@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from "react";
+// import { useSelector } from 'react-redux'
 import {Container, Col, Row, Alert} from "reactstrap";
 import {baseURL} from "../../app/constants";
-import Category from "./Category";
+// import Category from "./Category";
 
-const Categories = (props) => {
+const CategoryList = (props) => {
+
+    // const categoryListState = useSelector(state => state.categories);
+    // console.log("CategoryList.js categoryListState", categoryListState);
 
     // const [url, setUrl] = useState("");
     const [categoryMessage, setCategoryMessage] = useState("");
@@ -11,26 +15,25 @@ const Categories = (props) => {
     const [categoryResultsFound, setCategoryResultsFound] = useState(null);
     const [categoryList, setCategoryList] = useState([]);
 
-
     const getCategories = () => {
-        // console.log("Categories.js getCategories");
-        console.log("Categories.js getCategories baseURL", baseURL);
+        // console.log("CategoryList.js getCategories");
+        // console.log("CategoryList.js getCategories baseURL", baseURL);
 
         setCategoryMessage("");
         setErrCategoryMessage("");
         setCategoryResultsFound(null);
         setCategoryList([]);
 
-        // console.log("Categories.js getCategories this.props.categoryID", this.props.categoryID);
+        // console.log("CategoryList.js getCategories this.props.categoryID", this.props.categoryID);
         // this.props.setCategoryID(null);
-        // console.log("Categories.js getCategories this.props.titleID", this.props.titleID);
+        // console.log("CategoryList.js getCategories this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
         let url = baseURL + "category/";
 
         fetch(url)
         .then(response => {
-            // console.log("Categories.js getCategories response", response);
+            // console.log("CategoryList.js getCategories response", response);
             if (!response.ok) {
                 throw Error(response.status + " " + response.statusText + " " + response.url);
             } else {
@@ -38,7 +41,7 @@ const Categories = (props) => {
             };
         })
         .then(data => {
-            console.log("Categories.js getCategories data", data);
+            // console.log("CategoryList.js getCategories data", data);
 
             setCategoryResultsFound(data.resultsFound);
             setCategoryMessage(data.message);
@@ -54,9 +57,9 @@ const Categories = (props) => {
 
         })
         .catch(error => {
-            console.log("Categories.js getCategories error", error);
-            // console.log("Categories.js getCategories error.name", error.name);
-            // console.log("Categories.js getCategories error.message", error.message);
+            console.log("CategoryList.js getCategories error", error);
+            // console.log("CategoryList.js getCategories error.name", error.name);
+            // console.log("CategoryList.js getCategories error.message", error.message);
             setErrCategoryMessage(error.name + ": " + error.message);
         });
 
@@ -70,10 +73,17 @@ const Categories = (props) => {
         <Container>
         <Row>
 
+        {categoryResultsFound !== null ?
+            <pre>
+                {JSON.stringify(categoryList)}
+            </pre>
+        : null}
+
            <Col xs="2">
            {categoryMessage !== "" ? <Alert severity="info">{categoryMessage}</Alert> : null}
            {errCategoryMessage !== "" ? <Alert severity="error">{errCategoryMessage}</Alert> : null}
-           {categoryResultsFound !== null ? <Category categoryList={categoryList} /> : null}
+           {/* {categoryResultsFound !== null ? <Category categoryList={categoryList} /> : null} */}
+           {/* <Category categoryList={categoryListState} /> */}
            </Col>
 
            </Row>
@@ -81,4 +91,4 @@ const Categories = (props) => {
     );
 };
 
-export default Categories;
+export default CategoryList;
