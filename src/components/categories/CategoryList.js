@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-// import { useSelector } from 'react-redux'
+// import {useSelector} from 'react-redux';
 import {Container, Col, Row, Alert} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Category from "./Category";
@@ -70,7 +70,7 @@ const CategoryList = (props) => {
     }, []);
 
     return(
-        <Container>
+        <Container className="mt-4">
         <Row>
 
         {categoryResultsFound !== null ?

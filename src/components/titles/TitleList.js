@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-// import { useSelector } from 'react-redux'
+// import {useSelector} from 'react-redux';
 import {Container, Col, Row, Alert} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Title from "./Title";
@@ -29,7 +29,7 @@ const TitleList = (props) => {
         // console.log("TitleList.js getTitle this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
-        let url = baseURL + "title/";
+        let url = baseURL + "title/list";
 
         fetch(url)
         .then(response => {
@@ -67,7 +67,7 @@ const TitleList = (props) => {
     }, []);
 
     return(
-        <Container>
+        <Container className="mt-4">
         <Row>
 
         {titleResultsFound !== null ?

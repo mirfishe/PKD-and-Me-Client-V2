@@ -4,32 +4,7 @@ import {Container, Col, Row} from "reactstrap";
 const About = () => {
 
     return (
-        <Container>
-            <Row>
-            <Col xs="12">
-            <h4 className="text-center">PKD and Me</h4>
-
-            <h6 className="text-center">A personal journey into the works of Philip K. Dick.</h6>
-            </Col>
-            </Row>
-
-            <Row>
-
-            <Col xs="9">
-            <p>When someone discovers the work of Philip K. Dick and becomes fascinated by it, there is a phenomenon in which they must read all of his work as fast as possible. Sometimes the plots and incidents blur together into one mega-novel. And there are a lot of novels. It would be helpful for a person to have a checklist to mark the ones that they’ve read and the ability to enter what they thought of the novel.</p>
-
-            <p>Plus the application would provide resources such as publication dates, covers and links to more information for an even deeper dive into the work.</p>
-            </Col>
-            <Col xs="2">
-            <img src="https://philipdick.com/images/PKD/Philip_Dick2.jpg" alt="Philip K. Dick" />
-            </Col>
-            </Row>
-
-            <Row>
-            <Col xs="12">
-            &nbsp;
-            </Col>
-            </Row>
+        <Container className="mt-4">
             <Row>
             <Col xs="12">
             <h4 className="text-center">Philip K. Dick: A Brief Biography</h4>
@@ -39,11 +14,20 @@ const About = () => {
             </Row>
 
             <Row>
-            <Col xs="12">
+            <Col xs="10">
+
             <p>Philip K. Dick and his twin sister, Jane, were born on Dec 16, 1928 in Chicago. The twins were a bit premature and on Jan 29, Jane died. The loss of his twin sister was to have a great affect on Phil's life and writing. In 1935 Phil moved with his mother to Washington D.C. and in 1938 they moved to Berkeley, California. Phil would pretty much stay in California for the rest of his life, either in Berkeley, Pt. Reyes or Santa Ana. He died in 1982 and is buried next to Jane in Ft. Morgan, Colorado.</p>
 
             <p>PKD started writing at an early age, sending pseudonymous poems and short stories to the Berkeley Gazette in the mid-40s where they appeared in the 'Young author's Page.' Around this time Dick discovered Unknown magazine and a love for science fiction. In 1950 he found that Tony Boucher, a famous science fiction writer from Unknown and, in 1949, the co-founder (with J. Francis McComas) of The Magazine Of Fantasy & Science Fiction, lived nearby in Berkeley. At the time Boucher was conducting a workshop for would-be writers. Although PKD attended few of the actual sessions he did establish a close relationship with Boucher. This resulted in his first short-story sale: "Roog" to The Magazine Of Fantasy & Science Fiction in 1951 (after much rewriting). This story didn't appear in F&SF until Feb 1953. His first actual magazine appearance was "Beyond Lies The Wub" in the July 1952 Planet Stories.</p>
 
+            </Col>
+            <Col xs="2">
+            <img src="https://philipdick.com/images/PKD/Philip_Dick2.jpg" alt="Philip K. Dick" />
+            </Col>
+            </Row>
+
+            <Row>
+            <Col xs="12">
             <p>In the Spring of 1952 Phil got serious and enlisted the Scott Meredith Literary Agency in his cause. This agency would represent him for the rest of his writing career. He had already sold 15 short stories by this time and considered himself a professional writer. The early 1950s were a busy time for science fiction writers and PKD wrote and published 82 short stories between 1952 and 1958, as well as three novels.</p>
 
             <p>His first published novel was Solar Lottery, written in 1954 and published by Ace Books in 1955 as one half of an Ace Double. He was also at this time writing and failing to sell several 'mainstream' novels. Many of these have seen publication since his death. The earliest (1952) and one of the best of these straight novels is Gather Yourselves Together. It is also the last of his novels to be published (1994 WCS Books).</p>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-// import { useSelector } from 'react-redux'
+// import {useSelector} from 'react-redux';
 import {Container, Col, Row, Alert} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Edition from "./Edition";
@@ -29,7 +29,7 @@ const EditionList = (props) => {
         // console.log("EditionList.js getEdition this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
-        let url = baseURL + "edition/";
+        let url = baseURL + "edition/list";
 
         fetch(url)
         .then(response => {
@@ -67,7 +67,7 @@ const EditionList = (props) => {
     }, []);
 
     return(
-        <Container>
+        <Container className="mt-4">
         <Row>
 
         {editionResultsFound !== null ?
