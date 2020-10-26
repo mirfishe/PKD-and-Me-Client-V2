@@ -1,5 +1,6 @@
 {
-  "name": "client-v2",
+  "name": "pkd-and-me-client-v2",
+  "homepage": "https://philipdick.com/pkd-and-me/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
