@@ -91,3 +91,6 @@ node_modules/
 
 # Downloaded Code
 *.zip
+
+# .htaccess file for server
+.htaccess

@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from 'react-bootstrap-icons';
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText} from "reactstrap";
 // import {baseURL} from "./app/constants";
@@ -20,7 +20,7 @@ import Editions from "./components/editions/Editions";
 function App() {
 
   return (
-      <Router>
+      <BrowserRouter basename="/pkd-and-me">
       <Navbar color="light" light>
         <Nav>
           <NavbarBrand className="mx-2">
@@ -80,7 +80,7 @@ function App() {
       </Row>
       </Container>
 
-      </Router>
+      </BrowserRouter>
   );
 }
 
