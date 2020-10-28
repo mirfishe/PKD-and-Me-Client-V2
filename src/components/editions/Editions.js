@@ -1,5 +1,5 @@
 import React from "react";
-import {useSelector} from 'react-redux';
+import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter} from "reactstrap";
 
@@ -19,10 +19,10 @@ const Editions = (props) => {
 
     let editionList = [];
     if (!isNaN(mediaParam)) {
-        // If mediaParam is a number, then it's the mediaID
+        // If mediaParam is a number, then it"s the mediaID
         editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
     } else if (mediaParam !== undefined) {
-        // If mediaParam is not a number, then it's the media name
+        // If mediaParam is not a number, then it"s the media name
         const media = mediaListState.find(media => media.media === mediaParam.replaceAll("-", " "));
         // console.log("Editions.js typeof media", typeof media);
         // console.log("Editions.js media", media);
@@ -53,9 +53,13 @@ const Editions = (props) => {
 
                     {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
                     <Card key={edition.editionID}>
+
+                    {mediaParam === undefined ?
                     <CardHeader>
                         <Link to={"/editions/" + edition.medium.media.replaceAll("-", "|").replaceAll(" ", "-")}>{edition.medium.media}</Link>
                     </CardHeader>
+                    : null}
+
                     <CardBody className="editionImage">
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                         {edition.publicationDate !== null ? <CardText>{edition.publicationDate.toString().substring(0, 10)}</CardText> : null}

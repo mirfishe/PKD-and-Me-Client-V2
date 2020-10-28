@@ -1,8 +1,8 @@
 import React from "react";
-import {useSelector} from 'react-redux';
+import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter} from "reactstrap";
-import {Image} from 'react-bootstrap-icons';
+import {Image} from "react-bootstrap-icons";
 
 const Title = (props) => {
 
@@ -21,11 +21,11 @@ const Title = (props) => {
     let titleList = [];
     let editionList = [];
     if (!isNaN(titleParam)) {
-        // If titleParam is a number, then it's the titleID
+        // If titleParam is a number, then it"s the titleID
         titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
         editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
     } else if (titleParam !== undefined) {
-        // If titleParam is not a number, then it's the title name
+        // If titleParam is not a number, then it"s the title name
         titleList = titleListState.filter(title => title.titleName === titleParam.replaceAll("-", " ").replaceAll("|", "-")); // .replaceAll("%20", " "));
         const title = titleListState.find(title => title.titleName === titleParam.replaceAll("-", " ").replaceAll("|", "-"));
         // console.log("Title.js typeof title", typeof title);

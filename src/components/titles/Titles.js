@@ -1,8 +1,8 @@
 import React from "react";
-import {useSelector} from 'react-redux';
+import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg} from "reactstrap";
-import {Image} from 'react-bootstrap-icons';
+import {Image} from "react-bootstrap-icons";
 
 const Titles = (props) => {
 
@@ -63,11 +63,15 @@ const Titles = (props) => {
                     <Link to={"/editions/" + title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link> */}
 
                     <Card key={title.titleID}>
+
+                    {categoryParam === undefined ?
                     <CardHeader>
                         <Link to={"/titles/" + title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link>
                         {/* <Link to={"/title/" + title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
                         {title.publicationDate !== null ? <span> <small>({title.publicationDate.toString().substring(0, 4)})</small></span> : null} */}
-                    </CardHeader>
+                    </CardHeader>  
+                    : null}
+
                     <CardBody>
                         <Link to={"/title/" + title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>
                         {title.imageName !== null && title.imageName !== "" ? <CardImg src={title.imageName} alt={title.titleName}
