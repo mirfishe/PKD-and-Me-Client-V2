@@ -7,13 +7,6 @@ const About = () => {
         <Container className="mt-4">
             <Row>
             <Col xs="12">
-            <a href="https://pkdickbooks.com" target="_blank">https://pkdickbooks.com</a>
-            Philip K. Dick Bibliography
-            Philip K. Dick Bookshelf
-            </Col>
-            </Row>
-            <Row>
-            <Col xs="12">
             <h4 className="text-center">Philip K. Dick: A Brief Biography</h4>
 
             <h6 className="text-center">by Lord RC</h6>

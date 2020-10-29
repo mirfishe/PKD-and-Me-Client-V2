@@ -1,12 +1,16 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter} from "reactstrap";
+import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
+import {displayDate, displayYear, encodeURL, decodeURL} from "../../app/constants";
 
 const Title = (props) => {
 
     // console.log("Title.js props.titleList", props.titleList);
+
+    const [errTitleMessage, setErrTitleMessage] = useState("");
+    const [errEditionMessage, setErrEditionMessage] = useState("");
 
     const titleListState = useSelector(state => state.titles);
     // console.log("Title.js titleListState", titleListState);
@@ -26,11 +30,22 @@ const Title = (props) => {
         editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it"s the title name
-        titleList = titleListState.filter(title => title.titleName === titleParam.replaceAll("-", " ").replaceAll("|", "-")); // .replaceAll("%20", " "));
-        const title = titleListState.find(title => title.titleName === titleParam.replaceAll("-", " ").replaceAll("|", "-"));
+        titleList = titleListState.filter(title => title.titleName === decodeURL(titleParam));
+        const title = titleListState.find(title => title.titleName === decodeURL(titleParam));
         // console.log("Title.js typeof title", typeof title);
         // console.log("Title.js title", title);
-        editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
+
+        if (title !== undefined) {
+            editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
+        } else {
+            console.log("Title not found.");
+            // // Display all titles
+            // titleList = titleListState;
+            // // Display all editions
+            // editionList = editionListState;
+            // setErrTitleMessage("Title not found.")
+        };
+
     } else {
         // Display all titles
         titleList = titleListState;
@@ -45,11 +60,29 @@ const Title = (props) => {
     // Sort the editionList array by media.sortID
     editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
 
-    // console.log("Title.js titleList", titleList);
     // console.log("Title.js editionList", editionList);
+
+    useEffect(() => {
+        // console.log("Title.js useEffect titleList", titleList);
+        if (titleList.length > 0) {
+            setErrTitleMessage("");
+        } else {
+            setErrTitleMessage("Title not found.");
+        };
+    }, [titleList]);
+
+    useEffect(() => {
+        // console.log("Title.js useEffect editionList", editionList);
+        if (editionList.length > 0) {
+            setErrEditionMessage("");
+        } else {
+            setErrEditionMessage("No editions for purchase found.");
+        };
+    }, [editionList]);
 
     return(
         <Container className="mt-4">
+            {errTitleMessage !== "" ? <Alert severity="error">{errTitleMessage}</Alert> : null}
             {titleList.map((title) => {
             return (
                 <React.Fragment>
@@ -57,9 +90,9 @@ const Title = (props) => {
                 <Col xs="12">
                     <h5>{title.titleName}
 
-                        {title.publicationDate !== null ? <span className="ml-2"> ({title.publicationDate.toString().substring(0, 4)})</span> : null}
+                        {title.publicationDate !== null ? <span className="ml-2"> ({displayYear(title.publicationDate)})</span> : null}
 
-                        {title.category.category !== null && title.category.category !== "" ? <span className="ml-4"><Link to={"/titles/" + title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link>
+                        {title.category.category !== null && title.category.category !== "" ? <span className="ml-4"><Link to={"/titles/" + encodeURL(title.category.category)}>{title.category.category}</Link>
                         </span> : null}
                     </h5>
                 </Col>
@@ -67,7 +100,7 @@ const Title = (props) => {
 
                 <Row className="mb-4">
                 <Col xs="4">
-                        {title.imageName !== null && title.imageName !== "" ? <img src={title.imageName} alt={title.titleName} /> : <Image size="150" className="noImageIcon"/>}
+                        {title.imageName !== null && title.imageName !== "" ? <img src={title.imageName} alt={title.titleName} className="coverDisplay" /> : <Image size="150" className="noImageIcon"/>}
                 </Col>
                 <Col xs="8">
                     <p>{title.authorFirstName} {title.authorLastName}</p>
@@ -76,7 +109,7 @@ const Title = (props) => {
                 <Row className="mb-4">
                 <Col xs="12">
                     {title.shortDescription !== "" && title.shortDescription !== null ? <p>{title.shortDescription}</p> : null}
-                    {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank">Encyclopedia Dickiana</a></p> : null}
+                    {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noreferrer">Encyclopedia Dickiana</a></p> : null}
                 </Col>
                 </Row>
 
@@ -84,24 +117,36 @@ const Title = (props) => {
                 )
             })}
 
+            {errEditionMessage !== "" ? <Alert severity="error">{errEditionMessage}</Alert> : null}
+            {editionList.length > 0 ?
+            <Row>
+                <Col xs="12">
+                    <h5 className="text-center">Purchase</h5>
+                </Col>
+            </Row>
+            : null}
             <Row>
             {editionList.map((edition) => {
             return (
                 <Col key={edition.editionID} xs="4" className="mb-4">
 
-                    {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
                     <Card key={edition.editionID}>
                     <CardHeader>
-                        <Link to={"/editions/" + edition.medium.media.replaceAll("-", "|").replaceAll(" ", "-")}>{edition.medium.media}</Link>
+                        <Link to={"/editions/" + encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
                     </CardHeader>
                     <CardBody className="editionImage">
+                    {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
+                    :
+                        <a href={edition.textLinkFull} target="_blank" rel="noreferrer">
+                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" /> : <Image size="150" className="noImageIcon"/>}
+                        </a>
+                    }
                     </CardBody>
                     <CardFooter>
-                        {edition.publicationDate !== null ? <CardText>{edition.publicationDate.toString().substring(0, 10)}</CardText> : null}
+                        {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
                     </CardFooter>
                     </Card>
-                    : null}
 
                 </Col>
                 )

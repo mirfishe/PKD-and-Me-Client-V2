@@ -2,6 +2,7 @@ import React, {useState}  from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Nav, NavItem, Collapse, Card} from "reactstrap";
+import {encodeURL} from "../../app/constants";
 
 const Category = (props) => {
 
@@ -28,7 +29,7 @@ const Category = (props) => {
                 {/* <Link to={`/titles/${category.categoryID}`}>{category.categoryID}</Link>
                 <Link to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</Link>
                 <Link to={"/titles/" + category.categoryID}>{category.categoryID}</Link> */}
-                <Link to={"/titles/" + category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{category.category}</Link>
+                <Link to={"/titles/" + encodeURL(category.category)}>{category.category}</Link>
             </NavItem>
             )
         })}

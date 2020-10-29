@@ -24,6 +24,9 @@ function App() {
   const showTitleList = false;
   const showEditionList = false;
 
+  const showAllTitles = true;
+  const showAllEditions = true;
+
   return (
       <BrowserRouter basename="/pkd-and-me">
       <Navbar color="light" light>
@@ -57,11 +60,21 @@ function App() {
           <NavItem className="mx-2">
             <Link to="/media"><NavbarText>Media</NavbarText></Link>
           </NavItem> */}
+          {showAllTitles ? 
           <NavItem className="mx-2">
             <Link to="/titles"><NavbarText>All Titles</NavbarText></Link>
           </NavItem>
+          : null}
+          {showAllEditions ? 
           <NavItem className="mx-2">
             <Link to="/editions"><NavbarText>All Editions</NavbarText></Link>
+          </NavItem>
+          : null}
+          <NavItem className="mx-2">
+          <a href="https://pkdickbooks.com" target="_blank" rel="noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
+          </NavItem>
+          <NavItem className="mx-2">
+          <a href="https://philipdick.com" target="_blank" rel="noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
         </Nav>
       </Navbar>
