@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {Container, Col, Row} from "reactstrap";
 
 const About = () => {
@@ -18,7 +18,7 @@ const About = () => {
 
             <p>Philip K. Dick and his twin sister, Jane, were born on Dec 16, 1928 in Chicago. The twins were a bit premature and on Jan 29, Jane died. The loss of his twin sister was to have a great affect on Phil's life and writing. In 1935 Phil moved with his mother to Washington D.C. and in 1938 they moved to Berkeley, California. Phil would pretty much stay in California for the rest of his life, either in Berkeley, Pt. Reyes or Santa Ana. He died in 1982 and is buried next to Jane in Ft. Morgan, Colorado.</p>
 
-            <p>PKD started writing at an early age, sending pseudonymous poems and short stories to the Berkeley Gazette in the mid-40s where they appeared in the 'Young author's Page.' Around this time Dick discovered Unknown magazine and a love for science fiction. In 1950 he found that Tony Boucher, a famous science fiction writer from Unknown and, in 1949, the co-founder (with J. Francis McComas) of The Magazine Of Fantasy & Science Fiction, lived nearby in Berkeley. At the time Boucher was conducting a workshop for would-be writers. Although PKD attended few of the actual sessions he did establish a close relationship with Boucher. This resulted in his first short-story sale: "Roog" to The Magazine Of Fantasy & Science Fiction in 1951 (after much rewriting). This story didn't appear in F&SF until Feb 1953. His first actual magazine appearance was "Beyond Lies The Wub" in the July 1952 Planet Stories.</p>
+            <p>PKD started writing at an early age, sending pseudonymous poems and short stories to the Berkeley Gazette in the mid-40s where they appeared in the "Young author's Page." Around this time Dick discovered Unknown magazine and a love for science fiction. In 1950 he found that Tony Boucher, a famous science fiction writer from Unknown and, in 1949, the co-founder (with J. Francis McComas) of The Magazine Of Fantasy & Science Fiction, lived nearby in Berkeley. At the time Boucher was conducting a workshop for would-be writers. Although PKD attended few of the actual sessions he did establish a close relationship with Boucher. This resulted in his first short-story sale: "Roog" to The Magazine Of Fantasy & Science Fiction in 1951 (after much rewriting). This story didn't appear in F&SF until Feb 1953. His first actual magazine appearance was "Beyond Lies The Wub" in the July 1952 Planet Stories.</p>
 
             </Col>
             <Col xs="2">

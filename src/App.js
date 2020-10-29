@@ -1,9 +1,9 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
-import {HouseFill} from 'react-bootstrap-icons';
+import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText} from "reactstrap";
 // import {baseURL} from "./app/constants";
 import CategoryList from "./components/categories/CategoryList";
@@ -19,6 +19,14 @@ import Editions from "./components/editions/Editions";
 
 function App() {
 
+  const showCategoryList = false;
+  const showMediaList = false;
+  const showTitleList = false;
+  const showEditionList = false;
+
+  const showAllTitles = true;
+  const showAllEditions = true;
+
   return (
       <BrowserRouter basename="/pkd-and-me">
       <Navbar color="light" light>
@@ -26,29 +34,47 @@ function App() {
           <NavbarBrand className="mx-2">
             <Link to="/"><HouseFill color="black" /></Link>
           </NavbarBrand>
-          {/* <NavItem className="mx-2">
+          {showCategoryList ? 
+          <NavItem className="mx-2">
             <Link to="/categoryList"><NavbarText>Category List</NavbarText></Link>
           </NavItem>
+          : null}
+          {showMediaList ? 
           <NavItem className="mx-2">
             <Link to="/mediaList"><NavbarText>Media List</NavbarText></Link>
           </NavItem>
+          : null}
+          {showTitleList ? 
           <NavItem className="mx-2">
             <Link to="/titleList"><NavbarText>Title List</NavbarText></Link>
           </NavItem>
+          : null}
+          {showEditionList ? 
           <NavItem className="mx-2">
             <Link to="/editionList"><NavbarText>Edition List</NavbarText></Link>
           </NavItem>
-          <NavItem className="mx-2">
+          : null}
+          {/* <NavItem className="mx-2">
             <Link to="/categories"><NavbarText>Categories</NavbarText></Link>
           </NavItem>
           <NavItem className="mx-2">
             <Link to="/media"><NavbarText>Media</NavbarText></Link>
           </NavItem> */}
+          {showAllTitles ? 
           <NavItem className="mx-2">
             <Link to="/titles"><NavbarText>All Titles</NavbarText></Link>
           </NavItem>
+          : null}
+          {showAllEditions ? 
           <NavItem className="mx-2">
             <Link to="/editions"><NavbarText>All Editions</NavbarText></Link>
+          </NavItem>
+          : null}
+          <NavItem className="mx-2">
+          <a href="https://pkdickbooks.com" target="_blank" rel="noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
+          </NavItem>
+          <NavItem className="mx-2">
+          <a href="https://philipdick.com" target="_blank" rel="noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
         </Nav>
       </Navbar>

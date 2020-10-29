@@ -1,7 +1,8 @@
 import React, {useState}  from "react";
-import {useSelector} from 'react-redux';
+import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Nav, NavItem, Collapse, Card} from "reactstrap";
+import {encodeURL} from "../../app/constants";
 
 const Media = (props) => {
 
@@ -28,7 +29,7 @@ const Media = (props) => {
                 {/* <Link to={`/editions/${media.mediaID}`}>{media.mediaID}</Link>
                 <Link to={`/editions/${media.media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</Link>
                 <Link to={"/editions/" + media.mediaID}>{media.mediaID}</Link> */}
-                <Link to={"/editions/" + media.media.replaceAll("-", "|").replaceAll(" ", "-")}>{media.media}</Link>
+                <Link to={"/editions/" + encodeURL(media.media)}>{media.media}</Link>
             </NavItem>
             )
         })}

@@ -36,10 +36,19 @@ body {
   color: black;
 }
 
-.coverImage {
+.coverThumbnail {
   /* Testing to see if card images are automatically centered
   margin-left: auto;
   margin-right: auto; */
+  flex-shrink: 0;
+  width: 10%;
+  max-width: 10%;
+  height: auto;
+}
+
+.coverDisplay {
+  max-width: 100%;
+  height: auto;
 }
 
 .editionImage {
