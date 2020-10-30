@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert} from "reactstrap";
+import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
 import {displayDate, displayYear, encodeURL, decodeURL} from "../../app/constants";
 
@@ -81,8 +81,21 @@ const Title = (props) => {
     }, [editionList]);
 
     return(
-        <Container className="mt-4">
-            {errTitleMessage !== "" ? <Alert severity="error">{errTitleMessage}</Alert> : null}
+        <Container className="mt-4">            
+            {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+            <Row>
+            <Col xs="12">
+            <Breadcrumb>
+                <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
+                {titleList[0].category.category !== undefined && isNaN(titleList[0].category.category) ? 
+                <BreadcrumbItem><Link to={"/titles/" + encodeURL(titleList[0].category.category)}>{titleList[0].category.category}</Link></BreadcrumbItem>
+                :
+                <BreadcrumbItem><Link to={"/titles/"}>All Titles</Link></BreadcrumbItem>
+                }
+                <BreadcrumbItem active>{decodeURL(titleParam)}</BreadcrumbItem>
+            </Breadcrumb>
+            </Col>
+            </Row>
             {titleList.map((title) => {
             return (
                 <React.Fragment>
@@ -109,7 +122,7 @@ const Title = (props) => {
                 <Row className="mb-4">
                 <Col xs="12">
                     {title.shortDescription !== "" && title.shortDescription !== null ? <p>{title.shortDescription}</p> : null}
-                    {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noreferrer">Encyclopedia Dickiana</a></p> : null}
+                    {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
                 </Col>
                 </Row>
 
@@ -117,7 +130,7 @@ const Title = (props) => {
                 )
             })}
 
-            {errEditionMessage !== "" ? <Alert severity="error">{errEditionMessage}</Alert> : null}
+            {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
             {editionList.length > 0 ?
             <Row>
                 <Col xs="12">
@@ -138,8 +151,8 @@ const Title = (props) => {
                     {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
-                        <a href={edition.textLinkFull} target="_blank" rel="noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" /> : <Image size="150" className="noImageIcon"/>}
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image size="150" className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>

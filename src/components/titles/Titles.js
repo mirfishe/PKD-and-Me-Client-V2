@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert} from "reactstrap";
+import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
 import {displayYear, encodeURL, decodeURL} from "../../app/constants";
 
@@ -62,6 +62,18 @@ const Titles = (props) => {
 
     return(
         <Container className="mt-4">
+            <Row>
+            <Col xs="12">
+            <Breadcrumb>
+                <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
+                {categoryParam !== undefined && isNaN(categoryParam) ? 
+                <BreadcrumbItem active><Link to={"/titles/" + categoryParam}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
+                :
+                <BreadcrumbItem active><Link to={"/titles/"}>All Titles</Link></BreadcrumbItem>
+                }
+            </Breadcrumb>
+            </Col>
+            </Row>
             {categoryParam !== undefined && isNaN(categoryParam) ? 
             <Row>
             <Col xs="12">
@@ -70,8 +82,8 @@ const Titles = (props) => {
             </Row>
             : null}
             <Row>
-            {/* {errCategoryMessage !== "" ? <Alert severity="error">{errCategoryMessage}</Alert> : null} */}
-            {errTitleMessage !== "" ? <Alert severity="error">{errTitleMessage}</Alert> : null}
+            {/* {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
+            {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
             {titleList.map((title) => {
             return (
                 <Col key={title.titleID} xs="3" className="mb-4">

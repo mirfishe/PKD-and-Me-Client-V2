@@ -77,8 +77,8 @@ const MediaList = (props) => {
         : null}
 
            <Col xs="2">
-           {mediaMessage !== "" ? <Alert severity="info">{mediaMessage}</Alert> : null}
-           {errMediaMessage !== "" ? <Alert severity="error">{errMediaMessage}</Alert> : null}
+           {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
+           {errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
            {/* {mediaResultsFound !== null ? <Media mediaList={mediaList} /> : null} */}
            {/* <Media mediaList={mediaListState} /> */}
            </Col>

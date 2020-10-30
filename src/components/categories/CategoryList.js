@@ -80,8 +80,8 @@ const CategoryList = (props) => {
         : null}
 
            <Col xs="2">
-           {categoryMessage !== "" ? <Alert severity="info">{categoryMessage}</Alert> : null}
-           {errCategoryMessage !== "" ? <Alert severity="error">{errCategoryMessage}</Alert> : null}
+           {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
+           {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
            {/* {categoryResultsFound !== null ? <Category categoryList={categoryList} /> : null} */}
            {/* <Category categoryList={categoryListState} /> */}
            </Col>
