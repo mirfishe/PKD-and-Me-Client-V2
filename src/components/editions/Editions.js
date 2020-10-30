@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert} from "reactstrap";
+import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from 'react-bootstrap-icons';
 import {displayDate, displayYear, encodeURL, decodeURL} from "../../app/constants";
 
@@ -59,6 +59,18 @@ const Editions = (props) => {
 
     return(
         <Container className="mt-4">
+            <Row>
+            <Col xs="12">
+            <Breadcrumb>
+                <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
+                {mediaParam !== undefined && isNaN(mediaParam) ? 
+                <BreadcrumbItem active>{decodeURL(mediaParam)}</BreadcrumbItem>
+                :
+                <BreadcrumbItem active>All Editions</BreadcrumbItem>
+                }
+            </Breadcrumb>
+            </Col>
+            </Row>
             {mediaParam !== undefined && isNaN(mediaParam) ? 
             <Row>
             <Col xs="12">
@@ -67,7 +79,7 @@ const Editions = (props) => {
             </Row>
             : null}
             <Row>
-            {errEditionMessage !== "" ? <Alert severity="error">{errEditionMessage}</Alert> : null}
+            {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
             {editionList.map((edition) => {
             return (
                 <Col key={edition.editionID} xs="3" className="mb-4">
@@ -84,8 +96,8 @@ const Editions = (props) => {
                     {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
-                    <a href={edition.textLinkFull} target="_blank" rel="noreferrer">
-                    {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" /> : <Image size="150" className="noImageIcon"/>}
+                    <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                    {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image size="150" className="noImageIcon"/>}
                     </a>
                     }
                     {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}

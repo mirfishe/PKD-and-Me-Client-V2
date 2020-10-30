@@ -77,8 +77,8 @@ const TitleList = (props) => {
         : null} 
         
            <Col xs="2">
-           {titleMessage !== "" ? <Alert severity="info">{titleMessage}</Alert> : null}
-           {errTitleMessage !== "" ? <Alert severity="error">{errTitleMessage}</Alert> : null}
+           {titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
+           {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
            {/* {titleResultsFound !== null ? <Title titleList={titleList} /> : null} */}
            {/* <Title titleList={titleListState} /> */}
            </Col>

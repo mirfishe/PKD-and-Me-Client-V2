@@ -77,8 +77,8 @@ const EditionList = (props) => {
         : null}
 
            <Col xs="2">
-           {editionMessage !== "" ? <Alert severity="info">{editionMessage}</Alert> : null}
-           {errEditionMessage !== "" ? <Alert severity="error">{errEditionMessage}</Alert> : null}
+           {editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
+           {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
            {/* {editionResultsFound !== null ? <Edition editionList={editionList} /> : null} */}
            {/* <Edition editionList={editionListState} /> */}
            </Col>

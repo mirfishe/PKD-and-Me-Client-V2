@@ -71,10 +71,10 @@ function App() {
           </NavItem>
           : null}
           <NavItem className="mx-2">
-          <a href="https://pkdickbooks.com" target="_blank" rel="noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
+          <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
           </NavItem>
           <NavItem className="mx-2">
-          <a href="https://philipdick.com" target="_blank" rel="noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
+          <a href="https://philipdick.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
         </Nav>
       </Navbar>
