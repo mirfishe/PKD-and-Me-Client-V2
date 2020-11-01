@@ -17,7 +17,8 @@ switch (window.location.hostname) {
         API_URL = "https://pkd-and-me-server.herokuapp.com";
         break;
     default:
-        API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
+        // API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
+        API_URL = "https://pkd-and-me-server.herokuapp.com";
 };
 
 export default API_URL;

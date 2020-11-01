@@ -12,9 +12,9 @@ const Titles = (props) => {
     // const [errCategoryMessage, setErrCategoryMessage] = useState("");
     const [errTitleMessage, setErrTitleMessage] = useState("");
 
-    const titleListState = useSelector(state => state.titles);
+    const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log("Titles.js titleListState", titleListState);
-    const categoryListState = useSelector(state => state.categories);
+    const categoryListState = useSelector(state => state.categories.arrayCategories);
     // console.log("Titles.js categoryListState", categoryListState);
 
     // console.log("Titles.js props.match.params", props.match.params);

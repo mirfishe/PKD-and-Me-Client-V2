@@ -8,7 +8,7 @@ const Media = (props) => {
 
     const [isOpen, setIsOpen] = useState(true);
 
-    const mediaListState = useSelector(state => state.media);
+    const mediaListState = useSelector(state => state.media.arrayMedia);
     // console.log("Media.js mediaListState", mediaListState);
     
     // console.log("Media.js props.mediaList", props.mediaList);

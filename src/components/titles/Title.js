@@ -12,9 +12,9 @@ const Title = (props) => {
     const [errTitleMessage, setErrTitleMessage] = useState("");
     const [errEditionMessage, setErrEditionMessage] = useState("");
 
-    const titleListState = useSelector(state => state.titles);
+    const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log("Title.js titleListState", titleListState);
-    const editionListState = useSelector(state => state.editions);
+    const editionListState = useSelector(state => state.editions.arrayEditions);
     // console.log("Title.js editionListState", editionListState);
 
     // console.log("Title.js props.match.params", props.match.params);

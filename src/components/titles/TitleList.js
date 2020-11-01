@@ -69,22 +69,25 @@ const TitleList = (props) => {
     return(
         <Container className="mt-4">
         <Row>
-
+            {titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
+            {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+        </Row>
         {titleResultsFound !== null ?
-            <pre>
-                {JSON.stringify(titleList)}
-            </pre>
+            <Row>
+                <pre>
+                    {JSON.stringify(titleList)}
+                </pre>
+                {/* <span>
+                    {JSON.stringify(titleList)}
+                </span> */}
+            </Row>
         : null} 
         
-           <Col xs="2">
-           {titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
-           {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+        <Row>
            {/* {titleResultsFound !== null ? <Title titleList={titleList} /> : null} */}
            {/* <Title titleList={titleListState} /> */}
-           </Col>
-
-           </Row>
-          </Container>
+        </Row>
+        </Container>
     );
 };
 

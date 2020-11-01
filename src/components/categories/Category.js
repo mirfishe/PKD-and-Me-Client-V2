@@ -8,7 +8,7 @@ const Category = (props) => {
 
     const [isOpen, setIsOpen] = useState(true);
 
-    const categoryListState = useSelector(state => state.categories);
+    const categoryListState = useSelector(state => state.categories.arrayCategories);
     // console.log("Category.js categoryListState", categoryListState);
     
     // console.log("Category.js props.categoryList", props.categoryList);
