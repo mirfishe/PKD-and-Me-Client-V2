@@ -69,21 +69,24 @@ const EditionList = (props) => {
     return(
         <Container className="mt-4">
         <Row>
-
+            {editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
+            {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+        </Row>
         {editionResultsFound !== null ?
-            <pre>
-                {JSON.stringify(editionList)}
-            </pre>
+            <Row>
+                {/* <pre>
+                    {JSON.stringify(editionList)}
+                </pre> */}
+                <span>
+                    {JSON.stringify(editionList)}
+                </span>
+            </Row>
         : null}
 
-           <Col xs="2">
-           {editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
-           {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+        <Row>
            {/* {editionResultsFound !== null ? <Edition editionList={editionList} /> : null} */}
            {/* <Edition editionList={editionListState} /> */}
-           </Col>
-
-           </Row>
+        </Row>
           </Container>
     );
 };

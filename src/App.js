@@ -1,11 +1,27 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
-import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText} from "reactstrap";
-// import {baseURL} from "./app/constants";
+import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
+
+import {baseURL} from "./app/constants";
+
+// import categoriesLoadData from "./bibliographyData/categoriesLoadData";
+import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
+import {loadArrayCategories, setCategoriesDataOffline} from "./bibliographyData/categoriesSlice";
+// import editionsLoadData from "./bibliographyData/editionsLoadData";
+import editionsOfflineData from "./bibliographyData/editionsOfflineData";
+import {loadArrayEditions, setEditionsDataOffline} from "./bibliographyData/editionsSlice";
+// import mediaLoadData from "./bibliographyData/mediaLoadData";
+import mediaOfflineData from "./bibliographyData/mediaOfflineData";
+import {loadArrayMedia, setMediaDataOffline} from "./bibliographyData/mediaSlice";
+// import titlesLoadData from "./bibliographyData/titlesLoadData";
+import titlesOfflineData from "./bibliographyData/titlesOfflineData";
+import {loadArrayTitles, setTitlesDataOffline} from "./bibliographyData/titlesSlice";
+
 import CategoryList from "./components/categories/CategoryList";
 import MediaList from "./components/media/MediaList";
 import TitleList from "./components/titles/TitleList";
@@ -19,6 +35,8 @@ import Editions from "./components/editions/Editions";
 
 function App() {
 
+  const appOffline = false;
+
   const showCategoryList = false;
   const showMediaList = false;
   const showTitleList = false;
@@ -26,6 +44,271 @@ function App() {
 
   const showAllTitles = true;
   const showAllEditions = true;
+
+  const dispatch = useDispatch();
+
+  const [categoryMessage, setCategoryMessage] = useState("");
+  const [errCategoryMessage, setErrCategoryMessage] = useState("");
+  // const [categoryResultsFound, setCategoryResultsFound] = useState(null);
+  // const [categoryList, setCategoryList] = useState([]);
+  const [mediaMessage, setMediaMessage] = useState("");
+  const [errMediaMessage, setErrMediaMessage] = useState("");
+  // const [mediaResultsFound, setMediaResultsFound] = useState(null);
+  // const [mediaList, setMediaList] = useState([]);
+  const [titleMessage, setTitleMessage] = useState("");
+  const [errTitleMessage, setErrTitleMessage] = useState("");
+  // const [titleResultsFound, setTitleResultsFound] = useState(null);
+  // const [titleList, setTitleList] = useState([]);
+  const [editionMessage, setEditionMessage] = useState("");
+  const [errEditionMessage, setErrEditionMessage] = useState("");
+  // const [editionResultsFound, setEditionResultsFound] = useState(null);
+  // const [editionList, setEditionList] = useState([]);
+
+  const getCategories = () => {
+    // console.log("App.js getCategories");
+    // console.log("App.js getCategories baseURL", baseURL);
+
+    setCategoryMessage("");
+    setErrCategoryMessage("");
+    // setCategoryResultsFound(null);
+    // setCategoryList([]);
+
+    let url = baseURL + "category/";
+
+    fetch(url)
+    .then(response => {
+        // console.log("App.js getCategories response", response);
+        if (!response.ok) {
+          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // load offline data
+          dispatch(setCategoriesDataOffline(true));
+          return {resultsFound: true, message: "Offline Categories data used.", categories: categoriesOfflineData};
+        } else {
+            return response.json();
+        };
+    })
+    .then(data => {
+        // console.log("App.js getCategories data", data);
+
+        // setCategoryResultsFound(data.resultsFound);
+        // setCategoryMessage(data.message);
+
+        if (data.resultsFound === true) {
+          // setCategoryList(data.categories);
+          dispatch(loadArrayCategories(data.categories));
+        } else {
+          console.log("App.js getCategories resultsFound error", data.message);
+          // setErrCategoryMessage(data.message);
+          dispatch(setCategoriesDataOffline(true));
+          dispatch(loadArrayCategories(categoriesOfflineData));
+        };
+
+    })
+    .catch(error => {
+        console.log("App.js getCategories error", error);
+        // console.log("App.js getCategories error.name", error.name);
+        // console.log("App.js getCategories error.message", error.message);
+        // setErrCategoryMessage(error.name + ": " + error.message);
+        dispatch(setCategoriesDataOffline(true));
+        dispatch(loadArrayCategories(categoriesOfflineData));
+    });
+
+};
+
+const getMedia = () => {
+  // console.log("App.js getMedia");
+  // console.log("App.js getMedia baseURL", baseURL);
+
+  setMediaMessage("");
+  setErrMediaMessage("");
+  // setMediaResultsFound(null);
+  // setMediaList([]);
+
+  // console.log("App.js getMedia this.props.mediaID", this.props.mediaID);
+  // this.props.setMediaID(null);
+  // console.log("App.js getMedia this.props.titleID", this.props.titleID);
+  // this.props.setTitleID(null);
+
+  let url = baseURL + "media/";
+
+  fetch(url)
+  .then(response => {
+      // console.log("App.js getMedia response", response);
+      if (!response.ok) {
+          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // load offline data
+          dispatch(setMediaDataOffline(true));
+          return {resultsFound: true, message: "Offline Media data used.", media: mediaOfflineData};
+      } else {
+          return response.json();
+      };
+  })
+  .then(data => {
+      // console.log("App.js getMedia data", data);
+
+      // setMediaResultsFound(data.resultsFound);
+      // setMediaMessage(data.message);
+
+      if (data.resultsFound === true) {
+          // setMediaList(data.media);
+          dispatch(loadArrayMedia(data.media));
+      } else {
+          console.log("App.js getMedia resultsFound error", data.message);
+          // setErrMediaMessage(data.message);
+          dispatch(setMediaDataOffline(true));
+          dispatch(loadArrayMedia(mediaOfflineData));
+      };
+
+  })
+  .catch(error => {
+      console.log("App.js getMedia error", error);
+      // console.log("App.js getMedia error.name", error.name);
+      // console.log("App.js getMedia error.message", error.message);
+      // setErrMediaMessage(error.name + ": " + error.message);
+      dispatch(setMediaDataOffline(true));
+      dispatch(loadArrayMedia(mediaOfflineData));
+  });
+
+};
+
+const getTitles = () => {
+  // console.log("App.js getTitle");
+  // console.log("App.js getTitle baseURL", baseURL);
+
+  setTitleMessage("");
+  setErrTitleMessage("");
+  // setTitleResultsFound(null);
+  // setTitleList([]);
+
+  // console.log("App.js getTitle this.props.titleID", this.props.titleID);
+  // this.props.setTitleID(null);
+  // console.log("App.js getTitle this.props.titleID", this.props.titleID);
+  // this.props.setTitleID(null);
+
+  let url = baseURL + "title/list";
+
+  fetch(url)
+  .then(response => {
+      // console.log("App.js getTitle response", response);
+      if (!response.ok) {
+          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // load offline data
+          dispatch(setTitlesDataOffline(true));
+          return {resultsFound: true, message: "Offline Titles data used.", titles: titlesOfflineData};
+      } else {
+          return response.json();
+      };
+  })
+  .then(data => {
+      // console.log("App.js getTitle data", data);
+
+      // setTitleResultsFound(data.resultsFound);
+      // setTitleMessage(data.message);
+
+      if (data.resultsFound === true) {
+          // setTitleList(data.titles);
+          dispatch(loadArrayTitles(data.titles));
+      } else {
+          console.log("App.js getTitles resultsFound error", data.message);
+          // setErrTitleMessage(data.message);
+          dispatch(setTitlesDataOffline(true));
+          dispatch(loadArrayTitles(titlesOfflineData));
+      };
+
+  })
+  .catch(error => {
+      console.log("App.js getTitle error", error);
+      // console.log("App.js getTitle error.name", error.name);
+      // console.log("App.js getTitle error.message", error.message);
+      // setErrTitleMessage(error.name + ": " + error.message);
+      dispatch(setTitlesDataOffline(true));
+      dispatch(loadArrayTitles(titlesOfflineData));
+  });
+
+};
+
+const getEditions = () => {
+  console.log("App.js getEdition");
+  // console.log("App.js getEdition baseURL", baseURL);
+
+  setEditionMessage("");
+  setErrEditionMessage("");
+  // setEditionResultsFound(null);
+  // setEditionList([]);
+
+  // console.log("App.js getEdition this.props.editionID", this.props.editionID);
+  // this.props.setEditionID(null);
+  // console.log("App.js getEdition this.props.titleID", this.props.titleID);
+  // this.props.setTitleID(null);
+
+  let url = baseURL + "edition/list";
+
+  fetch(url)
+  .then(response => {
+      // console.log("App.js getEdition response", response);
+      if (!response.ok) {
+          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // load offline data
+          dispatch(setEditionsDataOffline(true));
+          return {resultsFound: true, message: "Offline Editions data used.", editions: editionsOfflineData};
+      } else {
+          return response.json();
+      };
+  })
+  .then(data => {
+      // console.log("App.js getEdition data", data);
+
+      // setEditionResultsFound(data.resultsFound);
+      // setEditionMessage(data.message);
+
+      if (data.resultsFound === true) {
+          // setEditionList(data.editions);
+          dispatch(loadArrayEditions(data.editions));
+      } else {
+          console.log("App.js getEditions resultsFound error", data.message);
+          // setErrEditionMessage(data.message);
+          dispatch(setEditionsDataOffline(true));
+          dispatch(loadArrayEditions(editionsOfflineData));
+      };
+
+  })
+  .catch(error => {
+      console.log("App.js getEditions error", error);
+      // console.log("App.js getEdition error.name", error.name);
+      // console.log("App.js getEdition error.message", error.message);
+      // setErrEditionMessage(error.name + ": " + error.message);
+      dispatch(setEditionsDataOffline(true));
+      dispatch(loadArrayEditions(editionsOfflineData));
+  });
+
+};
+
+  useEffect(() => {
+    // console.log("App.js useEffect setCategoryData");
+
+    // Only load the bibliography data once per session unless the data is changed
+    if (appOffline) {
+      dispatch(setCategoriesDataOffline(true));
+      dispatch(loadArrayCategories(categoriesOfflineData));
+      dispatch(setMediaDataOffline(true));
+      dispatch(loadArrayMedia(mediaOfflineData));
+      dispatch(setTitlesDataOffline(true));
+      dispatch(loadArrayTitles(titlesOfflineData));
+      dispatch(setEditionsDataOffline(true));
+      dispatch(loadArrayEditions(editionsOfflineData));
+    // } else if (!appOffline) {
+    //   getCategories();
+    //   getMedia();
+    //   getTitles();
+    //   getEditions();
+    } else {
+      getCategories();
+      getMedia();
+      getTitles();
+      getEditions();
+    };
+
+  }, []);
 
   return (
       <BrowserRouter basename="/pkd-and-me">
@@ -80,6 +363,16 @@ function App() {
       </Navbar>
 
       <Container className="bodyContainer mb-5">
+      <Row>
+        {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
+        {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+        {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
+        {errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+        {titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
+        {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+        {editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
+        {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+      </Row>
       <Row>
       <Col xs="2">
         <Category />

@@ -11,9 +11,9 @@ const Editions = (props) => {
 
     const [errEditionMessage, setErrEditionMessage] = useState("");
 
-    const editionListState = useSelector(state => state.editions);
+    const editionListState = useSelector(state => state.editions.arrayEditions);
     // console.log("Editions.js editionListState", editionListState);
-    const mediaListState = useSelector(state => state.media);
+    const mediaListState = useSelector(state => state.media.arrayMedia);
     // console.log("Editions.js mediaListState", mediaListState);
 
     // console.log("Editions.js props.match.params", props.match.params);

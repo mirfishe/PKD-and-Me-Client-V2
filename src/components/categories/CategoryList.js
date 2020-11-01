@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 // import {useSelector} from "react-redux";
-import {Container, Col, Row, Alert} from "reactstrap";
+import {Container, Col, Row, Alert, Button} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Category from "./Category";
 
@@ -69,25 +69,62 @@ const CategoryList = (props) => {
         getCategories();
     }, []);
 
+    const copyText = () => {
+        // txtCategoryList = document.getElementById("txtCategoryList");
+        // txtCategoryList.select();
+        // document.execCommand("copy");
+        // alert("Copied the text: " + copyText.value);
+
+        // https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
+        // let dummy = document.createElement("input");
+        // dummy.style.display = 'none';
+        // document.body.appendChild(dummy);
+    
+        // dummy.setAttribute("id", "dummy_id");
+        // document.getElementById("dummy_id").value = JSON.stringify(categoryList);
+        // dummy.select();
+        // document.execCommand("copy");
+        // document.body.removeChild(dummy);
+
+        // https://stackoverflow.com/questions/52923771/react-copy-component-state-value-to-clipboard-without-dummy-element
+        // var dummy = document.createElement("pre");
+        // document.body.appendChild(dummy);
+        // dummy.setAttribute('value', JSON.stringify(categoryList));
+        // dummy.select();
+        // document.execCommand("copy");
+        // document.body.removeChild(dummy);
+
+        // https://www.npmjs.com/package/react-copy-to-clipboard
+        // https://reedbarger.com/how-to-create-a-custom-usecopytoclipboard-react-hook/
+
+    };
+
     return(
         <Container className="mt-4">
-        <Row>
-
+            <Row>
+            {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
+            {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+            </Row>
+            {/* <Row>
+            <Col xs="2">
+                <Button onClick={copyText}>Copy</Button>
+            </Col>
+            </Row> */}
         {categoryResultsFound !== null ?
-            <pre>
-                {JSON.stringify(categoryList)}
-            </pre>
+            <Row>
+                {/* <pre>
+                    {JSON.stringify(categoryList)}
+                </pre> */}
+                <span>
+                    {JSON.stringify(categoryList)}
+                </span>
+            </Row>
         : null}
-
-           <Col xs="2">
-           {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
-           {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
-           {/* {categoryResultsFound !== null ? <Category categoryList={categoryList} /> : null} */}
-           {/* <Category categoryList={categoryListState} /> */}
-           </Col>
-
-           </Row>
-          </Container>
+        <Row>
+            {/* {categoryResultsFound !== null ? <Category categoryList={categoryList} /> : null} */}
+            {/* <Category categoryList={categoryListState} /> */}
+        </Row>
+        </Container>
     );
 };
 

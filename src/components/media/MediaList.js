@@ -69,22 +69,25 @@ const MediaList = (props) => {
     return(
         <Container className="mt-4">
         <Row>
-
+            {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
+            {errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+        </Row>
         {mediaResultsFound !== null ? 
-            <pre>
-                {JSON.stringify(mediaList)}
-            </pre>
+            <Row>
+                {/* <pre>
+                    {JSON.stringify(mediaList)}
+                </pre> */}
+                <span>
+                    {JSON.stringify(mediaList)}
+                </span>
+            </Row>
         : null}
 
-           <Col xs="2">
-           {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
-           {errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+        <Row>
            {/* {mediaResultsFound !== null ? <Media mediaList={mediaList} /> : null} */}
            {/* <Media mediaList={mediaListState} /> */}
-           </Col>
-
-           </Row>
-          </Container>
+        </Row>
+        </Container>
     );
 };
 
