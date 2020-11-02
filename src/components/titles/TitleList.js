@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
-// import {useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {Container, Col, Row, Alert} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Title from "./Title";
 
 const TitleList = (props) => {
+
+    const siteName = useSelector(state => state.app.siteName);
+    document.title = "Title List | " + siteName;
 
     // const titleListState = useSelector(state => state.title);
     // console.log("TitleList.js titleListState", titleListState);

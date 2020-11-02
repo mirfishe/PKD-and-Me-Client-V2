@@ -5,7 +5,8 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
   arrayTitles: [],
   titlesLoaded: false,
-  titlesDataOffline: false
+  titlesDataOffline: false,
+  titleSort: "titleName"
 };
 
 const titlesSlice = createSlice({
@@ -34,10 +35,19 @@ const titlesSlice = createSlice({
         state.titlesDataOffline = action.payload;
 
       }
+    },
+    setTitleSort: {
+      reducer(state, action) {
+        // console.log("titlesSlice.js setTitleSort action.payload", action.payload);
+        // console.log("titlesSlice.js setTitleSort action.payload.length", action.payload.length);
+
+        state.titleSort = action.payload;
+
+      }
     }
 }
 });
 
-export const {loadArrayTitles, setTitlesDataOffline} = titlesSlice.actions
+export const {loadArrayTitles, setTitlesDataOffline, setTitleSort} = titlesSlice.actions
 
 export default titlesSlice.reducer

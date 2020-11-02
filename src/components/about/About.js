@@ -1,7 +1,11 @@
-import React from "react"
+import React from "react";
+import {useSelector} from "react-redux";
 import {Container, Col, Row} from "reactstrap";
 
 const About = () => {
+
+    const siteName = useSelector(state => state.app.siteName);
+    document.title = "Home | About Philip K. Dick | " + siteName;
 
     return (
         <Container className="mt-4">

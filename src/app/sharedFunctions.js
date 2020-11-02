@@ -91,3 +91,25 @@ export const decodeURL = (titleName) => {
 
     return newTitleName;
 };
+
+export const displayParagraphs = (text) => {
+
+    // console.log("constants displayParagraphs text", text);
+
+    let newText = text;
+
+    if (newText !== undefined) {
+
+        newText = "<p>" + newText;
+        
+        // Changes the \n to </p><p>
+        newText = newText.replaceAll("\n", "</p><p>");
+
+        newText = newText + "</p>";
+
+    };
+
+    // console.log("constants displayParagraphs newText", newText);
+
+    return newText;
+};

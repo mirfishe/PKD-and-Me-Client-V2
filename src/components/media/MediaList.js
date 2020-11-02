@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
-// import {useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {Container, Col, Row, Alert} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Media from "./Media";
 
 const MediaList = (props) => {
+
+    const siteName = useSelector(state => state.app.siteName);
+    document.title = "Media List | " + siteName;
 
     // const mediaListState = useSelector(state => state.media);
     // console.log("MediaList.js mediaListState", mediaListState);
