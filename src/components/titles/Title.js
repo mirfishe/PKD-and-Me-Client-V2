@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs} from "../../app/sharedFunctions";
+import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs, removeOnePixelImage} from "../../app/sharedFunctions";
 
 const Title = (props) => {
 
@@ -94,11 +94,6 @@ const Title = (props) => {
     return(
         <Container className="mt-4"> 
             <Row>
-                <Col xs="12">   
-                    {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-                </Col>
-            </Row>
-            <Row>
                 <Col xs="12">
                     <Breadcrumb className="breadcrumb mb-2">
                         <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
@@ -109,6 +104,11 @@ const Title = (props) => {
                         }
                         <BreadcrumbItem active>{decodeURL(titleParam)}</BreadcrumbItem>
                     </Breadcrumb>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs="12">   
+                    {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
                 </Col>
             </Row>
             {titleList.map((title) => {
@@ -134,7 +134,7 @@ const Title = (props) => {
 
                 <Row className="mb-4">
                     <Col xs="4">
-                            {title.imageName !== null && title.imageName !== "" ? <img src={title.imageName} alt={title.titleName} className="coverDisplay" /> : <Image size="150" className="noImageIcon"/>}
+                        {title.imageName !== null && title.imageName !== "" ? <img src={title.imageName} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon"/>}
                     </Col>
                     <Col xs="8">
                         {title.shortDescription !== "" && title.shortDescription !== null ? <div dangerouslySetInnerHTML={{"__html": displayParagraphs(title.shortDescription)}} /> : null}
@@ -155,16 +155,16 @@ const Title = (props) => {
             {editionList.length > 0 ?
             <Row>
                 <Col xs="12">
-                    <h5 className="text-center">Purchase</h5>
+                    <h5 className="text-center">Find A Copy</h5>
                 </Col>
             </Row>
             : null}
             <Row>
             {editionList.map((edition) => {
             return (
-                <Col key={edition.editionID} xs="4" className="mb-4">
+                <Col key={edition.editionID} xs="6" className="mb-4">
 
-                    <Card key={edition.editionID}>
+                    {/* <Card key={edition.editionID}>
                     <CardHeader>
                         <Link to={"/editions/" + encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
                     </CardHeader>
@@ -173,12 +173,37 @@ const Title = (props) => {
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image size="150" className="noImageIcon"/>}
+                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>
                     <CardFooter>
                         {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                    </CardFooter>
+                    </Card> */}
+
+                    <Card key={edition.editionID}>
+                    <Row className="no-gutters">
+                        <Col className="col-md-6">
+                        {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
+                            <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
+                        :
+                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                            </a>
+                        }
+                        </Col>
+                        <Col className="col-md-6">
+                            <CardBody>
+                                <CardText><Link to={"/title/" + encodeURL(edition.title.titleName)}>{edition.title.titleName}</Link>
+                                {edition.title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(edition.title.publicationDate)})</span> : null}
+                                </CardText>
+                                {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                            </CardBody>
+                        </Col>
+                    </Row>
+                    <CardFooter className="cardFooter">
+                        <CardText><Link to={"/editions/" + encodeURL(edition.medium.media)}>{edition.medium.media}</Link></CardText>
                     </CardFooter>
                     </Card>
 

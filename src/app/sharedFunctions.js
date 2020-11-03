@@ -113,3 +113,24 @@ export const displayParagraphs = (text) => {
 
     return newText;
 };
+
+export const removeOnePixelImage = (text, ASIN) => {
+
+    // console.log("constants removeOnePixelImage text", text);
+    // console.log("constants removeOnePixelImage ASIN", ASIN);
+
+    let newText = text;
+
+    if (newText !== undefined) {
+        
+        // Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
+        newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&", "");
+        newText = newText.replaceAll(" width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
+        newText = newText.replaceAll("a=" + ASIN, "");
+
+    };
+
+    // console.log("constants removeOnePixelImage newText", newText);
+
+    return newText;
+};

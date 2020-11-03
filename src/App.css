@@ -20,12 +20,15 @@
   --very-light-green: #CDE8E1;
   --very-very-light-grey: #f8f9fa;
 
+  --philipdick-site-background: #EFEFE9;
+
   --font-default: Helvetica,Arial,sans-serif;
 }
 
 body {
   font-family: var(--font-default);
-  background-color: var(--very-light-brown);
+  /*background-color: var(--very-light-brown);*/
+  background-color: var(--philipdick-site-background);
 }
 
 .bodyContainer {
@@ -34,6 +37,7 @@ body {
 
 .noImageIcon {
   color: black;
+  font-size: 125px;
 }
 
 .coverThumbnail {
@@ -69,4 +73,11 @@ body {
   font-size: small;
   margin: 0;
   padding: 0;
+}
+
+.cardFooter {
+  text-align: right;
+  font-size: smaller;
+  margin: 0;
+  padding: .25em;
 }

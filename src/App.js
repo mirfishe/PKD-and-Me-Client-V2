@@ -53,8 +53,8 @@ function App() {
   const [showTitleList, setShowTitleList] = useState(false);
   const [showEditionList, setShowEditionList] = useState(false);
 
-  const [showAllTitles, setShowAllTitles] = useState(true);
-  const [showAllEditions, setShowAllEditions] = useState(true);
+  const [showAllTitles, setShowAllTitles] = useState(false);
+  const [showAllEditions, setShowAllEditions] = useState(false);
 
   const [categoryMessage, setCategoryMessage] = useState("");
   const [errCategoryMessage, setErrCategoryMessage] = useState("");

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from 'react-bootstrap-icons';
-import {displayDate, displayYear, encodeURL, decodeURL} from "../../app/sharedFunctions";
+import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage} from "../../app/sharedFunctions";
 import {setEditionSort} from "../../bibliographyData/editionsSlice";
 
 const Editions = (props) => {
@@ -101,23 +101,23 @@ const Editions = (props) => {
                     </Breadcrumb>
                 </Col>
             </Row>
-            <Row>
+            {/* <Row>
                 <Col xs="12">
                     <h4 className="text-center mb-4">{mediaParam !== undefined && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
                     <span className="text-muted ml-2 smallText">Sort By
-                        {/* {editionSort !== "releaseDate" ? 
+                        {editionSort !== "releaseDate" ? 
                         <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSort("releaseDate"));}}>Release Date</a>
-                        : null} */}
+                        : null}
                         {editionSort !== "publicationDate" ? 
-                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ sortEditions("publicationDate"); dispatch(setEditionSort("publicationDate"));}}>Publication Date</a>
+                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("publicationDate"); dispatch(setEditionSort("publicationDate"));}}>Publication Date</a>
                         : null}
                         {editionSort !== "titleName" ? 
-                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ sortEditions("titleName"); dispatch(setEditionSort("titleName"));}}>Title</a>
+                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSort("titleName"));}}>Title</a>
                         : null}
                     </span>
                     </h4>
                 </Col>
-            </Row>
+            </Row> */}
             <Row>
                 <Col xs="12">
                     {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
@@ -127,9 +127,9 @@ const Editions = (props) => {
             <Row>
             {editionList.map((edition) => {
             return (
-                <Col key={edition.editionID} xs="3" className="mb-4">
+                <Col key={edition.editionID} xs="6" className="mb-4">
 
-                    <Card key={edition.editionID}>
+                    {/* <Card key={edition.editionID}>
 
                     {mediaParam === undefined ?
                     <CardHeader>
@@ -142,7 +142,7 @@ const Editions = (props) => {
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                     <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image size="150" className="noImageIcon"/>}
+                    {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                     </a>
                     }
                     {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
@@ -151,6 +151,33 @@ const Editions = (props) => {
                         <Link to={"/title/" + encodeURL(edition.title.titleName)}>{edition.title.titleName}</Link>
                         {edition.title.publicationDate !== null ? <span> <small>({displayYear(edition.title.publicationDate)})</small></span> : null}
                     </CardFooter>
+                    </Card> */}
+
+                    <Card key={edition.editionID}>
+                    <Row className="no-gutters">
+                        <Col className="col-md-6">
+                        {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
+                            <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
+                        :
+                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                            </a>
+                        }
+                        </Col>
+                        <Col className="col-md-6">
+                            <CardBody>
+                                <CardText><Link to={"/title/" + encodeURL(edition.title.titleName)}>{edition.title.titleName}</Link>
+                                {edition.title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(edition.title.publicationDate)})</span> : null}
+                                </CardText>
+                                {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                            </CardBody>
+                        </Col>
+                    </Row>
+                    {mediaParam === undefined ?
+                    <CardFooter className="cardFooter">
+                        <CardText><Link to={"/editions/" + encodeURL(edition.medium.media)}>{edition.medium.media}</Link></CardText>
+                    </CardFooter>
+                    : null}
                     </Card>
 
                 </Col>
