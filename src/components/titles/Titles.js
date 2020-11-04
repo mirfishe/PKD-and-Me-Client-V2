@@ -95,20 +95,20 @@ const Titles = (props) => {
                     </Breadcrumb>
                 </Col>
             </Row>
-            {/* <Row>
+            <Row>
                 <Col xs="12">
                     <h4 className="text-center mb-4">{categoryParam !== undefined && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
-                    <span className="text-muted ml-2 smallText">Sort By&nbsp;
+                    {/* <span className="text-muted ml-2 smallText">Sort By&nbsp;
                         {titleSort !== "publicationDate" ? 
                         <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSort("publicationDate"));}}>Publication Date</a>
                         : null}
                         {titleSort !== "titleName" ? 
                         <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("titleName"); dispatch(setTitleSort("titleName"));}}>Title</a>
                         : null}
-                    </span>
+                    </span> */}
                  </h4>
                 </Col>
-            </Row> */}
+            </Row>
             <Row>
                 <Col xs="12">
                     {/* {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
@@ -141,14 +141,14 @@ const Titles = (props) => {
                     : null} */}
 
                     {/* <CardBody>
-                        <Link to={"/title/" + encodeURL(title.titleName)}>
+                        <Link to={"/title/" + title.titleURL}>
                         {title.imageName !== null && title.imageName !== "" ? <CardImg src={title.imageName} alt={title.titleName} /> : <Image className="noImageIcon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
                     </CardBody>
                     <CardFooter> */}
                         {/* <Link to={"/titles/" + title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link> */}
-                        {/* <Link to={"/title/" + encodeURL(title.titleName)}>{title.titleName}</Link>
+                        {/* <Link to={"/title/" + title.titleURL}>{title.titleName}</Link>
                         {title.publicationDate !== null ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
@@ -156,16 +156,16 @@ const Titles = (props) => {
                     <Card key={title.titleID}>
                     <Row className="no-gutters">
                         <Col className="col-md-4">
-                            <Link to={"/title/" + encodeURL(title.titleName)}>
+                            <Link to={"/title/" + title.titleURL}>
                             {title.imageName !== null && title.imageName !== "" ? <CardImg src={title.imageName} alt={title.titleName} /> : <Image className="noImageIcon" />}
                             </Link>
                         </Col>
                         <Col className="col-md-8">
                             <CardBody>
                                 {/* <CardText><Link to={"/titles/" + title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
-                                <CardText><Link to={"/title/" + encodeURL(title.titleName)}>{title.titleName}</Link>
+                                <CardText><Link to={"/title/" + title.titleURL}>{title.titleName}</Link>
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
-                                <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
+                                <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                             </CardBody>
                         </Col>
                     </Row>

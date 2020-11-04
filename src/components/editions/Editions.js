@@ -101,10 +101,10 @@ const Editions = (props) => {
                     </Breadcrumb>
                 </Col>
             </Row>
-            {/* <Row>
+            <Row>
                 <Col xs="12">
                     <h4 className="text-center mb-4">{mediaParam !== undefined && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
-                    <span className="text-muted ml-2 smallText">Sort By
+                    {/* <span className="text-muted ml-2 smallText">Sort By
                         {editionSort !== "releaseDate" ? 
                         <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSort("releaseDate"));}}>Release Date</a>
                         : null}
@@ -114,10 +114,10 @@ const Editions = (props) => {
                         {editionSort !== "titleName" ? 
                         <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSort("titleName"));}}>Title</a>
                         : null}
-                    </span>
+                    </span> */}
                     </h4>
                 </Col>
-            </Row> */}
+            </Row>
             <Row>
                 <Col xs="12">
                     {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
@@ -148,7 +148,7 @@ const Editions = (props) => {
                     {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
                     </CardBody>
                     <CardFooter>
-                        <Link to={"/title/" + encodeURL(edition.title.titleName)}>{edition.title.titleName}</Link>
+                        <Link to={"/title/" + edition.title.titleURL}>{edition.title.titleName}</Link>
                         {edition.title.publicationDate !== null ? <span> <small>({displayYear(edition.title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
@@ -166,7 +166,7 @@ const Editions = (props) => {
                         </Col>
                         <Col className="col-md-6">
                             <CardBody>
-                                <CardText><Link to={"/title/" + encodeURL(edition.title.titleName)}>{edition.title.titleName}</Link>
+                                <CardText><Link to={"/title/" + edition.title.titleURL}>{edition.title.titleName}</Link>
                                 {edition.title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(edition.title.publicationDate)})</span> : null}
                                 </CardText>
                                 {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}

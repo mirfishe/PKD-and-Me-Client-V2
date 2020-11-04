@@ -77,12 +77,12 @@ const TitleList = (props) => {
         </Row>
         {titleResultsFound !== null ?
             <Row>
-                <pre>
+                {/* <pre>
                     {JSON.stringify(titleList)}
-                </pre>
-                {/* <span>
+                </pre> */}
+                <span>
                     {JSON.stringify(titleList)}
-                </span> */}
+                </span>
             </Row>
         : null} 
         

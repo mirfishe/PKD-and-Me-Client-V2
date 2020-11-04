@@ -240,7 +240,7 @@ const getTitles = () => {
 };
 
 const getEditions = () => {
-  console.log("App.js getEdition");
+  // console.log("App.js getEdition");
   // console.log("App.js getEdition baseURL", baseURL);
 
   setEditionMessage("");

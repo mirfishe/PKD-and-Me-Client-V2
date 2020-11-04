@@ -34,8 +34,8 @@ const Title = (props) => {
         editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it"s the title name
-        titleList = titleListState.filter(title => title.titleName === decodeURL(titleParam));
-        const title = titleListState.find(title => title.titleName === decodeURL(titleParam));
+        titleList = titleListState.filter(title => title.titleURL === titleParam);
+        const title = titleListState.find(title => title.titleURL === titleParam);
         // console.log("Title.js typeof title", typeof title);
         // console.log("Title.js title", title);
 
@@ -195,9 +195,6 @@ const Title = (props) => {
                         </Col>
                         <Col className="col-md-6">
                             <CardBody>
-                                <CardText><Link to={"/title/" + encodeURL(edition.title.titleName)}>{edition.title.titleName}</Link>
-                                {edition.title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(edition.title.publicationDate)})</span> : null}
-                                </CardText>
                                 {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
                             </CardBody>
                         </Col>
