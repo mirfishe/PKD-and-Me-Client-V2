@@ -1,14 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import "bootstrap/dist/css/bootstrap.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
-
 import {baseURL} from "./app/constants";
-
+import {setBaseURL, setAppOffline} from "./bibliographyData/appSlice";
 // import categoriesLoadData from "./bibliographyData/categoriesLoadData";
 import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
 import {loadArrayCategories, setCategoriesDataOffline} from "./bibliographyData/categoriesSlice";
@@ -35,17 +32,29 @@ import Editions from "./components/editions/Editions";
 
 function App() {
 
-  const appOffline = false;
-
-  const showCategoryList = false;
-  const showMediaList = false;
-  const showTitleList = false;
-  const showEditionList = false;
-
-  const showAllTitles = true;
-  const showAllEditions = true;
-
   const dispatch = useDispatch();
+
+  // const appOffline = false;
+  dispatch(setAppOffline(false));
+  const appOffline = useSelector(state => state.app.appOffline);
+
+  const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
+  const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
+  const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
+  const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
+
+  const categoriesLoaded = useSelector(state => state.categories.categoriesLoaded);
+  const mediaLoaded = useSelector(state => state.media.mediaLoaded);
+  const titlesLoaded = useSelector(state => state.titles.titlesLoaded);
+  const editionsLoaded = useSelector(state => state.editions.editionsLoaded);
+
+  const [showCategoryList, setShowCategoryList] = useState(false);
+  const [showMediaList, setShowMediaList] = useState(false);
+  const [showTitleList, setShowTitleList] = useState(false);
+  const [showEditionList, setShowEditionList] = useState(false);
+
+  const [showAllTitles, setShowAllTitles] = useState(false);
+  const [showAllEditions, setShowAllEditions] = useState(false);
 
   const [categoryMessage, setCategoryMessage] = useState("");
   const [errCategoryMessage, setErrCategoryMessage] = useState("");
@@ -84,7 +93,8 @@ function App() {
           dispatch(setCategoriesDataOffline(true));
           return {resultsFound: true, message: "Offline Categories data used.", categories: categoriesOfflineData};
         } else {
-            return response.json();
+          dispatch(setCategoriesDataOffline(false));
+          return response.json();
         };
     })
     .then(data => {
@@ -140,6 +150,7 @@ const getMedia = () => {
           dispatch(setMediaDataOffline(true));
           return {resultsFound: true, message: "Offline Media data used.", media: mediaOfflineData};
       } else {
+          dispatch(setMediaDataOffline(false));
           return response.json();
       };
   })
@@ -196,6 +207,7 @@ const getTitles = () => {
           dispatch(setTitlesDataOffline(true));
           return {resultsFound: true, message: "Offline Titles data used.", titles: titlesOfflineData};
       } else {
+          dispatch(setTitlesDataOffline(false));
           return response.json();
       };
   })
@@ -228,7 +240,7 @@ const getTitles = () => {
 };
 
 const getEditions = () => {
-  console.log("App.js getEdition");
+  // console.log("App.js getEdition");
   // console.log("App.js getEdition baseURL", baseURL);
 
   setEditionMessage("");
@@ -252,6 +264,7 @@ const getEditions = () => {
           dispatch(setEditionsDataOffline(true));
           return {resultsFound: true, message: "Offline Editions data used.", editions: editionsOfflineData};
       } else {
+          dispatch(setEditionsDataOffline(false));
           return response.json();
       };
   })
@@ -284,7 +297,7 @@ const getEditions = () => {
 };
 
   useEffect(() => {
-    // console.log("App.js useEffect setCategoryData");
+    // console.log("App.js useEffect");
 
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
@@ -302,13 +315,56 @@ const getEditions = () => {
     //   getTitles();
     //   getEditions();
     } else {
-      getCategories();
-      getMedia();
-      getTitles();
-      getEditions();
+
+      if(!categoriesLoaded) {
+        getCategories();
+      };
+
+      if(!mediaLoaded) {
+        getMedia();
+      };
+
+      if(!titlesLoaded) {
+        getTitles();
+      };
+
+      if(!editionsLoaded) {
+        getEditions();
+      };
+
     };
 
+    dispatch(setBaseURL(baseURL));
+
   }, []);
+
+  useEffect(() => {
+    // console.log("App.js useEffect categoriesDataOffline", categoriesDataOffline);
+    // console.log("App.js useEffect mediaDataOffline", mediaDataOffline);
+    // console.log("App.js useEffect titlesDataOffline", titlesDataOffline);
+    // console.log("App.js useEffect editionsDataOffline", editionsDataOffline);
+
+    if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
+      // console.log("App.js useEffect setAppOffline");
+      dispatch(setAppOffline(true));
+    };
+    
+  }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
+
+  useEffect(() => {
+    // console.log("App.js useEffect categoriesDataOffline", categoriesDataOffline);
+    // console.log("App.js useEffect mediaDataOffline", mediaDataOffline);
+    // console.log("App.js useEffect titlesDataOffline", titlesDataOffline);
+    // console.log("App.js useEffect editionsDataOffline", editionsDataOffline);
+
+    if (appOffline) {
+      setShowCategoryList(false);
+      setShowMediaList(false);
+      setShowTitleList(false);
+      setShowEditionList(false);
+    };
+    
+  }, [appOffline]);
 
   return (
       <BrowserRouter basename="/pkd-and-me">

@@ -1,7 +1,7 @@
 {
-  "name": "pkd-and-me-client-v2",
+  "name": "pkd-and-me-client",
   "homepage": "https://philipdick.com/pkd-and-me/",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
@@ -12,6 +12,7 @@
     "react": "^17.0.1",
     "react-bootstrap-icons": "^1.0.0",
     "react-dom": "^17.0.1",
+    "react-gtm-module": "^2.0.11",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",

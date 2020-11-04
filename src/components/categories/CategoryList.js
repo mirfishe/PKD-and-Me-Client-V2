@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
-// import {useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {Container, Col, Row, Alert, Button} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Category from "./Category";
 
 const CategoryList = (props) => {
+
+    const siteName = useSelector(state => state.app.siteName);
+    document.title = "Category List | " + siteName;
 
     // const categoryListState = useSelector(state => state.categories);
     // console.log("CategoryList.js categoryListState", categoryListState);

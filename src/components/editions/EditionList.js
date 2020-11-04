@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
-// import {useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {Container, Col, Row, Alert} from "reactstrap";
 import {baseURL} from "../../app/constants";
 // import Edition from "./Edition";
 
 const EditionList = (props) => {
+
+    const siteName = useSelector(state => state.app.siteName);
+    document.title = "Edition List | " + siteName;
 
     // const editionListState = useSelector(state => state.edition);
     // console.log("EditionList.js editionListState", editionListState);

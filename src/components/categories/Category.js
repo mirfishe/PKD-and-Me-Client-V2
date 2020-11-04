@@ -1,8 +1,8 @@
-import React, {useState}  from "react";
+import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Nav, NavItem, Collapse, Card} from "reactstrap";
-import {encodeURL} from "../../app/constants";
+import {encodeURL} from "../../app/sharedFunctions";
 
 const Category = (props) => {
 

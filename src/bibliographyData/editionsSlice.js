@@ -5,7 +5,8 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
   arrayEditions: [],
   editionsLoaded: false,
-  editionsDataOffline: false
+  editionsDataOffline: false,
+  editionSort: "titleName"
 };
 
 const editionsSlice = createSlice({
@@ -34,10 +35,19 @@ const editionsSlice = createSlice({
         state.editionsDataOffline = action.payload;
 
       }
+    },
+    setEditionSort: {
+      reducer(state, action) {
+        // console.log("editionsSlice.js setEditionSort action.payload", action.payload);
+        // console.log("editionsSlice.js setEditionSort action.payload.length", action.payload.length);
+
+        state.editionSort = action.payload;
+
+      }
     }
 }
 });
 
-export const {loadArrayEditions, setEditionsDataOffline} = editionsSlice.actions
+export const {loadArrayEditions, setEditionsDataOffline, setEditionSort} = editionsSlice.actions
 
 export default editionsSlice.reducer
