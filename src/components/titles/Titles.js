@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayYear, encodeURL, decodeURL} from "../../app/sharedFunctions";
+import {displayYear, encodeURL, decodeURL, setLocalImagePath} from "../../app/sharedFunctions";
 import {setTitleSort} from "../../bibliographyData/titlesSlice";
 
 const Titles = (props) => {
@@ -142,7 +142,7 @@ const Titles = (props) => {
 
                     {/* <CardBody>
                         <Link to={"/title/" + title.titleURL}>
-                        {title.imageName !== null && title.imageName !== "" ? <CardImg src={title.imageName} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
                     </CardBody>
@@ -157,7 +157,7 @@ const Titles = (props) => {
                     <Row className="no-gutters">
                         <Col className="col-md-4">
                             <Link to={"/title/" + title.titleURL}>
-                            {title.imageName !== null && title.imageName !== "" ? <CardImg src={title.imageName} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                             </Link>
                         </Col>
                         <Col className="col-md-8">

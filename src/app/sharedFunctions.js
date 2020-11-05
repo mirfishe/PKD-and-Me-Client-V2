@@ -1,3 +1,5 @@
+import AppSettings from "./environment";
+
 export const displayDate = (dateToDisplay) => {
 
     // console.log("constants displayDate dateToDisplay", dateToDisplay);
@@ -131,6 +133,30 @@ export const removeOnePixelImage = (text, ASIN) => {
     };
 
     // console.log("constants removeOnePixelImage newText", newText);
+
+    return newText;
+};
+
+export const setLocalImagePath = (text) => {
+
+    // console.log("constants setLocalImagePath text", text);
+    // console.log("constants setLocalImagePath AppSettings.profileType", AppSettings.profileType);
+
+    let newText = text;
+
+    if (newText !== undefined) {
+
+        // So that it doesn't remove the URL when the application is running locally or on a site without the images
+        if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
+            
+            // Removes the "https://philipdick.com"
+            newText = newText.replaceAll("https://philipdick.com", "");
+
+        };
+
+    };
+
+    // console.log("constants setLocalImagePath newText", newText);
 
     return newText;
 };
