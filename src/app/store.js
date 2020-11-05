@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import appReducer from "../bibliographyData/appSlice";
+import appReducer from "./appSlice";
 import categoriesReducer from "../bibliographyData/categoriesSlice";
 import mediaReducer from "../bibliographyData/mediaSlice";
 import titlesReducer from "../bibliographyData/titlesSlice";

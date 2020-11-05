@@ -4,26 +4,32 @@ import "./App.css";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
-import {baseURL} from "./app/constants";
-import {setBaseURL, setAppOffline} from "./bibliographyData/appSlice";
+import AppSettings from "./app//environment";
+import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} from "./app/appSlice";
 // import categoriesLoadData from "./bibliographyData/categoriesLoadData";
-import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
+// import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
+import CategoryData from "./bibliographyData/Categories.json";
 import {loadArrayCategories, setCategoriesDataOffline} from "./bibliographyData/categoriesSlice";
 // import editionsLoadData from "./bibliographyData/editionsLoadData";
-import editionsOfflineData from "./bibliographyData/editionsOfflineData";
+// import editionsOfflineData from "./bibliographyData/editionsOfflineData";
+import EditionData from "./bibliographyData/Editions.json";
 import {loadArrayEditions, setEditionsDataOffline} from "./bibliographyData/editionsSlice";
 // import mediaLoadData from "./bibliographyData/mediaLoadData";
-import mediaOfflineData from "./bibliographyData/mediaOfflineData";
+// import mediaOfflineData from "./bibliographyData/mediaOfflineData";
+import MediaData from "./bibliographyData/Media.json";
 import {loadArrayMedia, setMediaDataOffline} from "./bibliographyData/mediaSlice";
 // import titlesLoadData from "./bibliographyData/titlesLoadData";
-import titlesOfflineData from "./bibliographyData/titlesOfflineData";
+// import titlesOfflineData from "./bibliographyData/titlesOfflineData";
+import TitleData from "./bibliographyData/Titles.json";
 import {loadArrayTitles, setTitlesDataOffline} from "./bibliographyData/titlesSlice";
 
+import About from "./content/About";
+import Home from "./content/Home";
+import Homeopape from "./content/Homeopape";
 import CategoryList from "./components/categories/CategoryList";
 import MediaList from "./components/media/MediaList";
 import TitleList from "./components/titles/TitleList";
 import EditionList from "./components/editions/EditionList";
-import About from "./components/about/About";
 import Category from "./components/categories/Category";
 import Media from "./components/media/Media";
 import Titles from "./components/titles/Titles";
@@ -34,10 +40,47 @@ function App() {
 
   const dispatch = useDispatch();
 
-  // const appOffline = false;
-  dispatch(setAppOffline(false));
-  const appOffline = useSelector(state => state.app.appOffline);
+  // Load settings from environment into Redux
+  // const hostname = AppSettings.hostname;
+  dispatch(setHostname(AppSettings.hostname));
 
+  // const profileType = AppSettings.profileType;
+  dispatch(setProfileType(AppSettings.profileType));
+
+  // const API_URL = AppSettings.API_URL;
+  dispatch(setAPI_URL(AppSettings.API_URL));
+
+  const baseURL = AppSettings.baseURL;
+  dispatch(setBaseURL(AppSettings.baseURL));
+
+  // const tagManagerArgsgtmId = AppSettings.tagManagerArgs.gtmId;
+  dispatch(setTagManagerArgsgtmId(AppSettings.tagManagerArgs.gtmId));
+
+  // const siteName = AppSettings.siteName;
+  dispatch(setSiteName(AppSettings.siteName));
+
+  // const appName = AppSettings.appName;
+  dispatch(setAppName(AppSettings.appName));
+
+  // const metaDescription = AppSettings.metaDescription;
+  dispatch(setMetaDescription(AppSettings.metaDescription));
+
+  const defaultPageComponent = AppSettings.defaultPageComponent;
+  dispatch(setDefaultPageComponent(AppSettings.defaultPageComponent));
+
+  const routerBaseName = AppSettings.routerBaseName;
+  dispatch(setRouterBaseName(AppSettings.routerBaseName));
+
+  const appOffline = AppSettings.appOffline;
+  dispatch(setAppOffline(AppSettings.appOffline));
+
+  // const electronicOnly = AppSettings.electronicOnly;
+  dispatch(setElectronicOnly(AppSettings.electronicOnly));
+
+  // const electronicOnlyMessage = AppSettings.electronicOnlyMessage;
+  dispatch(setElectronicOnlyMessage(AppSettings.electronicOnlyMessage));
+
+  // Load settings from Redux slices
   const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
   const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
   const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
@@ -48,11 +91,16 @@ function App() {
   const titlesLoaded = useSelector(state => state.titles.titlesLoaded);
   const editionsLoaded = useSelector(state => state.editions.editionsLoaded);
 
+  const [showAbout, setShowAbout] = useState(true);
+  // const [showHomeopape, setShowHomeopape] = useState(false);
+
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showMediaList, setShowMediaList] = useState(false);
   const [showTitleList, setShowTitleList] = useState(false);
   const [showEditionList, setShowEditionList] = useState(false);
 
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const [showAllMedia, setShowAllMedia] = useState(false);
   const [showAllTitles, setShowAllTitles] = useState(false);
   const [showAllEditions, setShowAllEditions] = useState(false);
 
@@ -91,7 +139,7 @@ function App() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
           dispatch(setCategoriesDataOffline(true));
-          return {resultsFound: true, message: "Offline Categories data used.", categories: categoriesOfflineData};
+          return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
         } else {
           dispatch(setCategoriesDataOffline(false));
           return response.json();
@@ -110,7 +158,7 @@ function App() {
           console.log("App.js getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
           dispatch(setCategoriesDataOffline(true));
-          dispatch(loadArrayCategories(categoriesOfflineData));
+          dispatch(loadArrayCategories(CategoryData));
         };
 
     })
@@ -120,7 +168,7 @@ function App() {
         // console.log("App.js getCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         dispatch(setCategoriesDataOffline(true));
-        dispatch(loadArrayCategories(categoriesOfflineData));
+        dispatch(loadArrayCategories(CategoryData));
     });
 
 };
@@ -148,7 +196,7 @@ const getMedia = () => {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
           dispatch(setMediaDataOffline(true));
-          return {resultsFound: true, message: "Offline Media data used.", media: mediaOfflineData};
+          return {resultsFound: true, message: "Offline Media data used.", media: MediaData};
       } else {
           dispatch(setMediaDataOffline(false));
           return response.json();
@@ -167,7 +215,7 @@ const getMedia = () => {
           console.log("App.js getMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
           dispatch(setMediaDataOffline(true));
-          dispatch(loadArrayMedia(mediaOfflineData));
+          dispatch(loadArrayMedia(MediaData));
       };
 
   })
@@ -177,7 +225,7 @@ const getMedia = () => {
       // console.log("App.js getMedia error.message", error.message);
       // setErrMediaMessage(error.name + ": " + error.message);
       dispatch(setMediaDataOffline(true));
-      dispatch(loadArrayMedia(mediaOfflineData));
+      dispatch(loadArrayMedia(MediaData));
   });
 
 };
@@ -205,7 +253,7 @@ const getTitles = () => {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
           dispatch(setTitlesDataOffline(true));
-          return {resultsFound: true, message: "Offline Titles data used.", titles: titlesOfflineData};
+          return {resultsFound: true, message: "Offline Titles data used.", titles: TitleData};
       } else {
           dispatch(setTitlesDataOffline(false));
           return response.json();
@@ -224,7 +272,7 @@ const getTitles = () => {
           console.log("App.js getTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
           dispatch(setTitlesDataOffline(true));
-          dispatch(loadArrayTitles(titlesOfflineData));
+          dispatch(loadArrayTitles(TitleData));
       };
 
   })
@@ -234,7 +282,7 @@ const getTitles = () => {
       // console.log("App.js getTitle error.message", error.message);
       // setErrTitleMessage(error.name + ": " + error.message);
       dispatch(setTitlesDataOffline(true));
-      dispatch(loadArrayTitles(titlesOfflineData));
+      dispatch(loadArrayTitles(TitleData));
   });
 
 };
@@ -262,7 +310,7 @@ const getEditions = () => {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
           dispatch(setEditionsDataOffline(true));
-          return {resultsFound: true, message: "Offline Editions data used.", editions: editionsOfflineData};
+          return {resultsFound: true, message: "Offline Editions data used.", editions: EditionData};
       } else {
           dispatch(setEditionsDataOffline(false));
           return response.json();
@@ -281,7 +329,7 @@ const getEditions = () => {
           console.log("App.js getEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);
           dispatch(setEditionsDataOffline(true));
-          dispatch(loadArrayEditions(editionsOfflineData));
+          dispatch(loadArrayEditions(EditionData));
       };
 
   })
@@ -291,7 +339,7 @@ const getEditions = () => {
       // console.log("App.js getEdition error.message", error.message);
       // setErrEditionMessage(error.name + ": " + error.message);
       dispatch(setEditionsDataOffline(true));
-      dispatch(loadArrayEditions(editionsOfflineData));
+      dispatch(loadArrayEditions(EditionData));
   });
 
 };
@@ -302,13 +350,13 @@ const getEditions = () => {
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
       dispatch(setCategoriesDataOffline(true));
-      dispatch(loadArrayCategories(categoriesOfflineData));
+      dispatch(loadArrayCategories(CategoryData));
       dispatch(setMediaDataOffline(true));
-      dispatch(loadArrayMedia(mediaOfflineData));
+      dispatch(loadArrayMedia(MediaData));
       dispatch(setTitlesDataOffline(true));
-      dispatch(loadArrayTitles(titlesOfflineData));
+      dispatch(loadArrayTitles(TitleData));
       dispatch(setEditionsDataOffline(true));
-      dispatch(loadArrayEditions(editionsOfflineData));
+      dispatch(loadArrayEditions(EditionData));
     // } else if (!appOffline) {
     //   getCategories();
     //   getMedia();
@@ -333,8 +381,6 @@ const getEditions = () => {
       };
 
     };
-
-    dispatch(setBaseURL(baseURL));
 
   }, []);
 
@@ -367,12 +413,22 @@ const getEditions = () => {
   }, [appOffline]);
 
   return (
-      <BrowserRouter basename="/pkd-and-me">
+      <BrowserRouter basename={routerBaseName}>
       <Navbar color="light" light>
         <Nav>
           <NavbarBrand className="mx-2">
             <Link to="/"><HouseFill color="black" /></Link>
           </NavbarBrand>
+          {/* {showHomeopape ? 
+          <NavItem className="mx-2">
+            <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
+          </NavItem>
+          : null} */}
+          {showAbout ? 
+          <NavItem className="mx-2">
+            <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
+          </NavItem>
+          : null}
           {showCategoryList ? 
           <NavItem className="mx-2">
             <Link to="/categoryList"><NavbarText>Category List</NavbarText></Link>
@@ -393,12 +449,16 @@ const getEditions = () => {
             <Link to="/editionList"><NavbarText>Edition List</NavbarText></Link>
           </NavItem>
           : null}
-          {/* <NavItem className="mx-2">
-            <Link to="/categories"><NavbarText>Categories</NavbarText></Link>
-          </NavItem>
+          {showAllCategories ? 
           <NavItem className="mx-2">
-            <Link to="/media"><NavbarText>Media</NavbarText></Link>
-          </NavItem> */}
+            <Link to="/categories"><NavbarText>All Categories</NavbarText></Link>
+          </NavItem>
+          : null}
+          {showAllMedia ? 
+          <NavItem className="mx-2">
+            <Link to="/media"><NavbarText>All Media</NavbarText></Link>
+          </NavItem>
+          : null}
           {showAllTitles ? 
           <NavItem className="mx-2">
             <Link to="/titles"><NavbarText>All Titles</NavbarText></Link>
@@ -436,8 +496,15 @@ const getEditions = () => {
       </Col>
       <Col xs="10">
       <Switch>
-      <Route exact path="/" component={About} />
+
+      {/* Set the default page from the defaultPageComponent from environment */}
+      {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
+      {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
+      {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
+
+      <Route exact path="/home" component={Home} />
       <Route exact path="/about" component={About} />
+      <Route exact path="/homeopape" component={Homeopape} />
       <Route exact path="/categoryList" component={CategoryList} />
       <Route exact path="/mediaList" component={MediaList} />
       <Route exact path="/titleList" component={TitleList} />

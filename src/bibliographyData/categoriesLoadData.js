@@ -1,4 +1,6 @@
-import {baseURL} from "../app/constants";
+import AppSettings from "./app//environment";
+
+const baseURL = AppSettings.baseURL;
 
 const categoriesLoadData = () => {
     // console.log("categoriesLoadData.js getCategories");
