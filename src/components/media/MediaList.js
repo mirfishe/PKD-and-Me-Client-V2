@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Container, Col, Row, Alert} from "reactstrap";
-import {baseURL} from "../../app/constants";
 // import Media from "./Media";
 
 const MediaList = (props) => {
+
+    const baseURL = useSelector(state => state.app.baseURL);
 
     const siteName = useSelector(state => state.app.siteName);
     document.title = "Media List | " + siteName;

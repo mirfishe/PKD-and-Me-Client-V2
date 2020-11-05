@@ -5,7 +5,7 @@ import {Container, Col, Row} from "reactstrap";
 const About = () => {
 
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Home | About Philip K. Dick | " + siteName;
+    document.title = "About Philip K. Dick | " + siteName;
 
     return (
         <Container className="mt-4">
