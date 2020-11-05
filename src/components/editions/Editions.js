@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from 'react-bootstrap-icons';
-import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage} from "../../app/sharedFunctions";
+import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalImagePath} from "../../app/sharedFunctions";
 import {setEditionSort} from "../../bibliographyData/editionsSlice";
 
 const Editions = (props) => {
@@ -142,7 +142,7 @@ const Editions = (props) => {
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                     <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                    {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                     </a>
                     }
                     {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
@@ -160,7 +160,7 @@ const Editions = (props) => {
                             <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
                         :
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={edition.imageName} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                             </a>
                         }
                         </Col>
