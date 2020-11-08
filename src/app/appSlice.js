@@ -140,6 +140,6 @@ const appSlice = createSlice({
 }
 });
 
-export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} = appSlice.actions
+export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} = appSlice.actions;
 
-export default appSlice.reducer
+export default appSlice.reducer;

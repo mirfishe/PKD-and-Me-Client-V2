@@ -48,6 +48,6 @@ const titlesSlice = createSlice({
 }
 });
 
-export const {loadArrayTitles, setTitlesDataOffline, setTitleSort} = titlesSlice.actions
+export const {loadArrayTitles, setTitlesDataOffline, setTitleSort} = titlesSlice.actions;
 
-export default titlesSlice.reducer
+export default titlesSlice.reducer;

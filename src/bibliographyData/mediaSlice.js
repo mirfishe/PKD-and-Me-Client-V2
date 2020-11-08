@@ -38,6 +38,6 @@ const mediaSlice = createSlice({
 }
 });
 
-export const {loadArrayMedia, setMediaDataOffline} = mediaSlice.actions
+export const {loadArrayMedia, setMediaDataOffline} = mediaSlice.actions;
 
-export default mediaSlice.reducer
+export default mediaSlice.reducer;

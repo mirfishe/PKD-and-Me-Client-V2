@@ -48,6 +48,6 @@ const editionsSlice = createSlice({
 }
 });
 
-export const {loadArrayEditions, setEditionsDataOffline, setEditionSort} = editionsSlice.actions
+export const {loadArrayEditions, setEditionsDataOffline, setEditionSort} = editionsSlice.actions;
 
-export default editionsSlice.reducer
+export default editionsSlice.reducer;

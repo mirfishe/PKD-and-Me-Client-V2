@@ -38,6 +38,6 @@ const categoriesSlice = createSlice({
 }
 });
 
-export const {loadArrayCategories, setCategoriesDataOffline} = categoriesSlice.actions
+export const {loadArrayCategories, setCategoriesDataOffline} = categoriesSlice.actions;
 
-export default categoriesSlice.reducer
+export default categoriesSlice.reducer;
