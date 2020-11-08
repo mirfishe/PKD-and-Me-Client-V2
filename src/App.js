@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./App.css";
-import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Link, Redirect} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
 import AppSettings from "./app/environment";
@@ -43,7 +43,8 @@ function App() {
   const dispatch = useDispatch();
 
   // const [documentURL, setDocumentURL] = useState({});
-  const [param, setParam] = useState("");
+  // const [param, setParam] = useState("");
+  const [linkItem, setLinkItem] = useState({});
   // if (props.match !== undefined) {
   //   // props.match.params and props.match is coming from React Router and not the url
   //   console.log("App.js props.match.params", props.match.params);
@@ -433,14 +434,6 @@ const getEditions = () => {
   useEffect(() => {
     // console.log("App.js useEffect");
 
-    let documentURL = new URL(document.URL);
-    console.log("App.js useEffect documentURL", documentURL);
-    // setDocumentURL(currentURL);
-    // console.log("App.js useEffect documentURL", documentURL);
-    // console.log("App.js useEffect documentURL.pathname", documentURL.pathname);
-    setParam(documentURL.pathname.replaceAll("/", ""));
-    console.log("App.js useEffect documentURL.pathname", documentURL.pathname);
-
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
       dispatch(setCategoriesDataOffline(true));
@@ -506,6 +499,31 @@ const getEditions = () => {
     };
     
   }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
+
+  useEffect(() => {
+    // console.log("App.js useEffect urlLookup", urlLookup);
+
+    let documentURL = new URL(document.URL);
+    // console.log("App.js useEffect documentURL", documentURL);
+    // setDocumentURL(currentURL);
+    // console.log("App.js useEffect documentURL", documentURL);
+    // console.log("App.js useEffect documentURL.pathname", documentURL.pathname);
+    // setParam(documentURL.pathname.replaceAll("/", ""));
+    // console.log("App.js useEffect param", param);
+
+    for (let i = 0; i < urlLookup.length; i++) {
+      let linkArrayItem = urlLookup.find(linkName => linkName.linkName === documentURL.pathname.replaceAll("/", ""));
+      // console.log("App.js useEffect linkArrayItem", linkArrayItem);
+      setLinkItem(linkArrayItem);
+    };
+
+    if (linkItem !== undefined && linkItem.hasOwnProperty("linkName")) {
+      console.log("App.js useEffect Redirect to ", "/titles/" + linkItem.linkName);
+      // Doesn't work this way
+      return <Redirect to={"/titles/" + linkItem.linkName} />
+    };
+    
+  }, [urlLookup]);
 
   return (
       <BrowserRouter basename={routerBaseName}>
@@ -575,7 +593,8 @@ const getEditions = () => {
 
       <Container className="bodyContainer mb-5">
       <Row>
-        {param !== "" ? <Alert color="info">{param}</Alert> : null}
+        {/* {param !== "" ? <Alert color="info">{param}</Alert> : null} */}
+        {linkItem !== undefined && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null}
         {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
         {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
         {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
@@ -597,6 +616,9 @@ const getEditions = () => {
       {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
       {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
       {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
+      {/* <Route exact path="/">
+        {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
+      </Route> */}
 
       <Route exact path="/home" component={Home} />
       <Route exact path="/about" component={About} />
