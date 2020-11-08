@@ -4,8 +4,10 @@ import "./App.css";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
-import AppSettings from "./app//environment";
+import AppSettings from "./app/environment";
+import {encodeURL, decodeURL} from "./app/sharedFunctions";
 import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} from "./app/appSlice";
+import {loadArrayURLs} from "./app/urlsSlice";
 // import categoriesLoadData from "./bibliographyData/categoriesLoadData";
 // import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
 import CategoryData from "./bibliographyData/Categories.json";
@@ -39,6 +41,15 @@ import Editions from "./components/editions/Editions";
 function App() {
 
   const dispatch = useDispatch();
+
+  // const [documentURL, setDocumentURL] = useState({});
+  const [param, setParam] = useState("");
+  // if (props.match !== undefined) {
+  //   // props.match.params and props.match is coming from React Router and not the url
+  //   console.log("App.js props.match.params", props.match.params);
+  //   setParams(props.match.params);
+  //   setParam(props.match.params.name);
+  // };
 
   // Load settings from environment into Redux
   // const hostname = AppSettings.hostname;
@@ -91,6 +102,8 @@ function App() {
   const titlesLoaded = useSelector(state => state.titles.titlesLoaded);
   const editionsLoaded = useSelector(state => state.editions.editionsLoaded);
 
+  const urlLookup = useSelector(state => state.urls.arrayURLs);
+
   const [showAbout, setShowAbout] = useState(true);
   // const [showHomeopape, setShowHomeopape] = useState(false);
 
@@ -120,6 +133,46 @@ function App() {
   const [errEditionMessage, setErrEditionMessage] = useState("");
   // const [editionResultsFound, setEditionResultsFound] = useState(null);
   // const [editionList, setEditionList] = useState([]);
+
+  const loadDataStore = (data, source) => {
+
+    if (source === "category") {
+      // console.log("App.js loadDataStore data", data);
+      dispatch(loadArrayCategories(data));
+      loadURLs(data, source);
+    } else if (source === "media") {
+      // console.log("App.js loadDataStore data", data);
+      dispatch(loadArrayMedia(data));
+      loadURLs(data, source);
+    } else if (source === "title") {
+      // console.log("App.js loadDataStore data", data);
+      dispatch(loadArrayTitles(data));
+      loadURLs(data, source);
+    };
+
+  };
+
+  const loadURLs = (data, source) => {
+
+    let arrayURLs = [];
+  
+    for (let i = 0; i < data.length; i++) {
+
+      if (source === "category") {
+        // console.log("App.js loadURLs data[i].category", data[i].category);
+        arrayURLs.push({linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID});
+      } else if (source === "media") {
+        // console.log("App.js loadURLs data[i].media", data[i].media);
+        arrayURLs.push({linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID});
+      } else if (source === "title") {
+        // console.log("App.js loadURLs data[i].titleURL", data[i].titleURL);
+        arrayURLs.push({linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID});
+      };
+  
+    };
+    dispatch(loadArrayURLs(arrayURLs));
+  
+  };
 
   const getCategories = () => {
     // console.log("App.js getCategories");
@@ -153,7 +206,18 @@ function App() {
 
         if (data.resultsFound === true) {
           // setCategoryList(data.categories);
-          dispatch(loadArrayCategories(data.categories));
+          // dispatch(loadArrayCategories(data.categories));
+
+          loadDataStore(data.categories, "category");
+
+          // loadURLs(data.categories, "category");
+          // let arrayURLs = [];
+          // for (let i = 0; i < data.categories.length; i++) {
+          //   // console.log("App.js getCategories data.categories[i].category", data.categories[i].category);
+          //   arrayURLs.push({linkName: data.categories[i].category, linkType: "category", linkID: data.categories[i].categoryID});
+          // };
+          // dispatch(loadArrayURLs(arrayURLs));
+
         } else {
           console.log("App.js getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
@@ -210,7 +274,18 @@ const getMedia = () => {
 
       if (data.resultsFound === true) {
           // setMediaList(data.media);
-          dispatch(loadArrayMedia(data.media));
+          // dispatch(loadArrayMedia(data.media));
+
+          loadDataStore(data.media, "media");
+
+          // loadURLs(data.media, "media");
+          // let arrayURLs = [];
+          // for (let i = 0; i < data.media.length; i++) {
+          //   // console.log("App.js getMedia data.media[i].media", data.media[i].media);
+          //   arrayURLs.push({linkName: data.media[i].media, linkType: "media", linkID: data.media[i].mediaID});
+          // };
+          // dispatch(loadArrayURLs(arrayURLs));
+
       } else {
           console.log("App.js getMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
@@ -267,7 +342,18 @@ const getTitles = () => {
 
       if (data.resultsFound === true) {
           // setTitleList(data.titles);
-          dispatch(loadArrayTitles(data.titles));
+          // dispatch(loadArrayTitles(data.titles));
+
+          loadDataStore(data.titles, "title");
+
+          // loadURLs(data.titles, "title");
+          // let arrayURLs = [];
+          // for (let i = 0; i < data.titles.length; i++) {
+          //   // console.log("App.js getTitles data.titles[i].titleURL", data.titles[i].titleURL);
+          //   arrayURLs.push({linkName: data.titles[i].titleURL, linkType: "title", linkID: data.titles[i].titleID});
+          // };
+          // dispatch(loadArrayURLs(arrayURLs));
+
       } else {
           console.log("App.js getTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
@@ -347,14 +433,25 @@ const getEditions = () => {
   useEffect(() => {
     // console.log("App.js useEffect");
 
+    let documentURL = new URL(document.URL);
+    console.log("App.js useEffect documentURL", documentURL);
+    // setDocumentURL(currentURL);
+    // console.log("App.js useEffect documentURL", documentURL);
+    // console.log("App.js useEffect documentURL.pathname", documentURL.pathname);
+    setParam(documentURL.pathname.replaceAll("/", ""));
+    console.log("App.js useEffect documentURL.pathname", documentURL.pathname);
+
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
       dispatch(setCategoriesDataOffline(true));
-      dispatch(loadArrayCategories(CategoryData));
+      // dispatch(loadArrayCategories(CategoryData));
+      loadDataStore(CategoryData, "category");
       dispatch(setMediaDataOffline(true));
-      dispatch(loadArrayMedia(MediaData));
+      // dispatch(loadArrayMedia(MediaData));
+      loadDataStore(MediaData, "media");
       dispatch(setTitlesDataOffline(true));
-      dispatch(loadArrayTitles(TitleData));
+      // dispatch(loadArrayTitles(TitleData));
+      loadDataStore(TitleData, "title");
       dispatch(setEditionsDataOffline(true));
       dispatch(loadArrayEditions(EditionData));
     // } else if (!appOffline) {
@@ -403,14 +500,12 @@ const getEditions = () => {
     // console.log("App.js useEffect titlesDataOffline", titlesDataOffline);
     // console.log("App.js useEffect editionsDataOffline", editionsDataOffline);
 
-    if (appOffline) {
-      setShowCategoryList(false);
-      setShowMediaList(false);
-      setShowTitleList(false);
-      setShowEditionList(false);
+    if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
+      // console.log("App.js useEffect setAppOffline");
+      dispatch(setAppOffline(true));
     };
     
-  }, [appOffline]);
+  }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
 
   return (
       <BrowserRouter basename={routerBaseName}>
@@ -480,6 +575,7 @@ const getEditions = () => {
 
       <Container className="bodyContainer mb-5">
       <Row>
+        {param !== "" ? <Alert color="info">{param}</Alert> : null}
         {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
         {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
         {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
