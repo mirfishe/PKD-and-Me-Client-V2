@@ -111,7 +111,7 @@ switch (profileType) {
 };
 
 // Override the appOffline setting
-// appOffline = true;
+appOffline = true;
 // appOffline = false;
 
 // Override the electronicOnly setting

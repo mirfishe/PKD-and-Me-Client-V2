@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./App.css";
-import {BrowserRouter, Switch, Route, Link, Redirect} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
 import AppSettings from "./app/environment";
-import {encodeURL, decodeURL} from "./app/sharedFunctions";
+import {encodeURL} from "./app/sharedFunctions";
 import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} from "./app/appSlice";
-import {loadArrayURLs} from "./app/urlsSlice";
+import {loadArrayURLs, setPageURL, setLinkItem} from "./app/urlsSlice";
 // import categoriesLoadData from "./bibliographyData/categoriesLoadData";
 // import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
 import CategoryData from "./bibliographyData/Categories.json";
@@ -25,8 +25,9 @@ import {loadArrayMedia, setMediaDataOffline} from "./bibliographyData/mediaSlice
 import TitleData from "./bibliographyData/Titles.json";
 import {loadArrayTitles, setTitlesDataOffline} from "./bibliographyData/titlesSlice";
 
-import About from "./content/About";
 import Home from "./content/Home";
+import New from "./content/New";
+import About from "./content/About";
 import Homeopape from "./content/Homeopape";
 import CategoryList from "./components/categories/CategoryList";
 import MediaList from "./components/media/MediaList";
@@ -42,15 +43,8 @@ function App() {
 
   const dispatch = useDispatch();
 
-  // const [documentURL, setDocumentURL] = useState({});
-  // const [param, setParam] = useState("");
-  const [linkItem, setLinkItem] = useState({});
-  // if (props.match !== undefined) {
-  //   // props.match.params and props.match is coming from React Router and not the url
-  //   console.log("App.js props.match.params", props.match.params);
-  //   setParams(props.match.params);
-  //   setParam(props.match.params.name);
-  // };
+  const pageURL = useSelector(state => state.urls.pageURL);
+  const linkItem = useSelector(state => state.urls.linkItem);
 
   // Load settings from environment into Redux
   // const hostname = AppSettings.hostname;
@@ -105,6 +99,7 @@ function App() {
 
   const urlLookup = useSelector(state => state.urls.arrayURLs);
 
+  const [showNew, setShowNew] = useState(true);
   const [showAbout, setShowAbout] = useState(true);
   // const [showHomeopape, setShowHomeopape] = useState(false);
 
@@ -115,7 +110,9 @@ function App() {
 
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllMedia, setShowAllMedia] = useState(false);
+  // This route no longer works. 
   const [showAllTitles, setShowAllTitles] = useState(false);
+  // This route no longer works. 
   const [showAllEditions, setShowAllEditions] = useState(false);
 
   const [categoryMessage, setCategoryMessage] = useState("");
@@ -436,17 +433,30 @@ const getEditions = () => {
 
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
-      dispatch(setCategoriesDataOffline(true));
-      // dispatch(loadArrayCategories(CategoryData));
-      loadDataStore(CategoryData, "category");
-      dispatch(setMediaDataOffline(true));
-      // dispatch(loadArrayMedia(MediaData));
-      loadDataStore(MediaData, "media");
-      dispatch(setTitlesDataOffline(true));
-      // dispatch(loadArrayTitles(TitleData));
-      loadDataStore(TitleData, "title");
-      dispatch(setEditionsDataOffline(true));
-      dispatch(loadArrayEditions(EditionData));
+
+      if(!categoriesLoaded) {
+        dispatch(setCategoriesDataOffline(true));
+        // dispatch(loadArrayCategories(CategoryData));
+        loadDataStore(CategoryData, "category");
+      };
+
+      if(!mediaLoaded) {
+        dispatch(setMediaDataOffline(true));
+        // dispatch(loadArrayMedia(MediaData));
+        loadDataStore(MediaData, "media");
+      };
+
+      if(!titlesLoaded) {
+        dispatch(setTitlesDataOffline(true));
+        // dispatch(loadArrayTitles(TitleData));
+        loadDataStore(TitleData, "title");
+      };
+
+      if(!editionsLoaded) {
+        dispatch(setEditionsDataOffline(true));
+        dispatch(loadArrayEditions(EditionData));
+      };
+
     // } else if (!appOffline) {
     //   getCategories();
     //   getMedia();
@@ -471,6 +481,9 @@ const getEditions = () => {
       };
 
     };
+
+    let documentURL = new URL(document.URL);
+    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
 
   }, []);
 
@@ -501,29 +514,25 @@ const getEditions = () => {
   }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
 
   useEffect(() => {
-    // console.log("App.js useEffect urlLookup", urlLookup);
+    console.log("App.js useEffect pageURL", pageURL);
 
-    let documentURL = new URL(document.URL);
-    // console.log("App.js useEffect documentURL", documentURL);
-    // setDocumentURL(currentURL);
-    // console.log("App.js useEffect documentURL", documentURL);
-    // console.log("App.js useEffect documentURL.pathname", documentURL.pathname);
-    // setParam(documentURL.pathname.replaceAll("/", ""));
-    // console.log("App.js useEffect param", param);
+    if (pageURL !== undefined && pageURL !== "") {
 
-    for (let i = 0; i < urlLookup.length; i++) {
-      let linkArrayItem = urlLookup.find(linkName => linkName.linkName === documentURL.pathname.replaceAll("/", ""));
+      let linkArrayItem = {};
+
+      for (let i = 0; i < urlLookup.length; i++) {
+        linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL);
+        // console.log("App.js useEffect linkArrayItem", linkArrayItem);
+        // setLinkItem(linkArrayItem);
+      };
+
       // console.log("App.js useEffect linkArrayItem", linkArrayItem);
-      setLinkItem(linkArrayItem);
-    };
-
-    if (linkItem !== undefined && linkItem.hasOwnProperty("linkName")) {
-      console.log("App.js useEffect Redirect to ", "/titles/" + linkItem.linkName);
-      // Doesn't work this way
-      return <Redirect to={"/titles/" + linkItem.linkName} />
+      // console.log("App.js useEffect typeof linkArrayItem", typeof linkArrayItem);
+      dispatch(setLinkItem(linkArrayItem));
+      
     };
     
-  }, [urlLookup]);
+  }, [pageURL, urlLookup]);
 
   return (
       <BrowserRouter basename={routerBaseName}>
@@ -537,6 +546,11 @@ const getEditions = () => {
             <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
           </NavItem>
           : null} */}
+          {showNew? 
+          <NavItem className="mx-2">
+            <Link to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></Link>
+          </NavItem>
+          : null}
           {showAbout ? 
           <NavItem className="mx-2">
             <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
@@ -618,9 +632,19 @@ const getEditions = () => {
       {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
       {/* <Route exact path="/">
         {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
+
+        {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
+        {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
+        {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
       </Route> */}
 
+
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} />: null}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} />: null}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} />: null}
+
       <Route exact path="/home" component={Home} />
+      <Route exact path="/new" component={New} />
       <Route exact path="/about" component={About} />
       <Route exact path="/homeopape" component={Homeopape} />
       <Route exact path="/categoryList" component={CategoryList} />
@@ -629,12 +653,16 @@ const getEditions = () => {
       <Route exact path="/editionList" component={EditionList} />
       <Route exact path="/categories" component={Category} />
       <Route exact path="/media" component={Media} />
+
+      {/* This route no longer works. */}
       <Route exact path="/titles" component={Titles} />
-      <Route exact path="/titles/:category" component={Titles} />
-      <Route exact path="/title/:title" component={Title} />
+      {/* <Route exact path="/titles/:category" component={Titles} />
+      <Route exact path="/title/:title" component={Title} /> */}
+
+      {/* This route no longer works. */}
       <Route exact path="/editions" component={Editions} />
       {/* <Route exact path="/editions/:title" component={Editions} /> */}
-      <Route exact path="/editions/:media" component={Editions} />
+      {/* <Route exact path="/editions/:media" component={Editions} /> */}
       </Switch>
       </Col>
       </Row>

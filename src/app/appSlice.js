@@ -13,7 +13,8 @@ const initialState = {
     routerBaseName: "",
     appOffline: false,
     electronicOnly: false,
-    electronicOnlyMessage: ""
+    electronicOnlyMessage: "",
+    linkItem: {}
 };
 
 const appSlice = createSlice({
@@ -136,10 +137,19 @@ const appSlice = createSlice({
         state.electronicOnlyMessage = action.payload;
 
       }
+    },
+    setLinkItem: {
+      reducer(state, action) {
+        // console.log("appSlice.js setLinkItem action.payload", action.payload);
+        // console.log("appSlice.js setLinkItem action.payload.length", action.payload.length);
+
+        state.linkItem = action.payload;
+
+      }
     }
 }
 });
 
-export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} = appSlice.actions;
+export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setLinkItem} = appSlice.actions;
 
 export default appSlice.reducer;

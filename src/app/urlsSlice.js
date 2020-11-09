@@ -2,7 +2,9 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
   arrayURLs: [],
-  urlsLoaded: false
+  urlsLoaded: false,
+  pageURL: "",
+  linkItem: {}
 };
 
 const urlsSlice = createSlice({
@@ -22,10 +24,28 @@ const urlsSlice = createSlice({
         state.urlsLoaded = true;
 
       }
+    },
+    setPageURL: {
+      reducer(state, action) {
+        // console.log("urlsSlice.js setPageURL action.payload", action.payload);
+        // console.log("urlsSlice.js setPageURL action.payload.length", action.payload.length);
+
+        state.pageURL = action.payload;
+
+      }
+    },
+    setLinkItem: {
+      reducer(state, action) {
+        // console.log("urlsSlice.js setLinkItem action.payload", action.payload);
+        // console.log("urlsSlice.js setLinkItem action.payload.length", action.payload.length);
+
+        state.linkItem = action.payload;
+
+      }
     }
 }
 });
 
-export const {loadArrayURLs} = urlsSlice.actions;
+export const {loadArrayURLs, setPageURL, setLinkItem} = urlsSlice.actions;
 
 export default urlsSlice.reducer;

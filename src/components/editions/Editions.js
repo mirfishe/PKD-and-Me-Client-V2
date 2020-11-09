@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from 'react-bootstrap-icons';
 import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalImagePath} from "../../app/sharedFunctions";
 import {setEditionSort} from "../../bibliographyData/editionsSlice";
+import {setPageURL} from "../../app/urlsSlice";
 
 const Editions = (props) => {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
     const editionSort = useSelector(state => state.editions.editionSort);
@@ -23,7 +25,7 @@ const Editions = (props) => {
     // console.log("Editions.js mediaListState", mediaListState);
 
     // console.log("Editions.js props.match.params", props.match.params);
-    const mediaParam = props.match.params.media;
+    const mediaParam = props.linkItem.linkName; // props.match.params.media;
     // console.log("Editions.js typeof mediaParam", typeof mediaParam);
     // console.log("Editions.js mediaParam", mediaParam);
 
@@ -78,6 +80,12 @@ const Editions = (props) => {
 
     sortEditions(editionSort);
 
+    const redirectPage = (linkName) => {
+        // console.log("Editions.js redirectPage", linkName);
+        dispatch(setPageURL(linkName));
+        history.push("/" + linkName);
+    };
+
     useEffect(() => {
         // console.log("Editions.js useEffect editionList", editionList);
         if (editionList.length > 0) {
@@ -94,9 +102,9 @@ const Editions = (props) => {
                 <Breadcrumb className="breadcrumb mb-2">
                         <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                         {mediaParam !== undefined && isNaN(mediaParam) ? 
-                        <BreadcrumbItem active>{decodeURL(mediaParam)}</BreadcrumbItem>
+                        <BreadcrumbItem active><Link to={mediaParam} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(mediaParam);}}>{decodeURL(mediaParam)}</Link></BreadcrumbItem>
                         :
-                        <BreadcrumbItem active>All Editions</BreadcrumbItem>
+                        <BreadcrumbItem active><Link to={"/editions/"} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/editions/");}}>All Editions</Link></BreadcrumbItem>
                         }
                     </Breadcrumb>
                 </Col>
@@ -133,7 +141,7 @@ const Editions = (props) => {
 
                     {mediaParam === undefined ?
                     <CardHeader>
-                        <Link to={"/editions/" + encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
+                        <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
                     </CardHeader>
                     : null}
 
@@ -148,7 +156,7 @@ const Editions = (props) => {
                     {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
                     </CardBody>
                     <CardFooter>
-                        <Link to={"/title/" + edition.title.titleURL}>{edition.title.titleName}</Link>
+                        <Link to={edition.title.titleURL}>{edition.title.titleName}</Link>
                         {edition.title.publicationDate !== null ? <span> <small>({displayYear(edition.title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
@@ -166,7 +174,7 @@ const Editions = (props) => {
                         </Col>
                         <Col className="col-md-6">
                             <CardBody>
-                                <CardText><Link to={"/title/" + edition.title.titleURL}>{edition.title.titleName}</Link>
+                                <CardText><Link to={edition.title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(edition.title.titleURL);}}>{edition.title.titleName}</Link>
                                 {edition.title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(edition.title.publicationDate)})</span> : null}
                                 </CardText>
                                 {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
@@ -175,7 +183,7 @@ const Editions = (props) => {
                     </Row>
                     {mediaParam === undefined ?
                     <CardFooter className="cardFooter">
-                        <CardText><Link to={"/editions/" + encodeURL(edition.medium.media)}>{edition.medium.media}</Link></CardText>
+                        <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(edition.medium.media));}}>{edition.medium.media}</Link></CardText>
                     </CardFooter>
                     : null}
                     </Card>
