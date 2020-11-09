@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayYear, encodeURL, decodeURL, setLocalPath} from "../../app/sharedFunctions";
+import {displayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
 
 const TitleCard = (props) => {
@@ -82,7 +82,7 @@ const TitleCard = (props) => {
                     {imageSide === "left" ?
                         <Col className="col-md-4">
                             <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>
-                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalPath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                             </Link>
                         </Col>
                     : null}
@@ -100,7 +100,7 @@ const TitleCard = (props) => {
                         {imageSide === "right" ?
                         <Col className="col-md-4">
                             <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>
-                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalPath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                             </Link>
                         </Col>
                     : null}
