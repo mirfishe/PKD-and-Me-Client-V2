@@ -19,7 +19,7 @@ const Category = (props) => {
 
     const redirectPage = (linkName) => {
         // console.log("Category.js redirectPage", linkName);
-        dispatch(setPageURL(linkName));
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 

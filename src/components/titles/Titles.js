@@ -76,7 +76,7 @@ const Titles = (props) => {
 
     const redirectPage = (linkName) => {
         // console.log("Titles.js redirectPage", linkName);
-        dispatch(setPageURL(linkName));
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 

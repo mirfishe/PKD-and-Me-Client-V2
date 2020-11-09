@@ -19,7 +19,7 @@ const Media = (props) => {
 
     const redirectPage = (linkName) => {
         // console.log("Media.js redirectPage", linkName);
-        dispatch(setPageURL(linkName));
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./App.css";
-import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Link, useHistory} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
 import AppSettings from "./app/environment";
@@ -42,6 +42,7 @@ import Editions from "./components/editions/Editions";
 function App() {
 
   const dispatch = useDispatch();
+  // const history = useHistory();
 
   const pageURL = useSelector(state => state.urls.pageURL);
   const linkItem = useSelector(state => state.urls.linkItem);
@@ -101,7 +102,7 @@ function App() {
 
   const [showNew, setShowNew] = useState(true);
   const [showAbout, setShowAbout] = useState(true);
-  // const [showHomeopape, setShowHomeopape] = useState(false);
+  const [showHomeopape, setShowHomeopape] = useState(true);
 
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showMediaList, setShowMediaList] = useState(false);
@@ -514,14 +515,15 @@ const getEditions = () => {
   }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
 
   useEffect(() => {
-    console.log("App.js useEffect pageURL", pageURL);
+    // console.log("App.js useEffect pageURL", pageURL);
+    // console.log("App.js useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
 
     if (pageURL !== undefined && pageURL !== "") {
 
       let linkArrayItem = {};
 
       for (let i = 0; i < urlLookup.length; i++) {
-        linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL);
+        linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
         // console.log("App.js useEffect linkArrayItem", linkArrayItem);
         // setLinkItem(linkArrayItem);
       };
@@ -541,11 +543,11 @@ const getEditions = () => {
           <NavbarBrand className="mx-2">
             <Link to="/"><HouseFill color="black" /></Link>
           </NavbarBrand>
-          {/* {showHomeopape ? 
+          {showHomeopape ? 
           <NavItem className="mx-2">
             <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
           </NavItem>
-          : null} */}
+          : null}
           {showNew? 
           <NavItem className="mx-2">
             <Link to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></Link>
@@ -607,8 +609,7 @@ const getEditions = () => {
 
       <Container className="bodyContainer mb-5">
       <Row>
-        {/* {param !== "" ? <Alert color="info">{param}</Alert> : null} */}
-        {linkItem !== undefined && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null}
+        {/* {linkItem !== undefined && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
         {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
         {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
         {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
@@ -632,16 +633,11 @@ const getEditions = () => {
       {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
       {/* <Route exact path="/">
         {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
-
         {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
         {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
         {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
       </Route> */}
 
-
-      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} />: null}
-      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} />: null}
-      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} />: null}
 
       <Route exact path="/home" component={Home} />
       <Route exact path="/new" component={New} />
@@ -663,6 +659,12 @@ const getEditions = () => {
       <Route exact path="/editions" component={Editions} />
       {/* <Route exact path="/editions/:title" component={Editions} /> */}
       {/* <Route exact path="/editions/:media" component={Editions} /> */}
+
+      {/* These need to stay at the bottom of the list so that the links above will work properly. */}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} />: null}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} />: null}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} />: null}
+
       </Switch>
       </Col>
       </Row>

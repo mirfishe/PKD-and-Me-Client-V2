@@ -1,11 +1,22 @@
 import React from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row} from "reactstrap";
+import {setPageURL} from "../app/urlsSlice";
 
 const New = () => {
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const siteName = useSelector(state => state.app.siteName);
     document.title = "New To Philip K. Dick? | " + siteName;
+
+    const redirectPage = (linkName) => {
+        // console.log("New.js redirectPage", linkName);
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
+        history.push("/" + linkName);
+    };
 
     return (
         <Container className="mt-4">
@@ -21,13 +32,13 @@ const New = () => {
             <Col xs="12">
             https://philipdick.com/biography/new-to-philip-k-dick/
 
-            <p>Do Androids Dream of Electric Sheep?<br />
+            <p><Link to="/Do-Androids-Dream-Of-Electric-Sheep" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("Do-Androids-Dream-Of-Electric-Sheep");}}>Do Androids Dream of Electric Sheep?</Link><br />
             His most famous novel which inspired Blade Runner. A chilling futuristic story that demonstrates his creative genius. The most common gateway book for new readers of Philip K. Dick, I believe.</p>
 
-            <p>Ubik<br />
+            <p><Link to="/Ubik" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("Ubik");}}>Ubik</Link><br />
             A great story of corporate intrigue where time moves backwards. Intensely psychological with unpredictable plot twists.</p>
 
-            <p>The Man in the High Castle<br />
+            <p><Link to="/The-Man-In-The-High-Castle" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("The-Man-In-The-High-Castle");}}>The Man in the High Castle</Link><br />
             Dick’s masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters.</p>
 
             <p>Or instead if you are more daring and think you would like to read more than one of these books,<br />

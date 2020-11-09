@@ -82,7 +82,7 @@ const Editions = (props) => {
 
     const redirectPage = (linkName) => {
         // console.log("Editions.js redirectPage", linkName);
-        dispatch(setPageURL(linkName));
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 
