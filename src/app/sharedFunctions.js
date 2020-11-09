@@ -137,10 +137,10 @@ export const removeOnePixelImage = (text, ASIN) => {
     return newText;
 };
 
-export const setLocalImagePath = (text) => {
+export const setLocalPath = (text) => {
 
-    // console.log("constants setLocalImagePath text", text);
-    // console.log("constants setLocalImagePath AppSettings.profileType", AppSettings.profileType);
+    // console.log("constants setLocalPath text", text);
+    // console.log("constants setLocalPath AppSettings.profileType", AppSettings.profileType);
 
     let newText = text;
 
@@ -156,7 +156,7 @@ export const setLocalImagePath = (text) => {
 
     };
 
-    // console.log("constants setLocalImagePath newText", newText);
+    // console.log("constants setLocalPath newText", newText);
 
     return newText;
 };
