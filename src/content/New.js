@@ -2,7 +2,9 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row} from "reactstrap";
+import {setLocalPath} from "../app/sharedFunctions";
 import {setPageURL} from "../app/urlsSlice";
+import TitleCard from "../components/titles/TitleCard";
 
 const New = () => {
 
@@ -29,28 +31,34 @@ const New = () => {
             </Row>
 
             <Row>
-            <Col xs="12">
-            https://philipdick.com/biography/new-to-philip-k-dick/
-
-            <p><Link to="/Do-Androids-Dream-Of-Electric-Sheep" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("Do-Androids-Dream-Of-Electric-Sheep");}}>Do Androids Dream of Electric Sheep?</Link><br />
-            His most famous novel which inspired Blade Runner. A chilling futuristic story that demonstrates his creative genius. The most common gateway book for new readers of Philip K. Dick, I believe.</p>
-
-            <p><Link to="/Ubik" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("Ubik");}}>Ubik</Link><br />
-            A great story of corporate intrigue where time moves backwards. Intensely psychological with unpredictable plot twists.</p>
-
-            <p><Link to="/The-Man-In-The-High-Castle" onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("The-Man-In-The-High-Castle");}}>The Man in the High Castle</Link><br />
-            Dick’s masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters.</p>
-
-            <p>Or instead if you are more daring and think you would like to read more than one of these books,<br />
-            this Library of America press book is a bargain, containing all three of these recommended books plus another excellent novel.</p>
-
-            If you would like further recommendations, visit The Connoisseurs’ Choice collated by Umberto Rossi.
-            https://philipdick.com/biography/the-connoisseurs-choice/
-
+            <Col xs="12" className="mb-4">
+            <TitleCard linkItem={{linkName: "Do-Androids-Dream-Of-Electric-Sheep"}} imageSide="right" additionalText="His most famous novel which inspired Blade Runner. A chilling futuristic story that demonstrates his creative genius. The most common gateway book for new readers of Philip K. Dick, I believe." />
             </Col>
             </Row>
 
-    
+            <Row>
+            <Col xs="12" className="mb-4">
+            <TitleCard linkItem={{linkName: "Ubik"}} imageSide="left" additionalText="A great story of corporate intrigue where time moves backwards. Intensely psychological with unpredictable plot twists." />
+            </Col>
+            </Row>
+
+            <Row>
+            <Col xs="12" className="mb-4">
+            <TitleCard linkItem={{linkName: "The-Man-In-The-High-Castle"}} imageSide="right" additionalText="Dick’s masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters." />
+            </Col>
+            </Row>
+
+            <Row>
+            <Col xs="12" className="mb-4">
+            <TitleCard linkItem={{linkName: "Four-Novels-Of-The-1960s"}} imageSide="left" additionalText="Or instead if you are more daring and think you would like to read more than one of these books, this Library of America press book is a bargain, containing all three of these recommended books plus another excellent novel." />
+            </Col>
+            </Row>
+
+            <Row>
+            <Col xs="12" className="mb-4">
+            <p className="text-center">If you would like further recommendations, visit <a href={setLocalPath("https://philipdick.com/biography/the-connoisseurs-choice/")}> The Connoisseurs’ Choice</a> collated by Umberto Rossi.</p>
+            </Col>
+            </Row>
 
         </Container>
     );

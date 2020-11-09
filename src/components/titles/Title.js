@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs, removeOnePixelImage, setLocalImagePath} from "../../app/sharedFunctions";
+import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs, removeOnePixelImage, setLocalPath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
 
 const Title = (props) => {
@@ -144,7 +144,7 @@ const Title = (props) => {
 
                 <Row className="mb-4">
                     <Col xs="4">
-                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <img src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <img src={setLocalPath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon"/>}
                     </Col>
                     <Col xs="8">
                         {title.shortDescription !== "" && title.shortDescription !== null ? <div dangerouslySetInnerHTML={{"__html": displayParagraphs(title.shortDescription)}} /> : null}
@@ -183,7 +183,7 @@ const Title = (props) => {
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalPath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>
@@ -199,7 +199,7 @@ const Title = (props) => {
                             <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
                         :
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalPath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                             </a>
                         }
                         </Col>

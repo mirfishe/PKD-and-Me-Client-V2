@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "./App.css";
-import {BrowserRouter, Switch, Route, Link, useHistory} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
 import AppSettings from "./app/environment";
@@ -102,7 +102,7 @@ function App() {
 
   const [showNew, setShowNew] = useState(true);
   const [showAbout, setShowAbout] = useState(true);
-  const [showHomeopape, setShowHomeopape] = useState(true);
+  const [showHomeopape, setShowHomeopape] = useState(false);
 
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showMediaList, setShowMediaList] = useState(false);

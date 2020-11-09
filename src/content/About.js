@@ -2,6 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row} from "reactstrap";
+import {setLocalPath} from "../app/sharedFunctions";
 import {setPageURL} from "../app/urlsSlice";
 
 const About = () => {
@@ -37,7 +38,7 @@ const About = () => {
 
             </Col>
             <Col xs="2">
-            <img src="https://philipdick.com/images/PKD/Philip_Dick2.jpg" alt="Philip K. Dick" />
+            <img src={setLocalPath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
             </Col>
             </Row>
 
