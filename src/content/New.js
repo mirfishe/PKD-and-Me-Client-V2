@@ -2,7 +2,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row} from "reactstrap";
-import {setLocalPath} from "../app/sharedFunctions";
+import {setLocalPath, setLocalImagePath} from "../app/sharedFunctions";
 import {setPageURL} from "../app/urlsSlice";
 import TitleCard from "../components/titles/TitleCard";
 

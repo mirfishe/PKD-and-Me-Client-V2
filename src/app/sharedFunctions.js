@@ -137,6 +137,30 @@ export const removeOnePixelImage = (text, ASIN) => {
     return newText;
 };
 
+export const setLocalImagePath = (text) => {
+
+    // console.log("constants setLocalImagePath text", text);
+    // console.log("constants setLocalImagePath AppSettings.profileType", AppSettings.profileType);
+
+    let newText = text;
+
+    if (newText !== undefined) {
+
+        // So that it doesn't remove the URL when the application is running locally or on a site without the images
+        if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
+            
+            // Removes the "https://philipdick.com"
+            newText = newText.replaceAll("https://philipdick.com", "");
+
+        };
+
+    };
+
+    // console.log("constants setLocalPath newText", newText);
+
+    return newText;
+};
+
 export const setLocalPath = (text) => {
 
     // console.log("constants setLocalPath text", text);
@@ -147,7 +171,7 @@ export const setLocalPath = (text) => {
     if (newText !== undefined) {
 
         // So that it doesn't remove the URL when the application is running locally or on a site without the images
-        if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
+        if (AppSettings.profileType === "philipdick") {
             
             // Removes the "https://philipdick.com"
             newText = newText.replaceAll("https://philipdick.com", "");
