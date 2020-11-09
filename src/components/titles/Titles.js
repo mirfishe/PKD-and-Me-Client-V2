@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayYear, encodeURL, decodeURL, setLocalPath} from "../../app/sharedFunctions";
+import {displayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setTitleSort} from "../../bibliographyData/titlesSlice";
 import {setPageURL} from "../../app/urlsSlice";
 
@@ -150,7 +150,7 @@ const Titles = (props) => {
 
                     {/* <CardBody>
                         <Link to={title.titleURL}>
-                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalPath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
                     </CardBody>
@@ -165,7 +165,7 @@ const Titles = (props) => {
                     <Row className="no-gutters">
                         <Col className="col-md-4">
                             <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>
-                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalPath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                             </Link>
                         </Col>
                         <Col className="col-md-8">
