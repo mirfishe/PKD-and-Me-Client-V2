@@ -1,11 +1,23 @@
 import React from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row} from "reactstrap";
+import {setLocalPath} from "../app/sharedFunctions";
+import {setPageURL} from "../app/urlsSlice";
 
 const Home = () => {
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const siteName = useSelector(state => state.app.siteName);
     document.title = "Home | " + siteName;
+
+    const redirectPage = (linkName) => {
+        // console.log("Home.js redirectPage", linkName);
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
+        history.push("/" + linkName);
+    };
 
     return (
         <Container className="mt-4">
@@ -20,12 +32,11 @@ const Home = () => {
             <Row>
             <Col xs="10">
 
-                add contact method
+                {/* add contact method
                     for suggestions of items to add
                     site issues
                     anything else
-                description of what's here
-
+                description of what's here */}
 
             <p>When someone discovers the work of Philip K. Dick and becomes fascinated by it, there is a phenomenon in which they must read all of his work as fast as possible. Sometimes the plots and incidents blur together into one mega-novel. And there are a lot of novels. It would be helpful for a person to have a checklist to mark the ones that they’ve read and the ability to enter what they thought of the novel.</p>
 
@@ -33,7 +44,7 @@ const Home = () => {
 
             </Col>
             <Col xs="2">
-            <img src="https://philipdick.com/images/PKD/Philip_Dick2.jpg" alt="Philip K. Dick" />
+            <img src={setLocalPath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
             </Col>
             </Row>
 

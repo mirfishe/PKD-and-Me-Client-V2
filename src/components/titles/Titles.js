@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayYear, encodeURL, decodeURL, setLocalImagePath} from "../../app/sharedFunctions";
+import {displayYear, encodeURL, decodeURL, setLocalPath} from "../../app/sharedFunctions";
 import {setTitleSort} from "../../bibliographyData/titlesSlice";
+import {setPageURL} from "../../app/urlsSlice";
 
 const Titles = (props) => {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
     const titleSort = useSelector(state => state.titles.titleSort);
@@ -22,7 +24,7 @@ const Titles = (props) => {
     // console.log("Titles.js categoryListState", categoryListState);
 
     // console.log("Titles.js props.match.params", props.match.params);
-    const categoryParam = props.match.params.category;
+    const categoryParam = props.linkItem.linkName; // props.match.params.category;
     // console.log("Titles.js typeof categoryParam", typeof categoryParam);
     // console.log("Titles.js categoryParam", categoryParam);
 
@@ -72,6 +74,12 @@ const Titles = (props) => {
 
     sortTitles(titleSort);
 
+    const redirectPage = (linkName) => {
+        // console.log("Titles.js redirectPage", linkName);
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
+        history.push("/" + linkName);
+    };
+
     useEffect(() => {
         // console.log("Titles.js useEffect titleList", titleList);
         if (titleList.length > 0) {
@@ -88,9 +96,9 @@ const Titles = (props) => {
                 <Breadcrumb className="breadcrumb mb-2">
                         <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                         {categoryParam !== undefined && isNaN(categoryParam) ? 
-                        <BreadcrumbItem active><Link to={"/titles/" + categoryParam}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
+                        <BreadcrumbItem active><Link to={categoryParam} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(categoryParam);}}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
                         :
-                        <BreadcrumbItem active><Link to={"/titles/"}>All Titles</Link></BreadcrumbItem>
+                        <BreadcrumbItem active><Link to={"/titles/"} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/titles/");}}>All Titles</Link></BreadcrumbItem>
                         }
                     </Breadcrumb>
                 </Col>
@@ -120,35 +128,35 @@ const Titles = (props) => {
             return (
                 <Col key={title.titleID} xs="4" className="mb-4">
 
-                    {/* <Link to={`/title/${title.titleID}`}>{title.titleID}</Link>
-                    <Link to={`/title/${title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}`}>{title.titleName}</Link>
-                    <Link to={"/title/" + title.titleID}>{title.titleID}</Link>
-                    <Link to={"/title/" + title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
+                    {/* <Link to={`${title.titleID}`}>{title.titleID}</Link>
+                    <Link to={`${title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}`}>{title.titleName}</Link>
+                    <Link to={ftitle.titleID}>{title.titleID}</Link>
+                    <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
 
                     <Link to={`/editions/${title.titleID}`}>{title.titleID}</Link>
                     <Link to={`/editions/${title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}`}>{title.titleName}</Link>
-                    <Link to={"/editions/" + title.titleID}>{title.titleID}</Link>
-                    <Link to={"/editions/" + title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link> */}
+                    <Link to={title.titleID}>{title.titleID}</Link>
+                    <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link> */}
 
                     {/* <Card key={title.titleID}>
 
                     {categoryParam === undefined ?
                     <CardHeader>
-                        <Link to={"/titles/" + encodeURL(title.category.category)}>{title.category.category}</Link> */}
-                        {/* <Link to={"/title/" + title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
+                        <Link to={encodeURL(title.category.category)}>{title.category.category}</Link> */}
+                        {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
                         {title.publicationDate !== null ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
                     {/* </CardHeader>  
                     : null} */}
 
                     {/* <CardBody>
-                        <Link to={"/title/" + title.titleURL}>
-                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        <Link to={title.titleURL}>
+                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalPath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
                     </CardBody>
                     <CardFooter> */}
-                        {/* <Link to={"/titles/" + title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link> */}
-                        {/* <Link to={"/title/" + title.titleURL}>{title.titleName}</Link>
+                        {/* <Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link> */}
+                        {/* <Link to={title.titleURL}>{title.titleName}</Link>
                         {title.publicationDate !== null ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
@@ -156,14 +164,14 @@ const Titles = (props) => {
                     <Card key={title.titleID}>
                     <Row className="no-gutters">
                         <Col className="col-md-4">
-                            <Link to={"/title/" + title.titleURL}>
-                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                            <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>
+                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalPath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                             </Link>
                         </Col>
                         <Col className="col-md-8">
                             <CardBody>
-                                {/* <CardText><Link to={"/titles/" + title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
-                                <CardText><Link to={"/title/" + title.titleURL}>{title.titleName}</Link>
+                                {/* <CardText><Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
+                                <CardText><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                             </CardBody>
@@ -171,8 +179,8 @@ const Titles = (props) => {
                     </Row>
                     {categoryParam === undefined ?
                     <CardFooter className="cardFooter">
-                        <CardText><Link to={"/titles/" + encodeURL(title.category.category)}>{title.category.category}</Link></CardText>
-                        {/* <Link to={"/title/" + title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
+                        <CardText><Link to={encodeURL(title.category.category)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(title.category.category));}}>{title.category.category}</Link></CardText>
+                        {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
                         {title.publicationDate !== null ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
                     </CardFooter>  
                     : null}

@@ -4,8 +4,10 @@ import "./App.css";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
-import AppSettings from "./app//environment";
+import AppSettings from "./app/environment";
+import {encodeURL} from "./app/sharedFunctions";
 import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} from "./app/appSlice";
+import {loadArrayURLs, setPageURL, setLinkItem} from "./app/urlsSlice";
 // import categoriesLoadData from "./bibliographyData/categoriesLoadData";
 // import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
 import CategoryData from "./bibliographyData/Categories.json";
@@ -23,8 +25,9 @@ import {loadArrayMedia, setMediaDataOffline} from "./bibliographyData/mediaSlice
 import TitleData from "./bibliographyData/Titles.json";
 import {loadArrayTitles, setTitlesDataOffline} from "./bibliographyData/titlesSlice";
 
-import About from "./content/About";
 import Home from "./content/Home";
+import New from "./content/New";
+import About from "./content/About";
 import Homeopape from "./content/Homeopape";
 import CategoryList from "./components/categories/CategoryList";
 import MediaList from "./components/media/MediaList";
@@ -39,6 +42,10 @@ import Editions from "./components/editions/Editions";
 function App() {
 
   const dispatch = useDispatch();
+  // const history = useHistory();
+
+  const pageURL = useSelector(state => state.urls.pageURL);
+  const linkItem = useSelector(state => state.urls.linkItem);
 
   // Load settings from environment into Redux
   // const hostname = AppSettings.hostname;
@@ -91,8 +98,11 @@ function App() {
   const titlesLoaded = useSelector(state => state.titles.titlesLoaded);
   const editionsLoaded = useSelector(state => state.editions.editionsLoaded);
 
+  const urlLookup = useSelector(state => state.urls.arrayURLs);
+
+  const [showNew, setShowNew] = useState(true);
   const [showAbout, setShowAbout] = useState(true);
-  // const [showHomeopape, setShowHomeopape] = useState(false);
+  const [showHomeopape, setShowHomeopape] = useState(false);
 
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showMediaList, setShowMediaList] = useState(false);
@@ -101,7 +111,9 @@ function App() {
 
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showAllMedia, setShowAllMedia] = useState(false);
+  // This route no longer works. 
   const [showAllTitles, setShowAllTitles] = useState(false);
+  // This route no longer works. 
   const [showAllEditions, setShowAllEditions] = useState(false);
 
   const [categoryMessage, setCategoryMessage] = useState("");
@@ -120,6 +132,46 @@ function App() {
   const [errEditionMessage, setErrEditionMessage] = useState("");
   // const [editionResultsFound, setEditionResultsFound] = useState(null);
   // const [editionList, setEditionList] = useState([]);
+
+  const loadDataStore = (data, source) => {
+
+    if (source === "category") {
+      // console.log("App.js loadDataStore data", data);
+      dispatch(loadArrayCategories(data));
+      loadURLs(data, source);
+    } else if (source === "media") {
+      // console.log("App.js loadDataStore data", data);
+      dispatch(loadArrayMedia(data));
+      loadURLs(data, source);
+    } else if (source === "title") {
+      // console.log("App.js loadDataStore data", data);
+      dispatch(loadArrayTitles(data));
+      loadURLs(data, source);
+    };
+
+  };
+
+  const loadURLs = (data, source) => {
+
+    let arrayURLs = [];
+  
+    for (let i = 0; i < data.length; i++) {
+
+      if (source === "category") {
+        // console.log("App.js loadURLs data[i].category", data[i].category);
+        arrayURLs.push({linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID});
+      } else if (source === "media") {
+        // console.log("App.js loadURLs data[i].media", data[i].media);
+        arrayURLs.push({linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID});
+      } else if (source === "title") {
+        // console.log("App.js loadURLs data[i].titleURL", data[i].titleURL);
+        arrayURLs.push({linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID});
+      };
+  
+    };
+    dispatch(loadArrayURLs(arrayURLs));
+  
+  };
 
   const getCategories = () => {
     // console.log("App.js getCategories");
@@ -153,7 +205,18 @@ function App() {
 
         if (data.resultsFound === true) {
           // setCategoryList(data.categories);
-          dispatch(loadArrayCategories(data.categories));
+          // dispatch(loadArrayCategories(data.categories));
+
+          loadDataStore(data.categories, "category");
+
+          // loadURLs(data.categories, "category");
+          // let arrayURLs = [];
+          // for (let i = 0; i < data.categories.length; i++) {
+          //   // console.log("App.js getCategories data.categories[i].category", data.categories[i].category);
+          //   arrayURLs.push({linkName: data.categories[i].category, linkType: "category", linkID: data.categories[i].categoryID});
+          // };
+          // dispatch(loadArrayURLs(arrayURLs));
+
         } else {
           console.log("App.js getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
@@ -210,7 +273,18 @@ const getMedia = () => {
 
       if (data.resultsFound === true) {
           // setMediaList(data.media);
-          dispatch(loadArrayMedia(data.media));
+          // dispatch(loadArrayMedia(data.media));
+
+          loadDataStore(data.media, "media");
+
+          // loadURLs(data.media, "media");
+          // let arrayURLs = [];
+          // for (let i = 0; i < data.media.length; i++) {
+          //   // console.log("App.js getMedia data.media[i].media", data.media[i].media);
+          //   arrayURLs.push({linkName: data.media[i].media, linkType: "media", linkID: data.media[i].mediaID});
+          // };
+          // dispatch(loadArrayURLs(arrayURLs));
+
       } else {
           console.log("App.js getMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
@@ -267,7 +341,18 @@ const getTitles = () => {
 
       if (data.resultsFound === true) {
           // setTitleList(data.titles);
-          dispatch(loadArrayTitles(data.titles));
+          // dispatch(loadArrayTitles(data.titles));
+
+          loadDataStore(data.titles, "title");
+
+          // loadURLs(data.titles, "title");
+          // let arrayURLs = [];
+          // for (let i = 0; i < data.titles.length; i++) {
+          //   // console.log("App.js getTitles data.titles[i].titleURL", data.titles[i].titleURL);
+          //   arrayURLs.push({linkName: data.titles[i].titleURL, linkType: "title", linkID: data.titles[i].titleID});
+          // };
+          // dispatch(loadArrayURLs(arrayURLs));
+
       } else {
           console.log("App.js getTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
@@ -349,14 +434,30 @@ const getEditions = () => {
 
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
-      dispatch(setCategoriesDataOffline(true));
-      dispatch(loadArrayCategories(CategoryData));
-      dispatch(setMediaDataOffline(true));
-      dispatch(loadArrayMedia(MediaData));
-      dispatch(setTitlesDataOffline(true));
-      dispatch(loadArrayTitles(TitleData));
-      dispatch(setEditionsDataOffline(true));
-      dispatch(loadArrayEditions(EditionData));
+
+      if(!categoriesLoaded) {
+        dispatch(setCategoriesDataOffline(true));
+        // dispatch(loadArrayCategories(CategoryData));
+        loadDataStore(CategoryData, "category");
+      };
+
+      if(!mediaLoaded) {
+        dispatch(setMediaDataOffline(true));
+        // dispatch(loadArrayMedia(MediaData));
+        loadDataStore(MediaData, "media");
+      };
+
+      if(!titlesLoaded) {
+        dispatch(setTitlesDataOffline(true));
+        // dispatch(loadArrayTitles(TitleData));
+        loadDataStore(TitleData, "title");
+      };
+
+      if(!editionsLoaded) {
+        dispatch(setEditionsDataOffline(true));
+        dispatch(loadArrayEditions(EditionData));
+      };
+
     // } else if (!appOffline) {
     //   getCategories();
     //   getMedia();
@@ -382,6 +483,9 @@ const getEditions = () => {
 
     };
 
+    let documentURL = new URL(document.URL);
+    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
+
   }, []);
 
   useEffect(() => {
@@ -403,14 +507,34 @@ const getEditions = () => {
     // console.log("App.js useEffect titlesDataOffline", titlesDataOffline);
     // console.log("App.js useEffect editionsDataOffline", editionsDataOffline);
 
-    if (appOffline) {
-      setShowCategoryList(false);
-      setShowMediaList(false);
-      setShowTitleList(false);
-      setShowEditionList(false);
+    if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
+      // console.log("App.js useEffect setAppOffline");
+      dispatch(setAppOffline(true));
     };
     
-  }, [appOffline]);
+  }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
+
+  useEffect(() => {
+    // console.log("App.js useEffect pageURL", pageURL);
+    // console.log("App.js useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
+
+    if (pageURL !== undefined && pageURL !== "") {
+
+      let linkArrayItem = {};
+
+      for (let i = 0; i < urlLookup.length; i++) {
+        linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
+        // console.log("App.js useEffect linkArrayItem", linkArrayItem);
+        // setLinkItem(linkArrayItem);
+      };
+
+      // console.log("App.js useEffect linkArrayItem", linkArrayItem);
+      // console.log("App.js useEffect typeof linkArrayItem", typeof linkArrayItem);
+      dispatch(setLinkItem(linkArrayItem));
+      
+    };
+    
+  }, [pageURL, urlLookup]);
 
   return (
       <BrowserRouter basename={routerBaseName}>
@@ -419,11 +543,16 @@ const getEditions = () => {
           <NavbarBrand className="mx-2">
             <Link to="/"><HouseFill color="black" /></Link>
           </NavbarBrand>
-          {/* {showHomeopape ? 
+          {showHomeopape ? 
           <NavItem className="mx-2">
             <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
           </NavItem>
-          : null} */}
+          : null}
+          {showNew? 
+          <NavItem className="mx-2">
+            <Link to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></Link>
+          </NavItem>
+          : null}
           {showAbout ? 
           <NavItem className="mx-2">
             <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
@@ -480,6 +609,7 @@ const getEditions = () => {
 
       <Container className="bodyContainer mb-5">
       <Row>
+        {/* {linkItem !== undefined && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
         {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
         {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
         {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
@@ -501,8 +631,16 @@ const getEditions = () => {
       {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
       {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
       {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
+      {/* <Route exact path="/">
+        {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
+        {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
+        {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
+        {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
+      </Route> */}
+
 
       <Route exact path="/home" component={Home} />
+      <Route exact path="/new" component={New} />
       <Route exact path="/about" component={About} />
       <Route exact path="/homeopape" component={Homeopape} />
       <Route exact path="/categoryList" component={CategoryList} />
@@ -511,12 +649,22 @@ const getEditions = () => {
       <Route exact path="/editionList" component={EditionList} />
       <Route exact path="/categories" component={Category} />
       <Route exact path="/media" component={Media} />
+
+      {/* This route no longer works. */}
       <Route exact path="/titles" component={Titles} />
-      <Route exact path="/titles/:category" component={Titles} />
-      <Route exact path="/title/:title" component={Title} />
+      {/* <Route exact path="/titles/:category" component={Titles} />
+      <Route exact path="/title/:title" component={Title} /> */}
+
+      {/* This route no longer works. */}
       <Route exact path="/editions" component={Editions} />
       {/* <Route exact path="/editions/:title" component={Editions} /> */}
-      <Route exact path="/editions/:media" component={Editions} />
+      {/* <Route exact path="/editions/:media" component={Editions} /> */}
+
+      {/* These need to stay at the bottom of the list so that the links above will work properly. */}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} />: null}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} />: null}
+      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} />: null}
+
       </Switch>
       </Col>
       </Row>

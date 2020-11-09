@@ -1,11 +1,23 @@
 import React from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row} from "reactstrap";
+import {setLocalPath} from "../app/sharedFunctions";
+import {setPageURL} from "../app/urlsSlice";
 
 const About = () => {
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const siteName = useSelector(state => state.app.siteName);
     document.title = "About Philip K. Dick | " + siteName;
+
+    const redirectPage = (linkName) => {
+        // console.log("About.js redirectPage", linkName);
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
+        history.push("/" + linkName);
+    };
 
     return (
         <Container className="mt-4">
@@ -26,7 +38,7 @@ const About = () => {
 
             </Col>
             <Col xs="2">
-            <img src="https://philipdick.com/images/PKD/Philip_Dick2.jpg" alt="Philip K. Dick" />
+            <img src={setLocalPath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
             </Col>
             </Row>
 
