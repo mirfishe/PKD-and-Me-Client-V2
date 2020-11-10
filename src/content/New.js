@@ -8,6 +8,8 @@ import TitleCard from "../components/titles/TitleCard";
 
 const New = () => {
 
+    const componentName = "New.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -16,7 +18,7 @@ const New = () => {
     document.title = "New To Philip K. Dick? | " + appName + " | " + siteName;
 
     const redirectPage = (linkName) => {
-        // console.log("New.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };

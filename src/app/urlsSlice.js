@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const componentName = "urlsSlice.js";
+
 const initialState = {
   arrayURLs: [],
   urlsLoaded: false,
@@ -13,11 +15,11 @@ const urlsSlice = createSlice({
   reducers: {
     loadArrayURLs: {
       reducer(state, action) {
-        // console.log("urlsSlice.js loadArrayURLs action.payload", action.payload);
-        // console.log("urlsSlice.js loadArrayURLs action.payload.length", action.payload.length);
+        // console.log(componentName, "loadArrayURLs action.payload", action.payload);
+        // console.log(componentName, "loadArrayURLs action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log("urlsSlice.js loadArrayURLs action.payload[i]", action.payload[i]);
+          // console.log(componentName, "loadArrayURLs action.payload[i]", action.payload[i]);
           state.arrayURLs.push(action.payload[i]);
         };
 
@@ -27,8 +29,8 @@ const urlsSlice = createSlice({
     },
     setPageURL: {
       reducer(state, action) {
-        // console.log("urlsSlice.js setPageURL action.payload", action.payload);
-        // console.log("urlsSlice.js setPageURL action.payload.length", action.payload.length);
+        // console.log(componentName, "setPageURL action.payload", action.payload);
+        // console.log(componentName, "setPageURL action.payload.length", action.payload.length);
 
         state.pageURL = action.payload;
 
@@ -36,8 +38,8 @@ const urlsSlice = createSlice({
     },
     setLinkItem: {
       reducer(state, action) {
-        // console.log("urlsSlice.js setLinkItem action.payload", action.payload);
-        // console.log("urlsSlice.js setLinkItem action.payload.length", action.payload.length);
+        // console.log(componentName, "setLinkItem action.payload", action.payload);
+        // console.log(componentName, "setLinkItem action.payload.length", action.payload.length);
 
         state.linkItem = action.payload;
 

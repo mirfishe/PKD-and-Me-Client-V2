@@ -7,6 +7,8 @@ import {setPageURL} from "../app/urlsSlice";
 
 const About = () => {
 
+    const componentName = "About.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -15,7 +17,7 @@ const About = () => {
     document.title = "About Philip K. Dick | " + appName + " | " + siteName;
 
     const redirectPage = (linkName) => {
-        // console.log("About.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };

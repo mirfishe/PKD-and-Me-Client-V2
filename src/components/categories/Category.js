@@ -7,18 +7,20 @@ import {setPageURL} from "../../app/urlsSlice";
 
 const Category = (props) => {
 
+    const componentName = "Category.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [isOpen, setIsOpen] = useState(true);
 
     const categoryListState = useSelector(state => state.categories.arrayCategories);
-    // console.log("Category.js categoryListState", categoryListState);
+    // console.log(componentName, "categoryListState", categoryListState);
     
-    // console.log("Category.js props.categoryList", props.categoryList);
+    // console.log(componentName, "props.categoryList", props.categoryList);
 
     const redirectPage = (linkName) => {
-        // console.log("Category.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };

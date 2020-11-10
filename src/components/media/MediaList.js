@@ -5,6 +5,8 @@ import {Container, Col, Row, Alert} from "reactstrap";
 
 const MediaList = (props) => {
 
+    const componentName = "MediaList.js";
+
     const baseURL = useSelector(state => state.app.baseURL);
 
     const siteName = useSelector(state => state.app.siteName);
@@ -12,7 +14,7 @@ const MediaList = (props) => {
     document.title = "Media List | " + appName + " | " + siteName;
 
     // const mediaListState = useSelector(state => state.media);
-    // console.log("MediaList.js mediaListState", mediaListState);
+    // console.log(componentName, "mediaListState", mediaListState);
 
     // const [url, setUrl] = useState("");
     const [mediaMessage, setMediaMessage] = useState("");
@@ -21,24 +23,24 @@ const MediaList = (props) => {
     const [mediaList, setMediaList] = useState([]);
 
     const getMedia = () => {
-        // console.log("MediaList.js getMedia");
-        // console.log("MediaList.js getMedia baseURL", baseURL);
+        // console.log(componentName, "getMedia");
+        // console.log(componentName, "getMedia baseURL", baseURL);
 
         setMediaMessage("");
         setErrMediaMessage("");
         setMediaResultsFound(null);
         setMediaList([]);
 
-        // console.log("MediaList.js getMedia this.props.mediaID", this.props.mediaID);
+        // console.log(componentName, "getMedia this.props.mediaID", this.props.mediaID);
         // this.props.setMediaID(null);
-        // console.log("MediaList.js getMedia this.props.titleID", this.props.titleID);
+        // console.log(componentName, "getMedia this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
         let url = baseURL + "media/";
 
         fetch(url)
         .then(response => {
-            // console.log("MediaList.js getMedia response", response);
+            // console.log(componentName, "getMedia response", response);
             if (!response.ok) {
                 throw Error(response.status + " " + response.statusText + " " + response.url);
             } else {
@@ -46,7 +48,7 @@ const MediaList = (props) => {
             };
         })
         .then(data => {
-            // console.log("MediaList.js getMedia data", data);
+            // console.log(componentName, "getMedia data", data);
 
             setMediaResultsFound(data.resultsFound);
             setMediaMessage(data.message);
@@ -59,9 +61,9 @@ const MediaList = (props) => {
 
         })
         .catch(error => {
-            console.log("MediaList.js getMedia error", error);
-            // console.log("MediaList.js getMedia error.name", error.name);
-            // console.log("MediaList.js getMedia error.message", error.message);
+            console.log(componentName, "getMedia error", error);
+            // console.log(componentName, "getMedia error.name", error.name);
+            // console.log(componentName, "getMedia error.message", error.message);
             setErrMediaMessage(error.name + ": " + error.message);
         });
 

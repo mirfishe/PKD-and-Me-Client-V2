@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const componentName = "mediaSlice.js";
+
 // import initialState from "./mediaInitialState";
 
 const initialState = {
@@ -14,11 +16,11 @@ const mediaSlice = createSlice({
   reducers: {
     loadArrayMedia: {
       reducer(state, action) {
-        // console.log("mediaSlice.js loadArrayMedia action.payload", action.payload);
-        // console.log("mediaSlice.js loadArrayMedia action.payload.length", action.payload.length);
+        // console.log(componentName, "loadArrayMedia action.payload", action.payload);
+        // console.log(componentName, "loadArrayMedia action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log("mediaSlice.js loadArrayMedia action.payload[i]", action.payload[i]);
+          // console.log(componentName, "loadArrayMedia action.payload[i]", action.payload[i]);
           state.arrayMedia.push(action.payload[i]);
         };
 
@@ -28,8 +30,8 @@ const mediaSlice = createSlice({
     },
     setMediaDataOffline: {
       reducer(state, action) {
-        // console.log("mediaSlice.js setMediaDataOffline action.payload", action.payload);
-        // console.log("mediaSlice.js setMediaDataOffline action.payload.length", action.payload.length);
+        // console.log(componentName, "setMediaDataOffline action.payload", action.payload);
+        // console.log(componentName, "setMediaDataOffline action.payload.length", action.payload.length);
 
         state.mediaDataOffline = action.payload;
 

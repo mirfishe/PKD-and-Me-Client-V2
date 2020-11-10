@@ -8,13 +8,15 @@ import {setPageURL} from "../../app/urlsSlice";
 
 const TitleCard = (props) => {
 
+    const componentName = "TitleCard.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [errTitleMessage, setErrTitleMessage] = useState("");
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
-    // console.log("TitleCard.js titleListState", titleListState);
+    // console.log(componentName, "titleListState", titleListState);
 
     let imageSide = "left";
     if (props.imageSide !== undefined && props.imageSide !== "") {
@@ -22,16 +24,16 @@ const TitleCard = (props) => {
     } else {
         imageSide = "left";
     };
-    // console.log("TitleCard.js props.imageSide", props.imageSide);
-    // console.log("TitleCard.js imageSide", imageSide);
+    // console.log(componentName, "props.imageSide", props.imageSide);
+    // console.log(componentName, "imageSide", imageSide);
 
     const additionalText = props.additionalText;
-    // console.log("TitleCard.js props.additionalText", props.additionalText);
+    // console.log(componentName, "props.additionalText", props.additionalText);
 
-    // console.log("TitleCard.js props.match.params", props.match.params);
+    // console.log(componentName, "props.match.params", props.match.params);
     const titleParam = props.linkItem.linkName; // props.match.params.title;
-    // console.log("TitleCard.js typeof titleParam", typeof titleParam);
-    // console.log("TitleCard.js titleParam", titleParam);
+    // console.log(componentName, "typeof titleParam", typeof titleParam);
+    // console.log(componentName, "titleParam", titleParam);
 
     let titleList = [];
     if (!isNaN(titleParam)) {
@@ -41,8 +43,8 @@ const TitleCard = (props) => {
         // If titleParam is not a number, then it"s the title name
         titleList = titleListState.filter(title => title.titleURL === titleParam);
         const title = titleListState.find(title => title.titleURL === titleParam);
-        // console.log("TitleCard.js typeof title", typeof title);
-        // console.log("TitleCard.js title", title);
+        // console.log(componentName, "typeof title", typeof title);
+        // console.log(componentName, "title", title);
     } else {
         console.log("Title not found.");
         // Display all titles
@@ -50,13 +52,13 @@ const TitleCard = (props) => {
     };
 
     const redirectPage = (linkName) => {
-        // console.log("TitleCard.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 
     useEffect(() => {
-        // console.log("TitleCard.js useEffect titleList", titleList);
+        // console.log(componentName, "useEffect titleList", titleList);
         if (titleList.length > 0) {
             setErrTitleMessage("");
         } else {

@@ -7,18 +7,29 @@ import {setPageURL} from "../../app/urlsSlice";
 
 const Media = (props) => {
 
+    const componentName = "Media.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [isOpen, setIsOpen] = useState(true);
 
+    const electronicOnly = useSelector(state => state.app.electronicOnly);
+
     const mediaListState = useSelector(state => state.media.arrayMedia);
-    // console.log("Media.js mediaListState", mediaListState);
+    // console.log(componentName, "mediaListState", mediaListState);
     
-    // console.log("Media.js props.mediaList", props.mediaList);
+    // console.log(componentName, "props.mediaList", props.mediaList);
+
+    let mediaList = [];
+    if (electronicOnly) {
+        mediaList = mediaListState.filter(media => media.electronic === true);
+    } else {
+        mediaList = [...mediaListState];
+    };
 
     const redirectPage = (linkName) => {
-        // console.log("Media.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
@@ -32,7 +43,7 @@ const Media = (props) => {
         <Card onClick={toggle} color="light" className="mt-2 p-2">Media</Card>
         <Collapse isOpen={isOpen}>
         <Nav vertical>
-        {mediaListState.map((media) => {
+        {mediaList.map((media) => {
           return (
             <NavItem key={media.mediaID}>
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}

@@ -5,6 +5,8 @@ import {Container, Col, Row, Alert} from "reactstrap";
 
 const EditionList = (props) => {
 
+    const componentName = "EditionList.js";
+
     const baseURL = useSelector(state => state.app.baseURL);
     
     const siteName = useSelector(state => state.app.siteName);
@@ -12,7 +14,7 @@ const EditionList = (props) => {
     document.title = "Edition List | " + appName + " | " + siteName;
 
     // const editionListState = useSelector(state => state.edition);
-    // console.log("EditionList.js editionListState", editionListState);
+    // console.log(componentName, "editionListState", editionListState);
 
     // const [url, setUrl] = useState("");
     const [editionMessage, setEditionMessage] = useState("");
@@ -21,24 +23,24 @@ const EditionList = (props) => {
     const [editionList, setEditionList] = useState([]);
 
     const getEditions = () => {
-        // console.log("EditionList.js getEdition");
-        // console.log("EditionList.js getEdition baseURL", baseURL);
+        // console.log(componentName, "getEdition");
+        // console.log(componentName, "getEdition baseURL", baseURL);
 
         setEditionMessage("");
         setErrEditionMessage("");
         setEditionResultsFound(null);
         setEditionList([]);
 
-        // console.log("EditionList.js getEdition this.props.editionID", this.props.editionID);
+        // console.log(componentName, "getEdition this.props.editionID", this.props.editionID);
         // this.props.setEditionID(null);
-        // console.log("EditionList.js getEdition this.props.titleID", this.props.titleID);
+        // console.log(componentName, "getEdition this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
         let url = baseURL + "edition/list";
 
         fetch(url)
         .then(response => {
-            // console.log("EditionList.js getEdition response", response);
+            // console.log(componentName, "getEdition response", response);
             if (!response.ok) {
                 throw Error(response.status + " " + response.statusText + " " + response.url);
             } else {
@@ -46,7 +48,7 @@ const EditionList = (props) => {
             };
         })
         .then(data => {
-            // console.log("EditionList.js getEdition data", data);
+            // console.log(componentName, "getEdition data", data);
 
             setEditionResultsFound(data.resultsFound);
             setEditionMessage(data.message);
@@ -59,9 +61,9 @@ const EditionList = (props) => {
 
         })
         .catch(error => {
-            console.log("EditionList.js getEdition error", error);
-            // console.log("EditionList.js getEdition error.name", error.name);
-            // console.log("EditionList.js getEdition error.message", error.message);
+            console.log(componentName, "getEdition error", error);
+            // console.log(componentName, "getEdition error.name", error.name);
+            // console.log(componentName, "getEdition error.message", error.message);
             setErrEditionMessage(error.name + ": " + error.message);
         });
 

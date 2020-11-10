@@ -1,8 +1,10 @@
 import AppSettings from "./environment";
 
+const componentName = "sharedFunctions.js";
+
 export const displayDate = (dateToDisplay) => {
 
-    // console.log("constants displayDate dateToDisplay", dateToDisplay);
+    // console.log(componentName, "displayDate dateToDisplay", dateToDisplay);
 
     let newDisplayDate = "";
 
@@ -19,14 +21,14 @@ export const displayDate = (dateToDisplay) => {
 
     };
 
-    // console.log("constants displayDate dateToDisplay", dateToDisplay);
+    // console.log(componentName, "displayDate dateToDisplay", dateToDisplay);
 
     return newDisplayDate;
 };
 
 export const displayYear = (dateToDisplay) => {
 
-    // console.log("constants displayYear dateToDisplay", dateToDisplay);
+    // console.log(componentName, "displayYear dateToDisplay", dateToDisplay);
 
     let newDisplayDate = "";
 
@@ -45,14 +47,14 @@ export const displayYear = (dateToDisplay) => {
 
     };
 
-    // console.log("constants displayYear dateToDisplay", dateToDisplay);
+    // console.log(componentName, "displayYear dateToDisplay", dateToDisplay);
 
     return newDisplayDate;
 };
 
 export const encodeURL = (titleName) => {
 
-    // console.log("constants encodeURL titleName", titleName);
+    // console.log(componentName, "encodeURL titleName", titleName);
 
     let newTitleName = titleName;
 
@@ -67,14 +69,14 @@ export const encodeURL = (titleName) => {
 
     };
 
-    // console.log("constants encodeURL newTitleName", newTitleName);
+    // console.log(componentName, "encodeURL newTitleName", newTitleName);
 
     return newTitleName;
 };
 
 export const decodeURL = (titleName) => {
 
-    // console.log("constants decodeURL titleName", titleName);
+    // console.log(componentName, "decodeURL titleName", titleName);
 
     let newTitleName = titleName;
 
@@ -89,14 +91,14 @@ export const decodeURL = (titleName) => {
 
     };
 
-    // console.log("constants decodeURL newTitleName", newTitleName);
+    // console.log(componentName, "decodeURL newTitleName", newTitleName);
 
     return newTitleName;
 };
 
 export const displayParagraphs = (text) => {
 
-    // console.log("constants displayParagraphs text", text);
+    // console.log(componentName, "displayParagraphs text", text);
 
     let newText = text;
 
@@ -111,15 +113,15 @@ export const displayParagraphs = (text) => {
 
     };
 
-    // console.log("constants displayParagraphs newText", newText);
+    // console.log(componentName, "displayParagraphs newText", newText);
 
     return newText;
 };
 
 export const removeOnePixelImage = (text, ASIN) => {
 
-    // console.log("constants removeOnePixelImage text", text);
-    // console.log("constants removeOnePixelImage ASIN", ASIN);
+    // console.log(componentName, "removeOnePixelImage text", text);
+    // console.log(componentName, "removeOnePixelImage ASIN", ASIN);
 
     let newText = text;
 
@@ -132,15 +134,15 @@ export const removeOnePixelImage = (text, ASIN) => {
 
     };
 
-    // console.log("constants removeOnePixelImage newText", newText);
+    // console.log(componentName, "removeOnePixelImage newText", newText);
 
     return newText;
 };
 
 export const setLocalImagePath = (text) => {
 
-    // console.log("constants setLocalImagePath text", text);
-    // console.log("constants setLocalImagePath AppSettings.profileType", AppSettings.profileType);
+    // console.log(componentName, "setLocalImagePath text", text);
+    // console.log(componentName, "setLocalImagePath AppSettings.profileType", AppSettings.profileType);
 
     let newText = text;
 
@@ -156,15 +158,15 @@ export const setLocalImagePath = (text) => {
 
     };
 
-    // console.log("constants setLocalPath newText", newText);
+    // console.log(componentName, "setLocalPath newText", newText);
 
     return newText;
 };
 
 export const setLocalPath = (text) => {
 
-    // console.log("constants setLocalPath text", text);
-    // console.log("constants setLocalPath AppSettings.profileType", AppSettings.profileType);
+    // console.log(componentName, "setLocalPath text", text);
+    // console.log(componentName, "setLocalPath AppSettings.profileType", AppSettings.profileType);
 
     let newText = text;
 
@@ -180,7 +182,7 @@ export const setLocalPath = (text) => {
 
     };
 
-    // console.log("constants setLocalPath newText", newText);
+    // console.log(componentName, "setLocalPath newText", newText);
 
     return newText;
 };

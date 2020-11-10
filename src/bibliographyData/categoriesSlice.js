@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const componentName = "categoriesSlice.js";
+
 // import initialState from "./categoriesInitialState";
 
 const initialState = {
@@ -14,11 +16,11 @@ const categoriesSlice = createSlice({
   reducers: {
     loadArrayCategories: {
       reducer(state, action) {
-        // console.log("categoriesSlice.js loadArrayCategories action.payload", action.payload);
-        // console.log("categoriesSlice.js loadArrayCategories action.payload.length", action.payload.length);
+        // console.log(componentName, "loadArrayCategories action.payload", action.payload);
+        // console.log(componentName, "loadArrayCategories action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log("categoriesSlice.js loadArrayCategories action.payload[i]", action.payload[i]);
+          // console.log(componentName, "loadArrayCategories action.payload[i]", action.payload[i]);
           state.arrayCategories.push(action.payload[i]);
         };
 
@@ -28,8 +30,8 @@ const categoriesSlice = createSlice({
     },
     setCategoriesDataOffline: {
       reducer(state, action) {
-        // console.log("categoriesSlice.js setCategoriesDataOffline action.payload", action.payload);
-        // console.log("categoriesSlice.js setCategoriesDataOffline action.payload.length", action.payload.length);
+        // console.log(componentName, "setCategoriesDataOffline action.payload", action.payload);
+        // console.log(componentName, "setCategoriesDataOffline action.payload.length", action.payload.length);
 
         state.categoriesDataOffline = action.payload;
 

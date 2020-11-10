@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
-import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
+import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from 'react-bootstrap-icons';
 import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setEditionSort} from "../../bibliographyData/editionsSlice";
 import {setPageURL} from "../../app/urlsSlice";
 
 const Editions = (props) => {
+
+    const componentName = "Editions.js";
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -22,14 +24,14 @@ const Editions = (props) => {
     const [errEditionMessage, setErrEditionMessage] = useState("");
 
     const editionListState = useSelector(state => state.editions.arrayEditions);
-    // console.log("Editions.js editionListState", editionListState);
+    // console.log(componentName, "editionListState", editionListState);
     const mediaListState = useSelector(state => state.media.arrayMedia);
-    // console.log("Editions.js mediaListState", mediaListState);
+    // console.log(componentName, "mediaListState", mediaListState);
 
-    // console.log("Editions.js props.match.params", props.match.params);
+    // console.log(componentName, "props.match.params", props.match.params);
     const mediaParam = props.linkItem.linkName; // props.match.params.media;
-    // console.log("Editions.js typeof mediaParam", typeof mediaParam);
-    // console.log("Editions.js mediaParam", mediaParam);
+    // console.log(componentName, "typeof mediaParam", typeof mediaParam);
+    // console.log(componentName, "mediaParam", mediaParam);
 
     const sortEditions = (sortBy) => {
         // console.log("Titles.js sortTitles sortBy", sortBy);
@@ -51,17 +53,28 @@ const Editions = (props) => {
     let editionList = [];
     if (!isNaN(mediaParam)) {
         // If mediaParam is a number, then it"s the mediaID
-        editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
         document.title = editionList[0].medium.media + " | " + appName + " | " + siteName;
+        if (electronicOnly) {
+            editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === true);
+        } else {
+            editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
+        };
+
     } else if (mediaParam !== undefined) {
         // If mediaParam is not a number, then it"s the media name
         const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
-        // console.log("Editions.js typeof media", typeof media);
-        // console.log("Editions.js media", media);
+        // console.log(componentName, "typeof media", typeof media);
+        // console.log(componentName, "media", media);
 
         if (media !== undefined) {
             document.title = media.media + " | " + appName + " | " + siteName;
-            editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
+
+            if (electronicOnly) {
+                editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === true);
+            } else {
+                editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
+            };
+
         } else {
             document.title = "Media Not Found | " + appName + " | " + siteName;
             console.log("Media not found.");
@@ -76,20 +89,16 @@ const Editions = (props) => {
         editionList = [...editionListState];
     };
 
-    if (electronicOnly) {
-        editionList = editionListState.filter(edition => edition.medium.electronic === true);
-    };
-
     sortEditions(editionSort);
 
     const redirectPage = (linkName) => {
-        // console.log("Editions.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 
     useEffect(() => {
-        // console.log("Editions.js useEffect editionList", editionList);
+        // console.log(componentName, "useEffect editionList", editionList);
         if (editionList.length > 0) {
             setErrEditionMessage("");
         } else {
@@ -170,7 +179,7 @@ const Editions = (props) => {
                             <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
                         :
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <CardImg src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
                             </a>
                         }
                         </Col>
