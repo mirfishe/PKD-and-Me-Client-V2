@@ -5,13 +5,16 @@ import {Container, Col, Row, Alert, Button} from "reactstrap";
 
 const CategoryList = (props) => {
 
+    const componentName = "CategoryList.js";
+
     const baseURL = useSelector(state => state.app.baseURL);
     
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Category List | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Category List | " + appName + " | " + siteName;
 
     // const categoryListState = useSelector(state => state.categories);
-    // console.log("CategoryList.js categoryListState", categoryListState);
+    // console.log(componentName, "categoryListState", categoryListState);
 
     // const [url, setUrl] = useState("");
     const [categoryMessage, setCategoryMessage] = useState("");
@@ -20,24 +23,24 @@ const CategoryList = (props) => {
     const [categoryList, setCategoryList] = useState([]);
 
     const getCategories = () => {
-        // console.log("CategoryList.js getCategories");
-        // console.log("CategoryList.js getCategories baseURL", baseURL);
+        // console.log(componentName, "getCategories");
+        // console.log(componentName, "getCategories baseURL", baseURL);
 
         setCategoryMessage("");
         setErrCategoryMessage("");
         setCategoryResultsFound(null);
         setCategoryList([]);
 
-        // console.log("CategoryList.js getCategories this.props.categoryID", this.props.categoryID);
+        // console.log(componentName, "getCategories this.props.categoryID", this.props.categoryID);
         // this.props.setCategoryID(null);
-        // console.log("CategoryList.js getCategories this.props.titleID", this.props.titleID);
+        // console.log(componentName, "getCategories this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
         let url = baseURL + "category/";
 
         fetch(url)
         .then(response => {
-            // console.log("CategoryList.js getCategories response", response);
+            // console.log(componentName, "getCategories response", response);
             if (!response.ok) {
                 throw Error(response.status + " " + response.statusText + " " + response.url);
             } else {
@@ -45,7 +48,7 @@ const CategoryList = (props) => {
             };
         })
         .then(data => {
-            // console.log("CategoryList.js getCategories data", data);
+            // console.log(componentName, "getCategories data", data);
 
             setCategoryResultsFound(data.resultsFound);
             setCategoryMessage(data.message);
@@ -61,9 +64,9 @@ const CategoryList = (props) => {
 
         })
         .catch(error => {
-            console.log("CategoryList.js getCategories error", error);
-            // console.log("CategoryList.js getCategories error.name", error.name);
-            // console.log("CategoryList.js getCategories error.message", error.message);
+            console.log(componentName, "getCategories error", error);
+            // console.log(componentName, "getCategories error.name", error.name);
+            // console.log(componentName, "getCategories error.message", error.message);
             setErrCategoryMessage(error.name + ": " + error.message);
         });
 

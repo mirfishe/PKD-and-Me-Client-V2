@@ -8,10 +8,13 @@ import {setPageURL} from "../../app/urlsSlice";
 
 const Title = (props) => {
 
+    const componentName = "Title.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
+    const appName = useSelector(state => state.app.appName);
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
@@ -20,34 +23,34 @@ const Title = (props) => {
     const [errEditionMessage, setErrEditionMessage] = useState("");
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
-    // console.log("Title.js titleListState", titleListState);
+    // console.log(componentName, "titleListState", titleListState);
     const editionListState = useSelector(state => state.editions.arrayEditions);
-    // console.log("Title.js editionListState", editionListState);
+    // console.log(componentName, "editionListState", editionListState);
 
-    // console.log("Title.js props.match.params", props.match.params);
+    // console.log(componentName, "props.match.params", props.match.params);
     const titleParam = props.linkItem.linkName; // props.match.params.title;
-    // console.log("Title.js typeof titleParam", typeof titleParam);
-    // console.log("Title.js titleParam", titleParam);
+    // console.log(componentName, "typeof titleParam", typeof titleParam);
+    // console.log(componentName, "titleParam", titleParam);
 
     let titleList = [];
     let editionList = [];
     if (!isNaN(titleParam)) {
         // If titleParam is a number, then it"s the titleID
+        document.title = titleList[0].title.titleName + " | " + appName + " | " + siteName;
         titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
-        document.title = titleList[0].title.titleName + " | " + siteName;
         editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it"s the title name
         titleList = titleListState.filter(title => title.titleURL === titleParam);
         const title = titleListState.find(title => title.titleURL === titleParam);
-        // console.log("Title.js typeof title", typeof title);
-        // console.log("Title.js title", title);
+        // console.log(componentName, "typeof title", typeof title);
+        // console.log(componentName, "title", title);
 
         if (title !== undefined) {
-            document.title = title.titleName + " | " + siteName;
+            document.title = title.titleName + " | " + appName + " | " + siteName;
             editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
         } else {
-            document.title = "Title Not Found | " + siteName;
+            document.title = "Title Not Found | " + appName + " | " + siteName;
             console.log("Title not found.");
             // // Display all titles
             // titleList = titleListState;
@@ -57,7 +60,7 @@ const Title = (props) => {
         };
 
     } else {
-        document.title = "All Titles | " + siteName;
+        document.title = "All Titles | " + appName + " | " + siteName;
         // Display all titles
         titleList = [...titleListState];
         // Display all editions
@@ -75,16 +78,16 @@ const Title = (props) => {
     // Sort the editionList array by media.sortID
     editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
 
-    // console.log("Title.js editionList", editionList);
+    // console.log(componentName, "editionList", editionList);
 
     const redirectPage = (linkName) => {
-        // console.log("Title.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 
     useEffect(() => {
-        // console.log("Title.js useEffect titleList", titleList);
+        // console.log(componentName, "useEffect titleList", titleList);
         if (titleList.length > 0) {
             setErrTitleMessage("");
         } else {
@@ -93,7 +96,7 @@ const Title = (props) => {
     }, [titleList]);
 
     useEffect(() => {
-        // console.log("Title.js useEffect editionList", editionList);
+        // console.log(componentName, "useEffect editionList", editionList);
         if (editionList.length > 0) {
             setErrEditionMessage("");
         } else {
@@ -178,12 +181,12 @@ const Title = (props) => {
                     <CardHeader>
                         <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
                     </CardHeader>
-                    <CardBody className="editionImage">
+                    <CardBody>
                     {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>
@@ -199,7 +202,7 @@ const Title = (props) => {
                             <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
                         :
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
                             </a>
                         }
                         </Col>

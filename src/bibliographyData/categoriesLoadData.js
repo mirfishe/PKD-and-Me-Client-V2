@@ -1,10 +1,12 @@
 import AppSettings from "./app//environment";
 
+const componentName = "categoriesLoadData.js";
+
 const baseURL = AppSettings.baseURL;
 
 const categoriesLoadData = () => {
-    // console.log("categoriesLoadData.js getCategories");
-    // console.log("categoriesLoadData.js getCategories baseURL", baseURL);
+    // console.log(componentName, "getCategories");
+    // console.log(componentName, "getCategories baseURL", baseURL);
 
     let categoryMessage = "";
     let errCategoryMessage = "";
@@ -15,7 +17,7 @@ const categoriesLoadData = () => {
 
     fetch(url)
     .then(response => {
-        // console.log("categoriesLoadData.js getCategories response", response);
+        // console.log(componentName, "getCategories response", response);
         if (!response.ok) {
             throw Error(response.status + " " + response.statusText + " " + response.url);
         } else {
@@ -23,7 +25,7 @@ const categoriesLoadData = () => {
         };
     })
     .then(data => {
-        // console.log("categoriesLoadData.js getCategories data", data);
+        // console.log(componentName, "getCategories data", data);
 
         categoryResultsFound = data.resultsFound;
         categoryMessage = data.message;
@@ -41,9 +43,9 @@ const categoriesLoadData = () => {
 
     })
     .catch(error => {
-        console.log("categoriesLoadData.js getCategories error", error);
-        // console.log("categoriesLoadData.js getCategories error.name", error.name);
-        // console.log("categoriesLoadData.js getCategories error.message", error.message);
+        console.log(componentName, "getCategories error", error);
+        // console.log(componentName, "getCategories error.name", error.name);
+        // console.log(componentName, "getCategories error.message", error.message);
         errCategoryMessage = error.name + ": " + error.message;
     });
 

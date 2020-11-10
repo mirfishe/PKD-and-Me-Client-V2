@@ -7,14 +7,17 @@ import {setPageURL} from "../app/urlsSlice";
 
 const About = () => {
 
+    const componentName = "About.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "About Philip K. Dick | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "About Philip K. Dick | " + appName + " | " + siteName;
 
     const redirectPage = (linkName) => {
-        // console.log("About.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
@@ -58,7 +61,7 @@ const About = () => {
 
             <p>Much speculation has surrounded the events and explanations of PKD's 2/3-74 experiences. Dick himself spent much of the rest of his life wondering and writing about it in his unpublished, mostly holographic, notes which he called his Exegesis. But essentially what happened was that, while suffering from an impacted wisdom tooth and while taking massive doses of vitamin-C, Phil called a local pharmacist for some medicine. When the delivery girl arrived at his door he was stunned by a beam of pink light which seemed to emanate from a necklace the girl wore. This was one of those 'fish sign' necklaces that are associated with Christianity. He soon found himself in a dual reality, as if ancient Rome was overlaid on Orange County 1974. He felt himself to be an early Christian and beyond time. This story is told in VALIS and some of his speculation (it runs to a million words in the Exegesis) can be found in In Pursuit Of Valis ed. L. Sutin. We hope that soon a complete publication of the Exegesis will appear.</p>
 
-            <a href="https://1999pkdweb.philipdick.com/pkdlife.htm">https://1999pkdweb.philipdick.com/pkdlife.htm</a>
+            <a href="https://1999pkdweb.philipdick.com/pkdlife.htm" target="_blank" rel="noopener noreferrer">https://1999pkdweb.philipdick.com/pkdlife.htm</a>
 
             </Col>
             </Row>

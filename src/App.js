@@ -41,6 +41,8 @@ import Editions from "./components/editions/Editions";
 
 function App() {
 
+  const componentName = "App.js";
+
   const dispatch = useDispatch();
   // const history = useHistory();
 
@@ -136,15 +138,15 @@ function App() {
   const loadDataStore = (data, source) => {
 
     if (source === "category") {
-      // console.log("App.js loadDataStore data", data);
+      // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayCategories(data));
       loadURLs(data, source);
     } else if (source === "media") {
-      // console.log("App.js loadDataStore data", data);
+      // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayMedia(data));
       loadURLs(data, source);
     } else if (source === "title") {
-      // console.log("App.js loadDataStore data", data);
+      // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayTitles(data));
       loadURLs(data, source);
     };
@@ -158,13 +160,13 @@ function App() {
     for (let i = 0; i < data.length; i++) {
 
       if (source === "category") {
-        // console.log("App.js loadURLs data[i].category", data[i].category);
+        // console.log(componentName, "loadURLs data[i].category", data[i].category);
         arrayURLs.push({linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID});
       } else if (source === "media") {
-        // console.log("App.js loadURLs data[i].media", data[i].media);
+        // console.log(componentName, "loadURLs data[i].media", data[i].media);
         arrayURLs.push({linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID});
       } else if (source === "title") {
-        // console.log("App.js loadURLs data[i].titleURL", data[i].titleURL);
+        // console.log(componentName, "loadURLs data[i].titleURL", data[i].titleURL);
         arrayURLs.push({linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID});
       };
   
@@ -174,8 +176,8 @@ function App() {
   };
 
   const getCategories = () => {
-    // console.log("App.js getCategories");
-    // console.log("App.js getCategories baseURL", baseURL);
+    // console.log(componentName, "getCategories");
+    // console.log(componentName, "getCategories baseURL", baseURL);
 
     setCategoryMessage("");
     setErrCategoryMessage("");
@@ -186,7 +188,7 @@ function App() {
 
     fetch(url)
     .then(response => {
-        // console.log("App.js getCategories response", response);
+        // console.log(componentName, "getCategories response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
@@ -198,7 +200,7 @@ function App() {
         };
     })
     .then(data => {
-        // console.log("App.js getCategories data", data);
+        // console.log(componentName, "getCategories data", data);
 
         // setCategoryResultsFound(data.resultsFound);
         // setCategoryMessage(data.message);
@@ -212,13 +214,13 @@ function App() {
           // loadURLs(data.categories, "category");
           // let arrayURLs = [];
           // for (let i = 0; i < data.categories.length; i++) {
-          //   // console.log("App.js getCategories data.categories[i].category", data.categories[i].category);
+          //   // console.log(componentName, "getCategories data.categories[i].category", data.categories[i].category);
           //   arrayURLs.push({linkName: data.categories[i].category, linkType: "category", linkID: data.categories[i].categoryID});
           // };
           // dispatch(loadArrayURLs(arrayURLs));
 
         } else {
-          console.log("App.js getCategories resultsFound error", data.message);
+          console.log(componentName, "getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
           dispatch(setCategoriesDataOffline(true));
           dispatch(loadArrayCategories(CategoryData));
@@ -226,9 +228,9 @@ function App() {
 
     })
     .catch(error => {
-        console.log("App.js getCategories error", error);
-        // console.log("App.js getCategories error.name", error.name);
-        // console.log("App.js getCategories error.message", error.message);
+        console.log(componentName, "getCategories error", error);
+        // console.log(componentName, "getCategories error.name", error.name);
+        // console.log(componentName, "getCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         dispatch(setCategoriesDataOffline(true));
         dispatch(loadArrayCategories(CategoryData));
@@ -237,24 +239,24 @@ function App() {
 };
 
 const getMedia = () => {
-  // console.log("App.js getMedia");
-  // console.log("App.js getMedia baseURL", baseURL);
+  // console.log(componentName, "getMedia");
+  // console.log(componentName, "getMedia baseURL", baseURL);
 
   setMediaMessage("");
   setErrMediaMessage("");
   // setMediaResultsFound(null);
   // setMediaList([]);
 
-  // console.log("App.js getMedia this.props.mediaID", this.props.mediaID);
+  // console.log(componentName, "getMedia this.props.mediaID", this.props.mediaID);
   // this.props.setMediaID(null);
-  // console.log("App.js getMedia this.props.titleID", this.props.titleID);
+  // console.log(componentName, "getMedia this.props.titleID", this.props.titleID);
   // this.props.setTitleID(null);
 
   let url = baseURL + "media/";
 
   fetch(url)
   .then(response => {
-      // console.log("App.js getMedia response", response);
+      // console.log(componentName, "getMedia response", response);
       if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
@@ -266,7 +268,7 @@ const getMedia = () => {
       };
   })
   .then(data => {
-      // console.log("App.js getMedia data", data);
+      // console.log(componentName, "getMedia data", data);
 
       // setMediaResultsFound(data.resultsFound);
       // setMediaMessage(data.message);
@@ -280,13 +282,13 @@ const getMedia = () => {
           // loadURLs(data.media, "media");
           // let arrayURLs = [];
           // for (let i = 0; i < data.media.length; i++) {
-          //   // console.log("App.js getMedia data.media[i].media", data.media[i].media);
+          //   // console.log(componentName, "getMedia data.media[i].media", data.media[i].media);
           //   arrayURLs.push({linkName: data.media[i].media, linkType: "media", linkID: data.media[i].mediaID});
           // };
           // dispatch(loadArrayURLs(arrayURLs));
 
       } else {
-          console.log("App.js getMedia resultsFound error", data.message);
+          console.log(componentName, "getMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
           dispatch(setMediaDataOffline(true));
           dispatch(loadArrayMedia(MediaData));
@@ -294,9 +296,9 @@ const getMedia = () => {
 
   })
   .catch(error => {
-      console.log("App.js getMedia error", error);
-      // console.log("App.js getMedia error.name", error.name);
-      // console.log("App.js getMedia error.message", error.message);
+      console.log(componentName, "getMedia error", error);
+      // console.log(componentName, "getMedia error.name", error.name);
+      // console.log(componentName, "getMedia error.message", error.message);
       // setErrMediaMessage(error.name + ": " + error.message);
       dispatch(setMediaDataOffline(true));
       dispatch(loadArrayMedia(MediaData));
@@ -305,24 +307,24 @@ const getMedia = () => {
 };
 
 const getTitles = () => {
-  // console.log("App.js getTitle");
-  // console.log("App.js getTitle baseURL", baseURL);
+  // console.log(componentName, "getTitle");
+  // console.log(componentName, "getTitle baseURL", baseURL);
 
   setTitleMessage("");
   setErrTitleMessage("");
   // setTitleResultsFound(null);
   // setTitleList([]);
 
-  // console.log("App.js getTitle this.props.titleID", this.props.titleID);
+  // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
   // this.props.setTitleID(null);
-  // console.log("App.js getTitle this.props.titleID", this.props.titleID);
+  // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
   // this.props.setTitleID(null);
 
   let url = baseURL + "title/list";
 
   fetch(url)
   .then(response => {
-      // console.log("App.js getTitle response", response);
+      // console.log(componentName, "getTitle response", response);
       if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
@@ -334,7 +336,7 @@ const getTitles = () => {
       };
   })
   .then(data => {
-      // console.log("App.js getTitle data", data);
+      // console.log(componentName, "getTitle data", data);
 
       // setTitleResultsFound(data.resultsFound);
       // setTitleMessage(data.message);
@@ -348,13 +350,13 @@ const getTitles = () => {
           // loadURLs(data.titles, "title");
           // let arrayURLs = [];
           // for (let i = 0; i < data.titles.length; i++) {
-          //   // console.log("App.js getTitles data.titles[i].titleURL", data.titles[i].titleURL);
+          //   // console.log(componentName, "getTitles data.titles[i].titleURL", data.titles[i].titleURL);
           //   arrayURLs.push({linkName: data.titles[i].titleURL, linkType: "title", linkID: data.titles[i].titleID});
           // };
           // dispatch(loadArrayURLs(arrayURLs));
 
       } else {
-          console.log("App.js getTitles resultsFound error", data.message);
+          console.log(componentName, "getTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
           dispatch(setTitlesDataOffline(true));
           dispatch(loadArrayTitles(TitleData));
@@ -362,9 +364,9 @@ const getTitles = () => {
 
   })
   .catch(error => {
-      console.log("App.js getTitle error", error);
-      // console.log("App.js getTitle error.name", error.name);
-      // console.log("App.js getTitle error.message", error.message);
+      console.log(componentName, "getTitle error", error);
+      // console.log(componentName, "getTitle error.name", error.name);
+      // console.log(componentName, "getTitle error.message", error.message);
       // setErrTitleMessage(error.name + ": " + error.message);
       dispatch(setTitlesDataOffline(true));
       dispatch(loadArrayTitles(TitleData));
@@ -373,24 +375,24 @@ const getTitles = () => {
 };
 
 const getEditions = () => {
-  // console.log("App.js getEdition");
-  // console.log("App.js getEdition baseURL", baseURL);
+  // console.log(componentName, "getEdition");
+  // console.log(componentName, "getEdition baseURL", baseURL);
 
   setEditionMessage("");
   setErrEditionMessage("");
   // setEditionResultsFound(null);
   // setEditionList([]);
 
-  // console.log("App.js getEdition this.props.editionID", this.props.editionID);
+  // console.log(componentName, "getEdition this.props.editionID", this.props.editionID);
   // this.props.setEditionID(null);
-  // console.log("App.js getEdition this.props.titleID", this.props.titleID);
+  // console.log(componentName, "getEdition this.props.titleID", this.props.titleID);
   // this.props.setTitleID(null);
 
   let url = baseURL + "edition/list";
 
   fetch(url)
   .then(response => {
-      // console.log("App.js getEdition response", response);
+      // console.log(componentName, "getEdition response", response);
       if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
@@ -402,7 +404,7 @@ const getEditions = () => {
       };
   })
   .then(data => {
-      // console.log("App.js getEdition data", data);
+      // console.log(componentName, "getEdition data", data);
 
       // setEditionResultsFound(data.resultsFound);
       // setEditionMessage(data.message);
@@ -411,7 +413,7 @@ const getEditions = () => {
           // setEditionList(data.editions);
           dispatch(loadArrayEditions(data.editions));
       } else {
-          console.log("App.js getEditions resultsFound error", data.message);
+          console.log(componentName, "getEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);
           dispatch(setEditionsDataOffline(true));
           dispatch(loadArrayEditions(EditionData));
@@ -419,9 +421,9 @@ const getEditions = () => {
 
   })
   .catch(error => {
-      console.log("App.js getEditions error", error);
-      // console.log("App.js getEdition error.name", error.name);
-      // console.log("App.js getEdition error.message", error.message);
+      console.log(componentName, "getEditions error", error);
+      // console.log(componentName, "getEdition error.name", error.name);
+      // console.log(componentName, "getEdition error.message", error.message);
       // setErrEditionMessage(error.name + ": " + error.message);
       dispatch(setEditionsDataOffline(true));
       dispatch(loadArrayEditions(EditionData));
@@ -430,7 +432,7 @@ const getEditions = () => {
 };
 
   useEffect(() => {
-    // console.log("App.js useEffect");
+    // console.log(componentName, "useEffect");
 
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
@@ -489,34 +491,21 @@ const getEditions = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("App.js useEffect categoriesDataOffline", categoriesDataOffline);
-    // console.log("App.js useEffect mediaDataOffline", mediaDataOffline);
-    // console.log("App.js useEffect titlesDataOffline", titlesDataOffline);
-    // console.log("App.js useEffect editionsDataOffline", editionsDataOffline);
+    // console.log(componentName, "useEffect categoriesDataOffline", categoriesDataOffline);
+    // console.log(componentName, "useEffect mediaDataOffline", mediaDataOffline);
+    // console.log(componentName, "useEffect titlesDataOffline", titlesDataOffline);
+    // console.log(componentName, "useEffect editionsDataOffline", editionsDataOffline);
 
     if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
-      // console.log("App.js useEffect setAppOffline");
+      // console.log(componentName, "useEffect setAppOffline");
       dispatch(setAppOffline(true));
     };
     
   }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
 
   useEffect(() => {
-    // console.log("App.js useEffect categoriesDataOffline", categoriesDataOffline);
-    // console.log("App.js useEffect mediaDataOffline", mediaDataOffline);
-    // console.log("App.js useEffect titlesDataOffline", titlesDataOffline);
-    // console.log("App.js useEffect editionsDataOffline", editionsDataOffline);
-
-    if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
-      // console.log("App.js useEffect setAppOffline");
-      dispatch(setAppOffline(true));
-    };
-    
-  }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
-
-  useEffect(() => {
-    // console.log("App.js useEffect pageURL", pageURL);
-    // console.log("App.js useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
+    // console.log(componentName, "useEffect pageURL", pageURL);
+    // console.log(componentName, "useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
 
     if (pageURL !== undefined && pageURL !== "") {
 
@@ -524,12 +513,12 @@ const getEditions = () => {
 
       for (let i = 0; i < urlLookup.length; i++) {
         linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
-        // console.log("App.js useEffect linkArrayItem", linkArrayItem);
+        // console.log(componentName, "useEffect linkArrayItem", linkArrayItem);
         // setLinkItem(linkArrayItem);
       };
 
-      // console.log("App.js useEffect linkArrayItem", linkArrayItem);
-      // console.log("App.js useEffect typeof linkArrayItem", typeof linkArrayItem);
+      // console.log(componentName, "useEffect linkArrayItem", linkArrayItem);
+      // console.log(componentName, "useEffect typeof linkArrayItem", typeof linkArrayItem);
       dispatch(setLinkItem(linkArrayItem));
       
     };

@@ -9,27 +9,31 @@ import {setPageURL} from "../../app/urlsSlice";
 
 const Titles = (props) => {
 
+    const componentName = "Titles.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
+    const appName = useSelector(state => state.app.appName);
+
     const titleSort = useSelector(state => state.titles.titleSort);
 
     // const [errCategoryMessage, setErrCategoryMessage] = useState("");
     const [errTitleMessage, setErrTitleMessage] = useState("");
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
-    // console.log("Titles.js titleListState", titleListState);
+    // console.log(componentName, "titleListState", titleListState);
     const categoryListState = useSelector(state => state.categories.arrayCategories);
-    // console.log("Titles.js categoryListState", categoryListState);
+    // console.log(componentName, "categoryListState", categoryListState);
 
-    // console.log("Titles.js props.match.params", props.match.params);
+    // console.log(componentName, "props.match.params", props.match.params);
     const categoryParam = props.linkItem.linkName; // props.match.params.category;
-    // console.log("Titles.js typeof categoryParam", typeof categoryParam);
-    // console.log("Titles.js categoryParam", categoryParam);
+    // console.log(componentName, "typeof categoryParam", typeof categoryParam);
+    // console.log(componentName, "categoryParam", categoryParam);
 
     const sortTitles = (sortBy) => {
-        // console.log("Titles.js sortTitles sortBy", sortBy);
+        // console.log(componentName, "sortTitles sortBy", sortBy);
         if (sortBy === "publicationDate") {
             // Sort the titleList array by title.publicationDate
             titleList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
@@ -45,19 +49,19 @@ const Titles = (props) => {
     let titleList = [];
     if (!isNaN(categoryParam)) {
         // If categoryParam is a number, then it's the categoryID
+        document.title = titleList[0].category.category + " | " + appName + " | " + siteName;
         titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
-        document.title = titleList[0].category.category + " | " + siteName;
     } else if (categoryParam !== undefined) {
         // If categoryParam is not a number, then it's the category name
         const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
-        // console.log("Titles.js typeof category", typeof category);
-        // console.log("Titles.js category", category);
+        // console.log(componentName, "typeof category", typeof category);
+        // console.log(componentName, "category", category);
 
         if (category !== undefined) {
-            document.title = category.category + " | " + siteName;
+            document.title = category.category + " | " + appName + " | " + siteName;
             titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
         } else {
-            document.title = "Category Not Found | " + siteName;
+            document.title = "Category Not Found | " + appName + " | " + siteName;
             console.log("Category not found.");
             // // Display all titles
             // titleList = titleListState;
@@ -67,7 +71,7 @@ const Titles = (props) => {
         };
 
     } else {
-        document.title = "All Titles | " + siteName;
+        document.title = "All Titles | " + appName + " | " + siteName;
         // Display all titles
         titleList = [...titleListState];
     };
@@ -75,13 +79,13 @@ const Titles = (props) => {
     sortTitles(titleSort);
 
     const redirectPage = (linkName) => {
-        // console.log("Titles.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };
 
     useEffect(() => {
-        // console.log("Titles.js useEffect titleList", titleList);
+        // console.log(componentName, "useEffect titleList", titleList);
         if (titleList.length > 0) {
             setErrTitleMessage("");
         } else {

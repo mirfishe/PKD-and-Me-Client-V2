@@ -7,14 +7,17 @@ import {setPageURL} from "../app/urlsSlice";
 
 const Home = () => {
 
+    const componentName = "Home.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Home | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Home | " + appName + " | " + siteName;
 
     const redirectPage = (linkName) => {
-        // console.log("Home.js redirectPage", linkName);
+        // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };

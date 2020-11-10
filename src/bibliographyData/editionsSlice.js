@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const componentName = "editionsSlice.js";
+
 // import initialState from "./editionsInitialState";
 
 const initialState = {
@@ -15,11 +17,11 @@ const editionsSlice = createSlice({
   reducers: {
     loadArrayEditions: {
       reducer(state, action) {
-        // console.log("editionsSlice.js loadArrayEditions action.payload", action.payload);
-        // console.log("editionsSlice.js loadArrayEditions action.payload.length", action.payload.length);
+        // console.log(componentName, "loadArrayEditions action.payload", action.payload);
+        // console.log(componentName, "loadArrayEditions action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log("editionsSlice.js loadArrayEditions action.payload[i]", action.payload[i]);
+          // console.log(componentName, "loadArrayEditions action.payload[i]", action.payload[i]);
           state.arrayEditions.push(action.payload[i]);
         };
 
@@ -29,8 +31,8 @@ const editionsSlice = createSlice({
     },
     setEditionsDataOffline: {
       reducer(state, action) {
-        // console.log("editionsSlice.js setEditionsDataOffline action.payload", action.payload);
-        // console.log("editionsSlice.js setEditionsDataOffline action.payload.length", action.payload.length);
+        // console.log(componentName, "setEditionsDataOffline action.payload", action.payload);
+        // console.log(componentName, "setEditionsDataOffline action.payload.length", action.payload.length);
 
         state.editionsDataOffline = action.payload;
 
@@ -38,8 +40,8 @@ const editionsSlice = createSlice({
     },
     setEditionSort: {
       reducer(state, action) {
-        // console.log("editionsSlice.js setEditionSort action.payload", action.payload);
-        // console.log("editionsSlice.js setEditionSort action.payload.length", action.payload.length);
+        // console.log(componentName, "setEditionSort action.payload", action.payload);
+        // console.log(componentName, "setEditionSort action.payload.length", action.payload.length);
 
         state.editionSort = action.payload;
 

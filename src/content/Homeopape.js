@@ -7,14 +7,17 @@ import {setPageURL} from "../app/urlsSlice";
 
 const Homeopape = () => {
 
+    const componentName = "Homeopape.js";
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Home | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Home | " + appName + " | " + siteName;
 
     const redirectPage = (linkName) => {
-        // console.log("Homeopape.js redirectPage", linkName);
+        // console.log(componentName, "edirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));
         history.push("/" + linkName);
     };

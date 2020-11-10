@@ -5,13 +5,16 @@ import {Container, Col, Row, Alert} from "reactstrap";
 
 const TitleList = (props) => {
     
+    const componentName = "TitleList.js";
+
     const baseURL = useSelector(state => state.app.baseURL);
-    
+
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Title List | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Title List | " + appName + " | " + siteName;
 
     // const titleListState = useSelector(state => state.title);
-    // console.log("TitleList.js titleListState", titleListState);
+    // console.log(componentName, "titleListState", titleListState);
 
     // const [url, setUrl] = useState("");
     const [titleMessage, setTitleMessage] = useState("");
@@ -20,24 +23,24 @@ const TitleList = (props) => {
     const [titleList, setTitleList] = useState([]);
 
     const getTitles = () => {
-        // console.log("TitleList.js getTitle");
-        // console.log("TitleList.js getTitle baseURL", baseURL);
+        // console.log(componentName, "getTitle");
+        // console.log(componentName, "getTitle baseURL", baseURL);
 
         setTitleMessage("");
         setErrTitleMessage("");
         setTitleResultsFound(null);
         setTitleList([]);
 
-        // console.log("TitleList.js getTitle this.props.titleID", this.props.titleID);
+        // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
-        // console.log("TitleList.js getTitle this.props.titleID", this.props.titleID);
+        // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
         let url = baseURL + "title/list";
 
         fetch(url)
         .then(response => {
-            // console.log("TitleList.js getTitle response", response);
+            // console.log(componentName, "getTitle response", response);
             if (!response.ok) {
                 throw Error(response.status + " " + response.statusText + " " + response.url);
             } else {
@@ -45,7 +48,7 @@ const TitleList = (props) => {
             };
         })
         .then(data => {
-            // console.log("TitleList.js getTitle data", data);
+            // console.log(componentName, "getTitle data", data);
 
             setTitleResultsFound(data.resultsFound);
             setTitleMessage(data.message);
@@ -58,9 +61,9 @@ const TitleList = (props) => {
 
         })
         .catch(error => {
-            console.log("TitleList.js getTitle error", error);
-            // console.log("TitleList.js getTitle error.name", error.name);
-            // console.log("TitleList.js getTitle error.message", error.message);
+            console.log(componentName, "getTitle error", error);
+            // console.log(componentName, "getTitle error.name", error.name);
+            // console.log(componentName, "getTitle error.message", error.message);
             setErrTitleMessage(error.name + ": " + error.message);
         });
 
@@ -88,8 +91,8 @@ const TitleList = (props) => {
         : null} 
         
         <Row>
-           {/* {titleResultsFound !== null ? <Title titleList={titleList} /> : null} */}
-           {/* <Title titleList={titleListState} /> */}
+            {/* {titleResultsFound !== null ? <Title titleList={titleList} /> : null} */}
+            {/* <Title titleList={titleListState} /> */}
         </Row>
         </Container>
     );

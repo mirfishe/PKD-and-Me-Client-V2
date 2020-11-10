@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const componentName = "titlesSlice.js";
+
 // import initialState from "./titlesInitialState";
 
 const initialState = {
@@ -15,11 +17,11 @@ const titlesSlice = createSlice({
   reducers: {
     loadArrayTitles: {
       reducer(state, action) {
-        // console.log("titlesSlice.js loadArrayTitles action.payload", action.payload);
-        // console.log("titlesSlice.js loadArrayTitles action.payload.length", action.payload.length);
+        // console.log(componentName, "loadArrayTitles action.payload", action.payload);
+        // console.log(componentName, "loadArrayTitles action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log("titlesSlice.js loadArrayTitles action.payload[i]", action.payload[i]);
+          // console.log(componentName, "loadArrayTitles action.payload[i]", action.payload[i]);
           state.arrayTitles.push(action.payload[i]);
         };
 
@@ -29,8 +31,8 @@ const titlesSlice = createSlice({
     },
     setTitlesDataOffline: {
       reducer(state, action) {
-        // console.log("titlesSlice.js setTitlesDataOffline action.payload", action.payload);
-        // console.log("titlesSlice.js setTitlesDataOffline action.payload.length", action.payload.length);
+        // console.log(componentName, "setTitlesDataOffline action.payload", action.payload);
+        // console.log(componentName, "setTitlesDataOffline action.payload.length", action.payload.length);
 
         state.titlesDataOffline = action.payload;
 
@@ -38,8 +40,8 @@ const titlesSlice = createSlice({
     },
     setTitleSort: {
       reducer(state, action) {
-        // console.log("titlesSlice.js setTitleSort action.payload", action.payload);
-        // console.log("titlesSlice.js setTitleSort action.payload.length", action.payload.length);
+        // console.log(componentName, "setTitleSort action.payload", action.payload);
+        // console.log(componentName, "setTitleSort action.payload.length", action.payload.length);
 
         state.titleSort = action.payload;
 
