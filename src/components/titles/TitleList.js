@@ -8,7 +8,8 @@ const TitleList = (props) => {
     const baseURL = useSelector(state => state.app.baseURL);
     
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Title List | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Title List | " + appName + " | " + siteName;
 
     // const titleListState = useSelector(state => state.title);
     // console.log("TitleList.js titleListState", titleListState);

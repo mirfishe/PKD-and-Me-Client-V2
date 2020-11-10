@@ -89,7 +89,7 @@ switch (profileType) {
     case "homeopape":
         API_URL = "https://pkd-and-me-server.herokuapp.com";
         siteName = "Homeopape";
-        appName = "";
+        appName = "Philip K. Dick Bibliography";
         metaDescription = "Purchase digital (i.e. not analog) versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick";
         defaultPageComponent = "Homeopape";
         routerBaseName = "";
@@ -123,6 +123,7 @@ Object.assign(AppSettings, {profileType: profileType});
 Object.assign(AppSettings, {API_URL: API_URL});
 Object.assign(AppSettings, {baseURL: API_URL + baseURL});
 Object.assign(AppSettings, {siteName: siteName});
+Object.assign(AppSettings, {appName: appName});
 Object.assign(AppSettings, {metaDescription: metaDescription});
 Object.assign(AppSettings, {defaultPageComponent: defaultPageComponent});
 Object.assign(AppSettings, {routerBaseName: routerBaseName});

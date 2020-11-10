@@ -13,6 +13,8 @@ const Editions = (props) => {
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
+    const appName = useSelector(state => state.app.appName);
+
     const editionSort = useSelector(state => state.editions.editionSort);
     const electronicOnly = useSelector(state => state.app.electronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
@@ -50,7 +52,7 @@ const Editions = (props) => {
     if (!isNaN(mediaParam)) {
         // If mediaParam is a number, then it"s the mediaID
         editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
-        document.title = editionList[0].medium.media + " | " + siteName;
+        document.title = editionList[0].medium.media + " | " + appName + " | " + siteName;
     } else if (mediaParam !== undefined) {
         // If mediaParam is not a number, then it"s the media name
         const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
@@ -58,10 +60,10 @@ const Editions = (props) => {
         // console.log("Editions.js media", media);
 
         if (media !== undefined) {
-            document.title = media.media + " | " + siteName;
+            document.title = media.media + " | " + appName + " | " + siteName;
             editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
         } else {
-            document.title = "Media Not Found | " + siteName;
+            document.title = "Media Not Found | " + appName + " | " + siteName;
             console.log("Media not found.");
             // Display all editions
             // editionList = editionListState;
@@ -69,7 +71,7 @@ const Editions = (props) => {
         };
 
     } else {
-        document.title = "All Editions | " + siteName;
+        document.title = "All Editions | " + appName + " | " + siteName;
         // Display all editions
         editionList = [...editionListState];
     };

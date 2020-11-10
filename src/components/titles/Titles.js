@@ -13,6 +13,8 @@ const Titles = (props) => {
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
+    const appName = useSelector(state => state.app.appName);
+
     const titleSort = useSelector(state => state.titles.titleSort);
 
     // const [errCategoryMessage, setErrCategoryMessage] = useState("");
@@ -46,7 +48,7 @@ const Titles = (props) => {
     if (!isNaN(categoryParam)) {
         // If categoryParam is a number, then it's the categoryID
         titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
-        document.title = titleList[0].category.category + " | " + siteName;
+        document.title = titleList[0].category.category + " | " + appName + " | " + siteName;
     } else if (categoryParam !== undefined) {
         // If categoryParam is not a number, then it's the category name
         const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
@@ -54,10 +56,10 @@ const Titles = (props) => {
         // console.log("Titles.js category", category);
 
         if (category !== undefined) {
-            document.title = category.category + " | " + siteName;
+            document.title = category.category + " | " + appName + " | " + siteName;
             titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
         } else {
-            document.title = "Category Not Found | " + siteName;
+            document.title = "Category Not Found | " + appName + " | " + siteName;
             console.log("Category not found.");
             // // Display all titles
             // titleList = titleListState;
@@ -67,7 +69,7 @@ const Titles = (props) => {
         };
 
     } else {
-        document.title = "All Titles | " + siteName;
+        document.title = "All Titles | " + appName + " | " + siteName;
         // Display all titles
         titleList = [...titleListState];
     };

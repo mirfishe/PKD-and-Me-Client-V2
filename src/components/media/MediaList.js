@@ -8,7 +8,8 @@ const MediaList = (props) => {
     const baseURL = useSelector(state => state.app.baseURL);
 
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Media List | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Media List | " + appName + " | " + siteName;
 
     // const mediaListState = useSelector(state => state.media);
     // console.log("MediaList.js mediaListState", mediaListState);

@@ -8,7 +8,8 @@ const EditionList = (props) => {
     const baseURL = useSelector(state => state.app.baseURL);
     
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Edition List | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Edition List | " + appName + " | " + siteName;
 
     // const editionListState = useSelector(state => state.edition);
     // console.log("EditionList.js editionListState", editionListState);

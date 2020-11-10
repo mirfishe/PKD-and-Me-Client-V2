@@ -11,7 +11,8 @@ const Home = () => {
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Home | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Home | " + appName + " | " + siteName;
 
     const redirectPage = (linkName) => {
         // console.log("Home.js redirectPage", linkName);

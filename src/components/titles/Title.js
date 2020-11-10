@@ -12,6 +12,7 @@ const Title = (props) => {
     const history = useHistory();
 
     const siteName = useSelector(state => state.app.siteName);
+    const appName = useSelector(state => state.app.appName);
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
@@ -34,7 +35,7 @@ const Title = (props) => {
     if (!isNaN(titleParam)) {
         // If titleParam is a number, then it"s the titleID
         titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
-        document.title = titleList[0].title.titleName + " | " + siteName;
+        document.title = titleList[0].title.titleName + " | " + appName + " | " + siteName;
         editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it"s the title name
@@ -44,10 +45,10 @@ const Title = (props) => {
         // console.log("Title.js title", title);
 
         if (title !== undefined) {
-            document.title = title.titleName + " | " + siteName;
+            document.title = title.titleName + " | " + appName + " | " + siteName;
             editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
         } else {
-            document.title = "Title Not Found | " + siteName;
+            document.title = "Title Not Found | " + appName + " | " + siteName;
             console.log("Title not found.");
             // // Display all titles
             // titleList = titleListState;
@@ -57,7 +58,7 @@ const Title = (props) => {
         };
 
     } else {
-        document.title = "All Titles | " + siteName;
+        document.title = "All Titles | " + appName + " | " + siteName;
         // Display all titles
         titleList = [...titleListState];
         // Display all editions

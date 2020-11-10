@@ -8,7 +8,8 @@ const CategoryList = (props) => {
     const baseURL = useSelector(state => state.app.baseURL);
     
     const siteName = useSelector(state => state.app.siteName);
-    document.title = "Category List | " + siteName;
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Category List | " + appName + " | " + siteName;
 
     // const categoryListState = useSelector(state => state.categories);
     // console.log("CategoryList.js categoryListState", categoryListState);
