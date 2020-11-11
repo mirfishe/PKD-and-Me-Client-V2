@@ -15,6 +15,7 @@ const Media = (props) => {
     const [isOpen, setIsOpen] = useState(true);
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
+    const physicalOnly = useSelector(state => state.app.physicalOnly);
 
     const mediaListState = useSelector(state => state.media.arrayMedia);
     // console.log(componentName, "mediaListState", mediaListState);
@@ -24,6 +25,8 @@ const Media = (props) => {
     let mediaList = [];
     if (electronicOnly) {
         mediaList = mediaListState.filter(media => media.electronic === true);
+    } else if (physicalOnly) {
+        mediaList = mediaListState.filter(media => media.electronic === false);
     } else {
         mediaList = [...mediaListState];
     };

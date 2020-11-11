@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
+import {displayYear, encodeURL, decodeURL, displayParagraphs, truncateText, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
 
 const TitleCard = (props) => {
@@ -27,26 +27,47 @@ const TitleCard = (props) => {
     // console.log(componentName, "props.imageSide", props.imageSide);
     // console.log(componentName, "imageSide", imageSide);
 
+    const showShortDescription = props.showShortDescription;
+    // console.log(componentName, "props.showShortDescription", props.showShortDescription);
+    // console.log(componentName, "typeof props.showShortDescription", typeof props.showShortDescription);
+
+    const headerText = props.headerText;
+    // console.log(componentName, "props.headerText", props.headerText);
+
     const additionalText = props.additionalText;
     // console.log(componentName, "props.additionalText", props.additionalText);
 
-    // console.log(componentName, "props.match.params", props.match.params);
-    const titleParam = props.linkItem.linkName; // props.match.params.title;
+    let titleParam = props.linkName;
     // console.log(componentName, "typeof titleParam", typeof titleParam);
     // console.log(componentName, "titleParam", titleParam);
 
+    const randomTitle = props.randomTitle;
+    // console.log(componentName, "props.randomTitle", props.randomTitle);
+    // console.log(componentName, "typeof props.randomTitle", typeof props.randomTitle);
+
+    // Only show title in certain categories or by certain authors
+    // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category.category === "Novels" || title.category.category === "Short Story Collections" || title.category.category === "Non Fiction"));
+    const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+
+    if (randomTitle) {
+        titleParam = Math.floor(Math.random() * randomTitleList.length);
+    };
+
     let titleList = [];
     if (!isNaN(titleParam)) {
-        // If titleParam is a number, then it"s the titleID
-        titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
+        // If titleParam is a number, then it's the titleID
+        if (randomTitle) {
+            titleList = randomTitleList.filter(title => title.titleID === parseInt(titleParam));
+            // console.log(componentName, "randomTitle titleParam", titleParam);
+            // console.log(componentName, "randomTitle titleList", titleList);
+        } else {
+            titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
+        };
     } else if (titleParam !== undefined) {
-        // If titleParam is not a number, then it"s the title name
+        // If titleParam is not a number, then it's the title name
         titleList = titleListState.filter(title => title.titleURL === titleParam);
-        const title = titleListState.find(title => title.titleURL === titleParam);
-        // console.log(componentName, "typeof title", typeof title);
-        // console.log(componentName, "title", title);
     } else {
-        console.log("Title not found.");
+        // console.log("Title not found.");
         // Display all titles
         // titleList = [...titleListState];
     };
@@ -62,7 +83,7 @@ const TitleCard = (props) => {
         if (titleList.length > 0) {
             setErrTitleMessage("");
         } else {
-            setErrTitleMessage("Title not found.");
+            // setErrTitleMessage("Title not found.");
         };
     }, [titleList]);
 
@@ -70,8 +91,8 @@ const TitleCard = (props) => {
         <Container className="mt-4">
             <Row className="justify-content-center">
                 <Col xs="12">
-                    {/* {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
                     {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+                    {headerText !== undefined && headerText !== "" ? <h4 className="text-center">{headerText}</h4> : null}
                 </Col>
             </Row>
             <Row className="justify-content-center">
@@ -96,6 +117,7 @@ const TitleCard = (props) => {
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                                 {additionalText !== undefined && additionalText !== "" ? <CardText className="my-5">{additionalText}</CardText> : null}
+                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <CardText className="my-5"><div dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /></CardText> : null}
                             </CardBody>
                         </Col>
 

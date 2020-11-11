@@ -35,25 +35,25 @@ const New = () => {
 
             <Row>
             <Col xs="12" className="mb-4">
-            <TitleCard linkItem={{linkName: "Do-Androids-Dream-Of-Electric-Sheep"}} imageSide="right" additionalText="His most famous novel which inspired Blade Runner. A chilling futuristic story that demonstrates his creative genius. The most common gateway book for new readers of Philip K. Dick, I believe." />
+            <TitleCard linkName="Do-Androids-Dream-Of-Electric-Sheep" imageSide="right" additionalText="His most famous novel which inspired Blade Runner. A chilling futuristic story that demonstrates his creative genius. The most common gateway book for new readers of Philip K. Dick, I believe." />
             </Col>
             </Row>
 
             <Row>
             <Col xs="12" className="mb-4">
-            <TitleCard linkItem={{linkName: "Ubik"}} imageSide="left" additionalText="A great story of corporate intrigue where time moves backwards. Intensely psychological with unpredictable plot twists." />
+            <TitleCard linkName="Ubik" imageSide="left" additionalText="A great story of corporate intrigue where time moves backwards. Intensely psychological with unpredictable plot twists." />
             </Col>
             </Row>
 
             <Row>
             <Col xs="12" className="mb-4">
-            <TitleCard linkItem={{linkName: "The-Man-In-The-High-Castle"}} imageSide="right" additionalText="Dick’s masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters." />
+            <TitleCard linkName="The-Man-In-The-High-Castle" imageSide="right" additionalText="Dick’s masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters." />
             </Col>
             </Row>
 
             <Row>
             <Col xs="12" className="mb-4">
-            <TitleCard linkItem={{linkName: "Four-Novels-Of-The-1960s"}} imageSide="left" additionalText="Or instead if you are more daring and think you would like to read more than one of these books, this Library of America press book is a bargain, containing all three of these recommended books plus another excellent novel." />
+            <TitleCard linkName="Four-Novels-Of-The-1960s" imageSide="left" additionalText="Or instead if you are more daring and think you would like to read more than one of these books, this Library of America press book is a bargain, containing all three of these recommended books plus another excellent novel." />
             </Col>
             </Row>
 

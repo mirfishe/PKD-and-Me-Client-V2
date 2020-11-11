@@ -18,6 +18,8 @@ const Title = (props) => {
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
+    const physicalOnly = useSelector(state => state.app.physicalOnly);
+    const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
 
     const [errTitleMessage, setErrTitleMessage] = useState("");
     const [errEditionMessage, setErrEditionMessage] = useState("");
@@ -32,15 +34,25 @@ const Title = (props) => {
     // console.log(componentName, "typeof titleParam", typeof titleParam);
     // console.log(componentName, "titleParam", titleParam);
 
+    let titleNameBreadCrumb = "";
+
     let titleList = [];
     let editionList = [];
     if (!isNaN(titleParam)) {
-        // If titleParam is a number, then it"s the titleID
+        // If titleParam is a number, then it's the titleID
         document.title = titleList[0].title.titleName + " | " + appName + " | " + siteName;
         titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
-        editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
+
+        if (electronicOnly) {
+            editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam) && edition.medium.electronic === true);
+        } else if (physicalOnly) {
+            editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam) && edition.medium.electronic === false);
+        } else {
+            editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
+        };
+
     } else if (titleParam !== undefined) {
-        // If titleParam is not a number, then it"s the title name
+        // If titleParam is not a number, then it's the title name
         titleList = titleListState.filter(title => title.titleURL === titleParam);
         const title = titleListState.find(title => title.titleURL === titleParam);
         // console.log(componentName, "typeof title", typeof title);
@@ -48,7 +60,16 @@ const Title = (props) => {
 
         if (title !== undefined) {
             document.title = title.titleName + " | " + appName + " | " + siteName;
-            editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
+            titleNameBreadCrumb = title.titleName;
+
+            if (electronicOnly) {
+                editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID) && edition.medium.electronic === true);
+            } else if (physicalOnly) {
+                editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID) && edition.medium.electronic === false);
+            } else {
+                editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
+            };
+
         } else {
             document.title = "Title Not Found | " + appName + " | " + siteName;
             console.log("Title not found.");
@@ -70,10 +91,6 @@ const Title = (props) => {
     // Sort the titleList array by title.titleSort
     // Really not needed here since there should only be one item in the array
     titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-
-    if (electronicOnly) {
-        editionList = editionList.filter(edition => edition.medium.electronic === true);
-    };
 
     // Sort the editionList array by media.sortID
     editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
@@ -115,7 +132,7 @@ const Title = (props) => {
                         :
                         <BreadcrumbItem><Link to={"/titles/"} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/titles/");}}>All Titles</Link></BreadcrumbItem>
                         }
-                        <BreadcrumbItem active>{decodeURL(titleParam)}</BreadcrumbItem>
+                        <BreadcrumbItem active>{titleNameBreadCrumb}</BreadcrumbItem>
                     </Breadcrumb>
                 </Col>
             </Row>
@@ -163,6 +180,7 @@ const Title = (props) => {
                 <Col xs="12">
                 {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
                 {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+                {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
                 </Col>
             </Row>
             {editionList.length > 0 ?

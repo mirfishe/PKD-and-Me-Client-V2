@@ -118,6 +118,32 @@ export const displayParagraphs = (text) => {
     return newText;
 };
 
+export const truncateText = (text, limit) => {
+    // https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript
+
+    // console.log(componentName, "truncateText text", text);
+
+    // let newText = text;
+
+    if (text.length > limit) {
+
+        for (let i = limit; i > 0; i--) {
+            if (text.charAt(i) === ' ' && (text.charAt(i - 1) !== ',' || text.charAt(i - 1) !== '.' || text.charAt(i - 1) !== ';')) {
+                return text.substring(0, i) + '...';
+            };
+        };
+        
+        return text.substring(0, limit) + '...';
+        
+    } else {
+        return text;
+    };
+
+    // console.log(componentName, "truncateText newText", newText);
+
+    // return newText;
+};
+
 export const removeOnePixelImage = (text, ASIN) => {
 
     // console.log(componentName, "removeOnePixelImage text", text);
