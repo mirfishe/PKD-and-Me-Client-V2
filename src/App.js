@@ -64,7 +64,7 @@ function App() {
 
   // const showAllMenuItems = true;
   const showAllMenuItems = false;
-  
+
   if (showAllMenuItems) {
     showNew = true;
     showAbout = true;
@@ -556,69 +556,69 @@ const getEditions = () => {
       <BrowserRouter basename={routerBaseName}>
       <Navbar color="light" light>
         <Nav>
-          <NavbarBrand className="mx-2">
+          <NavbarBrand className="mx-3">
             <Link to="/"><HouseFill color="black" /></Link>
           </NavbarBrand>
           {showHomeopape ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
           </NavItem>
           : null}
           {showNew? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></Link>
           </NavItem>
           : null}
           {showAbout ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
           </NavItem>
           : null}
           {showCategoryList ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/categoryList"><NavbarText>Category List</NavbarText></Link>
           </NavItem>
           : null}
           {showMediaList ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/mediaList"><NavbarText>Media List</NavbarText></Link>
           </NavItem>
           : null}
           {showTitleList ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/titleList"><NavbarText>Title List</NavbarText></Link>
           </NavItem>
           : null}
           {showEditionList ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/editionList"><NavbarText>Edition List</NavbarText></Link>
           </NavItem>
           : null}
           {showAllCategories ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/categories"><NavbarText>All Categories</NavbarText></Link>
           </NavItem>
           : null}
           {showAllMedia ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/media"><NavbarText>All Media</NavbarText></Link>
           </NavItem>
           : null}
           {showAllTitles ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/titles"><NavbarText>All Titles</NavbarText></Link>
           </NavItem>
           : null}
           {showAllEditions ? 
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
             <Link to="/editions"><NavbarText>All Editions</NavbarText></Link>
           </NavItem>
           : null}
-          <NavItem className="mx-2">
+          <NavItem className="mx-3">
           <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
           </NavItem>
-          <NavItem className="mx-2">
-          <a href="https://philipdick.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
+          <NavItem className="mx-3">
+          <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
         </Nav>
       </Navbar>

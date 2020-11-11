@@ -43,12 +43,12 @@ const Media = (props) => {
 
     return(
         <React.Fragment>
-        <Card onClick={toggle} color="light" className="mt-2 p-2">Media</Card>
+        <Card onClick={toggle} color="light" className="mt-2 p-2"><h5>Media</h5></Card>
         <Collapse isOpen={isOpen}>
         <Nav vertical>
         {mediaList.map((media) => {
           return (
-            <NavItem key={media.mediaID}>
+            <NavItem key={media.mediaID} className="mt-2 pl-3">
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}
                 {/* <Link to={`/editions/${media.mediaID}`}>{media.mediaID}</Link>
                 <Link to={`/editions/${media.media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</Link>

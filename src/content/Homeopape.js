@@ -49,7 +49,7 @@ const Homeopape = () => {
 
             </Col>
             <Col xs="3">
-            <img src={setLocalPath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg")} alt="Philip K. Dick" />
+            <img src={setLocalImagePath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg")} alt="Philip K. Dick" />
             </Col>
             </Row>
 

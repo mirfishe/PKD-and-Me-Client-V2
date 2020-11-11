@@ -82,7 +82,7 @@ switch (profileType) {
     case "philipdick":
         API_URL = "https://pkd-and-me-server.herokuapp.com";
         siteName = "Philip K. Dick";
-        appName = "Philip K. Dick Bibliography";
+        appName = "PKD and Me";
         metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";
         defaultPageComponent = "Home";
         routerBaseName = "/pkd-and-me";
