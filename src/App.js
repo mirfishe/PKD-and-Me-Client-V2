@@ -6,7 +6,7 @@ import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert} from "reactstrap";
 import AppSettings from "./app/environment";
 import {encodeURL} from "./app/sharedFunctions";
-import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage} from "./app/appSlice";
+import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage} from "./app/appSlice";
 import {loadArrayURLs, setPageURL, setLinkItem} from "./app/urlsSlice";
 // import categoriesLoadData from "./bibliographyData/categoriesLoadData";
 // import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
@@ -45,6 +45,43 @@ function App() {
 
   const dispatch = useDispatch();
   // const history = useHistory();
+
+  let showNew = true;
+  let showAbout = true;
+  let showHomeopape = false;
+
+  let showCategoryList = false;
+  let showMediaList = false;
+  let showTitleList = false;
+  let showEditionList = false;
+
+  let showAllCategories = false;
+  let showAllMedia = false;
+  // This route no longer works. 
+  let showAllTitles = false;
+  // This route no longer works. 
+  let showAllEditions = false;
+
+  // const showAllMenuItems = true;
+  const showAllMenuItems = false;
+  
+  if (showAllMenuItems) {
+    showNew = true;
+    showAbout = true;
+    showHomeopape = true;
+
+    showCategoryList = true;
+    showMediaList = true;
+    showTitleList = true;
+    showEditionList = true;
+
+    showAllCategories = true;
+    showAllMedia = true;
+    // This route no longer works. 
+    showAllTitles = true;
+    // This route no longer works. 
+    showAllEditions = true;
+  };
 
   const pageURL = useSelector(state => state.urls.pageURL);
   const linkItem = useSelector(state => state.urls.linkItem);
@@ -89,6 +126,12 @@ function App() {
   // const electronicOnlyMessage = AppSettings.electronicOnlyMessage;
   dispatch(setElectronicOnlyMessage(AppSettings.electronicOnlyMessage));
 
+  // const physicalOnly = AppSettings.physicalOnly;
+  dispatch(setPhysicalOnly(AppSettings.physicalOnly));
+
+  // const physicalOnlyMessage = AppSettings.physicalOnlyMessage;
+  dispatch(setPhysicalOnlyMessage(AppSettings.physicalOnlyMessage));
+
   // Load settings from Redux slices
   const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
   const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
@@ -101,22 +144,6 @@ function App() {
   const editionsLoaded = useSelector(state => state.editions.editionsLoaded);
 
   const urlLookup = useSelector(state => state.urls.arrayURLs);
-
-  const [showNew, setShowNew] = useState(true);
-  const [showAbout, setShowAbout] = useState(true);
-  const [showHomeopape, setShowHomeopape] = useState(false);
-
-  const [showCategoryList, setShowCategoryList] = useState(false);
-  const [showMediaList, setShowMediaList] = useState(false);
-  const [showTitleList, setShowTitleList] = useState(false);
-  const [showEditionList, setShowEditionList] = useState(false);
-
-  const [showAllCategories, setShowAllCategories] = useState(false);
-  const [showAllMedia, setShowAllMedia] = useState(false);
-  // This route no longer works. 
-  const [showAllTitles, setShowAllTitles] = useState(false);
-  // This route no longer works. 
-  const [showAllEditions, setShowAllEditions] = useState(false);
 
   const [categoryMessage, setCategoryMessage] = useState("");
   const [errCategoryMessage, setErrCategoryMessage] = useState("");

@@ -13,7 +13,9 @@ let defaultPageComponent = "";
 let routerBaseName = "";
 let appOffline = false;
 let electronicOnly = false;
-let electronicOnlyMessage = "You are viewing electronic only editions.";
+let electronicOnlyMessage = "You are viewing only electronic editions.";
+let physicalOnly = false;
+let physicalOnlyMessage = "You are viewing only physical editions.";
 
 let tagManagerArgs = {
     gtmId: ""
@@ -62,6 +64,7 @@ switch (profileType) {
         routerBaseName = "";
         appOffline = false;
         electronicOnly = false;
+        physicalOnly = false;
         tagManagerArgs.gtmId = "";
         break;
     case "heroku":
@@ -73,6 +76,7 @@ switch (profileType) {
         routerBaseName = "";
         appOffline = false;
         electronicOnly = false;
+        physicalOnly = false;
         tagManagerArgs.gtmId = "";
         break;
     case "philipdick":
@@ -84,6 +88,7 @@ switch (profileType) {
         routerBaseName = "/pkd-and-me";
         appOffline = true;
         electronicOnly = false;
+        physicalOnly = false;
         tagManagerArgs.gtmId = "GTM-NW2GPF2";
         break;
     case "homeopape":
@@ -95,6 +100,7 @@ switch (profileType) {
         routerBaseName = "";
         appOffline = true;
         electronicOnly = true;
+        physicalOnly = false;
         tagManagerArgs.gtmId = "GTM-NXQJTGL";
         break;
     default:
@@ -107,6 +113,7 @@ switch (profileType) {
         routerBaseName = "";
         appOffline = false;
         electronicOnly = false;
+        physicalOnly = false;
         tagManagerArgs.gtmId = "";
 };
 
@@ -117,6 +124,16 @@ switch (profileType) {
 // Override the electronicOnly setting
 // electronicOnly = true;
 // electronicOnly = false;
+
+// Override the physicalOnly setting
+// physicalOnly = true;
+// physicalOnly = false;
+
+// In case accidentally set both to true, then electronicOnly overides.
+if (physicalOnly && electronicOnly) {
+    electronicOnly = true;
+    physicalOnly = false;
+};
 
 Object.assign(AppSettings, {hostname: window.location.hostname});
 Object.assign(AppSettings, {profileType: profileType});
@@ -130,6 +147,8 @@ Object.assign(AppSettings, {routerBaseName: routerBaseName});
 Object.assign(AppSettings, {appOffline: appOffline});
 Object.assign(AppSettings, {electronicOnly: electronicOnly});
 Object.assign(AppSettings, {electronicOnlyMessage: electronicOnlyMessage});
+Object.assign(AppSettings, {physicalOnly: physicalOnly});
+Object.assign(AppSettings, {physicalOnlyMessage: physicalOnlyMessage});
 Object.assign(AppSettings, {tagManagerArgs: tagManagerArgs});
 
 export default AppSettings;

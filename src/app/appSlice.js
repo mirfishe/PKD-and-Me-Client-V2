@@ -16,6 +16,8 @@ const initialState = {
     appOffline: false,
     electronicOnly: false,
     electronicOnlyMessage: "",
+    physicalOnly: false,
+    physicalOnlyMessage: "",
     linkItem: {}
 };
 
@@ -140,6 +142,24 @@ const appSlice = createSlice({
 
       }
     },
+    setPhysicalOnly: {
+      reducer(state, action) {
+        // console.log(componentName, "setPhysicalOnly action.payload", action.payload);
+        // console.log(componentName, "setPhysicalOnly action.payload.length", action.payload.length);
+
+        state.physicalOnly = action.payload;
+
+      }
+    },
+    setPhysicalOnlyMessage: {
+      reducer(state, action) {
+        // console.log(componentName, "setPhysicalOnlyMessage action.payload", action.payload);
+        // console.log(componentName, "setPhysicalOnlyMessage action.payload.length", action.payload.length);
+
+        state.physicalOnlyMessage = action.payload;
+
+      }
+    },
     setLinkItem: {
       reducer(state, action) {
         // console.log(componentName, "setLinkItem action.payload", action.payload);
@@ -152,6 +172,6 @@ const appSlice = createSlice({
 }
 });
 
-export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setLinkItem} = appSlice.actions;
+export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setLinkItem} = appSlice.actions;
 
 export default appSlice.reducer;

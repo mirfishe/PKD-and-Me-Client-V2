@@ -20,6 +20,8 @@ const Editions = (props) => {
     const editionSort = useSelector(state => state.editions.editionSort);
     const electronicOnly = useSelector(state => state.app.electronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
+    const physicalOnly = useSelector(state => state.app.physicalOnly);
+    const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
 
     const [errEditionMessage, setErrEditionMessage] = useState("");
 
@@ -52,16 +54,18 @@ const Editions = (props) => {
 
     let editionList = [];
     if (!isNaN(mediaParam)) {
-        // If mediaParam is a number, then it"s the mediaID
+        // If mediaParam is a number, then it's the mediaID
         document.title = editionList[0].medium.media + " | " + appName + " | " + siteName;
         if (electronicOnly) {
             editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === true);
+        } else if (physicalOnly) {
+            editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === false);
         } else {
             editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
         };
 
     } else if (mediaParam !== undefined) {
-        // If mediaParam is not a number, then it"s the media name
+        // If mediaParam is not a number, then it's the media name
         const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
         // console.log(componentName, "typeof media", typeof media);
         // console.log(componentName, "media", media);
@@ -71,6 +75,8 @@ const Editions = (props) => {
 
             if (electronicOnly) {
                 editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === true);
+            } else if (physicalOnly) {
+                editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === false);
             } else {
                 editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
             };
@@ -141,6 +147,7 @@ const Editions = (props) => {
                 <Col xs="12">
                     {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
                     {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+                    {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
                 </Col>
             </Row>
             <Row>

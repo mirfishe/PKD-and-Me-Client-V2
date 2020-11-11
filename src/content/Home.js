@@ -4,6 +4,7 @@ import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row} from "reactstrap";
 import {setLocalPath, setLocalImagePath} from "../app/sharedFunctions";
 import {setPageURL} from "../app/urlsSlice";
+import TitleCard from "../components/titles/TitleCard";
 
 const Home = () => {
 
@@ -41,9 +42,9 @@ const Home = () => {
                     anything else
                 description of what's here */}
 
-            <p>When someone discovers the work of Philip K. Dick and becomes fascinated by it, there is a phenomenon in which they must read all of his work as fast as possible. Sometimes the plots and incidents blur together into one mega-novel. And there are a lot of novels. It would be helpful for a person to have a checklist to mark the ones that they’ve read and the ability to enter what they thought of the novel.</p>
+            <p>When someone discovers the work of Philip K. Dick and becomes fascinated by it, there is a phenomenon in which they must read all of his work as fast as possible. Sometimes the plots and incidents blur together into one mega-novel. And there are a lot of novels.</p>
 
-            <p>Plus the application would provide resources such as publication dates, covers and links to more information for an even deeper dive into the work.</p>
+            <p>View resources such as publication dates, covers and links to more information for an even deeper dive into the work.</p>
 
             </Col>
             <Col xs="2">
@@ -51,6 +52,11 @@ const Home = () => {
             </Col>
             </Row>
 
+            <Row className="mx-4">
+            <Col xs="12">
+            <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+            </Col>
+            </Row>
 
         </Container>
     );
