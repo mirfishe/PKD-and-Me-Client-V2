@@ -116,8 +116,8 @@ const TitleCard = (props) => {
                                 <CardText><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
-                                {additionalText !== undefined && additionalText !== "" ? <CardText className="my-5">{additionalText}</CardText> : null}
-                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <CardText className="my-5"><div dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /></CardText> : null}
+                                {additionalText !== undefined && additionalText !== "" ? <CardText className="my-4">{additionalText}</CardText> : null}
+                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <CardText className="my-4"><div dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /></CardText> : null}
                             </CardBody>
                         </Col>
 
