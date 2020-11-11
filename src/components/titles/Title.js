@@ -117,7 +117,7 @@ const Title = (props) => {
         if (editionList.length > 0) {
             setErrEditionMessage("");
         } else {
-            setErrEditionMessage("No editions for purchase found.");
+            setErrEditionMessage("No editions found.");
         };
     }, [editionList]);
 

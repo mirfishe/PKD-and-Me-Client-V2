@@ -31,12 +31,12 @@ const Category = (props) => {
 
     return(
         <React.Fragment>
-        <Card onClick={toggle} color="light" className="mt-2 p-2">Categories</Card>
+        <Card onClick={toggle} color="light" className="mt-2 p-2"><h5>Categories</h5></Card>
         <Collapse isOpen={isOpen}>
         <Nav vertical>
         {categoryListState.map((category) => {
           return (
-            <NavItem key={category.categoryID}>
+            <NavItem key={category.categoryID} className="mt-2 pl-3">
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(category.categoryID)}}>{category.category}</a> */}
                 {/* <Link to={`/titles/${category.categoryID}`}>{category.categoryID}</Link>
                 <Link to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</Link>

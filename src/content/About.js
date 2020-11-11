@@ -41,7 +41,7 @@ const About = () => {
 
             </Col>
             <Col xs="2">
-            <img src={setLocalPath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
+            <img src={setLocalImagePath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
             </Col>
             </Row>
 
