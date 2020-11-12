@@ -10,19 +10,19 @@ import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgt
 import {loadArrayURLs, setPageURL, setLinkItem} from "./app/urlsSlice";
 // import categoriesLoadData from "./bibliographyData/categoriesLoadData";
 // import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
-import CategoryData from "./bibliographyData/Categories.json";
+// import CategoryData from "./bibliographyData/Categories.json";
 import {loadArrayCategories, setCategoriesDataOffline} from "./bibliographyData/categoriesSlice";
 // import editionsLoadData from "./bibliographyData/editionsLoadData";
 // import editionsOfflineData from "./bibliographyData/editionsOfflineData";
-import EditionData from "./bibliographyData/Editions.json";
+// import EditionData from "./bibliographyData/Editions.json";
 import {loadArrayEditions, setEditionsDataOffline} from "./bibliographyData/editionsSlice";
 // import mediaLoadData from "./bibliographyData/mediaLoadData";
 // import mediaOfflineData from "./bibliographyData/mediaOfflineData";
-import MediaData from "./bibliographyData/Media.json";
+// import MediaData from "./bibliographyData/Media.json";
 import {loadArrayMedia, setMediaDataOffline} from "./bibliographyData/mediaSlice";
 // import titlesLoadData from "./bibliographyData/titlesLoadData";
 // import titlesOfflineData from "./bibliographyData/titlesOfflineData";
-import TitleData from "./bibliographyData/Titles.json";
+// import TitleData from "./bibliographyData/Titles.json";
 import {loadArrayTitles, setTitlesDataOffline} from "./bibliographyData/titlesSlice";
 
 import Home from "./content/Home";
@@ -90,46 +90,47 @@ function App() {
   // const hostname = AppSettings.hostname;
   dispatch(setHostname(AppSettings.hostname));
 
-  // const profileType = AppSettings.profileType;
+  let profileType = AppSettings.profileType;
   dispatch(setProfileType(AppSettings.profileType));
 
-  // const API_URL = AppSettings.API_URL;
+  // let API_URL = AppSettings.API_URL;
   dispatch(setAPI_URL(AppSettings.API_URL));
 
-  const baseURL = AppSettings.baseURL;
+  let baseURL = AppSettings.baseURL;
   dispatch(setBaseURL(AppSettings.baseURL));
 
-  // const tagManagerArgsgtmId = AppSettings.tagManagerArgs.gtmId;
+  // let tagManagerArgsgtmId = AppSettings.tagManagerArgs.gtmId;
   dispatch(setTagManagerArgsgtmId(AppSettings.tagManagerArgs.gtmId));
 
-  // const siteName = AppSettings.siteName;
+  // console.log(componentName, "AppSettings.siteName", AppSettings.siteName);
+  // let siteName = AppSettings.siteName;
   dispatch(setSiteName(AppSettings.siteName));
 
-  // const appName = AppSettings.appName;
+  // let appName = AppSettings.appName;
   dispatch(setAppName(AppSettings.appName));
 
-  // const metaDescription = AppSettings.metaDescription;
+  // let metaDescription = AppSettings.metaDescription;
   dispatch(setMetaDescription(AppSettings.metaDescription));
 
-  const defaultPageComponent = AppSettings.defaultPageComponent;
+  let defaultPageComponent = AppSettings.defaultPageComponent;
   dispatch(setDefaultPageComponent(AppSettings.defaultPageComponent));
 
-  const routerBaseName = AppSettings.routerBaseName;
+  let routerBaseName = AppSettings.routerBaseName;
   dispatch(setRouterBaseName(AppSettings.routerBaseName));
 
-  const appOffline = AppSettings.appOffline;
+  let appOffline = AppSettings.appOffline;
   dispatch(setAppOffline(AppSettings.appOffline));
 
-  // const electronicOnly = AppSettings.electronicOnly;
+  // let electronicOnly = AppSettings.electronicOnly;
   dispatch(setElectronicOnly(AppSettings.electronicOnly));
 
-  // const electronicOnlyMessage = AppSettings.electronicOnlyMessage;
+  // let electronicOnlyMessage = AppSettings.electronicOnlyMessage;
   dispatch(setElectronicOnlyMessage(AppSettings.electronicOnlyMessage));
 
-  // const physicalOnly = AppSettings.physicalOnly;
+  // let physicalOnly = AppSettings.physicalOnly;
   dispatch(setPhysicalOnly(AppSettings.physicalOnly));
 
-  // const physicalOnlyMessage = AppSettings.physicalOnlyMessage;
+  // let physicalOnlyMessage = AppSettings.physicalOnlyMessage;
   dispatch(setPhysicalOnlyMessage(AppSettings.physicalOnlyMessage));
 
   // Load settings from Redux slices
@@ -162,6 +163,129 @@ function App() {
   // const [editionResultsFound, setEditionResultsFound] = useState(null);
   // const [editionList, setEditionList] = useState([]);
 
+  const loadAppSettings = () => {
+    // console.log(componentName, "fetchLocalDataAppSettings");
+    // console.log(componentName, "fetchLocalDataAppSettings profileType", profileType);
+
+    let url = "./appSettings/" + profileType + ".json";
+
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "fetchLocalDataAppSettings response", response);
+        if (!response.ok) {
+          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // load offline data
+          // return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
+        } else {
+          return response.json();
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "fetchLocalDataAppSettings data", data);
+
+        if (data.resultsFound === true) {
+
+          // Duplicated from the code above
+          // Won't overwrite the settings from above in AppSettings because the component re-renders after the fetch and restores the settings to the ones in AppSettings
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.profileType", data.profileType);
+          if (data.profileType !== undefined && data.profileType !== "") {
+            profileType = data.profileType;
+            dispatch(setProfileType(data.profileType));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.API_URL", data.API_URL);
+          if (data.API_URL !== undefined && data.API_URL !== "") {
+            // API_URL = data.API_URL;
+            dispatch(setAPI_URL(data.API_URL));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.baseURL", data.baseURL);
+          if (data.baseURL !== undefined && data.baseURL !== "") {
+            baseURL = data.baseURL;
+            dispatch(setBaseURL(data.baseURL));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.tagManagerArgs", data.tagManagerArgs);
+          // console.log(componentName, "fetchLocalDataAppSettings data.tagManagerArgs.gtmId", data.tagManagerArgs.gtmId);
+          if (data.tagManagerArgs !== undefined && data.tagManagerArgs.gtmId !== undefined && data.tagManagerArgs.gtmId !== "") {
+            // tagManagerArgsgtmId = data.tagManagerArgs.gtmId;
+            dispatch(setTagManagerArgsgtmId(data.tagManagerArgs.gtmId));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.siteName", data.siteName);
+          if (data.siteName !== undefined && data.siteName !== "") {
+            // siteName = data.siteName;
+            dispatch(setSiteName(data.siteName));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.appName", data.appName);
+          if (data.appName !== undefined && data.appName !== "") {
+            // appName = data.appName;
+            dispatch(setAppName(data.appName));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.metaDescription", data.metaDescription);
+          if (data.metaDescription !== undefined && data.metaDescription !== "") {
+            // metaDescription = data.metaDescription;
+            dispatch(setMetaDescription(data.metaDescription));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.defaultPageComponent", data.defaultPageComponent);
+          if (data.defaultPageComponent !== undefined && data.defaultPageComponent !== "") {
+            defaultPageComponent = data.defaultPageComponent;
+            dispatch(setDefaultPageComponent(data.defaultPageComponent));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.routerBaseName", data.routerBaseName);
+          if (data.routerBaseName !== undefined && data.routerBaseName !== "") {
+            routerBaseName = data.routerBaseName;
+            dispatch(setRouterBaseName(data.routerBaseName));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.appOffline", data.appOffline);
+          if (data.appOffline !== undefined) {
+            appOffline = data.appOffline;
+            dispatch(setAppOffline(data.appOffline));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.electronicOnly", data.electronicOnly);
+          if (data.electronicOnly !== undefined) {
+            // electronicOnly = data.electronicOnly;
+            dispatch(setElectronicOnly(data.electronicOnly));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.electronicOnlyMessage", data.electronicOnlyMessage);
+          if (data.electronicOnlyMessage !== undefined && data.electronicOnlyMessage !== "") {
+            // electronicOnlyMessage = data.electronicOnlyMessage;
+            dispatch(setElectronicOnlyMessage(data.electronicOnlyMessage));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.physicalOnly", data.physicalOnly);
+          if (data.physicalOnly !== undefined) {
+            // physicalOnly = data.physicalOnly;
+            dispatch(setPhysicalOnly(data.physicalOnly));
+          };
+
+          // console.log(componentName, "fetchLocalDataAppSettings data.physicalOnlyMessage", data.physicalOnlyMessage);
+          if (data.physicalOnlyMessage !== undefined && data.physicalOnlyMessage !== "") {
+            // physicalOnlyMessage = data.physicalOnlyMessage;
+            dispatch(setPhysicalOnlyMessage(data.physicalOnlyMessage));
+          };
+
+        } else {
+          console.log(componentName, "fetchLocalDataAppSettings resultsFound error", data.message);
+        };
+
+    })
+    .catch(error => {
+        console.log(componentName, "fetchLocalDataAppSettings error", error);
+        // console.log(componentName, "fetchLocalDataAppSettings error.name", error.name);
+        // console.log(componentName, "fetchLocalDataAppSettings error.message", error.message);
+    });
+
+};
+
   const loadDataStore = (data, source) => {
 
     if (source === "category") {
@@ -176,6 +300,9 @@ function App() {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayTitles(data));
       loadURLs(data, source);
+    } else if (source === "edition") {
+      // console.log(componentName, "loadDataStore data", data);
+      dispatch(loadArrayEditions(data));
     };
 
   };
@@ -211,7 +338,7 @@ function App() {
     // setCategoryResultsFound(null);
     // setCategoryList([]);
 
-    let url = baseURL + "category/";
+    let url = baseURL + "category/list";
 
     fetch(url)
     .then(response => {
@@ -220,7 +347,8 @@ function App() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
           dispatch(setCategoriesDataOffline(true));
-          return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
+          // return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
+          return {resultsFound: false, message: "Offline Categories data used."};
         } else {
           dispatch(setCategoriesDataOffline(false));
           return response.json();
@@ -235,7 +363,6 @@ function App() {
         if (data.resultsFound === true) {
           // setCategoryList(data.categories);
           // dispatch(loadArrayCategories(data.categories));
-
           loadDataStore(data.categories, "category");
 
           // loadURLs(data.categories, "category");
@@ -250,7 +377,9 @@ function App() {
           console.log(componentName, "getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
           dispatch(setCategoriesDataOffline(true));
-          dispatch(loadArrayCategories(CategoryData));
+          // dispatch(loadArrayCategories(CategoryData));
+          // loadDataStore(CategoryData, "category");
+          fetchLocalDataCategories();
         };
 
     })
@@ -260,206 +389,442 @@ function App() {
         // console.log(componentName, "getCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         dispatch(setCategoriesDataOffline(true));
-        dispatch(loadArrayCategories(CategoryData));
+        // dispatch(loadArrayCategories(CategoryData));
+        // loadDataStore(CategoryData, "category");
+        fetchLocalDataCategories();
     });
 
-};
+  };
 
-const getMedia = () => {
-  // console.log(componentName, "getMedia");
-  // console.log(componentName, "getMedia baseURL", baseURL);
+  const getMedia = () => {
+    // console.log(componentName, "getMedia");
+    // console.log(componentName, "getMedia baseURL", baseURL);
 
-  setMediaMessage("");
-  setErrMediaMessage("");
-  // setMediaResultsFound(null);
-  // setMediaList([]);
+    setMediaMessage("");
+    setErrMediaMessage("");
+    // setMediaResultsFound(null);
+    // setMediaList([]);
 
-  // console.log(componentName, "getMedia this.props.mediaID", this.props.mediaID);
-  // this.props.setMediaID(null);
-  // console.log(componentName, "getMedia this.props.titleID", this.props.titleID);
-  // this.props.setTitleID(null);
+    // console.log(componentName, "getMedia this.props.mediaID", this.props.mediaID);
+    // this.props.setMediaID(null);
+    // console.log(componentName, "getMedia this.props.titleID", this.props.titleID);
+    // this.props.setTitleID(null);
 
-  let url = baseURL + "media/";
+    let url = baseURL + "media/list";
 
-  fetch(url)
-  .then(response => {
-      // console.log(componentName, "getMedia response", response);
-      if (!response.ok) {
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "getMedia response", response);
+        if (!response.ok) {
+            // throw Error(response.status + " " + response.statusText + " " + response.url);
+            // load offline data
+            dispatch(setMediaDataOffline(true));
+            // return {resultsFound: true, message: "Offline Media data used.", media: MediaData};
+            return {resultsFound: false, message: "Offline Media data used."};
+        } else {
+            dispatch(setMediaDataOffline(false));
+            return response.json();
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "getMedia data", data);
+
+        // setMediaResultsFound(data.resultsFound);
+        // setMediaMessage(data.message);
+
+        if (data.resultsFound === true) {
+            // setMediaList(data.media);
+            // dispatch(loadArrayMedia(data.media));
+            loadDataStore(data.media, "media");
+
+            // loadURLs(data.media, "media");
+            // let arrayURLs = [];
+            // for (let i = 0; i < data.media.length; i++) {
+            //   // console.log(componentName, "getMedia data.media[i].media", data.media[i].media);
+            //   arrayURLs.push({linkName: data.media[i].media, linkType: "media", linkID: data.media[i].mediaID});
+            // };
+            // dispatch(loadArrayURLs(arrayURLs));
+
+        } else {
+            console.log(componentName, "getMedia resultsFound error", data.message);
+            // setErrMediaMessage(data.message);
+            dispatch(setMediaDataOffline(true));
+            // dispatch(loadArrayMedia(MediaData));
+            // loadDataStore(MediaData, "media");
+            fetchLocalDataMedia();
+        };
+
+    })
+    .catch(error => {
+        console.log(componentName, "getMedia error", error);
+        // console.log(componentName, "getMedia error.name", error.name);
+        // console.log(componentName, "getMedia error.message", error.message);
+        // setErrMediaMessage(error.name + ": " + error.message);
+        dispatch(setMediaDataOffline(true));
+        // dispatch(loadArrayMedia(MediaData));
+        // loadDataStore(MediaData, "media");
+        fetchLocalDataMedia();
+    });
+
+  };
+
+  const getTitles = () => {
+    // console.log(componentName, "getTitle");
+    // console.log(componentName, "getTitle baseURL", baseURL);
+
+    setTitleMessage("");
+    setErrTitleMessage("");
+    // setTitleResultsFound(null);
+    // setTitleList([]);
+
+    // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
+    // this.props.setTitleID(null);
+    // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
+    // this.props.setTitleID(null);
+
+    let url = baseURL + "title/list";
+
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "getTitle response", response);
+        if (!response.ok) {
+            // throw Error(response.status + " " + response.statusText + " " + response.url);
+            // load offline data
+            dispatch(setTitlesDataOffline(true));
+            // return {resultsFound: true, message: "Offline Titles data used.", titles: TitleData};
+            return {resultsFound: false, message: "Offline Titles data used."};
+        } else {
+            dispatch(setTitlesDataOffline(false));
+            return response.json();
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "getTitle data", data);
+
+        // setTitleResultsFound(data.resultsFound);
+        // setTitleMessage(data.message);
+
+        if (data.resultsFound === true) {
+            // setTitleList(data.titles);
+            // dispatch(loadArrayTitles(data.titles));
+            loadDataStore(data.titles, "title");
+
+            // loadURLs(data.titles, "title");
+            // let arrayURLs = [];
+            // for (let i = 0; i < data.titles.length; i++) {
+            //   // console.log(componentName, "getTitles data.titles[i].titleURL", data.titles[i].titleURL);
+            //   arrayURLs.push({linkName: data.titles[i].titleURL, linkType: "title", linkID: data.titles[i].titleID});
+            // };
+            // dispatch(loadArrayURLs(arrayURLs));
+
+        } else {
+            console.log(componentName, "getTitles resultsFound error", data.message);
+            // setErrTitleMessage(data.message);
+            dispatch(setTitlesDataOffline(true));
+            // dispatch(loadArrayTitles(TitleData));
+            // loadDataStore(TitleData, "title");
+            fetchLocalDataTitles();
+        };
+
+    })
+    .catch(error => {
+        console.log(componentName, "getTitle error", error);
+        // console.log(componentName, "getTitle error.name", error.name);
+        // console.log(componentName, "getTitle error.message", error.message);
+        // setErrTitleMessage(error.name + ": " + error.message);
+        dispatch(setTitlesDataOffline(true));
+        // dispatch(loadArrayTitles(TitleData));
+        // loadDataStore(TitleData, "title");
+        fetchLocalDataTitles();
+    });
+
+  };
+
+  const getEditions = () => {
+    // console.log(componentName, "getEdition");
+    // console.log(componentName, "getEdition baseURL", baseURL);
+
+    setEditionMessage("");
+    setErrEditionMessage("");
+    // setEditionResultsFound(null);
+    // setEditionList([]);
+
+    // console.log(componentName, "getEdition this.props.editionID", this.props.editionID);
+    // this.props.setEditionID(null);
+    // console.log(componentName, "getEdition this.props.titleID", this.props.titleID);
+    // this.props.setTitleID(null);
+
+    let url = baseURL + "edition/list";
+
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "getEdition response", response);
+        if (!response.ok) {
+            // throw Error(response.status + " " + response.statusText + " " + response.url);
+            // load offline data
+            dispatch(setEditionsDataOffline(true));
+            // return {resultsFound: true, message: "Offline Editions data used.", editions: EditionData};
+            return {resultsFound: false, message: "Offline Editions data used."};
+        } else {
+            dispatch(setEditionsDataOffline(false));
+            return response.json();
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "getEdition data", data);
+
+        // setEditionResultsFound(data.resultsFound);
+        // setEditionMessage(data.message);
+
+        if (data.resultsFound === true) {
+            // setEditionList(data.editions);
+            // dispatch(loadArrayEditions(data.editions));
+            loadDataStore(data.editions, "edition");
+        } else {
+            console.log(componentName, "getEditions resultsFound error", data.message);
+            // setErrEditionMessage(data.message);
+            dispatch(setEditionsDataOffline(true));
+            // dispatch(loadArrayEditions(EditionData));
+            // loadDataStore(EditionData, "edition");
+            fetchLocalDataEditions();
+        };
+
+    })
+    .catch(error => {
+        console.log(componentName, "getEditions error", error);
+        // console.log(componentName, "getEdition error.name", error.name);
+        // console.log(componentName, "getEdition error.message", error.message);
+        // setErrEditionMessage(error.name + ": " + error.message);
+        dispatch(setEditionsDataOffline(true));
+        // dispatch(loadArrayEditions(EditionData));
+        // loadDataStore(EditionData, "edition");
+        fetchLocalDataEditions();
+    });
+
+  };
+
+  const fetchLocalDataCategories = () => {
+    // console.log(componentName, "fetchLocalDataCategories");
+
+    let url = "./bibliographyData/Categories.json";
+
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "fetchLocalDataCategories response", response);
+        if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
-          dispatch(setMediaDataOffline(true));
-          return {resultsFound: true, message: "Offline Media data used.", media: MediaData};
-      } else {
-          dispatch(setMediaDataOffline(false));
+          dispatch(setCategoriesDataOffline(true));
+          // return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
+          return {resultsFound: false, message: "Offline Categories data fetch failed."};
+        } else {
+          dispatch(setCategoriesDataOffline(true));
           return response.json();
-      };
-  })
-  .then(data => {
-      // console.log(componentName, "getMedia data", data);
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "fetchLocalDataCategories data", data);
 
-      // setMediaResultsFound(data.resultsFound);
-      // setMediaMessage(data.message);
+        if (data.resultsFound === true) {
+          // setCategoryList(data.categories);
+          // dispatch(loadArrayCategories(data.categories));
+          loadDataStore(data.categories, "category");
 
-      if (data.resultsFound === true) {
-          // setMediaList(data.media);
-          // dispatch(loadArrayMedia(data.media));
-
-          loadDataStore(data.media, "media");
-
-          // loadURLs(data.media, "media");
+          // loadURLs(data.categories, "category");
           // let arrayURLs = [];
-          // for (let i = 0; i < data.media.length; i++) {
-          //   // console.log(componentName, "getMedia data.media[i].media", data.media[i].media);
-          //   arrayURLs.push({linkName: data.media[i].media, linkType: "media", linkID: data.media[i].mediaID});
+          // for (let i = 0; i < data.categories.length; i++) {
+          //   // console.log(componentName, "fetchLocalDataCategories data.categories[i].category", data.categories[i].category);
+          //   arrayURLs.push({linkName: data.categories[i].category, linkType: "category", linkID: data.categories[i].categoryID});
           // };
           // dispatch(loadArrayURLs(arrayURLs));
 
-      } else {
-          console.log(componentName, "getMedia resultsFound error", data.message);
-          // setErrMediaMessage(data.message);
-          dispatch(setMediaDataOffline(true));
-          dispatch(loadArrayMedia(MediaData));
-      };
+        } else {
+          console.log(componentName, "fetchLocalDataCategories resultsFound error", data.message);
+          // setErrCategoryMessage(data.message);
+          dispatch(setCategoriesDataOffline(true));
+          // dispatch(loadArrayCategories(CategoryData));
+          // loadDataStore(CategoryData, "category");
+        };
 
-  })
-  .catch(error => {
-      console.log(componentName, "getMedia error", error);
-      // console.log(componentName, "getMedia error.name", error.name);
-      // console.log(componentName, "getMedia error.message", error.message);
-      // setErrMediaMessage(error.name + ": " + error.message);
-      dispatch(setMediaDataOffline(true));
-      dispatch(loadArrayMedia(MediaData));
-  });
+    })
+    .catch(error => {
+        console.log(componentName, "fetchLocalDataCategories error", error);
+        // console.log(componentName, "fetchLocalDataCategories error.name", error.name);
+        // console.log(componentName, "fetchLocalDataCategories error.message", error.message);
+        // setErrCategoryMessage(error.name + ": " + error.message);
+        dispatch(setCategoriesDataOffline(true));
+        // dispatch(loadArrayCategories(CategoryData));
+        // loadDataStore(CategoryData, "category");
+    });
 
-};
+  };
 
-const getTitles = () => {
-  // console.log(componentName, "getTitle");
-  // console.log(componentName, "getTitle baseURL", baseURL);
+  const fetchLocalDataMedia = () => {
+    // console.log(componentName, "fetchLocalDataMedia");
 
-  setTitleMessage("");
-  setErrTitleMessage("");
-  // setTitleResultsFound(null);
-  // setTitleList([]);
+    let url = "./bibliographyData/Media.json";
 
-  // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
-  // this.props.setTitleID(null);
-  // console.log(componentName, "getTitle this.props.titleID", this.props.titleID);
-  // this.props.setTitleID(null);
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "fetchLocalDataMedia response", response);
+        if (!response.ok) {
+            // throw Error(response.status + " " + response.statusText + " " + response.url);
+            // load offline data
+            dispatch(setMediaDataOffline(true));
+            // return {resultsFound: true, message: "Offline Media data used.", media: MediaData};
+            return {resultsFound: false, message: "Offline Media data fetch failed."};
+        } else {
+            dispatch(setMediaDataOffline(true));
+            return response.json();
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "fetchLocalDataMedia data", data);
 
-  let url = baseURL + "title/list";
+        if (data.resultsFound === true) {
+            // setMediaList(data.media);
+            // dispatch(loadArrayMedia(data.media));
+            loadDataStore(data.media, "media");
 
-  fetch(url)
-  .then(response => {
-      // console.log(componentName, "getTitle response", response);
-      if (!response.ok) {
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
-          // load offline data
-          dispatch(setTitlesDataOffline(true));
-          return {resultsFound: true, message: "Offline Titles data used.", titles: TitleData};
-      } else {
-          dispatch(setTitlesDataOffline(false));
-          return response.json();
-      };
-  })
-  .then(data => {
-      // console.log(componentName, "getTitle data", data);
+            // loadURLs(data.media, "media");
+            // let arrayURLs = [];
+            // for (let i = 0; i < data.media.length; i++) {
+            //   // console.log(componentName, "fetchLocalDataMedia data.media[i].media", data.media[i].media);
+            //   arrayURLs.push({linkName: data.media[i].media, linkType: "media", linkID: data.media[i].mediaID});
+            // };
+            // dispatch(loadArrayURLs(arrayURLs));
 
-      // setTitleResultsFound(data.resultsFound);
-      // setTitleMessage(data.message);
+        } else {
+            console.log(componentName, "fetchLocalDataMedia resultsFound error", data.message);
+            // setErrMediaMessage(data.message);
+            dispatch(setMediaDataOffline(true));
+            // dispatch(loadArrayMedia(MediaData));
+            // loadDataStore(MediaData, "media");
+        };
 
-      if (data.resultsFound === true) {
-          // setTitleList(data.titles);
-          // dispatch(loadArrayTitles(data.titles));
+    })
+    .catch(error => {
+        console.log(componentName, "fetchLocalDataMedia error", error);
+        // console.log(componentName, "fetchLocalDataMedia error.name", error.name);
+        // console.log(componentName, "fetchLocalDataMedia error.message", error.message);
+        // setErrMediaMessage(error.name + ": " + error.message);
+        dispatch(setMediaDataOffline(true));
+        // dispatch(loadArrayMedia(MediaData));
+        // loadDataStore(MediaData, "media");
+    });
 
-          loadDataStore(data.titles, "title");
+  };
 
-          // loadURLs(data.titles, "title");
-          // let arrayURLs = [];
-          // for (let i = 0; i < data.titles.length; i++) {
-          //   // console.log(componentName, "getTitles data.titles[i].titleURL", data.titles[i].titleURL);
-          //   arrayURLs.push({linkName: data.titles[i].titleURL, linkType: "title", linkID: data.titles[i].titleID});
-          // };
-          // dispatch(loadArrayURLs(arrayURLs));
+  const fetchLocalDataTitles = () => {
+    // console.log(componentName, "fetchLocalDataTitles");
 
-      } else {
-          console.log(componentName, "getTitles resultsFound error", data.message);
-          // setErrTitleMessage(data.message);
-          dispatch(setTitlesDataOffline(true));
-          dispatch(loadArrayTitles(TitleData));
-      };
+    let url = "./bibliographyData/Titles.json";
 
-  })
-  .catch(error => {
-      console.log(componentName, "getTitle error", error);
-      // console.log(componentName, "getTitle error.name", error.name);
-      // console.log(componentName, "getTitle error.message", error.message);
-      // setErrTitleMessage(error.name + ": " + error.message);
-      dispatch(setTitlesDataOffline(true));
-      dispatch(loadArrayTitles(TitleData));
-  });
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "fetchLocalDataTitles response", response);
+        if (!response.ok) {
+            // throw Error(response.status + " " + response.statusText + " " + response.url);
+            // load offline data
+            dispatch(setTitlesDataOffline(true));
+            // return {resultsFound: true, message: "Offline Titles data used.", titles: TitleData};
+            return {resultsFound: false, message: "Offline Titles data fetch failed."};
+        } else {
+            dispatch(setTitlesDataOffline(true));
+            return response.json();
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "fetchLocalDataTitles data", data);
 
-};
+        if (data.resultsFound === true) {
+            // setTitleList(data.titles);
+            // dispatch(loadArrayTitles(data.titles));
+            loadDataStore(data.titles, "title");
 
-const getEditions = () => {
-  // console.log(componentName, "getEdition");
-  // console.log(componentName, "getEdition baseURL", baseURL);
+            // loadURLs(data.titles, "title");
+            // let arrayURLs = [];
+            // for (let i = 0; i < data.titles.length; i++) {
+            //   // console.log(componentName, "fetchLocalDataTitles data.titles[i].titleURL", data.titles[i].titleURL);
+            //   arrayURLs.push({linkName: data.titles[i].titleURL, linkType: "title", linkID: data.titles[i].titleID});
+            // };
+            // dispatch(loadArrayURLs(arrayURLs));
 
-  setEditionMessage("");
-  setErrEditionMessage("");
-  // setEditionResultsFound(null);
-  // setEditionList([]);
+        } else {
+            console.log(componentName, "fetchLocalDataTitles resultsFound error", data.message);
+            // setErrTitleMessage(data.message);
+            dispatch(setTitlesDataOffline(true));
+            // dispatch(loadArrayTitles(TitleData));
+            // loadDataStore(TitleData, "title");
+        };
 
-  // console.log(componentName, "getEdition this.props.editionID", this.props.editionID);
-  // this.props.setEditionID(null);
-  // console.log(componentName, "getEdition this.props.titleID", this.props.titleID);
-  // this.props.setTitleID(null);
+    })
+    .catch(error => {
+        console.log(componentName, "fetchLocalDataTitles error", error);
+        // console.log(componentName, "fetchLocalDataTitles error.name", error.name);
+        // console.log(componentName, "fetchLocalDataTitles error.message", error.message);
+        // setErrTitleMessage(error.name + ": " + error.message);
+        dispatch(setTitlesDataOffline(true));
+        // dispatch(loadArrayTitles(TitleData));
+        // loadDataStore(TitleData, "title");
+    });
 
-  let url = baseURL + "edition/list";
+  };
 
-  fetch(url)
-  .then(response => {
-      // console.log(componentName, "getEdition response", response);
-      if (!response.ok) {
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
-          // load offline data
-          dispatch(setEditionsDataOffline(true));
-          return {resultsFound: true, message: "Offline Editions data used.", editions: EditionData};
-      } else {
-          dispatch(setEditionsDataOffline(false));
-          return response.json();
-      };
-  })
-  .then(data => {
-      // console.log(componentName, "getEdition data", data);
+  const fetchLocalDataEditions = () => {
+    // console.log(componentName, "fetchLocalDataEditions");
 
-      // setEditionResultsFound(data.resultsFound);
-      // setEditionMessage(data.message);
+    let url = "./bibliographyData/Editions.json";
 
-      if (data.resultsFound === true) {
-          // setEditionList(data.editions);
-          dispatch(loadArrayEditions(data.editions));
-      } else {
-          console.log(componentName, "getEditions resultsFound error", data.message);
-          // setErrEditionMessage(data.message);
-          dispatch(setEditionsDataOffline(true));
-          dispatch(loadArrayEditions(EditionData));
-      };
+    fetch(url)
+    .then(response => {
+        // console.log(componentName, "fetchLocalDataEditions response", response);
+        if (!response.ok) {
+            // throw Error(response.status + " " + response.statusText + " " + response.url);
+            // load offline data
+            dispatch(setEditionsDataOffline(true));
+            // return {resultsFound: true, message: "Offline Editions data used.", editions: EditionData};
+            return {resultsFound: false, message: "Offline Editions data fetch failed."};
+        } else {
+            dispatch(setEditionsDataOffline(false));
+            return response.json();
+        };
+    })
+    .then(data => {
+        // console.log(componentName, "fetchLocalDataEditions data", data);
 
-  })
-  .catch(error => {
-      console.log(componentName, "getEditions error", error);
-      // console.log(componentName, "getEdition error.name", error.name);
-      // console.log(componentName, "getEdition error.message", error.message);
-      // setErrEditionMessage(error.name + ": " + error.message);
-      dispatch(setEditionsDataOffline(true));
-      dispatch(loadArrayEditions(EditionData));
-  });
+        // setEditionResultsFound(data.resultsFound);
+        // setEditionMessage(data.message);
 
-};
+        if (data.resultsFound === true) {
+            // setEditionList(data.editions);
+            // dispatch(loadArrayEditions(data.editions));
+            loadDataStore(data.editions, "edition");
+        } else {
+            console.log(componentName, "fetchLocalDataEditions resultsFound error", data.message);
+            // setErrEditionMessage(data.message);
+            dispatch(setEditionsDataOffline(true));
+            // dispatch(loadArrayEditions(EditionData));
+            // loadDataStore(EditionData, "edition");
+        };
+
+    })
+    .catch(error => {
+        console.log(componentName, "fetchLocalDataEditions error", error);
+        // console.log(componentName, "fetchLocalDataEditions error.name", error.name);
+        // console.log(componentName, "fetchLocalDataEditions error.message", error.message);
+        // setErrEditionMessage(error.name + ": " + error.message);
+        dispatch(setEditionsDataOffline(true));
+        // dispatch(loadArrayEditions(EditionData));
+        // loadDataStore(EditionData, "edition");
+    });
+
+  };
 
   useEffect(() => {
     // console.log(componentName, "useEffect");
+
+    loadAppSettings();
 
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
@@ -467,24 +832,28 @@ const getEditions = () => {
       if(!categoriesLoaded) {
         dispatch(setCategoriesDataOffline(true));
         // dispatch(loadArrayCategories(CategoryData));
-        loadDataStore(CategoryData, "category");
+        // loadDataStore(CategoryData, "category");
+        fetchLocalDataCategories();
       };
 
       if(!mediaLoaded) {
         dispatch(setMediaDataOffline(true));
         // dispatch(loadArrayMedia(MediaData));
-        loadDataStore(MediaData, "media");
+        // loadDataStore(MediaData, "media");
+        fetchLocalDataMedia();
       };
 
       if(!titlesLoaded) {
         dispatch(setTitlesDataOffline(true));
         // dispatch(loadArrayTitles(TitleData));
-        loadDataStore(TitleData, "title");
+        // loadDataStore(TitleData, "title");
+        fetchLocalDataTitles();
       };
 
       if(!editionsLoaded) {
         dispatch(setEditionsDataOffline(true));
-        dispatch(loadArrayEditions(EditionData));
+        // dispatch(loadArrayEditions(EditionData));
+        fetchLocalDataEditions();
       };
 
     // } else if (!appOffline) {

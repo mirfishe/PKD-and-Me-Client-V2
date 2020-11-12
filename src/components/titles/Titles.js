@@ -50,20 +50,20 @@ const Titles = (props) => {
     if (!isNaN(categoryParam)) {
         // If categoryParam is a number, then it's the categoryID
         document.title = titleList[0].category.category + " | " + appName + " | " + siteName;
-        titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
+        titleList = titleListState.filter(title => title.active === true && title.categoryID === parseInt(categoryParam));
     } else if (categoryParam !== undefined) {
         // If categoryParam is not a number, then it's the category name
-        const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
+        const category = categoryListState.find(category => category.active === true && category.category === decodeURL(categoryParam));
         // console.log(componentName, "typeof category", typeof category);
         // console.log(componentName, "category", category);
 
         if (category !== undefined) {
             document.title = category.category + " | " + appName + " | " + siteName;
-            titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
+            titleList = titleListState.filter(title => title.active === true && title.categoryID === parseInt(category.categoryID));
         } else {
             document.title = "Category Not Found | " + appName + " | " + siteName;
             console.log("Category not found.");
-            // // Display all titles
+            // // Display all active titles
             // titleList = titleListState;
             // // Display all editions
             // editionList = editionListState;
@@ -72,8 +72,9 @@ const Titles = (props) => {
 
     } else {
         document.title = "All Titles | " + appName + " | " + siteName;
-        // Display all titles
-        titleList = [...titleListState];
+        // Display all active titles
+        // titleList = [...titleListState];
+        titleList = titleListState.filter(title => title.active === true);
     };
 
     sortTitles(titleSort);

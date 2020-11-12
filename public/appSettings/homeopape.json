@@ -1,0 +1,18 @@
+{
+"resultsFound": true, 
+"message": "Offline AppSettings data used.",
+"profileType": "AppSettings.json",
+"API_URL": "https://pkd-and-me-server.herokuapp.com",
+"baseURL": "https://pkd-and-me-server.herokuapp.com/",
+"siteName": "Homeopape",
+"appName": "Philip K. Dick Bibliography",
+"metaDescription": "Purchase digital (i.e. not analog) versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.",
+"defaultPageComponent": "Homeopape",
+"routerBaseName": "",
+"appOffline": true,
+"electronicOnly": true,
+"electronicOnlyMessage": "You are viewing only electronic editions.",
+"physicalOnly": false,
+"physicalOnlyMessage": "You are viewing only physical editions.",
+"tagManagerArgs": {"gtmId": "GTM-NXQJTGL"}
+}

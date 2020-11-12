@@ -36,7 +36,7 @@ const MediaList = (props) => {
         // console.log(componentName, "getMedia this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
-        let url = baseURL + "media/";
+        let url = baseURL + "media/list";
 
         fetch(url)
         .then(response => {

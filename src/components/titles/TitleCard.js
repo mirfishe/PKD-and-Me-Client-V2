@@ -47,7 +47,7 @@ const TitleCard = (props) => {
 
     // Only show title in certain categories or by certain authors
     // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category.category === "Novels" || title.category.category === "Short Story Collections" || title.category.category === "Non Fiction"));
-    const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+    const randomTitleList = titleListState.filter(title => title.active === true && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
 
     if (randomTitle) {
         titleParam = Math.floor(Math.random() * randomTitleList.length);
@@ -57,18 +57,19 @@ const TitleCard = (props) => {
     if (!isNaN(titleParam)) {
         // If titleParam is a number, then it's the titleID
         if (randomTitle) {
-            titleList = randomTitleList.filter(title => title.titleID === parseInt(titleParam));
+            // Active titles were filtered out above
+            titleList = randomTitleList.filter(title => title.active === true && title.titleID === parseInt(titleParam));
             // console.log(componentName, "randomTitle titleParam", titleParam);
             // console.log(componentName, "randomTitle titleList", titleList);
         } else {
-            titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
+            titleList = titleListState.filter(title => title.active === true && title.titleID === parseInt(titleParam));
         };
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it's the title name
-        titleList = titleListState.filter(title => title.titleURL === titleParam);
+        titleList = titleListState.filter(title => title.active === true && title.titleURL === titleParam);
     } else {
         // console.log("Title not found.");
-        // Display all titles
+        // Display all active titles
         // titleList = [...titleListState];
     };
 

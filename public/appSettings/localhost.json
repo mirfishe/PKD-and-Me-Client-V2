@@ -1,0 +1,10 @@
+{
+"resultsFound": true, 
+"message": "Offline AppSettings data used.",
+"profileType": "AppSettings.json",
+"siteName": "Test",
+"appName": "Test",
+"appOffline": true,
+"electronicOnly": true,
+"physicalOnly": false
+}

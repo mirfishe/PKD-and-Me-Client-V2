@@ -95,7 +95,7 @@ switch (profileType) {
         API_URL = "https://pkd-and-me-server.herokuapp.com";
         siteName = "Homeopape";
         appName = "Philip K. Dick Bibliography";
-        metaDescription = "Purchase digital (i.e. not analog) versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick";
+        metaDescription = "Purchase digital (i.e. not analog) versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
         defaultPageComponent = "Homeopape";
         routerBaseName = "";
         appOffline = true;

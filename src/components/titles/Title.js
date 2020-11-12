@@ -41,20 +41,20 @@ const Title = (props) => {
     if (!isNaN(titleParam)) {
         // If titleParam is a number, then it's the titleID
         document.title = titleList[0].title.titleName + " | " + appName + " | " + siteName;
-        titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
+        titleList = titleListState.filter(title => title.active === true && title.titleID === parseInt(titleParam));
 
         if (electronicOnly) {
-            editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam) && edition.medium.electronic === true);
+            editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(titleParam) && edition.medium.electronic === true);
         } else if (physicalOnly) {
-            editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam) && edition.medium.electronic === false);
+            editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(titleParam) && edition.medium.electronic === false);
         } else {
-            editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
+            editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(titleParam));
         };
 
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it's the title name
-        titleList = titleListState.filter(title => title.titleURL === titleParam);
-        const title = titleListState.find(title => title.titleURL === titleParam);
+        titleList = titleListState.filter(title => title.active === true && title.titleURL === titleParam);
+        const title = titleListState.find(title => title.active === true && title.titleURL === titleParam);
         // console.log(componentName, "typeof title", typeof title);
         // console.log(componentName, "title", title);
 
@@ -63,29 +63,31 @@ const Title = (props) => {
             titleNameBreadCrumb = title.titleName;
 
             if (electronicOnly) {
-                editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID) && edition.medium.electronic === true);
+                editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(title.titleID) && edition.medium.electronic === true);
             } else if (physicalOnly) {
-                editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID) && edition.medium.electronic === false);
+                editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(title.titleID) && edition.medium.electronic === false);
             } else {
-                editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
+                editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(title.titleID));
             };
 
         } else {
             document.title = "Title Not Found | " + appName + " | " + siteName;
             console.log("Title not found.");
-            // // Display all titles
+            // // Display all active titles
             // titleList = titleListState;
-            // // Display all editions
+            // // Display all active editions
             // editionList = editionListState;
             // setErrTitleMessage("Title not found.")
         };
 
     } else {
         document.title = "All Titles | " + appName + " | " + siteName;
-        // Display all titles
-        titleList = [...titleListState];
-        // Display all editions
-        editionList = [...editionListState];
+        // Display all active titles
+        // titleList = [...titleListState];
+        titleList = titleListState.filter(title => title.active === true);
+        // Display all active editions
+        // editionList = [...editionListState];
+        editionList = editionListState.filter(edition => edition.active === true);
     };
 
     // Sort the titleList array by title.titleSort
