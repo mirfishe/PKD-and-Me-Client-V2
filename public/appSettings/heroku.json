@@ -1,7 +1,6 @@
 {
 "resultsFound": true, 
 "message": "Offline AppSettings data used.",
-"profileType": "AppSettings.json",
 "API_URL": "https://pkd-and-me-server.herokuapp.com",
 "baseURL": "https://pkd-and-me-server.herokuapp.com/",
 "siteName": "PKD and Me",
@@ -11,8 +10,5 @@
 "routerBaseName": "",
 "appOffline": false,
 "electronicOnly": false,
-"electronicOnlyMessage": "You are viewing only electronic editions.",
-"physicalOnly": false,
-"physicalOnlyMessage": "You are viewing only physical editions.",
-"tagManagerArgs": {"gtmId": ""}
+"physicalOnly": false
 }

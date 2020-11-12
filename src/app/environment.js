@@ -21,6 +21,24 @@ let tagManagerArgs = {
     gtmId: ""
 };
 
+let menuSettings = {
+    showAllMenuItems: false,
+    
+    showNew: true,
+    showAbout: true,
+    showHomeopape: false,
+  
+    showCategoryList: false,
+    showMediaList: false,
+    showTitleList: false,
+    showEditionList: false,
+  
+    showAllCategories: false,
+    showAllMedia: false,
+    showAllTitles: false,
+    showAllEditions: false
+};
+
 switch (window.location.hostname) {
     case "localhost" || "127.0.0.1":
         profileType = "localhost";
@@ -59,7 +77,7 @@ switch (profileType) {
         API_URL = "https://pkd-and-me-server.herokuapp.com";
         siteName = "localhost";
         appName = "PKD and Me";
-        metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";
+        metaDescription = "";
         defaultPageComponent = "Home";
         routerBaseName = "";
         appOffline = false;
@@ -129,6 +147,13 @@ switch (profileType) {
 // physicalOnly = true;
 // physicalOnly = false;
 
+// Override the profileType setting
+// profileType = "localhost";
+// profileType = "heroku";
+// profileType = "philipdick";
+// profileType = "homeopape";
+// profileType = "";
+
 // In case accidentally set both to true, then electronicOnly overides.
 if (physicalOnly && electronicOnly) {
     electronicOnly = true;
@@ -150,5 +175,6 @@ Object.assign(AppSettings, {electronicOnlyMessage: electronicOnlyMessage});
 Object.assign(AppSettings, {physicalOnly: physicalOnly});
 Object.assign(AppSettings, {physicalOnlyMessage: physicalOnlyMessage});
 Object.assign(AppSettings, {tagManagerArgs: tagManagerArgs});
+Object.assign(AppSettings, {menuSettings: menuSettings});
 
 export default AppSettings;

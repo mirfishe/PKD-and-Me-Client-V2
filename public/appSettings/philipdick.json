@@ -1,7 +1,6 @@
 {
 "resultsFound": true, 
 "message": "Offline AppSettings data used.",
-"profileType": "AppSettings.json",
 "API_URL": "https://pkd-and-me-server.herokuapp.com",
 "baseURL": "https://pkd-and-me-server.herokuapp.com/",
 "siteName": "Philip K. Dick",
@@ -11,8 +10,23 @@
 "routerBaseName": "/pkd-and-me",
 "appOffline": true,
 "electronicOnly": false,
-"electronicOnlyMessage": "You are viewing only electronic editions.",
 "physicalOnly": false,
-"physicalOnlyMessage": "You are viewing only physical editions.",
-"tagManagerArgs": {"gtmId": "GTM-NW2GPF2"}
+"tagManagerArgs": {"gtmId": "GTM-NW2GPF2"},
+"menuSettings": {
+    "showAllMenuItems": false,
+
+    "showNew": true,
+    "showAbout": true,
+    "showHomeopape": false,
+  
+    "showCategoryList": false,
+    "showMediaList": false,
+    "showTitleList": false,
+    "showEditionList": false,
+  
+    "showAllCategories": false,
+    "showAllMedia": false,
+    "showAllTitles": false,
+    "showAllEditions": false
+    }
 }
