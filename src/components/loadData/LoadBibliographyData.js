@@ -28,9 +28,16 @@ function LoadBibliographyData() {
   const dispatch = useDispatch();
 
   // Loading the baseURL from the state store here is too slow
+  // Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  const appOffline = useSelector(state => state.app.appOffline);
+  // console.log(componentName, "baseURL", baseURL);
+
+  // Loading the appOffline from the state store here is too slow
+  // Always pulling it from environment.js
+  // const appOffline = useSelector(state => state.app.appOffline);
+  const appOffline = AppSettings.appOffline;
+  // console.log(componentName, "appOffline", appOffline);
 
   // Load settings from Redux slices
   const categoriesLoaded = useSelector(state => state.categories.categoriesLoaded);

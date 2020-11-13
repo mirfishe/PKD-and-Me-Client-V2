@@ -20,6 +20,8 @@ const Category = (props) => {
     const categoryList = categoryListState.filter(category => category.active === true);
     // console.log(componentName, "categoryList", categoryList);
 
+    categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
     const redirectPage = (linkName) => {
         // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));

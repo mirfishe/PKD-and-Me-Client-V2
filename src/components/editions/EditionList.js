@@ -2,21 +2,21 @@ import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Container, Col, Row, Alert} from "reactstrap";
 // import Edition from "./Edition";
+import AppSettings from "../../app/environment";
 
 const EditionList = (props) => {
 
     const componentName = "EditionList.js";
 
-    const baseURL = useSelector(state => state.app.baseURL);
+    // Loading the baseURL from the state store here is too slow
+    // Always pulling it from environment.js
+    // const baseURL = useSelector(state => state.app.baseURL);
+    const baseURL = AppSettings.baseURL;
     
     const siteName = useSelector(state => state.app.siteName);
     const appName = useSelector(state => state.app.appName);
     document.title = "Edition List | " + appName + " | " + siteName;
 
-    // const editionListState = useSelector(state => state.edition);
-    // console.log(componentName, "editionListState", editionListState);
-
-    // const [url, setUrl] = useState("");
     const [editionMessage, setEditionMessage] = useState("");
     const [errEditionMessage, setErrEditionMessage] = useState("");
     const [editionResultsFound, setEditionResultsFound] = useState(null);
@@ -31,41 +31,40 @@ const EditionList = (props) => {
         setEditionResultsFound(null);
         setEditionList([]);
 
-        // console.log(componentName, "getEdition this.props.editionID", this.props.editionID);
-        // this.props.setEditionID(null);
-        // console.log(componentName, "getEdition this.props.titleID", this.props.titleID);
-        // this.props.setTitleID(null);
+        if (baseURL !== undefined && baseURL !== "") {
 
-        let url = baseURL + "edition/list";
+            let url = baseURL + "edition/list";
 
-        fetch(url)
-        .then(response => {
-            // console.log(componentName, "getEdition response", response);
-            if (!response.ok) {
-                throw Error(response.status + " " + response.statusText + " " + response.url);
-            } else {
-                return response.json();
-            };
-        })
-        .then(data => {
-            // console.log(componentName, "getEdition data", data);
+            fetch(url)
+            .then(response => {
+                // console.log(componentName, "getEdition response", response);
+                if (!response.ok) {
+                    throw Error(response.status + " " + response.statusText + " " + response.url);
+                } else {
+                    return response.json();
+                };
+            })
+            .then(data => {
+                // console.log(componentName, "getEdition data", data);
 
-            setEditionResultsFound(data.resultsFound);
-            setEditionMessage(data.message);
+                setEditionResultsFound(data.resultsFound);
+                setEditionMessage(data.message);
 
-            if (data.resultsFound === true) {
-                setEditionList(data.editions);
-            } else {
-                setErrEditionMessage(data.message);
-            };
+                if (data.resultsFound === true) {
+                    setEditionList(data.editions);
+                } else {
+                    setErrEditionMessage(data.message);
+                };
 
-        })
-        .catch(error => {
-            console.log(componentName, "getEdition error", error);
-            // console.log(componentName, "getEdition error.name", error.name);
-            // console.log(componentName, "getEdition error.message", error.message);
-            setErrEditionMessage(error.name + ": " + error.message);
-        });
+            })
+            .catch(error => {
+                console.log(componentName, "getEdition error", error);
+                // console.log(componentName, "getEdition error.name", error.name);
+                // console.log(componentName, "getEdition error.message", error.message);
+                setErrEditionMessage(error.name + ": " + error.message);
+            });
+
+        };
 
     };
 
@@ -85,7 +84,7 @@ const EditionList = (props) => {
                     {JSON.stringify(editionList)}
                 </pre> */}
                 <span>
-                    {JSON.stringify(editionList)}
+                    {JSON.stringify({"resultsFound": true, "message": "Offline Editions data used.", "editions": editionList})}
                 </span>
             </Row>
         : null}

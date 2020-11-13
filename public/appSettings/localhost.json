@@ -1,14 +1,11 @@
 {
 "resultsFound": true, 
 "message": "Offline AppSettings data used.",
-"API_URL": "https://pkd-and-me-server.herokuapp.com",
-"baseURL": "https://pkd-and-me-server.herokuapp.com/",
 "siteName": "localhost",
 "appName": "PKD and Me",
 "metaDescription": "",
 "defaultPageComponent": "Home",
 "routerBaseName": "",
-"appOffline": false,
 "electronicOnly": false,
 "physicalOnly": false,
 "menuSettings": {
@@ -17,6 +14,7 @@
     "showNew": true,
     "showAbout": true,
     "showHomeopape": false,
+    "showDickian": false,
   
     "showCategoryList": false,
     "showMediaList": false,
