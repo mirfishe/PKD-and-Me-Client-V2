@@ -11,8 +11,8 @@ const initialState = {
     siteName: "",
     appName: "",
     metaDescription: "",
-    // defaultPageComponent: "",
-    // routerBaseName: "",
+    defaultPageComponent: "",
+    routerBaseName: "",
     appOffline: false,
     electronicOnly: false,
     electronicOnlyMessage: "",
@@ -100,24 +100,24 @@ const appSlice = createSlice({
 
       }
     },
-    // setDefaultPageComponent: {
-    //   reducer(state, action) {
-    //     // console.log(componentName, "setDefaultPageComponent action.payload", action.payload);
-    //     // console.log(componentName, "setDefaultPageComponent action.payload.length", action.payload.length);
+    setDefaultPageComponent: {
+      reducer(state, action) {
+        // console.log(componentName, "setDefaultPageComponent action.payload", action.payload);
+        // console.log(componentName, "setDefaultPageComponent action.payload.length", action.payload.length);
 
-    //     state.defaultPageComponent = action.payload;
+        state.defaultPageComponent = action.payload;
 
-    //   }
-    // },
-    // setRouterBaseName: {
-    //   reducer(state, action) {
-    //     // console.log(componentName, "setRouterBaseName action.payload", action.payload);
-    //     // console.log(componentName, "setRouterBaseName action.payload.length", action.payload.length);
+      }
+    },
+    setRouterBaseName: {
+      reducer(state, action) {
+        // console.log(componentName, "setRouterBaseName action.payload", action.payload);
+        // console.log(componentName, "setRouterBaseName action.payload.length", action.payload.length);
 
-    //     state.routerBaseName = action.payload;
+        state.routerBaseName = action.payload;
 
-    //   }
-    // },
+      }
+    },
     setAppOffline: {
       reducer(state, action) {
         // console.log(componentName, "setAppOffline action.payload", action.payload);
@@ -202,6 +202,6 @@ const appSlice = createSlice({
 }
 });
 
-export const {setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, /*setDefaultPageComponent, setRouterBaseName,*/ setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
+export const {setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
 
 export default appSlice.reducer;

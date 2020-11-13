@@ -51,12 +51,12 @@ function LoadAppSettings() {
     // Loading the defaultPageComponent from the state store here is too slow
     // Always pulling it from environment.js
     // let defaultPageComponent = AppSettings.defaultPageComponent;
-    // dispatch(setDefaultPageComponent(AppSettings.defaultPageComponent));
+    dispatch(setDefaultPageComponent(AppSettings.defaultPageComponent));
 
     // Loading the routerBaseName from the state store here is too slow
     // Always pulling it from environment.js
     // let routerBaseName = AppSettings.routerBaseName;
-    // dispatch(setRouterBaseName(AppSettings.routerBaseName));
+    dispatch(setRouterBaseName(AppSettings.routerBaseName));
 
     // let appOffline = AppSettings.appOffline;
     dispatch(setAppOffline(AppSettings.appOffline));
