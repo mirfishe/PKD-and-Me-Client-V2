@@ -22,21 +22,22 @@ let tagManagerArgs = {
 };
 
 let menuSettings = {
-    showAllMenuItems: false,
-    
-    showNew: true,
-    showAbout: true,
-    showHomeopape: false,
+    "showAllMenuItems": false,
+
+    "showNew": true,
+    "showAbout": true,
+    "showHomeopape": false,
+    "showDickian": false,
   
-    showCategoryList: false,
-    showMediaList: false,
-    showTitleList: false,
-    showEditionList: false,
+    "showCategoryList": false,
+    "showMediaList": false,
+    "showTitleList": false,
+    "showEditionList": false,
   
-    showAllCategories: false,
-    showAllMedia: false,
-    showAllTitles: false,
-    showAllEditions: false
+    "showAllCategories": false,
+    "showAllMedia": false,
+    "showAllTitles": false,
+    "showAllEditions": false
 };
 
 switch (window.location.hostname) {

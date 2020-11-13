@@ -2,21 +2,21 @@ import React, {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Container, Col, Row, Alert} from "reactstrap";
 // import Media from "./Media";
+import AppSettings from "../../app/environment";
 
 const MediaList = (props) => {
 
     const componentName = "MediaList.js";
 
-    const baseURL = useSelector(state => state.app.baseURL);
+    // Loading the baseURL from the state store here is too slow
+    // Always pulling it from environment.js
+    // const baseURL = useSelector(state => state.app.baseURL);
+    const baseURL = AppSettings.baseURL;
 
     const siteName = useSelector(state => state.app.siteName);
     const appName = useSelector(state => state.app.appName);
     document.title = "Media List | " + appName + " | " + siteName;
 
-    // const mediaListState = useSelector(state => state.media);
-    // console.log(componentName, "mediaListState", mediaListState);
-
-    // const [url, setUrl] = useState("");
     const [mediaMessage, setMediaMessage] = useState("");
     const [errMediaMessage, setErrMediaMessage] = useState("");
     const [mediaResultsFound, setMediaResultsFound] = useState(null);
@@ -31,41 +31,40 @@ const MediaList = (props) => {
         setMediaResultsFound(null);
         setMediaList([]);
 
-        // console.log(componentName, "getMedia this.props.mediaID", this.props.mediaID);
-        // this.props.setMediaID(null);
-        // console.log(componentName, "getMedia this.props.titleID", this.props.titleID);
-        // this.props.setTitleID(null);
+        if (baseURL !== undefined && baseURL !== "") {
 
-        let url = baseURL + "media/list";
+            let url = baseURL + "media/list";
 
-        fetch(url)
-        .then(response => {
-            // console.log(componentName, "getMedia response", response);
-            if (!response.ok) {
-                throw Error(response.status + " " + response.statusText + " " + response.url);
-            } else {
-                return response.json();
-            };
-        })
-        .then(data => {
-            // console.log(componentName, "getMedia data", data);
+            fetch(url)
+            .then(response => {
+                // console.log(componentName, "getMedia response", response);
+                if (!response.ok) {
+                    throw Error(response.status + " " + response.statusText + " " + response.url);
+                } else {
+                    return response.json();
+                };
+            })
+            .then(data => {
+                console.log(componentName, "getMedia data", data);
 
-            setMediaResultsFound(data.resultsFound);
-            setMediaMessage(data.message);
+                setMediaResultsFound(data.resultsFound);
+                setMediaMessage(data.message);
 
-            if (data.resultsFound === true) {
-                setMediaList(data.media);
-            } else {
-                setErrMediaMessage(data.message);
-            };
+                if (data.resultsFound === true) {
+                    setMediaList(data.media);
+                } else {
+                    setErrMediaMessage(data.message);
+                };
 
-        })
-        .catch(error => {
-            console.log(componentName, "getMedia error", error);
-            // console.log(componentName, "getMedia error.name", error.name);
-            // console.log(componentName, "getMedia error.message", error.message);
-            setErrMediaMessage(error.name + ": " + error.message);
-        });
+            })
+            .catch(error => {
+                console.log(componentName, "getMedia error", error);
+                // console.log(componentName, "getMedia error.name", error.name);
+                // console.log(componentName, "getMedia error.message", error.message);
+                setErrMediaMessage(error.name + ": " + error.message);
+            });
+
+        };
 
     };
 
@@ -85,7 +84,7 @@ const MediaList = (props) => {
                     {JSON.stringify(mediaList)}
                 </pre> */}
                 <span>
-                    {JSON.stringify(mediaList)}
+                    {JSON.stringify({"resultsFound": true, "message": "Offline Media data used.", "media": mediaList})}
                 </span>
             </Row>
         : null}

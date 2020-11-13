@@ -1,14 +1,11 @@
 {
 "resultsFound": true, 
 "message": "Offline AppSettings data used.",
-"API_URL": "https://pkd-and-me-server.herokuapp.com",
-"baseURL": "https://pkd-and-me-server.herokuapp.com/",
 "siteName": "PKD and Me",
 "appName": "Philip K. Dick Bibliography",
 "metaDescription": "",
 "defaultPageComponent": "Home",
 "routerBaseName": "",
-"appOffline": false,
 "electronicOnly": false,
 "physicalOnly": false
 }

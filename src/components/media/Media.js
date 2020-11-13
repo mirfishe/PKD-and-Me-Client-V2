@@ -30,6 +30,8 @@ const Media = (props) => {
         mediaList = mediaListState.filter(media => media.active === true);
     };
 
+    mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
     const redirectPage = (linkName) => {
         // console.log(componentName, "redirectPage", linkName);
         dispatch(setPageURL(linkName.replaceAll("/", "")));

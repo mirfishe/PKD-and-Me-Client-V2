@@ -12,6 +12,7 @@ import Home from "./content/Home";
 import New from "./content/New";
 import About from "./content/About";
 import Homeopape from "./content/Homeopape";
+import Dickian from "./content/Dickian";
 import CategoryList from "./components/categories/CategoryList";
 import MediaList from "./components/media/MediaList";
 import TitleList from "./components/titles/TitleList";
@@ -52,6 +53,8 @@ function App() {
 
   let showHomeopape = useSelector(state => state.app.menuSettings.showHomeopape);
   // console.log(componentName, "showHomeopape", showHomeopape);
+  let showDickian = useSelector(state => state.app.menuSettings.showDickian);
+  // console.log(componentName, "showDickian", showDickian);
 
   let showCategoryList = useSelector(state => state.app.menuSettings.showCategoryList);
   let showMediaList = useSelector(state => state.app.menuSettings.showMediaList);
@@ -125,6 +128,11 @@ function App() {
           {showHomeopape || showAllMenuItems ? 
           <NavItem className="mx-3">
             <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
+          </NavItem>
+          : null}
+          {showDickian || showAllMenuItems ? 
+          <NavItem className="mx-3">
+            <Link to="/dickian"><NavbarText>Dickian</NavbarText></Link>
           </NavItem>
           : null}
           {showNew || showAllMenuItems ? 
@@ -204,6 +212,7 @@ function App() {
       {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
       {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
       {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
+      {defaultPageComponent === "Dickian" ? <Route exact path="/" component={Dickian} /> : null}
       {/* <Route exact path="/">
         {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
         {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
@@ -216,6 +225,7 @@ function App() {
       <Route exact path="/new" component={New} />
       <Route exact path="/about" component={About} />
       <Route exact path="/homeopape" component={Homeopape} />
+      <Route exact path="/dickian" component={Dickian} />
       <Route exact path="/categoryList" component={CategoryList} />
       <Route exact path="/mediaList" component={MediaList} />
       <Route exact path="/titleList" component={TitleList} />
