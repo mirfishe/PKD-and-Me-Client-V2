@@ -48,11 +48,15 @@ function LoadAppSettings() {
     // let metaDescription = AppSettings.metaDescription;
     dispatch(setMetaDescription(AppSettings.metaDescription));
 
+    // Loading the defaultPageComponent from the state store here is too slow
+    // Always pulling it from environment.js
     // let defaultPageComponent = AppSettings.defaultPageComponent;
-    dispatch(setDefaultPageComponent(AppSettings.defaultPageComponent));
+    // dispatch(setDefaultPageComponent(AppSettings.defaultPageComponent));
 
+    // Loading the routerBaseName from the state store here is too slow
+    // Always pulling it from environment.js
     // let routerBaseName = AppSettings.routerBaseName;
-    dispatch(setRouterBaseName(AppSettings.routerBaseName));
+    // dispatch(setRouterBaseName(AppSettings.routerBaseName));
 
     // let appOffline = AppSettings.appOffline;
     dispatch(setAppOffline(AppSettings.appOffline));
@@ -144,17 +148,21 @@ function LoadAppSettings() {
             //     dispatch(setMetaDescription(data.metaDescription));
             // };
 
+            // Loading the defaultPageComponent from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.defaultPageComponent", data.defaultPageComponent);
-            if (data.defaultPageComponent !== undefined && data.defaultPageComponent !== "") {
-                // defaultPageComponent = data.defaultPageComponent;
-                dispatch(setDefaultPageComponent(data.defaultPageComponent));
-            };
+            // if (data.defaultPageComponent !== undefined && data.defaultPageComponent !== "") {
+            //     // defaultPageComponent = data.defaultPageComponent;
+            //     dispatch(setDefaultPageComponent(data.defaultPageComponent));
+            // };
 
+            // Loading the routerBaseName from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.routerBaseName", data.routerBaseName);
-            if (data.routerBaseName !== undefined && data.routerBaseName !== "") {
-                // routerBaseName = data.routerBaseName;
-                dispatch(setRouterBaseName(data.routerBaseName));
-            };
+            // if (data.routerBaseName !== undefined && data.routerBaseName !== "") {
+            //     // routerBaseName = data.routerBaseName;
+            //     dispatch(setRouterBaseName(data.routerBaseName));
+            // };
 
             // console.log(componentName, "getAppSettings data.appOffline", data.appOffline);
             if (data.appOffline !== undefined) {

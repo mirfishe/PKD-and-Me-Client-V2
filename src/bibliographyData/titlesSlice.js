@@ -2,8 +2,6 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const componentName = "titlesSlice.js";
 
-// import initialState from "./titlesInitialState";
-
 const initialState = {
   arrayTitles: [],
   titlesLoaded: false,

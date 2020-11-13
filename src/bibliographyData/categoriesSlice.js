@@ -2,8 +2,6 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const componentName = "categoriesSlice.js";
 
-// import initialState from "./categoriesInitialState";
-
 const initialState = {
   arrayCategories: [],
   categoriesLoaded: false,

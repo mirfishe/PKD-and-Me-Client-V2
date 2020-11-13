@@ -3,8 +3,6 @@
 "message": "Offline AppSettings data used.",
 "siteName": "PKD and Me",
 "appName": "Philip K. Dick Bibliography",
-"defaultPageComponent": "Home",
-"routerBaseName": "",
 "electronicOnly": false,
 "physicalOnly": false
 }
