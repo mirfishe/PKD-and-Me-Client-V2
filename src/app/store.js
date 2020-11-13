@@ -5,6 +5,7 @@ import categoriesReducer from "../bibliographyData/categoriesSlice";
 import mediaReducer from "../bibliographyData/mediaSlice";
 import titlesReducer from "../bibliographyData/titlesSlice";
 import editionsReducer from "../bibliographyData/editionsSlice";
+import userReviewsReducer from "../bibliographyData/userReviewsSlice";
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
     categories: categoriesReducer,
     media: mediaReducer,
     titles: titlesReducer,
-    editions: editionsReducer
+    editions: editionsReducer,
+    userReviews: userReviewsReducer
   },
 });

@@ -4,10 +4,12 @@ import "./App.css";
 import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText} from "reactstrap";
+import AppSettings from "./app/environment";
 import {setAppOffline} from "./app/appSlice";
 import {setPageURL, setLinkItem} from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
+import LoadUserReviews from "./components/loadData/LoadUserReviews";
 import Home from "./content/Home";
 import New from "./content/New";
 import About from "./content/About";
@@ -72,8 +74,15 @@ function App() {
   const pageURL = useSelector(state => state.urls.pageURL);
   const linkItem = useSelector(state => state.urls.linkItem);
 
-  const routerBaseName = useSelector(state => state.app.routerBaseName);
-  const defaultPageComponent = useSelector(state => state.app.defaultPageComponent);
+  // Loading the routerBaseName from the state store here is too slow
+  // Always pulling it from environment.js
+  // const routerBaseName = useSelector(state => state.app.routerBaseName);
+  const routerBaseName = AppSettings.routerBaseName;
+
+  // Loading the defaultPageComponent from the state store here is too slow
+  // Always pulling it from environment.js
+  // const defaultPageComponent = useSelector(state => state.app.defaultPageComponent);
+  const defaultPageComponent = AppSettings.defaultPageComponent;
 
   useEffect(() => {
     // console.log(componentName, "useEffect");
@@ -199,6 +208,7 @@ function App() {
         {/* {linkItem !== undefined && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
         <LoadAppSettings />
         <LoadBibliographyData />
+        <LoadUserReviews />
       </Row>
       <Row>
       <Col xs="2">

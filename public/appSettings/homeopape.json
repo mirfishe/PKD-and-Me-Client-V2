@@ -3,8 +3,6 @@
 "message": "Offline AppSettings data used.",
 "siteName": "Homeopape",
 "appName": "Philip K. Dick Bibliography",
-"defaultPageComponent": "Homeopape",
-"routerBaseName": "",
 "electronicOnly": true,
 "physicalOnly": false
 }

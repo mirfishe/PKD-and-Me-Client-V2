@@ -2,8 +2,6 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const componentName = "mediaSlice.js";
 
-// import initialState from "./mediaInitialState";
-
 const initialState = {
   arrayMedia: [],
   mediaLoaded: false,

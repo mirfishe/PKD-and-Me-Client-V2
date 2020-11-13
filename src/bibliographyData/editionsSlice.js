@@ -2,8 +2,6 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const componentName = "editionsSlice.js";
 
-// import initialState from "./editionsInitialState";
-
 const initialState = {
   arrayEditions: [],
   editionsLoaded: false,

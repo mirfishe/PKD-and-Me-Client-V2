@@ -48,9 +48,13 @@ function LoadAppSettings() {
     // let metaDescription = AppSettings.metaDescription;
     dispatch(setMetaDescription(AppSettings.metaDescription));
 
+    // Loading the defaultPageComponent from the state store here is too slow
+    // Always pulling it from environment.js
     // let defaultPageComponent = AppSettings.defaultPageComponent;
     dispatch(setDefaultPageComponent(AppSettings.defaultPageComponent));
 
+    // Loading the routerBaseName from the state store here is too slow
+    // Always pulling it from environment.js
     // let routerBaseName = AppSettings.routerBaseName;
     dispatch(setRouterBaseName(AppSettings.routerBaseName));
 
@@ -144,17 +148,21 @@ function LoadAppSettings() {
             //     dispatch(setMetaDescription(data.metaDescription));
             // };
 
+            // Loading the defaultPageComponent from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.defaultPageComponent", data.defaultPageComponent);
-            if (data.defaultPageComponent !== undefined && data.defaultPageComponent !== "") {
-                // defaultPageComponent = data.defaultPageComponent;
-                dispatch(setDefaultPageComponent(data.defaultPageComponent));
-            };
+            // if (data.defaultPageComponent !== undefined && data.defaultPageComponent !== "") {
+            //     // defaultPageComponent = data.defaultPageComponent;
+            //     dispatch(setDefaultPageComponent(data.defaultPageComponent));
+            // };
 
+            // Loading the routerBaseName from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.routerBaseName", data.routerBaseName);
-            if (data.routerBaseName !== undefined && data.routerBaseName !== "") {
-                // routerBaseName = data.routerBaseName;
-                dispatch(setRouterBaseName(data.routerBaseName));
-            };
+            // if (data.routerBaseName !== undefined && data.routerBaseName !== "") {
+            //     // routerBaseName = data.routerBaseName;
+            //     dispatch(setRouterBaseName(data.routerBaseName));
+            // };
 
             // console.log(componentName, "getAppSettings data.appOffline", data.appOffline);
             if (data.appOffline !== undefined) {
@@ -215,7 +223,7 @@ function LoadAppSettings() {
   };
 
 useEffect(() => {
-    console.log(componentName, "useEffect");
+    // console.log(componentName, "useEffect");
 
     // Only load the AppSettings data once per session unless the data is changed
     if (!appSettingsLoaded) {
