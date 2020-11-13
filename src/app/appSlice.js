@@ -18,6 +18,9 @@ const initialState = {
     electronicOnlyMessage: "",
     physicalOnly: false,
     physicalOnlyMessage: "",
+    appSettingsLoaded: false,
+    appSettingsJsonLoaded: false,
+    menuSettings: {},
     linkItem: {}
 };
 
@@ -160,6 +163,33 @@ const appSlice = createSlice({
 
       }
     },
+    setAppSettingsLoaded: {
+      reducer(state, action) {
+        // console.log(componentName, "setAppSettingsLoaded action.payload", action.payload);
+        // console.log(componentName, "setAppSettingsLoaded action.payload.length", action.payload.length);
+
+        state.appSettingsLoaded = action.payload;
+
+      }
+    },
+    setAppSettingsJsonLoaded: {
+      reducer(state, action) {
+        // console.log(componentName, "setAppSettingsJsonLoaded action.payload", action.payload);
+        // console.log(componentName, "setAppSettingsJsonLoaded action.payload.length", action.payload.length);
+
+        state.appSettingsJsonLoaded = action.payload;
+
+      }
+    },
+    setMenuSettings: {
+      reducer(state, action) {
+        // console.log(componentName, "setMenuSettings action.payload", action.payload);
+        // console.log(componentName, "setMenuSettings action.payload.length", action.payload.length);
+
+        state.menuSettings = action.payload;
+
+      }
+    },
     setLinkItem: {
       reducer(state, action) {
         // console.log(componentName, "setLinkItem action.payload", action.payload);
@@ -172,6 +202,6 @@ const appSlice = createSlice({
 }
 });
 
-export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setLinkItem} = appSlice.actions;
+export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
 
 export default appSlice.reducer;

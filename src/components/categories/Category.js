@@ -16,8 +16,9 @@ const Category = (props) => {
 
     const categoryListState = useSelector(state => state.categories.arrayCategories);
     // console.log(componentName, "categoryListState", categoryListState);
-    
-    // console.log(componentName, "props.categoryList", props.categoryList);
+
+    const categoryList = categoryListState.filter(category => category.active === true);
+    // console.log(componentName, "categoryList", categoryList);
 
     const redirectPage = (linkName) => {
         // console.log(componentName, "redirectPage", linkName);
@@ -34,7 +35,7 @@ const Category = (props) => {
         <Card onClick={toggle} color="light" className="mt-2 p-2"><h5>Categories</h5></Card>
         <Collapse isOpen={isOpen}>
         <Nav vertical>
-        {categoryListState.map((category) => {
+        {categoryList.map((category) => {
           return (
             <NavItem key={category.categoryID} className="mt-2 pl-3">
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(category.categoryID)}}>{category.category}</a> */}

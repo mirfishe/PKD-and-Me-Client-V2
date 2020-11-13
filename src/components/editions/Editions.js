@@ -57,16 +57,16 @@ const Editions = (props) => {
         // If mediaParam is a number, then it's the mediaID
         document.title = editionList[0].medium.media + " | " + appName + " | " + siteName;
         if (electronicOnly) {
-            editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === true);
+            editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === true);
         } else if (physicalOnly) {
-            editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === false);
+            editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === false);
         } else {
-            editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
+            editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(mediaParam));
         };
 
     } else if (mediaParam !== undefined) {
         // If mediaParam is not a number, then it's the media name
-        const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
+        const media = mediaListState.find(media => media.active === true && media.media === decodeURL(mediaParam));
         // console.log(componentName, "typeof media", typeof media);
         // console.log(componentName, "media", media);
 
@@ -74,25 +74,26 @@ const Editions = (props) => {
             document.title = media.media + " | " + appName + " | " + siteName;
 
             if (electronicOnly) {
-                editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === true);
+                editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === true);
             } else if (physicalOnly) {
-                editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === false);
+                editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === false);
             } else {
-                editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
+                editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(media.mediaID));
             };
 
         } else {
             document.title = "Media Not Found | " + appName + " | " + siteName;
             console.log("Media not found.");
-            // Display all editions
+            // Display all active editions
             // editionList = editionListState;
             // setErrTitleMessage("Media not found.")
         };
 
     } else {
         document.title = "All Editions | " + appName + " | " + siteName;
-        // Display all editions
-        editionList = [...editionListState];
+        // Display all active editions
+        // editionList = [...editionListState];
+        editionList = editionListState.filter(edition => edition.active === true);
     };
 
     sortEditions(editionSort);

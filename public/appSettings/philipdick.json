@@ -1,0 +1,32 @@
+{
+"resultsFound": true, 
+"message": "Offline AppSettings data used.",
+"API_URL": "https://pkd-and-me-server.herokuapp.com",
+"baseURL": "https://pkd-and-me-server.herokuapp.com/",
+"siteName": "Philip K. Dick",
+"appName": "PKD and Me",
+"metaDescription": "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.",
+"defaultPageComponent": "Home",
+"routerBaseName": "/pkd-and-me",
+"appOffline": true,
+"electronicOnly": false,
+"physicalOnly": false,
+"tagManagerArgs": {"gtmId": "GTM-NW2GPF2"},
+"menuSettings": {
+    "showAllMenuItems": false,
+
+    "showNew": true,
+    "showAbout": true,
+    "showHomeopape": false,
+  
+    "showCategoryList": false,
+    "showMediaList": false,
+    "showTitleList": false,
+    "showEditionList": false,
+  
+    "showAllCategories": false,
+    "showAllMedia": false,
+    "showAllTitles": false,
+    "showAllEditions": false
+    }
+}

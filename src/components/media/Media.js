@@ -19,16 +19,15 @@ const Media = (props) => {
 
     const mediaListState = useSelector(state => state.media.arrayMedia);
     // console.log(componentName, "mediaListState", mediaListState);
-    
-    // console.log(componentName, "props.mediaList", props.mediaList);
 
     let mediaList = [];
     if (electronicOnly) {
-        mediaList = mediaListState.filter(media => media.electronic === true);
+        mediaList = mediaListState.filter(media => media.active === true && media.electronic === true);
     } else if (physicalOnly) {
-        mediaList = mediaListState.filter(media => media.electronic === false);
+        mediaList = mediaListState.filter(media => media.active === true && media.electronic === false);
     } else {
-        mediaList = [...mediaListState];
+        // mediaList = [...mediaListState];
+        mediaList = mediaListState.filter(media => media.active === true);
     };
 
     const redirectPage = (linkName) => {

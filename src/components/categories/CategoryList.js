@@ -36,7 +36,7 @@ const CategoryList = (props) => {
         // console.log(componentName, "getCategories this.props.titleID", this.props.titleID);
         // this.props.setTitleID(null);
 
-        let url = baseURL + "category/";
+        let url = baseURL + "category/list";
 
         fetch(url)
         .then(response => {
