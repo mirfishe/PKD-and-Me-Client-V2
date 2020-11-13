@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import AppSettings from "../../app/environment";
-import {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings} from "../../app/appSlice";
+import {setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings} from "../../app/appSlice";
 
 function LoadAppSettings() {
 
@@ -26,11 +26,15 @@ function LoadAppSettings() {
     };
     dispatch(setProfileType(AppSettings.profileType));
 
+    // Loading the API_URL from the state store here is too slow
+    // Always pulling it from environment.js
     // let API_URL = AppSettings.API_URL;
-    dispatch(setAPI_URL(AppSettings.API_URL));
+    // dispatch(setAPI_URL(AppSettings.API_URL));
 
+    // Loading the baseURL from the state store here is too slow
+    // Always pulling it from environment.js
     // let baseURL = AppSettings.baseURL;
-    dispatch(setBaseURL(AppSettings.baseURL));
+    // dispatch(setBaseURL(AppSettings.baseURL));
 
     // let tagManagerArgsgtmId = AppSettings.tagManagerArgs.gtmId;
     dispatch(setTagManagerArgsgtmId(AppSettings.tagManagerArgs.gtmId));
@@ -95,24 +99,30 @@ function LoadAppSettings() {
             //     dispatch(setProfileType(data.profileType));
             // };
 
+            // Loading the API_URL from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.API_URL", data.API_URL);
-            if (data.API_URL !== undefined && data.API_URL !== "") {
-                // API_URL = data.API_URL;
-                dispatch(setAPI_URL(data.API_URL));
-            };
+            // if (data.API_URL !== undefined && data.API_URL !== "") {
+            //     // API_URL = data.API_URL;
+            //     dispatch(setAPI_URL(data.API_URL));
+            // };
 
+            // Loading the baseURL from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.baseURL", data.baseURL);
-            if (data.baseURL !== undefined && data.baseURL !== "") {
-                // baseURL = data.baseURL;
-                dispatch(setBaseURL(data.baseURL));
-            };
+            // if (data.baseURL !== undefined && data.baseURL !== "") {
+            //     // baseURL = data.baseURL;
+            //     dispatch(setBaseURL(data.baseURL));
+            // };
 
+            // Loading the tagManagerArgs from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.tagManagerArgs", data.tagManagerArgs);
             // console.log(componentName, "getAppSettings data.tagManagerArgs.gtmId", data.tagManagerArgs.gtmId);
-            if (data.tagManagerArgs !== undefined && data.tagManagerArgs.gtmId !== undefined && data.tagManagerArgs.gtmId !== "") {
-                // tagManagerArgsgtmId = data.tagManagerArgs.gtmId;
-                dispatch(setTagManagerArgsgtmId(data.tagManagerArgs.gtmId));
-            };
+            // if (data.tagManagerArgs !== undefined && data.tagManagerArgs.gtmId !== undefined && data.tagManagerArgs.gtmId !== "") {
+            //     // tagManagerArgsgtmId = data.tagManagerArgs.gtmId;
+            //     dispatch(setTagManagerArgsgtmId(data.tagManagerArgs.gtmId));
+            // };
 
             // console.log(componentName, "getAppSettings data.siteName", data.siteName);
             if (data.siteName !== undefined && data.siteName !== "") {
@@ -126,11 +136,13 @@ function LoadAppSettings() {
                 dispatch(setAppName(data.appName));
             };
 
+            // Loading the metaDescription from the state store here is too slow
+            // Always pulling it from environment.js
             // console.log(componentName, "getAppSettings data.metaDescription", data.metaDescription);
-            if (data.metaDescription !== undefined && data.metaDescription !== "") {
-                // metaDescription = data.metaDescription;
-                dispatch(setMetaDescription(data.metaDescription));
-            };
+            // if (data.metaDescription !== undefined && data.metaDescription !== "") {
+            //     // metaDescription = data.metaDescription;
+            //     dispatch(setMetaDescription(data.metaDescription));
+            // };
 
             // console.log(componentName, "getAppSettings data.defaultPageComponent", data.defaultPageComponent);
             if (data.defaultPageComponent !== undefined && data.defaultPageComponent !== "") {
@@ -203,7 +215,7 @@ function LoadAppSettings() {
   };
 
 useEffect(() => {
-    // console.log(componentName, "useEffect");
+    console.log(componentName, "useEffect");
 
     // Only load the AppSettings data once per session unless the data is changed
     if (!appSettingsLoaded) {

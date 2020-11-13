@@ -5,8 +5,8 @@ const componentName = "appSlice.js";
 const initialState = {
     hostname: "",
     profileType: "",
-    API_URL: "",
-    baseURL: "",
+    // API_URL: "",
+    // baseURL: "",
     tagManagerArgsgtmId: "",
     siteName: "",
     appName: "",
@@ -46,24 +46,24 @@ const appSlice = createSlice({
 
       }
     },
-    setAPI_URL: {
-      reducer(state, action) {
-        // console.log(componentName, "setAPI_URL action.payload", action.payload);
-        // console.log(componentName, "setAPI_URL action.payload.length", action.payload.length);
+    // setAPI_URL: {
+    //   reducer(state, action) {
+    //     // console.log(componentName, "setAPI_URL action.payload", action.payload);
+    //     // console.log(componentName, "setAPI_URL action.payload.length", action.payload.length);
 
-        state.API_URL = action.payload;
+    //     state.API_URL = action.payload;
 
-      }
-    },
-    setBaseURL: {
-        reducer(state, action) {
-          // console.log(componentName, "setBaseURL action.payload", action.payload);
-          // console.log(componentName, "setBaseURL action.payload.length", action.payload.length);
+    //   }
+    // },
+    // setBaseURL: {
+    //     reducer(state, action) {
+    //       // console.log(componentName, "setBaseURL action.payload", action.payload);
+    //       // console.log(componentName, "setBaseURL action.payload.length", action.payload.length);
   
-          state.baseURL = action.payload;
+    //       state.baseURL = action.payload;
   
-        }
-      },
+    //     }
+    //   },
     setTagManagerArgsgtmId: {
         reducer(state, action) {
           // console.log(componentName, "setTagManagerArgsgtmId action.payload", action.payload);
@@ -202,6 +202,6 @@ const appSlice = createSlice({
 }
 });
 
-export const {setHostname, setProfileType, setAPI_URL, setBaseURL, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
+export const {setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
 
 export default appSlice.reducer;

@@ -3,7 +3,6 @@
 "message": "Offline AppSettings data used.",
 "siteName": "localhost",
 "appName": "PKD and Me",
-"metaDescription": "",
 "defaultPageComponent": "Home",
 "routerBaseName": "",
 "electronicOnly": false,
