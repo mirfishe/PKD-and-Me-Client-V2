@@ -90,7 +90,7 @@ switch (profileType) {
         API_URL = "https://pkd-and-me-server.herokuapp.com";
         siteName = "PKD and Me";
         appName = "Philip K. Dick Bibliography";
-        metaDescription = "";
+        metaDescription = "Purchase versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
         defaultPageComponent = "Home";
         routerBaseName = "";
         appOffline = false;
@@ -148,7 +148,7 @@ switch (profileType) {
 // physicalOnly = true;
 // physicalOnly = false;
 
-// Override the profileType setting
+// Override the profileType setting to test the appSetting files
 // profileType = "localhost";
 // profileType = "heroku";
 // profileType = "philipdick";
