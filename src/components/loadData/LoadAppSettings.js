@@ -215,7 +215,7 @@ function LoadAppSettings() {
   };
 
 useEffect(() => {
-    console.log(componentName, "useEffect");
+    // console.log(componentName, "useEffect");
 
     // Only load the AppSettings data once per session unless the data is changed
     if (!appSettingsLoaded) {

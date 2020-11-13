@@ -33,7 +33,7 @@ const Dickian = () => {
             <Row>
             <Col xs="8">
 
-
+            Definition.
 
             </Col>
             <Col xs="3">
