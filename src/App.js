@@ -24,6 +24,9 @@ import Media from "./components/media/Media";
 import Titles from "./components/titles/Titles";
 import Title from "./components/titles/Title";
 import Editions from "./components/editions/Editions";
+import Login from "./components/users/Login";
+import Register from "./components/users/Register";
+import EditUser from "./components/users/EditUser";
 
 function App() {
 
@@ -38,6 +41,11 @@ function App() {
   const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
 
   let showAllMenuItems = useSelector(state => state.app.menuSettings.showAllMenuItems);
+
+  const sessionToken = useSelector(state => state.user.sessionToken);
+  // console.log(componentName, "sessionToken", sessionToken);
+  const admin = useSelector(state => state.user.admin);
+  // console.log(componentName, "admin", admin);
 
   let showNew = useSelector(state => state.app.menuSettings.showNew);
   // console.log(componentName, "showNew", showNew);
@@ -192,6 +200,21 @@ function App() {
           {showAllEditions || showAllMenuItems ? 
           <NavItem className="mx-3">
             <Link to="/editions"><NavbarText>All Editions</NavbarText></Link>
+          </NavItem>
+          : null}
+          {sessionToken === undefined || sessionToken === null || sessionToken === "" ? 
+          <NavItem className="mx-3">
+            <Login />
+          </NavItem>
+          : null}
+          {sessionToken === undefined || sessionToken === null || sessionToken === "" ? 
+          <NavItem className="mx-3">
+            <Register />
+          </NavItem>
+          : null}
+          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
+          <NavItem className="mx-3">
+            <EditUser />
           </NavItem>
           : null}
           <NavItem className="mx-3">

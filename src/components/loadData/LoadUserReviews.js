@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "reactstrap";
 import AppSettings from "../../app/environment";
+import UserReviewData from "../../bibliographyData/UserReviews.json";
 import {loadArrayUserReviews, setUserReviewsDataOffline} from "../../bibliographyData/userReviewsSlice";
 
 function LoadUserReviews() {
@@ -53,8 +54,7 @@ function LoadUserReviews() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
           dispatch(setUserReviewsDataOffline(true));
-          // return {resultsFound: true, message: "Offline User Reviews data used.", userReviews: UserReviewData};
-          return {resultsFound: false, message: "Offline User Reviews data used."};
+          return {resultsFound: false, message: "Offline User Reviews data fetch used."};
         } else {
           dispatch(setUserReviewsDataOffline(false));
           return response.json();
@@ -113,7 +113,7 @@ function LoadUserReviews() {
           console.log(componentName, "fetchLocalDataUserReviews resultsFound error", data.message);
           // setErrUserReviewMessage(data.message);
           dispatch(setUserReviewsDataOffline(true));
-          // loadDataStore(UserReviewData, "userReview");
+          loadDataStore(UserReviewData, "userReview");
         };
 
     })
@@ -123,7 +123,7 @@ function LoadUserReviews() {
         // console.log(componentName, "fetchLocalDataUserReviews error.message", error.message);
         // setErrUserReviewMessage(error.name + ": " + error.message);
         dispatch(setUserReviewsDataOffline(true));
-        // loadDataStore(UserReviewData, "userReview");
+        loadDataStore(UserReviewData, "userReview");
     });
 
   };

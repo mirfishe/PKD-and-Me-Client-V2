@@ -4,21 +4,13 @@ import {Alert} from "reactstrap";
 import AppSettings from "../../app/environment";
 import {encodeURL} from "../../app/sharedFunctions";
 import {loadArrayURLs} from "../../app/urlsSlice";
-// import categoriesLoadData from "./bibliographyData/categoriesLoadData";
-// import categoriesOfflineData from "./bibliographyData/categoriesOfflineData";
-// import CategoryData from "./bibliographyData/Categories.json";
+import CategoryData from "../../bibliographyData/Categories.json";
 import {loadArrayCategories, setCategoriesDataOffline} from "../../bibliographyData/categoriesSlice";
-// import editionsLoadData from "./bibliographyData/editionsLoadData";
-// import editionsOfflineData from "./bibliographyData/editionsOfflineData";
-// import EditionData from "./bibliographyData/Editions.json";
+import EditionData from "../../bibliographyData/Editions.json";
 import {loadArrayEditions, setEditionsDataOffline} from "../../bibliographyData/editionsSlice";
-// import mediaLoadData from "./bibliographyData/mediaLoadData";
-// import mediaOfflineData from "./bibliographyData/mediaOfflineData";
-// import MediaData from "./bibliographyData/Media.json";
+import MediaData from "../../bibliographyData/Media.json";
 import {loadArrayMedia, setMediaDataOffline} from "../../bibliographyData/mediaSlice";
-// import titlesLoadData from "./bibliographyData/titlesLoadData";
-// import titlesOfflineData from "./bibliographyData/titlesOfflineData";
-// import TitleData from "./bibliographyData/Titles.json";
+import TitleData from "../../bibliographyData/Titles.json";
 import {loadArrayTitles, setTitlesDataOffline} from "../../bibliographyData/titlesSlice";
 
 function LoadBibliographyData() {
@@ -113,8 +105,7 @@ function LoadBibliographyData() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // load offline data
           dispatch(setCategoriesDataOffline(true));
-          // return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
-          return {resultsFound: false, message: "Offline Categories data used."};
+          return {resultsFound: false, message: "Offline Categories data fetch used."};
         } else {
           dispatch(setCategoriesDataOffline(false));
           return response.json();
@@ -162,7 +153,7 @@ function LoadBibliographyData() {
             // load offline data
             dispatch(setMediaDataOffline(true));
             // return {resultsFound: true, message: "Offline Media data used.", media: MediaData};
-            return {resultsFound: false, message: "Offline Media data used."};
+            return {resultsFound: false, message: "Offline Media data fetch used."};
         } else {
             dispatch(setMediaDataOffline(false));
             return response.json();
@@ -210,7 +201,7 @@ function LoadBibliographyData() {
             // load offline data
             dispatch(setTitlesDataOffline(true));
             // return {resultsFound: true, message: "Offline Titles data used.", titles: TitleData};
-            return {resultsFound: false, message: "Offline Titles data used."};
+            return {resultsFound: false, message: "Offline Titles data fetch used."};
         } else {
             dispatch(setTitlesDataOffline(false));
             return response.json();
@@ -258,7 +249,7 @@ function LoadBibliographyData() {
             // load offline data
             dispatch(setEditionsDataOffline(true));
             // return {resultsFound: true, message: "Offline Editions data used.", editions: EditionData};
-            return {resultsFound: false, message: "Offline Editions data used."};
+            return {resultsFound: false, message: "Offline Editions data fetch used."};
         } else {
             dispatch(setEditionsDataOffline(false));
             return response.json();
@@ -317,7 +308,7 @@ function LoadBibliographyData() {
           console.log(componentName, "fetchLocalDataCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
           dispatch(setCategoriesDataOffline(true));
-          // loadDataStore(CategoryData, "category");
+          loadDataStore(CategoryData, "category");
         };
 
     })
@@ -327,7 +318,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         dispatch(setCategoriesDataOffline(true));
-        // loadDataStore(CategoryData, "category");
+        loadDataStore(CategoryData, "category");
     });
 
   };
@@ -360,7 +351,7 @@ function LoadBibliographyData() {
             console.log(componentName, "fetchLocalDataMedia resultsFound error", data.message);
             // setErrMediaMessage(data.message);
             dispatch(setMediaDataOffline(true));
-            // loadDataStore(MediaData, "media");
+            loadDataStore(MediaData, "media");
         };
 
     })
@@ -370,7 +361,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataMedia error.message", error.message);
         // setErrMediaMessage(error.name + ": " + error.message);
         dispatch(setMediaDataOffline(true));
-        // loadDataStore(MediaData, "media");
+        loadDataStore(MediaData, "media");
     });
 
   };
@@ -403,7 +394,7 @@ function LoadBibliographyData() {
             console.log(componentName, "fetchLocalDataTitles resultsFound error", data.message);
             // setErrTitleMessage(data.message);
             dispatch(setTitlesDataOffline(true));
-            // loadDataStore(TitleData, "title");
+            loadDataStore(TitleData, "title");
         };
 
     })
@@ -413,7 +404,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataTitles error.message", error.message);
         // setErrTitleMessage(error.name + ": " + error.message);
         dispatch(setTitlesDataOffline(true));
-        // loadDataStore(TitleData, "title");
+        loadDataStore(TitleData, "title");
     });
 
   };
@@ -446,7 +437,7 @@ function LoadBibliographyData() {
             console.log(componentName, "fetchLocalDataEditions resultsFound error", data.message);
             // setErrEditionMessage(data.message);
             dispatch(setEditionsDataOffline(true));
-            // loadDataStore(EditionData, "edition");
+            loadDataStore(EditionData, "edition");
         };
 
     })
@@ -456,7 +447,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataEditions error.message", error.message);
         // setErrEditionMessage(error.name + ": " + error.message);
         dispatch(setEditionsDataOffline(true));
-        // loadDataStore(EditionData, "edition");
+        loadDataStore(EditionData, "edition");
     });
 
   };
