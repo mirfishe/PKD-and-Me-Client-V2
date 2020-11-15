@@ -40,6 +40,15 @@ const Login = (props) => {
     const [errEmail, setErrEmail] = useState("");
     const [errPassword, setErrPassword] = useState("");
 
+    const updateToken = (newToken) => {
+        if (newToken !== undefined && newToken !== null && newToken !== "") {
+          localStorage.setItem("token", newToken);
+          // console.log(componentName, "updateToken newToken", newToken);
+          // console.log(componentName, "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
+          // console.log(componentName, "updateToken User token changed.");
+        };
+    };
+
     const logIn = () => {
         // console.log(componentName, "logIn");
 
@@ -156,6 +165,7 @@ const Login = (props) => {
 
                             dispatch(loadUserData(data));
                             dispatch(setSessionToken(data.sessionToken));
+                            updateToken(data.sessionToken);
 
                         } else {
                             setErrMessage(data.error);
@@ -197,14 +207,14 @@ const Login = (props) => {
 
     return(
         <React.Fragment>
-        <Button outline size="sm" color="info" onClick={toggle}>Login</Button>
+        {sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline size="sm" color="info" onClick={toggle}>Login</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Login</ModalHeader>
            <ModalBody>
            <Form>
            <FormGroup>
-               {message !== "" ? <Alert color="info">{message}</Alert> : null}
-               {errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
+            {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
+            {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
            </FormGroup>
            <FormGroup>
 

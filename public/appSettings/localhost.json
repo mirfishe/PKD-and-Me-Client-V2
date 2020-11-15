@@ -17,6 +17,11 @@
     "showMediaList": false,
     "showTitleList": false,
     "showEditionList": false,
+
+    "showAddCategory": false,
+    "showAddMedia": false,
+    "showAddTitle": false,
+    "showAddEdition": false,
   
     "showAllCategories": false,
     "showAllMedia": false,

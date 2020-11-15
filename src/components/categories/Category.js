@@ -4,6 +4,7 @@ import {Link, useHistory} from "react-router-dom";
 import {Nav, NavItem, Collapse, Card} from "reactstrap";
 import {encodeURL} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
+import AddCategory from "./AddCategory";
 
 const Category = (props) => {
 
@@ -51,6 +52,7 @@ const Category = (props) => {
         })}
         </Nav>
         </Collapse>
+        <div className="mt-2 pl-3"><AddCategory displayButton={true} /></div>
         </React.Fragment>
     );
 

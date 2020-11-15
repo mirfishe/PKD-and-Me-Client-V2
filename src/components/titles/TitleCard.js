@@ -118,7 +118,7 @@ const TitleCard = (props) => {
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                                 {additionalText !== undefined && additionalText !== "" ? <CardText className="my-4">{additionalText}</CardText> : null}
-                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <CardText className="my-4"><div dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /></CardText> : null}
+                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <div className="my-4" dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /> : null}
                             </CardBody>
                         </Col>
 

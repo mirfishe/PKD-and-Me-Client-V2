@@ -151,7 +151,7 @@ export const removeOnePixelImage = (text, ASIN) => {
 
     let newText = text;
 
-    if (newText !== undefined) {
+    if (newText !== undefined && newText !== null && newText !== "") {
         
         // Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
         newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&", "");
@@ -172,7 +172,7 @@ export const setLocalImagePath = (text) => {
 
     let newText = text;
 
-    if (newText !== undefined) {
+    if (newText !== undefined && newText !== null && newText !== "") {
 
         // So that it doesn't remove the URL when the application is running locally or on a site without the images
         if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
@@ -196,7 +196,7 @@ export const setLocalPath = (text) => {
 
     let newText = text;
 
-    if (newText !== undefined) {
+    if (newText !== undefined && newText !== null && newText !== "") {
 
         // So that it doesn't remove the URL when the application is running locally or on a site without the images
         if (AppSettings.profileType === "philipdick") {
@@ -211,4 +211,133 @@ export const setLocalPath = (text) => {
     // console.log(componentName, "setLocalPath newText", newText);
 
     return newText;
+};
+
+
+export const createImageName = (titleName) => {
+
+    // console.log(omponentName, "createImageName titleName", titleName);
+
+    let newImageName = "";
+
+    if (titleName !== undefined && titleName !== null && titleName !== "") {
+        // Capitalize the first letter of every word
+        newImageName = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
+        // I'm sure there's a more elegant way to do this
+        // newImageName = newImageName.replaceAll(".", "");
+        // newImageName = newImageName.replaceAll("?", "");
+        // newImageName = newImageName.replaceAll(",", "");
+        // newImageName = newImageName.replaceAll(":", "");
+        // newImageName = newImageName.replaceAll("-", "");
+        //newImageName = newImageName.replace(/[.,\/#\'\?!$%\^&\*;:{}=\-_`~()]/g,"");
+        //newImageName = newImageName.replaceAll(" ", "");
+        // Remove all spaces - Doesn't work
+        // newImageName = newImageName.replace(/\s{2,}/g," ");
+
+        // https://www.codefari.com/2019/11/removereplace-special-characters-from.html
+        // SELECT regexp_replace('Remove!@#$ Special &*&characters', '[^\w]+','','g');
+        // regexp_replace("titleName", '[^\w]+')
+        // newImageName = titleName.replace(regExpr, "");
+
+        // select "titleName"
+        // --, replace("titleName", '-', '|')
+        // , regexp_replace("titleName", '[^\w]+','','g')
+        // , regexp_replace("titleName", '[^\w]+',' ','g')
+        // , replace(regexp_replace("titleName", '[^\w]+',' ','g'), ' ', '-')
+        // from titles
+
+        // https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
+        newImageName = newImageName.replace(/[^a-zA-Z0-9]/g, "");
+        
+
+        newImageName = "https://philipdick.com/images/covers/" + newImageName + ".jpg";
+    };
+
+    // console.log(omponentName, "createImageName newImageName", newImageName);
+
+    return newImageName;
+};
+
+export const createTitleURL = (titleName) => {
+
+    // console.log(omponentName, "createImageName titleName", titleName);
+
+    let newTitleURL = "";
+
+    if (titleName !== undefined && titleName !== null && titleName !== "") {
+        // Capitalize the first letter of every word
+        newTitleURL = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
+        // I'm sure there's a more elegant way to do this
+        // newTitleURL = newTitleURL.replaceAll(".", "");
+        // newTitleURL = newTitleURL.replaceAll("?", "");
+        // newTitleURL = newTitleURL.replaceAll(",", "");
+        // newTitleURL = newTitleURL.replaceAll(":", "");
+        // newTitleURL = newTitleURL.replaceAll("-", "");
+        //newTitleURL = newTitleURL.replace(/[.,\/#\'\?!$%\^&\*;:{}=\-_`~()]/g,"");
+        //newTitleURL = newTitleURL.replaceAll(" ", "");
+        // Remove all spaces - Doesn't work
+        // newTitleURL = newTitleURL.replace(/\s{2,}/g," ");
+
+        // https://www.codefari.com/2019/11/removereplace-special-characters-from.html
+        // SELECT regexp_replace('Remove!@#$ Special &*&characters', '[^\w]+','','g');
+        // regexp_replace("titleName", '[^\w]+')
+        // newTitleURL = titleName.replace(regExpr, "");
+
+        // select "titleName"
+        // --, replace("titleName", '-', '|')
+        // , regexp_replace("titleName", '[^\w]+','','g')
+        // , regexp_replace("titleName", '[^\w]+',' ','g')
+        // Use this regular expression to create the titleURL
+        // Execpt that letters after ' are captitalized also
+        // , replace(regexp_replace(initcap("titleName"), '[^\w]+',' ','g'), ' ', '-')
+        // from titles
+
+        // https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
+        newTitleURL = newTitleURL.replace(/[^a-zA-Z0-9]/g, "-");
+        // I'm sure there's a more elegant way to do this
+        newTitleURL = newTitleURL.replaceAll("---", "-");
+        newTitleURL = newTitleURL.replaceAll("--", "-");
+        
+
+        // newTitleURL = "https://philipdick.com/images/covers/" + newTitleURL + ".jpg";
+    };
+
+    // console.log(omponentName, "createImageName newTitleURL", newTitleURL);
+
+    return newTitleURL;
+};
+
+export const getASIN = (textLinkFull) => {
+
+    // console.log("sharedFunctions.tsx getASIN textLinkFull", textLinkFull);
+
+    let txtASIN = "";
+
+    // select substring("textLinkFull" from position('/dp/' in "textLinkFull") + 4 for 10) from editions
+
+    if (textLinkFull !== undefined && textLinkFull !== null && textLinkFull !== "") {
+
+        console.log("sharedFunctions.tsx getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
+        console.log("sharedFunctions.tsx getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));
+
+        if (textLinkFull.indexOf("/dp/") !== -1) {
+
+            // console.log("sharedFunctions.tsx getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
+            txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
+
+        } else if (textLinkFull.indexOf("/product/") !== -1) {
+
+            // console.log("sharedFunctions.tsx getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
+            txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
+
+        };
+
+    } else {
+        // return false;
+        // return null;
+        // return "";
+    };
+
+    return txtASIN;
+
 };

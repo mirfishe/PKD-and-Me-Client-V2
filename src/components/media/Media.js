@@ -4,6 +4,7 @@ import {Link, useHistory} from "react-router-dom";
 import {Nav, NavItem, Collapse, Card} from "reactstrap";
 import {encodeURL} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
+import AddMedia from "./AddMedia";
 
 const Media = (props) => {
 
@@ -62,6 +63,7 @@ const Media = (props) => {
         })}
         </Nav>
         </Collapse>
+        <div className="mt-2 pl-3"><AddMedia displayButton={true} /></div>
         </React.Fragment>
     );
 

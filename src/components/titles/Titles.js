@@ -6,6 +6,7 @@ import {Image} from "react-bootstrap-icons";
 import {displayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setTitleSort} from "../../bibliographyData/titlesSlice";
 import {setPageURL} from "../../app/urlsSlice";
+import AddTitle from "./AddTitle";
 
 const Titles = (props) => {
 
@@ -111,6 +112,7 @@ const Titles = (props) => {
             <Row>
                 <Col xs="12">
                     <h4 className="text-center mb-4">{categoryParam !== undefined && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
+                    <span className="mt-2 pl-3"><AddTitle displayButton={true} /></span>
                     {/* <span className="text-muted ml-2 smallText">Sort By&nbsp;
                         {titleSort !== "publicationDate" ? 
                         <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSort("publicationDate"));}}>Publication Date</a>

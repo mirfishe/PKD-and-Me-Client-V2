@@ -92,3 +92,8 @@ body {
   margin: 0;
   padding: .25em;
 }
+
+.addEditIcon {
+  color: black;
+  margin-left: 5px;
+}

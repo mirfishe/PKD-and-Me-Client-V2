@@ -4,9 +4,9 @@ const componentName = "userSlice.js";
 
 const initialState = {
     userID: null,
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: null,
+    lastName: null,
+    email: null,
     updatedBy: null,
     admin: false,
     active: false,

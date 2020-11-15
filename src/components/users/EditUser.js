@@ -250,7 +250,7 @@ const EditUser = (props) => {
     };
 
     useEffect(() => {
-        console.log(componentName, "useEffect userRecordUpdated", userRecordUpdated);
+        // console.log(componentName, "useEffect userRecordUpdated", userRecordUpdated);
         if (userRecordUpdated !== undefined && userRecordUpdated !== null && userRecordUpdated !== false) {
             setMessage("");
             setErrMessage("");
@@ -258,11 +258,23 @@ const EditUser = (props) => {
             setErrLastName("");
             setErrEmail("");
             setErrPassword("");
-            setUserRecordUpdated(false);
+            setUserRecordUpdated(null);
             setModal(false);
         };
         
     }, [userRecordUpdated]);
+
+    useEffect(() => {
+        // console.log(componentName, "useEffect sessionToken", sessionToken);
+        if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
+            setMessage("");
+            setErrMessage("");
+            setErrEmail("");
+            setErrPassword("");
+            setModal(false);
+        };
+        
+    }, [sessionToken]);
 
     const toggle = () => {
         setModal(!modal);
@@ -270,14 +282,14 @@ const EditUser = (props) => {
 
     return(
         <React.Fragment>
-        <Button outline size="sm" color="info" onClick={toggle}>Update User</Button>
+        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? <Button outline size="sm" color="info" onClick={toggle}>Update User</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Update User</ModalHeader>
            <ModalBody>
            <Form>
            <FormGroup>
-               {message !== "" ? <Alert color="info">{message}</Alert> : null}
-               {errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
+            {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
+            {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
             </FormGroup>
             <FormGroup>
 
