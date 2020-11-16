@@ -4,7 +4,7 @@ import {Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label,
 import {Image, Plus} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import {createTitleURL, createImageName} from "../../app/sharedFunctions";
-import {loadArrayTitles} from "../../bibliographyData/titlesSlice";
+import {addStateTitle} from "../../bibliographyData/titlesSlice";
 
 const AddTitle = (props) => {
 
@@ -60,7 +60,9 @@ const AddTitle = (props) => {
             // setCategoryMessage("categoryList.length", categoryList.length);
             setCategoryResultsFound(true);
         };
-        
+
+        setDdCategoryID(getCategoryIDFromCategoryName(props.categoryName));
+
     }, [categoryList]);
 
     const [message, setMessage] = useState("");
@@ -234,67 +236,102 @@ const AddTitle = (props) => {
                 let url = baseURL + "title/";
                 // console.log(componentName, "addTitle url", url);
 
-                fetch(url, {
-                    method: "POST",
-                    headers: new Headers({
-                    "Content-Type": "application/json",
-                    "Authorization": sessionToken
-                    }),
-                    body: JSON.stringify({title: titleObject})
-                })
-                .then(response => {
-                    // console.log(componentName, "addTitle response", response);
-                    // if (!response.ok) {
-                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                    // } else {
-                        // if (response.status === 200) {
-                            return response.json();
+                if (sessionToken !== undefined && sessionToken !== null) {
+
+                    fetch(url, {
+                        method: "POST",
+                        headers: new Headers({
+                        "Content-Type": "application/json",
+                        "Authorization": sessionToken
+                        }),
+                        body: JSON.stringify({title: titleObject})
+                    })
+                    .then(response => {
+                        // console.log(componentName, "addTitle response", response);
+                        // if (!response.ok) {
+                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
                         // } else {
-                        //     return response.status;
+                            // if (response.status === 200) {
+                                return response.json();
+                            // } else {
+                            //     return response.status;
+                            // };
                         // };
-                    // };
-                })
-                .then(data => {
-                    console.log(componentName, "addTitle data", data);
+                    })
+                    .then(data => {
+                        // console.log(componentName, "addTitle data", data);
 
-                    setTitleRecordAdded(data.recordAdded);
-                    setMessage(data.message);
+                        setTitleRecordAdded(data.recordAdded);
+                        setMessage(data.message);
 
-                    if (data.recordAdded === true) {
+                        if (data.recordAdded === true) {
 
-                        setTitleItem(data);
-                        setTitleID(data.titleID);
-                        setTitleName(data.titleName);
-                        setTitleSort(data.titleSort);
-                        setTitleURL(data.titleURL);
-                        setAuthorFirstName(data.authorFirstName);
-                        setAuthorLastName(data.authorLastName);
-                        setPublicationDate(data.publicationDate);
-                        setImageName(data.imageName);
-                        setCategoryID(data.categoryID);
-                        setShortDescription(data.shortDescription);
-                        setUrlPKDweb(data.urlPKDweb);
-                        setActive(data.active);
+                            setTitleItem(data);
+                            setTitleID(data.titleID);
+                            setTitleName(data.titleName);
+                            setTitleSort(data.titleSort);
+                            setTitleURL(data.titleURL);
+                            setAuthorFirstName(data.authorFirstName);
+                            setAuthorLastName(data.authorLastName);
+                            setPublicationDate(data.publicationDate);
+                            setImageName(data.imageName);
+                            setCategoryID(data.categoryID);
+                            setShortDescription(data.shortDescription);
+                            setUrlPKDweb(data.urlPKDweb);
+                            setActive(data.active);
 
-                        // Would still work if the createdAt and updatedAt were left out
-                        dispatch(loadArrayTitles([{titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                            // Would still work if the createdAt and updatedAt were left out
+                            dispatch(addStateTitle([{titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                            // Add to local storage also
 
-                    } else {
-                        // setErrMessage(data.error);
-                        setErrMessage(data.errorMessages);
-                    };
+                        } else {
+                            // setErrMessage(data.error);
+                            setErrMessage(data.errorMessages);
+                        };
 
-                })
-                .catch(error => {
-                    console.log(componentName, "addTitle error", error);
-                    // console.log(componentName, "addTitle error.name", error.name);
-                    // console.log(componentName, "addTitle error.message", error.message);
-                    setErrMessage(error.name + ": " + error.message);
-                });
+                    })
+                    .catch(error => {
+                        console.log(componentName, "addTitle error", error);
+                        // console.log(componentName, "addTitle error.name", error.name);
+                        // console.log(componentName, "addTitle error.message", error.message);
+                        setErrMessage(error.name + ": " + error.message);
+                    });
+
+                };
 
             };
 
         };
+    };
+
+    // This code is causing React to have too many re-renders in this location
+    const getCategoryIDFromCategoryName = (categoryName) => {
+        // console.log(componentName, "getCategoryIDFromCategoryName categoryName", categoryName);
+
+        if (categoryName !== undefined && categoryName !== null && categoryName !== "") {
+            // console.log(componentName, "getCategoryIDFromCategoryName categoryName", categoryName);
+
+            // Could use a find here also
+            const categoryProps = categoryList.filter(category => category.category === categoryName);
+            // console.log(componentName, "getCategoryIDFromCategoryName categoryProps", categoryProps);
+
+            if (!isNaN(categoryProps[0].categoryID)) {
+                // console.log(componentName, "getCategoryIDFromCategoryName categoryProps[0].categoryID", categoryProps[0].categoryID);
+
+                // setDdCategoryID(categoryProps[0].categoryID);
+
+                return categoryProps[0].categoryID;
+
+            } else {
+                return 0;
+            };
+
+        } else {
+            return 0;
+        };
+
+        // return 0;
+
     };
 
     useEffect(() => {
@@ -327,7 +364,7 @@ const AddTitle = (props) => {
     return(
         <React.Fragment>
 
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <Button outline size="sm" color="info" onClick={toggle}>Add Title</Button> : null}
+            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Title</Button></span> : null}
 
             {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
@@ -372,12 +409,16 @@ const AddTitle = (props) => {
                 <FormGroup row>
                 <Col>
 
+                {/* {console.log(componentName, "ddCategoryID", ddCategoryID)} */}
                 <Label id="lblCategoryID" for="lblCategoryID">Category</Label>
                 <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => {/*console.log(event.target.value);*/ setDdCategoryID(event.target.value);}}>
                 <option value="">Select a Category</option>
                 {categoryList.map((category) => {
                 return (
+                    <React.Fragment>
+                    {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
                     <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
+                    </React.Fragment>
                     )
                 })}
                 </Input>

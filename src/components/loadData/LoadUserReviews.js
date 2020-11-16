@@ -34,6 +34,8 @@ function LoadUserReviews() {
     if (source === "userReview") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayUserReviews(data));
+      localStorage.setItem("arrayUserReviews", data);
+      localStorage.setItem("lastDatabaseRetrievalUserReviews", new Date().toISOString());
     };
 
   };

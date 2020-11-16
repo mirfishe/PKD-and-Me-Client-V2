@@ -13,6 +13,11 @@ const Media = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const sessionToken = useSelector(state => state.user.sessionToken);
+    // console.log(componentName, "sessionToken", sessionToken);
+    const admin = useSelector(state => state.user.admin);
+    // console.log(componentName, "admin", admin);
+
     const [isOpen, setIsOpen] = useState(true);
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
@@ -63,7 +68,7 @@ const Media = (props) => {
         })}
         </Nav>
         </Collapse>
-        <div className="mt-2 pl-3"><AddMedia displayButton={true} /></div>
+        {admin !== undefined && admin !== null && admin === true ? <AddMedia displayButton={true} /> : null}
         </React.Fragment>
     );
 

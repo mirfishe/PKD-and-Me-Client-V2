@@ -5,6 +5,10 @@ import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, A
 import {Image} from "react-bootstrap-icons";
 import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
+import AddTitle from "./AddTitle";
+import EditTitle from "./EditTitle";
+import AddEdition from "../editions/AddEdition";
+import EditEdition from "../editions/EditEdition";
 
 const Title = (props) => {
 
@@ -15,6 +19,11 @@ const Title = (props) => {
 
     const siteName = useSelector(state => state.app.siteName);
     const appName = useSelector(state => state.app.appName);
+
+    const sessionToken = useSelector(state => state.user.sessionToken);
+    // console.log(componentName, "sessionToken", sessionToken);
+    const admin = useSelector(state => state.user.admin);
+    // console.log(componentName, "admin", admin);
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
@@ -145,15 +154,17 @@ const Title = (props) => {
             </Row>
             {titleList.map((title) => {
             return (
-                <React.Fragment>
+                <React.Fragment key={title.titleID}>
                 <Row>
                     <Col xs="12">
                         <h4>{title.titleName}
 
-                            {title.publicationDate !== null ? <span className="ml-2 smallerText"> ({displayYear(title.publicationDate)})</span> : null}
+                            {title.publicationDate !== undefined && title.publicationDate !== null ? <span className="ml-2 smallerText"> ({displayYear(title.publicationDate)})</span> : null}
 
                             {/* {title.category.category !== null && title.category.category !== "" ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category.category)}>{title.category.category}</Link>
                             </span> : null} */}
+                            {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
+                            {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                         </h4>
                     </Col>
                 </Row>
@@ -171,6 +182,7 @@ const Title = (props) => {
                     <Col xs="8">
                         {title.shortDescription !== "" && title.shortDescription !== null ? <div dangerouslySetInnerHTML={{"__html": displayParagraphs(title.shortDescription)}} /> : null}
                         {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
+                        {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
                     </Col>
                 </Row>
 
@@ -188,7 +200,9 @@ const Title = (props) => {
             {editionList.length > 0 ?
             <Row>
                 <Col xs="12">
-                    <h5 className="text-center">Find A Copy</h5>
+                    <h5 className="text-center">Find A Copy 
+                    {/* {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null} */}
+                    </h5>
                 </Col>
             </Row>
             : null}

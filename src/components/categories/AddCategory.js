@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Plus} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import {loadArrayCategories} from "../../bibliographyData/categoriesSlice";
+import {addStateCategory} from "../../bibliographyData/categoriesSlice";
 
 const AddCategory = (props) => {
 
@@ -94,56 +94,61 @@ const AddCategory = (props) => {
                 let url = baseURL + "category/";
                 // console.log(componentName, "addCategory url", url);
 
-                fetch(url, {
-                    method: "POST",
-                    headers: new Headers({
-                    "Content-Type": "application/json",
-                    "Authorization": sessionToken
-                    }),
-                    body: JSON.stringify({category: categoryObject})
-                })
-                .then(response => {
-                    // console.log(componentName, "addCategory response", response);
-                    // if (!response.ok) {
-                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                    // } else {
-                        // if (response.status === 200) {
-                            return response.json();
+                if (sessionToken !== undefined && sessionToken !== null) {
+
+                    fetch(url, {
+                        method: "POST",
+                        headers: new Headers({
+                        "Content-Type": "application/json",
+                        "Authorization": sessionToken
+                        }),
+                        body: JSON.stringify({category: categoryObject})
+                    })
+                    .then(response => {
+                        // console.log(componentName, "addCategory response", response);
+                        // if (!response.ok) {
+                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
                         // } else {
-                        //     return response.status;
+                            // if (response.status === 200) {
+                                return response.json();
+                            // } else {
+                            //     return response.status;
+                            // };
                         // };
-                    // };
-                })
-                .then(data => {
-                    console.log(componentName, "addCategory data", data);
+                    })
+                    .then(data => {
+                        console.log(componentName, "addCategory data", data);
 
-                    setCategoryRecordAdded(data.recordAdded);
-                    setMessage(data.message);
+                        setCategoryRecordAdded(data.recordAdded);
+                        setMessage(data.message);
 
-                    if (data.recordAdded === true) {
+                        if (data.recordAdded === true) {
 
-                        // setCategoryItem(data);
+                            // setCategoryItem(data);
 
-                        setCategoryID(data.categoryID);
-                        setCategory(data.category);
-                        setSortID(data.sortID);
-                        setActive(data.active);
+                            setCategoryID(data.categoryID);
+                            setCategory(data.category);
+                            setSortID(data.sortID);
+                            setActive(data.active);
 
-                        // Would still work if the createdAt and updatedAt were left out
-                        dispatch(loadArrayCategories([{categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                            // Would still work if the createdAt and updatedAt were left out
+                            dispatch(addStateCategory([{categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                            // Add to local storage also
 
-                    } else {
-                        // setErrMessage(data.error);
-                        setErrMessage(data.errorMessages);
-                    };
+                        } else {
+                            // setErrMessage(data.error);
+                            setErrMessage(data.errorMessages);
+                        };
 
-                })
-                .catch(error => {
-                    console.log(componentName, "addCategory error", error);
-                    // console.log(componentName, "addCategory error.name", error.name);
-                    // console.log(componentName, "addCategory error.message", error.message);
-                    setErrMessage(error.name + ": " + error.message);
-                });
+                    })
+                    .catch(error => {
+                        console.log(componentName, "addCategory error", error);
+                        // console.log(componentName, "addCategory error.name", error.name);
+                        // console.log(componentName, "addCategory error.message", error.message);
+                        setErrMessage(error.name + ": " + error.message);
+                    });
+
+                };
 
             };
 
@@ -179,7 +184,7 @@ const AddCategory = (props) => {
     return(
         <React.Fragment>
 
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <Button outline size="sm" color="info" onClick={toggle}>Add Category</Button> : null}
+            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Category</Button></span> : null}
 
             {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 

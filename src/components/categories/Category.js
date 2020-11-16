@@ -13,6 +13,11 @@ const Category = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const sessionToken = useSelector(state => state.user.sessionToken);
+    // console.log(componentName, "sessionToken", sessionToken);
+    const admin = useSelector(state => state.user.admin);
+    // console.log(componentName, "admin", admin);
+
     const [isOpen, setIsOpen] = useState(true);
 
     const categoryListState = useSelector(state => state.categories.arrayCategories);
@@ -52,7 +57,7 @@ const Category = (props) => {
         })}
         </Nav>
         </Collapse>
-        <div className="mt-2 pl-3"><AddCategory displayButton={true} /></div>
+        {admin !== undefined && admin !== null && admin === true ? <AddCategory displayButton={true} /> : null}
         </React.Fragment>
     );
 

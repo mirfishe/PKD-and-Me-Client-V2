@@ -5,6 +5,7 @@ const componentName = "categoriesSlice.js";
 const initialState = {
   arrayCategories: [],
   categoriesLoaded: false,
+  lastDatabaseRetrievalCategories: null,
   categoriesDataOffline: false
 };
 
@@ -23,9 +24,57 @@ const categoriesSlice = createSlice({
         };
 
         state.categoriesLoaded = true;
+        state.lastDatabaseRetrievalCategories = new Date().toISOString();
 
       }
     },
+    addStateCategory: {
+      reducer(state, action) {
+        // console.log(componentName, "addStateCategory action.payload", action.payload);
+        // console.log(componentName, "addStateCategory action.payload.length", action.payload.length);
+
+        // Could change this to accept an object and add that object to the store
+        for (let i = 0; i < action.payload.length; i++) {
+          // console.log(componentName, "addStateCategory action.payload[i]", action.payload[i]);
+          state.arrayCategories.push(action.payload[i]);
+        };
+
+      }
+    },
+  updateStateCategory: {
+    reducer(state, action) {
+      // console.log(componentName, "updateStateCategory action.payload", action.payload);
+      // console.log(componentName, "updateStateCategory action.payload.length", action.payload.length);
+
+      const categoryItem = action.payload;
+      const existingCategory = state.arrayCategories.find(category => category.categoryID === categoryItem.categoryID);
+      console.log(componentName, "updateStateCategory existingCategory", existingCategory);
+
+      if (existingCategory !== undefined) {
+        // existingCategory.categoryID = categoryItem.categoryID;
+        existingCategory.category = categoryItem.category;
+        existingCategory.sortID = categoryItem.sortID;
+        existingCategory.active = categoryItem.active;
+        existingCategory.createdAt = categoryItem.createdAt;
+        existingCategory.updatedAt = categoryItem.updatedAt;
+      };
+
+    }
+  },
+  deleteStateCategory: {
+    reducer(state, action) {
+      // console.log(componentName, "deleteStateCategory action.payload", action.payload);
+      // console.log(componentName, "deleteStateCategory action.payload.length", action.payload.length);
+
+      const categoryID = action.payload;
+
+      const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
+      console.log(componentName, "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
+
+      state.arrayCategories.splice(existingCategoryIndex, 1);
+
+    }
+  },
     setCategoriesDataOffline: {
       reducer(state, action) {
         // console.log(componentName, "setCategoriesDataOffline action.payload", action.payload);
@@ -38,6 +87,6 @@ const categoriesSlice = createSlice({
 }
 });
 
-export const {loadArrayCategories, setCategoriesDataOffline} = categoriesSlice.actions;
+export const {loadArrayCategories, addStateCategory, updateStateCategory, deleteStateCategory, setCategoriesDataOffline} = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

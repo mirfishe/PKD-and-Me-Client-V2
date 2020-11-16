@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Redirect} from "react-router-dom";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Image, Plus} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import {getASIN} from "../../app/sharedFunctions";
-import {loadArrayEditions} from "../../bibliographyData/editionsSlice";
+import {addStateEdition} from "../../bibliographyData/editionsSlice";
 
 const AddEdition = (props) => {
+
+    // publication date comes from where?
+    // titleID comes from where?
 
     const componentName = "AddEdition.js";
 
@@ -241,64 +243,69 @@ const AddEdition = (props) => {
             let url = baseURL + "edition/";
             // console.log(componentName, "addEdition url", url);
 
-            fetch(url, {
-                method: "POST",
-                headers: new Headers({
-                "Content-Type": "application/json",
-                "Authorization": sessionToken
-                }),
-                body: JSON.stringify({edition: editionObject})
-            })
-            .then(response => {
-                // console.log(componentName, "addEdition response", response);
-                // if (!response.ok) {
-                //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                // } else {
-                    // if (response.status === 200) {
-                        return response.json();
+            if (sessionToken !== undefined && sessionToken !== null) {
+
+                fetch(url, {
+                    method: "POST",
+                    headers: new Headers({
+                    "Content-Type": "application/json",
+                    "Authorization": sessionToken
+                    }),
+                    body: JSON.stringify({edition: editionObject})
+                })
+                .then(response => {
+                    // console.log(componentName, "addEdition response", response);
+                    // if (!response.ok) {
+                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
                     // } else {
-                    //     return response.status;
+                        // if (response.status === 200) {
+                            return response.json();
+                        // } else {
+                        //     return response.status;
+                        // };
                     // };
-                // };
-            })
-            .then(data => {
-                // console.log(componentName, "addEdition data", data);
+                })
+                .then(data => {
+                    // console.log(componentName, "addEdition data", data);
 
-                setEditionRecordAdded(data.recordAdded);
-                setMessage(data.message);
+                    setEditionRecordAdded(data.recordAdded);
+                    setMessage(data.message);
 
-                if (data.recordAdded === true) {
+                    if (data.recordAdded === true) {
 
-                    setEditionItem(data);
-                    setEditionID(data.editionID);
-                    setTitleID(data.titleID);
-                    setMediaID(data.mediaID);
-                    setPublicationDate(data.publicationDate);
-                    setImageName(data.imageName);
-                    setASIN(data.ASIN);
-                    setTextLinkShort(data.textLinkShort);
-                    setTextLinkFull(data.textLinkFull);
-                    setImageLinkSmall(data.imageLinkSmall);
-                    setImageLinkMedium(data.imageLinkMedium);
-                    setImageLinkLarge(data.imageLinkLarge);
-                    setTextImageLink(data.textImageLink);
-                    setActive(data.active);
+                        setEditionItem(data);
+                        setEditionID(data.editionID);
+                        setTitleID(data.titleID);
+                        setMediaID(data.mediaID);
+                        setPublicationDate(data.publicationDate);
+                        setImageName(data.imageName);
+                        setASIN(data.ASIN);
+                        setTextLinkShort(data.textLinkShort);
+                        setTextLinkFull(data.textLinkFull);
+                        setImageLinkSmall(data.imageLinkSmall);
+                        setImageLinkMedium(data.imageLinkMedium);
+                        setImageLinkLarge(data.imageLinkLarge);
+                        setTextImageLink(data.textImageLink);
+                        setActive(data.active);
 
-                    // Would still work if the createdAt and updatedAt were left out
-                    dispatch(loadArrayEditions([{editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                        // Would still work if the createdAt and updatedAt were left out
+                        dispatch(addStateEdition([{editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                        // Add to local storage also
+                        
+                    } else {
+                        // setErrMessage(data.error);
+                        setErrMessage(data.errorMessages);
+                    };
 
-                } else {
-                    // setErrMessage(data.error);
-                    setErrMessage(data.errorMessages);
-                };
+                })
+                .catch(error => {
+                    console.log(componentName, "addEdition error", error);
+                    // console.log(componentName, "addEdition error.name", error.name);
+                    // console.log(componentName, "addEdition error.message", error.message);
+                    setErrMessage(error.name + ": " + error.message);
+                });
 
-            })
-            .catch(error => {
-                console.log(componentName, "addEdition error", error);
-                // console.log(componentName, "addEdition error.name", error.name);
-                // console.log(componentName, "addEdition error.message", error.message);
-                setErrMessage(error.name + ": " + error.message);
-            });
+            };
 
         };
 
@@ -361,9 +368,9 @@ const AddEdition = (props) => {
         // console.log(componentName, "copyTitlePublicationDate props.titlePublicationDate", props.titlePublicationDate);
 
         if (props.titlePublicationDate !== undefined && props.titlePublicationDate !== null) {
-            setState({txtPublicationDate: props.titlePublicationDate.toString().substring(0, 10)});
+            setTxtPublicationDate(props.titlePublicationDate.toString().substring(0, 10));
         } else {
-            setState({txtPublicationDate: undefined});
+            setTxtPublicationDate(undefined);
         };
 
     };
@@ -397,11 +404,11 @@ const AddEdition = (props) => {
     return(
         <React.Fragment>
                             
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <Button outline size="sm" color="info" onClick={toggle}>Add Edition</Button> : null}
+            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Edition</Button></span> : null}
 
             {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
-        <Modal isOpen={modal} toggle={toggle} size="md">
+        <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Add Edition</ModalHeader>
            <ModalBody>
            <Form>
@@ -429,9 +436,8 @@ const AddEdition = (props) => {
                 </Col>
                 <Col>
                     
-                    <Label for="txtPublicationDate">Publication Date</Label>
+                    <Label for="txtPublicationDate">Publication Date</Label> {props.titlePublicationDate !== undefined && props.titlePublicationDate !== null ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
                     <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(event.target.value);*/ setTxtPublicationDate(event.target.value);}} />
-                    {props.titlePublicationDate !== undefined && props.titlePublicationDate !== null ? <Button outline size="small" color="secondary" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
 
                 </Col>
 
@@ -446,11 +452,10 @@ const AddEdition = (props) => {
                 </FormGroup>
                 <FormGroup>
 
-                {txtTextLinkFull !== undefined && txtTextLinkFull !== null && txtTextLinkFull !== "" ? <Alert color="info">{txtTextLinkFull.substring(txtTextLinkFull.indexOf("/dp/") + 4, txtTextLinkFull.indexOf("/ref="))}</Alert> : null}
+                {txtTextLinkFull !== undefined && txtTextLinkFull !== null && txtTextLinkFull !== "" ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
                 {ASINMessage !== undefined && ASINMessage !== null && ASINMessage !== "" ? <Alert color="info">{ASINMessage}</Alert> : null}
                 {errASINMessage !== undefined && errASINMessage !== null && errASINMessage !== "" ? <Alert color="danger">{errASINMessage}</Alert> : null}
-                <Button outline size="small" color="secondary" onClick={(event) => {/*console.log(event.target.value);*/ checkASIN(txtASIN);}}>Check for ASIN</Button>
-                <Label for="txtASIN">ASIN</Label>
+                <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={(event) => {/*console.log(event.target.value);*/ checkASIN(txtASIN);}}>Check for ASIN</Button>
                 <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => {/*console.log(event.target.value);*/ setTxtASIN(event.target.value);}} />
 
                 </FormGroup>

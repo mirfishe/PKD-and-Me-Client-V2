@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Plus} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import {loadArrayMedia} from "../../bibliographyData/mediaSlice";
+import {addStateMedia} from "../../bibliographyData/mediaSlice";
 
 const AddMedia = (props) => {
 
@@ -99,57 +99,62 @@ const AddMedia = (props) => {
                 let url = baseURL + "media/";
                 // console.log(componentName, "addMedia url", url);
 
-                fetch(url, {
-                    method: "POST",
-                    headers: new Headers({
-                    "Content-Type": "application/json",
-                    "Authorization": sessionToken
-                    }),
-                    body: JSON.stringify({media: mediaObject})
-                })
-                .then(response => {
-                    // console.log(componentName, "addMedia response", response);
-                    // if (!response.ok) {
-                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                    // } else {
-                        // if (response.status === 200) {
-                            return response.json();
+                if (sessionToken !== undefined && sessionToken !== null) {
+
+                    fetch(url, {
+                        method: "POST",
+                        headers: new Headers({
+                        "Content-Type": "application/json",
+                        "Authorization": sessionToken
+                        }),
+                        body: JSON.stringify({media: mediaObject})
+                    })
+                    .then(response => {
+                        // console.log(componentName, "addMedia response", response);
+                        // if (!response.ok) {
+                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
                         // } else {
-                        //     return response.status;
+                            // if (response.status === 200) {
+                                return response.json();
+                            // } else {
+                            //     return response.status;
+                            // };
                         // };
-                    // };
-                })
-                .then(data => {
-                    // console.log(componentName, "addMedia data", data);
+                    })
+                    .then(data => {
+                        // console.log(componentName, "addMedia data", data);
 
-                    setMediaRecordAdded(data.recordAdded);
-                    setMessage(data.message);
+                        setMediaRecordAdded(data.recordAdded);
+                        setMessage(data.message);
 
-                    if (data.recordAdded === true) {
+                        if (data.recordAdded === true) {
 
-                        // setMediaItem(data);
+                            // setMediaItem(data);
 
-                        setMediaID(data.mediaID);
-                        setMedia(data.media);
-                        setElectronic(data.electronic);
-                        setSortID(data.sortID);
-                        setActive(data.active);
+                            setMediaID(data.mediaID);
+                            setMedia(data.media);
+                            setElectronic(data.electronic);
+                            setSortID(data.sortID);
+                            setActive(data.active);
 
-                        // Would still work if the createdAt and updatedAt were left out
-                        dispatch(loadArrayMedia([{mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                            // Would still work if the createdAt and updatedAt were left out
+                            dispatch(addStateMedia([{mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                            // Add to local storage also
+                            
+                        } else {
+                            // setErrMessage(data.error);
+                            setErrMessage(data.errorMessages);
+                        };
 
-                    } else {
-                        // setErrMessage(data.error);
-                        setErrMessage(data.errorMessages);
-                    };
+                    })
+                    .catch(error => {
+                        console.log(componentName, "addMedia error", error);
+                        // console.log(componentName, "addMedia error.name", error.name);
+                        // console.log(componentName, "addMedia error.message", error.message);
+                        setErrMessage(error.name + ": " + error.message);
+                    });
 
-                })
-                .catch(error => {
-                    console.log(componentName, "addMedia error", error);
-                    // console.log(componentName, "addMedia error.name", error.name);
-                    // console.log(componentName, "addMedia error.message", error.message);
-                    setErrMessage(error.name + ": " + error.message);
-                });
+                };
 
             };
 
@@ -185,7 +190,7 @@ const AddMedia = (props) => {
     return(
         <React.Fragment>
                             
-        {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <Button outline size="sm" color="info" onClick={toggle}>Add Media</Button> : null}
+        {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
 
         {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 

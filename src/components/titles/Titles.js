@@ -7,6 +7,7 @@ import {displayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath} from
 import {setTitleSort} from "../../bibliographyData/titlesSlice";
 import {setPageURL} from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
+import EditTitle from "./EditTitle";
 
 const Titles = (props) => {
 
@@ -17,6 +18,11 @@ const Titles = (props) => {
 
     const siteName = useSelector(state => state.app.siteName);
     const appName = useSelector(state => state.app.appName);
+
+    const sessionToken = useSelector(state => state.user.sessionToken);
+    // console.log(componentName, "sessionToken", sessionToken);
+    const admin = useSelector(state => state.user.admin);
+    // console.log(componentName, "admin", admin);
 
     const titleSort = useSelector(state => state.titles.titleSort);
 
@@ -112,7 +118,7 @@ const Titles = (props) => {
             <Row>
                 <Col xs="12">
                     <h4 className="text-center mb-4">{categoryParam !== undefined && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
-                    <span className="mt-2 pl-3"><AddTitle displayButton={true} /></span>
+                    {admin !== undefined && admin !== null && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
                     {/* <span className="text-muted ml-2 smallText">Sort By&nbsp;
                         {titleSort !== "publicationDate" ? 
                         <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSort("publicationDate"));}}>Publication Date</a>
@@ -179,6 +185,7 @@ const Titles = (props) => {
                             <CardBody>
                                 {/* <CardText><Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
                                 <CardText><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
+                                {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                             </CardBody>

@@ -5,6 +5,7 @@ const componentName = "userReviewsSlice.js";
 const initialState = {
   arrayUserReviews: [],
   userReviewsLoaded: false,
+  lastDatabaseRetrievalUserReviews: null,
   userReviewsDataOffline: false
 };
 
@@ -23,6 +24,7 @@ const userReviewsSlice = createSlice({
         };
 
         state.userReviewsLoaded = true;
+        state.lastDatabaseRetrievalUserReviews = new Date().toISOString();
 
       }
     },

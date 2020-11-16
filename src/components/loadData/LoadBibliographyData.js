@@ -37,6 +37,11 @@ function LoadBibliographyData() {
   const titlesLoaded = useSelector(state => state.titles.titlesLoaded);
   const editionsLoaded = useSelector(state => state.editions.editionsLoaded);
 
+  const lastDatabaseRetrievalCategories = useSelector(state => state.categories.lastDatabaseRetrievalCategories);
+  const lastDatabaseRetrievalMedia = useSelector(state => state.media.lastDatabaseRetrievalMedia);
+  const lastDatabaseRetrievalTitles = useSelector(state => state.titles.lastDatabaseRetrievalTitles);
+  const lastDatabaseRetrievalEditions = useSelector(state => state.editions.lastDatabaseRetrievalEditions);
+
   const [categoryMessage, setCategoryMessage] = useState("");
   const [errCategoryMessage, setErrCategoryMessage] = useState("");
   const [mediaMessage, setMediaMessage] = useState("");
@@ -51,18 +56,26 @@ function LoadBibliographyData() {
     if (source === "category") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayCategories(data));
+      localStorage.setItem("arrayCategories", data);
+      localStorage.setItem("lastDatabaseRetrievalCategories", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "media") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayMedia(data));
+      localStorage.setItem("arrayMedia", data);
+      localStorage.setItem("lastDatabaseRetrievalMedia", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "title") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayTitles(data));
+      localStorage.setItem("arrayTitles", data);
+      localStorage.setItem("lastDatabaseRetrievalTitles", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "edition") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayEditions(data));
+      localStorage.setItem("arrayEditions", data);
+      localStorage.setItem("lastDatabaseRetrievalEditions", new Date().toISOString());
     };
 
   };
