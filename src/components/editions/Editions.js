@@ -6,6 +6,8 @@ import {Image} from 'react-bootstrap-icons';
 import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setEditionSort} from "../../bibliographyData/editionsSlice";
 import {setPageURL} from "../../app/urlsSlice";
+import AddEdition from "../editions/AddEdition";
+import EditEdition from "../editions/EditEdition";
 
 const Editions = (props) => {
 
@@ -16,6 +18,11 @@ const Editions = (props) => {
 
     const siteName = useSelector(state => state.app.siteName);
     const appName = useSelector(state => state.app.appName);
+
+    const sessionToken = useSelector(state => state.user.sessionToken);
+    // console.log(componentName, "sessionToken", sessionToken);
+    const admin = useSelector(state => state.user.admin);
+    // console.log(componentName, "admin", admin);
 
     const editionSort = useSelector(state => state.editions.editionSort);
     const electronicOnly = useSelector(state => state.app.electronicOnly);
@@ -197,6 +204,8 @@ const Editions = (props) => {
                                 {edition.title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(edition.title.publicationDate)})</span> : null}
                                 </CardText>
                                 {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                                {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={edition.title.titleID} titlePublicationDate={edition.title.publicationDate} displayButton={true} /> : null}
+                                {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.title.publicationDate} displayButton={true} /> : null}
                             </CardBody>
                         </Col>
                     </Row>

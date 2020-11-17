@@ -31,7 +31,6 @@ const appSlice = createSlice({
     setHostname: {
       reducer(state, action) {
         // console.log(componentName, "setAPI_URL action.payload", action.payload);
-        // console.log(componentName, "setAPI_URL action.payload.length", action.payload.length);
 
         state.hostname = action.payload;
 
@@ -40,7 +39,6 @@ const appSlice = createSlice({
     setProfileType: {
       reducer(state, action) {
         // console.log(componentName, "setAPI_URL action.payload", action.payload);
-        // console.log(componentName, "setAPI_URL action.payload.length", action.payload.length);
 
         state.profileType = action.payload;
 
@@ -49,7 +47,6 @@ const appSlice = createSlice({
     // setAPI_URL: {
     //   reducer(state, action) {
     //     // console.log(componentName, "setAPI_URL action.payload", action.payload);
-    //     // console.log(componentName, "setAPI_URL action.payload.length", action.payload.length);
 
     //     state.API_URL = action.payload;
 
@@ -58,7 +55,6 @@ const appSlice = createSlice({
     // setBaseURL: {
     //     reducer(state, action) {
     //       // console.log(componentName, "setBaseURL action.payload", action.payload);
-    //       // console.log(componentName, "setBaseURL action.payload.length", action.payload.length);
   
     //       state.baseURL = action.payload;
   
@@ -67,7 +63,6 @@ const appSlice = createSlice({
     setTagManagerArgsgtmId: {
         reducer(state, action) {
           // console.log(componentName, "setTagManagerArgsgtmId action.payload", action.payload);
-          // console.log(componentName, "setTagManagerArgsgtmId action.payload.length", action.payload.length);
   
           state.tagManagerArgsgtmId = action.payload;
   
@@ -76,7 +71,6 @@ const appSlice = createSlice({
     setSiteName: {
       reducer(state, action) {
         // console.log(componentName, "setSiteName action.payload", action.payload);
-        // console.log(componentName, "setSiteName action.payload.length", action.payload.length);
 
         state.siteName = action.payload;
 
@@ -85,7 +79,6 @@ const appSlice = createSlice({
     setAppName: {
       reducer(state, action) {
         // console.log(componentName, "setAppName action.payload", action.payload);
-        // console.log(componentName, "setAppName action.payload.length", action.payload.length);
 
         state.appName = action.payload;
 
@@ -94,7 +87,6 @@ const appSlice = createSlice({
     setMetaDescription: {
       reducer(state, action) {
         // console.log(componentName, "setMetaDescription action.payload", action.payload);
-        // console.log(componentName, "setMetaDescription action.payload.length", action.payload.length);
 
         state.metaDescription = action.payload;
 
@@ -103,7 +95,6 @@ const appSlice = createSlice({
     setDefaultPageComponent: {
       reducer(state, action) {
         // console.log(componentName, "setDefaultPageComponent action.payload", action.payload);
-        // console.log(componentName, "setDefaultPageComponent action.payload.length", action.payload.length);
 
         state.defaultPageComponent = action.payload;
 
@@ -112,7 +103,6 @@ const appSlice = createSlice({
     setRouterBaseName: {
       reducer(state, action) {
         // console.log(componentName, "setRouterBaseName action.payload", action.payload);
-        // console.log(componentName, "setRouterBaseName action.payload.length", action.payload.length);
 
         state.routerBaseName = action.payload;
 
@@ -121,7 +111,6 @@ const appSlice = createSlice({
     setAppOffline: {
       reducer(state, action) {
         // console.log(componentName, "setAppOffline action.payload", action.payload);
-        // console.log(componentName, "setAppOffline action.payload.length", action.payload.length);
 
         state.appOffline = action.payload;
 
@@ -130,7 +119,6 @@ const appSlice = createSlice({
     setElectronicOnly: {
       reducer(state, action) {
         // console.log(componentName, "setElectronicOnly action.payload", action.payload);
-        // console.log(componentName, "setElectronicOnly action.payload.length", action.payload.length);
 
         state.electronicOnly = action.payload;
 
@@ -139,7 +127,6 @@ const appSlice = createSlice({
     setElectronicOnlyMessage: {
       reducer(state, action) {
         // console.log(componentName, "setElectronicOnlyMessage action.payload", action.payload);
-        // console.log(componentName, "setElectronicOnlyMessage action.payload.length", action.payload.length);
 
         state.electronicOnlyMessage = action.payload;
 
@@ -148,7 +135,6 @@ const appSlice = createSlice({
     setPhysicalOnly: {
       reducer(state, action) {
         // console.log(componentName, "setPhysicalOnly action.payload", action.payload);
-        // console.log(componentName, "setPhysicalOnly action.payload.length", action.payload.length);
 
         state.physicalOnly = action.payload;
 
@@ -157,7 +143,6 @@ const appSlice = createSlice({
     setPhysicalOnlyMessage: {
       reducer(state, action) {
         // console.log(componentName, "setPhysicalOnlyMessage action.payload", action.payload);
-        // console.log(componentName, "setPhysicalOnlyMessage action.payload.length", action.payload.length);
 
         state.physicalOnlyMessage = action.payload;
 
@@ -166,7 +151,6 @@ const appSlice = createSlice({
     setAppSettingsLoaded: {
       reducer(state, action) {
         // console.log(componentName, "setAppSettingsLoaded action.payload", action.payload);
-        // console.log(componentName, "setAppSettingsLoaded action.payload.length", action.payload.length);
 
         state.appSettingsLoaded = action.payload;
 
@@ -175,7 +159,6 @@ const appSlice = createSlice({
     setAppSettingsJsonLoaded: {
       reducer(state, action) {
         // console.log(componentName, "setAppSettingsJsonLoaded action.payload", action.payload);
-        // console.log(componentName, "setAppSettingsJsonLoaded action.payload.length", action.payload.length);
 
         state.appSettingsJsonLoaded = action.payload;
 
@@ -184,7 +167,6 @@ const appSlice = createSlice({
     setMenuSettings: {
       reducer(state, action) {
         // console.log(componentName, "setMenuSettings action.payload", action.payload);
-        // console.log(componentName, "setMenuSettings action.payload.length", action.payload.length);
 
         state.menuSettings = action.payload;
 
@@ -193,7 +175,6 @@ const appSlice = createSlice({
     setLinkItem: {
       reducer(state, action) {
         // console.log(componentName, "setLinkItem action.payload", action.payload);
-        // console.log(componentName, "setLinkItem action.payload.length", action.payload.length);
 
         state.linkItem = action.payload;
 

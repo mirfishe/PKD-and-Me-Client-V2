@@ -56,26 +56,26 @@ function LoadBibliographyData() {
     if (source === "category") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayCategories(data));
-      localStorage.setItem("arrayCategories", data);
-      localStorage.setItem("lastDatabaseRetrievalCategories", new Date().toISOString());
+      // localStorage.setItem("arrayCategories", JSON.stringify(data));
+      // localStorage.setItem("lastDatabaseRetrievalCategories", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "media") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayMedia(data));
-      localStorage.setItem("arrayMedia", data);
-      localStorage.setItem("lastDatabaseRetrievalMedia", new Date().toISOString());
+      // localStorage.setItem("arrayMedia", JSON.stringify(data));
+      // localStorage.setItem("lastDatabaseRetrievalMedia", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "title") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayTitles(data));
-      localStorage.setItem("arrayTitles", data);
-      localStorage.setItem("lastDatabaseRetrievalTitles", new Date().toISOString());
+      // localStorage.setItem("arrayTitles", JSON.stringify(data));
+      // localStorage.setItem("lastDatabaseRetrievalTitles", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "edition") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayEditions(data));
-      localStorage.setItem("arrayEditions", data);
-      localStorage.setItem("lastDatabaseRetrievalEditions", new Date().toISOString());
+      // localStorage.setItem("arrayEditions", JSON.stringify(data));
+      // localStorage.setItem("lastDatabaseRetrievalEditions", new Date().toISOString());
     };
 
   };
@@ -468,44 +468,143 @@ function LoadBibliographyData() {
   useEffect(() => {
     // console.log(componentName, "useEffect");
 
+    // Experiment in adding bibliographical data to local storage that doesn't work
+    // let categoriesDataLocalStorage = false;
+    // let mediaDataLocalStorage = false;
+    // let titlesDataLocalStorage = false;
+    // let editionsDataLocalStorage = false;
+
+    // let currentDateTime = new Date().setTime(new Date().getTime());
+    // // console.log(componentName, "useEffect currentDateTime", currentDateTime);
+    // // console.log(componentName, "useEffect new Date(currentDateTime).toISOString()", new Date(currentDateTime).toISOString());
+
+    // if (!categoriesLoaded && localStorage.getItem("lastDatabaseRetrievalCategories") !== undefined && localStorage.getItem("lastDatabaseRetrievalCategories") !== null) {
+
+    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalCategories\")", localStorage.getItem("lastDatabaseRetrievalCategories"));
+
+    //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
+    //   // console.log(componentName, "useEffect localStoragelastDatabaseRetrievalCategories", localStoragelastDatabaseRetrievalCategories);
+    //   // console.log(componentName, "useEffect localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime())", localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime()));
+    //   // console.log(componentName, "useEffect typeof localStoragelastDatabaseRetrievalCategories", typeof localStoragelastDatabaseRetrievalCategories);
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).getTime() - (8*60*60*1000));
+    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
+    //   // console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+
+    //   if (currentDateTime > checkDateTime) {
+    //     if (localStorage.getItem("arrayCategories") !== undefined && localStorage.getItem("arrayCategories") !== null) {
+    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayCategories\")", localStorage.getItem("arrayCategories"));
+
+    //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
+    //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
+
+    //       categoriesDataLocalStorage = true;
+    //     };
+    //   };
+
+    // };
+
+    // if (!mediaLoaded && localStorage.getItem("lastDatabaseRetrievalMedia") !== undefined && localStorage.getItem("lastDatabaseRetrievalMedia") !== null) {
+
+    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalMedia\")", localStorage.getItem("lastDatabaseRetrievalMedia"));
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
+    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
+    //   // console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+
+    //   if (currentDateTime > checkDateTime) {
+    //     if (localStorage.getItem("arrayMedia") !== undefined && localStorage.getItem("arrayMedia") !== null) {
+    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayMedia\")", localStorage.getItem("arrayMedia"));
+
+    //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
+    //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
+          
+    //       mediaDataLocalStorage = true;
+    //     };
+    //   };
+
+    // };
+
+    // if (!titlesLoaded && localStorage.getItem("lastDatabaseRetrievalTitles") !== undefined && localStorage.getItem("lastDatabaseRetrievalTitles") !== null) {
+
+    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalTitles\")", localStorage.getItem("lastDatabaseRetrievalTitles"));
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
+    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
+    //   console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+
+    //   if (currentDateTime > checkDateTime) {
+    //     if (localStorage.getItem("arrayTitles") !== undefined && localStorage.getItem("arrayTitles") !== null) {
+    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayTitles\")", localStorage.getItem("arrayTitles"));
+
+    //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
+    //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
+          
+    //       titlesDataLocalStorage = true;
+    //     };
+    //   };
+
+    // };
+
+    // if (!editionsLoaded && localStorage.getItem("lastDatabaseRetrievalEditions") !== undefined && localStorage.getItem("lastDatabaseRetrievalEditions") !== null) {
+
+    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalEditions\")", localStorage.getItem("lastDatabaseRetrievalEditions"));
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
+    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
+    //   console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+
+    //   if (currentDateTime > checkDateTime) {
+    //   if (localStorage.getItem("arrayEditions") !== undefined && localStorage.getItem("arrayEditions") !== null) {
+    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayEditions\")", localStorage.getItem("arrayEditions"));
+
+    //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
+    //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");
+          
+    //       editionsDataLocalStorage = true;
+    //     };
+    //   };
+
+    // };
+
     // Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
 
-      if(!categoriesLoaded) {
+      if(!categoriesLoaded /*&& !categoriesDataLocalStorage*/) {
         dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
       };
 
-      if(!mediaLoaded) {
+      if(!mediaLoaded /*&& !mediaDataLocalStorage*/) {
         dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
       };
 
-      if(!titlesLoaded) {
+      if(!titlesLoaded /*&& !titlesDataLocalStorage*/) {
         dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
       };
 
-      if(!editionsLoaded) {
+      if(!editionsLoaded /*&& !editionsDataLocalStorage*/) {
         dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
       };
 
     } else {
 
-      if(!categoriesLoaded) {
+      if(!categoriesLoaded /*&& !categoriesDataLocalStorage*/) {
         getCategories();
       };
 
-      if(!mediaLoaded) {
+      if(!mediaLoaded /*&& !mediaDataLocalStorage*/) {
         getMedia();
       };
 
-      if(!titlesLoaded) {
+      if(!titlesLoaded /*&& !titlesDataLocalStorage*/) {
         getTitles();
       };
 
-      if(!editionsLoaded) {
+      if(!editionsLoaded /*&& !editionsDataLocalStorage*/) {
         getEditions();
       };
 

@@ -30,7 +30,6 @@ const urlsSlice = createSlice({
     setPageURL: {
       reducer(state, action) {
         // console.log(componentName, "setPageURL action.payload", action.payload);
-        // console.log(componentName, "setPageURL action.payload.length", action.payload.length);
 
         state.pageURL = action.payload;
 
@@ -39,7 +38,6 @@ const urlsSlice = createSlice({
     setLinkItem: {
       reducer(state, action) {
         // console.log(componentName, "setLinkItem action.payload", action.payload);
-        // console.log(componentName, "setLinkItem action.payload.length", action.payload.length);
 
         state.linkItem = action.payload;
 

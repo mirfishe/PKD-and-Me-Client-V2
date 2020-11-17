@@ -43,43 +43,56 @@ const mediaSlice = createSlice({
     },
     updateStateMedia: {
       reducer(state, action) {
-        // console.log(componentName, "updateStateMedia action.payload", action.payload);
-        // console.log(componentName, "updateStateMedia action.payload.length", action.payload.length);
+        console.log(componentName, "updateStateMedia action.payload", action.payload);
 
         const mediaItem = action.payload;
-        const existingMedia = state.arrayMedia.find(media => media.mediaID === mediaItem.mediaID);
-        console.log(componentName, "updateStateMedia existingMedia", existingMedia);
+        console.log(componentName, "updateStateMedia mediaItem", mediaItem);
+        console.log(componentName, "updateStateMedia mediaItem.mediaID", mediaItem.mediaID);
+        console.log(componentName, "updateStateMedia mediaItem.mediaItemIndex", mediaItem.mediaItemIndex);
 
-        if (existingMedia !== undefined) {
-          // existingMedia.mediaID = mediaItem.mediaID;
-          existingMedia.media = mediaItem.media;
-          existingMedia.electronic = mediaItem.electronic;
-          existingMedia.sortID = mediaItem.sortID;
-          existingMedia.active = mediaItem.active;
-          existingMedia.createdAt = mediaItem.createdAt;
-          existingMedia.updatedAt = mediaItem.updatedAt;
-        };
+        // This doesn't work because state.arrayMedia isn't stored as an array of objects?
+        // Need to copy the array?
+        // const existingMedia = state.arrayMedia.find(media => media.mediaID === mediaItem.mediaID);
+        // console.log(componentName, "updateStateMedia existingMedia", existingMedia);
+
+        // if (existingMedia !== undefined) {
+        //   // existingMedia.mediaID = mediaItem.mediaID;
+        //   existingMedia.media = mediaItem.media;
+        //   existingMedia.electronic = mediaItem.electronic;
+        //   existingMedia.sortID = mediaItem.sortID;
+        //   existingMedia.active = mediaItem.active;
+        //   existingMedia.createdAt = mediaItem.createdAt;
+        //   existingMedia.updatedAt = mediaItem.updatedAt;
+        // };
+
+        state.arrayMedia[mediaItem.mediaItemIndex].media = mediaItem.media;
+        state.arrayMedia[mediaItem.mediaItemIndex].electronic = mediaItem.electronic;
+        state.arrayMedia[mediaItem.mediaItemIndex].sortID = mediaItem.sortID;
+        state.arrayMedia[mediaItem.mediaItemIndex].active = mediaItem.active;
+        state.arrayMedia[mediaItem.mediaItemIndex].createdAt = mediaItem.createdAt;
+        state.arrayMedia[mediaItem.mediaItemIndex].updatedAt = mediaItem.updatedAt;
 
       }
     },
     deleteStateMedia: {
       reducer(state, action) {
-        // console.log(componentName, "deleteStateMedia action.payload", action.payload);
-        // console.log(componentName, "deleteStateMedia action.payload.length", action.payload.length);
+        console.log(componentName, "deleteStateMedia action.payload", action.payload);
 
-        const mediaID = action.payload;
+        const mediaItemIndex = action.payload;
+        // const mediaID = action.payload;
+        
+        // This doesn't work because state.arrayMedia isn't stored as an array of objects?
+        // Need to copy the array?
+        // const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
+        // console.log(componentName, "deleteStateMedia existingMediaIndex", existingMediaIndex);
 
-        const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
-        console.log(componentName, "deleteStateMedia existingMediaIndex", existingMediaIndex);
-
-        state.arrayMedia.splice(existingMediaIndex, 1);
+        state.arrayMedia.splice(mediaItemIndex, 1);
 
       }
     },
     setMediaDataOffline: {
       reducer(state, action) {
         // console.log(componentName, "setMediaDataOffline action.payload", action.payload);
-        // console.log(componentName, "setMediaDataOffline action.payload.length", action.payload.length);
 
         state.mediaDataOffline = action.payload;
 

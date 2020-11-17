@@ -216,7 +216,7 @@ export const setLocalPath = (text) => {
 
 export const createImageName = (titleName) => {
 
-    // console.log(omponentName, "createImageName titleName", titleName);
+    // console.log(componentName, "createImageName titleName", titleName);
 
     let newImageName = "";
 
@@ -253,14 +253,14 @@ export const createImageName = (titleName) => {
         newImageName = "https://philipdick.com/images/covers/" + newImageName + ".jpg";
     };
 
-    // console.log(omponentName, "createImageName newImageName", newImageName);
+    // console.log(componentName, "createImageName newImageName", newImageName);
 
     return newImageName;
 };
 
 export const createTitleURL = (titleName) => {
 
-    // console.log(omponentName, "createImageName titleName", titleName);
+    // console.log(componentName, "createImageName titleName", titleName);
 
     let newTitleURL = "";
 
@@ -302,14 +302,14 @@ export const createTitleURL = (titleName) => {
         // newTitleURL = "https://philipdick.com/images/covers/" + newTitleURL + ".jpg";
     };
 
-    // console.log(omponentName, "createImageName newTitleURL", newTitleURL);
+    // console.log(componentName, "createImageName newTitleURL", newTitleURL);
 
     return newTitleURL;
 };
 
 export const getASIN = (textLinkFull) => {
 
-    // console.log("sharedFunctions.tsx getASIN textLinkFull", textLinkFull);
+    // console.log(componentName, "getASIN textLinkFull", textLinkFull);
 
     let txtASIN = "";
 
@@ -317,17 +317,17 @@ export const getASIN = (textLinkFull) => {
 
     if (textLinkFull !== undefined && textLinkFull !== null && textLinkFull !== "") {
 
-        console.log("sharedFunctions.tsx getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
-        console.log("sharedFunctions.tsx getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));
+        // console.log(componentName, "getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
+        // console.log(componentName, "getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));
 
         if (textLinkFull.indexOf("/dp/") !== -1) {
 
-            // console.log("sharedFunctions.tsx getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
+            // console.log(componentName, "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
             txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
 
         } else if (textLinkFull.indexOf("/product/") !== -1) {
 
-            // console.log("sharedFunctions.tsx getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
+            // console.log(componentName, "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
             txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
 
         };

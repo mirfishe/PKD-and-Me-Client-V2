@@ -7,6 +7,7 @@ import {displayYear, encodeURL, decodeURL, displayParagraphs, truncateText, setL
 import {setPageURL} from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
+import AddEdition from "../editions/AddEdition";
 
 const TitleCard = (props) => {
 
@@ -124,10 +125,11 @@ const TitleCard = (props) => {
                                 <CardText><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
-                                {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
-                                {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                                 {additionalText !== undefined && additionalText !== "" ? <CardText className="my-4">{additionalText}</CardText> : null}
                                 {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <div className="my-4" dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /> : null}
+                                {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
+                                {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                                {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
                             </CardBody>
                         </Col>
 

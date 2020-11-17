@@ -20,7 +20,6 @@ const userSlice = createSlice({
     loadUserData: {
       reducer(state, action) {
         // console.log(componentName, "loadUserData action.payload", action.payload);
-        // console.log(componentName, "loadUserData action.payload.length", action.payload.length);
 
         if (typeof action.payload === "object") {
 
@@ -61,7 +60,6 @@ const userSlice = createSlice({
     setSessionToken: {
       reducer(state, action) {
         // console.log(componentName, "setLinkItem action.payload", action.payload);
-        // console.log(componentName, "setLinkItem action.payload.length", action.payload.length);
 
         state.sessionToken = action.payload;
 

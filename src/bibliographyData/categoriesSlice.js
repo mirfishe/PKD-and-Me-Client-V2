@@ -43,42 +43,54 @@ const categoriesSlice = createSlice({
     },
   updateStateCategory: {
     reducer(state, action) {
-      // console.log(componentName, "updateStateCategory action.payload", action.payload);
-      // console.log(componentName, "updateStateCategory action.payload.length", action.payload.length);
+      console.log(componentName, "updateStateCategory action.payload", action.payload);
 
       const categoryItem = action.payload;
-      const existingCategory = state.arrayCategories.find(category => category.categoryID === categoryItem.categoryID);
-      console.log(componentName, "updateStateCategory existingCategory", existingCategory);
+      console.log(componentName, "updateStateTitle categoryItem", categoryItem);
+      console.log(componentName, "updateStateTitle categoryItem.categoryID", categoryItem.categoryID);
+      console.log(componentName, "updateStateTitle categoryItem.categoryItemIndex", categoryItem.categoryItemIndex);
 
-      if (existingCategory !== undefined) {
-        // existingCategory.categoryID = categoryItem.categoryID;
-        existingCategory.category = categoryItem.category;
-        existingCategory.sortID = categoryItem.sortID;
-        existingCategory.active = categoryItem.active;
-        existingCategory.createdAt = categoryItem.createdAt;
-        existingCategory.updatedAt = categoryItem.updatedAt;
-      };
+      // This doesn't work because state.arrayCategories isn't stored as an array of objects?
+      // Need to copy the array?
+      // const existingCategory = state.arrayCategories.find(category => category.categoryID === categoryItem.categoryID);
+      // console.log(componentName, "updateStateCategory existingCategory", existingCategory);
+
+      // if (existingCategory !== undefined) {
+      //   // existingCategory.categoryID = categoryItem.categoryID;
+      //   existingCategory.category = categoryItem.category;
+      //   existingCategory.sortID = categoryItem.sortID;
+      //   existingCategory.active = categoryItem.active;
+      //   existingCategory.createdAt = categoryItem.createdAt;
+      //   existingCategory.updatedAt = categoryItem.updatedAt;
+      // };
+
+      state.arrayCategories[categoryItem.categoryItemIndex].category = categoryItem.category;
+      state.arrayCategories[categoryItem.categoryItemIndex].sortID = categoryItem.sortID;
+      state.arrayCategories[categoryItem.categoryItemIndex].active = categoryItem.active;
+      state.arrayCategories[categoryItem.categoryItemIndex].createdAt = categoryItem.createdAt;
+      state.arrayCategories[categoryItem.categoryItemIndex].updatedAt = categoryItem.updatedAt;
 
     }
   },
   deleteStateCategory: {
     reducer(state, action) {
-      // console.log(componentName, "deleteStateCategory action.payload", action.payload);
-      // console.log(componentName, "deleteStateCategory action.payload.length", action.payload.length);
+      console.log(componentName, "deleteStateCategory action.payload", action.payload);
 
-      const categoryID = action.payload;
+      const categoryItemIndex = action.payload;
+      // const categoryID = action.payload;
+      
+      // This doesn't work because state.arrayCategories isn't stored as an array of objects?
+      // Need to copy the array?
+      // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
+      // console.log(componentName, "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
 
-      const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
-      console.log(componentName, "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
-
-      state.arrayCategories.splice(existingCategoryIndex, 1);
+      state.arrayCategories.splice(categoryItemIndex, 1);
 
     }
   },
     setCategoriesDataOffline: {
       reducer(state, action) {
         // console.log(componentName, "setCategoriesDataOffline action.payload", action.payload);
-        // console.log(componentName, "setCategoriesDataOffline action.payload.length", action.payload.length);
 
         state.categoriesDataOffline = action.payload;
 

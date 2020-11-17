@@ -82,6 +82,7 @@ const EditTitle = (props) => {
     const [errTitleName, setErrTitleName] = useState("");
     const [errCategoryID, setErrCategoryID] = useState("");
 
+    const [titleItemIndex, setTitleItemIndex] = useState(null);
     const [titleItem, setTitleItem] = useState(null);
     const [titleID, setTitleID] = useState(null);
     const [titleName, setTitleName] = useState(null);
@@ -97,7 +98,8 @@ const EditTitle = (props) => {
     const [active, setActive] = useState(null);
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
-
+    // console.log(componentName, "titleListState", titleListState);
+    
     useEffect(() => {
     // console.log(componentName, "titleListState", titleListState);
 
@@ -106,6 +108,9 @@ const EditTitle = (props) => {
         let titleObject = titleListState.find(title => title.titleID === props.titleID);
         // console.log(componentName, "titleObject", titleObject);
         // console.log(componentName, "typeof titleObject", typeof titleObject);
+
+        setTitleItemIndex(titleListState.findIndex(title => title.titleID === props.titleID));
+        // console.log(componentName, "titleItemIndex", titleItemIndex);
 
         if (titleObject !== undefined) {
 
@@ -144,12 +149,14 @@ const EditTitle = (props) => {
 
     };
 
-    }, [titleListState]);
+    }, [props.titleID, titleListState]);
 
     const updateTitle = (deleteTitle) => {
         // console.log(componentName, "updateTitle");
         // console.log(componentName, "updateTitle deleteTitle", deleteTitle);
         // console.log(componentName, "updateTitle baseURL", baseURL);
+
+        console.log(componentName, "titleItemIndex", titleItemIndex);
 
         setMessage("");
         setErrMessage("");
@@ -335,7 +342,7 @@ const EditTitle = (props) => {
                             setActive(data.active);
 
                             // Would still work if the createdAt and updatedAt were left out
-                            dispatch(updateStateTitle({titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}));
+                            dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}));
                             // Update local storage also
 
                         } else {
@@ -407,7 +414,8 @@ const EditTitle = (props) => {
 
                     if (data.recordDeleted === true) {
 
-                        dispatch(deleteStateTitle(props.titleID));
+                        // dispatch(deleteStateTitle(props.titleID));
+                        dispatch(deleteStateTitle(titleItemIndex));
                         // Update local storage also
 
                     } else {
@@ -451,18 +459,6 @@ const EditTitle = (props) => {
         };
         
     }, [titleRecordUpdated, titleRecordDeleted]);
-
-    useEffect(() => {
-        // console.log(componentName, "useEffect props.titleID", props.titleID);
-
-        if (props.titleID !== undefined && props.titleID !== null) {
-
-            // filter list
-
-
-        };
-        
-    }, [props.titleID]);
 
     useEffect(() => {
         // console.log(componentName, "useEffect check for admin", admin);

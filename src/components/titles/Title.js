@@ -44,12 +44,23 @@ const Title = (props) => {
     // console.log(componentName, "titleParam", titleParam);
 
     let titleNameBreadCrumb = "";
+    let titleID = "";
+    let titlePublicationDate = "";
+    // This code is causing React to have too many re-renders in this location
+    // const [titleID, setTitleID] = useState("");
+    // const [titlePublicationDate, setTitlePublicationDate] = useState("");
 
     let titleList = [];
     let editionList = [];
     if (!isNaN(titleParam)) {
         // If titleParam is a number, then it's the titleID
         document.title = titleList[0].title.titleName + " | " + appName + " | " + siteName;
+        titleNameBreadCrumb = titleList[0].title.titleName;
+        titleID = titleList[0].title.titleID;
+        titlePublicationDate = titleList[0].title.publicationDate;
+        // setTitleID(titleList[0].title.titleID);
+        // setTitlePublicationDate(titleList[0].title.publicationDate);
+
         titleList = titleListState.filter(title => title.active === true && title.titleID === parseInt(titleParam));
 
         if (electronicOnly) {
@@ -70,6 +81,10 @@ const Title = (props) => {
         if (title !== undefined) {
             document.title = title.titleName + " | " + appName + " | " + siteName;
             titleNameBreadCrumb = title.titleName;
+            titleID = title.titleID;
+            titlePublicationDate = title.publicationDate;
+            // setTitleID(title.titleID);
+            // setTitlePublicationDate(title.publicationDate);
 
             if (electronicOnly) {
                 editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(title.titleID) && edition.medium.electronic === true);
@@ -201,7 +216,7 @@ const Title = (props) => {
             <Row>
                 <Col xs="12">
                     <h5 className="text-center">Find A Copy 
-                    {/* {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null} */}
+                    {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={titleID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
                     </h5>
                 </Col>
             </Row>
@@ -243,6 +258,7 @@ const Title = (props) => {
                         <Col className="col-md-6">
                             <CardBody>
                                 {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                                {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
                             </CardBody>
                         </Col>
                     </Row>

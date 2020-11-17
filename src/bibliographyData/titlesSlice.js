@@ -45,49 +45,69 @@ const titlesSlice = createSlice({
     updateStateTitle: {
       reducer(state, action) {
         // console.log(componentName, "updateStateTitle action.payload", action.payload);
-        // console.log(componentName, "updateStateTitle action.payload.length", action.payload.length);
 
         const titleItem = action.payload;
-        const existingTitle = state.arrayTitles.find(title => title.titleID === titleItem.titleID);
-        console.log(componentName, "updateStateTitle existingTitle", existingTitle);
+        console.log(componentName, "updateStateTitle titleItem", titleItem);
+        console.log(componentName, "updateStateTitle titleItem.titleID", titleItem.titleID);
+        console.log(componentName, "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
 
-        if (existingTitle !== undefined) {
-          // existingTitle.titleID = titleItem.titleID;
-          existingTitle.titleName = titleItem.titleName;
-          existingTitle.titleSort = titleItem.titleSort;
-          existingTitle.titleURL = titleItem.titleURL;
-          existingTitle.authorFirstName = titleItem.authorFirstName;
-          existingTitle.authorLastName = titleItem.authorLastName;
-          existingTitle.publicationDate = titleItem.publicationDate;
-          existingTitle.imageName = titleItem.imageName;
-          existingTitle.categoryID = titleItem.categoryID;
-          existingTitle.shortDescription = titleItem.shortDescription;
-          existingTitle.urlPKDweb = titleItem.urlPKDweb;
-          existingTitle.active = titleItem.active;
-          existingTitle.createdAt = titleItem.createdAt;
-          existingTitle.updatedAt = titleItem.updatedAt;
-        };
+        // This doesn't work because state.arrayTitles isn't stored as an array of objects?
+        // Need to copy the array?
+        // const existingTitle = state.arrayTitles.find(title => title.titleID === titleItem.titleID);
+        // console.log(componentName, "updateStateTitle existingTitle", existingTitle);
+
+        // if (existingTitle !== undefined) {
+        //   // existingTitle.titleID = titleItem.titleID;
+        //   existingTitle.titleName = titleItem.titleName;
+        //   existingTitle.titleSort = titleItem.titleSort;
+        //   existingTitle.titleURL = titleItem.titleURL;
+        //   existingTitle.authorFirstName = titleItem.authorFirstName;
+        //   existingTitle.authorLastName = titleItem.authorLastName;
+        //   existingTitle.publicationDate = titleItem.publicationDate;
+        //   existingTitle.imageName = titleItem.imageName;
+        //   existingTitle.categoryID = titleItem.categoryID;
+        //   existingTitle.shortDescription = titleItem.shortDescription;
+        //   existingTitle.urlPKDweb = titleItem.urlPKDweb;
+        //   existingTitle.active = titleItem.active;
+        //   existingTitle.createdAt = titleItem.createdAt;
+        //   existingTitle.updatedAt = titleItem.updatedAt;
+        // };
+
+        state.arrayTitles[titleItem.titleItemIndex].titleName = titleItem.titleName;
+        state.arrayTitles[titleItem.titleItemIndex].titleSort = titleItem.titleSort;
+        state.arrayTitles[titleItem.titleItemIndex].titleURL = titleItem.titleURL;
+        state.arrayTitles[titleItem.titleItemIndex].authorFirstName = titleItem.authorFirstName;
+        state.arrayTitles[titleItem.titleItemIndex].authorLastName = titleItem.authorLastName;
+        state.arrayTitles[titleItem.titleItemIndex].publicationDate = titleItem.publicationDate;
+        state.arrayTitles[titleItem.titleItemIndex].imageName = titleItem.imageName;
+        state.arrayTitles[titleItem.titleItemIndex].categoryID = titleItem.categoryID;
+        state.arrayTitles[titleItem.titleItemIndex].shortDescription = titleItem.shortDescription;
+        state.arrayTitles[titleItem.titleItemIndex].urlPKDweb = titleItem.urlPKDweb;
+        state.arrayTitles[titleItem.titleItemIndex].active = titleItem.active;
+        state.arrayTitles[titleItem.titleItemIndex].createdAt = titleItem.createdAt;
+        state.arrayTitles[titleItem.titleItemIndex].updatedAt = titleItem.updatedAt;
 
       }
     },
     deleteStateTitle: {
       reducer(state, action) {
-        // console.log(componentName, "deleteStateTitle action.payload", action.payload);
-        // console.log(componentName, "deleteStateTitle action.payload.length", action.payload.length);
+        console.log(componentName, "deleteStateTitle action.payload", action.payload);
 
-        const titleID = action.payload;
+        const titleItemIndex = action.payload;
+        // const titleID = action.payload;
 
-        const existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
-        console.log(componentName, "deleteStateTitle existingTitleIndex", existingTitleIndex);
+        // This doesn't work because state.arrayTitles isn't stored as an array of objects?
+        // Need to copy the array?
+        // const existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
+        // console.log(componentName, "deleteStateTitle existingTitleIndex", existingTitleIndex);
 
-        state.arrayTitles.splice(existingTitleIndex, 1);
+        state.arrayTitles.splice(titleItemIndex, 1);
 
       }
     },
     setTitlesDataOffline: {
       reducer(state, action) {
         // console.log(componentName, "setTitlesDataOffline action.payload", action.payload);
-        // console.log(componentName, "setTitlesDataOffline action.payload.length", action.payload.length);
 
         state.titlesDataOffline = action.payload;
 
@@ -96,7 +116,6 @@ const titlesSlice = createSlice({
     setTitleSort: {
       reducer(state, action) {
         // console.log(componentName, "setTitleSort action.payload", action.payload);
-        // console.log(componentName, "setTitleSort action.payload.length", action.payload.length);
 
         state.titleSort = action.payload;
 

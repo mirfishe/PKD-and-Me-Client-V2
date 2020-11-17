@@ -8,9 +8,6 @@ import {addStateEdition} from "../../bibliographyData/editionsSlice";
 
 const AddEdition = (props) => {
 
-    // publication date comes from where?
-    // titleID comes from where?
-
     const componentName = "AddEdition.js";
 
     const dispatch = useDispatch();
@@ -25,6 +22,9 @@ const AddEdition = (props) => {
     // const baseURL = useSelector(state => state.app.baseURL);
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
+
+    // console.log(componentName, "props.titleID", props.titleID);
+    // console.log(componentName, "props.titlePublicationDate", props.titlePublicationDate);
 
     const [mediaMessage, setMediaMessage] = useState("");
     const [errMediaMessage, setErrMediaMessage] = useState("");
@@ -60,7 +60,7 @@ const AddEdition = (props) => {
             setMediaResultsFound(false);
         } else {
             // console.log(componentName, "mediaList.length", mediaList.length);
-            setMediaMessage("mediaList.length", mediaList.length);
+            // setMediaMessage("mediaList.length", mediaList.length);
             setMediaResultsFound(true);
         };
         
