@@ -44,50 +44,38 @@ const Editions = (props) => {
 
     const sortEditions = (sortBy) => {
         // console.log("Titles.js sortTitles sortBy", sortBy);
-        if (sortBy === "releaseDate") {
-            // Sort the editionList array by edition.publicationDate, title.titleSort, (would like to add media.sortID)
-            editionList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : (a.publicationDate > b.publicationDate) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
-        } else if (sortBy === "publicationDate") {
-            // Sort the editionList array by title.publicationDate, title.titleSort, (would like to add media.sortID)
-            editionList.sort((a, b) => (a.title.publicationDate > b.title.publicationDate) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
-        } else if (sortBy === "titleName") {
-            // Sort the editionList array by title.titleSort, media.sortID
-            editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
-        } else {
-            // Sort the editionList array by title.titleSort, media.sortID
-            editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+        if (editionList !== undefined && editionList !== null && editionList.length > 0) {
+            if (sortBy === "releaseDate") {
+                // Sort the editionList array by edition.publicationDate, title.titleSort, (would like to add media.sortID)
+                editionList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : (a.publicationDate > b.publicationDate) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+            } else if (sortBy === "publicationDate") {
+                // Sort the editionList array by title.publicationDate, title.titleSort, (would like to add media.sortID)
+                editionList.sort((a, b) => (a.title.publicationDate > b.title.publicationDate) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+            } else if (sortBy === "titleName") {
+                // Sort the editionList array by title.titleSort, media.sortID
+                editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+            } else {
+                // Sort the editionList array by title.titleSort, media.sortID
+                editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+            };
         };
     };
 
     let editionList = [];
     if (!isNaN(mediaParam)) {
+        // This code no longer works with the current URL setup
         // If mediaParam is a number, then it's the mediaID
         document.title = editionList[0].medium.media + " | " + appName + " | " + siteName;
-        if (electronicOnly) {
-            editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === true);
-        } else if (physicalOnly) {
-            editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(mediaParam) && edition.medium.electronic === false);
-        } else {
-            editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(mediaParam));
-        };
-
+        editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
     } else if (mediaParam !== undefined) {
         // If mediaParam is not a number, then it's the media name
-        const media = mediaListState.find(media => media.active === true && media.media === decodeURL(mediaParam));
+        const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
         // console.log(componentName, "typeof media", typeof media);
         // console.log(componentName, "media", media);
 
         if (media !== undefined) {
             document.title = media.media + " | " + appName + " | " + siteName;
-
-            if (electronicOnly) {
-                editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === true);
-            } else if (physicalOnly) {
-                editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(media.mediaID) && edition.medium.electronic === false);
-            } else {
-                editionList = editionListState.filter(edition => edition.active === true && edition.mediaID === parseInt(media.mediaID));
-            };
-
+            editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
         } else {
             document.title = "Media Not Found | " + appName + " | " + siteName;
             console.log("Media not found.");
@@ -99,9 +87,24 @@ const Editions = (props) => {
     } else {
         document.title = "All Editions | " + appName + " | " + siteName;
         // Display all active editions
-        // editionList = [...editionListState];
-        editionList = editionListState.filter(edition => edition.active === true);
+        editionList = [...editionListState];
+        // editionList = editionListState.filter(edition => edition.active === true);
     };
+
+    if (electronicOnly === true) {
+        editionList = editionList.filter(edition => edition.medium.electronic === true);
+    } else if (physicalOnly === true) {
+        editionList = editionList.filter(edition =>  edition.medium.electronic === false);
+    } else {
+        editionList = [...editionList];
+    };
+
+    if (admin !== undefined && admin !== null && admin === true) {
+        editionList = [...editionList];
+    } else {
+        editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
+    };
+    // console.log(componentName, "editionList", editionList);
 
     sortEditions(editionSort);
 
@@ -160,6 +163,15 @@ const Editions = (props) => {
             </Row>
             <Row>
             {editionList.map((edition) => {
+
+                let activeString = "";
+                if (edition.active === true) {
+                    // activeString = "Active";
+                    activeString = "";
+                } else {
+                    activeString = "Inactive";
+                };
+
             return (
                 <Col key={edition.editionID} xs="6" className="mb-4">
 
@@ -188,6 +200,11 @@ const Editions = (props) => {
                     </Card> */}
 
                     <Card key={edition.editionID}>
+                    {activeString !== undefined && activeString !== null && activeString !== "" ?
+                        <CardHeader className="cardHeader inactiveItem">
+                            ({activeString})
+                        </CardHeader>
+                    : null}
                     <Row className="no-gutters">
                         <Col className="col-md-6">
                         {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 

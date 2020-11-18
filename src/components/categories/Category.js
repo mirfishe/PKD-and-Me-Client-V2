@@ -23,7 +23,13 @@ const Category = (props) => {
     const categoryListState = useSelector(state => state.categories.arrayCategories);
     // console.log(componentName, "categoryListState", categoryListState);
 
-    const categoryList = categoryListState.filter(category => category.active === true);
+    let categoryList = [];
+
+    if (admin !== undefined && admin !== null && admin === true) {
+        categoryList = [...categoryListState];
+    } else {
+        categoryList = categoryListState.filter(category => category.active === true);
+    };
     // console.log(componentName, "categoryList", categoryList);
 
     categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -44,6 +50,15 @@ const Category = (props) => {
         <Collapse isOpen={isOpen}>
         <Nav vertical>
         {categoryList.map((category) => {
+
+            let activeString = "";
+            if (category.active === true) {
+                // activeString = "Active";
+                activeString = "";
+            } else {
+                activeString = "Inactive";
+            };
+
           return (
             <NavItem key={category.categoryID} className="mt-2 pl-3">
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(category.categoryID)}}>{category.category}</a> */}
@@ -51,7 +66,9 @@ const Category = (props) => {
                 <Link to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</Link>
                 <Link to={"/titles/" + category.categoryID}>{category.categoryID}</Link> */}
                 {/* <Link to={"/titles/" + encodeURL(category.category)}>{category.category}</Link> */}
-                <Link to={encodeURL(category.category)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(category.category));}}>{category.category}</Link>
+                <Link to={encodeURL(category.category)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(category.category));}}>{category.category} 
+                {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
+                </Link>
             </NavItem>
             )
         })}

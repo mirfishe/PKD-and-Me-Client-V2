@@ -65,6 +65,8 @@ const mediaSlice = createSlice({
         //   existingMedia.updatedAt = mediaItem.updatedAt;
         // };
 
+        // Updates all the values even if you don't send them in the payload
+        // Sets them to what if they're not sent in the payload?
         state.arrayMedia[mediaItem.mediaItemIndex].media = mediaItem.media;
         state.arrayMedia[mediaItem.mediaItemIndex].electronic = mediaItem.electronic;
         state.arrayMedia[mediaItem.mediaItemIndex].sortID = mediaItem.sortID;

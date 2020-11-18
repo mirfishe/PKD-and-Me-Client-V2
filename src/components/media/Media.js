@@ -28,13 +28,20 @@ const Media = (props) => {
 
     let mediaList = [];
     if (electronicOnly) {
-        mediaList = mediaListState.filter(media => media.active === true && media.electronic === true);
+        mediaList = mediaListState.filter(media => media.electronic === true);
     } else if (physicalOnly) {
-        mediaList = mediaListState.filter(media => media.active === true && media.electronic === false);
+        mediaList = mediaListState.filter(media => media.electronic === false);
     } else {
-        // mediaList = [...mediaListState];
-        mediaList = mediaListState.filter(media => media.active === true);
+        mediaList = [...mediaListState];
+        // mediaList = mediaListState.filter(media => media.active === true);
     };
+
+    if (admin !== undefined && admin !== null && admin === true) {
+        mediaList = [...mediaList];
+    } else {
+        mediaList = mediaList.filter(media => media.active === true);
+    };
+    // console.log(componentName, "mediaList", mediaList);
 
     mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
@@ -54,6 +61,15 @@ const Media = (props) => {
         <Collapse isOpen={isOpen}>
         <Nav vertical>
         {mediaList.map((media) => {
+
+            let activeString = "";
+            if (media.active === true) {
+                // activeString = "Active";
+                activeString = "";
+            } else {
+                activeString = "Inactive";
+            };
+
           return (
             <NavItem key={media.mediaID} className="mt-2 pl-3">
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}
@@ -62,7 +78,9 @@ const Media = (props) => {
                 <Link to={"/editions/" + media.mediaID}>{media.mediaID}</Link> */}
                 {/* <Link to={"/editions/" + encodeURL(media.media)}>{media.media}</Link> */}
                 {/* <Link to={encodeURL(media.media)}>{media.media}</Link> */}
-                <Link to={encodeURL(media.media)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(media.media));}}>{media.media}</Link>
+                <Link to={encodeURL(media.media)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(media.media));}}>{media.media}
+                {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
+                </Link>
             </NavItem>
             )
         })}

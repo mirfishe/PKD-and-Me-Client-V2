@@ -23,6 +23,7 @@ import CategoryList from "./components/categories/CategoryList";
 import MediaList from "./components/media/MediaList";
 import TitleList from "./components/titles/TitleList";
 import EditionList from "./components/editions/EditionList";
+import URLList from "./components/loadData/URLList";
 import Category from "./components/categories/Category";
 import Media from "./components/media/Media";
 import Titles from "./components/titles/Titles";
@@ -85,6 +86,7 @@ function App() {
   let showMediaList = useSelector(state => state.app.menuSettings.showMediaList);
   let showTitleList = useSelector(state => state.app.menuSettings.showTitleList);
   let showEditionList = useSelector(state => state.app.menuSettings.showEditionList);
+  let showURLList = useSelector(state => state.app.menuSettings.showURLList);
 
   let showAddCategory = useSelector(state => state.app.menuSettings.showAddCategory);
   // console.log(componentName, "showAddCategory", showAddCategory);
@@ -309,7 +311,7 @@ function App() {
           <NavItem className="mx-3">
           <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
-          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && firstName !== "" && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem> : null}
+          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && firstName !== undefined && firstName !== null && firstName !== "" && lastName !== undefined && lastName !== null && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem> : null}
         </Nav>
       </Navbar>
       {showAllCategories || showAllMedia || showAllTitles || showAllEditions || showAllMenuItems ?
@@ -339,7 +341,7 @@ function App() {
       </Navbar>
       : null}
 
-      {showCategoryList || showMediaList || showTitleList || showEditionList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
+      {showCategoryList || showMediaList || showTitleList || showEditionList || showURLList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
       <Navbar>
         <Nav>
           {showCategoryList || showAllMenuItems ? 
@@ -360,6 +362,11 @@ function App() {
           {showEditionList || showAllMenuItems ? 
           <NavItem className="mx-3">
             <Link to="/editionList"><NavbarText>Edition List</NavbarText></Link>
+          </NavItem>
+          : null}
+          {showURLList || showAllMenuItems ? 
+          <NavItem className="mx-3">
+            <Link to="/urlList"><NavbarText>URL List</NavbarText></Link>
           </NavItem>
           : null}
           {showAddCategory && admin !== undefined && admin !== null && admin === true ? 
@@ -420,6 +427,7 @@ function App() {
       <Route exact path="/mediaList" component={MediaList} />
       <Route exact path="/titleList" component={TitleList} />
       <Route exact path="/editionList" component={EditionList} />
+      <Route exact path="/urlList" component={URLList} />
       <Route exact path="/categories" component={Category} />
       <Route exact path="/media" component={Media} />
 

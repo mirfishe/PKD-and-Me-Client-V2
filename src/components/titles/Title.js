@@ -53,6 +53,7 @@ const Title = (props) => {
     let titleList = [];
     let editionList = [];
     if (!isNaN(titleParam)) {
+        // This code no longer works with the current URL setup
         // If titleParam is a number, then it's the titleID
         document.title = titleList[0].title.titleName + " | " + appName + " | " + siteName;
         titleNameBreadCrumb = titleList[0].title.titleName;
@@ -61,20 +62,14 @@ const Title = (props) => {
         // setTitleID(titleList[0].title.titleID);
         // setTitlePublicationDate(titleList[0].title.publicationDate);
 
-        titleList = titleListState.filter(title => title.active === true && title.titleID === parseInt(titleParam));
+        titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
 
-        if (electronicOnly) {
-            editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(titleParam) && edition.medium.electronic === true);
-        } else if (physicalOnly) {
-            editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(titleParam) && edition.medium.electronic === false);
-        } else {
-            editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(titleParam));
-        };
+        editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
 
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it's the title name
-        titleList = titleListState.filter(title => title.active === true && title.titleURL === titleParam);
-        const title = titleListState.find(title => title.active === true && title.titleURL === titleParam);
+        titleList = titleListState.filter(title => title.titleURL === titleParam);
+        const title = titleListState.find(title => title.titleURL === titleParam);
         // console.log(componentName, "typeof title", typeof title);
         // console.log(componentName, "title", title);
 
@@ -86,13 +81,7 @@ const Title = (props) => {
             // setTitleID(title.titleID);
             // setTitlePublicationDate(title.publicationDate);
 
-            if (electronicOnly) {
-                editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(title.titleID) && edition.medium.electronic === true);
-            } else if (physicalOnly) {
-                editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(title.titleID) && edition.medium.electronic === false);
-            } else {
-                editionList = editionListState.filter(edition => edition.active === true && edition.titleID === parseInt(title.titleID));
-            };
+            editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
 
         } else {
             document.title = "Title Not Found | " + appName + " | " + siteName;
@@ -114,13 +103,31 @@ const Title = (props) => {
         editionList = editionListState.filter(edition => edition.active === true);
     };
 
+    if (electronicOnly === true) {
+        editionList = editionList.filter(edition => edition.medium.electronic === true);
+    } else if (physicalOnly === true) {
+        editionList = editionList.filter(edition =>  edition.medium.electronic === false);
+    } else {
+        editionList = [...editionList];
+    };
+
+    if (admin !== undefined && admin !== null && admin === true) {
+        titleList = [...titleList];
+        editionList = [...editionList];
+    } else {
+        titleList = titleList.filter(title => title.active === true);
+        editionList = editionList.filter(edition => edition.active === true);
+    };
+    // console.log(componentName, "titleList", titleList);
+
     // Sort the titleList array by title.titleSort
     // Really not needed here since there should only be one item in the array
     titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+    // console.log(componentName, "titleList", titleList);
 
     // Sort the editionList array by media.sortID
+    // console.log(componentName, "editionList", editionList);
     editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
-
     // console.log(componentName, "editionList", editionList);
 
     const redirectPage = (linkName) => {
@@ -168,6 +175,15 @@ const Title = (props) => {
                 </Col>
             </Row>
             {titleList.map((title) => {
+
+                let activeString = "";
+                if (title.active === true) {
+                    // activeString = "Active";
+                    activeString = "";
+                } else {
+                    activeString = "Inactive";
+                };
+
             return (
                 <React.Fragment key={title.titleID}>
                 <Row>
@@ -178,6 +194,7 @@ const Title = (props) => {
 
                             {/* {title.category.category !== null && title.category.category !== "" ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category.category)}>{title.category.category}</Link>
                             </span> : null} */}
+                            {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                             {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
                             {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                         </h4>
@@ -223,6 +240,15 @@ const Title = (props) => {
             : null}
             <Row>
             {editionList.map((edition) => {
+
+                let activeString = "";
+                if (edition.active === true) {
+                    // activeString = "Active";
+                    activeString = "";
+                } else {
+                    activeString = "Inactive";
+                };
+
             return (
                 <Col key={edition.editionID} xs="6" className="mb-4">
 
@@ -245,6 +271,11 @@ const Title = (props) => {
                     </Card> */}
 
                     <Card key={edition.editionID}>
+                    {activeString !== undefined && activeString !== null && activeString !== "" ?
+                        <CardHeader className="cardHeader inactiveItem">
+                            ({activeString})
+                        </CardHeader>
+                    : null}
                     <Row className="no-gutters">
                         <Col className="col-md-6">
                         {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 

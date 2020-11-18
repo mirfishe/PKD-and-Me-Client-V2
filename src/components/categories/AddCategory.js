@@ -131,7 +131,7 @@ const AddCategory = (props) => {
                             setSortID(data.sortID);
                             setActive(data.active);
 
-                            // Would still work if the createdAt and updatedAt were left out
+                            // Would still work if the createdAt and updatedAt were left out?
                             dispatch(addStateCategory([{categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
                             // Add to local storage also
 

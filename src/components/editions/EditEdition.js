@@ -166,7 +166,7 @@ const EditEdition = (props) => {
         // console.log(componentName, "updateEdition deleteEdition", deleteEdition);
         // console.log(componentName, "updateEdition baseURL", baseURL);
 
-        console.log(componentName, "editionItemIndex", editionItemIndex);
+        // console.log(componentName, "editionItemIndex", editionItemIndex);
 
         setMessage("");
         setErrMessage("");
@@ -281,7 +281,7 @@ const EditEdition = (props) => {
             };
 
             // If the user doesn't enter an imageLinkMedium, then it isn't added/updated
-            if (txtImageLinkMedium !== null && txtImageLinkMedium !== null) {
+            if (txtImageLinkMedium !== undefined && txtImageLinkMedium !== null) {
                 if (txtImageLinkMedium.trim().length !== 0) {
                     Object.assign(editionObject, {imageLinkMedium: txtImageLinkMedium.trim()});
                 };
@@ -354,7 +354,7 @@ const EditEdition = (props) => {
                         setTextImageLink(data.textImageLink);
                         setActive(data.active);
 
-                        // Would still work if the createdAt and updatedAt were left out
+                        // Would still work if the createdAt and updatedAt were left out?
                         dispatch(updateStateEdition({editionItemIndex: editionItemIndex, editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}));
                         // Add to local storage also
                         
@@ -511,7 +511,8 @@ const EditEdition = (props) => {
     };
 
     useEffect(() => {
-        // console.log(componentName, "useEffect editionRecordAdded", editionRecordAdded);
+        // console.log(componentName, "useEffect editionRecordUpdated", editionRecordUpdated);
+        // console.log(componentName, "useEffect editionRecordDeleted", editionRecordDeleted);
         if (editionRecordUpdated !== undefined && editionRecordUpdated !== null && editionRecordUpdated === true) {
             setMessage("");
             setErrMessage("");
@@ -570,7 +571,7 @@ const EditEdition = (props) => {
                 <option value="">Select a Media</option>
                 {mediaList.map((media) => {
                 return (
-                    <option value={media.mediaID}>{media.media}</option>
+                    <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
                     )
                 })}
                 </Input>
@@ -641,7 +642,12 @@ const EditEdition = (props) => {
 
                 <ModalFooter>
                 <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(false);}}>Update Edition</Button>
+                {active !== undefined && active !== null && active === false ? 
+                <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(false);}}>Undelete/Restore Edition</Button>
+                : null}
+                {active !== undefined && active !== null && active === true ? 
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(true);}}>Delete Edition</Button>
+                : null}
                 <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteEdition();}}>Hard Delete Edition</Button>
                 <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
                 </ModalFooter>

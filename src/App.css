@@ -97,3 +97,16 @@ body {
   color: black;
   margin-left: 5px;
 }
+
+.inactiveItem {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.cardHeader {
+  text-align: center;
+  font-size: smaller;
+  margin: 0;
+  padding: .25em;
+}

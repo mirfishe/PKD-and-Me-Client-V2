@@ -5,6 +5,7 @@ import {Image, PencilSquare} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import {createTitleURL, createImageName} from "../../app/sharedFunctions";
 import {updateStateTitle, deleteStateTitle} from "../../bibliographyData/titlesSlice";
+import {updateStateEdition, deleteStateEdition} from "../../bibliographyData/editionsSlice";
 
 const EditTitle = (props) => {
 
@@ -68,6 +69,8 @@ const EditTitle = (props) => {
     const [modal, setModal] = useState(false);
     const [titleRecordUpdated, setTitleRecordUpdated] = useState(null);
     const [titleRecordDeleted, setTitleRecordDeleted] = useState(null);
+    const [editionRecordUpdated, setEditionRecordUpdated] = useState(null);
+    const [editionRecordDeleted, setEditionRecordDeleted] = useState(null);
 
     const [txtTitleName, setTxtTitleName] = useState("");
     const [txtTitleURL, setTxtTitleURL] = useState("");
@@ -97,6 +100,10 @@ const EditTitle = (props) => {
     const [urlPKDweb, setUrlPKDweb] = useState(null);
     const [active, setActive] = useState(null);
 
+    const editionListState = useSelector(state => state.editions.arrayEditions);
+    // console.log(componentName, "editionListState", editionListState);
+    let editionList = [];
+
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
     
@@ -109,8 +116,10 @@ const EditTitle = (props) => {
         // console.log(componentName, "titleObject", titleObject);
         // console.log(componentName, "typeof titleObject", typeof titleObject);
 
-        setTitleItemIndex(titleListState.findIndex(title => title.titleID === props.titleID));
+        setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
         // console.log(componentName, "titleItemIndex", titleItemIndex);
+
+        editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
 
         if (titleObject !== undefined) {
 
@@ -127,6 +136,7 @@ const EditTitle = (props) => {
             setCategoryID(titleObject.categoryID);
             setShortDescription(titleObject.shortDescription);
             setUrlPKDweb(titleObject.urlPKDweb);
+            setActive(titleObject.active);
 
             setTxtTitleName(titleObject.titleName);
             setTxtTitleURL(titleObject.titleURL);
@@ -341,9 +351,21 @@ const EditTitle = (props) => {
                             setUrlPKDweb(data.urlPKDweb);
                             setActive(data.active);
 
-                            // Would still work if the createdAt and updatedAt were left out
+                            // Would still work if the createdAt and updatedAt were left out?
                             dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}));
                             // Update local storage also
+
+                            // Update/Delete related editions also if active is set to false
+                            if (data.active === false) {
+                                for (let i = 0; i < editionList.length; i++) {
+
+                                    let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+
+                                    // Would still work if the createdAt and updatedAt were left out?
+                                    dispatch(updateStateEdition({editionItemIndex: editionItemIndex, editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createdAt: editionList[i].createdAt, updatedAt: editionList[i].updatedAt}));
+
+                                };
+                            };
 
                         } else {
                             // setErrMessage(data.error);
@@ -418,6 +440,17 @@ const EditTitle = (props) => {
                         dispatch(deleteStateTitle(titleItemIndex));
                         // Update local storage also
 
+                        // Delete related editions also
+                        for (let i = 0; i < editionList.length; i++) {
+
+                            let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+
+                            deleteEdition = (editionList[i].editionID, editionItemIndex);
+
+                        };
+
+                        // Redirect when the title is deleted?
+
                     } else {
                         // setErrMessage(data.error);
                         setErrMessage(data.errorMessages);
@@ -433,6 +466,74 @@ const EditTitle = (props) => {
                 
             };
 
+        };
+
+    };
+
+    const deleteEdition = (editionID, editionItemIndex) => {
+        // console.log(componentName, "deleteEdition");
+        // console.log(componentName, "deleteEdition baseURL", baseURL);
+
+        setMessage("");
+        setErrMessage("");
+        setEditionRecordDeleted(null);
+
+        let url = baseURL + "edition/";
+
+        if (editionID !== undefined && editionID !== null) {
+            url = url + editionID;
+
+            // console.log(componentName, "deleteEdition url", url);
+
+            if (sessionToken !== undefined && sessionToken !== null) {
+
+                fetch(url, {
+                    method: "DELETE",
+                    headers:    new Headers ({
+                        "Content-Type": "application/json",
+                        "Authorization": sessionToken
+                    })
+                })
+                .then(response => {
+                    // console.log(componentName, "deleteEdition response", response);
+                    // if (!response.ok) {
+                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                    // } else {
+                        // if (response.status === 200) {
+                            return response.json();
+                        // } else {
+                        //     return response.status;
+                        // };
+                    // };
+                })
+                .then(data => {
+                    // console.log(componentName, "deleteEdition data", data);
+
+                    setEditionRecordDeleted(data.recordDeleted);
+
+                    setMessage(data.message); // Never seen by the user if the delete was successful
+
+                    if (data.recordDeleted === true) {
+
+                        // dispatch(deleteStateEdition(props.editionID));
+                        dispatch(deleteStateEdition(editionItemIndex));
+                        // Update local storage also
+
+                    } else {
+                        // setErrMessage(data.error);
+                        setErrMessage(data.errorMessages);
+                    };
+
+                })
+                .catch(error => {
+                    console.log(componentName, "deleteEdition error", error);
+                    // console.log(componentName, "deleteEdition error.name", error.name);
+                    // console.log(componentName, "deleteEdition error.message", error.message);
+                    setErrMessage(error.name + ": " + error.message);
+                });
+                
+            };
+        
         };
 
     };
@@ -569,10 +670,15 @@ const EditTitle = (props) => {
 
                 <ModalFooter>
     
-                 <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(false);}}>Update Title</Button>
-                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(true);}}>Delete Title</Button> 
-                 <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteTitle();}}>Hard Delete Title</Button>
-                 <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+                <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(false);}}>Update Title</Button>
+                {active !== undefined && active !== null && active === false ? 
+                <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(false);}}>Undelete/Restore Title</Button> 
+                : null}
+                {active !== undefined && active !== null && active === true ? 
+                <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(true);}}>Delete Title</Button> 
+                : null}
+                <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteTitle();}}>Hard Delete Title</Button>
+                <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
                 </ModalFooter>
                 </Form>
        </ModalBody>

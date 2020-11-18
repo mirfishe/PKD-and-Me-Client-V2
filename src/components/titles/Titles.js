@@ -42,32 +42,35 @@ const Titles = (props) => {
 
     const sortTitles = (sortBy) => {
         // console.log(componentName, "sortTitles sortBy", sortBy);
-        if (sortBy === "publicationDate") {
-            // Sort the titleList array by title.publicationDate
-            titleList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
-        } else if (sortBy === "titleName") {
-            // Sort the titleList array by title.titleSort
-            titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-        } else {
-            // Sort the titleList array by title.titleSort
-            titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+        if (titleList !== undefined && titleList !== null && titleList.length > 0) {
+            if (sortBy === "publicationDate") {
+                // Sort the titleList array by title.publicationDate
+                titleList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+            } else if (sortBy === "titleName") {
+                // Sort the titleList array by title.titleSort
+                titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+            } else {
+                // Sort the titleList array by title.titleSort
+                titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+            };
         };
     };
 
     let titleList = [];
     if (!isNaN(categoryParam)) {
+        // This code no longer works with the current URL setup
         // If categoryParam is a number, then it's the categoryID
         document.title = titleList[0].category.category + " | " + appName + " | " + siteName;
-        titleList = titleListState.filter(title => title.active === true && title.categoryID === parseInt(categoryParam));
+        titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
     } else if (categoryParam !== undefined) {
         // If categoryParam is not a number, then it's the category name
-        const category = categoryListState.find(category => category.active === true && category.category === decodeURL(categoryParam));
+        const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
         // console.log(componentName, "typeof category", typeof category);
         // console.log(componentName, "category", category);
 
         if (category !== undefined) {
             document.title = category.category + " | " + appName + " | " + siteName;
-            titleList = titleListState.filter(title => title.active === true && title.categoryID === parseInt(category.categoryID));
+            titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
         } else {
             document.title = "Category Not Found | " + appName + " | " + siteName;
             console.log("Category not found.");
@@ -81,9 +84,16 @@ const Titles = (props) => {
     } else {
         document.title = "All Titles | " + appName + " | " + siteName;
         // Display all active titles
-        // titleList = [...titleListState];
-        titleList = titleListState.filter(title => title.active === true);
+        titleList = [...titleListState];
+        // titleList = titleListState.filter(title => title.active === true);
     };
+
+    if (admin !== undefined && admin !== null && admin === true) {
+        titleList = [...titleList];
+    } else {
+        titleList = titleList.filter(title => title.active === true && title.category.active === true);
+    };
+    // console.log(componentName, "titleList", titleList);
 
     sortTitles(titleSort);
 
@@ -139,6 +149,15 @@ const Titles = (props) => {
             </Row>
             <Row>
             {titleList.map((title) => {
+
+                let activeString = "";
+                if (title.active === true) {
+                    // activeString = "Active";
+                    activeString = "";
+                } else {
+                    activeString = "Inactive";
+                };
+
             return (
                 <Col key={title.titleID} xs="4" className="mb-4">
 
@@ -176,6 +195,11 @@ const Titles = (props) => {
                     </Card> */}
 
                     <Card key={title.titleID}>
+                    {activeString !== undefined && activeString !== null && activeString !== "" ?
+                        <CardHeader className="cardHeader inactiveItem">
+                            ({activeString})
+                        </CardHeader>
+                    : null}
                     <Row className="no-gutters">
                         <Col className="col-md-4">
                             <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>

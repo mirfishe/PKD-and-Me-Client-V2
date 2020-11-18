@@ -47,9 +47,9 @@ const titlesSlice = createSlice({
         // console.log(componentName, "updateStateTitle action.payload", action.payload);
 
         const titleItem = action.payload;
-        console.log(componentName, "updateStateTitle titleItem", titleItem);
-        console.log(componentName, "updateStateTitle titleItem.titleID", titleItem.titleID);
-        console.log(componentName, "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
+        // console.log(componentName, "updateStateTitle titleItem", titleItem);
+        // console.log(componentName, "updateStateTitle titleItem.titleID", titleItem.titleID);
+        // console.log(componentName, "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
 
         // This doesn't work because state.arrayTitles isn't stored as an array of objects?
         // Need to copy the array?
@@ -73,6 +73,8 @@ const titlesSlice = createSlice({
         //   existingTitle.updatedAt = titleItem.updatedAt;
         // };
 
+        // Updates all the values even if you don't send them in the payload
+        // Sets them to what if they're not sent in the payload?
         state.arrayTitles[titleItem.titleItemIndex].titleName = titleItem.titleName;
         state.arrayTitles[titleItem.titleItemIndex].titleSort = titleItem.titleSort;
         state.arrayTitles[titleItem.titleItemIndex].titleURL = titleItem.titleURL;
@@ -91,7 +93,7 @@ const titlesSlice = createSlice({
     },
     deleteStateTitle: {
       reducer(state, action) {
-        console.log(componentName, "deleteStateTitle action.payload", action.payload);
+        // console.log(componentName, "deleteStateTitle action.payload", action.payload);
 
         const titleItemIndex = action.payload;
         // const titleID = action.payload;

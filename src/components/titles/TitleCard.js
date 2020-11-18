@@ -108,7 +108,7 @@ const TitleCard = (props) => {
             {titleList.map((title) => {
             return (
                 <Col key={title.titleID} xs="8" className="mb-4">
-                    <Card key={title.titleID}>
+                    <Card>
                     <Row className="no-gutters">
 
                     {imageSide === "left" ?
@@ -127,9 +127,9 @@ const TitleCard = (props) => {
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                                 {additionalText !== undefined && additionalText !== "" ? <CardText className="my-4">{additionalText}</CardText> : null}
                                 {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <div className="my-4" dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /> : null}
-                                {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
+                                {/* {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
                                 {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-                                {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
+                                {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null} */}
                             </CardBody>
                         </Col>
 

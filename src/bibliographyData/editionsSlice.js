@@ -44,12 +44,12 @@ const editionsSlice = createSlice({
     },
     updateStateEdition: {
       reducer(state, action) {
-        console.log(componentName, "updateStateEdition action.payload", action.payload);
+        // console.log(componentName, "updateStateEdition action.payload", action.payload);
 
         const editionItem = action.payload;
-        console.log(componentName, "updateStateEdition editionItem", editionItem);
-        console.log(componentName, "updateStateEdition editionItem.editionID", editionItem.editionID);
-        console.log(componentName, "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
+        // console.log(componentName, "updateStateEdition editionItem", editionItem);
+        // console.log(componentName, "updateStateEdition editionItem.editionID", editionItem.editionID);
+        // console.log(componentName, "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
 
         // This doesn't work because state.arrayEditions isn't stored as an array of objects?
         // Need to copy the array?
@@ -74,6 +74,8 @@ const editionsSlice = createSlice({
         //   existingEdition.updatedAt = editionItem.updatedAt;
         // };
 
+        // Updates all the values even if you don't send them in the payload
+        // Sets them to what if they're not sent in the payload?
         state.arrayEditions[editionItem.editionItemIndex].titleID = editionItem.titleID;
         state.arrayEditions[editionItem.editionItemIndex].mediaID = editionItem.mediaID;
         state.arrayEditions[editionItem.editionItemIndex].publicationDate = editionItem.publicationDate;
@@ -93,7 +95,7 @@ const editionsSlice = createSlice({
     },
     deleteStateEdition: {
       reducer(state, action) {
-        console.log(componentName, "deleteStateEdition action.payload", action.payload);
+        // console.log(componentName, "deleteStateEdition action.payload", action.payload);
 
         const editionItemIndex = action.payload;
         // const editionID = action.payload;

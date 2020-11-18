@@ -64,6 +64,8 @@ const categoriesSlice = createSlice({
       //   existingCategory.updatedAt = categoryItem.updatedAt;
       // };
 
+      // Updates all the values even if you don't send them in the payload
+      // Sets them to what if they're not sent in the payload?
       state.arrayCategories[categoryItem.categoryItemIndex].category = categoryItem.category;
       state.arrayCategories[categoryItem.categoryItemIndex].sortID = categoryItem.sortID;
       state.arrayCategories[categoryItem.categoryItemIndex].active = categoryItem.active;
