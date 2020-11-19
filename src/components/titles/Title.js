@@ -9,6 +9,7 @@ import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
 import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
+import AddUserReview from "../userReviews/AddUserReview";
 
 const Title = (props) => {
 
@@ -215,6 +216,7 @@ const Title = (props) => {
                         {title.shortDescription !== "" && title.shortDescription !== null ? <div dangerouslySetInnerHTML={{"__html": displayParagraphs(title.shortDescription)}} /> : null}
                         {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
                         {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
+                        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
                     </Col>
                 </Row>
 

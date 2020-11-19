@@ -139,7 +139,7 @@ const AddMedia = (props) => {
 
                             // Would still work if the createdAt and updatedAt were left out?
                             dispatch(addStateMedia([{mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
-                            // Add to local storage also
+                            // Add to local storage also?
                             
                         } else {
                             // setErrMessage(data.error);

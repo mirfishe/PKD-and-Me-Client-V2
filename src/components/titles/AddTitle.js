@@ -285,7 +285,7 @@ const AddTitle = (props) => {
 
                             // Would still work if the createdAt and updatedAt were left out?
                             dispatch(addStateTitle([{titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt}}]));
-                            // Add to local storage also
+                            // Add to local storage also?
 
                         } else {
                             // setErrMessage(data.error);

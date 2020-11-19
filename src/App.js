@@ -23,6 +23,7 @@ import CategoryList from "./components/categories/CategoryList";
 import MediaList from "./components/media/MediaList";
 import TitleList from "./components/titles/TitleList";
 import EditionList from "./components/editions/EditionList";
+import UserReviewList from "./components/userReviews/UserReviewList";
 import URLList from "./components/loadData/URLList";
 import Category from "./components/categories/Category";
 import Media from "./components/media/Media";
@@ -86,6 +87,7 @@ function App() {
   let showMediaList = useSelector(state => state.app.menuSettings.showMediaList);
   let showTitleList = useSelector(state => state.app.menuSettings.showTitleList);
   let showEditionList = useSelector(state => state.app.menuSettings.showEditionList);
+  let showUserReviewList = useSelector(state => state.app.menuSettings.showUserReviewList);
   let showURLList = useSelector(state => state.app.menuSettings.showURLList);
 
   let showAddCategory = useSelector(state => state.app.menuSettings.showAddCategory);
@@ -341,7 +343,7 @@ function App() {
       </Navbar>
       : null}
 
-      {showCategoryList || showMediaList || showTitleList || showEditionList || showURLList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
+      {showCategoryList || showMediaList || showTitleList || showEditionList || showUserReviewList || showURLList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
       <Navbar>
         <Nav>
           {showCategoryList || showAllMenuItems ? 
@@ -362,6 +364,11 @@ function App() {
           {showEditionList || showAllMenuItems ? 
           <NavItem className="mx-3">
             <Link to="/editionList"><NavbarText>Edition List</NavbarText></Link>
+          </NavItem>
+          : null}
+          {showUserReviewList || showAllMenuItems ? 
+          <NavItem className="mx-3">
+            <Link to="/userReviewList"><NavbarText>User Review List</NavbarText></Link>
           </NavItem>
           : null}
           {showURLList || showAllMenuItems ? 
@@ -427,6 +434,7 @@ function App() {
       <Route exact path="/mediaList" component={MediaList} />
       <Route exact path="/titleList" component={TitleList} />
       <Route exact path="/editionList" component={EditionList} />
+      <Route exact path="/userReviewList" component={UserReviewList} />
       <Route exact path="/urlList" component={URLList} />
       <Route exact path="/categories" component={Category} />
       <Route exact path="/media" component={Media} />

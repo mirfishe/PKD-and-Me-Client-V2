@@ -17,6 +17,7 @@
     "showMediaList": false,
     "showTitleList": false,
     "showEditionList": false,
+    "showUserReviewList": true,
     "showURLList": false,
 
     "showAddCategory": false,

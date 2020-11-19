@@ -47,7 +47,7 @@ function LoadUserReviews() {
     setUserReviewMessage("");
     setErrUserReviewMessage("");
 
-    let url = baseURL + "userreview/";
+    let url = baseURL + "userreview/list";
 
     fetch(url)
     .then(response => {
