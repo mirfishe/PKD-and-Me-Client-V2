@@ -6,7 +6,11 @@ const initialState = {
   arrayUserReviews: [],
   userReviewsLoaded: false,
   lastDatabaseRetrievalUserReviews: null,
-  userReviewsDataOffline: false
+  userReviewsDataOffline: false,
+  arrayUserReviewsRatings: [],
+  userReviewsRatingsLoaded: false,
+  lastDatabaseRetrievalUserReviewsRatings: null,
+  userReviewsRatingsDataOffline: false
 };
 
 const userReviewsSlice = createSlice({
@@ -89,10 +93,87 @@ const userReviewsSlice = createSlice({
         state.userReviewsDataOffline = action.payload;
 
       }
+    },
+    loadArrayUserReviewsRatings: {
+      reducer(state, action) {
+        // console.log(componentName, "loadArrayUserReviewsRatings action.payload", action.payload);
+        // console.log(componentName, "loadArrayUserReviewsRatings action.payload.length", action.payload.length);
+
+        for (let i = 0; i < action.payload.length; i++) {
+          // console.log(componentName, "loadArrayTitles action.payload[i]", action.payload[i]);
+          state.arrayUserReviewsRatings.push(action.payload[i]);
+        };
+
+        state.userReviewsRatingsLoaded = true;
+        state.lastDatabaseRetrievalUserReviewsRatings = new Date().toISOString();
+
+      }
+    },
+    addStateUserReviewsRatings: {
+      reducer(state, action) {
+        // console.log(componentName, "addStateUserReviewsRatings action.payload", action.payload);
+        // console.log(componentName, "addStateUserReviewsRatings action.payload.length", action.payload.length);
+
+        // Could change this to accept an object and add that object to the store
+        for (let i = 0; i < action.payload.length; i++) {
+          // console.log(componentName, "addStateUserReviewsRatings action.payload[i]", action.payload[i]);
+          state.arrayUserReviewsRatings.push(action.payload[i]);
+        };
+
+      }
+    },
+  updateStateUserReviewsRatings: {
+    reducer(state, action) {
+      console.log(componentName, "updateStateUserReviewsRatings action.payload", action.payload);
+
+      const userReviewItem = action.payload;
+      console.log(componentName, "updateStateUserReviewsRatings userReviewItem", userReviewItem);
+      console.log(componentName, "updateStateUserReviewsRatings userReviewItem.userReviewID", userReviewItem.userReviewID);
+      console.log(componentName, "updateStateUserReviewsRatings userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
+
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].reviewID = userReviewItem.reviewID;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].userID = userReviewItem.userID;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].titleID = userReviewItem.titleID;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].read = userReviewItem.read;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].dateRead = userReviewItem.dateRead;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].rating = userReviewItem.rating;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].createdAt = userReviewItem.createdAt;
+      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
+
+    }
+  },
+  deleteStateUserReviewsRatings: {
+    reducer(state, action) {
+      console.log(componentName, "deleteStateUserReviewsRatings action.payload", action.payload);
+
+      const userReviewItemIndex = action.payload;
+      // const userReviewID = action.payload;
+      
+      // This doesn't work because state.arrayUserReviewsRatings isn't stored as an array of objects?
+      // Need to copy the array?
+      // const existingUserReviewIndex = state.arrayUserReviewsRatings.findIndex(userReview => userReview.reviewID === reviewID);
+      // console.log(componentName, "deleteStateUserReviewsRatings existingUserReviewIndex", existingUserReviewIndex);
+
+      state.arrayUserReviewsRatings.splice(userReviewItemIndex, 1);
+
+    }
+  },
+    setUserReviewsRatingsDataOffline: {
+      reducer(state, action) {
+        // console.log(componentName, "setUserReviewsRatingsDataOffline action.payload", action.payload);
+        // console.log(componentName, "setUserReviewsRatingsDataOffline action.payload.length", action.payload.length);
+
+        state.userReviewsRatingsDataOffline = action.payload;
+
+      }
     }
 }
 });
 
-export const {loadArrayUserReviews, addStateUserReview, updateStateUserReview, deleteStateUserReview, setUserReviewsDataOffline} = userReviewsSlice.actions;
+export const {loadArrayUserReviews, addStateUserReview, updateStateUserReview, deleteStateUserReview, setUserReviewsDataOffline, loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings, setUserReviewsRatingsDataOffline} = userReviewsSlice.actions;
 
 export default userReviewsSlice.reducer;

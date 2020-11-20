@@ -24,6 +24,7 @@ import MediaList from "./components/media/MediaList";
 import TitleList from "./components/titles/TitleList";
 import EditionList from "./components/editions/EditionList";
 import UserReviewList from "./components/userReviews/UserReviewList";
+import UserReviewRatingList from "./components/userReviews/UserReviewRatingList";
 import URLList from "./components/loadData/URLList";
 import Category from "./components/categories/Category";
 import Media from "./components/media/Media";
@@ -88,6 +89,7 @@ function App() {
   let showTitleList = useSelector(state => state.app.menuSettings.showTitleList);
   let showEditionList = useSelector(state => state.app.menuSettings.showEditionList);
   let showUserReviewList = useSelector(state => state.app.menuSettings.showUserReviewList);
+  let showUserReviewRatingList = useSelector(state => state.app.menuSettings.showUserReviewRatingList);
   let showURLList = useSelector(state => state.app.menuSettings.showURLList);
 
   let showAddCategory = useSelector(state => state.app.menuSettings.showAddCategory);
@@ -343,7 +345,7 @@ function App() {
       </Navbar>
       : null}
 
-      {showCategoryList || showMediaList || showTitleList || showEditionList || showUserReviewList || showURLList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
+      {showCategoryList || showMediaList || showTitleList || showEditionList || showUserReviewList || showUserReviewRatingList || showURLList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
       <Navbar>
         <Nav>
           {showCategoryList || showAllMenuItems ? 
@@ -369,6 +371,11 @@ function App() {
           {showUserReviewList || showAllMenuItems ? 
           <NavItem className="mx-3">
             <Link to="/userReviewList"><NavbarText>User Review List</NavbarText></Link>
+          </NavItem>
+          : null}
+          {showUserReviewRatingList || showAllMenuItems ? 
+          <NavItem className="mx-3">
+            <Link to="/userReviewRatingList"><NavbarText>User Review Rating List</NavbarText></Link>
           </NavItem>
           : null}
           {showURLList || showAllMenuItems ? 
@@ -435,6 +442,7 @@ function App() {
       <Route exact path="/titleList" component={TitleList} />
       <Route exact path="/editionList" component={EditionList} />
       <Route exact path="/userReviewList" component={UserReviewList} />
+      <Route exact path="/userReviewRatingList" component={UserReviewRatingList} />
       <Route exact path="/urlList" component={URLList} />
       <Route exact path="/categories" component={Category} />
       <Route exact path="/media" component={Media} />

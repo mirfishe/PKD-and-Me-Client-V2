@@ -19,7 +19,7 @@ function UserReviewList() {
 
   const [userReviewMessage, setUserReviewMessage] = useState("");
   const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
-  const [userReviewMResultsFound, setUserReviewMResultsFound] = useState(null);
+  const [userReviewResultsFound, setUserReviewResultsFound] = useState(null);
   const [userReviewList, setUserReviewList] = useState([]);
 
   const getUserReviews = () => {
@@ -43,7 +43,7 @@ function UserReviewList() {
     .then(data => {
         // console.log(componentName, "getUserReviews data", data);
 
-        setUserReviewMResultsFound(data.resultsFound);
+        setUserReviewResultsFound(data.resultsFound);
         setUserReviewMessage(data.message);
 
         if (data.resultsFound === true) {
@@ -72,7 +72,7 @@ function UserReviewList() {
         {userReviewMessage !== "" ? <Alert color="info">{userReviewMessage}</Alert> : null}
         {errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
     </Row>
-    {userReviewMResultsFound !== null ?
+    {userReviewResultsFound !== null ?
         <Row>
             {/* <pre>
                 {JSON.stringify(userReviewList)}
@@ -84,7 +84,7 @@ function UserReviewList() {
     : null} 
     
     <Row>
-        {/* {userReviewMResultsFound !== null ? <UserReview userReviewList={userReviewList} /> : null} */}
+        {/* {userReviewResultsFound !== null ? <UserReview userReviewList={userReviewList} /> : null} */}
         {/* <UserReview userReviewList={userReviewList} /> */}
     </Row>
     </Container>

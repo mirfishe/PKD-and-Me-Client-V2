@@ -3,12 +3,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
+import {Rating} from "@material-ui/lab/";
+import AppSettings from "../../app/environment";
 import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
+import Edition from "../editions/Edition";
 import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
+import UserReview from "../userReviews/UserReview";
 import AddUserReview from "../userReviews/AddUserReview";
 
 const Title = (props) => {
@@ -25,18 +29,26 @@ const Title = (props) => {
     // console.log(componentName, "sessionToken", sessionToken);
     const admin = useSelector(state => state.user.admin);
     // console.log(componentName, "admin", admin);
+    const userID = useSelector(state => state.user.userID);
+    // console.log(componentName, "userID", userID);
 
-    const electronicOnly = useSelector(state => state.app.electronicOnly);
-    const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
-    const physicalOnly = useSelector(state => state.app.physicalOnly);
-    const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
+    // Loading the baseURL from the state store here is too slow
+    // Always pulling it from environment.js
+    // const baseURL = useSelector(state => state.app.baseURL);
+    const baseURL = AppSettings.baseURL;
+    // console.log(componentName, "baseURL", baseURL);
+
+    // const electronicOnly = useSelector(state => state.app.electronicOnly);
+    // const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
+    // const physicalOnly = useSelector(state => state.app.physicalOnly);
+    // const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
 
     const [errTitleMessage, setErrTitleMessage] = useState("");
     const [errEditionMessage, setErrEditionMessage] = useState("");
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
-    const editionListState = useSelector(state => state.editions.arrayEditions);
+    // const editionListState = useSelector(state => state.editions.arrayEditions);
     // console.log(componentName, "editionListState", editionListState);
 
     // console.log(componentName, "props.match.params", props.match.params);
@@ -52,7 +64,7 @@ const Title = (props) => {
     // const [titlePublicationDate, setTitlePublicationDate] = useState("");
 
     let titleList = [];
-    let editionList = [];
+    // let editionList = [];
     if (!isNaN(titleParam)) {
         // This code no longer works with the current URL setup
         // If titleParam is a number, then it's the titleID
@@ -65,7 +77,7 @@ const Title = (props) => {
 
         titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
 
-        editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
+        // editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
 
     } else if (titleParam !== undefined) {
         // If titleParam is not a number, then it's the title name
@@ -82,7 +94,7 @@ const Title = (props) => {
             // setTitleID(title.titleID);
             // setTitlePublicationDate(title.publicationDate);
 
-            editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
+            // editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
 
         } else {
             document.title = "Title Not Found | " + appName + " | " + siteName;
@@ -101,23 +113,23 @@ const Title = (props) => {
         titleList = titleListState.filter(title => title.active === true);
         // Display all active editions
         // editionList = [...editionListState];
-        editionList = editionListState.filter(edition => edition.active === true);
+        // editionList = editionListState.filter(edition => edition.active === true);
     };
 
-    if (electronicOnly === true) {
-        editionList = editionList.filter(edition => edition.medium.electronic === true);
-    } else if (physicalOnly === true) {
-        editionList = editionList.filter(edition =>  edition.medium.electronic === false);
-    } else {
-        editionList = [...editionList];
-    };
+    // if (electronicOnly === true) {
+    //     editionList = editionList.filter(edition => edition.medium.electronic === true);
+    // } else if (physicalOnly === true) {
+    //     editionList = editionList.filter(edition =>  edition.medium.electronic === false);
+    // } else {
+    //     editionList = [...editionList];
+    // };
 
     if (admin !== undefined && admin !== null && admin === true) {
         titleList = [...titleList];
-        editionList = [...editionList];
+        // editionList = [...editionList];
     } else {
         titleList = titleList.filter(title => title.active === true);
-        editionList = editionList.filter(edition => edition.active === true);
+        // editionList = editionList.filter(edition => edition.active === true);
     };
     // console.log(componentName, "titleList", titleList);
 
@@ -128,8 +140,131 @@ const Title = (props) => {
 
     // Sort the editionList array by media.sortID
     // console.log(componentName, "editionList", editionList);
-    editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+    // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
     // console.log(componentName, "editionList", editionList);
+
+    const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
+    // console.log(componentName, "userReviewsState", userReviewsState);
+
+    let userReviews = userReviewsState.filter(userReview => userReview.titleID === titleID);
+
+    let userReviewItem = {};
+
+    if (userID !== undefined && userID !== null && !isNaN(userID)) {
+        userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
+        userReviewItem = userReviewItem[0];
+    };
+    // console.log(componentName, "userReviewItem", userReviewItem);
+    // console.log(componentName, "typeof userReviewItem.read", typeof userReviewItem.read);
+    // console.log(componentName, "userReviewItem.read", userReviewItem.read);
+    // console.log(componentName, "typeof userReviewItem.dateRead", typeof userReviewItem.dateRead);
+    // console.log(componentName, "userReviewItem.dateRead", userReviewItem.dateRead);
+    // console.log(componentName, "typeof userReviewItem[0].read", typeof userReviewItem[0].read);
+    // console.log(componentName, "userReviewItem[0].read", userReviewItem[0].read);
+    // console.log(componentName, "typeof userReviewItem[0].dateRead", typeof userReviewItem[0].dateRead);
+    // console.log(componentName, "userReviewItem[0].dateRead", userReviewItem[0].dateRead);
+
+    // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
+    // // console.log(componentName, "userReviewsState", userReviewsState);
+
+    // let userReviewRatingItem = {};
+    // // console.log(componentName, "userReviewRatingItem", userReviewRatingItem);
+
+    // if (titleID !== undefined && titleID !== null && !isNaN(titleID)) {
+    //     userReviewRatingItem = userReviewsRatingsState.filter(userReview => userReview.titleID === titleID);
+    //     userReviewRatingItem = userReviewRatingItem[0];
+    // };
+
+    // let overallTitleRatingCount = 0;
+    // let overallTitleRating = 0;
+
+    // if (userReviewRatingItem !== undefined && userReviewRatingItem !== null) {
+    //     if (userReviewRatingItem.hasOwnProperty("userReviewAverage")) {
+    //         overallTitleRating = userReviewRatingItem.userReviewAverage;
+    //     };
+    
+    //     if (userReviewRatingItem.hasOwnProperty("userReviewCount")) {
+    //         overallTitleRatingCount = userReviewRatingItem.userReviewCount;
+    //     };
+    // };
+
+    // const [overallTitleRatingMessage, setOverallTitleRatingMessage] = useState("");
+    // const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
+    // const [overallTitleRatingResultsFound, setOverallTitleRatingResultsFound] = useState(null);
+    // const [overallTitleRating, setOverallTitleRating] = useState(null);
+    // const [overallTitleRatingCount, setOverallTitleRatingCount] = useState(0);
+
+    // const getTitleRating = () => {
+    //     // console.log(componentName, "getTitleRating");
+    //     // console.log(componentName, "getTitleRating baseURL", baseURL);
+
+    //     setOverallTitleRatingMessage("");
+    //     setErrOverallTitleRatingMessage("");
+    //     setOverallTitleRatingResultsFound(null);
+    //     setOverallTitleRating(null);
+    //     setOverallTitleRatingCount(0);
+
+    //     let url = baseURL + "userreview/";
+
+    //     if (titleID !== null) {
+    //         url = url + "rating/" + titleID;
+
+    //         // console.log(componentName, "getTitleRating url", url);
+
+    //         fetch(url)
+    //         .then(response => {
+    //             // console.log(componentName, "getTitleRating response", response);
+    //             if (!response.ok) {
+    //                 // throw Error(response.status + " " + response.statusText + " " + response.url);
+    //                 return {resultsFound: false, message: "Offline User Reviews Rating data fetch used."};
+    //             } else {
+    //                 return response.json();
+    //             };
+    //         })
+    //         .then(data => {
+    //             // console.log(componentName, "getTitleRating data", data);
+
+    //             setOverallTitleRatingResultsFound(data.resultsFound);
+    //             setOverallTitleRatingMessage(data.message);
+
+    //             if (data.resultsFound === true) {
+    //                 // console.log(componentName, "getTitleRating data.userReviews[0].userReviewCount", data.userReviews[0].userReviewCount);
+    //                 // console.log(componentName, "getTitleRating data.userReviews[0].userReviewSum", data.userReviews[0].userReviewSum);
+
+    //                 setOverallTitleRatingCount(data.userReviews[0].userReviewCount);
+    //                 let userReviewCount = data.userReviews[0].userReviewCount;
+
+    //                 if (userReviewCount > 0) {
+
+    //                     let userReviewSum = data.userReviews[0].userReviewSum;
+    //                     // Check for division by zero?
+    //                     // let userReviewAverage: number = userReviewSum/0;
+    //                     let userReviewAverage = userReviewSum/userReviewCount;
+
+    //                     // console.log(componentName, "getTitleRating userReviewCount", userReviewCount);
+    //                     // console.log(componentName, "getTitleRating state.overallTitleRatingCount", state.overallTitleRatingCount);
+    //                     // console.log(componentName, "getTitleRating userReviewSum", userReviewSum);
+    //                     // console.log(componentName, "getTitleRating userReviewAverage", userReviewAverage);
+
+    //                     setOverallTitleRating(userReviewAverage);
+    //                 };
+
+    //             } else {
+    //                 console.log(componentName, "getEditions resultsFound error", data.message);
+    //                 setErrOverallTitleRatingMessage(data.message);
+    //             };
+
+    //         })
+    //         .catch(error => {
+    //             console.log(componentName, "getTitleRating error", error);
+    //             // console.log(componentName, "getTitleRating error.name", error.name);
+    //             // console.log(componentName, "getTitleRating error.message", error.message);
+    //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
+    //         });
+
+    //     };
+
+    // };
 
     const redirectPage = (linkName) => {
         // console.log(componentName, "redirectPage", linkName);
@@ -144,16 +279,26 @@ const Title = (props) => {
         } else {
             setErrTitleMessage("Title not found.");
         };
+
     }, [titleList]);
 
-    useEffect(() => {
-        // console.log(componentName, "useEffect editionList", editionList);
-        if (editionList.length > 0) {
-            setErrEditionMessage("");
-        } else {
-            setErrEditionMessage("No editions found.");
-        };
-    }, [editionList]);
+    // useEffect(() => {
+    //     // console.log(componentName, "useEffect titleID", titleID);
+
+    //     if (titleID !== undefined && titleID !== null && titleID !== "" && overallTitleRatingResultsFound === null) {
+    //         getTitleRating();
+    //     };
+
+    // }, [titleID]);
+
+    // useEffect(() => {
+    //     // console.log(componentName, "useEffect editionList", editionList);
+    //     if (editionList.length > 0) {
+    //         setErrEditionMessage("");
+    //     } else {
+    //         setErrEditionMessage("No editions found.");
+    //     };
+    // }, [editionList]);
 
     return(
         <Container className="mt-4"> 
@@ -210,13 +355,28 @@ const Title = (props) => {
 
                 <Row className="mb-4">
                     <Col xs="4">
-                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <img src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                        {title.imageName !== undefined && title.imageName !== null && title.imageName !== "" ? <img src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon"/>}
                     </Col>
                     <Col xs="8">
+
+                        {title.userReviewCount !== undefined && title.userReviewCount !== null && title.userReviewCount > 0 ? 
+                        <React.Fragment>
+                        <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} />
+                        <p><small>out of {title.userReviewCount} review(s)</small></p>
+                        </React.Fragment>
+                        : null}
+
+                        {userReviewItem !== undefined && userReviewItem !== null ? 
+                        <React.Fragment>
+                            {userReviewItem.read !== undefined && userReviewItem.read !== null && userReviewItem.read === true && (userReviewItem.dateRead === undefined || userReviewItem.dateRead === null || userReviewItem.dateRead === "") ? <p>Read</p> : null}
+                            {userReviewItem.dateRead !== undefined && userReviewItem.dateRead !== null && userReviewItem.dateRead !== "" ? <p>Read on {displayDate(userReviewItem.dateRead)}</p> : null}
+                        </React.Fragment>
+                        : null}
+
                         {title.shortDescription !== "" && title.shortDescription !== null ? <div dangerouslySetInnerHTML={{"__html": displayParagraphs(title.shortDescription)}} /> : null}
                         {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
                         {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
-                        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
+                        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
                     </Col>
                 </Row>
 
@@ -224,7 +384,7 @@ const Title = (props) => {
                 )
             })}
 
-            <Row>
+            {/* <Row className="my-4">
                 <Col xs="12">
                 {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
                 {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
@@ -232,7 +392,7 @@ const Title = (props) => {
                 </Col>
             </Row>
             {editionList.length > 0 ?
-            <Row>
+            <Row className="my-4">
                 <Col xs="12">
                     <h5 className="text-center">Find A Copy 
                     {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={titleID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
@@ -252,7 +412,7 @@ const Title = (props) => {
                 };
 
             return (
-                <Col key={edition.editionID} xs="6" className="mb-4">
+                <Col key={edition.editionID} xs="6" className="mb-4"> */}
 
                     {/* <Card key={edition.editionID}>
                     <CardHeader>
@@ -272,7 +432,7 @@ const Title = (props) => {
                     </CardFooter>
                     </Card> */}
 
-                    <Card key={edition.editionID}>
+                    {/* <Card key={edition.editionID}>
                     {activeString !== undefined && activeString !== null && activeString !== "" ?
                         <CardHeader className="cardHeader inactiveItem">
                             ({activeString})
@@ -296,13 +456,21 @@ const Title = (props) => {
                         </Col>
                     </Row>
                     <CardFooter className="cardFooter">
-                        <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(edition.medium.media));}}>{edition.medium.media}</Link></CardText>
+                        <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => {event.preventDefault(); redirectPage(encodeURL(edition.medium.media));}}>{edition.medium.media}</Link></CardText>
                     </CardFooter>
                     </Card>
 
                 </Col>
                 )
             })}
+            </Row> */}
+
+            <Row>
+                <Edition titleID={titleID} titlePublicationDate={titlePublicationDate} />
+            </Row>
+
+            <Row>
+                <UserReview titleID={titleID} />
             </Row>
         </Container>
     );

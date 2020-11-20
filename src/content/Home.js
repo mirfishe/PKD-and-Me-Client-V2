@@ -52,7 +52,7 @@ const Home = () => {
             </Col>
             </Row>
 
-            <Row className="mx-4">
+            <Row className="my-4">
             <Col xs="12">
             <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
             </Col>

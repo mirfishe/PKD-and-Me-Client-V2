@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Rating} from "@material-ui/lab/";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Plus} from 'react-bootstrap-icons';
+import {Rating} from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
 import {addStateUserReview} from "../../bibliographyData/userReviewsSlice";
 
@@ -27,7 +27,7 @@ const AddUserReview = (props) => {
     // console.log(componentName, "titleListState", titleListState);
 
     const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
-    console.log(componentName, "userState", userState);
+    // console.log(componentName, "userState", userState);
 
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
@@ -156,7 +156,8 @@ const AddUserReview = (props) => {
 
                         let titleItem = titleListState.filter(title => title.titleID === data.titleID);
                         // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}
-
+                        titleItem = titleItem[0];
+                        
                         // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
                         // Would still work if the createdAt and updatedAt were left out?
@@ -225,13 +226,15 @@ const AddUserReview = (props) => {
            <FormGroup row>
 
                 <Col>
-                <FormGroup>
-                <Label for="cbxRead">Read</Label>
+                <FormGroup className="ml-4">
+
                 <Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => {/*console.log(event.target.value);*/ setCbxRead(!cbxRead);}} />
+                <Label for="cbxRead">Read</Label>
+
                 </FormGroup>
 
                 <FormGroup>
-                <Label for="rdoRating">Rating</Label>
+                <Label for="rdoRating" className="mr-4">Rating</Label>
                 <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => {/*console.log(event.target.value);*/ setRdoRating(newValue);}} />
                 {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
                     
@@ -255,11 +258,13 @@ const AddUserReview = (props) => {
                 </FormGroup>
                 </Col>
 
+                <Col>
                 <FormGroup>
                 <Label for="txtDateRead">Date Read</Label>
                 <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => {/*console.log(event.target.value);*/ setTxtDateRead(event.target.value);}} />
                 </FormGroup>
-
+                </Col>
+                
                 </FormGroup>
                 <FormGroup>
 
