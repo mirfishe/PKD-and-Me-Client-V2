@@ -4,6 +4,7 @@ import {Container, Col, Row, Alert} from "reactstrap";
 import {Rating} from "@material-ui/lab/";
 import {displayDate} from "../../app/sharedFunctions";
 import AddUserReview from "../userReviews/AddUserReview";
+import EditUserReview from "../userReviews/EditUserReview";
 
 const UserReview = (props) => {
 
@@ -19,6 +20,8 @@ const UserReview = (props) => {
     const [userReviewMessage, setUserReviewMessage] = useState("");
     const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
     const [userReviewResultsFound, setUserReviewResultsFound] = useState(null);
+
+    const [userReviewDisplayCount, setUserReviewDisplayCount] = useState(0);
 
     const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
     // console.log(componentName, "userReviewsState", userReviewsState);
@@ -36,9 +39,10 @@ const UserReview = (props) => {
     };
     // console.log(componentName, "userReviews", userReviews);
 
-    // userReviews.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-    // Sort the list alphabetically instead of by sortID
-    // userReviews.sort((a, b) => (a.userReview > b.userReview) ? 1 : -1);
+    // Sort the list by createdAt
+    userReviews.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1);
+    // Sort the list by updatedAt
+    // userReviews.sort((a, b) => (a.updatedAt > b.updatedAt) ? 1 : -1);
 
     let userReviewItem = {};
 
@@ -59,7 +63,24 @@ const UserReview = (props) => {
     useEffect(() => {
         // console.log(componentName, "useEffect userReviews", userReviews);
         if (userReviews.length > 0) {
-            setErrUserReviewMessage("");
+
+            let displayCount = 0; 
+
+            for (let i = 0; i < userReviews.length; i++) {
+
+                if ((userReviews[i].rating !== undefined && userReviews[i].rating !== null) || (userReviews[i].shortReview !== undefined && userReviews[i].shortReview !== null && userReviews[i].shortReview !== "") || (userReviews[i].longReview !== undefined && userReviews[i].longReview !== null && userReviews[i].longReview !== "")) {
+                    displayCount++;
+                };
+            };
+
+            // console.log(componentName, "useEffect displayCount", displayCount);
+
+            if (displayCount > 0) {
+                setErrUserReviewMessage("");
+            } else {
+                setErrUserReviewMessage("No user reviews found.");
+            };
+
         } else {
             setErrUserReviewMessage("No user reviews found.");
         };
@@ -67,11 +88,6 @@ const UserReview = (props) => {
 
     return(
         <Container className="my-4">
-             <Row className="my-4">
-                <Col xs="12">
-                {errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
-                </Col>
-            </Row>
             {/* This is not filtering correctly if there are reviews with no text or ratings in them; only read and dateRead reviews
             {userReviews.length > 0 ? */}
             <Row>
@@ -79,6 +95,11 @@ const UserReview = (props) => {
                 <h5 className="text-center">User Reviews
                 {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={props.titleID} displayButton={true} /> : null}
                 </h5>
+                </Col>
+            </Row>
+            <Row className="my-4">
+                <Col className="text-center" xs="12">
+                {errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
                 </Col>
             </Row>
             {/* : null} */}
@@ -94,7 +115,7 @@ const UserReview = (props) => {
             };
 
           return (
-            <Col xs="12" key={userReview.reviewID}>
+            <Col className="my-4" xs="12" key={userReview.reviewID}>
 
             {(userReview.rating !== undefined && userReview.rating !== null) || (userReview.shortReview !== undefined && userReview.shortReview !== null && userReview.shortReview !== "") || (userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "") ? 
 
@@ -130,6 +151,12 @@ const UserReview = (props) => {
                 Reviewed by {userReview.user.firstName} {userReview.updatedAt !== undefined && userReview.updatedAt !== null ? <small>on {displayDate(userReview.updatedAt)}</small> : null}
                 </p>
             </Col>
+            </Row>
+
+            <Row>
+                <Col xs="12">
+                {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReview.userID) || (admin !== undefined && admin !== null && admin === true)) ? <EditUserReview reviewID={userReview.reviewID} displayButton={true} /> : null}
+                </Col>
             </Row>
 
             </React.Fragment>

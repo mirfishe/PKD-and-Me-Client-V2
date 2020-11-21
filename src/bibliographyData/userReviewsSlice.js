@@ -7,7 +7,7 @@ const initialState = {
   userReviewsLoaded: false,
   lastDatabaseRetrievalUserReviews: null,
   userReviewsDataOffline: false,
-  arrayUserReviewsRatings: [],
+  // arrayUserReviewsRatings: [],
   userReviewsRatingsLoaded: false,
   lastDatabaseRetrievalUserReviewsRatings: null,
   userReviewsRatingsDataOffline: false
@@ -47,12 +47,12 @@ const userReviewsSlice = createSlice({
     },
   updateStateUserReview: {
     reducer(state, action) {
-      console.log(componentName, "updateStateUserReview action.payload", action.payload);
+      // console.log(componentName, "updateStateUserReview action.payload", action.payload);
 
       const userReviewItem = action.payload;
-      console.log(componentName, "updateStateTitle userReviewItem", userReviewItem);
-      console.log(componentName, "updateStateTitle userReviewItem.userReviewID", userReviewItem.userReviewID);
-      console.log(componentName, "updateStateTitle userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
+      // console.log(componentName, "updateStateUserReview userReviewItem", userReviewItem);
+      // console.log(componentName, "updateStateUserReview userReviewItem.userReviewID", userReviewItem.reviewID);
+      // console.log(componentName, "updateStateUserReview userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
 
       state.arrayUserReviews[userReviewItem.userReviewItemIndex].reviewID = userReviewItem.reviewID;
       state.arrayUserReviews[userReviewItem.userReviewItemIndex].userID = userReviewItem.userID;
@@ -64,8 +64,8 @@ const userReviewsSlice = createSlice({
       state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
       state.arrayUserReviews[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
       state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].createdAt = userReviewItem.createdAt;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
+      // state.arrayUserReviews[userReviewItem.userReviewItemIndex].createdAt = userReviewItem.createdAt;
+      // state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
 
     }
   },
@@ -94,74 +94,84 @@ const userReviewsSlice = createSlice({
 
       }
     },
-    loadArrayUserReviewsRatings: {
-      reducer(state, action) {
-        // console.log(componentName, "loadArrayUserReviewsRatings action.payload", action.payload);
-        // console.log(componentName, "loadArrayUserReviewsRatings action.payload.length", action.payload.length);
+  //   loadArrayUserReviewsRatings: {
+  //     reducer(state, action) {
+  //       // console.log(componentName, "loadArrayUserReviewsRatings action.payload", action.payload);
+  //       // console.log(componentName, "loadArrayUserReviewsRatings action.payload.length", action.payload.length);
 
-        for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "loadArrayTitles action.payload[i]", action.payload[i]);
-          state.arrayUserReviewsRatings.push(action.payload[i]);
-        };
+  //       for (let i = 0; i < action.payload.length; i++) {
+  //         // console.log(componentName, "loadArrayTitles action.payload[i]", action.payload[i]);
+  //         state.arrayUserReviewsRatings.push(action.payload[i]);
+  //       };
 
-        state.userReviewsRatingsLoaded = true;
-        state.lastDatabaseRetrievalUserReviewsRatings = new Date().toISOString();
+  //       state.userReviewsRatingsLoaded = true;
+  //       state.lastDatabaseRetrievalUserReviewsRatings = new Date().toISOString();
 
-      }
-    },
-    addStateUserReviewsRatings: {
-      reducer(state, action) {
-        // console.log(componentName, "addStateUserReviewsRatings action.payload", action.payload);
-        // console.log(componentName, "addStateUserReviewsRatings action.payload.length", action.payload.length);
+  //     }
+  //   },
+  //   addStateUserReviewsRatings: {
+  //     reducer(state, action) {
+  //       // console.log(componentName, "addStateUserReviewsRatings action.payload", action.payload);
+  //       // console.log(componentName, "addStateUserReviewsRatings action.payload.length", action.payload.length);
 
-        // Could change this to accept an object and add that object to the store
-        for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "addStateUserReviewsRatings action.payload[i]", action.payload[i]);
-          state.arrayUserReviewsRatings.push(action.payload[i]);
-        };
+  //       // Could change this to accept an object and add that object to the store
+  //       for (let i = 0; i < action.payload.length; i++) {
+  //         // console.log(componentName, "addStateUserReviewsRatings action.payload[i]", action.payload[i]);
+  //         state.arrayUserReviewsRatings.push(action.payload[i]);
+  //       };
 
-      }
-    },
-  updateStateUserReviewsRatings: {
-    reducer(state, action) {
-      console.log(componentName, "updateStateUserReviewsRatings action.payload", action.payload);
+  //     }
+  //   },
+  // updateStateUserReviewsRatings: {
+  //   reducer(state, action) {
+  //     // console.log(componentName, "updateStateUserReviewsRatings action.payload", action.payload);
 
-      const userReviewItem = action.payload;
-      console.log(componentName, "updateStateUserReviewsRatings userReviewItem", userReviewItem);
-      console.log(componentName, "updateStateUserReviewsRatings userReviewItem.userReviewID", userReviewItem.userReviewID);
-      console.log(componentName, "updateStateUserReviewsRatings userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
+  //     const userReviewRatingItem = action.payload;
+  //     // console.log(componentName, "updateStateUserReviewsRatings userReviewRatingItem", userReviewRatingItem);
+  //     // console.log(componentName, "updateStateUserReviewsRatings userReviewRatingItem.titleID", userReviewRatingItem.titleID);
+  //     // console.log(componentName, "updateStateUserReviewsRatings userReviewRatingItem.userReviewItemIndex", userReviewRatingItem.userReviewRatingItemIndex);
 
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].reviewID = userReviewItem.reviewID;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].userID = userReviewItem.userID;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].titleID = userReviewItem.titleID;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].read = userReviewItem.read;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].dateRead = userReviewItem.dateRead;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].rating = userReviewItem.rating;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].createdAt = userReviewItem.createdAt;
-      state.arrayUserReviewsRatings[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
+  //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].titleID = userReviewRatingItem.titleID;
+  //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].userReviewCount = userReviewRatingItem.userReviewCount;
+  //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].userReviewSum = userReviewRatingItem.userReviewSum;
+  //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].userReviewAverage = userReviewRatingItem.userReviewAverage;
 
-    }
-  },
-  deleteStateUserReviewsRatings: {
-    reducer(state, action) {
-      console.log(componentName, "deleteStateUserReviewsRatings action.payload", action.payload);
+  //   }
+  // },
+  // deleteStateUserReviewsRatings: {
+  //   reducer(state, action) {
+  //     console.log(componentName, "deleteStateUserReviewsRatings action.payload", action.payload);
 
-      const userReviewItemIndex = action.payload;
-      // const userReviewID = action.payload;
+  //     const userReviewItemIndex = action.payload;
+  //     // const userReviewID = action.payload;
       
-      // This doesn't work because state.arrayUserReviewsRatings isn't stored as an array of objects?
-      // Need to copy the array?
-      // const existingUserReviewIndex = state.arrayUserReviewsRatings.findIndex(userReview => userReview.reviewID === reviewID);
-      // console.log(componentName, "deleteStateUserReviewsRatings existingUserReviewIndex", existingUserReviewIndex);
+  //     // This doesn't work because state.arrayUserReviewsRatings isn't stored as an array of objects?
+  //     // Need to copy the array?
+  //     // const existingUserReviewIndex = state.arrayUserReviewsRatings.findIndex(userReview => userReview.reviewID === reviewID);
+  //     // console.log(componentName, "deleteStateUserReviewsRatings existingUserReviewIndex", existingUserReviewIndex);
 
-      state.arrayUserReviewsRatings.splice(userReviewItemIndex, 1);
+  //     state.arrayUserReviewsRatings.splice(userReviewItemIndex, 1);
 
-    }
-  },
+  //   }
+  // },
+    setUserReviewsRatingsLoaded: {
+      reducer(state, action) {
+        // console.log(componentName, "setUserReviewsRatingsLoaded action.payload", action.payload);
+        // console.log(componentName, "setUserReviewsRatingsLoaded action.payload.length", action.payload.length);
+
+        state.userReviewsRatingsLoaded = action.payload;
+
+      }
+    },
+    setLastDatabaseRetrievalUserReviewsRatings: {
+      reducer(state, action) {
+        // console.log(componentName, "setLastDatabaseRetrievalUserReviewsRatings action.payload", action.payload);
+        // console.log(componentName, "setLastDatabaseRetrievalUserReviewsRatings action.payload.length", action.payload.length);
+
+        state.lastDatabaseRetrievalUserReviewsRatings = action.payload;
+
+      }
+    },
     setUserReviewsRatingsDataOffline: {
       reducer(state, action) {
         // console.log(componentName, "setUserReviewsRatingsDataOffline action.payload", action.payload);
@@ -174,6 +184,6 @@ const userReviewsSlice = createSlice({
 }
 });
 
-export const {loadArrayUserReviews, addStateUserReview, updateStateUserReview, deleteStateUserReview, setUserReviewsDataOffline, loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings, setUserReviewsRatingsDataOffline} = userReviewsSlice.actions;
+export const {loadArrayUserReviews, addStateUserReview, updateStateUserReview, deleteStateUserReview, setUserReviewsDataOffline, /*loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings,*/ setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings, setUserReviewsRatingsDataOffline} = userReviewsSlice.actions;
 
 export default userReviewsSlice.reducer;

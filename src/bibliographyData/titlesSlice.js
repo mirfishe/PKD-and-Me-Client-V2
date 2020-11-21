@@ -86,8 +86,8 @@ const titlesSlice = createSlice({
         state.arrayTitles[titleItem.titleItemIndex].shortDescription = titleItem.shortDescription;
         state.arrayTitles[titleItem.titleItemIndex].urlPKDweb = titleItem.urlPKDweb;
         state.arrayTitles[titleItem.titleItemIndex].active = titleItem.active;
-        state.arrayTitles[titleItem.titleItemIndex].createdAt = titleItem.createdAt;
-        state.arrayTitles[titleItem.titleItemIndex].updatedAt = titleItem.updatedAt;
+        // state.arrayTitles[titleItem.titleItemIndex].createdAt = titleItem.createdAt;
+        // state.arrayTitles[titleItem.titleItemIndex].updatedAt = titleItem.updatedAt;
 
       }
     },
@@ -104,6 +104,45 @@ const titlesSlice = createSlice({
         // console.log(componentName, "deleteStateTitle existingTitleIndex", existingTitleIndex);
 
         state.arrayTitles.splice(titleItemIndex, 1);
+
+      }
+    },
+    updateStateTitleRating: {
+      reducer(state, action) {
+        // console.log(componentName, "updateStateTitleRating action.payload", action.payload);
+
+        const titleItem = action.payload;
+        // console.log(componentName, "updateStateTitleRating titleItem", titleItem);
+        // console.log(componentName, "updateStateTitleRating titleItem.titleID", titleItem.titleID);
+        // console.log(componentName, "updateStateTitleRating titleItem.titleItemIndex", titleItem.titleItemIndex);
+
+        // This doesn't work because state.arrayTitles isn't stored as an array of objects?
+        // Need to copy the array?
+        // const existingTitle = state.arrayTitles.find(title => title.titleID === titleItem.titleID);
+        // console.log(componentName, "updateStateTitleRating existingTitle", existingTitle);
+
+        // if (existingTitle !== undefined) {
+        //   // existingTitle.titleID = titleItem.titleID;
+        //   existingTitle.titleName = titleItem.titleName;
+        //   existingTitle.titleSort = titleItem.titleSort;
+        //   existingTitle.titleURL = titleItem.titleURL;
+        //   existingTitle.authorFirstName = titleItem.authorFirstName;
+        //   existingTitle.authorLastName = titleItem.authorLastName;
+        //   existingTitle.publicationDate = titleItem.publicationDate;
+        //   existingTitle.imageName = titleItem.imageName;
+        //   existingTitle.categoryID = titleItem.categoryID;
+        //   existingTitle.shortDescription = titleItem.shortDescription;
+        //   existingTitle.urlPKDweb = titleItem.urlPKDweb;
+        //   existingTitle.active = titleItem.active;
+        //   existingTitle.createdAt = titleItem.createdAt;
+        //   existingTitle.updatedAt = titleItem.updatedAt;
+        // };
+
+        // Updates all the values even if you don't send them in the payload
+        // Sets them to what if they're not sent in the payload?
+        state.arrayTitles[titleItem.titleItemIndex].userReviewCount = titleItem.userReviewCount;
+        state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
+        state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
 
       }
     },
@@ -126,6 +165,6 @@ const titlesSlice = createSlice({
 }
 });
 
-export const {loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, setTitlesDataOffline, setTitleSort} = titlesSlice.actions;
+export const {loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, updateStateTitleRating, setTitlesDataOffline, setTitleSort} = titlesSlice.actions;
 
 export default titlesSlice.reducer;

@@ -56,7 +56,7 @@ const AddTitle = (props) => {
             setErrCategoryMessage("categoryList is empty", categoryList.length);
             setCategoryResultsFound(false);
         } else {
-            // console.log(componentName, "categoryList.length", categoryList.length);
+            // console.log(componentName, "useEffect categoryList.length", categoryList.length);
             // setCategoryMessage("categoryList.length", categoryList.length);
             setCategoryResultsFound(true);
         };
@@ -368,7 +368,7 @@ const AddTitle = (props) => {
     return(
         <React.Fragment>
 
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Title</Button></span> : null}
+            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Title</Button></span> : null}
 
             {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
@@ -376,7 +376,7 @@ const AddTitle = (props) => {
            <ModalHeader toggle={toggle}>Add Title</ModalHeader>
            <ModalBody>
            <Form>
-                <FormGroup>
+                <FormGroup className="text-center">
                 {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
                 {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
                 {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}

@@ -25,7 +25,7 @@ const URLList = (props) => {
 
     return(
         <Container className="mt-4">
-            <Row>
+            <Row className="text-center">
             {urlMessage !== "" ? <Alert color="info">{urlMessage}</Alert> : null}
             {errUrlMessage !== "" ? <Alert color="danger">{errUrlMessage}</Alert> : null}
             </Row>

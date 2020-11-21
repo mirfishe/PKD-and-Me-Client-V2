@@ -155,7 +155,7 @@ const Editions = (props) => {
                 </Col>
             </Row>
             <Row>
-                <Col xs="12">
+                <Col className="text-center" xs="12">
                     {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
                     {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
                     {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}

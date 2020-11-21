@@ -14,6 +14,7 @@ import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
 import UserReview from "../userReviews/UserReview";
 import AddUserReview from "../userReviews/AddUserReview";
+import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
 
@@ -79,14 +80,14 @@ const Title = (props) => {
 
         // editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
 
-    } else if (titleParam !== undefined) {
+    } else if (titleParam !== undefined && titleParam !== null) {
         // If titleParam is not a number, then it's the title name
         titleList = titleListState.filter(title => title.titleURL === titleParam);
         const title = titleListState.find(title => title.titleURL === titleParam);
         // console.log(componentName, "typeof title", typeof title);
         // console.log(componentName, "title", title);
 
-        if (title !== undefined) {
+        if (title !== undefined && title !== null) {
             document.title = title.titleName + " | " + appName + " | " + siteName;
             titleNameBreadCrumb = title.titleName;
             titleID = title.titleID;
@@ -99,6 +100,7 @@ const Title = (props) => {
         } else {
             document.title = "Title Not Found | " + appName + " | " + siteName;
             console.log("Title not found.");
+            // console.log(componentName, "titleParam", titleParam);
             // // Display all active titles
             // titleList = titleListState;
             // // Display all active editions
@@ -316,7 +318,7 @@ const Title = (props) => {
                 </Col>
             </Row>
             <Row>
-                <Col xs="12">   
+                <Col className="text-center" xs="12">   
                     {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
                 </Col>
             </Row>
@@ -373,10 +375,12 @@ const Title = (props) => {
                         </React.Fragment>
                         : null}
 
+                        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
+                        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && userReviewItem !== undefined && userReviewItem !== null ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
+
                         {title.shortDescription !== "" && title.shortDescription !== null ? <div dangerouslySetInnerHTML={{"__html": displayParagraphs(title.shortDescription)}} /> : null}
                         {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
                         {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
-                        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
                     </Col>
                 </Row>
 
@@ -385,7 +389,7 @@ const Title = (props) => {
             })}
 
             {/* <Row className="my-4">
-                <Col xs="12">
+                <Col className="text-center" xs="12">
                 {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
                 {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
                 {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}

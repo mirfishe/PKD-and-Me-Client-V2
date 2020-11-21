@@ -38,7 +38,7 @@ const EditCategory = (props) => {
            <ModalHeader toggle={toggle}>Form</ModalHeader>
            <ModalBody>
            <Form>
-           <FormGroup>
+           <FormGroup className="text-center">
                {message !== "" ? <Alert color="info">{message}</Alert> : null}
                {errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
            </FormGroup>

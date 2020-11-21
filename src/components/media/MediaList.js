@@ -74,7 +74,7 @@ const MediaList = (props) => {
 
     return(
         <Container className="mt-4">
-        <Row>
+        <Row className="text-center">
             {mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
             {errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
         </Row>

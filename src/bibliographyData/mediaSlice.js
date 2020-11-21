@@ -71,8 +71,8 @@ const mediaSlice = createSlice({
         state.arrayMedia[mediaItem.mediaItemIndex].electronic = mediaItem.electronic;
         state.arrayMedia[mediaItem.mediaItemIndex].sortID = mediaItem.sortID;
         state.arrayMedia[mediaItem.mediaItemIndex].active = mediaItem.active;
-        state.arrayMedia[mediaItem.mediaItemIndex].createdAt = mediaItem.createdAt;
-        state.arrayMedia[mediaItem.mediaItemIndex].updatedAt = mediaItem.updatedAt;
+        // state.arrayMedia[mediaItem.mediaItemIndex].createdAt = mediaItem.createdAt;
+        // state.arrayMedia[mediaItem.mediaItemIndex].updatedAt = mediaItem.updatedAt;
 
       }
     },

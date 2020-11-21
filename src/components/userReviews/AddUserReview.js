@@ -5,6 +5,7 @@ import {Plus} from 'react-bootstrap-icons';
 import {Rating} from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
 import {addStateUserReview} from "../../bibliographyData/userReviewsSlice";
+import {updateStateTitleRating} from "../../bibliographyData/titlesSlice";
 
 const AddUserReview = (props) => {
 
@@ -25,6 +26,9 @@ const AddUserReview = (props) => {
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
+
+    const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
+    // console.log(componentName, "userReviewListState", userReviewListState);
 
     const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
     // console.log(componentName, "userState", userState);
@@ -51,6 +55,31 @@ const AddUserReview = (props) => {
     const [shortReview, setShortReview] = useState(null);
     const [longReview, setLongReview] = useState(null);
     const [active, setActive] = useState(null);
+
+    // const [titleItemIndex, setTitleItemIndex] = useState(null);
+    // const [titleItem, setTitleItem] = useState(null);
+
+    // useEffect(() => {
+    //     // console.log(componentName, "useEffect userReviewListState", userReviewListState);
+    
+    //     if (props.titleID !== undefined && props.titleID !== null) {
+    
+    //         let titleObject = titleListState.filter(title => title.titleID === props.titleID);
+    //         // console.log(componentName, "useEffect titleObject", titleObject);
+    //         // console.log(componentName, "useEffect typeof titleObject", typeof titleObject);
+    
+    //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
+    //         // console.log(componentName, "useEffect titleItemIndex", titleItemIndex);
+    
+    //         if (titleObject !== undefined) {
+
+    //             setTitleItem(titleObject);
+
+    //         };
+    
+    //     };
+    
+    // }, [props.titleID, titleListState]);
 
     const addUserReview = () => {
         // console.log(componentName, "addUserReview");
@@ -157,12 +186,41 @@ const AddUserReview = (props) => {
                         let titleItem = titleListState.filter(title => title.titleID === data.titleID);
                         // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}
                         titleItem = titleItem[0];
+                        // console.log(componentName, "addUserReview titleItem", titleItem);
+
+                        let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
                         
                         // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
                         // Would still work if the createdAt and updatedAt were left out?
-                        dispatch(addStateUserReview([{reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy,  admin: userState.admin, active: userState.active}}]));
+                        dispatch(addStateUserReview([{reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}}]));
                         // Add to local storage also?
+
+                        // Recalculate ratings
+                        let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID);
+
+                        // console.log(componentName, "addUserReview userReviews", userReviews);
+                        // Get all reviews for the title
+                        // Get the latest from state?
+                        // Update the state user review array?
+                        userReviews.push({reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}});
+                        // console.log(componentName, "addUserReview userReviews", userReviews);
+                        // Recompute the average
+                        let userReviewCount = userReviews.length;
+                        let userReviewSum = 0;
+                        for (let i = 0; i < userReviews.length; i++) {
+                            userReviewSum += userReviews[i].rating;
+                        };
+                        // console.log(componentName, "addUserReview userReviewSum", userReviewSum);
+                        let userReviewAverage = 0;
+                        if (userReviewCount > 0) {
+                            // Check for division by zero?
+                            // let userReviewAverage: number = userReviewSum/0;
+                            userReviewAverage = userReviewSum/userReviewCount;
+                          };
+                        // console.log(componentName, "addUserReview userReviewAverage", userReviewAverage);
+                        // Update the title ratings
+                        dispatch(updateStateTitleRating({titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage}));
 
                     } else {
                         // setErrMessage(data.error);
@@ -202,7 +260,7 @@ const AddUserReview = (props) => {
             setModal(false);
         };
         
-    }, [admin]);
+    }, [sessionToken]);
 
     const toggle = () => {
         setModal(!modal);
@@ -211,15 +269,15 @@ const AddUserReview = (props) => {
     return(
         <React.Fragment>
 
-            {props.displayButton === true ? <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Review</Button></span> : null}
+            {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Review</Button></span> : null}
 
-            {props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+            {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Add Review</ModalHeader>
            <ModalBody>
            <Form>
-           <FormGroup>
+           <FormGroup className="text-center">
                 {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
                 {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
             </FormGroup>

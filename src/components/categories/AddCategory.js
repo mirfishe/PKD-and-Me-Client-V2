@@ -184,7 +184,7 @@ const AddCategory = (props) => {
     return(
         <React.Fragment>
 
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Category</Button></span> : null}
+            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Category</Button></span> : null}
 
             {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
@@ -192,7 +192,7 @@ const AddCategory = (props) => {
            <ModalHeader toggle={toggle}>Add Category</ModalHeader>
            <ModalBody>
            <Form>
-                <FormGroup>
+                <FormGroup className="text-center">
                 {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
                 {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
                 </FormGroup>

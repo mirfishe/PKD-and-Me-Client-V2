@@ -110,16 +110,16 @@ const EditEdition = (props) => {
     // console.log(componentName, "editionListState", editionListState);
 
     useEffect(() => {
-    // console.log(componentName, "editionListState", editionListState);
+    // console.log(componentName, "useEffect editionListState", editionListState);
 
     if (props.editionID !== undefined && props.editionID !== null) {
 
         let editionObject = editionListState.find(edition => edition.editionID === props.editionID);
-        // console.log(componentName, "editionObject", editionObject);
-        // console.log(componentName, "typeof editionObject", typeof editionObject);
+        // console.log(componentName, "useEffect editionObject", editionObject);
+        // console.log(componentName, "useEffect typeof editionObject", typeof editionObject);
 
         setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === props.editionID));
-        // console.log(componentName, "editionItemIndex", editionItemIndex);
+        // console.log(componentName, "useEffect editionItemIndex", editionItemIndex);
 
         if (editionObject !== undefined) {
 
@@ -355,7 +355,7 @@ const EditEdition = (props) => {
                         setActive(data.active);
 
                         // Would still work if the createdAt and updatedAt were left out?
-                        dispatch(updateStateEdition({editionItemIndex: editionItemIndex, editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}));
+                        dispatch(updateStateEdition({editionItemIndex: editionItemIndex, editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, /* createdAt: data.createdAt, updatedAt: data.updatedAt, */}));
                         // Add to local storage also?
                         
                     } else {
@@ -548,7 +548,7 @@ const EditEdition = (props) => {
     return(
         <React.Fragment>
                             
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
+            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
 
             {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
@@ -556,7 +556,7 @@ const EditEdition = (props) => {
            <ModalHeader toggle={toggle}>Update Edition</ModalHeader>
            <ModalBody>
            <Form>
-                <FormGroup>
+                <FormGroup className="text-center">
                 {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
                 {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
                 {mediaMessage !== undefined && mediaMessage !== null && mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}

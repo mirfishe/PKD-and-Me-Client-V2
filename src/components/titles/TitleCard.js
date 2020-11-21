@@ -99,7 +99,7 @@ const TitleCard = (props) => {
     return(
         <Container className="mt-4">
             <Row className="justify-content-center">
-                <Col xs="12">
+                <Col className="text-center" xs="12">
                     {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
                     {headerText !== undefined && headerText !== "" ? <h4 className="text-center">{headerText}</h4> : null}
                 </Col>

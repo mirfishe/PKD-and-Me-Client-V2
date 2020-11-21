@@ -107,7 +107,7 @@ const CategoryList = (props) => {
 
     return(
         <Container className="mt-4">
-            <Row>
+            <Row className="text-center">
             {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
             {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
             </Row>

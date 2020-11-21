@@ -88,8 +88,8 @@ const editionsSlice = createSlice({
         state.arrayEditions[editionItem.editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
         state.arrayEditions[editionItem.editionItemIndex].textImageLink = editionItem.textImageLink;
         state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
-        state.arrayEditions[editionItem.editionItemIndex].createdAt = editionItem.createdAt;
-        state.arrayEditions[editionItem.editionItemIndex].updatedAt = editionItem.updatedAt;
+        // state.arrayEditions[editionItem.editionItemIndex].createdAt = editionItem.createdAt;
+        // state.arrayEditions[editionItem.editionItemIndex].updatedAt = editionItem.updatedAt;
 
       }
     },

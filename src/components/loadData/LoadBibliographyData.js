@@ -13,7 +13,7 @@ import {loadArrayMedia, setMediaDataOffline} from "../../bibliographyData/mediaS
 import TitleData from "../../bibliographyData/Titles.json";
 import {loadArrayTitles, setTitlesDataOffline} from "../../bibliographyData/titlesSlice";
 import UserReviewRatingData from "../../bibliographyData/UserReviewsRatings.json";
-import {loadArrayUserReviewsRatings, setUserReviewsRatingsDataOffline} from "../../bibliographyData/userReviewsSlice";
+import {setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings, setUserReviewsRatingsDataOffline} from "../../bibliographyData/userReviewsSlice";
 
 function LoadBibliographyData() {
 
@@ -109,6 +109,8 @@ function LoadBibliographyData() {
       };
   
     dispatch(loadArrayTitles(arrayTitles));
+    dispatch(setUserReviewsRatingsLoaded(true));
+    dispatch(setLastDatabaseRetrievalUserReviewsRatings(new Date().toISOString()));
   
   };
 
@@ -145,6 +147,7 @@ function LoadBibliographyData() {
         if (data.resultsFound === true) {
           // loadDataStore(data.userReviews, "userReviewRating");
           addRatings(titleData, data.userReviews);
+
         } else {
           console.log(componentName, "getUserReviewsRatings resultsFound error", data.message);
           // setErrOverallTitleRatingMessage(data.message);
@@ -778,7 +781,7 @@ function LoadBibliographyData() {
   }, []);
 
   return (
-    <React.Fragment>
+    <React.Fragment className="text-center">
         {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
         {errCategoryMessage !== undefined && errCategoryMessage !== null && errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
         {mediaMessage !== undefined && mediaMessage !== null && mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}

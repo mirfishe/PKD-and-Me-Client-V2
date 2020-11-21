@@ -94,7 +94,7 @@ function UserReviewRatingList() {
 
   return (
     <Container className="mt-4">
-    <Row>
+    <Row className="text-center">
         {userReviewRatingMessage !== "" ? <Alert color="info">{userReviewRatingMessage}</Alert> : null}
         {errUserReviewRatingMessage !== "" ? <Alert color="danger">{errUserReviewRatingMessage}</Alert> : null}
     </Row>

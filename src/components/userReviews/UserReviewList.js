@@ -68,7 +68,7 @@ function UserReviewList() {
 
   return (
     <Container className="mt-4">
-    <Row>
+    <Row className="text-center">
         {userReviewMessage !== "" ? <Alert color="info">{userReviewMessage}</Alert> : null}
         {errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
     </Row>

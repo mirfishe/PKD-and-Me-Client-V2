@@ -81,14 +81,7 @@ const Edition = (props) => {
 
     return(
         <Container className="my-4">
-             <Row className="my-4">
-                <Col xs="12">
-                {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
-                {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
-                {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
-                </Col>
-            </Row>
-            {editionList.length > 0 ?
+            {/* {editionList.length > 0 ? */}
             <Row className="my-4">
                 <Col xs="12">
                     <h5 className="text-center">Find A Copy 
@@ -96,7 +89,14 @@ const Edition = (props) => {
                     </h5>
                 </Col>
             </Row>
-            : null}
+                <Row className="my-4">
+                <Col className="text-center" xs="12">
+                {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+                {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+                {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
+                </Col>
+            </Row>
+            {/* : null} */}
             <Row>
             {editionList.map((edition) => {
 

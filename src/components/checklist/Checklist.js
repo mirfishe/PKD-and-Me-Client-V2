@@ -1,15 +1,14 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
-import {Nav, NavItem, Collapse, Card} from "reactstrap";
+import {Container, Col, Row, Alert, Button, Link} from "reactstrap";
 import {encodeURL} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
-import AddCategory from "./AddCategory";
-import EditCategories from "./EditCategories";
 
-const Category = (props) => {
 
-    const componentName = "Category.js";
+const Checklist = (props) => {
+
+    const componentName = "Checklist.js";
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -47,21 +46,11 @@ const Category = (props) => {
 
     return(
         <React.Fragment>
-        <Card onClick={toggle} color="light" className="mt-2 p-2"><h5>Categories</h5></Card>
-        <Collapse isOpen={isOpen}>
         <Nav vertical>
         {categoryList.map((category) => {
 
-            let activeString = "";
-            if (category.active === true) {
-                // activeString = "Active";
-                activeString = "";
-            } else {
-                activeString = "Inactive";
-            };
-
           return (
-            <NavItem key={category.categoryID} className="mt-2 pl-3">
+            <Col key={category.categoryID} className="mt-2 pl-3">
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(category.categoryID)}}>{category.category}</a> */}
                 {/* <Link to={`/titles/${category.categoryID}`}>{category.categoryID}</Link>
                 <Link to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</Link>
@@ -70,16 +59,13 @@ const Category = (props) => {
                 <Link to={encodeURL(category.category)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(category.category));}}>{category.category} 
                 {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                 </Link>
-            </NavItem>
+            </Col>
             )
         })}
         </Nav>
-        </Collapse>
-        {admin !== undefined && admin !== null && admin === true ? <AddCategory displayButton={true} /> : null}
-        {admin !== undefined && admin !== null && admin === true ? <EditCategories displayButton={true} /> : null}
         </React.Fragment>
     );
 
 };
 
-export default Category;
+export default Checklist;

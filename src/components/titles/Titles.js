@@ -62,13 +62,13 @@ const Titles = (props) => {
         // If categoryParam is a number, then it's the categoryID
         document.title = titleList[0].category.category + " | " + appName + " | " + siteName;
         titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
-    } else if (categoryParam !== undefined) {
+    } else if (categoryParam !== undefined && categoryParam !== null) {
         // If categoryParam is not a number, then it's the category name
         const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
         // console.log(componentName, "typeof category", typeof category);
         // console.log(componentName, "category", category);
 
-        if (category !== undefined) {
+        if (category !== undefined && category !== null) {
             document.title = category.category + " | " + appName + " | " + siteName;
             titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
         } else {
@@ -142,7 +142,7 @@ const Titles = (props) => {
                 </Col>
             </Row>
             <Row>
-                <Col xs="12">
+                <Col className="text-center" xs="12">
                     {/* {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
                     {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
                 </Col>

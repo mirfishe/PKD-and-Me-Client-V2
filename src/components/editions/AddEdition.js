@@ -416,7 +416,7 @@ const AddEdition = (props) => {
     return(
         <React.Fragment>
                             
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Add Edition</Button></span> : null}
+            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Edition</Button></span> : null}
 
             {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
@@ -424,7 +424,7 @@ const AddEdition = (props) => {
            <ModalHeader toggle={toggle}>Add Edition</ModalHeader>
            <ModalBody>
            <Form>
-                <FormGroup>
+                <FormGroup className="text-center">
                 {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
                 {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
                 {mediaMessage !== undefined && mediaMessage !== null && mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}

@@ -74,7 +74,7 @@ const TitleList = (props) => {
 
     return(
         <Container className="mt-4">
-        <Row>
+        <Row className="text-center">
             {titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
             {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
         </Row>

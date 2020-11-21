@@ -287,7 +287,7 @@ const EditUser = (props) => {
            <ModalHeader toggle={toggle}>Update User</ModalHeader>
            <ModalBody>
            <Form>
-           <FormGroup>
+           <FormGroup className="text-center">
             {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
             {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
             </FormGroup>

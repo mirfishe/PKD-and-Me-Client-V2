@@ -69,8 +69,8 @@ const categoriesSlice = createSlice({
       state.arrayCategories[categoryItem.categoryItemIndex].category = categoryItem.category;
       state.arrayCategories[categoryItem.categoryItemIndex].sortID = categoryItem.sortID;
       state.arrayCategories[categoryItem.categoryItemIndex].active = categoryItem.active;
-      state.arrayCategories[categoryItem.categoryItemIndex].createdAt = categoryItem.createdAt;
-      state.arrayCategories[categoryItem.categoryItemIndex].updatedAt = categoryItem.updatedAt;
+      // state.arrayCategories[categoryItem.categoryItemIndex].createdAt = categoryItem.createdAt;
+      // state.arrayCategories[categoryItem.categoryItemIndex].updatedAt = categoryItem.updatedAt;
 
     }
   },

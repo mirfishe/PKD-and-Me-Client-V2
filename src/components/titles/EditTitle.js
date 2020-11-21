@@ -57,7 +57,7 @@ const EditTitle = (props) => {
             setErrCategoryMessage("categoryList is empty", categoryList.length);
             setCategoryResultsFound(false);
         } else {
-            // console.log(componentName, "categoryList.length", categoryList.length);
+            // console.log(componentName, "useEffect categoryList.length", categoryList.length);
             // setCategoryMessage("categoryList.length", categoryList.length);
             setCategoryResultsFound(true);
         };
@@ -108,16 +108,16 @@ const EditTitle = (props) => {
     // console.log(componentName, "titleListState", titleListState);
     
     useEffect(() => {
-    // console.log(componentName, "titleListState", titleListState);
+    // console.log(componentName, "useEffect titleListState", titleListState);
 
     if (props.titleID !== undefined && props.titleID !== null) {
 
         let titleObject = titleListState.find(title => title.titleID === props.titleID);
-        // console.log(componentName, "titleObject", titleObject);
-        // console.log(componentName, "typeof titleObject", typeof titleObject);
+        // console.log(componentName, "useEffect titleObject", titleObject);
+        // console.log(componentName, "useEffect typeof titleObject", typeof titleObject);
 
         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
-        // console.log(componentName, "titleItemIndex", titleItemIndex);
+        // console.log(componentName, "useEffect titleItemIndex", titleItemIndex);
 
         editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
 
@@ -352,7 +352,7 @@ const EditTitle = (props) => {
                             setActive(data.active);
 
                             // Would still work if the createdAt and updatedAt were left out?
-                            dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}));
+                            dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, /* createdAt: data.createdAt, updatedAt: data.updatedAt, */}));
                             // Update local storage also
 
                             // Update/Delete related editions also if active is set to false
@@ -365,6 +365,7 @@ const EditTitle = (props) => {
                                     dispatch(updateStateEdition({editionItemIndex: editionItemIndex, editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createdAt: editionList[i].createdAt, updatedAt: editionList[i].updatedAt}));
 
                                 };
+
                             };
 
                         } else {
@@ -578,7 +579,7 @@ const EditTitle = (props) => {
     return(
         <React.Fragment>
 
-        {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="mt-2 pl-3"><Button outline size="sm" color="info" onClick={toggle}>Update Title</Button></span> : null}
+        {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Title</Button></span> : null}
 
         {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
@@ -586,7 +587,7 @@ const EditTitle = (props) => {
            <ModalHeader toggle={toggle}>Update Title</ModalHeader>
            <ModalBody>
            <Form>
-                <FormGroup>
+                <FormGroup className="text-center">
                 {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
                 {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
                 {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}

@@ -403,7 +403,7 @@ function App() {
       : null}
 
       <Container className="bodyContainer mb-5">
-      <Row>
+      <Row className="text-center">
         {/* {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
         {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
         {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
