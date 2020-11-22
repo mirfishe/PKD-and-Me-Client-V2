@@ -518,7 +518,8 @@ const EditEdition = (props) => {
             setErrMessage("");
             setErrMediaID("");
             setEditionRecordUpdated(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
 
         if (editionRecordDeleted !== undefined && editionRecordDeleted !== null && editionRecordDeleted === true) {
@@ -526,7 +527,8 @@ const EditEdition = (props) => {
             setErrMessage("");
             setErrMediaID("");
             setEditionRecordDeleted(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [editionRecordUpdated, editionRecordDeleted]);

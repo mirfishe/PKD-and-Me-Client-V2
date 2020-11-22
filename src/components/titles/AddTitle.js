@@ -346,7 +346,8 @@ const AddTitle = (props) => {
             setErrTitleName("");
             setErrCategoryID("");
             setTitleRecordAdded(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [titleRecordAdded]);

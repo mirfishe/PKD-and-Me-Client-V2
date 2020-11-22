@@ -247,7 +247,8 @@ const AddUserReview = (props) => {
             setMessage("");
             setErrMessage("");
             setUserReviewRecordAdded(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [userReviewRecordAdded]);

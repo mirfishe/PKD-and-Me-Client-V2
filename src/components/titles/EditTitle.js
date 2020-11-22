@@ -166,7 +166,7 @@ const EditTitle = (props) => {
         // console.log(componentName, "updateTitle deleteTitle", deleteTitle);
         // console.log(componentName, "updateTitle baseURL", baseURL);
 
-        console.log(componentName, "titleItemIndex", titleItemIndex);
+        // console.log(componentName, "titleItemIndex", titleItemIndex);
 
         setMessage("");
         setErrMessage("");
@@ -548,7 +548,8 @@ const EditTitle = (props) => {
             setErrTitleName("");
             setErrCategoryID("");
             setTitleRecordUpdated(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
 
         if (titleRecordDeleted !== undefined && titleRecordDeleted !== null && titleRecordDeleted === true) {
@@ -557,7 +558,8 @@ const EditTitle = (props) => {
             setErrTitleName("");
             setErrCategoryID("");
             setTitleRecordDeleted(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [titleRecordUpdated, titleRecordDeleted]);

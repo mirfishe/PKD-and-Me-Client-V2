@@ -168,7 +168,8 @@ const AddMedia = (props) => {
             setMessage("");
             setErrMessage("");
             setMediaRecordAdded(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [mediaRecordAdded]);

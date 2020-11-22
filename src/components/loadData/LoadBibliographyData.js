@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Alert} from "reactstrap";
+import {Row, Alert} from "reactstrap";
 import AppSettings from "../../app/environment";
 import {encodeURL} from "../../app/sharedFunctions";
 import {loadArrayURLs} from "../../app/urlsSlice";
@@ -781,7 +781,7 @@ function LoadBibliographyData() {
   }, []);
 
   return (
-    <React.Fragment className="text-center">
+    <Row className="text-center">
         {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
         {errCategoryMessage !== undefined && errCategoryMessage !== null && errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
         {mediaMessage !== undefined && mediaMessage !== null && mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
@@ -792,7 +792,7 @@ function LoadBibliographyData() {
         {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
         {overallTitleRatingMessage !== undefined && overallTitleRatingMessage !== null && overallTitleRatingMessage !== "" ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
         {errOverallTitleRatingMessage !== undefined && errOverallTitleRatingMessage !== null && errOverallTitleRatingMessage !== "" ? <Alert color="danger">{errOverallTitleRatingMessage}</Alert> : null}
-    </React.Fragment>
+    </Row>
   );
 }
 

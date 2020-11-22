@@ -54,18 +54,46 @@ const userReviewsSlice = createSlice({
       // console.log(componentName, "updateStateUserReview userReviewItem.userReviewID", userReviewItem.reviewID);
       // console.log(componentName, "updateStateUserReview userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
 
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].reviewID = userReviewItem.reviewID;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].userID = userReviewItem.userID;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleID = userReviewItem.titleID;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].read = userReviewItem.read;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].dateRead = userReviewItem.dateRead;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].rating = userReviewItem.rating;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
-      state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
-      // state.arrayUserReviews[userReviewItem.userReviewItemIndex].createdAt = userReviewItem.createdAt;
-      // state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
+      if (typeof userReviewItem === "object") {
+
+        if (userReviewItem.hasOwnProperty("reviewID")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].reviewID = userReviewItem.reviewID;
+        };
+        if (userReviewItem.hasOwnProperty("userID")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].userID = userReviewItem.userID;
+        };
+        if (userReviewItem.hasOwnProperty("updatedBy")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
+        };
+        if (userReviewItem.hasOwnProperty("titleID")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleID = userReviewItem.titleID;
+        };
+        if (userReviewItem.hasOwnProperty("read")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].read = userReviewItem.read;
+        };
+        if (userReviewItem.hasOwnProperty("dateRead")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].dateRead = userReviewItem.dateRead;
+        };
+        if (userReviewItem.hasOwnProperty("rating")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].rating = userReviewItem.rating;
+        };
+        if (userReviewItem.hasOwnProperty("shortReview")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
+        };
+        if (userReviewItem.hasOwnProperty("longReview")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
+        };
+        if (userReviewItem.hasOwnProperty("active")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+        };
+        if (userReviewItem.hasOwnProperty("createdAt")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].createdAt = userReviewItem.createdAt;
+        };
+        if (userReviewItem.hasOwnProperty("updatedAt")) {
+          state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
+        };
+
+      };
 
     }
   },

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import AppSettings from "../../app/environment";
 import {emailRegExp} from "../../app/constants";
-import {loadUserData, setSessionToken} from "../../app/userSlice";
+import {loadUserData, setSessionToken, loadArrayChecklist} from "../../app/userSlice";
 
 const Register = (props) => {
 
@@ -34,7 +34,11 @@ const Register = (props) => {
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
     const [modal, setModal] = useState(false);
-    // const [userResultsFound, setUserResultsFound] = useState(null);
+    const [userRecordAdded, setUserRecordAdded] = useState(null);
+
+    const [checklistMessage, setChecklistMessage] = useState("");
+    const [errChecklistMessage, setErrChecklistMessage] = useState("");
+    const [checklistResultsFound, setChecklistResultsFound] = useState(null);
 
     const [txtFirstName, setTxtFirstName] = useState(""); // process.env.REACT_APP_FIRSTNAME_DEFAULT
     const [txtLastName, setTxtLastName] = useState(""); // process.env.REACT_APP_LASTNAME_DEFAULT
@@ -191,10 +195,10 @@ const Register = (props) => {
 
                     // if (data !== 500 && data !== 401) {
     
-                        // setUserResultsFound(data.resultsFound);
+                        // setUserRecordAdded(data.recordAdded);
                         setMessage(data.message);
     
-                        if (data.resultsFound === true) {
+                        if (data.recordAdded === true) {
                             // setUser(data);
                             // setUserID(data.userID);
                             // setFirstName(data.firstName);
@@ -209,8 +213,12 @@ const Register = (props) => {
                             dispatch(setSessionToken(data.sessionToken));
                             updateToken(data.sessionToken);
 
+                            getChecklist(data.sessionToken);
+
+                            setUserRecordAdded(data.recordAdded);
+
                         } else {
-                            setErrMessage(data.error);
+                            setErrMessage(data.errorMessages);
                         };
                     // } else {
                     //     // console.log("Login.js error", json);
@@ -231,7 +239,80 @@ const Register = (props) => {
 
     };
 
+    const getChecklist = (token) => {
+        // console.log(componentName, "getChecklist");
+        // console.log(componentName, "getChecklist baseURL", baseURL);
+    
+        setChecklistMessage("");
+        setErrChecklistMessage("");
+        setChecklistResultsFound(null);
+    
+        let url = baseURL + "title/checklist/list";
+    
+        if (token !== undefined && token !== null && token !== "") {
+    
+            fetch(url, {
+                method: "GET",
+                headers: new Headers({
+                "Content-Type": "application/json",
+                "Authorization": token
+                }),
+            })
+            .then(response => {
+                // console.log(componentName, "getChecklist response", response);
+                // if (!response.ok) {
+                //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                // } else {
+                    // if (response.status === 200) {
+                        return response.json();
+                    // } else {
+                    //     return response.status;
+                    // };
+                // };
+            })
+            .then(data => {
+                // console.log(componentName, "getChecklist data", data);
+    
+                setChecklistResultsFound(data.resultsFound);
+                // setChecklistMessage(data.message);
+    
+                if (data.resultsFound === true) {
+    
+                  dispatch(loadArrayChecklist(data.titles));
+    
+                } else {
+                  console.log(componentName, "getChecklist resultsFound error", data.message);
+                  setErrMessage(data.message);
+                };
+    
+            })
+            .catch(error => {
+                console.log(componentName, "getChecklist error", error);
+                // console.log(componentName, "getChecklist error.name", error.name);
+                // console.log(componentName, "getChecklist error.message", error.message);
+                // setErrMessage(error.name + ": " + error.message);
+            });
+    
+        };
+    
+      };
 
+      useEffect(() => {
+        // console.log(componentName, "useEffect userRecordAdded", userRecordAdded);
+        if (userRecordAdded !== undefined && userRecordAdded !== null && userRecordAdded !== false) {
+            setMessage("");
+            setErrMessage("");
+            setErrFirstName("");
+            setErrLastName("");
+            setErrEmail("");
+            setErrPassword("");
+            setUserRecordAdded(null);
+            // setModal(false);
+            toggle();
+        };
+        
+    }, [userRecordAdded]);
+    
     useEffect(() => {
         // console.log(componentName, "useEffect sessionToken", sessionToken);
         if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
@@ -241,7 +322,7 @@ const Register = (props) => {
             setErrLastName("");
             setErrEmail("");
             setErrPassword("");
-            setModal(false);
+            toggle();
         };
         
     }, [sessionToken]);
@@ -252,7 +333,7 @@ const Register = (props) => {
 
     return(
         <React.Fragment>
-        {sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline size="sm" color="info" onClick={toggle}>Register</Button> : null}
+        {sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Register</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Register</ModalHeader>
            <ModalBody>

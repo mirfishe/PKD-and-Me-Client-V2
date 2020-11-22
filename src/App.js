@@ -10,7 +10,7 @@ import {setPageURL, setLinkItem} from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
 import LoadUserReviews from "./components/loadData/LoadUserReviews";
-import {loadUserData, setSessionToken} from "./app/userSlice";
+import {loadUserData, setSessionToken, loadArrayChecklist} from "./app/userSlice";
 import Home from "./content/Home";
 import New from "./content/New";
 import About from "./content/About";
@@ -34,6 +34,7 @@ import Editions from "./components/editions/Editions";
 import Login from "./components/users/Login";
 import Register from "./components/users/Register";
 import EditUser from "./components/users/EditUser";
+import Checklist from "./components/checklist/Checklist";
 
 function App() {
 
@@ -62,6 +63,9 @@ function App() {
   const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
   const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
   const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
+
+  const userLoaded = useSelector(state => state.user.userLoaded);
+  const checklistLoaded = useSelector(state => state.user.checklistLoaded);
 
   let showAllMenuItems = useSelector(state => state.app.menuSettings.showAllMenuItems);
 
@@ -123,6 +127,10 @@ function App() {
   const [errMessage, setErrMessage] = useState("");
   const [userResultsFound, setUserResultsFound] = useState(null);
 
+  const [checklistMessage, setChecklistMessage] = useState("");
+  const [errChecklistMessage, setErrChecklistMessage] = useState("");
+  const [checklistResultsFound, setChecklistResultsFound] = useState(null);
+
   const clearToken = () => {
     localStorage.clear();
     // setSessionToken("");
@@ -133,7 +141,7 @@ function App() {
 
   const logOut = () => {
     // remove user from userSlice
-    dispatch(loadUserData({userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null}));
+    dispatch(loadUserData({userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null, userLoaded: false, arrayChecklist: [], checklistLoaded: false, lastDatabaseRetrievalChecklist: null}));
     dispatch(setSessionToken(null));
     clearToken();
 
@@ -190,7 +198,7 @@ function App() {
 
             } else {
               // console.log(componentName, "getUser data.resultsFound !== true", data.message);
-              // setErrMessage(data.error);
+              // setErrMessage(data.message);
               logOut();
             };
 
@@ -199,6 +207,64 @@ function App() {
             console.log(componentName, "getUser error", error);
             // console.log(componentName, "getUser error.name", error.name);
             // console.log(componentName, "getUser error.message", error.message);
+            // setErrMessage(error.name + ": " + error.message);
+        });
+
+    };
+
+  };
+
+  const getChecklist = (token) => {
+    // console.log(componentName, "getChecklist");
+    // console.log(componentName, "getChecklist baseURL", baseURL);
+
+    setChecklistMessage("");
+    setErrChecklistMessage("");
+    setChecklistResultsFound(null);
+
+    let url = baseURL + "title/checklist/list";
+
+    if (token !== undefined && token !== null && token !== "") {
+
+        fetch(url, {
+            method: "GET",
+            headers: new Headers({
+            "Content-Type": "application/json",
+            "Authorization": token
+            }),
+        })
+        .then(response => {
+            // console.log(componentName, "getChecklist response", response);
+            // if (!response.ok) {
+            //     throw Error(response.status + " " + response.statusText + " " + response.url);
+            // } else {
+                // if (response.status === 200) {
+                    return response.json();
+                // } else {
+                //     return response.status;
+                // };
+            // };
+        })
+        .then(data => {
+            // console.log(componentName, "getChecklist data", data);
+
+            setChecklistResultsFound(data.resultsFound);
+            // setChecklistMessage(data.message);
+
+            if (data.resultsFound === true) {
+
+              dispatch(loadArrayChecklist(data.titles));
+
+            } else {
+              console.log(componentName, "getChecklist resultsFound error", data.message);
+              setErrMessage(data.message);
+            };
+
+        })
+        .catch(error => {
+            console.log(componentName, "getChecklist error", error);
+            // console.log(componentName, "getChecklist error.name", error.name);
+            // console.log(componentName, "getChecklist error.message", error.message);
             // setErrMessage(error.name + ": " + error.message);
         });
 
@@ -221,7 +287,13 @@ function App() {
       // setUserID(1);
       // setIsAdmin(true);
       // Fetch from the API to check these
-      getUser(localStorage.getItem("token"));
+      if(!userLoaded) {
+        getUser(localStorage.getItem("token"));
+      };
+      if(!checklistLoaded) {
+        getChecklist(localStorage.getItem("token"));
+      };
+
     };
 
     let documentURL = new URL(document.URL);
@@ -307,7 +379,12 @@ function App() {
           </NavItem>
           : null}
           {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
-           <NavItem className="mx-3"><Button outline size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
+          <NavItem className="mx-3">
+            <Checklist displayButton={true} />
+          </NavItem>
+          : null}
+          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
+           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
           : null}
           <NavItem className="mx-3">
           <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
@@ -403,20 +480,24 @@ function App() {
       : null}
 
       <Container className="bodyContainer mb-5">
-      <Row className="text-center">
-        {/* {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
-        {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-        {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-        <LoadAppSettings />
-        <LoadBibliographyData />
-        <LoadUserReviews />
-      </Row>
       <Row>
       <Col xs="2">
         <Category />
         <Media />
       </Col>
       <Col xs="10">
+
+      <Row className="text-center">
+        {/* {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
+        {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
+        {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
+        {checklistMessage !== undefined && checklistMessage !== null && checklistMessage !== "" ? <Alert color="info">{checklistMessage}</Alert> : null}
+        {errChecklistMessage !== undefined && errChecklistMessage !== null && errChecklistMessage !== "" ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
+        <LoadAppSettings />
+        <LoadBibliographyData />
+        <LoadUserReviews />
+      </Row>
+
       <Switch>
 
       {/* Set the default page from the defaultPageComponent from environment */}

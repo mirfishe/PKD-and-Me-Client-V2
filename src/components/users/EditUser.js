@@ -228,7 +228,8 @@ const EditUser = (props) => {
                             // dispatch(setSessionToken(data.sessionToken));
 
                         } else {
-                            setErrMessage(data.error);
+                            // setErrMessage(data.error);
+                            setErrMessage(data.errorMessages);
                         };
                     // } else {
                     //     // console.log("Login.js error", json);
@@ -259,7 +260,8 @@ const EditUser = (props) => {
             setErrEmail("");
             setErrPassword("");
             setUserRecordUpdated(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [userRecordUpdated]);
@@ -282,7 +284,7 @@ const EditUser = (props) => {
 
     return(
         <React.Fragment>
-        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? <Button outline size="sm" color="info" onClick={toggle}>Update User</Button> : null}
+        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Update User</ModalHeader>
            <ModalBody>

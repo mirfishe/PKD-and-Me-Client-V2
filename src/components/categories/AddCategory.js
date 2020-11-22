@@ -162,7 +162,8 @@ const AddCategory = (props) => {
             setMessage("");
             setErrMessage("");
             setCategoryRecordAdded(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [categoryRecordAdded]);

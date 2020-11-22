@@ -423,14 +423,16 @@ const EditUserReview = (props) => {
             setMessage("");
             setErrMessage("");
             setUserReviewRecordUpdated(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
 
         if (userReviewRecordDeleted !== undefined && userReviewRecordDeleted !== null && userReviewRecordDeleted === true) {
             setMessage("");
             setErrMessage("");
             setUserReviewRecordDeleted(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [userReviewRecordUpdated, userReviewRecordDeleted]);

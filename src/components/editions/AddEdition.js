@@ -394,7 +394,8 @@ const AddEdition = (props) => {
             setErrMessage("");
             setErrMediaID("");
             setEditionRecordAdded(null);
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [editionRecordAdded]);

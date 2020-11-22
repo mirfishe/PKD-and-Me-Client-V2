@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import AppSettings from "../../app/environment";
 import {emailRegExp} from "../../app/constants";
-import {loadUserData, setSessionToken} from "../../app/userSlice";
+import {loadUserData, setSessionToken, loadArrayChecklist} from "../../app/userSlice";
 
 const Login = (props) => {
 
@@ -32,7 +32,11 @@ const Login = (props) => {
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
     const [modal, setModal] = useState(false);
-    // const [userResultsFound, setUserResultsFound] = useState(null);
+    const [userResultsFound, setUserResultsFound] = useState(null);
+
+    const [checklistMessage, setChecklistMessage] = useState("");
+    const [errChecklistMessage, setErrChecklistMessage] = useState("");
+    const [checklistResultsFound, setChecklistResultsFound] = useState(null);
 
     const [txtEmail, setTxtEmail] = useState(""); // process.env.REACT_APP_EMAIL_DEFAULT
     const [txtPassword, setTxtPassword] = useState(""); // process.env.REACT_APP_PASSWORD_DEFAULT
@@ -167,6 +171,10 @@ const Login = (props) => {
                             dispatch(setSessionToken(data.sessionToken));
                             updateToken(data.sessionToken);
 
+                            getChecklist(data.sessionToken);
+
+                            setUserResultsFound(data.resultsFound);
+
                         } else {
                             setErrMessage(data.error);
                         };
@@ -189,6 +197,78 @@ const Login = (props) => {
 
     };
 
+    const getChecklist = (token) => {
+        // console.log(componentName, "getChecklist");
+        // console.log(componentName, "getChecklist baseURL", baseURL);
+    
+        setChecklistMessage("");
+        setErrChecklistMessage("");
+        setChecklistResultsFound(null);
+    
+        let url = baseURL + "title/checklist/list";
+    
+        if (token !== undefined && token !== null && token !== "") {
+    
+            fetch(url, {
+                method: "GET",
+                headers: new Headers({
+                "Content-Type": "application/json",
+                "Authorization": token
+                }),
+            })
+            .then(response => {
+                // console.log(componentName, "getChecklist response", response);
+                // if (!response.ok) {
+                //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                // } else {
+                    // if (response.status === 200) {
+                        return response.json();
+                    // } else {
+                    //     return response.status;
+                    // };
+                // };
+            })
+            .then(data => {
+                // console.log(componentName, "getChecklist data", data);
+    
+                setChecklistResultsFound(data.resultsFound);
+                // setChecklistMessage(data.message);
+    
+                if (data.resultsFound === true) {
+    
+                  dispatch(loadArrayChecklist(data.titles));
+    
+                } else {
+                  console.log(componentName, "getChecklist resultsFound error", data.message);
+                  setErrMessage(data.message);
+                };
+    
+            })
+            .catch(error => {
+                console.log(componentName, "getChecklist error", error);
+                // console.log(componentName, "getChecklist error.name", error.name);
+                // console.log(componentName, "getChecklist error.message", error.message);
+                // setErrMessage(error.name + ": " + error.message);
+            });
+    
+        };
+    
+      };
+
+      useEffect(() => {
+        // console.log(componentName, "useEffect userResultsFound", userResultsFound);
+        if (userResultsFound !== undefined && userResultsFound !== null && userResultsFound !== false) {
+            setMessage("");
+            setErrMessage("");
+            setErrEmail("");
+            setErrPassword("");
+            setUserResultsFound(null);
+            // setModal(false);
+            toggle();
+        };
+        
+    }, [userResultsFound]);
+
     useEffect(() => {
         // console.log(componentName, "useEffect sessionToken", sessionToken);
         if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
@@ -196,7 +276,8 @@ const Login = (props) => {
             setErrMessage("");
             setErrEmail("");
             setErrPassword("");
-            setModal(false);
+            // setModal(false);
+            toggle();
         };
         
     }, [sessionToken]);
@@ -207,7 +288,7 @@ const Login = (props) => {
 
     return(
         <React.Fragment>
-        {sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline size="sm" color="info" onClick={toggle}>Login</Button> : null}
+        {sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Login</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Login</ModalHeader>
            <ModalBody>
