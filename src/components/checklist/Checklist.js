@@ -29,6 +29,8 @@ const Checklist = (props) => {
 
     const [modal, setModal] = useState(false);
 
+    const checklistLoaded = useSelector(state => state.user.checklistLoaded);
+
     const [checklistMessage, setChecklistMessage] = useState("");
     const [errChecklistMessage, setErrChecklistMessage] = useState("");
     const [checklistRecordUpdated, setChecklistRecordUpdated] = useState(null);
@@ -38,6 +40,9 @@ const Checklist = (props) => {
 
     const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
     // console.log(componentName, "userReviewListState", userReviewListState);
+
+    const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
+    // console.log(componentName, "userState", userState);
 
     const checklistListState = useSelector(state => state.user.arrayChecklist);
     // console.log(componentName, "checklistListState", checklistListState);
@@ -146,7 +151,11 @@ const Checklist = (props) => {
                     const checklistListIndex = checklistList.findIndex(title => title.titleID === titleID);
                     // console.log(componentName, "updateChecklist checklistListIndex", checklistListIndex);
 
-                    dispatch(updateStateChecklist({checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, active: data.active, updatedAt: data.updatedAt}));
+                    if (updateChecklistMethod === "PUT") {
+                        dispatch(updateStateChecklist({checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString()}));
+                    } else if (updateChecklistMethod === "POST") {
+                        dispatch(updateStateChecklist({checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: data.updatedAt}));
+                    };
 
                     const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID)
                     // console.log(componentName, "updateChecklist checklistListIndex", checklistListIndex);
@@ -157,11 +166,7 @@ const Checklist = (props) => {
 
                     } else if (updateChecklistMethod === "POST") {
 
-                        // dispatch(addStateUserReview([{reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, 
-                            
-                        //     title: {titleID: checklistListItem.titleID, titleName: checklistListItem.titleName, titleSort: checklistListItem.titleSort, titleURL: checklistListItem.titleURL, authorFirstName: checklistListItem.authorFirstName, authorLastName: checklistListItem.authorLastName, publicationDate: checklistListItem.publicationDate, imageName: checklistListItem.imageName, categoryID: checklistListItem.categoryID, shortDescription: checklistListItem.shortDescription, urlPKDweb: checklistListItem.urlPKDweb, active: checklistListItem.active, createdAt: checklistListItem.createdAt, updatedAt: checklistListItem.updatedAt}, 
-                            
-                        //     user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}}]));
+                        dispatch(addStateUserReview([{reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: {titleID: checklistListItem.titleID, titleName: checklistListItem.titleName, titleSort: checklistListItem.titleSort, titleURL: checklistListItem.titleURL, authorFirstName: checklistListItem.authorFirstName, authorLastName: checklistListItem.authorLastName, publicationDate: checklistListItem.publicationDate, imageName: checklistListItem.imageName, categoryID: checklistListItem.categoryID, shortDescription: checklistListItem.shortDescription, urlPKDweb: checklistListItem.urlPKDweb, active: checklistListItem.active, createdAt: checklistListItem.createdAt, updatedAt: checklistListItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}}]));
 
                     };
 
@@ -197,7 +202,7 @@ const Checklist = (props) => {
     return(
         <React.Fragment>
 
-            {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Checklist</Button> : null}
+            {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Checklist</Button> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Checklist</ModalHeader>

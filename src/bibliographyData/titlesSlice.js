@@ -51,43 +51,46 @@ const titlesSlice = createSlice({
         // console.log(componentName, "updateStateTitle titleItem.titleID", titleItem.titleID);
         // console.log(componentName, "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
 
-        // This doesn't work because state.arrayTitles isn't stored as an array of objects?
-        // Need to copy the array?
-        // const existingTitle = state.arrayTitles.find(title => title.titleID === titleItem.titleID);
-        // console.log(componentName, "updateStateTitle existingTitle", existingTitle);
+        if (typeof titleItem === "object") {
 
-        // if (existingTitle !== undefined) {
-        //   // existingTitle.titleID = titleItem.titleID;
-        //   existingTitle.titleName = titleItem.titleName;
-        //   existingTitle.titleSort = titleItem.titleSort;
-        //   existingTitle.titleURL = titleItem.titleURL;
-        //   existingTitle.authorFirstName = titleItem.authorFirstName;
-        //   existingTitle.authorLastName = titleItem.authorLastName;
-        //   existingTitle.publicationDate = titleItem.publicationDate;
-        //   existingTitle.imageName = titleItem.imageName;
-        //   existingTitle.categoryID = titleItem.categoryID;
-        //   existingTitle.shortDescription = titleItem.shortDescription;
-        //   existingTitle.urlPKDweb = titleItem.urlPKDweb;
-        //   existingTitle.active = titleItem.active;
-        //   existingTitle.createdAt = titleItem.createdAt;
-        //   existingTitle.updatedAt = titleItem.updatedAt;
-        // };
+          if (titleItem.hasOwnProperty("titleName")) {
+            state.arrayTitles[titleItem.titleItemIndex].titleName = titleItem.titleName;
+          };
+          if (titleItem.hasOwnProperty("titleSort")) {
+            state.arrayTitles[titleItem.titleItemIndex].titleSort = titleItem.titleSort;
+          };
+          if (titleItem.hasOwnProperty("titleURL")) {
+            state.arrayTitles[titleItem.titleItemIndex].titleURL = titleItem.titleURL;
+          };
+          if (titleItem.hasOwnProperty("authorFirstName")) {
+            state.arrayTitles[titleItem.titleItemIndex].authorFirstName = titleItem.authorFirstName;
+          };
+          if (titleItem.hasOwnProperty("authorLastName")) {
+            state.arrayTitles[titleItem.titleItemIndex].authorLastName = titleItem.authorLastName;
+          };
+          if (titleItem.hasOwnProperty("publicationDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].publicationDate = titleItem.publicationDate;
+          };
+          if (titleItem.hasOwnProperty("imageName")) {
+            state.arrayTitles[titleItem.titleItemIndex].imageName = titleItem.imageName;
+          };
+          if (titleItem.hasOwnProperty("categoryID")) {
+            state.arrayTitles[titleItem.titleItemIndex].categoryID = titleItem.categoryID;
+          };
+          if (titleItem.hasOwnProperty("shortDescription")) {
+            state.arrayTitles[titleItem.titleItemIndex].shortDescription = titleItem.shortDescription;
+          };
+          if (titleItem.hasOwnProperty("urlPKDweb")) {
+            state.arrayTitles[titleItem.titleItemIndex].urlPKDweb = titleItem.urlPKDweb;
+          };
+          if (titleItem.hasOwnProperty("active")) {
+            state.arrayTitles[titleItem.titleItemIndex].active = titleItem.active;
+          };
+          if (titleItem.hasOwnProperty("updatedAt")) {
+            state.arrayTitles[titleItem.titleItemIndex].updatedAt = titleItem.updatedAt;
+          };
 
-        // Updates all the values even if you don't send them in the payload
-        // Sets them to what if they're not sent in the payload?
-        state.arrayTitles[titleItem.titleItemIndex].titleName = titleItem.titleName;
-        state.arrayTitles[titleItem.titleItemIndex].titleSort = titleItem.titleSort;
-        state.arrayTitles[titleItem.titleItemIndex].titleURL = titleItem.titleURL;
-        state.arrayTitles[titleItem.titleItemIndex].authorFirstName = titleItem.authorFirstName;
-        state.arrayTitles[titleItem.titleItemIndex].authorLastName = titleItem.authorLastName;
-        state.arrayTitles[titleItem.titleItemIndex].publicationDate = titleItem.publicationDate;
-        state.arrayTitles[titleItem.titleItemIndex].imageName = titleItem.imageName;
-        state.arrayTitles[titleItem.titleItemIndex].categoryID = titleItem.categoryID;
-        state.arrayTitles[titleItem.titleItemIndex].shortDescription = titleItem.shortDescription;
-        state.arrayTitles[titleItem.titleItemIndex].urlPKDweb = titleItem.urlPKDweb;
-        state.arrayTitles[titleItem.titleItemIndex].active = titleItem.active;
-        // state.arrayTitles[titleItem.titleItemIndex].createdAt = titleItem.createdAt;
-        // state.arrayTitles[titleItem.titleItemIndex].updatedAt = titleItem.updatedAt;
+        };
 
       }
     },
@@ -116,33 +119,19 @@ const titlesSlice = createSlice({
         // console.log(componentName, "updateStateTitleRating titleItem.titleID", titleItem.titleID);
         // console.log(componentName, "updateStateTitleRating titleItem.titleItemIndex", titleItem.titleItemIndex);
 
-        // This doesn't work because state.arrayTitles isn't stored as an array of objects?
-        // Need to copy the array?
-        // const existingTitle = state.arrayTitles.find(title => title.titleID === titleItem.titleID);
-        // console.log(componentName, "updateStateTitleRating existingTitle", existingTitle);
+        if (typeof titleItem === "object") {
 
-        // if (existingTitle !== undefined) {
-        //   // existingTitle.titleID = titleItem.titleID;
-        //   existingTitle.titleName = titleItem.titleName;
-        //   existingTitle.titleSort = titleItem.titleSort;
-        //   existingTitle.titleURL = titleItem.titleURL;
-        //   existingTitle.authorFirstName = titleItem.authorFirstName;
-        //   existingTitle.authorLastName = titleItem.authorLastName;
-        //   existingTitle.publicationDate = titleItem.publicationDate;
-        //   existingTitle.imageName = titleItem.imageName;
-        //   existingTitle.categoryID = titleItem.categoryID;
-        //   existingTitle.shortDescription = titleItem.shortDescription;
-        //   existingTitle.urlPKDweb = titleItem.urlPKDweb;
-        //   existingTitle.active = titleItem.active;
-        //   existingTitle.createdAt = titleItem.createdAt;
-        //   existingTitle.updatedAt = titleItem.updatedAt;
-        // };
+          if (titleItem.hasOwnProperty("userReviewCount")) {
+            state.arrayTitles[titleItem.titleItemIndex].userReviewCount = titleItem.userReviewCount;
+          };
+          if (titleItem.hasOwnProperty("userReviewSum")) {
+            state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
+          };
+          if (titleItem.hasOwnProperty("userReviewAverage")) {
+            state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
+          };
 
-        // Updates all the values even if you don't send them in the payload
-        // Sets them to what if they're not sent in the payload?
-        state.arrayTitles[titleItem.titleItemIndex].userReviewCount = titleItem.userReviewCount;
-        state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
-        state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
+        };
 
       }
     },

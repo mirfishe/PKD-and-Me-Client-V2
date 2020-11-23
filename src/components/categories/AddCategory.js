@@ -3,7 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Plus} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
+import {encodeURL} from "../../app/sharedFunctions";
 import {addStateCategory} from "../../bibliographyData/categoriesSlice";
+import {addStateURL} from "../../app/urlsSlice";
 
 const AddCategory = (props) => {
 
@@ -134,6 +136,8 @@ const AddCategory = (props) => {
                             // Would still work if the createdAt and updatedAt were left out?
                             dispatch(addStateCategory([{categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
                             // Add to local storage also?
+
+                            dispatch(addStateURL([{linkName: encodeURL(data.category), linkType: "category", linkID: data.categoryID}]));
 
                         } else {
                             // setErrMessage(data.error);

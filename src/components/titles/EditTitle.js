@@ -6,6 +6,7 @@ import AppSettings from "../../app/environment";
 import {createTitleURL, createImageName} from "../../app/sharedFunctions";
 import {updateStateTitle, deleteStateTitle} from "../../bibliographyData/titlesSlice";
 import {updateStateEdition, deleteStateEdition} from "../../bibliographyData/editionsSlice";
+import {updateStateURL, deleteStateURL} from "../../app/urlsSlice";
 
 const EditTitle = (props) => {
 
@@ -106,6 +107,8 @@ const EditTitle = (props) => {
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
+
+    const urlLookup = useSelector(state => state.urls.arrayURLs);
     
     useEffect(() => {
     // console.log(componentName, "useEffect titleListState", titleListState);
@@ -352,7 +355,7 @@ const EditTitle = (props) => {
                             setActive(data.active);
 
                             // Would still work if the createdAt and updatedAt were left out?
-                            dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, /* createdAt: data.createdAt, updatedAt: data.updatedAt, */}));
+                            dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, updatedAt: new Date().toISOString()}));
                             // Update local storage also
 
                             // Update/Delete related editions also if active is set to false
@@ -366,6 +369,16 @@ const EditTitle = (props) => {
 
                                 };
 
+                            };
+
+                            let urlListIndex = urlLookup.findIndex(url => url.linkType === "title" && url.linkID === data.titleID);
+                            // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
+
+                            // Update/Delete related urls in arrayURLs also
+                            if (data.active === false) {
+                                dispatch(deleteStateURL(urlListIndex));
+                            } else {
+                                dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID}]));
                             };
 
                         } else {
@@ -449,6 +462,12 @@ const EditTitle = (props) => {
                             deleteEdition = (editionList[i].editionID, editionItemIndex);
 
                         };
+
+                        let urlListIndex = urlLookup.findIndex(url => url.linkType === "title" && url.linkID === data.titleID);
+                        // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
+
+                        // Update/Delete related urls in arrayURLs also
+                        dispatch(deleteStateURL(urlListIndex));
 
                         // Redirect when the title is deleted?
 

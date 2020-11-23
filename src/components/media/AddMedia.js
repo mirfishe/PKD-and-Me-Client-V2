@@ -3,7 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Plus} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
+import {encodeURL} from "../../app/sharedFunctions";
 import {addStateMedia} from "../../bibliographyData/mediaSlice";
+import {addStateURL} from "../../app/urlsSlice";
 
 const AddMedia = (props) => {
 
@@ -141,6 +143,8 @@ const AddMedia = (props) => {
                             dispatch(addStateMedia([{mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
                             // Add to local storage also?
                             
+                            dispatch(addStateURL([{linkName: encodeURL(data.media), linkType: "media", linkID: data.mediaID}]));
+
                         } else {
                             // setErrMessage(data.error);
                             setErrMessage(data.errorMessages);

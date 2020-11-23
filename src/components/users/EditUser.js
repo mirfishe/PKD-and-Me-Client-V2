@@ -33,6 +33,8 @@ const EditUser = (props) => {
     // const [sessionToken, setSessionToken] = useState(null);
     const sessionToken = useSelector(state => state.user.sessionToken);
 
+    const userLoaded = useSelector(state => state.user.userLoaded);
+
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
     const [modal, setModal] = useState(false);
@@ -268,7 +270,7 @@ const EditUser = (props) => {
 
     useEffect(() => {
         // console.log(componentName, "useEffect sessionToken", sessionToken);
-        if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
+        if (userLoaded !== undefined && userLoaded !== null && userLoaded === false) {
             setMessage("");
             setErrMessage("");
             setErrEmail("");
@@ -276,7 +278,7 @@ const EditUser = (props) => {
             setModal(false);
         };
         
-    }, [sessionToken]);
+    }, [userLoaded]);
 
     const toggle = () => {
         setModal(!modal);
@@ -284,7 +286,7 @@ const EditUser = (props) => {
 
     return(
         <React.Fragment>
-        {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
+        {userLoaded !== undefined && userLoaded !== null && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Update User</ModalHeader>
            <ModalBody>

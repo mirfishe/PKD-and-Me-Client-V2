@@ -6,6 +6,7 @@ import {Rating} from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
 import {addStateUserReview} from "../../bibliographyData/userReviewsSlice";
 import {updateStateTitleRating} from "../../bibliographyData/titlesSlice";
+import {updateStateChecklist} from "../../app/userSlice";
 
 const AddUserReview = (props) => {
 
@@ -26,6 +27,9 @@ const AddUserReview = (props) => {
 
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
+
+    const checklistListState = useSelector(state => state.user.arrayChecklist);
+    // console.log(componentName, "checklistListState", checklistListState);
 
     const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
     // console.log(componentName, "userReviewListState", userReviewListState);
@@ -221,6 +225,12 @@ const AddUserReview = (props) => {
                         // console.log(componentName, "addUserReview userReviewAverage", userReviewAverage);
                         // Update the title ratings
                         dispatch(updateStateTitleRating({titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage}));
+
+                        const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID)
+
+                        if (data.active === true) {
+                            dispatch(updateStateChecklist({checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString()}));
+                        };
 
                     } else {
                         // setErrMessage(data.error);

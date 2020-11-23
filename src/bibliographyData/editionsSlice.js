@@ -51,45 +51,49 @@ const editionsSlice = createSlice({
         // console.log(componentName, "updateStateEdition editionItem.editionID", editionItem.editionID);
         // console.log(componentName, "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
 
-        // This doesn't work because state.arrayEditions isn't stored as an array of objects?
-        // Need to copy the array?
-        // const existingEdition = state.arrayEditions.find(edition => edition.editionID === editionItem.editionID);
-        // console.log(componentName, "updateStateEdition existingEdition", existingEdition);
+        if (typeof editionItem === "object") {
 
-        // if (existingEdition !== undefined) {
-        //   // existingEdition.editionID = editionItem.editionID;
-        //   existingEdition.titleID = editionItem.titleID;
-        //   existingEdition.mediaID = editionItem.mediaID;
-        //   existingEdition.publicationDate = editionItem.publicationDate;
-        //   existingEdition.imageName = editionItem.imageName;
-        //   existingEdition.ASIN = editionItem.ASIN;
-        //   existingEdition.textLinkShort = editionItem.textLinkShort;
-        //   existingEdition.textLinkFull = editionItem.textLinkFull;
-        //   existingEdition.imageLinkSmall = editionItem.imageLinkSmall;
-        //   existingEdition.imageLinkMedium = editionItem.imageLinkMedium;
-        //   existingEdition.imageLinkLarge = editionItem.imageLinkLarge;
-        //   existingEdition.textImageLink = editionItem.textImageLink;
-        //   existingEdition.active = editionItem.active;
-        //   existingEdition.createdAt = editionItem.createdAt;
-        //   existingEdition.updatedAt = editionItem.updatedAt;
-        // };
+          if (editionItem.hasOwnProperty("titleID")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleID = editionItem.titleID;
+          };
+          if (editionItem.hasOwnProperty("mediaID")) {
+            state.arrayEditions[editionItem.editionItemIndex].mediaID = editionItem.mediaID;
+          };
+          if (editionItem.hasOwnProperty("publicationDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].publicationDate = editionItem.publicationDate;
+          };
+          if (editionItem.hasOwnProperty("imageName")) {
+            state.arrayEditions[editionItem.editionItemIndex].imageName = editionItem.imageName;
+          };
+          if (editionItem.hasOwnProperty("ASIN")) {
+            state.arrayEditions[editionItem.editionItemIndex].ASIN = editionItem.ASIN;
+          };
+          if (editionItem.hasOwnProperty("textLinkShort")) {
+            state.arrayEditions[editionItem.editionItemIndex].textLinkShort = editionItem.textLinkShort;
+          };
+          if (editionItem.hasOwnProperty("textLinkFull")) {
+            state.arrayEditions[editionItem.editionItemIndex].textLinkFull = editionItem.textLinkFull;
+          };
+          if (editionItem.hasOwnProperty("imageLinkSmall")) {
+            state.arrayEditions[editionItem.editionItemIndex].imageLinkSmall = editionItem.imageLinkSmall;
+          };
+          if (editionItem.hasOwnProperty("imageLinkMedium")) {
+            state.arrayEditions[editionItem.editionItemIndex].imageLinkMedium = editionItem.imageLinkMedium;
+          };
+          if (editionItem.hasOwnProperty("imageLinkLarge")) {
+            state.arrayEditions[editionItem.editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
+          };
+          if (editionItem.hasOwnProperty("textImageLink")) {
+            state.arrayEditions[editionItem.editionItemIndex].textImageLink = editionItem.textImageLink;
+          };
+          if (editionItem.hasOwnProperty("active")) {
+            state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
+          };
+          if (editionItem.hasOwnProperty("updatedAt")) {
+            state.arrayEditions[editionItem.editionItemIndex].updatedAt = editionItem.updatedAt;
+          };
 
-        // Updates all the values even if you don't send them in the payload
-        // Sets them to what if they're not sent in the payload?
-        state.arrayEditions[editionItem.editionItemIndex].titleID = editionItem.titleID;
-        state.arrayEditions[editionItem.editionItemIndex].mediaID = editionItem.mediaID;
-        state.arrayEditions[editionItem.editionItemIndex].publicationDate = editionItem.publicationDate;
-        state.arrayEditions[editionItem.editionItemIndex].imageName = editionItem.imageName;
-        state.arrayEditions[editionItem.editionItemIndex].ASIN = editionItem.ASIN;
-        state.arrayEditions[editionItem.editionItemIndex].textLinkShort = editionItem.textLinkShort;
-        state.arrayEditions[editionItem.editionItemIndex].textLinkFull = editionItem.textLinkFull;
-        state.arrayEditions[editionItem.editionItemIndex].imageLinkSmall = editionItem.imageLinkSmall;
-        state.arrayEditions[editionItem.editionItemIndex].imageLinkMedium = editionItem.imageLinkMedium;
-        state.arrayEditions[editionItem.editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
-        state.arrayEditions[editionItem.editionItemIndex].textImageLink = editionItem.textImageLink;
-        state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
-        // state.arrayEditions[editionItem.editionItemIndex].createdAt = editionItem.createdAt;
-        // state.arrayEditions[editionItem.editionItemIndex].updatedAt = editionItem.updatedAt;
+        };
 
       }
     },

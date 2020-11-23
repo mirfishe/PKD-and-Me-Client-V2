@@ -257,7 +257,7 @@ function App() {
 
             } else {
               console.log(componentName, "getChecklist resultsFound error", data.message);
-              setErrMessage(data.message);
+              // setErrMessage(data.message);
             };
 
         })
@@ -373,12 +373,12 @@ function App() {
             <Register />
           </NavItem>
           : null}
-          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
+          {userLoaded !== undefined && userLoaded !== null && userLoaded === true ? 
           <NavItem className="mx-3">
             <EditUser />
           </NavItem>
           : null}
-          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
+          {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true ? 
           <NavItem className="mx-3">
             <Checklist displayButton={true} />
           </NavItem>
@@ -392,7 +392,7 @@ function App() {
           <NavItem className="mx-3">
           <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
-          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && firstName !== undefined && firstName !== null && firstName !== "" && lastName !== undefined && lastName !== null && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem> : null}
+          {userLoaded !== undefined && userLoaded !== null && userLoaded === true && firstName !== undefined && firstName !== null && firstName !== "" && lastName !== undefined && lastName !== null && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem> : null}
         </Nav>
       </Navbar>
       {showAllCategories || showAllMedia || showAllTitles || showAllEditions || showAllMenuItems ?

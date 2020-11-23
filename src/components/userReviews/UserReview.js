@@ -97,7 +97,7 @@ const UserReview = (props) => {
                 </h5>
                 </Col>
             </Row>
-            <Row className="my-4">
+            <Row>
                 <Col className="text-center" xs="12">
                 {errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
                 </Col>
@@ -115,11 +115,11 @@ const UserReview = (props) => {
             };
 
           return (
-            <Col className="my-4" xs="12" key={userReview.reviewID}>
+            <React.Fragment key={userReview.reviewID}>
 
             {(userReview.rating !== undefined && userReview.rating !== null) || (userReview.shortReview !== undefined && userReview.shortReview !== null && userReview.shortReview !== "") || (userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "") ? 
 
-            <React.Fragment>
+            <Col className="my-4" xs="12" key={userReview.reviewID}>
 
             {activeString !== undefined && activeString !== null && activeString !== "" ?
                 <Row className="cardHeader inactiveItem">
@@ -159,11 +159,11 @@ const UserReview = (props) => {
                 </Col>
             </Row>
 
-            </React.Fragment>
+            </Col>
             
             : null}
 
-            </Col>
+            </React.Fragment>
             )
         })}
             </Row>

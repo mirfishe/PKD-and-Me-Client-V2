@@ -6,6 +6,7 @@ import {Rating} from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
 import {updateStateUserReview, deleteStateUserReview} from "../../bibliographyData/userReviewsSlice";
 import {updateStateTitleRating} from "../../bibliographyData/titlesSlice";
+import {updateStateChecklist} from "../../app/userSlice";
 
 const EditUserReview = (props) => {
 
@@ -27,10 +28,14 @@ const EditUserReview = (props) => {
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
 
+    const checklistListState = useSelector(state => state.user.arrayChecklist);
+    // console.log(componentName, "checklistListState", checklistListState);
+
     const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
     // console.log(componentName, "userReviewListState", userReviewListState);
 
-    const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
+    // Not needed?
+    // const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
     // console.log(componentName, "userState", userState);
 
     const [message, setMessage] = useState("");
@@ -105,6 +110,51 @@ const EditUserReview = (props) => {
     };
 
     }, [props.reviewID, userReviewListState]);
+
+    useEffect(() => {
+        // console.log(componentName, "useEffect userReviewListState", userReviewListState);
+    
+        if (props.reviewID !== undefined && props.reviewID !== null) {
+    
+            let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
+            // console.log(componentName, "useEffect userReviewObject", userReviewObject);
+            // console.log(componentName, "useEffect typeof userReviewObject", typeof userReviewObject);
+    
+            setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
+            // console.log(componentName, "useEffect userReviewItemIndex", userReviewItemIndex);
+    
+            if (userReviewObject !== undefined) {
+    
+                setUserReviewItem(userReviewObject);
+    
+                setReviewID(userReviewObject.reviewID);
+                setUserID(userReviewObject.userID);
+                setUpdatedBy(userReviewObject.updatedBy);
+                setTitleID(userReviewObject.titleID);
+                setRead(userReviewObject.read);
+                setDateRead(userReviewObject.dateRead);
+                setRating(userReviewObject.rating);
+                setShortReview(userReviewObject.shortReview);
+                setLongReview(userReviewObject.longReview);
+                setActive(userReviewObject.active);
+    
+                setCbxRead(userReviewObject.read);
+    
+                if (userReviewObject.dateRead !== undefined && userReviewObject.dateRead !== null) {
+                    setTxtDateRead(userReviewObject.dateRead.toString().substring(0, 10));
+                } else {
+                    setTxtDateRead("");
+                };
+    
+                setRdoRating(userReviewObject.rating);
+                setTxtShortReview(userReviewObject.shortReview);
+                setTxtLongReview(userReviewObject.longReview);
+    
+            };
+    
+        };
+    
+        }, [props.reviewID, userReviewListState]);
 
     // useEffect(() => {
     //     // console.log(componentName, "useEffect titleListState", titleListState);
@@ -220,7 +270,7 @@ const EditUserReview = (props) => {
                     // };
                 })
                 .then(data => {
-                    // console.log(componentName, "updateUserReview data", data);
+                    console.log(componentName, "updateUserReview data", data);
 
                     setUserReviewRecordUpdated(data.recordUpdated);
                     setMessage(data.message);
@@ -249,17 +299,18 @@ const EditUserReview = (props) => {
                         // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
                         // Would still work if the createdAt and updatedAt were left out?
-                        dispatch(updateStateUserReview({userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, /* createdAt: data.createdAt, updatedAt: data.updatedAt, */ }));
+                        dispatch(updateStateUserReview({userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, updatedAt: new Date().toISOString()}));
                         // Add to local storage also?
 
                         // Recalculate ratings
-                        let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === data.titleID);
+                        let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === data.titleID && userReview.active === true);
                         let userReviews = [];
                         for (let i = 0; i < userReviewsList.length; i++) {
                             userReviews.push({reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating});
                         };
 
                         const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID)
+                        // console.log(componentName, "updateUserReview userReviewsIndex", userReviewsIndex);
 
                         // console.log(componentName, "updateUserReview userReviews", userReviews);
                         // Get all reviews for the title
@@ -270,7 +321,21 @@ const EditUserReview = (props) => {
                         // userReviews[userReviewsIndex].rating = data.rating;
                         userReviews.splice(userReviewsIndex, 1);
                         // userReviews.push({reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}});
-                        userReviews.push({reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, rating: data.rating});
+
+                        // console.log(componentName, "updateUserReview data.active", data.active);
+
+                        if (data.active === true) {
+                            // console.log(componentName, "updateUserReview data.reviewID", data.reviewID);
+                            // console.log(componentName, "updateUserReview data.userID", data.userID);
+                            // console.log(componentName, "updateUserReview data.updatedBy", data.updatedBy);
+                            // console.log(componentName, "updateUserReview data.rating", data.rating);
+
+                            // This line of code is not working for some reason
+                            userReviews.push({reviewID: parseInt(data.reviewID), userID: data.userID, updatedBy: data.updatedBy, rating: data.rating});
+
+                            // console.log(componentName, "updateUserReview userReviews", userReviews);
+                        };
+
                         // console.log(componentName, "updateUserReview userReviews", userReviews);
                         // Recompute the average
                         let userReviewCount = userReviews.length;
@@ -290,6 +355,14 @@ const EditUserReview = (props) => {
                         // Update the title ratings
                         // console.log(componentName, "updateUserReview titleItemIndex", titleItemIndex);
                         dispatch(updateStateTitleRating({titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage}));
+
+                        const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID)
+
+                        if (data.active === true) {
+                            dispatch(updateStateChecklist({checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString()}));
+                        } else {
+                            dispatch(updateStateChecklist({checklistListIndex: checklistListIndex, reviewID: null, userID: null, updatedBy: null, titleID: data.titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedAt: null, userReviewUpdatedAt: null}));
+                        };
 
                     } else {
                         // setErrMessage(data.error);
@@ -367,7 +440,7 @@ const EditUserReview = (props) => {
                         let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
                         
                         // Recalculate ratings
-                        let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID);
+                        let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID && userReview.active === true);
 
                         const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID)
 

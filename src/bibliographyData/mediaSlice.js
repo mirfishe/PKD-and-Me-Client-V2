@@ -50,29 +50,25 @@ const mediaSlice = createSlice({
         console.log(componentName, "updateStateMedia mediaItem.mediaID", mediaItem.mediaID);
         console.log(componentName, "updateStateMedia mediaItem.mediaItemIndex", mediaItem.mediaItemIndex);
 
-        // This doesn't work because state.arrayMedia isn't stored as an array of objects?
-        // Need to copy the array?
-        // const existingMedia = state.arrayMedia.find(media => media.mediaID === mediaItem.mediaID);
-        // console.log(componentName, "updateStateMedia existingMedia", existingMedia);
+        if (typeof mediaItem === "object") {
 
-        // if (existingMedia !== undefined) {
-        //   // existingMedia.mediaID = mediaItem.mediaID;
-        //   existingMedia.media = mediaItem.media;
-        //   existingMedia.electronic = mediaItem.electronic;
-        //   existingMedia.sortID = mediaItem.sortID;
-        //   existingMedia.active = mediaItem.active;
-        //   existingMedia.createdAt = mediaItem.createdAt;
-        //   existingMedia.updatedAt = mediaItem.updatedAt;
-        // };
+          if (mediaItem.hasOwnProperty("media")) {
+            state.arrayMedia[mediaItem.mediaItemIndex].media = mediaItem.media;
+          };
+          if (mediaItem.hasOwnProperty("electronic")) {
+            state.arrayMedia[mediaItem.mediaItemIndex].electronic = mediaItem.electronic;
+          };
+          if (mediaItem.hasOwnProperty("sortID")) {
+            state.arrayMedia[mediaItem.mediaItemIndex].sortID = mediaItem.sortID;
+          };
+          if (mediaItem.hasOwnProperty("active")) {
+            state.arrayMedia[mediaItem.mediaItemIndex].active = mediaItem.active;
+          };
+          if (mediaItem.hasOwnProperty("updatedAt")) {
+            state.arrayMedia[mediaItem.mediaItemIndex].updatedAt = mediaItem.updatedAt;
+          };
 
-        // Updates all the values even if you don't send them in the payload
-        // Sets them to what if they're not sent in the payload?
-        state.arrayMedia[mediaItem.mediaItemIndex].media = mediaItem.media;
-        state.arrayMedia[mediaItem.mediaItemIndex].electronic = mediaItem.electronic;
-        state.arrayMedia[mediaItem.mediaItemIndex].sortID = mediaItem.sortID;
-        state.arrayMedia[mediaItem.mediaItemIndex].active = mediaItem.active;
-        // state.arrayMedia[mediaItem.mediaItemIndex].createdAt = mediaItem.createdAt;
-        // state.arrayMedia[mediaItem.mediaItemIndex].updatedAt = mediaItem.updatedAt;
+        };
 
       }
     },

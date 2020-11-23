@@ -50,27 +50,22 @@ const categoriesSlice = createSlice({
       console.log(componentName, "updateStateTitle categoryItem.categoryID", categoryItem.categoryID);
       console.log(componentName, "updateStateTitle categoryItem.categoryItemIndex", categoryItem.categoryItemIndex);
 
-      // This doesn't work because state.arrayCategories isn't stored as an array of objects?
-      // Need to copy the array?
-      // const existingCategory = state.arrayCategories.find(category => category.categoryID === categoryItem.categoryID);
-      // console.log(componentName, "updateStateCategory existingCategory", existingCategory);
+      if (typeof categoryItem === "object") {
 
-      // if (existingCategory !== undefined) {
-      //   // existingCategory.categoryID = categoryItem.categoryID;
-      //   existingCategory.category = categoryItem.category;
-      //   existingCategory.sortID = categoryItem.sortID;
-      //   existingCategory.active = categoryItem.active;
-      //   existingCategory.createdAt = categoryItem.createdAt;
-      //   existingCategory.updatedAt = categoryItem.updatedAt;
-      // };
+        if (categoryItem.hasOwnProperty("category")) {
+          state.arrayCategories[categoryItem.categoryItemIndex].category = categoryItem.category;
+        };
+        if (categoryItem.hasOwnProperty("sortID")) {
+          state.arrayCategories[categoryItem.categoryItemIndex].sortID = categoryItem.sortID;
+        };
+        if (categoryItem.hasOwnProperty("active")) {
+          state.arrayCategories[categoryItem.categoryItemIndex].active = categoryItem.active;
+        };
+        if (categoryItem.hasOwnProperty("updatedAt")) {
+          state.arrayCategories[categoryItem.categoryItemIndex].updatedAt = categoryItem.updatedAt;
+        };
 
-      // Updates all the values even if you don't send them in the payload
-      // Sets them to what if they're not sent in the payload?
-      state.arrayCategories[categoryItem.categoryItemIndex].category = categoryItem.category;
-      state.arrayCategories[categoryItem.categoryItemIndex].sortID = categoryItem.sortID;
-      state.arrayCategories[categoryItem.categoryItemIndex].active = categoryItem.active;
-      // state.arrayCategories[categoryItem.categoryItemIndex].createdAt = categoryItem.createdAt;
-      // state.arrayCategories[categoryItem.categoryItemIndex].updatedAt = categoryItem.updatedAt;
+      };
 
     }
   },

@@ -86,9 +86,6 @@ const userReviewsSlice = createSlice({
         if (userReviewItem.hasOwnProperty("active")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
         };
-        if (userReviewItem.hasOwnProperty("createdAt")) {
-          state.arrayUserReviews[userReviewItem.userReviewItemIndex].createdAt = userReviewItem.createdAt;
-        };
         if (userReviewItem.hasOwnProperty("updatedAt")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
         };
