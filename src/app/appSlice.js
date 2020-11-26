@@ -15,9 +15,12 @@ const initialState = {
     routerBaseName: "",
     appOffline: false,
     electronicOnly: false,
+    userElectronicOnly: false,
     electronicOnlyMessage: "",
     physicalOnly: false,
+    userPhysicalOnly: false,
     physicalOnlyMessage: "",
+    appAllowUserInteractions: true,
     appSettingsLoaded: false,
     appSettingsJsonLoaded: false,
     menuSettings: {},
@@ -124,6 +127,14 @@ const appSlice = createSlice({
 
       }
     },
+    setUserElectronicOnly: {
+      reducer(state, action) {
+        // console.log(componentName, "setUserElectronicOnly action.payload", action.payload);
+
+        state.userElectronicOnly = action.payload;
+
+      }
+    },
     setElectronicOnlyMessage: {
       reducer(state, action) {
         // console.log(componentName, "setElectronicOnlyMessage action.payload", action.payload);
@@ -140,11 +151,27 @@ const appSlice = createSlice({
 
       }
     },
+    setUserPhysicalOnly: {
+      reducer(state, action) {
+        // console.log(componentName, "setUserPhysicalOnly action.payload", action.payload);
+
+        state.userPhysicalOnly = action.payload;
+
+      }
+    },
     setPhysicalOnlyMessage: {
       reducer(state, action) {
         // console.log(componentName, "setPhysicalOnlyMessage action.payload", action.payload);
 
         state.physicalOnlyMessage = action.payload;
+
+      }
+    },
+    setAppAllowUserInteractions: {
+      reducer(state, action) {
+        // console.log(componentName, "setAppAllowUserInteractions action.payload", action.payload);
+
+        state.appAllowUserInteractions = action.payload;
 
       }
     },
@@ -183,6 +210,6 @@ const appSlice = createSlice({
 }
 });
 
-export const {setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
+export const {setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
 
 export default appSlice.reducer;

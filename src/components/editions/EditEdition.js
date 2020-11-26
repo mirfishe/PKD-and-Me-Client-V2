@@ -23,6 +23,8 @@ const EditEdition = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
     // console.log(componentName, "props.editionID", props.editionID);
     // console.log(componentName, "props.titleID", props.titleID); // Would come from the record that is being edited
     // console.log(componentName, "props.titlePublicationDate", props.titlePublicationDate);
@@ -550,9 +552,9 @@ const EditEdition = (props) => {
     return(
         <React.Fragment>
                             
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
+            {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ?  <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
 
-            {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+            {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Update Edition</ModalHeader>

@@ -110,3 +110,7 @@ body {
   margin: 0;
   padding: .25em;
 }
+
+.displayParagraphs {
+  white-space: pre-line;
+}

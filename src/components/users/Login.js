@@ -19,6 +19,8 @@ const Login = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
     // const [user, setUser] = useState({});
     // const [userID, setUserID] = useState(null);
     // const [firstName, setFirstName] = useState("");
@@ -288,7 +290,7 @@ const Login = (props) => {
 
     return(
         <React.Fragment>
-        {sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Login</Button> : null}
+        {appAllowUserInteractions === true && sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Login</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Login</ModalHeader>
            <ModalBody>

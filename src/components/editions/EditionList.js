@@ -75,8 +75,8 @@ const EditionList = (props) => {
     return(
         <Container className="mt-4">
         <Row className="text-center">
-            {editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
-            {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+            {editionMessage !== undefined && editionMessage !== null && editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
+            {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
         </Row>
         {editionResultsFound !== null ?
             <Row>

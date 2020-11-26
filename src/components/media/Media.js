@@ -21,15 +21,17 @@ const Media = (props) => {
     const [isOpen, setIsOpen] = useState(true);
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
+    const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
     const physicalOnly = useSelector(state => state.app.physicalOnly);
+    const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
 
     const mediaListState = useSelector(state => state.media.arrayMedia);
     // console.log(componentName, "mediaListState", mediaListState);
 
     let mediaList = [];
-    if (electronicOnly) {
+    if (electronicOnly === true || userElectronicOnly === true) {
         mediaList = mediaListState.filter(media => media.electronic === true);
-    } else if (physicalOnly) {
+    } else if (physicalOnly === true || userPhysicalOnly === true) {
         mediaList = mediaListState.filter(media => media.electronic === false);
     } else {
         mediaList = [...mediaListState];

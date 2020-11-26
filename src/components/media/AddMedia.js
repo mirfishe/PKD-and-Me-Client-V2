@@ -24,6 +24,8 @@ const AddMedia = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
     const [modal, setModal] = useState(false);
@@ -195,9 +197,9 @@ const AddMedia = (props) => {
     return(
         <React.Fragment>
                             
-        {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
+        {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
 
-        {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+        {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Add Media</ModalHeader>

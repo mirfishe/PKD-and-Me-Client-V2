@@ -20,6 +20,8 @@ const Register = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
     // const [user, setUser] = useState(null);
     // const [userID, setUserID] = useState(null);
     // const [firstName, setFirstName] = useState(null);
@@ -333,7 +335,7 @@ const Register = (props) => {
 
     return(
         <React.Fragment>
-        {sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Register</Button> : null}
+        {appAllowUserInteractions === true && sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Register</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Register</ModalHeader>
            <ModalBody>

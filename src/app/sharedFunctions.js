@@ -96,27 +96,28 @@ export const decodeURL = (titleName) => {
     return newTitleName;
 };
 
-export const displayParagraphs = (text) => {
+// export const displayParagraphs = (text) => {
+//     // Not needed; Use the .displayParagraphs css style
 
-    // console.log(componentName, "displayParagraphs text", text);
+//     // console.log(componentName, "displayParagraphs text", text);
 
-    let newText = text;
+//     let newText = text;
 
-    if (newText !== undefined) {
+//     if (newText !== undefined) {
 
-        newText = "<p>" + newText;
+//         // newText = "<p>" + newText;
         
-        // Changes the \n to </p><p>
-        newText = newText.replaceAll("\n", "</p><p>");
+//         // Changes the \n to </p><p>
+//         newText = newText.replaceAll("\n", "</p><p>");
 
-        newText = newText + "</p>";
+//         // newText = newText + "</p>";
 
-    };
+//     };
 
-    // console.log(componentName, "displayParagraphs newText", newText);
+//     // console.log(componentName, "displayParagraphs newText", newText);
 
-    return newText;
-};
+//     return newText;
+// };
 
 export const truncateText = (text, limit) => {
     // https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript

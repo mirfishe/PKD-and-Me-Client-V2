@@ -20,6 +20,8 @@ const EditUser = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
     // const [user, setUser] = useState({});
     // const [userID, setUserID] = useState(null);
     const userID = useSelector(state => state.user.userID);
@@ -286,7 +288,7 @@ const EditUser = (props) => {
 
     return(
         <React.Fragment>
-        {userLoaded !== undefined && userLoaded !== null && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
+        {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
         <Modal isOpen={modal} toggle={toggle} size="md">
            <ModalHeader toggle={toggle}>Update User</ModalHeader>
            <ModalBody>

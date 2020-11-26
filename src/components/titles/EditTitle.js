@@ -25,6 +25,8 @@ const EditTitle = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
     const [categoryMessage, setCategoryMessage] = useState("");
     const [errCategoryMessage, setErrCategoryMessage] = useState("");
     const [categoryResultsFound, setCategoryResultsFound] = useState(null);
@@ -333,7 +335,7 @@ const EditTitle = (props) => {
                         // };
                     })
                     .then(data => {
-                        console.log(componentName, "updateTitle data", data);
+                        // console.log(componentName, "updateTitle data", data);
 
                         setTitleRecordUpdated(data.recordUpdated);
                         setMessage(data.message);
@@ -600,9 +602,9 @@ const EditTitle = (props) => {
     return(
         <React.Fragment>
 
-        {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Title</Button></span> : null}
+        {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Title</Button></span> : null}
 
-        {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+        {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Update Title</ModalHeader>

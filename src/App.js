@@ -5,7 +5,7 @@ import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
 import {HouseFill} from "react-bootstrap-icons";
 import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button} from "reactstrap";
 import AppSettings from "./app/environment";
-import {setAppOffline} from "./app/appSlice";
+import {setAppOffline, setUserElectronicOnly, setUserPhysicalOnly} from "./app/appSlice";
 import {setPageURL, setLinkItem} from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
@@ -53,6 +53,8 @@ function App() {
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, "baseURL", baseURL);
 
+  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
   const firstName = useSelector(state => state.user.firstName);
   // console.log(componentName, "firstName", firstName);
   const lastName = useSelector(state => state.user.lastName);
@@ -63,6 +65,11 @@ function App() {
   const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
   const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
   const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
+
+  const electronicOnly = useSelector(state => state.app.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
+  const physicalOnly = useSelector(state => state.app.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
 
   const userLoaded = useSelector(state => state.user.userLoaded);
   const checklistLoaded = useSelector(state => state.user.checklistLoaded);
@@ -108,6 +115,9 @@ function App() {
   let showAllTitles = useSelector(state => state.app.menuSettings.showAllTitles);
     // This route no longer works. 
   let showAllEditions = useSelector(state => state.app.menuSettings.showAllEditions);
+
+  let showUserPhysicalOnly = useSelector(state => state.app.menuSettings.showUserPhysicalOnly);
+  let showUserElectronicOnly = useSelector(state => state.app.menuSettings.showUserElectronicOnly);
 
   const urlLookup = useSelector(state => state.urls.arrayURLs);
   const pageURL = useSelector(state => state.urls.pageURL);
@@ -275,7 +285,7 @@ function App() {
   useEffect(() => {
     // console.log(componentName, "useEffect");
 
-    if (localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null && localStorage.getItem("token") !== "") {
+    if (appAllowUserInteractions === true && localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null && localStorage.getItem("token") !== "") {
 
       dispatch(setSessionToken(localStorage.getItem("token")));
       // console.log(componentName, "componentDidMount localStorage token", localStorage.getItem("token"));
@@ -287,17 +297,17 @@ function App() {
       // setUserID(1);
       // setIsAdmin(true);
       // Fetch from the API to check these
-      if(!userLoaded) {
+      if (!userLoaded) {
         getUser(localStorage.getItem("token"));
       };
-      if(!checklistLoaded) {
+      if (!checklistLoaded) {
         getChecklist(localStorage.getItem("token"));
       };
 
-    };
+  };
 
-    let documentURL = new URL(document.URL);
-    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
+  let documentURL = new URL(document.URL);
+  dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
 
   }, []);
 
@@ -363,28 +373,20 @@ function App() {
             <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
           </NavItem>
           : null}
-          {sessionToken === undefined || sessionToken === null || sessionToken === "" ? 
+          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ? 
           <NavItem className="mx-3">
             <Login />
           </NavItem>
           : null}
-          {sessionToken === undefined || sessionToken === null || sessionToken === "" ? 
+          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ? 
           <NavItem className="mx-3">
             <Register />
           </NavItem>
           : null}
-          {userLoaded !== undefined && userLoaded !== null && userLoaded === true ? 
+          {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ? 
           <NavItem className="mx-3">
             <EditUser />
           </NavItem>
-          : null}
-          {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true ? 
-          <NavItem className="mx-3">
-            <Checklist displayButton={true} />
-          </NavItem>
-          : null}
-          {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
-           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
           : null}
           <NavItem className="mx-3">
           <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
@@ -392,7 +394,16 @@ function App() {
           <NavItem className="mx-3">
           <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
-          {userLoaded !== undefined && userLoaded !== null && userLoaded === true && firstName !== undefined && firstName !== null && firstName !== "" && lastName !== undefined && lastName !== null && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem> : null}
+          {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true && firstName !== undefined && firstName !== null && firstName !== "" && lastName !== undefined && lastName !== null && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
+          : null}
+          {appAllowUserInteractions === true && checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true ? 
+          <NavItem className="mx-3">
+            <Checklist displayButton={true} />
+          </NavItem>
+          : null}
+          {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
+           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
+          : null}
         </Nav>
       </Navbar>
       {showAllCategories || showAllMedia || showAllTitles || showAllEditions || showAllMenuItems ?
@@ -475,6 +486,22 @@ function App() {
             <AddTitle displayButton={true} />
           </NavItem>
           : null}
+        </Nav>
+      </Navbar>
+      : null}
+
+    {showUserPhysicalOnly || showUserElectronicOnly || showAllMenuItems ?
+      <Navbar>
+        <Nav>
+          {(showUserPhysicalOnly === true || showUserElectronicOnly === true) && (userPhysicalOnly === true || userElectronicOnly === true) ?
+          <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => {dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(false));}}>All Editions</Button></NavItem>
+          : null}
+          {showUserPhysicalOnly === true && userPhysicalOnly !== undefined && userPhysicalOnly !== null && userPhysicalOnly === false ?
+           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => {dispatch(setUserPhysicalOnly(true)); dispatch(setUserElectronicOnly(false));}}>Only Physical Editions</Button></NavItem>
+          : null}
+          {showUserElectronicOnly === true && userElectronicOnly !== undefined && userElectronicOnly !== null && userElectronicOnly === false ?
+           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => {dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(true));}}>Only Electronic Editions</Button></NavItem>
+           : null}
         </Nav>
       </Navbar>
       : null}

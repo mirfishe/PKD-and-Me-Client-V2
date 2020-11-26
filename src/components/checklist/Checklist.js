@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
-import {Modal, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, Button, Input} from "reactstrap";
+import {Modal, ModalHeader, ModalBody, ModalFooter, Container, Col, Row, ListGroup, ListGroupItem, Button, Input} from "reactstrap";
+import {Drawer} from "@material-ui/core";
 import AppSettings from "../../app/environment";
 import {displayYear, encodeURL} from "../../app/sharedFunctions";
 import {setTitleSort} from "../../bibliographyData/titlesSlice";
@@ -28,6 +29,7 @@ const Checklist = (props) => {
     // console.log(componentName, "baseURL", baseURL);
 
     const [modal, setModal] = useState(false);
+    const [drawer, setDrawer] = useState(false);
 
     const checklistLoaded = useSelector(state => state.user.checklistLoaded);
 
@@ -199,19 +201,33 @@ const Checklist = (props) => {
         setModal(!modal);
     };
 
+    const toggleDrawer = () => {
+        setDrawer(!drawer);
+    };
+
     return(
         <React.Fragment>
 
-            {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Checklist</Button> : null}
+            {/* {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Checklist</Button> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Checklist</ModalHeader>
-           <ModalBody>
+           <ModalBody> */}
 
-           <ListGroup flush>
+        {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Checklist</Button> : null}
+
+        <Drawer anchor="right" open={drawer} onClose={toggleDrawer}>
+
+            <Container className="mx-3">
+                <Row>
+                <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Close</Button>
+                </Row>
+
+           {/* <ListGroup flush> */}
 
            {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkType") === true && linkItem.hasOwnProperty("linkName") === true && linkItem.linkType === "category" ? 
-            <ListGroupItem> 
+            <Row>
+            {/* <ListGroupItem> */}
             <h6 className="text-center">{linkItem.linkName}
             {/* Fetch runs very slow 
             <p className="ml-2"> <small>Sort By
@@ -223,26 +239,32 @@ const Checklist = (props) => {
                 : null}
             </small></p> */}
             </h6>
-            </ListGroupItem>
+            {/* </ListGroupItem> */}
+            </Row>
             : null}
 
             {checklistList.map((title) => {
             return (
-            <ListGroupItem key={title.titleID}>
-                <ListGroupItem key={title.titleID}><Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID)}} /> <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
+                <Row /*ListGroupItem*/ key={title.titleID} className="mx-3"><Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID)}} /> <p><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}
-            </ListGroupItem>
-            </ListGroupItem>
+                </p>
+                {/* </ListGroupItem> */}
+                </Row>
             )
             })}
-        </ListGroup>
+        {/* </ListGroup> */}
+        
+        </Container>
 
-        <ModalFooter>
+        </Drawer>
+
+        {/* <ModalFooter>
     
         <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
     </ModalFooter>
     </ModalBody>
-    </Modal>
+    </Modal> */}
+
     </React.Fragment>
     );
 

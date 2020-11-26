@@ -108,8 +108,8 @@ const CategoryList = (props) => {
     return(
         <Container className="mt-4">
             <Row className="text-center">
-            {categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
-            {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+            {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
+            {errCategoryMessage !== undefined && errCategoryMessage !== null && errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
             </Row>
             {/* <Row>
             <Col xs="2">

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayYear, encodeURL, decodeURL, displayParagraphs, truncateText, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
+import {displayYear, encodeURL, decodeURL, truncateText, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -100,8 +100,8 @@ const TitleCard = (props) => {
         <Container className="mt-4">
             <Row className="justify-content-center">
                 <Col className="text-center" xs="12">
-                    {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-                    {headerText !== undefined && headerText !== "" ? <h4 className="text-center">{headerText}</h4> : null}
+                    {errTitleMessage !== undefined && errTitleMessage !== null && errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+                    {headerText !== undefined && headerText !== null && headerText !== "" ? <h4 className="text-center">{headerText}</h4> : null}
                 </Col>
             </Row>
             <Row className="justify-content-center">
@@ -126,7 +126,7 @@ const TitleCard = (props) => {
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                                 {additionalText !== undefined && additionalText !== "" ? <CardText className="my-4">{additionalText}</CardText> : null}
-                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <div className="my-4" dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /> : null}
+                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <p className="my-4 displayParagraphs">{truncateText(title.shortDescription, 250)}</p>  : null}
                                 {/* {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
                                 {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                                 {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null} */}

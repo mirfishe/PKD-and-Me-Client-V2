@@ -4,5 +4,6 @@
 "siteName": "Homeopape",
 "appName": "Philip K. Dick Bibliography",
 "electronicOnly": true,
-"physicalOnly": false
+"physicalOnly": false,
+"appAllowUserInteractions": true
 }

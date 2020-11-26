@@ -5,7 +5,7 @@ import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, A
 import {Image} from "react-bootstrap-icons";
 import {Rating} from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
-import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
+import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -40,8 +40,10 @@ const Title = (props) => {
     // console.log(componentName, "baseURL", baseURL);
 
     // const electronicOnly = useSelector(state => state.app.electronicOnly);
+    // const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
     // const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
     // const physicalOnly = useSelector(state => state.app.physicalOnly);
+    // const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
     // const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
 
     const [errTitleMessage, setErrTitleMessage] = useState("");
@@ -118,9 +120,9 @@ const Title = (props) => {
         // editionList = editionListState.filter(edition => edition.active === true);
     };
 
-    // if (electronicOnly === true) {
+    // if (electronicOnly === true || userElectronicOnly === true) {
     //     editionList = editionList.filter(edition => edition.medium.electronic === true);
-    // } else if (physicalOnly === true) {
+    // } else if (physicalOnly === true || userPhysicalOnly === true) {
     //     editionList = editionList.filter(edition =>  edition.medium.electronic === false);
     // } else {
     //     editionList = [...editionList];
@@ -319,7 +321,7 @@ const Title = (props) => {
             </Row>
             <Row>
                 <Col className="text-center" xs="12">   
-                    {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+                    {errTitleMessage !== undefined && errTitleMessage !== null && errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
                 </Col>
             </Row>
             {titleList.map((title) => {
@@ -378,7 +380,7 @@ const Title = (props) => {
                         {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
                         {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && userReviewItem !== undefined && userReviewItem !== null ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
-                        {title.shortDescription !== "" && title.shortDescription !== null ? <div dangerouslySetInnerHTML={{"__html": displayParagraphs(title.shortDescription)}} /> : null}
+                        {title.shortDescription !== "" && title.shortDescription !== null ? <p class="displayParagraphs">{title.shortDescription}</p> : null}
                         {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
                         {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
                     </Col>
@@ -390,9 +392,9 @@ const Title = (props) => {
 
             {/* <Row className="my-4">
                 <Col className="text-center" xs="12">
-                {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
-                {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
-                {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
+                {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+                {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+                {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
                 </Col>
             </Row>
             {editionList.length > 0 ?

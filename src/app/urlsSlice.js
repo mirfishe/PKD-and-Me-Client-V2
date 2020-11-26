@@ -45,7 +45,7 @@ const urlsSlice = createSlice({
         // console.log(componentName, "updateStateURL action.payload", action.payload);
 
         const urlItem = action.payload;
-        console.log(componentName, "updateStateURL urlItem", urlItem);
+        // console.log(componentName, "updateStateURL urlItem", urlItem);
         // console.log(componentName, "updateStateURL urlItem.linkID", urlItem.linkID);
         // console.log(componentName, "updateStateURL urlItem.urlListIndex", urlItem.urlListIndex);
 

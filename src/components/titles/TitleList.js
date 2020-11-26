@@ -75,8 +75,8 @@ const TitleList = (props) => {
     return(
         <Container className="mt-4">
         <Row className="text-center">
-            {titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
-            {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+            {titleMessage !== undefined && titleMessage !== null && titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
+            {errTitleMessage !== undefined && errTitleMessage !== null && errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
         </Row>
         {titleResultsFound !== null ?
             <Row>

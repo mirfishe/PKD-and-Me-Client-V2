@@ -96,7 +96,7 @@ const userReviewsSlice = createSlice({
   },
   deleteStateUserReview: {
     reducer(state, action) {
-      console.log(componentName, "deleteStateUserReview action.payload", action.payload);
+      // console.log(componentName, "deleteStateUserReview action.payload", action.payload);
 
       const userReviewItemIndex = action.payload;
       // const userReviewID = action.payload;

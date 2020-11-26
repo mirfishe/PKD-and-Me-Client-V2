@@ -5,6 +5,7 @@
 "appName": "PKD and Me",
 "electronicOnly": false,
 "physicalOnly": false,
+"appAllowUserInteractions": true,
 "menuSettings": {
     "showAllMenuItems": false,
 
@@ -29,6 +30,9 @@
     "showAllCategories": false,
     "showAllMedia": false,
     "showAllTitles": false,
-    "showAllEditions": false
+    "showAllEditions": false,
+
+    "showUserPhysicalOnly": false,
+    "showUserElectronicOnly": false
     }
 }

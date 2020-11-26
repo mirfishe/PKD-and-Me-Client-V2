@@ -16,6 +16,7 @@ let electronicOnly = false;
 let electronicOnlyMessage = "You are viewing only electronic editions.";
 let physicalOnly = false;
 let physicalOnlyMessage = "You are viewing only physical editions.";
+let appAllowUserInteractions = true;
 
 let tagManagerArgs = {
     gtmId: ""
@@ -84,6 +85,7 @@ switch (profileType) {
         appOffline = false;
         electronicOnly = false;
         physicalOnly = false;
+        appAllowUserInteractions = true;
         tagManagerArgs.gtmId = "";
         break;
     case "heroku":
@@ -96,6 +98,7 @@ switch (profileType) {
         appOffline = false;
         electronicOnly = false;
         physicalOnly = false;
+        appAllowUserInteractions = true;
         tagManagerArgs.gtmId = "";
         break;
     case "philipdick":
@@ -108,6 +111,7 @@ switch (profileType) {
         appOffline = true;
         electronicOnly = false;
         physicalOnly = false;
+        appAllowUserInteractions = true;
         tagManagerArgs.gtmId = "GTM-NW2GPF2";
         break;
     case "homeopape":
@@ -120,6 +124,7 @@ switch (profileType) {
         appOffline = true;
         electronicOnly = true;
         physicalOnly = false;
+        appAllowUserInteractions = false;
         tagManagerArgs.gtmId = "GTM-NXQJTGL";
         break;
     default:
@@ -133,6 +138,7 @@ switch (profileType) {
         appOffline = false;
         electronicOnly = false;
         physicalOnly = false;
+        appAllowUserInteractions = true;
         tagManagerArgs.gtmId = "";
 };
 
@@ -155,6 +161,10 @@ switch (profileType) {
 // profileType = "homeopape";
 // profileType = "";
 
+// Override the appAllowUserInteractions setting
+// appAllowUserInteractions = true;
+// appAllowUserInteractions = false;
+
 // In case accidentally set both to true, then electronicOnly overides.
 if (physicalOnly && electronicOnly) {
     electronicOnly = true;
@@ -175,6 +185,7 @@ Object.assign(AppSettings, {electronicOnly: electronicOnly});
 Object.assign(AppSettings, {electronicOnlyMessage: electronicOnlyMessage});
 Object.assign(AppSettings, {physicalOnly: physicalOnly});
 Object.assign(AppSettings, {physicalOnlyMessage: physicalOnlyMessage});
+Object.assign(AppSettings, {appAllowUserInteractions: appAllowUserInteractions});
 Object.assign(AppSettings, {tagManagerArgs: tagManagerArgs});
 Object.assign(AppSettings, {menuSettings: menuSettings});
 

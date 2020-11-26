@@ -25,6 +25,8 @@ const EditUserReview = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
 
@@ -270,7 +272,7 @@ const EditUserReview = (props) => {
                     // };
                 })
                 .then(data => {
-                    console.log(componentName, "updateUserReview data", data);
+                    // console.log(componentName, "updateUserReview data", data);
 
                     setUserReviewRecordUpdated(data.recordUpdated);
                     setMessage(data.message);
@@ -527,9 +529,9 @@ const EditUserReview = (props) => {
     return(
         <React.Fragment>
 
-            {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReviewItem.userID) || (admin !== undefined && admin !== null && admin === true)) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Review</Button></span> : null}
+            {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReviewItem.userID) || (admin !== undefined && admin !== null && admin === true)) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Review</Button></span> : null}
 
-            {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReviewItem.userID) || (admin !== undefined && admin !== null && admin === true)) && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+            {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReviewItem.userID) || (admin !== undefined && admin !== null && admin === true)) && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Update Review</ModalHeader>

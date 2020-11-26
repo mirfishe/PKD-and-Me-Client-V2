@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
-import {displayDate, displayYear, encodeURL, decodeURL, displayParagraphs, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
+import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
 import {setPageURL} from "../../app/urlsSlice";
 import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
@@ -21,8 +21,10 @@ const Edition = (props) => {
     // console.log(componentName, "admin", admin);
 
     const electronicOnly = useSelector(state => state.app.electronicOnly);
+    const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
     const physicalOnly = useSelector(state => state.app.physicalOnly);
+    const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
     const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
 
     const [editionMessage, setEditionMessage] = useState("");
@@ -44,9 +46,9 @@ const Edition = (props) => {
         titleItem = titleListState.filter(title => title.titleID === props.titleID);
     };
 
-    if (electronicOnly === true) {
+    if (electronicOnly === true || userElectronicOnly === true) {
         editionList = editionList.filter(edition => edition.medium.electronic === true);
-    } else if (physicalOnly === true) {
+    } else if (physicalOnly === true || userPhysicalOnly === true) {
         editionList = editionList.filter(edition =>  edition.medium.electronic === false);
     } else {
         editionList = [...editionList];
@@ -91,9 +93,9 @@ const Edition = (props) => {
             </Row>
                 <Row className="my-4">
                 <Col className="text-center" xs="12">
-                {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
-                {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
-                {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
+                {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+                {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+                {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
                 </Col>
             </Row>
             {/* : null} */}

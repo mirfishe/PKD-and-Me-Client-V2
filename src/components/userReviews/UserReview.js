@@ -99,7 +99,7 @@ const UserReview = (props) => {
             </Row>
             <Row>
                 <Col className="text-center" xs="12">
-                {errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
+                {errUserReviewMessage !== undefined && errUserReviewMessage !== null && errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
                 </Col>
             </Row>
             {/* : null} */}
@@ -138,7 +138,7 @@ const UserReview = (props) => {
 
             <Row>
                 <Col xs="12">
-                {userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "" ? <p>{userReview.longReview}</p> : null}
+                {userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "" ? <p class="displayParagraphs">{userReview.longReview}</p> : null}
                 </Col>
             </Row>
 

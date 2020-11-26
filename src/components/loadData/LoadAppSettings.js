@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import AppSettings from "../../app/environment";
-import {setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings} from "../../app/appSlice";
+import {setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings} from "../../app/appSlice";
 
 function LoadAppSettings() {
 
@@ -72,6 +72,9 @@ function LoadAppSettings() {
 
     // let physicalOnlyMessage = AppSettings.physicalOnlyMessage;
     dispatch(setPhysicalOnlyMessage(AppSettings.physicalOnlyMessage));
+
+    // let appAllowUserInteractions = AppSettings.appAllowUserInteractions;
+    dispatch(setAppAllowUserInteractions(AppSettings.appAllowUserInteractions));
 
     // let menuSettings = AppSettings.menuSettings;
     dispatch(setMenuSettings(AppSettings.menuSettings));
@@ -192,6 +195,12 @@ function LoadAppSettings() {
             if (data.physicalOnlyMessage !== undefined && data.physicalOnlyMessage !== "") {
                 // physicalOnlyMessage = data.physicalOnlyMessage;
                 dispatch(setPhysicalOnlyMessage(data.physicalOnlyMessage));
+            };
+
+            // console.log(componentName, "getAppSettings data.appAllowUserInteractions", data.appAllowUserInteractions);
+            if (data.appAllowUserInteractions !== undefined) {
+                // appAllowUserInteractions = data.appAllowUserInteractions;
+                dispatch(setAppAllowUserInteractions(data.appAllowUserInteractions));
             };
 
             // In case accidentally set both to true, then electronicOnly overides.

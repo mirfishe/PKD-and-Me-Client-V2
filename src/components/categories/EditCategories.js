@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {PencilSquare} from 'react-bootstrap-icons';
+import AppSettings from "../../app/environment";
 
 const EditCategories = (props) => {
 
@@ -13,6 +14,14 @@ const EditCategories = (props) => {
     // console.log(componentName, "sessionToken", sessionToken);
     const admin = useSelector(state => state.user.admin);
     // console.log(componentName, "admin", admin);
+
+    // Loading the baseURL from the state store here is too slow
+    // Always pulling it from environment.js
+    // const baseURL = useSelector(state => state.app.baseURL);
+    const baseURL = AppSettings.baseURL;
+    // console.log(componentName, "baseURL", baseURL);
+
+    const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
@@ -61,9 +70,9 @@ const EditCategories = (props) => {
     return(
         <React.Fragment>
 
-            {admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Edit Categories</Button></span> : null}
+            {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Edit Categories</Button></span> : null}
 
-            {admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+            {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Update Categories</ModalHeader>

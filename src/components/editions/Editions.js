@@ -26,8 +26,10 @@ const Editions = (props) => {
 
     const editionSort = useSelector(state => state.editions.editionSort);
     const electronicOnly = useSelector(state => state.app.electronicOnly);
+    const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
     const physicalOnly = useSelector(state => state.app.physicalOnly);
+    const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
     const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
 
     const [errEditionMessage, setErrEditionMessage] = useState("");
@@ -91,9 +93,9 @@ const Editions = (props) => {
         // editionList = editionListState.filter(edition => edition.active === true);
     };
 
-    if (electronicOnly === true) {
+    if (electronicOnly === true || userElectronicOnly === true) {
         editionList = editionList.filter(edition => edition.medium.electronic === true);
-    } else if (physicalOnly === true) {
+    } else if (physicalOnly === true || userPhysicalOnly === true) {
         editionList = editionList.filter(edition =>  edition.medium.electronic === false);
     } else {
         editionList = [...editionList];
@@ -156,9 +158,9 @@ const Editions = (props) => {
             </Row>
             <Row>
                 <Col className="text-center" xs="12">
-                    {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
-                    {electronicOnly ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
-                    {physicalOnly ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
+                    {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+                    {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+                    {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
                 </Col>
             </Row>
             <Row>
