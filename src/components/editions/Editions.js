@@ -4,7 +4,8 @@ import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from 'react-bootstrap-icons';
 import {displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
-import {setEditionSort} from "../../bibliographyData/editionsSlice";
+import {setTitleSortBy} from "../../bibliographyData/titlesSlice";
+import {setEditionSortBy} from "../../bibliographyData/editionsSlice";
 import {setPageURL} from "../../app/urlsSlice";
 import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
@@ -24,7 +25,8 @@ const Editions = (props) => {
     const admin = useSelector(state => state.user.admin);
     // console.log(componentName, "admin", admin);
 
-    const editionSort = useSelector(state => state.editions.editionSort);
+    const editionSortBy = useSelector(state => state.editions.editionSortBy);
+    
     const electronicOnly = useSelector(state => state.app.electronicOnly);
     const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
     const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
@@ -39,26 +41,193 @@ const Editions = (props) => {
     const mediaListState = useSelector(state => state.media.arrayMedia);
     // console.log(componentName, "mediaListState", mediaListState);
 
-    // console.log(componentName, "props.match.params", props.match.params);
-    const mediaParam = props.linkItem.linkName; // props.match.params.media;
-    // console.log(componentName, "typeof mediaParam", typeof mediaParam);
-    // console.log(componentName, "mediaParam", mediaParam);
+    let mediaParam;
+    if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
+        // console.log(componentName, "props.match.params", props.match.params);
+        mediaParam = props.linkItem.linkName; // props.match.params.media;
+        // console.log(componentName, "typeof mediaParam", typeof mediaParam);
+        // console.log(componentName, "mediaParam", mediaParam);
+    };
 
     const sortEditions = (sortBy) => {
         // console.log("Titles.js sortTitles sortBy", sortBy);
         if (editionList !== undefined && editionList !== null && editionList.length > 0) {
             if (sortBy === "releaseDate") {
                 // Sort the editionList array by edition.publicationDate, title.titleSort, (would like to add media.sortID)
-                editionList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : (a.publicationDate > b.publicationDate) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+                // Doesn't handle null values well; treats them as "null"
+                // editionList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : (a.publicationDate > b.publicationDate) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+
+                // Temporary to test the sorting
+                // editionList = editionList.filter(edition => edition.title.titleName === "A Scanner Darkly");
+
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                // editionList.sort(
+                //     function(a, b) {
+                //        if (a.publicationDate === b.publicationDate) {
+                //             if (a.title.titleSort === b.title.titleSort) {
+                //                 // Media is only important when title.titleSort are the same
+                //                 return a.medium.sortID - b.medium.sortID;
+                //             };
+                //             // titleSort is only important when publicationDate are the same
+                //             return a.title.titleSort - b.title.titleSort;
+                //        };
+                //        return a.publicationDate > b.publicationDate ? 1 : -1;
+                //     });
+
+                // Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
+                let editionListReleaseDate = editionList.filter(edition => edition.publicationDate !== undefined && edition.publicationDate !== null);
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                editionListReleaseDate.sort(
+                    function(a, b) {          
+                       if (a.publicationDate === b.publicationDate) {
+                            if (a.title.titleSort === b.title.titleSort) {
+                                // Media is only important when title.titleSort are the same
+                                return a.medium.sortID - b.medium.sortID;
+                            };
+                            // titleSort is only important when publicationDate are the same
+                            return a.title.titleSort - b.title.titleSort;
+                       };
+                       return a.publicationDate > b.publicationDate ? 1 : -1;
+                    });
+                // console.log(componentName, "editionListReleaseDate", editionListReleaseDate);
+
+                let editionListNoReleaseDate = editionList.filter(edition => edition.publicationDate === undefined || edition.publicationDate === null);
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                editionListNoReleaseDate.sort(
+                    function(a, b) {          
+                       if (a.title.titleSort === b.title.titleSort) {
+                            // Media is only important when title.titleSort are the same
+                            // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
+                            //     console.log(componentName, "a.title.titleName", a.title.titleName);
+                            //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
+                            //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+                            // };
+                            return a.medium.sortID - b.medium.sortID;
+                       };
+                       return a.title.titleSort > b.title.titleSort ? 1 : -1;
+                    });
+                // console.log(componentName, "editionListNoReleaseDate", editionListNoReleaseDate);
+
+                let newEditionList = [...editionListReleaseDate];
+                newEditionList.push(...editionListNoReleaseDate);
+                // console.log(componentName, "newEditionList", newEditionList);
+
+                editionList = [...newEditionList];
+
             } else if (sortBy === "publicationDate") {
                 // Sort the editionList array by title.publicationDate, title.titleSort, (would like to add media.sortID)
-                editionList.sort((a, b) => (a.title.publicationDate > b.title.publicationDate) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+                // Doesn't handle null values well; treats them as "null"
+                // editionList.sort((a, b) => (a.title.publicationDate > b.title.publicationDate) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+
+                // Temporary to test the sorting
+                // editionList = editionList.filter(edition => edition.title.titleName === "A Scanner Darkly");
+
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                // editionList.sort(
+                //     function(a, b) {          
+                //        if (a.title.publicationDate === b.title.publicationDate) {
+                //             if (a.title.titleSort === b.title.titleSort) {
+                //                 // Media is only important when title.titleSort are the same
+                //                 return a.medium.sortID - b.medium.sortID;
+                //             };
+                //             // titleSort is only important when publicationDate are the same
+                //             return a.title.titleSort - b.title.titleSort;
+                //        };
+                //        return a.title.publicationDate > b.title.publicationDate ? 1 : -1;
+                //     });
+
+                // Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
+                let editionListPublicationDate = editionList.filter(edition => edition.title.publicationDate !== undefined && edition.title.publicationDate !== null);
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                editionListPublicationDate.sort(
+                    function(a, b) {          
+                       if (a.title.publicationDate === b.title.publicationDate) {
+                            if (a.title.titleSort === b.title.titleSort) {
+                                // Media is only important when title.titleSort are the same
+                                return a.medium.sortID - b.medium.sortID;
+                            };
+                            // titleSort is only important when publicationDate are the same
+                            return a.title.titleSort - b.title.titleSort;
+                       };
+                       return a.title.publicationDate > b.title.publicationDate ? 1 : -1;
+                    });
+                // console.log(componentName, "editionListPublicationDate", editionListPublicationDate);
+
+                let editionListNoPublicationDate = editionList.filter(edition => edition.title.publicationDate === undefined || edition.title.publicationDate === null);
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                editionListNoPublicationDate.sort(
+                    function(a, b) {          
+                       if (a.title.titleSort === b.title.titleSort) {
+                            // Media is only important when title.titleSort are the same
+                            // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
+                            //     console.log(componentName, "a.title.titleName", a.title.titleName);
+                            //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
+                            //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+                            // };
+                            return a.medium.sortID - b.medium.sortID;
+                       };
+                       return a.title.titleSort > b.title.titleSort ? 1 : -1;
+                    });
+                // console.log(componentName, "editionListNoPublicationDate", editionListNoPublicationDate);
+
+                let newEditionList = [...editionListPublicationDate];
+                newEditionList.push(...editionListNoPublicationDate);
+                // console.log(componentName, "newEditionList", newEditionList);
+
+                editionList = [...newEditionList];
+
             } else if (sortBy === "titleName") {
                 // Sort the editionList array by title.titleSort, media.sortID
-                editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+                // Doesn't sort correctly
+                // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+
+                // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : -1);
+
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                editionList.sort(
+                    function(a, b) {          
+                       if (a.title.titleSort === b.title.titleSort) {
+                            // Media is only important when title.titleSort are the same
+                            // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
+                            //     console.log(componentName, "a.title.titleName", a.title.titleName);
+                            //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
+                            //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+                            // };
+                            return a.medium.sortID - b.medium.sortID;
+                       };
+                       return a.title.titleSort > b.title.titleSort ? 1 : -1;
+                    });
+
             } else {
                 // Sort the editionList array by title.titleSort, media.sortID
-                editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+                // Doesn't sort correctly
+                // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+
+                // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : -1);
+
+                // https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
+                editionList.sort(
+                    function(a, b) {          
+                       if (a.title.titleSort === b.title.titleSort) {
+                            // Media is only important when title.titleSort are the same
+                            // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
+                            //     console.log(componentName, "a.title.titleName", a.title.titleName);
+                            //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
+                            //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+                            //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+                            // };
+                            return a.medium.sortID - b.medium.sortID;
+                       };
+                       return a.title.titleSort > b.title.titleSort ? 1 : -1;
+                    });
+
             };
         };
     };
@@ -106,9 +275,9 @@ const Editions = (props) => {
     } else {
         editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
     };
-    // console.log(componentName, "editionList", editionList);
 
-    sortEditions(editionSort);
+    sortEditions(editionSortBy);
+    // console.log(componentName, "editionList", editionList);
 
     const redirectPage = (linkName) => {
         // console.log(componentName, "redirectPage", linkName);
@@ -142,17 +311,17 @@ const Editions = (props) => {
             <Row>
                 <Col xs="12">
                     <h4 className="text-center mb-4">{mediaParam !== undefined && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
-                    {/* <span className="text-muted ml-2 smallText">Sort By
-                        {editionSort !== "releaseDate" ? 
-                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSort("releaseDate"));}}>Release Date</a>
+                    <span className="text-muted ml-2 smallText">Sort By
+                        {editionSortBy !== "releaseDate" ? 
+                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSortBy("releaseDate"));}}>Release Date</a>
                         : null}
-                        {editionSort !== "publicationDate" ? 
-                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("publicationDate"); dispatch(setEditionSort("publicationDate"));}}>Publication Date</a>
+                        {editionSortBy !== "publicationDate" ? 
+                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("publicationDate"); dispatch(setEditionSortBy("publicationDate")); dispatch(setTitleSortBy("publicationDate"));}}>Publication Date</a>
                         : null}
-                        {editionSort !== "titleName" ? 
-                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSort("titleName"));}}>Title</a>
+                        {editionSortBy !== "titleName" ? 
+                        <a href="#" className="text-decoration-none ml-2" onClick={(event) => {event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSortBy("titleName")); dispatch(setTitleSortBy("titleName"));}}>Title</a>
                         : null}
-                    </span> */}
+                    </span>
                     </h4>
                 </Col>
             </Row>

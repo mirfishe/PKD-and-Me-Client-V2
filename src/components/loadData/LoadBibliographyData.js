@@ -252,13 +252,13 @@ function LoadBibliographyData() {
 
       if (source === "category") {
         // console.log(componentName, "loadURLs data[i].category", data[i].category);
-        arrayURLs.push({linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID});
+        arrayURLs.push({linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category});
       } else if (source === "media") {
         // console.log(componentName, "loadURLs data[i].media", data[i].media);
-        arrayURLs.push({linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID});
+        arrayURLs.push({linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID, linkTypeNameID: data[i].mediaID, linkTypeName: data[i].media});
       } else if (source === "title") {
         // console.log(componentName, "loadURLs data[i].titleURL", data[i].titleURL);
-        arrayURLs.push({linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID});
+        arrayURLs.push({linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category.category});
       };
   
     };

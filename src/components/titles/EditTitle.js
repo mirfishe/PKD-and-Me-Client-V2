@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Image, PencilSquare} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import {createTitleURL, createImageName} from "../../app/sharedFunctions";
 import {updateStateTitle, deleteStateTitle} from "../../bibliographyData/titlesSlice";
 import {updateStateEdition, deleteStateEdition} from "../../bibliographyData/editionsSlice";
-import {updateStateURL, deleteStateURL} from "../../app/urlsSlice";
+import {addStateURL, updateStateURL, deleteStateURL, setPageURL} from "../../app/urlsSlice";
 
 const EditTitle = (props) => {
 
     const componentName = "EditTitle.js";
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const sessionToken = useSelector(state => state.user.sessionToken);
     // console.log(componentName, "sessionToken", sessionToken);
@@ -111,6 +113,9 @@ const EditTitle = (props) => {
     // console.log(componentName, "titleListState", titleListState);
 
     const urlLookup = useSelector(state => state.urls.arrayURLs);
+
+    const linkItem = useSelector(state => state.urls.linkItem);
+    // console.log(componentName, "linkItem", linkItem);
     
     useEffect(() => {
     // console.log(componentName, "useEffect titleListState", titleListState);
@@ -380,7 +385,26 @@ const EditTitle = (props) => {
                             if (data.active === false) {
                                 dispatch(deleteStateURL(urlListIndex));
                             } else {
-                                dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID}]));
+                                // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
+                                // console.log(componentName, "updateTitle data.titleURL", data.titleURL);
+                                // console.log(componentName, "updateTitle data.titleID", data.titleID);
+                                // console.log(componentName, "updateTitle data.categoryID", data.categoryID);
+
+                                let categoryName = categoryList.find(category => category.categoryID === data.categoryID);
+                                // console.log(componentName, "updateTitle categoryName", categoryName);
+                                // console.log(componentName, "updateTitle categoryName.category", categoryName.category);
+
+                                // Doesn't seem to be updating the state for some reason?
+                                // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID, linkTypeNameID: data.categoryID, linkTypeName: categoryName.category}]));
+
+                                dispatch(deleteStateURL(urlListIndex));
+                                dispatch(addStateURL([{urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID, linkTypeNameID: data.categoryID, linkTypeName: categoryName.category}]));
+
+                            };
+
+                            // Redirect to the new titleURL is that was changed
+                            if (linkItem.linkName !== data.titleURL) {
+                                redirectPage(data.titleURL);
                             };
 
                         } else {
@@ -584,6 +608,12 @@ const EditTitle = (props) => {
         };
         
     }, [titleRecordUpdated, titleRecordDeleted]);
+
+    const redirectPage = (linkName) => {
+        // console.log(componentName, "redirectPage", linkName);
+        dispatch(setPageURL(linkName.replaceAll("/", "")));
+        history.push("/" + linkName);
+    };
 
     useEffect(() => {
         // console.log(componentName, "useEffect check for admin", admin);

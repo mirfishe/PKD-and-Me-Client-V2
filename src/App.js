@@ -555,12 +555,12 @@ function App() {
       <Route exact path="/categories" component={Category} />
       <Route exact path="/media" component={Media} />
 
-      {/* This route no longer works. */}
+      {/* This route no longer works. Fixed. */}
       <Route exact path="/titles" component={Titles} />
       {/* <Route exact path="/titles/:category" component={Titles} />
       <Route exact path="/title/:title" component={Title} /> */}
 
-      {/* This route no longer works. */}
+      {/* This route no longer works. Fixed. */}
       <Route exact path="/editions" component={Editions} />
       {/* <Route exact path="/editions/:title" component={Editions} /> */}
       {/* <Route exact path="/editions/:media" component={Editions} /> */}

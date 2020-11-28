@@ -114,3 +114,7 @@ body {
 .displayParagraphs {
   white-space: pre-line;
 }
+
+.checklistDrawer {
+  width: 350px;
+}

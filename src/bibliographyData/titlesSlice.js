@@ -7,7 +7,7 @@ const initialState = {
   titlesLoaded: false,
   lastDatabaseRetrievalTitles: null,
   titlesDataOffline: false,
-  titleSort: "titleName"
+  titleSortBy: "titleName"
 };
 
 const titlesSlice = createSlice({
@@ -143,17 +143,17 @@ const titlesSlice = createSlice({
 
       }
     },
-    setTitleSort: {
+    setTitleSortBy: {
       reducer(state, action) {
-        // console.log(componentName, "setTitleSort action.payload", action.payload);
+        // console.log(componentName, "setTitleSortBy action.payload", action.payload);
 
-        state.titleSort = action.payload;
+        state.titleSortBy = action.payload;
 
       }
     }
 }
 });
 
-export const {loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, updateStateTitleRating, setTitlesDataOffline, setTitleSort} = titlesSlice.actions;
+export const {loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, updateStateTitleRating, setTitlesDataOffline, setTitleSortBy} = titlesSlice.actions;
 
 export default titlesSlice.reducer;

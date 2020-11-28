@@ -4,7 +4,8 @@ import {Link, useHistory} from "react-router-dom";
 import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {Image} from "react-bootstrap-icons";
 import {displayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
-import {setTitleSort} from "../../bibliographyData/titlesSlice";
+import {setTitleSortBy} from "../../bibliographyData/titlesSlice";
+import {setEditionSortBy} from "../../bibliographyData/editionsSlice";
 import {setPageURL} from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -25,7 +26,7 @@ const Titles = (props) => {
     const admin = useSelector(state => state.user.admin);
     // console.log(componentName, "admin", admin);
 
-    const titleSort = useSelector(state => state.titles.titleSort);
+    const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
     // const [errCategoryMessage, setErrCategoryMessage] = useState("");
     const [errTitleMessage, setErrTitleMessage] = useState("");
@@ -35,17 +36,55 @@ const Titles = (props) => {
     const categoryListState = useSelector(state => state.categories.arrayCategories);
     // console.log(componentName, "categoryListState", categoryListState);
 
-    // console.log(componentName, "props.match.params", props.match.params);
-    const categoryParam = props.linkItem.linkName; // props.match.params.category;
-    // console.log(componentName, "typeof categoryParam", typeof categoryParam);
-    // console.log(componentName, "categoryParam", categoryParam);
+    let categoryParam;
+    if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
+        // console.log(componentName, "props.match.params", props.match.params);
+        categoryParam = props.linkItem.linkName; // props.match.params.category;
+        // console.log(componentName, "typeof categoryParam", typeof categoryParam);
+        // console.log(componentName, "categoryParam", categoryParam);
+    };
 
     const sortTitles = (sortBy) => {
         // console.log(componentName, "sortTitles sortBy", sortBy);
         if (titleList !== undefined && titleList !== null && titleList.length > 0) {
             if (sortBy === "publicationDate") {
                 // Sort the titleList array by title.publicationDate
-                titleList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+                // Doesn't handle null values well; treats them as "null"
+                // titleList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+
+                // Sort by titleSort first to order the items with a null value for publicationDate?
+                // titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+                // Doesn't sort at all
+                // https://stackoverflow.com/questions/29829205/sort-an-array-so-that-null-values-always-come-last
+                // https://stackoverflow.com/questions/2328562/javascript-sorting-array-of-mixed-strings-and-null-values
+                // titleList.sort((a, b) => ((b.publicationDate !== null) - (a.publicationDate !== null) || a.publicationDate - b.publicationDate));
+
+                // Doesn't sort correctly
+                // https://stackoverflow.com/questions/29829205/sort-an-array-so-that-null-values-always-come-last
+                // https://stackoverflow.com/questions/2328562/javascript-sorting-array-of-mixed-strings-and-null-values
+                // titleList.sort(function(a, b) {
+                //     if (a.publicationDate === b.publicationDate) {
+                //         // titleSort is only important when publicationDates are the same
+                //         return b.titleSort - a.titleSort;
+                //      };
+                //     return ((b.publicationDate != null) - (a.publicationDate != null) || a.publicationDate - b.publicationDate);
+                // });
+
+                // Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
+                let titleListPublicationDate = titleList.filter(title => title.publicationDate !== undefined && title.publicationDate !== null);
+                titleListPublicationDate.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+                // console.log(componentName, "titleListPublicationDate", titleListPublicationDate);
+
+                let titleListNoPublicationDate = titleList.filter(title => title.publicationDate === undefined || title.publicationDate === null);
+                titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+                // console.log(componentName, "titleListNoPublicationDate", titleListNoPublicationDate);
+
+                let newTitleList = [...titleListPublicationDate];
+                newTitleList.push(...titleListNoPublicationDate);
+                // console.log(componentName, "newTitleList", newTitleList);
+
+                titleList = [...newTitleList];
+
             } else if (sortBy === "titleName") {
                 // Sort the titleList array by title.titleSort
                 titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
@@ -93,9 +132,10 @@ const Titles = (props) => {
     } else {
         titleList = titleList.filter(title => title.active === true && title.category.active === true);
     };
-    // console.log(componentName, "titleList", titleList);
 
-    sortTitles(titleSort);
+    sortTitles(titleSortBy);
+    // console.log(componentName, "titleSortBy", titleSortBy);
+    // console.log(componentName, "titleList", titleList);
 
     const redirectPage = (linkName) => {
         // console.log(componentName, "redirectPage", linkName);
@@ -130,14 +170,14 @@ const Titles = (props) => {
                 <Col xs="12">
                     <h4 className="text-center mb-4">{categoryParam !== undefined && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
                     {admin !== undefined && admin !== null && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
-                    {/* <span className="text-muted ml-2 smallText">Sort By&nbsp;
-                        {titleSort !== "publicationDate" ? 
-                        <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSort("publicationDate"));}}>Publication Date</a>
+                    <span className="text-muted ml-2 smallText">Sort By&nbsp;
+                        {titleSortBy !== "publicationDate" ? 
+                        <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate"));}}>Publication Date</a>
                         : null}
-                        {titleSort !== "titleName" ? 
-                        <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("titleName"); dispatch(setTitleSort("titleName"));}}>Title</a>
+                        {titleSortBy !== "titleName" ? 
+                        <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortTitles("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName"));}}>Title</a>
                         : null}
-                    </span> */}
+                    </span>
                  </h4>
                 </Col>
             </Row>

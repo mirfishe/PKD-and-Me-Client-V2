@@ -7,7 +7,7 @@ const initialState = {
   editionsLoaded: false,
   lastDatabaseRetrievalEditions: null,
   editionsDataOffline: false,
-  editionSort: "titleName"
+  editionSortBy: "titleName"
 };
 
 const editionsSlice = createSlice({
@@ -121,17 +121,17 @@ const editionsSlice = createSlice({
 
       }
     },
-    setEditionSort: {
+    setEditionSortBy: {
       reducer(state, action) {
-        // console.log(componentName, "setEditionSort action.payload", action.payload);
+        // console.log(componentName, "setEditionSortBy action.payload", action.payload);
 
-        state.editionSort = action.payload;
+        state.editionSortBy = action.payload;
 
       }
     }
 }
 });
 
-export const {loadArrayEditions, addStateEdition, updateStateEdition, deleteStateEdition, setEditionsDataOffline, setEditionSort} = editionsSlice.actions;
+export const {loadArrayEditions, addStateEdition, updateStateEdition, deleteStateEdition, setEditionsDataOffline, setEditionSortBy} = editionsSlice.actions;
 
 export default editionsSlice.reducer;

@@ -44,6 +44,8 @@ const urlsSlice = createSlice({
       reducer(state, action) {
         // console.log(componentName, "updateStateURL action.payload", action.payload);
 
+        // Doesn't seem to be updating the state for some reason?
+
         const urlItem = action.payload;
         // console.log(componentName, "updateStateURL urlItem", urlItem);
         // console.log(componentName, "updateStateURL urlItem.linkID", urlItem.linkID);
@@ -59,6 +61,12 @@ const urlsSlice = createSlice({
           };
           if (urlItem.hasOwnProperty("linkID")) {
             state.arrayURLs[urlItem.urlListIndex].linkID = urlItem.linkID;
+          };
+          if (urlItem.hasOwnProperty("linkTypeNameID")) {
+            state.arrayURLs[urlItem.urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
+          };
+          if (urlItem.hasOwnProperty("linkTypeName")) {
+            state.arrayURLs[urlItem.urlListIndex].linkTypeName = urlItem.linkTypeName;
           };
 
         };

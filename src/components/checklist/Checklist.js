@@ -4,8 +4,9 @@ import {Link, useHistory} from "react-router-dom";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Container, Col, Row, ListGroup, ListGroupItem, Button, Input} from "reactstrap";
 import {Drawer} from "@material-ui/core";
 import AppSettings from "../../app/environment";
-import {displayYear, encodeURL} from "../../app/sharedFunctions";
-import {setTitleSort} from "../../bibliographyData/titlesSlice";
+import {displayYear, encodeURL, decodeURL} from "../../app/sharedFunctions";
+import {setTitleSortBy} from "../../bibliographyData/titlesSlice";
+import {setEditionSortBy} from "../../bibliographyData/editionsSlice";
 import {setPageURL} from "../../app/urlsSlice";
 import {addStateUserReview, updateStateUserReview} from "../../bibliographyData/userReviewsSlice";
 import {updateStateChecklist} from "../../app/userSlice";
@@ -28,6 +29,8 @@ const Checklist = (props) => {
     const baseURL = AppSettings.baseURL;
     // console.log(componentName, "baseURL", baseURL);
 
+    const titleSortBy = useSelector(state => state.titles.titleSortBy);
+
     const [modal, setModal] = useState(false);
     const [drawer, setDrawer] = useState(false);
 
@@ -46,6 +49,59 @@ const Checklist = (props) => {
     const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
     // console.log(componentName, "userState", userState);
 
+    const editionListState = useSelector(state => state.editions.arrayEditions);
+    // console.log(componentName, "editionListState", editionListState);
+
+    let editionList = [...editionListState];
+    // console.log(componentName, "editionList", editionList);
+
+    const sortChecklistList = (sortBy) => {
+        // console.log(componentName, "sortTitles sortBy", sortBy);
+        if (checklistList !== undefined && checklistList !== null && checklistList.length > 0) {
+            if (sortBy === "publicationDate") {
+                // Sort the checklistList array by title.publicationDate
+                // Doesn't handle null values well; treats them as "null"
+                // checklistList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+
+                // Sort by titleSort first to order the items with a null value for publicationDate?
+                // checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+                // Doesn't sort at all
+                // checklistList.sort((a, b) => ((b.publicationDate !== null) - (a.publicationDate !== null) || a.publicationDate - b.publicationDate));
+
+                // Doesn't sort correctly
+                // checklistList.sort(function(a, b) {
+                //     if (a.publicationDate === b.publicationDate) {
+                //         // titleSort is only important when publicationDates are the same
+                //         return b.titleSort - a.titleSort;
+                //      };
+                //     return ((b.publicationDate != null) - (a.publicationDate != null) || a.publicationDate - b.publicationDate);
+                // });
+
+                // Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
+                let titleListPublicationDate = checklistList.filter(title => title.publicationDate !== undefined && title.publicationDate !== null);
+                titleListPublicationDate.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+                // console.log(componentName, "titleListPublicationDate", titleListPublicationDate);
+
+                let titleListNoPublicationDate = checklistList.filter(title => title.publicationDate === undefined || title.publicationDate === null);
+                titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+                // console.log(componentName, "titleListNoPublicationDate", titleListNoPublicationDate);
+
+                let newtitleList = [...titleListPublicationDate];
+                newtitleList.push(...titleListNoPublicationDate);
+                // console.log(componentName, "newtitleList", newtitleList);
+
+                checklistList = [...newtitleList];
+
+            } else if (sortBy === "titleName") {
+                // Sort the checklistList array by title.titleSort
+                checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+            } else {
+                // Sort the checklistList array by title.titleSort
+                checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+            };
+        };
+    };
+
     const checklistListState = useSelector(state => state.user.arrayChecklist);
     // console.log(componentName, "checklistListState", checklistListState);
 
@@ -60,11 +116,25 @@ const Checklist = (props) => {
         } else if (linkItem.linkType === "media") {
             // This won't work; media is not available
             // checklistList = checklistList.filter(title => title.mediaID === linkItem.linkID);
+
+            editionList = editionList.filter(edition => edition.mediaID === linkItem.linkID);
+
+            checklistList = checklistList.filter((title) => {
+                return editionList.some((edition) => {
+                  return edition.titleID === title.titleID;
+                });
+              });
+
+        } else if (linkItem.linkType === "title") {
+            checklistList = checklistList.filter(title => title.categoryID === linkItem.linkTypeNameID);
         };
 
     };
 
-    checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+    // checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+    sortChecklistList(titleSortBy);
+    // console.log(componentName, "titleSortBy", titleSortBy);
+    // console.log(componentName, "titleList", titleList);
 
     const updateChecklist = (titleID, read, reviewID) => {
         // console.log(componentName, "updateChecklist");
@@ -197,9 +267,9 @@ const Checklist = (props) => {
         // toggle();
     };
 
-    const toggle = () => {
-        setModal(!modal);
-    };
+    // const toggle = () => {
+    //     setModal(!modal);
+    // };
 
     const toggleDrawer = () => {
         setDrawer(!drawer);
@@ -218,37 +288,44 @@ const Checklist = (props) => {
 
         <Drawer anchor="right" open={drawer} onClose={toggleDrawer}>
 
-            <Container className="mx-3">
-                <Row>
-                <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Close</Button>
+            <Container className="checklistDrawer mx-3">
+                <Row className="mb-2">
+                    <Col>
+                    <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Close</Button>
+                    </Col>
                 </Row>
 
            {/* <ListGroup flush> */}
 
-           {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkType") === true && linkItem.hasOwnProperty("linkName") === true && linkItem.linkType === "category" ? 
-            <Row>
-            {/* <ListGroupItem> */}
-            <h6 className="text-center">{linkItem.linkName}
-            {/* Fetch runs very slow 
-            <p className="ml-2"> <small>Sort By
-                {props.titleSort !== "publicationDate" ? 
-                <a href="#" onClick={(event) => {event.preventDefault(); props.setTitleSort("publicationDate")}}>Publication Date</a>
-                : null}
-                {props.titleSort !== null ? 
-                <a href="#" onClick={(event) => {event.preventDefault(); props.setTitleSort(null)}}>Title</a>
-                : null}
-            </small></p> */}
-            </h6>
-            {/* </ListGroupItem> */}
+           {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkTypeName") === true ? 
+            <Row className="justify-content-center">
+                <Col xs="8">
+                    {/* <ListGroupItem> */}
+                    <h6 className="text-center mb-2">{linkItem.linkTypeName}
+                    <br />
+                    <span className="text-muted ml-2 smallText">Sort By&nbsp;
+                        {titleSortBy !== "publicationDate" ? 
+                        <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortChecklistList("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate"));}}>Publication Date</a>
+                        : null}
+                        {titleSortBy !== "titleName" ? 
+                        <a href="#" className="text-decoration-none" onClick={(event) => {event.preventDefault(); sortChecklistList("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName"));}}>Title</a>
+                        : null}
+                    </span>
+                    </h6>
+                    {/* </ListGroupItem> */}
+                </Col>
             </Row>
             : null}
 
             {checklistList.map((title) => {
             return (
-                <Row /*ListGroupItem*/ key={title.titleID} className="mx-3"><Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID)}} /> <p><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
-                {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}
-                </p>
-                {/* </ListGroupItem> */}
+                <Row /*ListGroupItem*/ key={title.titleID}>
+                    <Col className="mx-3">
+                        <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID)}} /> <p><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
+                        {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}
+                        </p>
+                        {/* </ListGroupItem> */}
+                    </Col>
                 </Row>
             )
             })}

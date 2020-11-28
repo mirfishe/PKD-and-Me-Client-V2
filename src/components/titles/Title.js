@@ -380,7 +380,7 @@ const Title = (props) => {
                         {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
                         {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && userReviewItem !== undefined && userReviewItem !== null ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
-                        {title.shortDescription !== "" && title.shortDescription !== null ? <p class="displayParagraphs">{title.shortDescription}</p> : null}
+                        {title.shortDescription !== "" && title.shortDescription !== null ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
                         {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
                         {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
                     </Col>

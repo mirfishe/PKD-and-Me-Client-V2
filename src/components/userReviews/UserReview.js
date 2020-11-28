@@ -138,7 +138,7 @@ const UserReview = (props) => {
 
             <Row>
                 <Col xs="12">
-                {userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "" ? <p class="displayParagraphs">{userReview.longReview}</p> : null}
+                {userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "" ? <p className="displayParagraphs">{userReview.longReview}</p> : null}
                 </Col>
             </Row>
 
