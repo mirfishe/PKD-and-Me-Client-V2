@@ -6,6 +6,7 @@
 "electronicOnly": false,
 "physicalOnly": false,
 "appAllowUserInteractions": true,
+"requireUserLogin": true,
 "menuSettings": {
     "showAllMenuItems": false,
 

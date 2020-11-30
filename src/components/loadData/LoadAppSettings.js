@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import AppSettings from "../../app/environment";
-import {setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings} from "../../app/appSlice";
+import {setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings} from "../../app/appSlice";
 
 function LoadAppSettings() {
 
@@ -75,6 +75,9 @@ function LoadAppSettings() {
 
     // let appAllowUserInteractions = AppSettings.appAllowUserInteractions;
     dispatch(setAppAllowUserInteractions(AppSettings.appAllowUserInteractions));
+
+    // let requireUserLogin = AppSettings.requireUserLogin;
+    dispatch(setRequireUserLogin(AppSettings.requireUserLogin));
 
     // let menuSettings = AppSettings.menuSettings;
     dispatch(setMenuSettings(AppSettings.menuSettings));
@@ -201,6 +204,12 @@ function LoadAppSettings() {
             if (data.appAllowUserInteractions !== undefined) {
                 // appAllowUserInteractions = data.appAllowUserInteractions;
                 dispatch(setAppAllowUserInteractions(data.appAllowUserInteractions));
+            };
+
+            // console.log(componentName, "getAppSettings data.requireUserLogin", data.requireUserLogin);
+            if (data.requireUserLogin !== undefined) {
+                // requireUserLogin = data.requireUserLogin;
+                dispatch(setRequireUserLogin(data.requireUserLogin));
             };
 
             // In case accidentally set both to true, then electronicOnly overides.

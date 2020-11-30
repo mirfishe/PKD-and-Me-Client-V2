@@ -21,6 +21,7 @@ const initialState = {
     userPhysicalOnly: false,
     physicalOnlyMessage: "",
     appAllowUserInteractions: true,
+    requireUserLogin: true,
     appSettingsLoaded: false,
     appSettingsJsonLoaded: false,
     menuSettings: {},
@@ -175,6 +176,14 @@ const appSlice = createSlice({
 
       }
     },
+    setRequireUserLogin: {
+      reducer(state, action) {
+        // console.log(componentName, "setRequireUserLogin action.payload", action.payload);
+
+        state.requireUserLogin = action.payload;
+
+      }
+    },
     setAppSettingsLoaded: {
       reducer(state, action) {
         // console.log(componentName, "setAppSettingsLoaded action.payload", action.payload);
@@ -210,6 +219,6 @@ const appSlice = createSlice({
 }
 });
 
-export const {setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
+export const {setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem} = appSlice.actions;
 
 export default appSlice.reducer;

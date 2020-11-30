@@ -62,6 +62,15 @@ const EditCategories = (props) => {
 
     };
 
+    useEffect(() => {
+        // console.log(componentName, "useEffect check for admin", admin);
+
+        if (admin !== true) {
+            // return <Redirect to="/" />;
+            setModal(false);
+        };
+        
+    }, [admin]);
 
     const toggle = () => {
         setModal(!modal);

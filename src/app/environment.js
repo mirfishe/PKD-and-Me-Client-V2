@@ -17,6 +17,7 @@ let electronicOnlyMessage = "You are viewing only electronic editions.";
 let physicalOnly = false;
 let physicalOnlyMessage = "You are viewing only physical editions.";
 let appAllowUserInteractions = true;
+let requireUserLogin = true;
 
 let tagManagerArgs = {
     gtmId: ""
@@ -86,6 +87,7 @@ switch (profileType) {
         electronicOnly = false;
         physicalOnly = false;
         appAllowUserInteractions = true;
+        requireUserLogin = true;
         tagManagerArgs.gtmId = "";
         break;
     case "heroku":
@@ -99,6 +101,7 @@ switch (profileType) {
         electronicOnly = false;
         physicalOnly = false;
         appAllowUserInteractions = true;
+        requireUserLogin = true;
         tagManagerArgs.gtmId = "";
         break;
     case "philipdick":
@@ -112,6 +115,7 @@ switch (profileType) {
         electronicOnly = false;
         physicalOnly = false;
         appAllowUserInteractions = true;
+        requireUserLogin = true;
         tagManagerArgs.gtmId = "GTM-NW2GPF2";
         break;
     case "homeopape":
@@ -125,6 +129,7 @@ switch (profileType) {
         electronicOnly = true;
         physicalOnly = false;
         appAllowUserInteractions = false;
+        requireUserLogin = true;
         tagManagerArgs.gtmId = "GTM-NXQJTGL";
         break;
     default:
@@ -139,6 +144,7 @@ switch (profileType) {
         electronicOnly = false;
         physicalOnly = false;
         appAllowUserInteractions = true;
+        requireUserLogin = true;
         tagManagerArgs.gtmId = "";
 };
 
@@ -186,6 +192,7 @@ Object.assign(AppSettings, {electronicOnlyMessage: electronicOnlyMessage});
 Object.assign(AppSettings, {physicalOnly: physicalOnly});
 Object.assign(AppSettings, {physicalOnlyMessage: physicalOnlyMessage});
 Object.assign(AppSettings, {appAllowUserInteractions: appAllowUserInteractions});
+Object.assign(AppSettings, {requireUserLogin: requireUserLogin});
 Object.assign(AppSettings, {tagManagerArgs: tagManagerArgs});
 Object.assign(AppSettings, {menuSettings: menuSettings});
 
