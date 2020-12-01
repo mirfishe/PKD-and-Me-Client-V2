@@ -83,7 +83,7 @@ const TitleSuggestions = (props) => {
             <Row>
             <Col xs="12">
                 <p>
-                Suggested by {titleSuggestion.user.firstName} {titleSuggestion.user.lastName} {titleSuggestion.updatedAt !== undefined && titleSuggestion.updatedAt !== null ? <small>on {displayDate(titleSuggestion.updatedAt)}</small> : null}
+                Suggested by {titleSuggestion.user.firstName !== undefined && titleSuggestion.user.firstName !== null ? titleSuggestion.user.firstName : null} {titleSuggestion.user.lastName !== undefined && titleSuggestion.user.lastName !== null ? titleSuggestion.user.lastName : null} {titleSuggestion.emailAddress !== undefined && titleSuggestion.emailAddress !== null ? titleSuggestion.emailAddress : null} {titleSuggestion.updatedAt !== undefined && titleSuggestion.updatedAt !== null ? <small>on {displayDate(titleSuggestion.updatedAt)}</small> : null}
                 </p>
             </Col>
             </Row>
