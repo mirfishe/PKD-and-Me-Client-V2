@@ -197,9 +197,16 @@ function App() {
 
             if (data.resultsFound === true) {
 
-              if (data.users[0].active === true) {
+              if (data.active === true) {
 
-                dispatch(loadUserData(data.users[0]));
+                dispatch(loadUserData(data));
+
+                // console.log(componentName, "getUser checklistLoaded", checklistLoaded);
+                // console.log(componentName, "getUser data.sessionToken", data.sessionToken);
+                // console.log(componentName, "getUser token", token);
+                if (!checklistLoaded) {
+                  getChecklist(token);
+                };
 
               } else {
                 // Won't hit this because no records will be returned if the user is not active
@@ -227,6 +234,7 @@ function App() {
   const getChecklist = (token) => {
     // console.log(componentName, "getChecklist");
     // console.log(componentName, "getChecklist baseURL", baseURL);
+    // console.log(componentName, "getChecklist token", token);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
@@ -300,9 +308,11 @@ function App() {
       if (!userLoaded) {
         getUser(localStorage.getItem("token"));
       };
-      if (!checklistLoaded) {
-        getChecklist(localStorage.getItem("token"));
-      };
+
+      // Moved to the getUser function
+      // if (!checklistLoaded) {
+      //   getChecklist(localStorage.getItem("token"));
+      // };
 
   };
 
