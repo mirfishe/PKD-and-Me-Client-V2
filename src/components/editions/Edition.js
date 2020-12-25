@@ -39,12 +39,17 @@ const Edition = (props) => {
     const titleListState = useSelector(state => state.titles.arrayTitles);
     // console.log(componentName, "titleListState", titleListState);
 
+    let titleItemArray = [];
     let titleItem = {};
 
     if (props.titleID !== undefined && props.titleID !== null && !isNaN(props.titleID)) {
         editionList = editionList.filter(edition => edition.titleID === props.titleID);
-        titleItem = titleListState.filter(title => title.titleID === props.titleID);
+        titleItemArray = titleListState.filter(title => title.titleID === props.titleID);
+        titleItem = titleItemArray[0];
     };
+    
+    // console.log(componentName, "props.titleID", props.titleID);
+    // console.log(componentName, "titleItem", titleItem);
 
     if (electronicOnly === true || userElectronicOnly === true) {
         editionList = editionList.filter(edition => edition.medium.electronic === true);
@@ -87,7 +92,7 @@ const Edition = (props) => {
             <Row className="my-4">
                 <Col xs="12">
                     <h5 className="text-center">Find A Copy 
-                    {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.titlePublicationDate} displayButton={true} /> : null}
+                    {admin !== undefined && admin !== null && admin === true && titleItem !== undefined ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} displayButton={true} /> : null}
                     </h5>
                 </Col>
             </Row>

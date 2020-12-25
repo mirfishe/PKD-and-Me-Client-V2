@@ -37,7 +37,7 @@ const EditUserReview = (props) => {
     // console.log(componentName, "userReviewListState", userReviewListState);
 
     // Not needed?
-    // const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
+    const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
     // console.log(componentName, "userState", userState);
 
     const [message, setMessage] = useState("");
@@ -206,8 +206,12 @@ const EditUserReview = (props) => {
         // txtDateRead is expecting a date and rdoRating is expecting a number
         // if (txtDateRead !== null && rdoRating !== null) {
 
+            // console.log(componentName, "addUserReview typeof titleID", typeof titleID);
+
+            // console.log(componentName, "addUserReview parseInt(titleID)", parseInt(titleID));
+
             let userReviewObject = {
-                titleID: titleID,
+                titleID: parseInt(titleID),
                 read: cbxRead,
                 // dateRead: txtDateRead.trim(),
                 rating: rdoRating,
@@ -294,14 +298,16 @@ const EditUserReview = (props) => {
                         let titleItem = titleListState.filter(title => title.titleID === data.titleID);
                         // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}
                         titleItem = titleItem[0];
+
                         // console.log(componentName, "updateUserReview titleItem", titleItem);
+                        // console.log(componentName, "updateUserReview typeof data.titleID", typeof data.titleID);
 
                         let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
                         
                         // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
                         // Would still work if the createdAt and updatedAt were left out?
-                        dispatch(updateStateUserReview({userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, updatedAt: new Date().toISOString()}));
+                        dispatch(updateStateUserReview({userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, updatedAt: new Date().toISOString(), title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}}));
                         // Add to local storage also?
 
                         // Recalculate ratings

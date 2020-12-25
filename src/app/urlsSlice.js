@@ -56,15 +56,19 @@ const urlsSlice = createSlice({
           if (urlItem.hasOwnProperty("linkName")) {
             state.arrayURLs[urlItem.urlListIndex].linkName = urlItem.linkName;
           };
+
           if (urlItem.hasOwnProperty("linkType")) {
             state.arrayURLs[urlItem.urlListIndex].linkType = urlItem.linkType;
           };
+
           if (urlItem.hasOwnProperty("linkID")) {
             state.arrayURLs[urlItem.urlListIndex].linkID = urlItem.linkID;
           };
+
           if (urlItem.hasOwnProperty("linkTypeNameID")) {
             state.arrayURLs[urlItem.urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
           };
+          
           if (urlItem.hasOwnProperty("linkTypeName")) {
             state.arrayURLs[urlItem.urlListIndex].linkTypeName = urlItem.linkTypeName;
           };

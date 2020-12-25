@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
 import {Image, PencilSquare} from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import {getASIN} from "../../app/sharedFunctions";
+import {getASIN, removeOnePixelImage} from "../../app/sharedFunctions";
 import {updateStateEdition, deleteStateEdition} from "../../bibliographyData/editionsSlice";
 
 const EditEdition = (props) => {
@@ -68,6 +68,9 @@ const EditEdition = (props) => {
         };
         
     }, [mediaList]);
+
+    const titleListState = useSelector(state => state.titles.arrayTitles);
+    // console.log(componentName, "titleListState", titleListState);
 
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
@@ -225,10 +228,16 @@ const EditEdition = (props) => {
 
         if (formValidated === true) {
 
+            // console.log(componentName, "addEdition typeof titleID", typeof titleID);
+            // console.log(componentName, "addEdition typeof ddMediaID", typeof ddMediaID);
+
+            // console.log(componentName, "addEdition parseInt(titleID)", parseInt(titleID));
+            // console.log(componentName, "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
+
             let editionObject = {
                 editionID: props.editionID,
-                titleID: titleID,
-                mediaID: ddMediaID,
+                titleID: parseInt(titleID),
+                mediaID: parseInt(ddMediaID),
                 // imageName: txtImageName.trim(),
                 // ASIN: txtASIN.trim(),
                 // textLinkShort: txtTextLinkShort.trim(),
@@ -356,8 +365,22 @@ const EditEdition = (props) => {
                         setTextImageLink(data.textImageLink);
                         setActive(data.active);
 
+                        let mediaItem = mediaListState.filter(media => media.mediaID === data.mediaID);
+                        // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createdAt: mediaItem.createdAt, updatedAt: mediaItem.updatedAt}
+                        mediaItem = mediaItem[0];
+
+                        // console.log(componentName, "updateEdition typeof data.mediaID", typeof data.mediaID);
+                        // console.log(componentName, "updateEdition mediaItem", mediaItem);
+
+                        let titleItem = titleListState.filter(title => title.titleID === data.titleID);
+                        // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}
+                        titleItem = titleItem[0];
+
+                        // console.log(componentName, "updateEdition typeof data.titleID", typeof data.titleID);
+                        // console.log(componentName, "updateEdition titleItem", titleItem);
+
                         // Would still work if the createdAt and updatedAt were left out?
-                        dispatch(updateStateEdition({editionItemIndex: editionItemIndex, editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, updatedAt: new Date().toISOString()}));
+                        dispatch(updateStateEdition({editionItemIndex: editionItemIndex, editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, updatedAt: new Date().toISOString(), medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createdAt: mediaItem.createdAt, updatedAt: mediaItem.updatedAt}, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}}));
                         // Add to local storage also?
                         
                     } else {
@@ -615,25 +638,25 @@ const EditEdition = (props) => {
                 </FormGroup>
                 <FormGroup>
     
-                <Label for="txtTextLinkFull">Text Link Full</Label>
+                <Label for="txtTextLinkFull">Text Link Full</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull));}}>Copy ASIN</Button>
                 <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => {/*console.log(event.target.value);*/ setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull));}} />
 
                 </FormGroup>
                 <FormGroup>
     
-                <Label for="txtImageLinkSmall">Image Link Small</Label>
+                <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(event.target.value);*/ setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN));}}>Remove One Pixel Image</Button>
                 <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => {/*console.log(event.target.value);*/ setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull));}} />
 
                 </FormGroup>
                 <FormGroup>
     
-                <Label for="txtImageLinkMedium">Image Link Medium</Label>
+                <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(event.target.value);*/ setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN));}}>Remove One Pixel Image</Button>
                 <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => {/*console.log(event.target.value);*/ setTxtImageLinkMedium(event.target.value);}} />
 
                 </FormGroup>
                 <FormGroup>
     
-                <Label for="txtImageLinkLarge">Image Link Large</Label>
+                <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(event.target.value);*/ setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN));}}>Remove One Pixel Image</Button>
                 <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => {/*console.log(event.target.value);*/ setTxtImageLinkLarge(event.target.value);}} />
 
                 </FormGroup>

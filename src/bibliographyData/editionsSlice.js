@@ -56,41 +56,138 @@ const editionsSlice = createSlice({
           if (editionItem.hasOwnProperty("titleID")) {
             state.arrayEditions[editionItem.editionItemIndex].titleID = editionItem.titleID;
           };
+
           if (editionItem.hasOwnProperty("mediaID")) {
             state.arrayEditions[editionItem.editionItemIndex].mediaID = editionItem.mediaID;
           };
+
           if (editionItem.hasOwnProperty("publicationDate")) {
             state.arrayEditions[editionItem.editionItemIndex].publicationDate = editionItem.publicationDate;
           };
+
           if (editionItem.hasOwnProperty("imageName")) {
             state.arrayEditions[editionItem.editionItemIndex].imageName = editionItem.imageName;
           };
+
           if (editionItem.hasOwnProperty("ASIN")) {
             state.arrayEditions[editionItem.editionItemIndex].ASIN = editionItem.ASIN;
           };
+
           if (editionItem.hasOwnProperty("textLinkShort")) {
             state.arrayEditions[editionItem.editionItemIndex].textLinkShort = editionItem.textLinkShort;
           };
+
           if (editionItem.hasOwnProperty("textLinkFull")) {
             state.arrayEditions[editionItem.editionItemIndex].textLinkFull = editionItem.textLinkFull;
           };
+
           if (editionItem.hasOwnProperty("imageLinkSmall")) {
             state.arrayEditions[editionItem.editionItemIndex].imageLinkSmall = editionItem.imageLinkSmall;
           };
+
           if (editionItem.hasOwnProperty("imageLinkMedium")) {
             state.arrayEditions[editionItem.editionItemIndex].imageLinkMedium = editionItem.imageLinkMedium;
           };
+
           if (editionItem.hasOwnProperty("imageLinkLarge")) {
             state.arrayEditions[editionItem.editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
           };
+
           if (editionItem.hasOwnProperty("textImageLink")) {
             state.arrayEditions[editionItem.editionItemIndex].textImageLink = editionItem.textImageLink;
           };
+
           if (editionItem.hasOwnProperty("active")) {
             state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
           };
+
           if (editionItem.hasOwnProperty("updatedAt")) {
             state.arrayEditions[editionItem.editionItemIndex].updatedAt = editionItem.updatedAt;
+          };
+
+          if (editionItem.hasOwnProperty("medium")) {
+            // console.log(componentName, "updateStateEdition editionItem.medium", editionItem.medium);
+
+            if (editionItem.medium.hasOwnProperty("mediaID")) {
+              state.arrayEditions[editionItem.editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
+            };
+
+            if (editionItem.medium.hasOwnProperty("media")) {
+              state.arrayEditions[editionItem.editionItemIndex].medium.media = editionItem.medium.media;
+            };
+
+            if (editionItem.medium.hasOwnProperty("electronic")) {
+              state.arrayEditions[editionItem.editionItemIndex].medium.electronic = editionItem.medium.electronic;
+            };
+
+            if (editionItem.medium.hasOwnProperty("sortID")) {
+              state.arrayEditions[editionItem.editionItemIndex].medium.sortID = editionItem.medium.sortID;
+            };
+
+            if (editionItem.medium.hasOwnProperty("active")) {
+              state.arrayEditions[editionItem.editionItemIndex].medium.active = editionItem.medium.active;
+            };
+
+            if (editionItem.medium.hasOwnProperty("updatedAt")) {
+              state.arrayEditions[editionItem.editionItemIndex].medium.updatedAt = editionItem.medium.updatedAt;
+            };
+
+          };
+
+          if (editionItem.hasOwnProperty("title")) {
+
+            if (editionItem.title.hasOwnProperty("titleID")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.titleID = editionItem.title.titleID;
+            };
+
+            if (editionItem.title.hasOwnProperty("titleName")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.titleName = editionItem.title.titleName;
+            };
+
+            if (editionItem.title.hasOwnProperty("titleSort")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.titleSort = editionItem.title.titleSort;
+            };
+
+            if (editionItem.title.hasOwnProperty("titleURL")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.titleURL = editionItem.title.titleURL;
+            };
+
+            if (editionItem.title.hasOwnProperty("authorFirstName")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.authorFirstName = editionItem.title.authorFirstName;
+            };
+
+            if (editionItem.title.hasOwnProperty("authorLastName")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.authorLastName = editionItem.title.authorLastName;
+            };
+
+            if (editionItem.title.hasOwnProperty("publicationDate")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.publicationDate = editionItem.title.publicationDate;
+            };
+
+            if (editionItem.title.hasOwnProperty("imageName")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.imageName = editionItem.title.imageName;
+            };
+
+            if (editionItem.title.hasOwnProperty("categoryID")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.categoryID = editionItem.title.categoryID;
+            };
+
+            if (editionItem.title.hasOwnProperty("shortDescription")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.shortDescription = editionItem.title.shortDescription;
+            };
+
+            if (editionItem.title.hasOwnProperty("urlPKDweb")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.urlPKDweb = editionItem.title.urlPKDweb;
+            };
+
+            if (editionItem.title.hasOwnProperty("active")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.active = editionItem.title.active;
+            };
+            
+            if (editionItem.title.hasOwnProperty("updatedAt")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.updatedAt = editionItem.title.updatedAt;
+            };
+
           };
 
         };

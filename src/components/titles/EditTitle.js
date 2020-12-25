@@ -248,12 +248,16 @@ const EditTitle = (props) => {
 
             if (txtTitleName !== undefined && txtTitleName !== null) {
 
+                // console.log(componentName, "addEdition typeof ddCategoryID", typeof ddCategoryID);
+
+                // console.log(componentName, "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
+
                 let titleObject = {
                     titleName: txtTitleName.trim(),
                     // authorFirstName: txtAuthorFirstName.trim(),
                     // authorLastName: txtAuthorLastName.trim(),
                     // imageName: txtImageName.trim(),
-                    categoryID: ddCategoryID,
+                    categoryID: parseInt(ddCategoryID),
                     // shortDescription: txtShortDescription.trim(),
                     // urlPKDweb: txtUrlPKDweb.trim(),
                     active: !deleteTitle
@@ -361,8 +365,15 @@ const EditTitle = (props) => {
                             setUrlPKDweb(data.urlPKDweb);
                             setActive(data.active);
 
+                            let categoryItem = categoryList.filter(category => category.categoryID === data.categoryID);
+                            // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt}
+                            categoryItem = categoryItem[0];
+
+                            // console.log(componentName, "addTitle typeof data.categoryID", typeof data.categoryID);
+                            // console.log(componentName, "addTitle categoryItem", categoryItem);
+
                             // Would still work if the createdAt and updatedAt were left out?
-                            dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, updatedAt: new Date().toISOString()}));
+                            dispatch(updateStateTitle({titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, updatedAt: new Date().toISOString(), category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt}}));
                             // Update local storage also
 
                             // Update/Delete related editions also if active is set to false
@@ -393,6 +404,8 @@ const EditTitle = (props) => {
                                 let categoryName = categoryList.find(category => category.categoryID === data.categoryID);
                                 // console.log(componentName, "updateTitle categoryName", categoryName);
                                 // console.log(componentName, "updateTitle categoryName.category", categoryName.category);
+
+                                // console.log(componentName, "updateTitle typeof data.categoryID", typeof data.categoryID);
 
                                 // Doesn't seem to be updating the state for some reason?
                                 // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID, linkTypeNameID: data.categoryID, linkTypeName: categoryName.category}]));

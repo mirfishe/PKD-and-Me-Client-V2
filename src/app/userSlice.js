@@ -138,24 +138,31 @@ const userSlice = createSlice({
           if (checklistItem.hasOwnProperty("reviewID")) {
             state.arrayChecklist[checklistItem.checklistListIndex].reviewID = checklistItem.reviewID;
           };
+
           if (checklistItem.hasOwnProperty("userID")) {
             state.arrayChecklist[checklistItem.checklistListIndex].userID = checklistItem.userID;
           };
+
           if (checklistItem.hasOwnProperty("updatedBy")) {
             state.arrayChecklist[checklistItem.checklistListIndex].updatedBy = checklistItem.updatedBy;
           };
+
           if (checklistItem.hasOwnProperty("read")) {
             state.arrayChecklist[checklistItem.checklistListIndex].read = checklistItem.read;
           };
+
           if (checklistItem.hasOwnProperty("dateRead")) {
             state.arrayChecklist[checklistItem.checklistListIndex].dateRead = checklistItem.dateRead;
           };
+
           if (checklistItem.hasOwnProperty("userReviewActive")) {
             state.arrayChecklist[checklistItem.checklistListIndex].userReviewActive = checklistItem.userReviewActive;
           };
+
           if (checklistItem.hasOwnProperty("userReviewCreatedAt")) {
             state.arrayChecklist[checklistItem.checklistListIndex].userReviewCreatedAt = checklistItem.userReviewCreatedAt;
           };
+          
           if (checklistItem.hasOwnProperty("userReviewUpdatedAt")) {
             state.arrayChecklist[checklistItem.checklistListIndex].userReviewUpdatedAt = checklistItem.userReviewUpdatedAt;
           };

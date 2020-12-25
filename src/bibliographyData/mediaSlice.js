@@ -55,15 +55,19 @@ const mediaSlice = createSlice({
           if (mediaItem.hasOwnProperty("media")) {
             state.arrayMedia[mediaItem.mediaItemIndex].media = mediaItem.media;
           };
+
           if (mediaItem.hasOwnProperty("electronic")) {
             state.arrayMedia[mediaItem.mediaItemIndex].electronic = mediaItem.electronic;
           };
+
           if (mediaItem.hasOwnProperty("sortID")) {
             state.arrayMedia[mediaItem.mediaItemIndex].sortID = mediaItem.sortID;
           };
+
           if (mediaItem.hasOwnProperty("active")) {
             state.arrayMedia[mediaItem.mediaItemIndex].active = mediaItem.active;
           };
+          
           if (mediaItem.hasOwnProperty("updatedAt")) {
             state.arrayMedia[mediaItem.mediaItemIndex].updatedAt = mediaItem.updatedAt;
           };

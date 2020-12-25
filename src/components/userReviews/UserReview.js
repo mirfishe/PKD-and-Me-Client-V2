@@ -31,6 +31,7 @@ const UserReview = (props) => {
     if (props.titleID !== undefined && props.titleID !== null && !isNaN(props.titleID)) {
         userReviews = userReviews.filter(userReview => userReview.titleID === props.titleID);
     };
+    // console.log(componentName, "props.titleID", props.titleID);
 
     if (admin !== undefined && admin !== null && admin === true) {
         userReviews = [...userReviews];

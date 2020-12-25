@@ -39,6 +39,8 @@ const AddUserReview = (props) => {
     const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
     // console.log(componentName, "userState", userState);
 
+    // console.log(componentName, "props.titleID", props.titleID);
+
     const [message, setMessage] = useState("");
     const [errMessage, setErrMessage] = useState("");
     const [modal, setModal] = useState(false);
@@ -90,6 +92,7 @@ const AddUserReview = (props) => {
     const addUserReview = () => {
         // console.log(componentName, "addUserReview");
         // console.log(componentName, "addUserReview baseURL", baseURL);
+        // console.log(componentName, "addUserReview props.titleID", props.titleID);
 
         setMessage("");
         setErrMessage("");
@@ -112,11 +115,15 @@ const AddUserReview = (props) => {
         // txtDateRead is expecting a date and rdoRating is expecting a number
         // if (txtDateRead !== null && rdoRating !== null) {
 
+            // console.log(componentName, "addUserReview typeof props.titleID", typeof props.titleID);
+
+            // console.log(componentName, "addUserReview parseInt(props.titleID)", parseInt(props.titleID));
+
             let userReviewObject = {
-                titleID: props.titleID,
+                titleID: parseInt(props.titleID),
                 read: cbxRead,
                 // dateRead: txtDateRead.trim(),
-                rating: rdoRating,
+                rating: rdoRating
                 // shortReview: txtShortReview.trim(),
                 // longReview: txtLongReview.trim()
             };
@@ -192,7 +199,9 @@ const AddUserReview = (props) => {
                         let titleItem = titleListState.filter(title => title.titleID === data.titleID);
                         // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}
                         titleItem = titleItem[0];
+
                         // console.log(componentName, "addUserReview titleItem", titleItem);
+                        // console.log(componentName, "addUserReview typeof data.titleID", typeof data.titleID);
 
                         let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
                         

@@ -59,35 +59,133 @@ const userReviewsSlice = createSlice({
         if (userReviewItem.hasOwnProperty("reviewID")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].reviewID = userReviewItem.reviewID;
         };
+
         if (userReviewItem.hasOwnProperty("userID")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].userID = userReviewItem.userID;
         };
+
         if (userReviewItem.hasOwnProperty("updatedBy")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
         };
+
         if (userReviewItem.hasOwnProperty("titleID")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleID = userReviewItem.titleID;
         };
+
         if (userReviewItem.hasOwnProperty("read")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].read = userReviewItem.read;
         };
+
         if (userReviewItem.hasOwnProperty("dateRead")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].dateRead = userReviewItem.dateRead;
         };
+
         if (userReviewItem.hasOwnProperty("rating")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].rating = userReviewItem.rating;
         };
+
         if (userReviewItem.hasOwnProperty("shortReview")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
         };
+
         if (userReviewItem.hasOwnProperty("longReview")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
         };
+
         if (userReviewItem.hasOwnProperty("active")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
         };
+
         if (userReviewItem.hasOwnProperty("updatedAt")) {
           state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
+        };
+
+        if (userReviewItem.hasOwnProperty("title")) {
+
+          if (userReviewItem.title.hasOwnProperty("titleID")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleID = userReviewItem.title.titleID;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("titleName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleName = userReviewItem.title.titleName;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("titleSort")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleSort = userReviewItem.title.titleSort;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("titleURL")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleURL = userReviewItem.title.titleURL;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("authorFirstName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.authorFirstName = userReviewItem.title.authorFirstName;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("authorLastName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.authorLastName = userReviewItem.title.authorLastName;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("publicationDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.publicationDate = userReviewItem.title.publicationDate;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("imageName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.imageName = userReviewItem.title.imageName;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("categoryID")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.categoryID = userReviewItem.title.categoryID;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("shortDescription")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.shortDescription = userReviewItem.title.shortDescription;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("urlPKDweb")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.urlPKDweb = userReviewItem.title.urlPKDweb;
+          };
+
+          if (userReviewItem.title.hasOwnProperty("active")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.active = userReviewItem.title.active;
+          };
+          
+          if (userReviewItem.title.hasOwnProperty("updatedAt")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.updatedAt = userReviewItem.title.updatedAt;
+          };
+
+        };
+
+        if (userReviewItem.hasOwnProperty("user")) {
+
+          if (userReviewItem.user.hasOwnProperty("userID")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].user.userID = userReviewItem.user.userID;
+          };
+
+          if (userReviewItem.user.hasOwnProperty("firstName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].firstName = userReviewItem.user.firstName;
+          };
+
+          if (userReviewItem.user.hasOwnProperty("lastName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].lastName = userReviewItem.user.lastName;
+          };
+
+          if (userReviewItem.user.hasOwnProperty("email")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].email = userReviewItem.user.email;
+          };
+
+          if (userReviewItem.user.hasOwnProperty("updatedBy")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.user.updatedBy;
+          };
+
+          if (userReviewItem.user.hasOwnProperty("admin")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].admin = userReviewItem.user.admin;
+          };
+
+          if (userReviewItem.user.hasOwnProperty("active")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.user.active;
+          };
+
         };
 
       };

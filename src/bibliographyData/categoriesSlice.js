@@ -55,12 +55,15 @@ const categoriesSlice = createSlice({
         if (categoryItem.hasOwnProperty("category")) {
           state.arrayCategories[categoryItem.categoryItemIndex].category = categoryItem.category;
         };
+
         if (categoryItem.hasOwnProperty("sortID")) {
           state.arrayCategories[categoryItem.categoryItemIndex].sortID = categoryItem.sortID;
         };
+
         if (categoryItem.hasOwnProperty("active")) {
           state.arrayCategories[categoryItem.categoryItemIndex].active = categoryItem.active;
         };
+        
         if (categoryItem.hasOwnProperty("updatedAt")) {
           state.arrayCategories[categoryItem.categoryItemIndex].updatedAt = categoryItem.updatedAt;
         };

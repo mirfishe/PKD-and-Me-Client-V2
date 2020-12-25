@@ -174,12 +174,16 @@ const AddTitle = (props) => {
 
             if (txtTitleName !== undefined && txtTitleName !== null) {
 
+                // console.log(componentName, "addEdition typeof ddCategoryID", typeof ddCategoryID);
+
+                // console.log(componentName, "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
+
                 let titleObject = {
                     titleName: txtTitleName.trim(),
                     // authorFirstName: txtAuthorFirstName.trim(),
                     // authorLastName: txtAuthorLastName.trim(),
                     // imageName: txtImageName.trim(),
-                    categoryID: ddCategoryID
+                    categoryID: parseInt(ddCategoryID)
                     // shortDescription: txtShortDescription.trim(),
                     // urlPKDweb: txtUrlPKDweb.trim()
                 };
@@ -283,9 +287,12 @@ const AddTitle = (props) => {
                             setUrlPKDweb(data.urlPKDweb);
                             setActive(data.active);
 
-                            let categoryItem = categoryList.filter(category => category.mediaID === data.categoryID);
+                            let categoryItem = categoryList.filter(category => category.categoryID === data.categoryID);
                             // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt}
                             categoryItem = categoryItem[0];
+
+                            // console.log(componentName, "addTitle typeof data.categoryID", typeof data.categoryID);
+                            // console.log(componentName, "addTitle categoryItem", categoryItem);
 
                             // Would still work if the createdAt and updatedAt were left out?
                             dispatch(addStateTitle([{titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt}}]));
