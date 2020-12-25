@@ -28,6 +28,13 @@ const Titles = (props) => {
 
     const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
+    const electronicOnly = useSelector(state => state.app.electronicOnly);
+    const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
+    // const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
+    const physicalOnly = useSelector(state => state.app.physicalOnly);
+    const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
+    // const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
+
     // const [errCategoryMessage, setErrCategoryMessage] = useState("");
     const [errTitleMessage, setErrTitleMessage] = useState("");
 
@@ -35,6 +42,8 @@ const Titles = (props) => {
     // console.log(componentName, "titleListState", titleListState);
     const categoryListState = useSelector(state => state.categories.arrayCategories);
     // console.log(componentName, "categoryListState", categoryListState);
+    const editionListState = useSelector(state => state.editions.arrayEditions);
+    // console.log(componentName, "editionListState", editionListState);
 
     let categoryParam;
     if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
@@ -42,6 +51,21 @@ const Titles = (props) => {
         categoryParam = props.linkItem.linkName; // props.match.params.category;
         // console.log(componentName, "typeof categoryParam", typeof categoryParam);
         // console.log(componentName, "categoryParam", categoryParam);
+    };
+
+    let editionList = [...editionListState];
+    if (electronicOnly === true || userElectronicOnly === true) {
+        editionList = editionList.filter(edition => edition.medium.electronic === true);
+    } else if (physicalOnly === true || userPhysicalOnly === true) {
+        editionList = editionList.filter(edition =>  edition.medium.electronic === false);
+    } else {
+        editionList = [...editionList];
+    };
+
+    if (admin !== undefined && admin !== null && admin === true) {
+        editionList = [...editionList];
+    } else {
+        editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
     };
 
     const sortTitles = (sortBy) => {
@@ -150,6 +174,7 @@ const Titles = (props) => {
         } else {
             setErrTitleMessage("No titles found.");
         };
+
     }, [titleList]);
 
     return(
@@ -197,6 +222,11 @@ const Titles = (props) => {
                 } else {
                     activeString = "Inactive";
                 };
+
+                const editionsAvailable = editionList.reduce((titleCount, edition) => edition.titleID === title.titleID ? ++titleCount : titleCount, 0);
+                // console.log(componentName, "useEffect title.titleID", title.titleID);
+                // console.log(componentName, "useEffect title.titleName", title.titleName);
+                // console.log(componentName, "useEffect editionsAvailable", editionsAvailable);
 
             return (
                 <Col key={title.titleID} xs="4" className="mb-4">
@@ -252,6 +282,10 @@ const Titles = (props) => {
                                 <CardText><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
                                 {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
                                 <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
+                                <CardText className="smallerText">{editionsAvailable}<span> </span>
+                                {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
+                                {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
+                                edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
                                 {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                                 {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
                             </CardBody>
