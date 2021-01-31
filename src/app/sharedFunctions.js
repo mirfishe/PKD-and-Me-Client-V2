@@ -26,6 +26,7 @@ export const displayDate = (dateToDisplay) => {
     return newDisplayDate;
 };
 
+
 export const displayYear = (dateToDisplay) => {
 
     // console.log(componentName, "displayYear dateToDisplay", dateToDisplay);
@@ -52,6 +53,7 @@ export const displayYear = (dateToDisplay) => {
     return newDisplayDate;
 };
 
+
 export const encodeURL = (titleName) => {
 
     // console.log(componentName, "encodeURL titleName", titleName);
@@ -73,6 +75,7 @@ export const encodeURL = (titleName) => {
 
     return newTitleName;
 };
+
 
 export const decodeURL = (titleName) => {
 
@@ -96,6 +99,7 @@ export const decodeURL = (titleName) => {
     return newTitleName;
 };
 
+
 // export const displayParagraphs = (text) => {
 //     // Not needed; Use the .displayParagraphs css style
 
@@ -118,6 +122,7 @@ export const decodeURL = (titleName) => {
 
 //     return newText;
 // };
+
 
 export const truncateText = (text, limit) => {
     // https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript
@@ -144,6 +149,7 @@ export const truncateText = (text, limit) => {
 
     // return newText;
 };
+
 
 export const removeOnePixelImage = (text, ASIN) => {
 
@@ -184,6 +190,7 @@ export const removeOnePixelImage = (text, ASIN) => {
     return newText;
 };
 
+
 export const setLocalImagePath = (text) => {
 
     // console.log(componentName, "setLocalImagePath text", text);
@@ -207,6 +214,7 @@ export const setLocalImagePath = (text) => {
 
     return newText;
 };
+
 
 export const setLocalPath = (text) => {
 
@@ -277,6 +285,7 @@ export const createImageName = (titleName) => {
     return newImageName;
 };
 
+
 export const createTitleURL = (titleName) => {
 
     // console.log(componentName, "createImageName titleName", titleName);
@@ -326,6 +335,7 @@ export const createTitleURL = (titleName) => {
     return newTitleURL;
 };
 
+
 export const getASIN = (textLinkFull) => {
 
     // console.log(componentName, "getASIN textLinkFull", textLinkFull);
@@ -358,5 +368,126 @@ export const getASIN = (textLinkFull) => {
     };
 
     return txtASIN;
+
+};
+
+
+export const IsEmpty = (value) => {
+
+    // https://stackoverflow.com/questions/4597900/checking-something-isempty-in-javascript
+    // https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+    
+    // const isEmpty = (object) => {
+    //   for (var key in object) {
+    //     if (object.hasOwnProperty(key)) {
+    //         return false;
+    //     };
+    //   };
+    //   return true;
+    // };
+
+    return value === undefined || value === null || (typeof value === "object" && Object.keys(value).length === 0) || (typeof value === "string" && value.trim().length === 0);
+
+    // Returns true
+    // console.log(componentName, "IsEmpty(\"\")", IsEmpty(""));
+    // console.log(componentName, "IsEmpty(null)", IsEmpty(null));
+    // console.log(componentName, "IsEmpty(undefined)", IsEmpty(undefined));
+    // console.log(componentName, "IsEmpty([])", IsEmpty([]));
+    // console.log(componentName, "IsEmpty({})", IsEmpty({}));
+
+    // Returns false
+    // console.log(componentName, "IsEmpty(\"test\")", IsEmpty("test"));
+    // console.log(componentName, "IsEmpty(5)", IsEmpty(5));
+    // console.log(componentName, "IsEmpty(true)", IsEmpty(true));
+    // console.log(componentName, "IsEmpty([\"test\"])", IsEmpty(["test"]));
+    // console.log(componentName, "IsEmpty({test: \"test\"})", IsEmpty({ test: "test" }));
+
+};
+
+
+export const DisplayValue = (variableValue) => {
+
+    let displayValue = "";
+
+    if (variableValue !== undefined && variableValue !== null) {
+
+        if (variableValue === true) {
+            displayValue = "True";
+        } else if (variableValue === false) {
+            displayValue = "False";
+        } else {
+            displayValue = variableValue;
+        };
+
+    } else {
+        displayValue = "Value is undefined or null.";
+    };
+
+    return displayValue;
+
+};
+
+
+export const TryParseJSON = (jsonString) => {
+
+    // https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try
+    try {
+        let jsonData = JSON.parse(jsonString);
+
+        // Handle non-exception-throwing cases:
+        // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
+        // but... JSON.parse(null) returns null, and typeof null === "object", 
+        // so we must check for that, too. Thankfully, null is falsey, so this suffices:
+        if (jsonData && typeof jsonData === "object") {
+            return jsonData;
+        };
+    }
+    catch (e) { }
+
+    return false;
+
+};
+
+
+export const DisplayObjectData = (ObjectData) => {
+    // console.log(componentName, "DisplayObjectData ObjectData", ObjectData);
+
+    let objectDataString = JSON.stringify(ObjectData);
+
+    objectDataString = objectDataString.replaceAll("[{\"", "<p>");
+    objectDataString = objectDataString.replaceAll("\"},{\"", "</p><p>");
+    objectDataString = objectDataString.replaceAll("\"}]", "</p>");
+
+    objectDataString = objectDataString.replaceAll("{\"", "<p>");
+    objectDataString = objectDataString.replaceAll("\"}", "</p>");
+
+    objectDataString = objectDataString.replaceAll("\":\"", " = ");
+    objectDataString = objectDataString.replaceAll("\":", " = ");
+
+    objectDataString = objectDataString.replaceAll("\",\"", "</p><p>");
+    objectDataString = objectDataString.replaceAll(",\"", "</p><p>");
+
+    objectDataString = objectDataString.replaceAll("},", "");
+
+    objectDataString = objectDataString.replaceAll("[]", "");
+
+    objectDataString = objectDataString.replaceAll("[\"", "");
+    objectDataString = objectDataString.replaceAll("\"]", "");
+
+    objectDataString = objectDataString.replaceAll("[", "");
+    objectDataString = objectDataString.replaceAll("]", "");
+    objectDataString = objectDataString.replaceAll("{", "");
+    objectDataString = objectDataString.replaceAll("}", "");
+
+    return (objectDataString);
+
+};
+
+
+export const GetDateTime = () => {
+
+    // console.log(componentName, "GetDateTime");
+
+    return new Date().toLocaleString();
 
 };

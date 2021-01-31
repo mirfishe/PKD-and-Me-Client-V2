@@ -16,6 +16,7 @@ import New from "./content/New";
 import About from "./content/About";
 import Homeopape from "./content/Homeopape";
 import Dickian from "./content/Dickian";
+import FormatPost from "./components/socialMedia/FormatPost";
 import AddCategory from "./components/categories/AddCategory";
 import AddMedia from "./components/media/AddMedia";
 import AddTitle from "./components/titles/AddTitle";
@@ -382,6 +383,11 @@ function App() {
           <NavItem className="mx-3">
             <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
           </NavItem>
+            : null}
+          {showAbout || showAllMenuItems ? 
+          <NavItem className="mx-3">
+            <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
+          </NavItem>
           : null}
           {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ? 
           <NavItem className="mx-3">
@@ -553,6 +559,7 @@ function App() {
       <Route exact path="/home" component={Home} />
       <Route exact path="/new" component={New} />
       <Route exact path="/about" component={About} />
+      <Route exact path="/socialMedia" component={FormatPost} />
       <Route exact path="/homeopape" component={Homeopape} />
       <Route exact path="/dickian" component={Dickian} />
       <Route exact path="/categoryList" component={CategoryList} />
