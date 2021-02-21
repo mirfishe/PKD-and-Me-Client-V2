@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
-import {Plus} from 'react-bootstrap-icons';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 
 const AddComment = (props) => {
@@ -28,11 +28,19 @@ const AddComment = (props) => {
 
     const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
-    const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
+    const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) }
     // console.log(componentName, "userState", userState);
 
     const [message, setMessage] = useState("");
-    const [errMessage, setErrMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [messageVisible, setMessageVisible] = useState(false);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+    const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+    const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+    const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+    const onDismissMessage = () => setMessageVisible(false);
+    const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
     const [modal, setModal] = useState(false);
     const [commentRecordAdded, setCommentRecordAdded] = useState(null);
 
@@ -52,8 +60,7 @@ const AddComment = (props) => {
         // console.log(componentName, "addComment");
         // console.log(componentName, "addComment baseURL", baseURL);
 
-        setMessage("");
-        setErrMessage("");
+        clearMessages();
         setCommentRecordAdded(null);
         setErrComment("");
         setErrEmailAddress("");
@@ -126,60 +133,60 @@ const AddComment = (props) => {
 
                 if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
 
-                    let headerObject = new Headers({"Content-Type": "application/json"});
+                    let headerObject = new Headers({ "Content-Type": "application/json" });
 
                     // If the user isn't logged in and user login isn't required, then it isn't added to the Authorization header
                     if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
-                        Object.assign(headerObject, {"Authorization": sessionToken});
+                        Object.assign(headerObject, { "Authorization": sessionToken });
                     };
 
                     fetch(url, {
                         method: "POST",
                         headers: headerObject,
-                        body: JSON.stringify({comment: commentObject})
+                        body: JSON.stringify({ comment: commentObject })
                     })
-                    .then(response => {
-                        // console.log(componentName, "addComment response", response);
-                        // if (!response.ok) {
-                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                        // } else {
+                        .then(response => {
+                            // console.log(componentName, "addComment response", response);
+                            // if (!response.ok) {
+                            //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                            // } else {
                             // if (response.status === 200) {
-                                return response.json();
+                            return response.json();
                             // } else {
                             //     return response.status;
                             // };
-                        // };
-                    })
-                    .then(data => {
-                        // console.log(componentName, "addComment data", data);
+                            // };
+                        })
+                        .then(data => {
+                            // console.log(componentName, "addComment data", data);
 
-                        setCommentRecordAdded(data.recordAdded);
-                        setMessage(data.message);
+                            setCommentRecordAdded(data.recordAdded);
+                            addMessage(data.message);
 
-                        if (data.recordAdded === true) {
+                            if (data.recordAdded === true) {
 
-                            setCommentItem(data);
-                            setCommentID(data.CommentID);
-                            setCommentUserID(data.userID);
-                            setComment(data.Comment);
-                            setCommentEmailAddress(data.emailAddress);
+                                setCommentItem(data);
+                                setCommentID(data.CommentID);
+                                setCommentUserID(data.userID);
+                                setComment(data.Comment);
+                                setCommentEmailAddress(data.emailAddress);
 
-                            // Would still work if the createdAt and updatedAt were left out?
-                            // dispatch(addStateTitle([{titleID: data.titleID, emailAddress: data.EmailAddress, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, Comment: data.Comment, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
-                            // Add to local storage also?
+                                // Would still work if the createdAt and updatedAt were left out?
+                                // dispatch(addStateTitle([{titleID: data.titleID, emailAddress: data.EmailAddress, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, Comment: data.Comment, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                                // Add to local storage also?
 
-                        } else {
-                            // setErrMessage(data.error);
-                            setErrMessage(data.errorMessages);
-                        };
+                            } else {
+                                // addErrorMessage(data.error);
+                                addErrorMessage(data.errorMessages);
+                            };
 
-                    })
-                    .catch(error => {
-                        console.log(componentName, "addComment error", error);
-                        // console.log(componentName, "addComment error.name", error.name);
-                        // console.log(componentName, "addComment error.message", error.message);
-                        setErrMessage(error.name + ": " + error.message);
-                    });
+                        })
+                        .catch(error => {
+                            console.log(componentName, "addComment error", error);
+                            // console.log(componentName, "addComment error.name", error.name);
+                            // console.log(componentName, "addComment error.message", error.message);
+                            addErrorMessage(error.name + ": " + error.message);
+                        });
 
                 };
 
@@ -191,15 +198,14 @@ const AddComment = (props) => {
     useEffect(() => {
         // console.log(componentName, "useEffect commentRecordAdded", commentRecordAdded);
         if (commentRecordAdded !== undefined && commentRecordAdded !== null && commentRecordAdded === true) {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setErrComment("");
             setErrEmailAddress("");
             setCommentRecordAdded(null);
             // setModal(false);
             toggle();
         };
-        
+
     }, [commentRecordAdded]);
 
     useEffect(() => {
@@ -209,52 +215,52 @@ const AddComment = (props) => {
             // return <Redirect to="/" />;
             setModal(false);
         };
-        
+
     }, [sessionToken]);
 
     const toggle = () => {
         setModal(!modal);
     };
 
-    return(
+    return (
         <React.Fragment>
 
             {appAllowUserInteractions === true && ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Comment</Button></span> : null}
 
             {appAllowUserInteractions === true && ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
-        <Modal isOpen={modal} toggle={toggle} size="lg">
-           <ModalHeader toggle={toggle}>Add Comment</ModalHeader>
-           <ModalBody>
-           <Form>
-           <FormGroup className="text-center">
-                {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-                {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-            </FormGroup>
-            <FormGroup>
-                
-            <Label for="txtComment">Comment</Label>
-            <Input type="textarea" id="txtComment" rows={10} value={txtComment} onChange={(event) => {/*console.log(event.target.value);*/ setTxtComment(event.target.value);}} />
-            {errComment !== undefined && errComment !== null && errComment !== "" ? <Alert color="danger">{errComment}</Alert> : null}
+            <Modal isOpen={modal} toggle={toggle} size="lg">
+                <ModalHeader toggle={toggle}>Add Comment</ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup className="text-center">
+                            <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
+                            <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+                        </FormGroup>
+                        <FormGroup>
 
-            </FormGroup>
-            <FormGroup>
+                            <Label for="txtComment">Comment</Label>
+                            <Input type="textarea" id="txtComment" rows={10} value={txtComment} onChange={(event) => {/*console.log(event.target.value);*/ setTxtComment(event.target.value); }} />
+                            {errComment !== undefined && errComment !== null && errComment !== "" ? <Alert color="danger">{errComment}</Alert> : null}
 
-            <Label for="txtEmailAddress">Email Address</Label>
-            <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmailAddress(event.target.value);}} />
-            {errEmailAddress !== undefined && errEmailAddress !== null && errEmailAddress !== "" ? <Alert color="danger">{errEmailAddress}</Alert> : null}
+                        </FormGroup>
+                        <FormGroup>
 
-            </FormGroup>
+                            <Label for="txtEmailAddress">Email Address</Label>
+                            <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmailAddress(event.target.value); }} />
+                            {errEmailAddress !== undefined && errEmailAddress !== null && errEmailAddress !== "" ? <Alert color="danger">{errEmailAddress}</Alert> : null}
 
-                <ModalFooter>
-    
-                 <Button outline size="lg" color="primary" onClick={addComment}>Add Comment</Button>
-                 <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
-                </ModalFooter>
-                </Form>
-       </ModalBody>
-     </Modal>
-   </React.Fragment>
+                        </FormGroup>
+
+                        <ModalFooter>
+
+                            <Button outline size="lg" color="primary" onClick={addComment}>Add Comment</Button>
+                            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
+                    </Form>
+                </ModalBody>
+            </Modal>
+        </React.Fragment>
     );
 
 };

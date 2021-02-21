@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
-import {Plus} from 'react-bootstrap-icons';
-import {Rating} from "@material-ui/lab/";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Plus } from 'react-bootstrap-icons';
+import { Rating } from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
-import {addStateUserReview} from "../../bibliographyData/userReviewsSlice";
-import {updateStateTitleRating} from "../../bibliographyData/titlesSlice";
-import {updateStateChecklist} from "../../app/userSlice";
+import { addStateUserReview } from "../../bibliographyData/userReviewsSlice";
+import { updateStateTitleRating } from "../../bibliographyData/titlesSlice";
+import { updateStateChecklist } from "../../app/userSlice";
 
 const AddUserReview = (props) => {
 
@@ -36,13 +36,21 @@ const AddUserReview = (props) => {
     const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
     // console.log(componentName, "userReviewListState", userReviewListState);
 
-    const userState = {userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active)}
+    const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) }
     // console.log(componentName, "userState", userState);
 
     // console.log(componentName, "props.titleID", props.titleID);
 
     const [message, setMessage] = useState("");
-    const [errMessage, setErrMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [messageVisible, setMessageVisible] = useState(false);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+    const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+    const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+    const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+    const onDismissMessage = () => setMessageVisible(false);
+    const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
     const [modal, setModal] = useState(false);
     const [userReviewRecordAdded, setUserReviewRecordAdded] = useState(null);
 
@@ -69,24 +77,24 @@ const AddUserReview = (props) => {
 
     // useEffect(() => {
     //     // console.log(componentName, "useEffect userReviewListState", userReviewListState);
-    
+
     //     if (props.titleID !== undefined && props.titleID !== null) {
-    
+
     //         let titleObject = titleListState.filter(title => title.titleID === props.titleID);
     //         // console.log(componentName, "useEffect titleObject", titleObject);
     //         // console.log(componentName, "useEffect typeof titleObject", typeof titleObject);
-    
+
     //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
     //         // console.log(componentName, "useEffect titleItemIndex", titleItemIndex);
-    
+
     //         if (titleObject !== undefined) {
 
     //             setTitleItem(titleObject);
 
     //         };
-    
+
     //     };
-    
+
     // }, [props.titleID, titleListState]);
 
     const addUserReview = () => {
@@ -94,8 +102,7 @@ const AddUserReview = (props) => {
         // console.log(componentName, "addUserReview baseURL", baseURL);
         // console.log(componentName, "addUserReview props.titleID", props.titleID);
 
-        setMessage("");
-        setErrMessage("");
+        clearMessages();
         setUserReviewRecordAdded(null);
 
         setUserReviewItem(null);
@@ -115,72 +122,72 @@ const AddUserReview = (props) => {
         // txtDateRead is expecting a date and rdoRating is expecting a number
         // if (txtDateRead !== null && rdoRating !== null) {
 
-            // console.log(componentName, "addUserReview typeof props.titleID", typeof props.titleID);
+        // console.log(componentName, "addUserReview typeof props.titleID", typeof props.titleID);
 
-            // console.log(componentName, "addUserReview parseInt(props.titleID)", parseInt(props.titleID));
+        // console.log(componentName, "addUserReview parseInt(props.titleID)", parseInt(props.titleID));
 
-            let userReviewObject = {
-                titleID: parseInt(props.titleID),
-                read: cbxRead,
-                // dateRead: txtDateRead.trim(),
-                rating: rdoRating
-                // shortReview: txtShortReview.trim(),
-                // longReview: txtLongReview.trim()
+        let userReviewObject = {
+            titleID: parseInt(props.titleID),
+            read: cbxRead,
+            // dateRead: txtDateRead.trim(),
+            rating: rdoRating
+            // shortReview: txtShortReview.trim(),
+            // longReview: txtLongReview.trim()
+        };
+
+        // If the user doesn't enter a date read, then it isn't added/updated
+        if (txtDateRead !== null && txtDateRead !== undefined) {
+            if (txtDateRead.trim().length !== 0) {
+                Object.assign(userReviewObject, { dateRead: txtDateRead.trim() });
             };
+        };
 
-            // If the user doesn't enter a date read, then it isn't added/updated
-            if (txtDateRead !== null && txtDateRead !== undefined) {
-                if (txtDateRead.trim().length !== 0) {
-                    Object.assign(userReviewObject, {dateRead: txtDateRead.trim()});
-                };
+        // If the user doesn't enter a short review, then it isn't added/updated
+        if (txtShortReview !== null && txtShortReview !== undefined) {
+            if (txtShortReview.trim().length !== 0) {
+                Object.assign(userReviewObject, { shortReview: txtShortReview.trim() });
             };
+        };
 
-            // If the user doesn't enter a short review, then it isn't added/updated
-            if (txtShortReview !== null && txtShortReview !== undefined) {
-                if (txtShortReview.trim().length !== 0) {
-                    Object.assign(userReviewObject, {shortReview: txtShortReview.trim()});
-                };
+        // If the user doesn't enter a long review, then it isn't added/updated
+        if (txtLongReview !== null && txtLongReview !== undefined) {
+            if (txtLongReview.trim().length !== 0) {
+                Object.assign(userReviewObject, { longReview: txtLongReview.trim() });
             };
+        };
 
-            // If the user doesn't enter a long review, then it isn't added/updated
-            if (txtLongReview !== null && txtLongReview !== undefined) {
-                if (txtLongReview.trim().length !== 0) {
-                    Object.assign(userReviewObject, {longReview: txtLongReview.trim()});
-                };
-            };
+        // console.log(componentName, "addUserReview userReviewObject", userReviewObject);
 
-            // console.log(componentName, "addUserReview userReviewObject", userReviewObject);
+        let url = baseURL + "userreview/";
+        // console.log(componentName, "addUserReview url", url);
 
-            let url = baseURL + "userreview/";
-            // console.log(componentName, "addUserReview url", url);
+        if (sessionToken !== undefined && sessionToken !== null) {
 
-            if (sessionToken !== undefined && sessionToken !== null) {
-
-                fetch(url, {
-                    method: "POST",
-                    headers: new Headers({
+            fetch(url, {
+                method: "POST",
+                headers: new Headers({
                     "Content-Type": "application/json",
                     "Authorization": sessionToken
-                    }),
-                    body: JSON.stringify({userReview: userReviewObject})
-                })
+                }),
+                body: JSON.stringify({ userReview: userReviewObject })
+            })
                 .then(response => {
                     // console.log(componentName, "addUserReview response", response);
                     // if (!response.ok) {
                     //     throw Error(response.status + " " + response.statusText + " " + response.url);
                     // } else {
-                        // if (response.status === 200) {
-                            return response.json();
-                        // } else {
-                        //     return response.status;
-                        // };
+                    // if (response.status === 200) {
+                    return response.json();
+                    // } else {
+                    //     return response.status;
+                    // };
                     // };
                 })
                 .then(data => {
                     // console.log(componentName, "addUserReview data", data);
 
                     setUserReviewRecordAdded(data.recordAdded);
-                    setMessage(data.message);
+                    addMessage(data.message);
 
                     if (data.recordAdded === true) {
 
@@ -204,11 +211,11 @@ const AddUserReview = (props) => {
                         // console.log(componentName, "addUserReview typeof data.titleID", typeof data.titleID);
 
                         let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
-                        
+
                         // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
                         // Would still work if the createdAt and updatedAt were left out?
-                        dispatch(addStateUserReview([{reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}}]));
+                        dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
                         // Add to local storage also?
 
                         // Recalculate ratings
@@ -218,7 +225,7 @@ const AddUserReview = (props) => {
                         // Get all reviews for the title
                         // Get the latest from state?
                         // Update the state user review array?
-                        userReviews.push({reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}});
+                        userReviews.push({ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } });
                         // console.log(componentName, "addUserReview userReviews", userReviews);
                         // Recompute the average
                         let userReviewCount = userReviews.length;
@@ -231,21 +238,21 @@ const AddUserReview = (props) => {
                         if (userReviewCount > 0) {
                             // Check for division by zero?
                             // let userReviewAverage: number = userReviewSum/0;
-                            userReviewAverage = userReviewSum/userReviewCount;
-                          };
+                            userReviewAverage = userReviewSum / userReviewCount;
+                        };
                         // console.log(componentName, "addUserReview userReviewAverage", userReviewAverage);
                         // Update the title ratings
-                        dispatch(updateStateTitleRating({titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage}));
+                        dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
                         const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID)
 
                         if (data.active === true) {
-                            dispatch(updateStateChecklist({checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString()}));
+                            dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString() }));
                         };
 
                     } else {
-                        // setErrMessage(data.error);
-                        setErrMessage(data.errorMessages);
+                        // addErrorMessage(data.error);
+                        addErrorMessage(data.errorMessages);
                     };
 
                 })
@@ -253,10 +260,10 @@ const AddUserReview = (props) => {
                     console.log(componentName, "addUserReview error", error);
                     // console.log(componentName, "addUserReview error.name", error.name);
                     // console.log(componentName, "addUserReview error.message", error.message);
-                    setErrMessage(error.name + ": " + error.message);
+                    addErrorMessage(error.name + ": " + error.message);
                 });
 
-            };
+        };
 
         // };
 
@@ -265,13 +272,12 @@ const AddUserReview = (props) => {
     useEffect(() => {
         // console.log(componentName, "useEffect userReviewRecordAdded", userReviewRecordAdded);
         if (userReviewRecordAdded !== undefined && userReviewRecordAdded !== null && userReviewRecordAdded === true) {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setUserReviewRecordAdded(null);
             // setModal(false);
             toggle();
         };
-        
+
     }, [userReviewRecordAdded]);
 
     useEffect(() => {
@@ -281,42 +287,42 @@ const AddUserReview = (props) => {
             // return <Redirect to="/" />;
             setModal(false);
         };
-        
+
     }, [sessionToken]);
 
     const toggle = () => {
         setModal(!modal);
     };
 
-    return(
+    return (
         <React.Fragment>
 
             {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Review</Button></span> : null}
 
             {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
-        <Modal isOpen={modal} toggle={toggle} size="lg">
-           <ModalHeader toggle={toggle}>Add Review</ModalHeader>
-           <ModalBody>
-           <Form>
-           <FormGroup className="text-center">
-                {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-                {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-            </FormGroup>
-           <FormGroup row>
+            <Modal isOpen={modal} toggle={toggle} size="lg">
+                <ModalHeader toggle={toggle}>Add Review</ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup className="text-center">
+                            <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
+                            <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+                        </FormGroup>
+                        <FormGroup row>
 
-                <Col>
-                <FormGroup className="ml-4">
+                            <Col>
+                                <FormGroup className="ml-4">
 
-                <Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => {/*console.log(event.target.value);*/ setCbxRead(!cbxRead);}} />
-                <Label for="cbxRead">Read</Label>
+                                    <Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => {/*console.log(event.target.value);*/ setCbxRead(!cbxRead); }} />
+                                    <Label for="cbxRead">Read</Label>
 
-                </FormGroup>
+                                </FormGroup>
 
-                <FormGroup>
-                <Label for="rdoRating" className="mr-4">Rating</Label>
-                <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => {/*console.log(event.target.value);*/ setRdoRating(newValue);}} />
-                {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
+                                <FormGroup>
+                                    <Label for="rdoRating" className="mr-4">Rating</Label>
+                                    <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => {/*console.log(event.target.value);*/ setRdoRating(newValue); }} />
+                                    {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 2</Label>
                     
@@ -335,39 +341,39 @@ const AddUserReview = (props) => {
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 9</Label>
                                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 10</Label> */}
-                </FormGroup>
-                </Col>
+                                </FormGroup>
+                            </Col>
 
-                <Col>
-                <FormGroup>
-                <Label for="txtDateRead">Date Read</Label>
-                <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => {/*console.log(event.target.value);*/ setTxtDateRead(event.target.value);}} />
-                </FormGroup>
-                </Col>
-                
-                </FormGroup>
-                <FormGroup>
+                            <Col>
+                                <FormGroup>
+                                    <Label for="txtDateRead">Date Read</Label>
+                                    <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => {/*console.log(event.target.value);*/ setTxtDateRead(event.target.value); }} />
+                                </FormGroup>
+                            </Col>
 
-                <Label for="txtShortReview">Short Review</Label>
-                <Input type="text" id="txtShortReview" value={txtShortReview} onChange={(event) => {/*console.log(event.target.value);*/ setTxtShortReview(event.target.value);}} />
+                        </FormGroup>
+                        <FormGroup>
 
-                </FormGroup>
-                <FormGroup>
+                            <Label for="txtShortReview">Short Review</Label>
+                            <Input type="text" id="txtShortReview" value={txtShortReview} onChange={(event) => {/*console.log(event.target.value);*/ setTxtShortReview(event.target.value); }} />
 
-                <Label for="txtLongReview">Long Review</Label>
-                <Input type="textarea" id="txtLongReview" rows={10} value={txtLongReview} onChange={(event) => {/*console.log(event.target.value);*/ setTxtLongReview(event.target.value);}} />
+                        </FormGroup>
+                        <FormGroup>
 
-                </FormGroup>
+                            <Label for="txtLongReview">Long Review</Label>
+                            <Input type="textarea" id="txtLongReview" rows={10} value={txtLongReview} onChange={(event) => {/*console.log(event.target.value);*/ setTxtLongReview(event.target.value); }} />
 
-                <ModalFooter>
-    
-                 <Button outline size="lg" color="primary" onClick={addUserReview}>Add Review</Button>
-                 <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
-                </ModalFooter>
-                </Form>
-       </ModalBody>
-     </Modal>
-   </React.Fragment>
+                        </FormGroup>
+
+                        <ModalFooter>
+
+                            <Button outline size="lg" color="primary" onClick={addUserReview}>Add Review</Button>
+                            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
+                    </Form>
+                </ModalBody>
+            </Modal>
+        </React.Fragment>
     );
 
 };

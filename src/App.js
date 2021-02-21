@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
-import {HouseFill} from "react-bootstrap-icons";
-import {Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button} from "reactstrap";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { HouseFill } from "react-bootstrap-icons";
+import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button } from "reactstrap";
 import AppSettings from "./app/environment";
-import {setAppOffline, setUserElectronicOnly, setUserPhysicalOnly} from "./app/appSlice";
-import {setPageURL, setLinkItem} from "./app/urlsSlice";
+import { setAppOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/appSlice";
+import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
 import LoadUserReviews from "./components/loadData/LoadUserReviews";
-import {loadUserData, setSessionToken, loadArrayChecklist} from "./app/userSlice";
+import { loadUserData, setSessionToken, loadArrayChecklist } from "./app/userSlice";
 import Home from "./content/Home";
 import New from "./content/New";
 import About from "./content/About";
@@ -112,9 +112,9 @@ function App() {
 
   let showAllCategories = useSelector(state => state.app.menuSettings.showAllCategories);
   let showAllMedia = useSelector(state => state.app.menuSettings.showAllMedia);
-    // This route no longer works. 
+  // This route no longer works. 
   let showAllTitles = useSelector(state => state.app.menuSettings.showAllTitles);
-    // This route no longer works. 
+  // This route no longer works. 
   let showAllEditions = useSelector(state => state.app.menuSettings.showAllEditions);
 
   let showUserPhysicalOnly = useSelector(state => state.app.menuSettings.showUserPhysicalOnly);
@@ -135,7 +135,15 @@ function App() {
   const defaultPageComponent = AppSettings.defaultPageComponent;
 
   const [message, setMessage] = useState("");
-  const [errMessage, setErrMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
   const [userResultsFound, setUserResultsFound] = useState(null);
 
   const [checklistMessage, setChecklistMessage] = useState("");
@@ -152,80 +160,79 @@ function App() {
 
   const logOut = () => {
     // remove user from userSlice
-    dispatch(loadUserData({userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null, userLoaded: false, arrayChecklist: [], checklistLoaded: false, lastDatabaseRetrievalChecklist: null}));
+    dispatch(loadUserData({ userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null, userLoaded: false, arrayChecklist: [], checklistLoaded: false, lastDatabaseRetrievalChecklist: null }));
     dispatch(setSessionToken(null));
     clearToken();
 
     // reload/refresh page
-    
+
   };
 
   const getUser = (token) => {
     // console.log(componentName, "getUser");
     // console.log(componentName, "getUser baseURL", baseURL);
 
-    setMessage("");
-    setErrMessage("");
+    clearMessages();
 
     let url = baseURL + "user/";
 
     if (token !== undefined && token !== null && token !== "") {
 
-        fetch(url, {
-            method: "GET",
-            headers: new Headers({
-            "Content-Type": "application/json",
-            "Authorization": token
-            }),
-        })
+      fetch(url, {
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Authorization": token
+        }),
+      })
         .then(response => {
-            // console.log(componentName, "getUser response", response);
-            // if (!response.ok) {
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-            // } else {
-                // if (response.status === 200) {
-                    return response.json();
-                // } else {
-                //     return response.status;
-                // };
-            // };
+          // console.log(componentName, "getUser response", response);
+          // if (!response.ok) {
+          //     throw Error(response.status + " " + response.statusText + " " + response.url);
+          // } else {
+          // if (response.status === 200) {
+          return response.json();
+          // } else {
+          //     return response.status;
+          // };
+          // };
         })
         .then(data => {
-            // console.log(componentName, "getUser data", data);
+          // console.log(componentName, "getUser data", data);
 
-            setUserResultsFound(data.resultsFound);
-            // setMessage(data.message);
+          setUserResultsFound(data.resultsFound);
+          // addMessage(data.message);
 
-            if (data.resultsFound === true) {
+          if (data.resultsFound === true) {
 
-              if (data.active === true) {
+            if (data.active === true) {
 
-                dispatch(loadUserData(data));
+              dispatch(loadUserData(data));
 
-                // console.log(componentName, "getUser checklistLoaded", checklistLoaded);
-                // console.log(componentName, "getUser data.sessionToken", data.sessionToken);
-                // console.log(componentName, "getUser token", token);
-                if (!checklistLoaded) {
-                  getChecklist(token);
-                };
-
-              } else {
-                // Won't hit this because no records will be returned if the user is not active
-                logOut();
+              // console.log(componentName, "getUser checklistLoaded", checklistLoaded);
+              // console.log(componentName, "getUser data.sessionToken", data.sessionToken);
+              // console.log(componentName, "getUser token", token);
+              if (!checklistLoaded) {
+                getChecklist(token);
               };
 
             } else {
-              // console.log(componentName, "getUser data.resultsFound !== true", data.message);
-              // setErrMessage(data.message);
+              // Won't hit this because no records will be returned if the user is not active
               logOut();
             };
 
+          } else {
+            // console.log(componentName, "getUser data.resultsFound !== true", data.message);
+            // addErrorMessage(data.message);
+            logOut();
+          };
+
         })
         .catch(error => {
-            console.log(componentName, "getUser error", error);
-            // console.log(componentName, "getUser error.name", error.name);
-            // console.log(componentName, "getUser error.message", error.message);
-            // setErrMessage(error.name + ": " + error.message);
+          console.log(componentName, "getUser error", error);
+          // console.log(componentName, "getUser error.name", error.name);
+          // console.log(componentName, "getUser error.message", error.message);
+          // addErrorMessage(error.name + ": " + error.message);
         });
 
     };
@@ -245,46 +252,46 @@ function App() {
 
     if (token !== undefined && token !== null && token !== "") {
 
-        fetch(url, {
-            method: "GET",
-            headers: new Headers({
-            "Content-Type": "application/json",
-            "Authorization": token
-            }),
-        })
+      fetch(url, {
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Authorization": token
+        }),
+      })
         .then(response => {
-            // console.log(componentName, "getChecklist response", response);
-            // if (!response.ok) {
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-            // } else {
-                // if (response.status === 200) {
-                    return response.json();
-                // } else {
-                //     return response.status;
-                // };
-            // };
+          // console.log(componentName, "getChecklist response", response);
+          // if (!response.ok) {
+          //     throw Error(response.status + " " + response.statusText + " " + response.url);
+          // } else {
+          // if (response.status === 200) {
+          return response.json();
+          // } else {
+          //     return response.status;
+          // };
+          // };
         })
         .then(data => {
-            // console.log(componentName, "getChecklist data", data);
+          // console.log(componentName, "getChecklist data", data);
 
-            setChecklistResultsFound(data.resultsFound);
-            // setChecklistMessage(data.message);
+          setChecklistResultsFound(data.resultsFound);
+          // setChecklistMessage(data.message);
 
-            if (data.resultsFound === true) {
+          if (data.resultsFound === true) {
 
-              dispatch(loadArrayChecklist(data.titles));
+            dispatch(loadArrayChecklist(data.titles));
 
-            } else {
-              console.log(componentName, "getChecklist resultsFound error", data.message);
-              // setErrMessage(data.message);
-            };
+          } else {
+            console.log(componentName, "getChecklist resultsFound error", data.message);
+            // addErrorMessage(data.message);
+          };
 
         })
         .catch(error => {
-            console.log(componentName, "getChecklist error", error);
-            // console.log(componentName, "getChecklist error.name", error.name);
-            // console.log(componentName, "getChecklist error.message", error.message);
-            // setErrMessage(error.name + ": " + error.message);
+          console.log(componentName, "getChecklist error", error);
+          // console.log(componentName, "getChecklist error.name", error.name);
+          // console.log(componentName, "getChecklist error.message", error.message);
+          // addErrorMessage(error.name + ": " + error.message);
         });
 
     };
@@ -315,10 +322,10 @@ function App() {
       //   getChecklist(localStorage.getItem("token"));
       // };
 
-  };
+    };
 
-  let documentURL = new URL(document.URL);
-  dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
+    let documentURL = new URL(document.URL);
+    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
 
   }, []);
 
@@ -332,7 +339,7 @@ function App() {
       // console.log(componentName, "useEffect setAppOffline");
       dispatch(setAppOffline(true));
     };
-    
+
   }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
 
   useEffect(() => {
@@ -352,203 +359,203 @@ function App() {
       // console.log(componentName, "useEffect linkArrayItem", linkArrayItem);
       // console.log(componentName, "useEffect typeof linkArrayItem", typeof linkArrayItem);
       dispatch(setLinkItem(linkArrayItem));
-      
+
     };
-    
+
   }, [pageURL, urlLookup]);
 
   return (
-      <BrowserRouter basename={routerBaseName}>
+    <BrowserRouter basename={routerBaseName}>
       <Navbar color="light" light>
         <Nav>
           <NavbarBrand href="/" className="mx-3">
             <HouseFill color="black" />
           </NavbarBrand>
-          {showHomeopape || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showDickian || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/dickian"><NavbarText>Dickian</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showNew || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showAbout || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
-          </NavItem>
+          {showHomeopape || showAllMenuItems ?
+            <NavItem className="mx-3">
+              <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
+            </NavItem>
             : null}
-          {showAbout || showAllMenuItems ? 
+          {showDickian || showAllMenuItems ?
+            <NavItem className="mx-3">
+              <Link to="/dickian"><NavbarText>Dickian</NavbarText></Link>
+            </NavItem>
+            : null}
+          {showNew || showAllMenuItems ?
+            <NavItem className="mx-3">
+              <Link to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></Link>
+            </NavItem>
+            : null}
+          {showAbout || showAllMenuItems ?
+            <NavItem className="mx-3">
+              <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
+            </NavItem>
+            : null}
+          {showAbout || showAllMenuItems ?
+            <NavItem className="mx-3">
+              <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
+            </NavItem>
+            : null}
+          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ?
+            <NavItem className="mx-3">
+              <Login />
+            </NavItem>
+            : null}
+          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ?
+            <NavItem className="mx-3">
+              <Register />
+            </NavItem>
+            : null}
+          {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ?
+            <NavItem className="mx-3">
+              <EditUser />
+            </NavItem>
+            : null}
           <NavItem className="mx-3">
-            <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
+            <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
           </NavItem>
-          : null}
-          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ? 
           <NavItem className="mx-3">
-            <Login />
-          </NavItem>
-          : null}
-          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ? 
-          <NavItem className="mx-3">
-            <Register />
-          </NavItem>
-          : null}
-          {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ? 
-          <NavItem className="mx-3">
-            <EditUser />
-          </NavItem>
-          : null}
-          <NavItem className="mx-3">
-          <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
-          </NavItem>
-          <NavItem className="mx-3">
-          <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
+            <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
           {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true && firstName !== undefined && firstName !== null && firstName !== "" && lastName !== undefined && lastName !== null && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
-          : null}
-          {appAllowUserInteractions === true && checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true ? 
-          <NavItem className="mx-3">
-            <Checklist displayButton={true} />
-          </NavItem>
-          : null}
-          {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ? 
-           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
-          : null}
+            : null}
+          {appAllowUserInteractions === true && checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true ?
+            <NavItem className="mx-3">
+              <Checklist displayButton={true} />
+            </NavItem>
+            : null}
+          {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ?
+            <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
+            : null}
         </Nav>
       </Navbar>
       {showAllCategories || showAllMedia || showAllTitles || showAllEditions || showAllMenuItems ?
-      <Navbar color="light" light>
-        <Nav>
-        {showAllCategories || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/categories"><NavbarText>All Categories</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showAllMedia || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/media"><NavbarText>All Media</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showAllTitles || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/titles"><NavbarText>All Titles</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showAllEditions || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/editions"><NavbarText>All Editions</NavbarText></Link>
-          </NavItem>
-          : null}
-      </Nav>
-      </Navbar>
-      : null}
+        <Navbar color="light" light>
+          <Nav>
+            {showAllCategories || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/categories"><NavbarText>All Categories</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showAllMedia || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/media"><NavbarText>All Media</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showAllTitles || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/titles"><NavbarText>All Titles</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showAllEditions || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/editions"><NavbarText>All Editions</NavbarText></Link>
+              </NavItem>
+              : null}
+          </Nav>
+        </Navbar>
+        : null}
 
       {showCategoryList || showMediaList || showTitleList || showEditionList || showUserReviewList || showUserReviewRatingList || showURLList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
-      <Navbar>
-        <Nav>
-          {showCategoryList || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/categoryList"><NavbarText>Category List</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showMediaList || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/mediaList"><NavbarText>Media List</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showTitleList || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/titleList"><NavbarText>Title List</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showEditionList || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/editionList"><NavbarText>Edition List</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showUserReviewList || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/userReviewList"><NavbarText>User Review List</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showUserReviewRatingList || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/userReviewRatingList"><NavbarText>User Review Rating List</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showURLList || showAllMenuItems ? 
-          <NavItem className="mx-3">
-            <Link to="/urlList"><NavbarText>URL List</NavbarText></Link>
-          </NavItem>
-          : null}
-          {showAddCategory && admin !== undefined && admin !== null && admin === true ? 
-          <NavItem className="mx-3">
-            <AddCategory displayButton={true} />
-          </NavItem>
-          : null}
-          {showAddMedia && admin !== undefined && admin !== null && admin === true ? 
-          <NavItem className="mx-3">
-            <AddMedia displayButton={true} />
-          </NavItem>
-          : null}
-          {showAddTitle && admin !== undefined && admin !== null && admin === true ? 
-          <NavItem className="mx-3">
-            <AddTitle displayButton={true} />
-          </NavItem>
-          : null}
-        </Nav>
-      </Navbar>
-      : null}
+        <Navbar>
+          <Nav>
+            {showCategoryList || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/categoryList"><NavbarText>Category List</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showMediaList || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/mediaList"><NavbarText>Media List</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showTitleList || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/titleList"><NavbarText>Title List</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showEditionList || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/editionList"><NavbarText>Edition List</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showUserReviewList || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/userReviewList"><NavbarText>User Review List</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showUserReviewRatingList || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/userReviewRatingList"><NavbarText>User Review Rating List</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showURLList || showAllMenuItems ?
+              <NavItem className="mx-3">
+                <Link to="/urlList"><NavbarText>URL List</NavbarText></Link>
+              </NavItem>
+              : null}
+            {showAddCategory && admin !== undefined && admin !== null && admin === true ?
+              <NavItem className="mx-3">
+                <AddCategory displayButton={true} />
+              </NavItem>
+              : null}
+            {showAddMedia && admin !== undefined && admin !== null && admin === true ?
+              <NavItem className="mx-3">
+                <AddMedia displayButton={true} />
+              </NavItem>
+              : null}
+            {showAddTitle && admin !== undefined && admin !== null && admin === true ?
+              <NavItem className="mx-3">
+                <AddTitle displayButton={true} />
+              </NavItem>
+              : null}
+          </Nav>
+        </Navbar>
+        : null}
 
-    {showUserPhysicalOnly || showUserElectronicOnly || showAllMenuItems ?
-      <Navbar>
-        <Nav>
-          {(showUserPhysicalOnly === true || showUserElectronicOnly === true) && (userPhysicalOnly === true || userElectronicOnly === true) ?
-          <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => {dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(false));}}>All Editions</Button></NavItem>
-          : null}
-          {showUserPhysicalOnly === true && userPhysicalOnly !== undefined && userPhysicalOnly !== null && userPhysicalOnly === false ?
-           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => {dispatch(setUserPhysicalOnly(true)); dispatch(setUserElectronicOnly(false));}}>Only Physical Editions</Button></NavItem>
-          : null}
-          {showUserElectronicOnly === true && userElectronicOnly !== undefined && userElectronicOnly !== null && userElectronicOnly === false ?
-           <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => {dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(true));}}>Only Electronic Editions</Button></NavItem>
-           : null}
-        </Nav>
-      </Navbar>
-      : null}
+      {showUserPhysicalOnly || showUserElectronicOnly || showAllMenuItems ?
+        <Navbar>
+          <Nav>
+            {(showUserPhysicalOnly === true || showUserElectronicOnly === true) && (userPhysicalOnly === true || userElectronicOnly === true) ?
+              <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(false)); }}>All Editions</Button></NavItem>
+              : null}
+            {showUserPhysicalOnly === true && userPhysicalOnly !== undefined && userPhysicalOnly !== null && userPhysicalOnly === false ?
+              <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(true)); dispatch(setUserElectronicOnly(false)); }}>Only Physical Editions</Button></NavItem>
+              : null}
+            {showUserElectronicOnly === true && userElectronicOnly !== undefined && userElectronicOnly !== null && userElectronicOnly === false ?
+              <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(true)); }}>Only Electronic Editions</Button></NavItem>
+              : null}
+          </Nav>
+        </Navbar>
+        : null}
 
       <Container className="bodyContainer mb-5">
-      <Row>
-      <Col xs="2">
-        <Category />
-        <Media />
-      </Col>
-      <Col xs="10">
+        <Row>
+          <Col xs="2">
+            <Category />
+            <Media />
+          </Col>
+          <Col xs="10">
 
-      <Row className="text-center">
-        {/* {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
-        {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-        {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-        {checklistMessage !== undefined && checklistMessage !== null && checklistMessage !== "" ? <Alert color="info">{checklistMessage}</Alert> : null}
-        {errChecklistMessage !== undefined && errChecklistMessage !== null && errChecklistMessage !== "" ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
-        <LoadAppSettings />
-        <LoadBibliographyData />
-        <LoadUserReviews />
-      </Row>
+            <Row className="text-center">
+              {/* {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
+              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
+              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+              {checklistMessage !== undefined && checklistMessage !== null && checklistMessage !== "" ? <Alert color="info">{checklistMessage}</Alert> : null}
+              {errChecklistMessage !== undefined && errChecklistMessage !== null && errChecklistMessage !== "" ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
+              <LoadAppSettings />
+              <LoadBibliographyData />
+              <LoadUserReviews />
+            </Row>
 
-      <Switch>
+            <Switch>
 
-      {/* Set the default page from the defaultPageComponent from environment */}
-      {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
-      {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
-      {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
-      {defaultPageComponent === "Dickian" ? <Route exact path="/" component={Dickian} /> : null}
-      {/* <Route exact path="/">
+              {/* Set the default page from the defaultPageComponent from environment */}
+              {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
+              {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
+              {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
+              {defaultPageComponent === "Dickian" ? <Route exact path="/" component={Dickian} /> : null}
+              {/* <Route exact path="/">
         {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
         {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
         {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
@@ -556,43 +563,43 @@ function App() {
       </Route> */}
 
 
-      <Route exact path="/home" component={Home} />
-      <Route exact path="/new" component={New} />
-      <Route exact path="/about" component={About} />
-      <Route exact path="/socialMedia" component={FormatPost} />
-      <Route exact path="/homeopape" component={Homeopape} />
-      <Route exact path="/dickian" component={Dickian} />
-      <Route exact path="/categoryList" component={CategoryList} />
-      <Route exact path="/mediaList" component={MediaList} />
-      <Route exact path="/titleList" component={TitleList} />
-      <Route exact path="/editionList" component={EditionList} />
-      <Route exact path="/userReviewList" component={UserReviewList} />
-      <Route exact path="/userReviewRatingList" component={UserReviewRatingList} />
-      <Route exact path="/urlList" component={URLList} />
-      <Route exact path="/categories" component={Category} />
-      <Route exact path="/media" component={Media} />
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/new" component={New} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/socialMedia" component={FormatPost} />
+              <Route exact path="/homeopape" component={Homeopape} />
+              <Route exact path="/dickian" component={Dickian} />
+              <Route exact path="/categoryList" component={CategoryList} />
+              <Route exact path="/mediaList" component={MediaList} />
+              <Route exact path="/titleList" component={TitleList} />
+              <Route exact path="/editionList" component={EditionList} />
+              <Route exact path="/userReviewList" component={UserReviewList} />
+              <Route exact path="/userReviewRatingList" component={UserReviewRatingList} />
+              <Route exact path="/urlList" component={URLList} />
+              <Route exact path="/categories" component={Category} />
+              <Route exact path="/media" component={Media} />
 
-      {/* This route no longer works. Fixed. */}
-      <Route exact path="/titles" component={Titles} />
-      {/* <Route exact path="/titles/:category" component={Titles} />
+              {/* This route no longer works. Fixed. */}
+              <Route exact path="/titles" component={Titles} />
+              {/* <Route exact path="/titles/:category" component={Titles} />
       <Route exact path="/title/:title" component={Title} /> */}
 
-      {/* This route no longer works. Fixed. */}
-      <Route exact path="/editions" component={Editions} />
-      {/* <Route exact path="/editions/:title" component={Editions} /> */}
-      {/* <Route exact path="/editions/:media" component={Editions} /> */}
+              {/* This route no longer works. Fixed. */}
+              <Route exact path="/editions" component={Editions} />
+              {/* <Route exact path="/editions/:title" component={Editions} /> */}
+              {/* <Route exact path="/editions/:media" component={Editions} /> */}
 
-      {/* These need to stay at the bottom of the list so that the links above will work properly. */}
-      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} />: null}
-      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} />: null}
-      {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} />: null}
+              {/* These need to stay at the bottom of the list so that the links above will work properly. */}
+              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
+              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
+              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
 
-      </Switch>
-      </Col>
-      </Row>
+            </Switch>
+          </Col>
+        </Row>
       </Container>
 
-      </BrowserRouter>
+    </BrowserRouter>
   );
 }
 

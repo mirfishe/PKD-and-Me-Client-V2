@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
-import {emailRegExp} from "../../app/constants";
-import {loadUserData, setSessionToken, loadArrayChecklist} from "../../app/userSlice";
+import { emailRegExp } from "../../app/constants";
+import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Login = (props) => {
 
@@ -32,7 +32,15 @@ const Login = (props) => {
     // const [sessionToken, setSessionToken] = useState(null);
 
     const [message, setMessage] = useState("");
-    const [errMessage, setErrMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [messageVisible, setMessageVisible] = useState(false);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+    const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+    const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+    const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+    const onDismissMessage = () => setMessageVisible(false);
+    const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
     const [modal, setModal] = useState(false);
     const [userResultsFound, setUserResultsFound] = useState(null);
 
@@ -48,18 +56,17 @@ const Login = (props) => {
 
     const updateToken = (newToken) => {
         if (newToken !== undefined && newToken !== null && newToken !== "") {
-          localStorage.setItem("token", newToken);
-          // console.log(componentName, "updateToken newToken", newToken);
-          // console.log(componentName, "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
-          // console.log(componentName, "updateToken User token changed.");
+            localStorage.setItem("token", newToken);
+            // console.log(componentName, "updateToken newToken", newToken);
+            // console.log(componentName, "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
+            // console.log(componentName, "updateToken User token changed.");
         };
     };
 
     const logIn = () => {
         // console.log(componentName, "logIn");
 
-        setMessage("");
-        setErrMessage("");
+        clearMessages();
         setErrEmail("");
         setErrPassword("");
         // setUser({});
@@ -78,7 +85,7 @@ const Login = (props) => {
 
         if (txtEmail !== undefined && txtEmail !== null) {
             if (txtEmail.trim().match(emailRegExp) && txtEmail.trim().length > 0) {
-            // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
+                // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
                 emailValidated = true;
                 setErrEmail("");
                 // console.log(componentName, "logIn Valid Email Address");
@@ -123,8 +130,8 @@ const Login = (props) => {
 
             if (txtEmail !== undefined && txtEmail !== null && txtPassword !== undefined && txtPassword !== null) {
                 let userObject = {
-                    email:  txtEmail.trim(),
-                    password:  txtPassword.trim()
+                    email: txtEmail.trim(),
+                    password: txtPassword.trim()
                 };
                 // console.log(componentName, "logIn userObject", userObject);
 
@@ -133,31 +140,31 @@ const Login = (props) => {
 
                 fetch(url, {
                     method: "POST",
-                    headers:    new Headers ({
+                    headers: new Headers({
                         "Content-Type": "application/json"
                     }),
-                    body: JSON.stringify({user: userObject})
+                    body: JSON.stringify({ user: userObject })
                 })
-                .then(response => {
-                    // console.log(componentName, "logIn response", response);
-                    // if (!response.ok) {
-                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                    // } else {
+                    .then(response => {
+                        // console.log(componentName, "logIn response", response);
+                        // if (!response.ok) {
+                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                        // } else {
                         // if (response.status === 200) {
-                            return response.json();
+                        return response.json();
                         // } else {
                         //     return response.status;
                         // };
-                    // };
-                })
-                .then(data => {
-                    // console.log(componentName, "logIn data", data);
+                        // };
+                    })
+                    .then(data => {
+                        // console.log(componentName, "logIn data", data);
 
-                    // if (data !== 500 && data !== 401) {
-    
+                        // if (data !== 500 && data !== 401) {
+
                         // setUserResultsFound(data.resultsFound);
-                        setMessage(data.message);
-    
+                        addMessage(data.message);
+
                         if (data.resultsFound === true) {
                             // setUser(data);
                             // setUserID(data.userID);
@@ -178,20 +185,20 @@ const Login = (props) => {
                             setUserResultsFound(data.resultsFound);
 
                         } else {
-                            setErrMessage(data.error);
+                            addErrorMessage(data.error);
                         };
-                    // } else {
-                    //     // console.log("Login.js error", json);
-                    //     setErrMessage(Login failed.");
-                    // };
+                        // } else {
+                        //     // console.log("Login.js error", json);
+                        //     addErrorMessage(Login failed.");
+                        // };
 
-                })
-                .catch(error => {
-                    console.log(componentName, "logIn error", error);
-                    // console.log(componentName, "logIn error.name", error.name);
-                    // console.log(componentName, "logIn error.message", error.message);
-                    setErrMessage(error.name + ": " + error.message);
-                });
+                    })
+                    .catch(error => {
+                        console.log(componentName, "logIn error", error);
+                        // console.log(componentName, "logIn error.name", error.name);
+                        // console.log(componentName, "logIn error.message", error.message);
+                        addErrorMessage(error.name + ": " + error.message);
+                    });
 
             };
 
@@ -202,126 +209,124 @@ const Login = (props) => {
     const getChecklist = (token) => {
         // console.log(componentName, "getChecklist");
         // console.log(componentName, "getChecklist baseURL", baseURL);
-    
+
         setChecklistMessage("");
         setErrChecklistMessage("");
         setChecklistResultsFound(null);
-    
+
         let url = baseURL + "title/checklist/list";
-    
+
         if (token !== undefined && token !== null && token !== "") {
-    
+
             fetch(url, {
                 method: "GET",
                 headers: new Headers({
-                "Content-Type": "application/json",
-                "Authorization": token
+                    "Content-Type": "application/json",
+                    "Authorization": token
                 }),
             })
-            .then(response => {
-                // console.log(componentName, "getChecklist response", response);
-                // if (!response.ok) {
-                //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                // } else {
+                .then(response => {
+                    // console.log(componentName, "getChecklist response", response);
+                    // if (!response.ok) {
+                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                    // } else {
                     // if (response.status === 200) {
-                        return response.json();
+                    return response.json();
                     // } else {
                     //     return response.status;
                     // };
-                // };
-            })
-            .then(data => {
-                // console.log(componentName, "getChecklist data", data);
-    
-                setChecklistResultsFound(data.resultsFound);
-                // setChecklistMessage(data.message);
-    
-                if (data.resultsFound === true) {
-    
-                  dispatch(loadArrayChecklist(data.titles));
-    
-                } else {
-                  console.log(componentName, "getChecklist resultsFound error", data.message);
-                  setErrMessage(data.message);
-                };
-    
-            })
-            .catch(error => {
-                console.log(componentName, "getChecklist error", error);
-                // console.log(componentName, "getChecklist error.name", error.name);
-                // console.log(componentName, "getChecklist error.message", error.message);
-                // setErrMessage(error.name + ": " + error.message);
-            });
-    
-        };
-    
-      };
+                    // };
+                })
+                .then(data => {
+                    // console.log(componentName, "getChecklist data", data);
 
-      useEffect(() => {
+                    setChecklistResultsFound(data.resultsFound);
+                    // setChecklistMessage(data.message);
+
+                    if (data.resultsFound === true) {
+
+                        dispatch(loadArrayChecklist(data.titles));
+
+                    } else {
+                        console.log(componentName, "getChecklist resultsFound error", data.message);
+                        addErrorMessage(data.message);
+                    };
+
+                })
+                .catch(error => {
+                    console.log(componentName, "getChecklist error", error);
+                    // console.log(componentName, "getChecklist error.name", error.name);
+                    // console.log(componentName, "getChecklist error.message", error.message);
+                    // addErrorMessage(error.name + ": " + error.message);
+                });
+
+        };
+
+    };
+
+    useEffect(() => {
         // console.log(componentName, "useEffect userResultsFound", userResultsFound);
         if (userResultsFound !== undefined && userResultsFound !== null && userResultsFound !== false) {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setErrEmail("");
             setErrPassword("");
             setUserResultsFound(null);
             // setModal(false);
             toggle();
         };
-        
+
     }, [userResultsFound]);
 
     useEffect(() => {
         // console.log(componentName, "useEffect sessionToken", sessionToken);
         if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setErrEmail("");
             setErrPassword("");
             // setModal(false);
             toggle();
         };
-        
+
     }, [sessionToken]);
 
     const toggle = () => {
         setModal(!modal);
     };
 
-    return(
+    return (
         <React.Fragment>
-        {appAllowUserInteractions === true && sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Login</Button> : null}
-        <Modal isOpen={modal} toggle={toggle} size="md">
-           <ModalHeader toggle={toggle}>Login</ModalHeader>
-           <ModalBody>
-           <Form>
-           <FormGroup className="text-center">
-            {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-            {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-           </FormGroup>
-           <FormGroup>
+            {appAllowUserInteractions === true && sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Login</Button> : null}
+            <Modal isOpen={modal} toggle={toggle} size="md">
+                <ModalHeader toggle={toggle}>Login</ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup className="text-center">
+                            <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
+                            <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+                        </FormGroup>
+                        <FormGroup>
 
-               <Label for="txtEmail">Email Address</Label>
-               <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmail(event.target.value);}} />
-               {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
+                            <Label for="txtEmail">Email Address</Label>
+                            <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmail(event.target.value); }} />
+                            {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
 
-           </FormGroup>
-           <FormGroup>
+                        </FormGroup>
+                        <FormGroup>
 
-               <Label for="txtPassword">Password</Label>
-               <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(event.target.value);*/ setTxtPassword(event.target.value);}} />
-               {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
-               
-           </FormGroup>
+                            <Label for="txtPassword">Password</Label>
+                            <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(event.target.value);*/ setTxtPassword(event.target.value); }} />
+                            {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
 
-           <ModalFooter>
-            <Button outline size="lg" color="primary" onClick={logIn}>Log In</Button>
-            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
-           </ModalFooter>
-           </Form>
-       </ModalBody>
-     </Modal>
-   </React.Fragment>
+                        </FormGroup>
+
+                        <ModalFooter>
+                            <Button outline size="lg" color="primary" onClick={logIn}>Log In</Button>
+                            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
+                    </Form>
+                </ModalBody>
+            </Modal>
+        </React.Fragment>
     );
 
 };

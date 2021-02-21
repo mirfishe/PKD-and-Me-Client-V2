@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
-import {Plus} from 'react-bootstrap-icons';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import {encodeURL} from "../../app/sharedFunctions";
-import {addStateCategory} from "../../bibliographyData/categoriesSlice";
-import {addStateURL} from "../../app/urlsSlice";
+import { encodeURL } from "../../app/sharedFunctions";
+import { addStateCategory } from "../../bibliographyData/categoriesSlice";
+import { addStateURL } from "../../app/urlsSlice";
 
 const AddCategory = (props) => {
 
@@ -27,7 +27,15 @@ const AddCategory = (props) => {
     const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
     const [message, setMessage] = useState("");
-    const [errMessage, setErrMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [messageVisible, setMessageVisible] = useState(false);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+    const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+    const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+    const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+    const onDismissMessage = () => setMessageVisible(false);
+    const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
     const [modal, setModal] = useState(false);
     const [categoryRecordAdded, setCategoryRecordAdded] = useState(null);
 
@@ -45,8 +53,7 @@ const AddCategory = (props) => {
         // console.log(componentName, "addCategory");
         // console.log(componentName, "addCategory baseURL", baseURL);
 
-        setMessage("");
-        setErrMessage("");
+        clearMessages();
         setCategoryRecordAdded(null);
 
         // setCategoryItem(null);
@@ -103,56 +110,56 @@ const AddCategory = (props) => {
                     fetch(url, {
                         method: "POST",
                         headers: new Headers({
-                        "Content-Type": "application/json",
-                        "Authorization": sessionToken
+                            "Content-Type": "application/json",
+                            "Authorization": sessionToken
                         }),
-                        body: JSON.stringify({category: categoryObject})
+                        body: JSON.stringify({ category: categoryObject })
                     })
-                    .then(response => {
-                        // console.log(componentName, "addCategory response", response);
-                        // if (!response.ok) {
-                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                        // } else {
+                        .then(response => {
+                            // console.log(componentName, "addCategory response", response);
+                            // if (!response.ok) {
+                            //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                            // } else {
                             // if (response.status === 200) {
-                                return response.json();
+                            return response.json();
                             // } else {
                             //     return response.status;
                             // };
-                        // };
-                    })
-                    .then(data => {
-                        console.log(componentName, "addCategory data", data);
+                            // };
+                        })
+                        .then(data => {
+                            console.log(componentName, "addCategory data", data);
 
-                        setCategoryRecordAdded(data.recordAdded);
-                        setMessage(data.message);
+                            setCategoryRecordAdded(data.recordAdded);
+                            addMessage(data.message);
 
-                        if (data.recordAdded === true) {
+                            if (data.recordAdded === true) {
 
-                            // setCategoryItem(data);
+                                // setCategoryItem(data);
 
-                            setCategoryID(data.categoryID);
-                            setCategory(data.category);
-                            setSortID(data.sortID);
-                            setActive(data.active);
+                                setCategoryID(data.categoryID);
+                                setCategory(data.category);
+                                setSortID(data.sortID);
+                                setActive(data.active);
 
-                            // Would still work if the createdAt and updatedAt were left out?
-                            dispatch(addStateCategory([{categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
-                            // Add to local storage also?
+                                // Would still work if the createdAt and updatedAt were left out?
+                                dispatch(addStateCategory([{ categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt }]));
+                                // Add to local storage also?
 
-                            dispatch(addStateURL([{linkName: encodeURL(data.category), linkType: "category", linkID: data.categoryID}]));
+                                dispatch(addStateURL([{ linkName: encodeURL(data.category), linkType: "category", linkID: data.categoryID }]));
 
-                        } else {
-                            // setErrMessage(data.error);
-                            setErrMessage(data.errorMessages);
-                        };
+                            } else {
+                                // addErrorMessage(data.error);
+                                addErrorMessage(data.errorMessages);
+                            };
 
-                    })
-                    .catch(error => {
-                        console.log(componentName, "addCategory error", error);
-                        // console.log(componentName, "addCategory error.name", error.name);
-                        // console.log(componentName, "addCategory error.message", error.message);
-                        setErrMessage(error.name + ": " + error.message);
-                    });
+                        })
+                        .catch(error => {
+                            console.log(componentName, "addCategory error", error);
+                            // console.log(componentName, "addCategory error.name", error.name);
+                            // console.log(componentName, "addCategory error.message", error.message);
+                            addErrorMessage(error.name + ": " + error.message);
+                        });
 
                 };
 
@@ -165,13 +172,12 @@ const AddCategory = (props) => {
     useEffect(() => {
         // console.log(componentName, "useEffect categoryRecordAdded", categoryRecordAdded);
         if (categoryRecordAdded !== undefined && categoryRecordAdded !== null && categoryRecordAdded === true) {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setCategoryRecordAdded(null);
             // setModal(false);
             toggle();
         };
-        
+
     }, [categoryRecordAdded]);
 
     useEffect(() => {
@@ -181,44 +187,44 @@ const AddCategory = (props) => {
             // return <Redirect to="/" />;
             setModal(false);
         };
-        
+
     }, [admin]);
 
     const toggle = () => {
         setModal(!modal);
     };
 
-    return(
+    return (
         <React.Fragment>
 
             {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Category</Button></span> : null}
 
             {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
-        <Modal isOpen={modal} toggle={toggle} size="md">
-           <ModalHeader toggle={toggle}>Add Category</ModalHeader>
-           <ModalBody>
-           <Form>
-                <FormGroup className="text-center">
-                {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-                {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-                </FormGroup>
-                <FormGroup>
+            <Modal isOpen={modal} toggle={toggle} size="md">
+                <ModalHeader toggle={toggle}>Add Category</ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup className="text-center">
+                            <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
+                            <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+                        </FormGroup>
+                        <FormGroup>
 
-                <Label for="txtCategory">Category</Label>
-                <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => {/*console.log(event.target.value);*/ setTxtCategory(event.target.value);}} />
-                {errCategory !== undefined && errCategory !== null && errCategory !== "" ? <Alert color="danger">{errCategory}</Alert> : null}
+                            <Label for="txtCategory">Category</Label>
+                            <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => {/*console.log(event.target.value);*/ setTxtCategory(event.target.value); }} />
+                            {errCategory !== undefined && errCategory !== null && errCategory !== "" ? <Alert color="danger">{errCategory}</Alert> : null}
 
-                </FormGroup>
+                        </FormGroup>
 
-                <ModalFooter>
-                     <Button outline size="lg" color="primary" onClick={addCategory}>Add Category</Button>
-                     <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
-                </ModalFooter>
-                </Form>
-       </ModalBody>
-     </Modal>
-   </React.Fragment>
+                        <ModalFooter>
+                            <Button outline size="lg" color="primary" onClick={addCategory}>Add Category</Button>
+                            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
+                    </Form>
+                </ModalBody>
+            </Modal>
+        </React.Fragment>
     );
 
 };

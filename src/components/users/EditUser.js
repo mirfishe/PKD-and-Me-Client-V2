@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
-import {emailRegExp} from "../../app/constants";
-import {loadUserData} from "../../app/userSlice";
+import { emailRegExp } from "../../app/constants";
+import { loadUserData } from "../../app/userSlice";
 
 const EditUser = (props) => {
 
@@ -38,7 +38,15 @@ const EditUser = (props) => {
     const userLoaded = useSelector(state => state.user.userLoaded);
 
     const [message, setMessage] = useState("");
-    const [errMessage, setErrMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [messageVisible, setMessageVisible] = useState(false);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+    const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+    const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+    const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+    const onDismissMessage = () => setMessageVisible(false);
+    const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
     const [modal, setModal] = useState(false);
     const [userRecordUpdated, setUserRecordUpdated] = useState(null);
 
@@ -55,8 +63,7 @@ const EditUser = (props) => {
     const updateUser = (deleteUser) => {
         // console.log(componentName, "updateUser");
 
-        setMessage("");
-        setErrMessage("");
+        clearMessages();
         setErrFirstName("");
         setErrLastName("");
         setErrEmail("");
@@ -107,7 +114,7 @@ const EditUser = (props) => {
 
         if (txtEmail !== undefined && txtEmail !== null) {
             if (txtEmail.trim().match(emailRegExp) && txtEmail.trim().length > 0) {
-            // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
+                // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
                 emailValidated = true;
                 setErrEmail("");
                 // console.log(componentName, "updateUser Valid Email Address");
@@ -163,18 +170,18 @@ const EditUser = (props) => {
 
             if (txtFirstName !== undefined && txtFirstName !== null && txtLastName !== undefined && txtLastName !== null && txtEmail !== undefined && txtEmail !== null && txtPassword !== undefined && txtPassword !== null) {
                 let userObject = {
-                    firstName:  txtFirstName.trim(),
-                    lastName:  txtLastName.trim(),
-                    email:  txtEmail.trim(),
-                    updatedBy:  userID,
+                    firstName: txtFirstName.trim(),
+                    lastName: txtLastName.trim(),
+                    email: txtEmail.trim(),
+                    updatedBy: userID,
                     // active:     active
-                    active:     !deleteUser
+                    active: !deleteUser
                 };
 
                 // If the user doesn't enter a password, then it isn't updated
                 if (txtPassword !== undefined && txtPassword !== null) {
                     if (txtPassword.trim().length !== 0) {
-                        Object.assign(userObject, {password: txtPassword.trim()});
+                        Object.assign(userObject, { password: txtPassword.trim() });
                     };
                 };
 
@@ -191,32 +198,32 @@ const EditUser = (props) => {
 
                 fetch(url, {
                     method: "PUT",
-                    headers:    new Headers ({
+                    headers: new Headers({
                         "Content-Type": "application/json",
                         "Authorization": sessionToken
                     }),
-                    body: JSON.stringify({user: userObject})
+                    body: JSON.stringify({ user: userObject })
                 })
-                .then(response => {
-                    // console.log(componentName, "updateUser response", response);
-                    // if (!response.ok) {
-                    //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                    // } else {
+                    .then(response => {
+                        // console.log(componentName, "updateUser response", response);
+                        // if (!response.ok) {
+                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                        // } else {
                         // if (response.status === 200) {
-                            return response.json();
+                        return response.json();
                         // } else {
                         //     return response.status;
                         // };
-                    // };
-                })
-                .then(data => {
-                    // console.log(componentName, "updateUser data", data);
+                        // };
+                    })
+                    .then(data => {
+                        // console.log(componentName, "updateUser data", data);
 
-                    // if (data !== 500 && data !== 401) {
-    
+                        // if (data !== 500 && data !== 401) {
+
                         setUserRecordUpdated(data.recordUpdated);
-                        setMessage(data.message);
-    
+                        addMessage(data.message);
+
                         if (data.resultsFound === true) {
                             // setUser(data);
                             // setUserID(data.userID);
@@ -232,21 +239,21 @@ const EditUser = (props) => {
                             // dispatch(setSessionToken(data.sessionToken));
 
                         } else {
-                            // setErrMessage(data.error);
-                            setErrMessage(data.errorMessages);
+                            // addErrorMessage(data.error);
+                            addErrorMessage(data.errorMessages);
                         };
-                    // } else {
-                    //     // console.log("Login.js error", json);
-                    //     setErrMessage(Login failed.");
-                    // };
+                        // } else {
+                        //     // console.log("Login.js error", json);
+                        //     addErrorMessage(Login failed.");
+                        // };
 
-                })
-                .catch(error => {
-                    console.log(componentName, "updateUser error", error);
-                    // console.log(componentName, "updateUser error.name", error.name);
-                    // console.log(componentName, "updateUser error.message", error.message);
-                    setErrMessage(error.name + ": " + error.message);
-                });
+                    })
+                    .catch(error => {
+                        console.log(componentName, "updateUser error", error);
+                        // console.log(componentName, "updateUser error.name", error.name);
+                        // console.log(componentName, "updateUser error.message", error.message);
+                        addErrorMessage(error.name + ": " + error.message);
+                    });
 
             };
 
@@ -257,8 +264,7 @@ const EditUser = (props) => {
     useEffect(() => {
         // console.log(componentName, "useEffect userRecordUpdated", userRecordUpdated);
         if (userRecordUpdated !== undefined && userRecordUpdated !== null && userRecordUpdated !== false) {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setErrFirstName("");
             setErrLastName("");
             setErrEmail("");
@@ -267,74 +273,73 @@ const EditUser = (props) => {
             // setModal(false);
             toggle();
         };
-        
+
     }, [userRecordUpdated]);
 
     useEffect(() => {
         // console.log(componentName, "useEffect sessionToken", sessionToken);
         if (userLoaded !== undefined && userLoaded !== null && userLoaded === false) {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setErrEmail("");
             setErrPassword("");
             setModal(false);
         };
-        
+
     }, [userLoaded]);
 
     const toggle = () => {
         setModal(!modal);
     };
 
-    return(
+    return (
         <React.Fragment>
-        {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
-        <Modal isOpen={modal} toggle={toggle} size="md">
-           <ModalHeader toggle={toggle}>Update User</ModalHeader>
-           <ModalBody>
-           <Form>
-           <FormGroup className="text-center">
-            {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-            {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-            </FormGroup>
-            <FormGroup>
+            {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
+            <Modal isOpen={modal} toggle={toggle} size="md">
+                <ModalHeader toggle={toggle}>Update User</ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup className="text-center">
+                            <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
+                            <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+                        </FormGroup>
+                        <FormGroup>
 
-                <Label for="txtFirstName">First Name</Label>
-                <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtFirstName(event.target.value);}} />
-                {errFirstName !== "" ? <Alert color="danger">{errFirstName}</Alert> : null}
+                            <Label for="txtFirstName">First Name</Label>
+                            <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtFirstName(event.target.value); }} />
+                            {errFirstName !== "" ? <Alert color="danger">{errFirstName}</Alert> : null}
 
-            </FormGroup>
-            <FormGroup>
+                        </FormGroup>
+                        <FormGroup>
 
-                <Label for="txtLastName">Last Name</Label>
-                <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtLastName(event.target.value);}} />
-                {errLastName !== "" ? <Alert color="danger">{errLastName}</Alert> : null}
+                            <Label for="txtLastName">Last Name</Label>
+                            <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtLastName(event.target.value); }} />
+                            {errLastName !== "" ? <Alert color="danger">{errLastName}</Alert> : null}
 
-            </FormGroup>
-           <FormGroup>
+                        </FormGroup>
+                        <FormGroup>
 
-               <Label for="txtEmail">Email Address</Label>
-               <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmail(event.target.value);}} />
-               {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
+                            <Label for="txtEmail">Email Address</Label>
+                            <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmail(event.target.value); }} />
+                            {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
 
-           </FormGroup>
-           <FormGroup>
+                        </FormGroup>
+                        <FormGroup>
 
-               <Label for="txtPassword">Password</Label>
-               <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(event.target.value);*/ setTxtPassword(event.target.value);}} />
-               {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
-               
-           </FormGroup>
+                            <Label for="txtPassword">Password</Label>
+                            <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(event.target.value);*/ setTxtPassword(event.target.value); }} />
+                            {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
 
-           <ModalFooter>
-            <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateUser(false);}}>Update</Button>
-            <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateUser(true);}}>Delete</Button>
-            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
-           </ModalFooter>
-           </Form>
-       </ModalBody>
-     </Modal>
-   </React.Fragment>
+                        </FormGroup>
+
+                        <ModalFooter>
+                            <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateUser(false); }}>Update</Button>
+                            <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateUser(true); }}>Delete</Button>
+                            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
+                    </Form>
+                </ModalBody>
+            </Modal>
+        </React.Fragment>
     );
 
 };

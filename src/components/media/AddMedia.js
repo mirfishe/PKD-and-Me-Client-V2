@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button} from "reactstrap";
-import {Plus} from 'react-bootstrap-icons';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import {encodeURL} from "../../app/sharedFunctions";
-import {addStateMedia} from "../../bibliographyData/mediaSlice";
-import {addStateURL} from "../../app/urlsSlice";
+import { encodeURL } from "../../app/sharedFunctions";
+import { addStateMedia } from "../../bibliographyData/mediaSlice";
+import { addStateURL } from "../../app/urlsSlice";
 
 const AddMedia = (props) => {
 
@@ -27,7 +27,15 @@ const AddMedia = (props) => {
     const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
     const [message, setMessage] = useState("");
-    const [errMessage, setErrMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [messageVisible, setMessageVisible] = useState(false);
+    const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+    const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+    const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+    const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+    const onDismissMessage = () => setMessageVisible(false);
+    const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
     const [modal, setModal] = useState(false);
     const [mediaRecordAdded, setMediaRecordAdded] = useState(null);
 
@@ -48,8 +56,7 @@ const AddMedia = (props) => {
         // console.log(componentName, "addMedia");
         // console.log(componentName, "addMedia baseURL", baseURL);
 
-        setMessage("");
-        setErrMessage("");
+        clearMessages();
         setMediaRecordAdded(null);
 
         // setMediaItem(null);
@@ -108,57 +115,57 @@ const AddMedia = (props) => {
                     fetch(url, {
                         method: "POST",
                         headers: new Headers({
-                        "Content-Type": "application/json",
-                        "Authorization": sessionToken
+                            "Content-Type": "application/json",
+                            "Authorization": sessionToken
                         }),
-                        body: JSON.stringify({media: mediaObject})
+                        body: JSON.stringify({ media: mediaObject })
                     })
-                    .then(response => {
-                        // console.log(componentName, "addMedia response", response);
-                        // if (!response.ok) {
-                        //     throw Error(response.status + " " + response.statusText + " " + response.url);
-                        // } else {
+                        .then(response => {
+                            // console.log(componentName, "addMedia response", response);
+                            // if (!response.ok) {
+                            //     throw Error(response.status + " " + response.statusText + " " + response.url);
+                            // } else {
                             // if (response.status === 200) {
-                                return response.json();
+                            return response.json();
                             // } else {
                             //     return response.status;
                             // };
-                        // };
-                    })
-                    .then(data => {
-                        // console.log(componentName, "addMedia data", data);
+                            // };
+                        })
+                        .then(data => {
+                            // console.log(componentName, "addMedia data", data);
 
-                        setMediaRecordAdded(data.recordAdded);
-                        setMessage(data.message);
+                            setMediaRecordAdded(data.recordAdded);
+                            addMessage(data.message);
 
-                        if (data.recordAdded === true) {
+                            if (data.recordAdded === true) {
 
-                            // setMediaItem(data);
+                                // setMediaItem(data);
 
-                            setMediaID(data.mediaID);
-                            setMedia(data.media);
-                            setElectronic(data.electronic);
-                            setSortID(data.sortID);
-                            setActive(data.active);
+                                setMediaID(data.mediaID);
+                                setMedia(data.media);
+                                setElectronic(data.electronic);
+                                setSortID(data.sortID);
+                                setActive(data.active);
 
-                            // Would still work if the createdAt and updatedAt were left out?
-                            dispatch(addStateMedia([{mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
-                            // Add to local storage also?
-                            
-                            dispatch(addStateURL([{linkName: encodeURL(data.media), linkType: "media", linkID: data.mediaID}]));
+                                // Would still work if the createdAt and updatedAt were left out?
+                                dispatch(addStateMedia([{ mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt }]));
+                                // Add to local storage also?
 
-                        } else {
-                            // setErrMessage(data.error);
-                            setErrMessage(data.errorMessages);
-                        };
+                                dispatch(addStateURL([{ linkName: encodeURL(data.media), linkType: "media", linkID: data.mediaID }]));
 
-                    })
-                    .catch(error => {
-                        console.log(componentName, "addMedia error", error);
-                        // console.log(componentName, "addMedia error.name", error.name);
-                        // console.log(componentName, "addMedia error.message", error.message);
-                        setErrMessage(error.name + ": " + error.message);
-                    });
+                            } else {
+                                // addErrorMessage(data.error);
+                                addErrorMessage(data.errorMessages);
+                            };
+
+                        })
+                        .catch(error => {
+                            console.log(componentName, "addMedia error", error);
+                            // console.log(componentName, "addMedia error.name", error.name);
+                            // console.log(componentName, "addMedia error.message", error.message);
+                            addErrorMessage(error.name + ": " + error.message);
+                        });
 
                 };
 
@@ -171,13 +178,12 @@ const AddMedia = (props) => {
     useEffect(() => {
         // console.log(componentName, "useEffect mediaRecordAdded", mediaRecordAdded);
         if (mediaRecordAdded !== undefined && mediaRecordAdded !== null && mediaRecordAdded === true) {
-            setMessage("");
-            setErrMessage("");
+            clearMessages();
             setMediaRecordAdded(null);
             // setModal(false);
             toggle();
         };
-        
+
     }, [mediaRecordAdded]);
 
     useEffect(() => {
@@ -187,50 +193,50 @@ const AddMedia = (props) => {
             // return <Redirect to="/" />;
             setModal(false);
         };
-        
+
     }, [admin]);
 
     const toggle = () => {
         setModal(!modal);
     };
 
-    return(
+    return (
         <React.Fragment>
-                            
-        {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
 
-        {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+            {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
 
-        <Modal isOpen={modal} toggle={toggle} size="md">
-           <ModalHeader toggle={toggle}>Add Media</ModalHeader>
-           <ModalBody>
-           <Form>
-                <FormGroup className="text-center">
-                {message !== undefined && message !== null && message !== "" ? <Alert color="info">{message}</Alert> : null}
-                {errMessage !== undefined && errMessage !== null && errMessage !== "" ? <Alert color="danger">{errMessage}</Alert> : null}
-                </FormGroup>
-                <FormGroup>
+            {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
-                <Label for="txtMedia">Media</Label>
-                <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => {/*console.log(event.target.value);*/ setTxtMedia(event.target.value);}} />
-                {errMedia !== undefined && errMedia !== null && errMedia !== "" ? <Alert color="danger">{errMedia}</Alert> : null}
+            <Modal isOpen={modal} toggle={toggle} size="md">
+                <ModalHeader toggle={toggle}>Add Media</ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup className="text-center">
+                            <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
+                            <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+                        </FormGroup>
+                        <FormGroup>
 
-                </FormGroup>
-                <FormGroup className="ml-4">
+                            <Label for="txtMedia">Media</Label>
+                            <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => {/*console.log(event.target.value);*/ setTxtMedia(event.target.value); }} />
+                            {errMedia !== undefined && errMedia !== null && errMedia !== "" ? <Alert color="danger">{errMedia}</Alert> : null}
 
-                <Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(event.target.value);*/ setCbxElectronic(!cbxElectronic);}} />
-                <Label for="cbxElectronic">Electronic</Label>
+                        </FormGroup>
+                        <FormGroup className="ml-4">
 
-                </FormGroup>
+                            <Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(event.target.value);*/ setCbxElectronic(!cbxElectronic); }} />
+                            <Label for="cbxElectronic">Electronic</Label>
 
-                <ModalFooter>
-                     <Button outline size="lg" color="primary" onClick={addMedia}>Add Media</Button>
-                     <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
-                </ModalFooter>
-                </Form>
-       </ModalBody>
-     </Modal>
-   </React.Fragment>
+                        </FormGroup>
+
+                        <ModalFooter>
+                            <Button outline size="lg" color="primary" onClick={addMedia}>Add Media</Button>
+                            <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
+                    </Form>
+                </ModalBody>
+            </Modal>
+        </React.Fragment>
     );
 
 };
