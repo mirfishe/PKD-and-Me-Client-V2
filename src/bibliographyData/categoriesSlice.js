@@ -33,7 +33,7 @@ const categoriesSlice = createSlice({
         // console.log(componentName, "addStateCategory action.payload", action.payload);
         // console.log(componentName, "addStateCategory action.payload.length", action.payload.length);
 
-        // Could change this to accept an object and add that object to the store
+        // * Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
           // console.log(componentName, "addStateCategory action.payload[i]", action.payload[i]);
           state.arrayCategories.push(action.payload[i]);
@@ -79,8 +79,8 @@ const categoriesSlice = createSlice({
       const categoryItemIndex = action.payload;
       // const categoryID = action.payload;
       
-      // This doesn't work because state.arrayCategories isn't stored as an array of objects?
-      // Need to copy the array?
+      // ? This doesn't work because state.arrayCategories isn't stored as an array of objects?
+      // ? Need to copy the array?
       // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
       // console.log(componentName, "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
 

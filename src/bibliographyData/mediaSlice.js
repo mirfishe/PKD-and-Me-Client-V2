@@ -33,7 +33,7 @@ const mediaSlice = createSlice({
         // console.log(componentName, "addStateMedia action.payload", action.payload);
         // console.log(componentName, "addStateMedia action.payload.length", action.payload.length);
 
-        // Could change this to accept an object and add that object to the store
+        // * Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
           // console.log(componentName, "addStateMedia action.payload[i]", action.payload[i]);
           state.arrayMedia.push(action.payload[i]);
@@ -83,8 +83,8 @@ const mediaSlice = createSlice({
         const mediaItemIndex = action.payload;
         // const mediaID = action.payload;
         
-        // This doesn't work because state.arrayMedia isn't stored as an array of objects?
-        // Need to copy the array?
+        // ? This doesn't work because state.arrayMedia isn't stored as an array of objects?
+        // ? Need to copy the array?
         // const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
         // console.log(componentName, "deleteStateMedia existingMediaIndex", existingMediaIndex);
 

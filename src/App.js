@@ -48,8 +48,8 @@ function App() {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, "admin", admin);
 
-  // Loading the baseURL from the state store here is too slow
-  // Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow
+  // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, "baseURL", baseURL);
@@ -61,7 +61,7 @@ function App() {
   const lastName = useSelector(state => state.user.lastName);
   // console.log(componentName, "lastName", lastName);
 
-  // Load settings from Redux slices
+  // * Load settings from Redux slices
   const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
   const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
   const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
@@ -79,14 +79,14 @@ function App() {
 
   let showNew = useSelector(state => state.app.menuSettings.showNew);
   // console.log(componentName, "showNew", showNew);
-  // show New page unless set specifically to false
+  // * show New page unless set specifically to false
   if (showNew !== false) {
     showNew = true;
   };
 
   let showAbout = useSelector(state => state.app.menuSettings.showAbout);
   // console.log(componentName, "showAbout", showAbout);
-  // show About page unless set specifically to false
+  // * show About page unless set specifically to false
   if (showAbout !== false) {
     showAbout = true;
   };
@@ -112,9 +112,9 @@ function App() {
 
   let showAllCategories = useSelector(state => state.app.menuSettings.showAllCategories);
   let showAllMedia = useSelector(state => state.app.menuSettings.showAllMedia);
-  // This route no longer works. 
+  // ! This route no longer works. 
   let showAllTitles = useSelector(state => state.app.menuSettings.showAllTitles);
-  // This route no longer works. 
+  // ! This route no longer works. 
   let showAllEditions = useSelector(state => state.app.menuSettings.showAllEditions);
 
   let showUserPhysicalOnly = useSelector(state => state.app.menuSettings.showUserPhysicalOnly);
@@ -124,13 +124,13 @@ function App() {
   const pageURL = useSelector(state => state.urls.pageURL);
   const linkItem = useSelector(state => state.urls.linkItem);
 
-  // Loading the routerBaseName from the state store here is too slow
-  // Always pulling it from environment.js
+  // ! Loading the routerBaseName from the state store here is too slow
+  // ! Always pulling it from environment.js
   // const routerBaseName = useSelector(state => state.app.routerBaseName);
   const routerBaseName = AppSettings.routerBaseName;
 
-  // Loading the defaultPageComponent from the state store here is too slow
-  // Always pulling it from environment.js
+  // ! Loading the defaultPageComponent from the state store here is too slow
+  // ! Always pulling it from environment.js
   // const defaultPageComponent = useSelector(state => state.app.defaultPageComponent);
   const defaultPageComponent = AppSettings.defaultPageComponent;
 
@@ -159,12 +159,12 @@ function App() {
   };
 
   const logOut = () => {
-    // remove user from userSlice
+    // * remove user from userSlice
     dispatch(loadUserData({ userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null, userLoaded: false, arrayChecklist: [], checklistLoaded: false, lastDatabaseRetrievalChecklist: null }));
     dispatch(setSessionToken(null));
     clearToken();
 
-    // reload/refresh page
+    // * reload/refresh page
 
   };
 
@@ -217,7 +217,7 @@ function App() {
               };
 
             } else {
-              // Won't hit this because no records will be returned if the user is not active
+              // * Won't hit this because no records will be returned if the user is not active
               logOut();
             };
 
@@ -307,17 +307,17 @@ function App() {
       // console.log(componentName, "componentDidMount localStorage token", localStorage.getItem("token"));
       // console.log(componentName, "componentDidMount state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
 
-      // Doesn't store if the user is active or is an admin
-      // Doesn't store the userID except inside the sessionToken hash
-      // ########## TEMPORARY ##########
+      // ! Doesn't store if the user is active or is an admin
+      // ! Doesn't store the userID except inside the sessionToken hash
+      // * ########## TEMPORARY ##########
       // setUserID(1);
       // setIsAdmin(true);
-      // Fetch from the API to check these
+      // * Fetch from the API to check these
       if (!userLoaded) {
         getUser(localStorage.getItem("token"));
       };
 
-      // Moved to the getUser function
+      // * Moved to the getUser function
       // if (!checklistLoaded) {
       //   getChecklist(localStorage.getItem("token"));
       // };
@@ -539,8 +539,8 @@ function App() {
 
             <Row className="text-center">
               {/* {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
-              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert >
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert >
+              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
               {checklistMessage !== undefined && checklistMessage !== null && checklistMessage !== "" ? <Alert color="info">{checklistMessage}</Alert> : null}
               {errChecklistMessage !== undefined && errChecklistMessage !== null && errChecklistMessage !== "" ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
               <LoadAppSettings />
@@ -550,7 +550,7 @@ function App() {
 
             <Switch>
 
-              {/* Set the default page from the defaultPageComponent from environment */}
+              {/* // * Set the default page from the defaultPageComponent from environment */}
               {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
               {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
               {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
@@ -579,17 +579,17 @@ function App() {
               <Route exact path="/categories" component={Category} />
               <Route exact path="/media" component={Media} />
 
-              {/* This route no longer works. Fixed. */}
+              {/* // * This route no longer works. Fixed. */}
               <Route exact path="/titles" component={Titles} />
               {/* <Route exact path="/titles/:category" component={Titles} />
       <Route exact path="/title/:title" component={Title} /> */}
 
-              {/* This route no longer works. Fixed. */}
+              {/* // * This route no longer works. Fixed. */}
               <Route exact path="/editions" component={Editions} />
               {/* <Route exact path="/editions/:title" component={Editions} /> */}
               {/* <Route exact path="/editions/:media" component={Editions} /> */}
 
-              {/* These need to stay at the bottom of the list so that the links above will work properly. */}
+              {/* // ! These need to stay at the bottom of the list so that the links above will work properly. */}
               {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
               {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
               {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}

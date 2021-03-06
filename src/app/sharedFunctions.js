@@ -82,21 +82,21 @@ export const removeOnePixelImage = (text, ASIN) => {
 
   if (newText !== undefined && newText !== null && newText !== "") {
 
-    // Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
-    // This is not working.
+    // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
+    // * This is not working.
     // newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&", "");
     // newText = newText.replaceAll(" width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
     // newText = newText.replaceAll("a=" + ASIN, "");
 
-    // Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
+    // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
     newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
 
-    // The difference between the next ones is the l=li1, l=li2, l=li3
-    // Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=0812699637" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+    // * The difference between the next ones is the l=li1, l=li2, l=li3
+    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=0812699637" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
     newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-    // Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=0997135603" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=0997135603" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
     newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-    // Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li2&o=1&a=0997135603" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li2&o=1&a=0997135603" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
     newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li2&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
 
 
@@ -122,10 +122,10 @@ export const setLocalImagePath = (text) => {
 
   if (newText !== undefined && newText !== null && newText !== "") {
 
-    // So that it doesn't remove the URL when the application is running locally or on a site without the images
+    // * So that it doesn't remove the URL when the application is running locally or on a site without the images
     if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
 
-      // Removes the "https://philipdick.com"
+      // * Removes the "https://philipdick.com"
       newText = newText.replaceAll("https://philipdick.com", "");
 
     };
@@ -147,10 +147,10 @@ export const setLocalPath = (text) => {
 
   if (newText !== undefined && newText !== null && newText !== "") {
 
-    // So that it doesn't remove the URL when the application is running locally or on a site without the images
+    // * So that it doesn't remove the URL when the application is running locally or on a site without the images
     if (AppSettings.profileType === "philipdick") {
 
-      // Removes the "https://philipdick.com"
+      // * Removes the "https://philipdick.com"
       newText = newText.replaceAll("https://philipdick.com", "");
 
     };
@@ -170,9 +170,9 @@ export const createImageName = (titleName) => {
   let newImageName = "";
 
   if (titleName !== undefined && titleName !== null && titleName !== "") {
-    // Capitalize the first letter of every word
+    // * Capitalize the first letter of every word
     newImageName = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
-    // I'm sure there's a more elegant way to do this
+    // * I'm sure there's a more elegant way to do this
     // newImageName = newImageName.replaceAll(".", "");
     // newImageName = newImageName.replaceAll("?", "");
     // newImageName = newImageName.replaceAll(",", "");
@@ -180,10 +180,10 @@ export const createImageName = (titleName) => {
     // newImageName = newImageName.replaceAll("-", "");
     //newImageName = newImageName.replace(/[.,\/#\'\?!$%\^&\*;:{}=\-_`~()]/g,"");
     //newImageName = newImageName.replaceAll(" ", "");
-    // Remove all spaces - Doesn't work
+    // * Remove all spaces - Doesn't work
     // newImageName = newImageName.replace(/\s{2,}/g," ");
 
-    // https://www.codefari.com/2019/11/removereplace-special-characters-from.html
+    // * https://www.codefari.com/2019/11/removereplace-special-characters-from.html
     // SELECT regexp_replace('Remove!@#$ Special &*&characters', '[^\w]+','','g');
     // regexp_replace("titleName", '[^\w]+')
     // newImageName = titleName.replace(regExpr, "");
@@ -195,7 +195,7 @@ export const createImageName = (titleName) => {
     // , replace(regexp_replace("titleName", '[^\w]+',' ','g'), ' ', '-')
     // from titles
 
-    // https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
+    // * https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
     newImageName = newImageName.replace(/[^a-zA-Z0-9]/g, "");
 
 
@@ -215,7 +215,7 @@ export const createTitleURL = (titleName) => {
   let newTitleURL = "";
 
   if (titleName !== undefined && titleName !== null && titleName !== "") {
-    // Capitalize the first letter of every word
+    // * Capitalize the first letter of every word
     newTitleURL = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
     // I'm sure there's a more elegant way to do this
     // newTitleURL = newTitleURL.replaceAll(".", "");
@@ -223,12 +223,12 @@ export const createTitleURL = (titleName) => {
     // newTitleURL = newTitleURL.replaceAll(",", "");
     // newTitleURL = newTitleURL.replaceAll(":", "");
     // newTitleURL = newTitleURL.replaceAll("-", "");
-    //newTitleURL = newTitleURL.replace(/[.,\/#\'\?!$%\^&\*;:{}=\-_`~()]/g,"");
-    //newTitleURL = newTitleURL.replaceAll(" ", "");
-    // Remove all spaces - Doesn't work
+    // newTitleURL = newTitleURL.replace(/[.,\/#\'\?!$%\^&\*;:{}=\-_`~()]/g,"");
+    // newTitleURL = newTitleURL.replaceAll(" ", "");
+    // * Remove all spaces - Doesn't work
     // newTitleURL = newTitleURL.replace(/\s{2,}/g," ");
 
-    // https://www.codefari.com/2019/11/removereplace-special-characters-from.html
+    // * https://www.codefari.com/2019/11/removereplace-special-characters-from.html
     // SELECT regexp_replace('Remove!@#$ Special &*&characters', '[^\w]+','','g');
     // regexp_replace("titleName", '[^\w]+')
     // newTitleURL = titleName.replace(regExpr, "");
@@ -237,14 +237,14 @@ export const createTitleURL = (titleName) => {
     // --, replace("titleName", '-', '|')
     // , regexp_replace("titleName", '[^\w]+','','g')
     // , regexp_replace("titleName", '[^\w]+',' ','g')
-    // Use this regular expression to create the titleURL
-    // Execpt that letters after ' are captitalized also
+    // * Use this regular expression to create the titleURL
+    // * Execpt that letters after ' are captitalized also
     // , replace(regexp_replace(initcap("titleName"), '[^\w]+',' ','g'), ' ', '-')
     // from titles
 
-    // https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
+    // * https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
     newTitleURL = newTitleURL.replace(/[^a-zA-Z0-9]/g, "-");
-    // I'm sure there's a more elegant way to do this
+    // ? I'm sure there's a more elegant way to do this
     newTitleURL = newTitleURL.replaceAll("---", "-");
     newTitleURL = newTitleURL.replaceAll("--", "-");
 
@@ -297,8 +297,8 @@ export const getASIN = (textLinkFull) => {
 export const IsEmpty = (value) => {
   // console.log(componentName, GetDateTime(), "IsEmpty value", value);
 
-  // https://stackoverflow.com/questions/4597900/checking-something-isempty-in-javascript
-  // https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
+  // * https://stackoverflow.com/questions/4597900/checking-something-isempty-in-javascript
+  // * https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
 
   // const isEmpty = (object) => {
   //   for (var key in object) {
@@ -311,14 +311,14 @@ export const IsEmpty = (value) => {
 
   return value === undefined || value === null || (typeof value === "object" && Object.keys(value).length === 0) || (typeof value === "string" && value.trim().length === 0);
 
-  // Returns true
+  // * Returns true
   // console.log(componentName, GetDateTime(), "IsEmpty(\"\")", IsEmpty(""));
   // console.log(componentName, GetDateTime(), "IsEmpty(null)", IsEmpty(null));
   // console.log(componentName, GetDateTime(), "IsEmpty(undefined)", IsEmpty(undefined));
   // console.log(componentName, GetDateTime(), "IsEmpty([])", IsEmpty([]));
   // console.log(componentName, GetDateTime(), "IsEmpty({})", IsEmpty({}));
 
-  // Returns false
+  // * Returns false
   // console.log(componentName, GetDateTime(), "IsEmpty(\"test\")", IsEmpty("test"));
   // console.log(componentName, GetDateTime(), "IsEmpty(5)", IsEmpty(5));
   // console.log(componentName, GetDateTime(), "IsEmpty(true)", IsEmpty(true));
@@ -357,20 +357,20 @@ export const DisplayValue = (variableValue) => {
 export const TryParseJSON = (jsonString) => {
   // console.log(componentName, GetDateTime(), "TryParseJSON jsonString", jsonString);
 
-  // https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try
+  // * https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try
   try {
     let jsonData = JSON.parse(jsonString);
 
-    // Handle non-exception-throwing cases:
-    // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
-    // but... JSON.parse(null) returns null, and typeof null === "object", 
-    // so we must check for that, too. Thankfully, null is falsey, so this suffices:
+    // * Handle non-exception-throwing cases:
+    // * Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
+    // * but... JSON.parse(null) returns null, and typeof null === "object", 
+    // * so we must check for that, too. Thankfully, null is falsey, so this suffices:
     if (jsonData && typeof jsonData === "object") {
       return jsonData;
     };
   }
   catch (error) {
-    // Don't display this error in the console. This function is already returning false is the JSON file is not in the correct format.
+    // ! Don't display this error in the console. This function is already returning false is the JSON file is not in the correct format.
     // console.log(componentName, GetDateTime(), "TryParseJSON error", error);
   };
 
@@ -435,11 +435,11 @@ export const displayDate = (dateToDisplay) => {
 
   if (IsEmpty(dateToDisplay) === false) {
 
-    // Year
+    // * Year
     let yyyy = dateToDisplay.toString().substring(0, 4);
-    // Month
+    // * Month
     let mm = dateToDisplay.toString().substring(5, 7);
-    // Day
+    // * Day
     let dd = dateToDisplay.toString().substring(8, 10);
 
     newDisplayDate = mm + "/" + dd + "/" + yyyy;
@@ -459,11 +459,11 @@ export const displayYear = (dateToDisplay) => {
 
   if (IsEmpty(dateToDisplay) === false) {
 
-    // Year
+    // * Year
     let yyyy = dateToDisplay.toString().substring(0, 4);
-    // Month
+    // * Month
     // let mm = dateToDisplay.toString().substring(5, 7);
-    // Day
+    // * Day
     // let dd = dateToDisplay.toString().substring(8, 10);
 
     // newDisplayDate = mm + "/" + dd + "/" + yyyy;
@@ -505,7 +505,7 @@ export const displayYear = (dateToDisplay) => {
 export const truncateText = (text, limit) => {
   // console.log(componentName, GetDateTime(), "truncateText text", text);
 
-  // https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript
+  // * https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript
 
   // let newText = text;
 

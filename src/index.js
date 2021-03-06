@@ -11,7 +11,7 @@ import store from './app/store';
 import {Provider} from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
-// Google Tag Manager
+// * Google Tag Manager
 if (AppSettings.tagManagerArgs.gtmId !== "") {
   TagManager.initialize(AppSettings.tagManagerArgs);
 };

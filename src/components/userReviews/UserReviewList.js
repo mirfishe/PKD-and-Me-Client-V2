@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from "react";
-import {useSelector} from "react-redux";
-import {Container, Col, Row, Alert} from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Container, Col, Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
 
 function UserReviewList() {
 
   const componentName = "UserReviewList.js";
 
-  // Loading the baseURL from the state store here is too slow
-  // Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow
+  // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, "baseURL", baseURL);
@@ -32,61 +32,61 @@ function UserReviewList() {
     let url = baseURL + "userreview/list";
 
     fetch(url)
-    .then(response => {
+      .then(response => {
         // console.log(componentName, "getUserReviews response", response);
         if (!response.ok) {
-            throw Error(response.status + " " + response.statusText + " " + response.url);
+          throw Error(response.status + " " + response.statusText + " " + response.url);
         } else {
-            return response.json();
+          return response.json();
         };
-    })
-    .then(data => {
+      })
+      .then(data => {
         // console.log(componentName, "getUserReviews data", data);
 
         setUserReviewResultsFound(data.resultsFound);
         setUserReviewMessage(data.message);
 
         if (data.resultsFound === true) {
-            setUserReviewList(data.userReviews);
+          setUserReviewList(data.userReviews);
         } else {
-            setErrUserReviewMessage(data.message);
+          setErrUserReviewMessage(data.message);
         };
 
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.log(componentName, "getUserReviews error", error);
         // console.log(componentName, "getUserReviews error.name", error.name);
         // console.log(componentName, "getUserReviews error.message", error.message);
         setErrUserReviewMessage(error.name + ": " + error.message);
-    });
+      });
 
   };
 
   useEffect(() => {
     getUserReviews();
-}, []);
+  }, []);
 
   return (
     <Container className="mt-4">
-    <Row className="text-center">
+      <Row className="text-center">
         {userReviewMessage !== undefined && userReviewMessage !== null && userReviewMessage !== "" ? <Alert color="info">{userReviewMessage}</Alert> : null}
         {errUserReviewMessage !== undefined && errUserReviewMessage !== null && errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
-    </Row>
-    {userReviewResultsFound !== null ?
+      </Row>
+      {userReviewResultsFound !== null ?
         <Row>
-            {/* <pre>
+          {/* <pre>
                 {JSON.stringify(userReviewList)}
             </pre> */}
-            <span>
-                {JSON.stringify({"resultsFound": true, "message": "Offline User Reviews data used.", "userReviews": userReviewList})}
-            </span>
+          <span>
+            {JSON.stringify({ "resultsFound": true, "message": "Offline User Reviews data used.", "userReviews": userReviewList })}
+          </span>
         </Row>
-    : null} 
-    
-    <Row>
+        : null}
+
+      <Row>
         {/* {userReviewResultsFound !== null ? <UserReview userReviewList={userReviewList} /> : null} */}
         {/* <UserReview userReviewList={userReviewList} /> */}
-    </Row>
+      </Row>
     </Container>
   );
 }

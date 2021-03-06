@@ -34,7 +34,7 @@ const titlesSlice = createSlice({
         // console.log(componentName, "addStateTitle action.payload", action.payload);
         // console.log(componentName, "addStateTitle action.payload.length", action.payload.length);
 
-        // Could change this to accept an object and add that object to the store
+        // * Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
           // console.log(componentName, "addStateTitle action.payload[i]", action.payload[i]);
           state.arrayTitles.push(action.payload[i]);
@@ -136,8 +136,8 @@ const titlesSlice = createSlice({
         const titleItemIndex = action.payload;
         // const titleID = action.payload;
 
-        // This doesn't work because state.arrayTitles isn't stored as an array of objects?
-        // Need to copy the array?
+        // ? This doesn't work because state.arrayTitles isn't stored as an array of objects?
+        // ? Need to copy the array?
         // const existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
         // console.log(componentName, "deleteStateTitle existingTitleIndex", existingTitleIndex);
 

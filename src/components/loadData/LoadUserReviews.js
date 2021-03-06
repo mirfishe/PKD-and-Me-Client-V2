@@ -89,7 +89,7 @@ function LoadUserReviews() {
         // console.log(componentName, "getUserReviews response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
-          // load offline data
+          // * load offline data
           dispatch(setUserReviewsDataOffline(true));
           return {resultsFound: false, message: "Offline User Reviews data fetch used."};
         } else {
@@ -140,7 +140,7 @@ function LoadUserReviews() {
 //           // console.log(componentName, "getUserReviewsRatings response", response);
 //           if (!response.ok) {
 //               // throw Error(response.status + " " + response.statusText + " " + response.url);
-//               // load offline data
+//               // * load offline data
 //               dispatch(setUserReviewsRatingsDataOffline(true));
 //               return {resultsFound: false, message: "Offline User Reviews Ratings data fetch used."};
 //           } else {
@@ -183,7 +183,8 @@ function LoadUserReviews() {
         // console.log(componentName, "fetchLocalDataUserReviews response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
-          // load offline data
+          // ! This error runs on the web server but not on the local developer computer.
+          // * load offline data
           dispatch(setUserReviewsDataOffline(true));
           // return {resultsFound: true, message: "Offline User Reviews data used.", userReviews: UserReviewData};
           return {resultsFound: false, message: "Offline User Reviews data fetch failed."};
@@ -210,7 +211,7 @@ function LoadUserReviews() {
         // console.log(componentName, "fetchLocalDataUserReviews error.name", error.name);
         // console.log(componentName, "fetchLocalDataUserReviews error.message", error.message);
         // setErrUserReviewMessage(error.name + ": " + error.message);
-        // This doesn't actually run as far as I can tell
+        // ! This doesn't actually run as far as I can tell
         dispatch(setUserReviewsDataOffline(true));
         loadDataStore(UserReviewData, "userReview");
     });
@@ -227,7 +228,7 @@ function LoadUserReviews() {
   //       // console.log(componentName, "fetchLocalDataUserReviewsRatings response", response);
   //       if (!response.ok) {
   //         // throw Error(response.status + " " + response.statusText + " " + response.url);
-  //         // load offline data
+  //         // * load offline data
   //         dispatch(setUserReviewsRatingsDataOffline(true));
   //         // return {resultsFound: true, message: "Offline User Reviews data used.", userReviews: UserReviewRatingData};
   //         return {resultsFound: false, message: "Offline User Reviews data fetch failed."};
@@ -254,7 +255,7 @@ function LoadUserReviews() {
   //       // console.log(componentName, "fetchLocalDataUserReviewsRatings error.name", error.name);
   //       // console.log(componentName, "fetchLocalDataUserReviewsRatings error.message", error.message);
   //       // setErrUserReviewMessage(error.name + ": " + error.message);
-  //       // This doesn't actually run as far as I can tell
+  //       // ! This doesn't actually run as far as I can tell
   //       dispatch(setUserReviewsRatingsDataOffline(true));
   //       loadDataStore(UserReviewRatingData, "userReviewRating");
   //   });
@@ -264,7 +265,7 @@ function LoadUserReviews() {
   useEffect(() => {
     // console.log(componentName, "useEffect");
 
-    // Only load the bibliography data once per session unless the data is changed
+    // * Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
 
       if(!userReviewsLoaded) {
