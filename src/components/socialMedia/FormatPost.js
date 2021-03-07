@@ -85,12 +85,26 @@ const FormatPost = () => {
     };
 
 
+    let param = "";
+    let regExp = "";
+    let newURL = "";
+
     // * Remove fbclid=
+    // * FaceBook analytics and tracking
     // * Removes everything after the fbclid=
     // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537
-    let param = "fbclid";
-    let regExp = new RegExp("[?&]" + param + "=.*$");
-    let newURL = txtArticleURL.replace(regExp, "");
+    param = "fbclid";
+    regExp = new RegExp("[?&]" + param + "=.*$");
+    newURL = txtArticleURL.replace(regExp, "");
+
+    // * Remove utm_medium=
+    // * Google Analytics and tracking
+    // * Removes everything after the utm_medium=
+    param = "utm_medium";
+    regExp = new RegExp("[?&]" + param + "=.*$");
+    newURL = txtArticleURL.replace(regExp, "");
+
+
 
     post = post + newURL;
 
