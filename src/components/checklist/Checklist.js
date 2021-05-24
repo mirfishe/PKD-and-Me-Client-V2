@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Container, Col, Row, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import { Drawer } from "@material-ui/core";
 import AppSettings from "../../app/environment";
-import { displayYear, encodeURL, decodeURL } from "../../app/sharedFunctions";
+import { DisplayYear, encodeURL, decodeURL } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -322,7 +322,7 @@ const Checklist = (props) => {
               <Row /*ListGroupItem*/ key={title.titleID}>
                 <Col className="mx-3">
                   <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID) }} /> <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                    {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}
+                    {title.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}
                   </p>
                   {/* </ListGroupItem> */}
                 </Col>

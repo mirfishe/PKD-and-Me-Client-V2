@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { DisplayDate, DisplayYear, encodeURL, decodeURL, IsEmpty, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
@@ -52,9 +52,11 @@ const Edition = (props) => {
   // console.log(componentName, "titleItem", titleItem);
 
   if (electronicOnly === true || userElectronicOnly === true) {
-    editionList = editionList.filter(edition => edition.medium.electronic === true);
+    // editionList = editionList.filter(edition => edition.medium.electronic === true);
+    editionList = editionList.filter(edition => edition.electronic === true);
   } else if (physicalOnly === true || userPhysicalOnly === true) {
-    editionList = editionList.filter(edition => edition.medium.electronic === false);
+    // editionList = editionList.filter(edition => edition.medium.electronic === false);
+    editionList = editionList.filter(edition => edition.electronic === false);
   } else {
     editionList = [...editionList];
   };
@@ -68,7 +70,9 @@ const Edition = (props) => {
 
   // * Sort the editionList array by media.sortID
   // console.log(componentName, "editionList", editionList);
-  editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+  // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+  editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
   // console.log(componentName, "editionList", editionList);
 
   const redirectPage = (linkName) => {
@@ -132,7 +136,7 @@ const Edition = (props) => {
                     }
                     </CardBody>
                     <CardFooter>
-                        {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                        {edition.publicationDate !== null ? <CardText>Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
                     </CardFooter>
                     </Card> */}
 
@@ -154,18 +158,18 @@ const Edition = (props) => {
                   </Col>
                   <Col className="col-md-6">
                     <CardBody>
-                      {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                      {edition.publicationDate !== null ? <CardText className="smallerText">Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
                       {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titleItem.titlePublicationDate} displayButton={true} /> : null}
                     </CardBody>
                   </Col>
                 </Row>
                 <CardFooter className="cardFooter">
-                  <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(edition.medium.media)); }}>{edition.medium.media}</Link></CardText>
+                  <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
                 </CardFooter>
               </Card>
 
             </Col>
-          )
+          );
         })}
       </Row>
     </Container>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Container, Col, Row, Alert } from "reactstrap";
-import { displayDate } from "../../app/sharedFunctions";
+import { DisplayDate, IsEmpty } from "../../app/sharedFunctions";
 
 const Comments = (props) => {
 
@@ -63,13 +63,13 @@ const Comments = (props) => {
               <Row>
                 <Col xs="12">
                   <p>
-                    Submitted by {comment.user.firstName !== undefined && comment.user.firstName !== null ? comment.user.firstName : null} {comment.user.lastName !== undefined && comment.user.lastName !== null ? comment.user.lastName : null} {comment.emailAddress !== undefined && comment.emailAddress !== null ? comment.emailAddress : null} {comment.updatedAt !== undefined && comment.updatedAt !== null ? <small>on {displayDate(comment.updatedAt)}</small> : null}
+                    Submitted by {comment.user.firstName !== undefined && comment.user.firstName !== null ? comment.user.firstName : null} {comment.user.lastName !== undefined && comment.user.lastName !== null ? comment.user.lastName : null} {comment.emailAddress !== undefined && comment.emailAddress !== null ? comment.emailAddress : null} {comment.updatedAt !== undefined && comment.updatedAt !== null ? <small>on {DisplayDate(comment.updatedAt)}</small> : null}
                   </p>
                 </Col>
               </Row>
 
             </Col>
-          )
+          );
         })}
       </Row>
     </Container>

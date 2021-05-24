@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Nav, NavItem, Collapse, Card } from "reactstrap";
-import { encodeURL } from "../../app/sharedFunctions";
+import { encodeURL, IsEmpty } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddMedia from "./AddMedia";
 
@@ -18,8 +18,6 @@ const Media = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, "admin", admin);
 
-  const [isOpen, setIsOpen] = useState(true);
-
   const electronicOnly = useSelector(state => state.app.electronicOnly);
   const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
   const physicalOnly = useSelector(state => state.app.physicalOnly);
@@ -28,7 +26,10 @@ const Media = (props) => {
   const mediaListState = useSelector(state => state.media.arrayMedia);
   // console.log(componentName, "mediaListState", mediaListState);
 
+  const [isOpen, setIsOpen] = useState(true);
+
   let mediaList = [];
+
   if (electronicOnly === true || userElectronicOnly === true) {
     mediaList = mediaListState.filter(media => media.electronic === true);
   } else if (physicalOnly === true || userPhysicalOnly === true) {
@@ -47,15 +48,18 @@ const Media = (props) => {
 
   mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
 
+
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+
 
   return (
     <React.Fragment>
@@ -84,7 +88,7 @@ const Media = (props) => {
                   {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                 </Link>
               </NavItem>
-            )
+            );
           })}
         </Nav>
       </Collapse>

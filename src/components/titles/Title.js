@@ -5,7 +5,7 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from "react-bootstrap-icons";
 import { Rating } from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
-import { displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { DisplayDate, DisplayYear, encodeURL, decodeURL, IsEmpty, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -121,11 +121,15 @@ const Title = (props) => {
   };
 
   // if (electronicOnly === true || userElectronicOnly === true) {
-  //     editionList = editionList.filter(edition => edition.medium.electronic === true);
+  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+  //   // editionList = editionList.filter(edition => edition.medium.electronic === true);
+  //   editionList = editionList.filter(edition => edition.electronic === true);
   // } else if (physicalOnly === true || userPhysicalOnly === true) {
-  //     editionList = editionList.filter(edition =>  edition.medium.electronic === false);
+  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+  //   // editionList = editionList.filter(edition => edition.medium.electronic === false);
+  //   editionList = editionList.filter(edition => edition.electronic === false);
   // } else {
-  //     editionList = [...editionList];
+  //   editionList = [...editionList];
   // };
 
   if (admin !== undefined && admin !== null && admin === true) {
@@ -144,7 +148,8 @@ const Title = (props) => {
 
   // * Sort the editionList array by media.sortID
   // console.log(componentName, "editionList", editionList);
-  // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+  // // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+  // editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
   // console.log(componentName, "editionList", editionList);
 
   const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
@@ -340,7 +345,7 @@ const Title = (props) => {
               <Col xs="12">
                 <h4>{title.titleName}
 
-                  {title.publicationDate !== undefined && title.publicationDate !== null ? <span className="ml-2 smallerText"> ({displayYear(title.publicationDate)})</span> : null}
+                  {title.publicationDate !== undefined && title.publicationDate !== null ? <span className="ml-2 smallerText"> ({DisplayYear(title.publicationDate)})</span> : null}
 
                   {/* {title.category.category !== null && title.category.category !== "" ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category.category)}>{title.category.category}</Link>
                             </span> : null} */}
@@ -373,7 +378,7 @@ const Title = (props) => {
                 {userReviewItem !== undefined && userReviewItem !== null ?
                   <React.Fragment>
                     {userReviewItem.read !== undefined && userReviewItem.read !== null && userReviewItem.read === true && (userReviewItem.dateRead === undefined || userReviewItem.dateRead === null || userReviewItem.dateRead === "") ? <p>Read</p> : null}
-                    {userReviewItem.dateRead !== undefined && userReviewItem.dateRead !== null && userReviewItem.dateRead !== "" ? <p>Read on {displayDate(userReviewItem.dateRead)}</p> : null}
+                    {userReviewItem.dateRead !== undefined && userReviewItem.dateRead !== null && userReviewItem.dateRead !== "" ? <p>Read on {DisplayDate(userReviewItem.dateRead)}</p> : null}
                   </React.Fragment>
                   : null}
 
@@ -387,7 +392,7 @@ const Title = (props) => {
             </Row>
 
           </React.Fragment>
-        )
+        );
       })}
 
       {/* <Row className="my-4">
@@ -434,7 +439,7 @@ const Title = (props) => {
                     }
                     </CardBody>
                     <CardFooter>
-                        {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                        {edition.publicationDate !== null ? <CardText>Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
                     </CardFooter>
                     </Card> */}
 
@@ -456,7 +461,7 @@ const Title = (props) => {
                         </Col>
                         <Col className="col-md-6">
                             <CardBody>
-                                {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                                {edition.publicationDate !== null ? <CardText className="smallerText">Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
                                 {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
                             </CardBody>
                         </Col>

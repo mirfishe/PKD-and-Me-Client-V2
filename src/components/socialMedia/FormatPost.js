@@ -87,7 +87,7 @@ const FormatPost = () => {
 
     let param = "";
     let regExp = "";
-    let newURL = "";
+    let newURL = txtArticleURL;
 
     // * Remove fbclid=
     // * FaceBook analytics and tracking
@@ -95,15 +95,32 @@ const FormatPost = () => {
     // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537
     param = "fbclid";
     regExp = new RegExp("[?&]" + param + "=.*$");
-    newURL = txtArticleURL.replace(regExp, "");
+    newURL = newURL.replace(regExp, "");
+    // console.log(componentName, "formatPost newURL", newURL);
 
     // * Remove utm_medium=
     // * Google Analytics and tracking
     // * Removes everything after the utm_medium=
     param = "utm_medium";
     regExp = new RegExp("[?&]" + param + "=.*$");
-    newURL = txtArticleURL.replace(regExp, "");
+    newURL = newURL.replace(regExp, "");
+    // console.log(componentName, "formatPost newURL", newURL);
 
+    // * Remove utm_campaign=
+    // * Google Analytics and tracking
+    // * Removes everything after the utm_campaign=
+    param = "utm_campaign";
+    regExp = new RegExp("[?&]" + param + "=.*$");
+    newURL = newURL.replace(regExp, "");
+    // console.log(componentName, "formatPost newURL", newURL);
+
+    // * Remove utm_source=
+    // * Google Analytics and tracking
+    // * Removes everything after the utm_source=
+    param = "utm_source";
+    regExp = new RegExp("[?&]" + param + "=.*$");
+    newURL = newURL.replace(regExp, "");
+    // console.log(componentName, "formatPost newURL", newURL);
 
 
     post = post + newURL;

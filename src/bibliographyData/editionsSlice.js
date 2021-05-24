@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const componentName = "editionsSlice.js";
 
@@ -105,6 +105,7 @@ const editionsSlice = createSlice({
             state.arrayEditions[editionItem.editionItemIndex].updatedAt = editionItem.updatedAt;
           };
 
+          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
           if (editionItem.hasOwnProperty("medium")) {
             // console.log(componentName, "updateStateEdition editionItem.medium", editionItem.medium);
 
@@ -134,6 +135,7 @@ const editionsSlice = createSlice({
 
           };
 
+          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
           if (editionItem.hasOwnProperty("title")) {
 
             if (editionItem.title.hasOwnProperty("titleID")) {
@@ -183,7 +185,7 @@ const editionsSlice = createSlice({
             if (editionItem.title.hasOwnProperty("active")) {
               state.arrayEditions[editionItem.editionItemIndex].title.active = editionItem.title.active;
             };
-            
+
             if (editionItem.title.hasOwnProperty("updatedAt")) {
               state.arrayEditions[editionItem.editionItemIndex].title.updatedAt = editionItem.title.updatedAt;
             };
@@ -226,9 +228,9 @@ const editionsSlice = createSlice({
 
       }
     }
-}
+  }
 });
 
-export const {loadArrayEditions, addStateEdition, updateStateEdition, deleteStateEdition, setEditionsDataOffline, setEditionSortBy} = editionsSlice.actions;
+export const { loadArrayEditions, addStateEdition, updateStateEdition, deleteStateEdition, setEditionsDataOffline, setEditionSortBy } = editionsSlice.actions;
 
 export default editionsSlice.reducer;

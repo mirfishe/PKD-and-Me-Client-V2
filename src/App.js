@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button } from "reactstrap";
 import AppSettings from "./app/environment";
+import { IsEmpty } from "./app/sharedFunctions";
 import { setAppOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/appSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
@@ -124,6 +125,8 @@ function App() {
   const pageURL = useSelector(state => state.urls.pageURL);
   const linkItem = useSelector(state => state.urls.linkItem);
 
+  const categoryListState = useSelector(state => state.categories.arrayCategories);
+
   // ! Loading the routerBaseName from the state store here is too slow
   // ! Always pulling it from environment.js
   // const routerBaseName = useSelector(state => state.app.routerBaseName);
@@ -150,6 +153,7 @@ function App() {
   const [errChecklistMessage, setErrChecklistMessage] = useState("");
   const [checklistResultsFound, setChecklistResultsFound] = useState(null);
 
+
   const clearToken = () => {
     localStorage.clear();
     // setSessionToken("");
@@ -157,6 +161,7 @@ function App() {
     // console.log(componentName, "sessionToken", sessionToken); // Never shows the current value of sessionToken
     // console.log(componentName, "clearToken User logged out.");
   };
+
 
   const logOut = () => {
     // * remove user from userSlice
@@ -167,6 +172,7 @@ function App() {
     // * reload/refresh page
 
   };
+
 
   const getUser = (token) => {
     // console.log(componentName, "getUser");
@@ -239,6 +245,7 @@ function App() {
 
   };
 
+
   const getChecklist = (token) => {
     // console.log(componentName, "getChecklist");
     // console.log(componentName, "getChecklist baseURL", baseURL);
@@ -298,6 +305,7 @@ function App() {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, "useEffect");
 
@@ -329,6 +337,7 @@ function App() {
 
   }, []);
 
+
   useEffect(() => {
     // console.log(componentName, "useEffect categoriesDataOffline", categoriesDataOffline);
     // console.log(componentName, "useEffect mediaDataOffline", mediaDataOffline);
@@ -341,6 +350,7 @@ function App() {
     };
 
   }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
+
 
   useEffect(() => {
     // console.log(componentName, "useEffect pageURL", pageURL);
@@ -363,6 +373,7 @@ function App() {
     };
 
   }, [pageURL, urlLookup]);
+
 
   return (
     <BrowserRouter basename={routerBaseName}>
@@ -532,8 +543,13 @@ function App() {
       <Container className="bodyContainer mb-5">
         <Row>
           <Col xs="2">
-            <Category />
+
+            {IsEmpty(categoryListState) === false ?
+              <Category />
+              : null}
+
             <Media />
+
           </Col>
           <Col xs="10">
 

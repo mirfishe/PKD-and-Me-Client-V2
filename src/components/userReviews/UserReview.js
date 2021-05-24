@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 import { Rating } from "@material-ui/lab/";
-import { displayDate } from "../../app/sharedFunctions";
+import { DisplayDate } from "../../app/sharedFunctions";
 import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 
@@ -149,7 +149,7 @@ const UserReview = (props) => {
                     </Col>
                     <Col xs="7">
                       <p>
-                        Reviewed by {userReview.user.firstName} {userReview.updatedAt !== undefined && userReview.updatedAt !== null ? <small>on {displayDate(userReview.updatedAt)}</small> : null}
+                        Reviewed by {userReview.user.firstName} {userReview.updatedAt !== undefined && userReview.updatedAt !== null ? <small>on {DisplayDate(userReview.updatedAt)}</small> : null}
                       </p>
                     </Col>
                   </Row>

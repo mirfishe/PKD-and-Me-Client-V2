@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { displayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { DisplayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -55,9 +55,15 @@ const Titles = (props) => {
 
   let editionList = [...editionListState];
   if (electronicOnly === true || userElectronicOnly === true) {
-    editionList = editionList.filter(edition => edition.medium.electronic === true);
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // editionList = editionList.filter(edition => edition.medium.electronic === true);
+    editionList = editionList.filter(edition => edition.electronic === true);
+
   } else if (physicalOnly === true || userPhysicalOnly === true) {
-    editionList = editionList.filter(edition => edition.medium.electronic === false);
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // editionList = editionList.filter(edition => edition.medium.electronic === false);
+    editionList = editionList.filter(edition => edition.electronic === false);
+
   } else {
     editionList = [...editionList];
   };
@@ -65,7 +71,10 @@ const Titles = (props) => {
   if (admin !== undefined && admin !== null && admin === true) {
     editionList = [...editionList];
   } else {
-    editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
+    editionList = editionList.filter(edition => edition.active === true && edition.active === true);
+
   };
 
   const sortTitles = (sortBy) => {
@@ -154,7 +163,9 @@ const Titles = (props) => {
   if (admin !== undefined && admin !== null && admin === true) {
     titleList = [...titleList];
   } else {
-    titleList = titleList.filter(title => title.active === true && title.category.active === true);
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // titleList = titleList.filter(title => title.active === true && title.category.active === true);
+    titleList = titleList.filter(title => title.active === true && title.active === true);
   };
 
   sortTitles(titleSortBy);
@@ -247,7 +258,7 @@ const Titles = (props) => {
                     <CardHeader>
                         <Link to={encodeURL(title.category.category)}>{title.category.category}</Link> */}
               {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
+                        {title.publicationDate !== null ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null} */}
               {/* </CardHeader>  
                     : null} */}
 
@@ -260,7 +271,7 @@ const Titles = (props) => {
                     <CardFooter> */}
               {/* <Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link> */}
               {/* <Link to={title.titleURL}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null}
+                        {title.publicationDate !== null ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
 
@@ -280,7 +291,7 @@ const Titles = (props) => {
                     <CardBody>
                       {/* <CardText><Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
                       <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
+                        {title.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
                       <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                       <CardText className="smallerText">{editionsAvailable}<span> </span>
                         {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
@@ -295,13 +306,13 @@ const Titles = (props) => {
                   <CardFooter className="cardFooter">
                     <CardText><Link to={encodeURL(title.category.category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(title.category.category)); }}>{title.category.category}</Link></CardText>
                     {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
+                        {title.publicationDate !== null ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null} */}
                   </CardFooter>
                   : null}
               </Card>
 
             </Col>
-          )
+          );
         })}
       </Row>
     </Container>

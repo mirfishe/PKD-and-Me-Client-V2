@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Container, Col, Row, Alert } from "reactstrap";
-import { displayDate } from "../../app/sharedFunctions";
+import { DisplayDate } from "../../app/sharedFunctions";
 
 const TitleSuggestions = (props) => {
 
@@ -57,7 +57,7 @@ const TitleSuggestions = (props) => {
               <Row>
                 <Col xs="12">
                   <h6>{titleSuggestion.titleName}
-                    {titleSuggestion.publicationDate !== undefined && titleSuggestion.publicationDate !== null ? <span className="ml-2 smallerText"> ({displayDate(titleSuggestion.publicationDate)})</span> : null}
+                    {titleSuggestion.publicationDate !== undefined && titleSuggestion.publicationDate !== null ? <span className="ml-2 smallerText"> ({DisplayDate(titleSuggestion.publicationDate)})</span> : null}
                   </h6>
                 </Col>
               </Row>
@@ -83,7 +83,7 @@ const TitleSuggestions = (props) => {
               <Row>
                 <Col xs="12">
                   <p>
-                    Suggested by {titleSuggestion.user.firstName !== undefined && titleSuggestion.user.firstName !== null ? titleSuggestion.user.firstName : null} {titleSuggestion.user.lastName !== undefined && titleSuggestion.user.lastName !== null ? titleSuggestion.user.lastName : null} {titleSuggestion.emailAddress !== undefined && titleSuggestion.emailAddress !== null ? titleSuggestion.emailAddress : null} {titleSuggestion.updatedAt !== undefined && titleSuggestion.updatedAt !== null ? <small>on {displayDate(titleSuggestion.updatedAt)}</small> : null}
+                    Suggested by {titleSuggestion.user.firstName !== undefined && titleSuggestion.user.firstName !== null ? titleSuggestion.user.firstName : null} {titleSuggestion.user.lastName !== undefined && titleSuggestion.user.lastName !== null ? titleSuggestion.user.lastName : null} {titleSuggestion.emailAddress !== undefined && titleSuggestion.emailAddress !== null ? titleSuggestion.emailAddress : null} {titleSuggestion.updatedAt !== undefined && titleSuggestion.updatedAt !== null ? <small>on {DisplayDate(titleSuggestion.updatedAt)}</small> : null}
                   </p>
                 </Col>
               </Row>

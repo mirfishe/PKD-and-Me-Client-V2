@@ -117,6 +117,7 @@ function LoadBibliographyData() {
   const getUserReviewsRatings = (titleData) => {
     // console.log(componentName, "getUserReviewsRatings");
     // console.log(componentName, "getUserReviewsRatings baseURL", baseURL);
+    // console.log(componentName, "getUserReviewsRatings titleData", titleData);
 
     setOverallTitleRatingMessage("");
     setErrOverallTitleRatingMessage("");
@@ -145,8 +146,8 @@ function LoadBibliographyData() {
         // setOverallTitleRatingMessage(data.message);
 
         if (data.resultsFound === true) {
-          // loadDataStore(data.userReviews, "userReviewRating");
-          addRatings(titleData, data.userReviews);
+          // loadDataStore(data.records, "userReviewRating");
+          addRatings(titleData, data.records);
 
         } else {
           console.log(componentName, "getUserReviewsRatings resultsFound error", data.message);
@@ -293,7 +294,7 @@ function LoadBibliographyData() {
         // setCategoryMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.categories, "category");
+          loadDataStore(data.records, "category");
         } else {
           console.log(componentName, "getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
@@ -341,7 +342,7 @@ function LoadBibliographyData() {
         // setMediaMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.media, "media");
+          loadDataStore(data.records, "media");
         } else {
           console.log(componentName, "getMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
@@ -389,7 +390,7 @@ function LoadBibliographyData() {
         // setTitleMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.titles, "title");
+          loadDataStore(data.records, "title");
         } else {
           console.log(componentName, "getTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
@@ -437,7 +438,7 @@ function LoadBibliographyData() {
         // setEditionMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.editions, "edition");
+          loadDataStore(data.records, "edition");
         } else {
           console.log(componentName, "getEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);

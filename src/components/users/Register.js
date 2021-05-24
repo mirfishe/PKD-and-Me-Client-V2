@@ -60,6 +60,7 @@ const Register = (props) => {
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
 
+
   const updateToken = (newToken) => {
     if (newToken !== undefined && newToken !== null && newToken !== "") {
       localStorage.setItem("token", newToken);
@@ -68,6 +69,7 @@ const Register = (props) => {
       // console.log(componentName, "updateToken User token changed.");
     };
   };
+
 
   const register = () => {
     // console.log(componentName, "register");
@@ -200,7 +202,7 @@ const Register = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "register data", data);
+            console.log(componentName, "register data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -247,6 +249,7 @@ const Register = (props) => {
     };
 
   };
+
 
   const getChecklist = (token) => {
     // console.log(componentName, "getChecklist");
@@ -306,6 +309,7 @@ const Register = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, "useEffect userRecordAdded", userRecordAdded);
     if (userRecordAdded !== undefined && userRecordAdded !== null && userRecordAdded !== false) {
@@ -321,6 +325,7 @@ const Register = (props) => {
 
   }, [userRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, "useEffect sessionToken", sessionToken);
     if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
@@ -334,9 +339,26 @@ const Register = (props) => {
 
   }, [sessionToken]);
 
+
+  useEffect(() => {
+    // console.log(componentName, "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
+
+    if (process.env.NODE_ENV === "development") {
+
+      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
+      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
+      setTxtFirstName(process.env.REACT_APP_FIRSTNAME_DEFAULT);
+      setTxtLastName(process.env.REACT_APP_LASTNAME_DEFAULT);
+
+    };
+
+  }, []);
+
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

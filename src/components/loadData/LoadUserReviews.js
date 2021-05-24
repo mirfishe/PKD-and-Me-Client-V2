@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Row, Alert} from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
 import UserReviewData from "../../bibliographyData/UserReviews.json";
 // import UserReviewRatingData from "../../bibliographyData/UserReviewsRatings.json";
-import {loadArrayUserReviews, setUserReviewsDataOffline} from "../../bibliographyData/userReviewsSlice";
+import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../bibliographyData/userReviewsSlice";
 
 function LoadUserReviews() {
 
@@ -29,7 +29,7 @@ function LoadUserReviews() {
 
   const [userReviewMessage, setUserReviewMessage] = useState("");
   const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
-  
+
   // const [overallTitleRatingMessage, setOverallTitleRatingMessage] = useState("");
   // const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
 
@@ -40,37 +40,37 @@ function LoadUserReviews() {
       dispatch(loadArrayUserReviews(data));
       // localStorage.setItem("arrayUserReviews", data);
       // localStorage.setItem("lastDatabaseRetrievalUserReviews", new Date().toISOString());
-    // } else if (source === "userReviewRating") {
-    //   // console.log(componentName, "loadDataStore data", data);
+      // } else if (source === "userReviewRating") {
+      //   // console.log(componentName, "loadDataStore data", data);
 
-    //   let userReviewsRatings = data;
+      //   let userReviewsRatings = data;
 
-    //   for (let i = 0; i < userReviewsRatings.length; i++) {
+      //   for (let i = 0; i < userReviewsRatings.length; i++) {
 
-    //       let userReviewCount = userReviewsRatings[i].userReviewCount;
-    //       let userReviewSum = userReviewsRatings[i].userReviewSum;
-    //       let userReviewAverage = 0;
+      //       let userReviewCount = userReviewsRatings[i].userReviewCount;
+      //       let userReviewSum = userReviewsRatings[i].userReviewSum;
+      //       let userReviewAverage = 0;
 
-    //       if (userReviewCount > 0) {
-    //           // Check for division by zero?
-    //           // let userReviewAverage: number = userReviewSum/0;
-    //           userReviewAverage = userReviewSum/userReviewCount;
+      //       if (userReviewCount > 0) {
+      //           // Check for division by zero?
+      //           // let userReviewAverage: number = userReviewSum/0;
+      //           userReviewAverage = userReviewSum/userReviewCount;
 
-    //           Object.assign(userReviewsRatings[i], {userReviewAverage: userReviewAverage});
-    //       };
+      //           Object.assign(userReviewsRatings[i], {userReviewAverage: userReviewAverage});
+      //       };
 
-    //       // console.log(componentName, "getUserReviewsRatings userReviewCount", userReviewCount);
-    //       // console.log(componentName, "getUserReviewsRatings userReviewSum", userReviewSum);
-    //       // console.log(componentName, "getUserReviewsRatings userReviewAverage", userReviewAverage);
+      //       // console.log(componentName, "getUserReviewsRatings userReviewCount", userReviewCount);
+      //       // console.log(componentName, "getUserReviewsRatings userReviewSum", userReviewSum);
+      //       // console.log(componentName, "getUserReviewsRatings userReviewAverage", userReviewAverage);
 
-    //   };
+      //   };
 
-    //   // console.log(componentName, "getUserReviewsRatings userReviewsRatings", userReviewsRatings);
+      //   // console.log(componentName, "getUserReviewsRatings userReviewsRatings", userReviewsRatings);
 
-    //   // dispatch(loadArrayUserReviewsRatings(data));
-    //   dispatch(loadArrayUserReviewsRatings(userReviewsRatings));
-    //   // localStorage.setItem("arrayUserReviewsRatings", JSON.stringify(data));
-    //   // localStorage.setItem("lastDatabaseRetrievalUserReviewsRatings", new Date().toISOString());
+      //   // dispatch(loadArrayUserReviewsRatings(data));
+      //   dispatch(loadArrayUserReviewsRatings(userReviewsRatings));
+      //   // localStorage.setItem("arrayUserReviewsRatings", JSON.stringify(data));
+      //   // localStorage.setItem("lastDatabaseRetrievalUserReviewsRatings", new Date().toISOString());
     };
 
   };
@@ -85,24 +85,24 @@ function LoadUserReviews() {
     let url = baseURL + "userreview/list";
 
     fetch(url)
-    .then(response => {
+      .then(response => {
         // console.log(componentName, "getUserReviews response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
           dispatch(setUserReviewsDataOffline(true));
-          return {resultsFound: false, message: "Offline User Reviews data fetch used."};
+          return { resultsFound: false, message: "Offline User Reviews data fetch used." };
         } else {
           dispatch(setUserReviewsDataOffline(false));
           return response.json();
         };
-    })
-    .then(data => {
+      })
+      .then(data => {
         // console.log(componentName, "getUserReviews data", data);
         // setUserReviewMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.userReviews, "userReview");
+          loadDataStore(data.records, "userReview");
         } else {
           console.log(componentName, "getUserReviews resultsFound error", data.message);
           // setErrUserReviewMessage(data.message);
@@ -110,68 +110,68 @@ function LoadUserReviews() {
           fetchLocalDataUserReviews();
         };
 
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.log(componentName, "getUserReviews error", error);
         // console.log(componentName, "getUserReviews error.name", error.name);
         // console.log(componentName, "getUserReviews error.message", error.message);
         // setErrUserReviewMessage(error.name + ": " + error.message);
         dispatch(setUserReviewsDataOffline(true));
         fetchLocalDataUserReviews();
-    });
+      });
 
   };
 
-//   const getUserReviewsRatings = () => {
-//     // console.log(componentName, "getUserReviewsRatings");
-//     // console.log(componentName, "getUserReviewsRatings baseURL", baseURL);
+  //   const getUserReviewsRatings = () => {
+  //     // console.log(componentName, "getUserReviewsRatings");
+  //     // console.log(componentName, "getUserReviewsRatings baseURL", baseURL);
 
-//     setOverallTitleRatingMessage("");
-//     setErrOverallTitleRatingMessage("");
+  //     setOverallTitleRatingMessage("");
+  //     setErrOverallTitleRatingMessage("");
 
-//     let url = baseURL + "userreview/";
+  //     let url = baseURL + "userreview/";
 
-//       url = url + "rating/list";
+  //       url = url + "rating/list";
 
-//       // console.log(componentName, "getUserReviewsRatings url", url);
+  //       // console.log(componentName, "getUserReviewsRatings url", url);
 
-//       fetch(url)
-//       .then(response => {
-//           // console.log(componentName, "getUserReviewsRatings response", response);
-//           if (!response.ok) {
-//               // throw Error(response.status + " " + response.statusText + " " + response.url);
-//               // * load offline data
-//               dispatch(setUserReviewsRatingsDataOffline(true));
-//               return {resultsFound: false, message: "Offline User Reviews Ratings data fetch used."};
-//           } else {
-//               dispatch(setUserReviewsRatingsDataOffline(false));
-//               return response.json();
-//           };
-//       })
-//       .then(data => {
-//         // console.log(componentName, "getUserReviewsRatings data", data);
-//         // setOverallTitleRatingMessage(data.message);
+  //       fetch(url)
+  //       .then(response => {
+  //           // console.log(componentName, "getUserReviewsRatings response", response);
+  //           if (!response.ok) {
+  //               // throw Error(response.status + " " + response.statusText + " " + response.url);
+  //               // * load offline data
+  //               dispatch(setUserReviewsRatingsDataOffline(true));
+  //               return {resultsFound: false, message: "Offline User Reviews Ratings data fetch used."};
+  //           } else {
+  //               dispatch(setUserReviewsRatingsDataOffline(false));
+  //               return response.json();
+  //           };
+  //       })
+  //       .then(data => {
+  //         // console.log(componentName, "getUserReviewsRatings data", data);
+  //         // setOverallTitleRatingMessage(data.message);
 
-//         if (data.resultsFound === true) {
-//           loadDataStore(data.userReviews, "userReviewRating");
-//         } else {
-//           console.log(componentName, "getUserReviewsRatings resultsFound error", data.message);
-//           // setErrOverallTitleRatingMessage(data.message);
-//           dispatch(setUserReviewsRatingsDataOffline(true));
-//           fetchLocalDataUserReviewsRatings();
-//         };
+  //         if (data.resultsFound === true) {
+  //           loadDataStore(data.userReviews, "userReviewRating");
+  //         } else {
+  //           console.log(componentName, "getUserReviewsRatings resultsFound error", data.message);
+  //           // setErrOverallTitleRatingMessage(data.message);
+  //           dispatch(setUserReviewsRatingsDataOffline(true));
+  //           fetchLocalDataUserReviewsRatings();
+  //         };
 
-//     })
-//       .catch(error => {
-//           console.log(componentName, "getUserReviewsRatings error", error);
-//           // console.log(componentName, "getUserReviewsRatings error.name", error.name);
-//           // console.log(componentName, "getUserReviewsRatings error.message", error.message);
-//           // setErrOverallTitleRatingMessage(error.name + ": " + error.message);
-//           dispatch(setUserReviewsRatingsDataOffline(true));
-//           fetchLocalDataUserReviewsRatings();
-//       });
+  //     })
+  //       .catch(error => {
+  //           console.log(componentName, "getUserReviewsRatings error", error);
+  //           // console.log(componentName, "getUserReviewsRatings error.name", error.name);
+  //           // console.log(componentName, "getUserReviewsRatings error.message", error.message);
+  //           // setErrOverallTitleRatingMessage(error.name + ": " + error.message);
+  //           dispatch(setUserReviewsRatingsDataOffline(true));
+  //           fetchLocalDataUserReviewsRatings();
+  //       });
 
-// };
+  // };
 
   const fetchLocalDataUserReviews = () => {
     // console.log(componentName, "fetchLocalDataUserReviews");
@@ -179,7 +179,7 @@ function LoadUserReviews() {
     let url = "./bibliographyData/UserReviews.json";
 
     fetch(url)
-    .then(response => {
+      .then(response => {
         // console.log(componentName, "fetchLocalDataUserReviews response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
@@ -187,13 +187,13 @@ function LoadUserReviews() {
           // * load offline data
           dispatch(setUserReviewsDataOffline(true));
           // return {resultsFound: true, message: "Offline User Reviews data used.", userReviews: UserReviewData};
-          return {resultsFound: false, message: "Offline User Reviews data fetch failed."};
+          return { resultsFound: false, message: "Offline User Reviews data fetch failed." };
         } else {
           dispatch(setUserReviewsDataOffline(true));
           return response.json();
         };
-    })
-    .then(data => {
+      })
+      .then(data => {
         // console.log(componentName, "fetchLocalDataUserReviews data", data);
 
         if (data.resultsFound === true) {
@@ -205,8 +205,8 @@ function LoadUserReviews() {
           loadDataStore(UserReviewData, "userReview");
         };
 
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.log(componentName, "fetchLocalDataUserReviews error", error);
         // console.log(componentName, "fetchLocalDataUserReviews error.name", error.name);
         // console.log(componentName, "fetchLocalDataUserReviews error.message", error.message);
@@ -214,7 +214,7 @@ function LoadUserReviews() {
         // ! This doesn't actually run as far as I can tell
         dispatch(setUserReviewsDataOffline(true));
         loadDataStore(UserReviewData, "userReview");
-    });
+      });
 
   };
 
@@ -268,7 +268,7 @@ function LoadUserReviews() {
     // * Only load the bibliography data once per session unless the data is changed
     if (appOffline) {
 
-      if(!userReviewsLoaded) {
+      if (!userReviewsLoaded) {
         dispatch(setUserReviewsDataOffline(true));
         fetchLocalDataUserReviews();
         // dispatch(setUserReviewsDataOffline(true));
@@ -277,7 +277,7 @@ function LoadUserReviews() {
 
     } else {
 
-      if(!userReviewsLoaded) {
+      if (!userReviewsLoaded) {
         getUserReviews();
         // getUserReviewsRatings();
       };
@@ -288,9 +288,9 @@ function LoadUserReviews() {
 
   return (
     <Row className="text-center">
-        {userReviewMessage !== undefined && userReviewMessage !== null && userReviewMessage !== "" ? <Alert color="info">{userReviewMessage}</Alert> : null}
-        {errUserReviewMessage !== undefined && errUserReviewMessage !== null && errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
-        {/* {overallTitleRatingMessage !== undefined && overallTitleRatingMessage !== null && overallTitleRatingMessage !== "" ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
+      {userReviewMessage !== undefined && userReviewMessage !== null && userReviewMessage !== "" ? <Alert color="info">{userReviewMessage}</Alert> : null}
+      {errUserReviewMessage !== undefined && errUserReviewMessage !== null && errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
+      {/* {overallTitleRatingMessage !== undefined && overallTitleRatingMessage !== null && overallTitleRatingMessage !== "" ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
         {errOverallTitleRatingMessage !== undefined && errOverallTitleRatingMessage !== null && errOverallTitleRatingMessage !== "" ? <Alert color="danger">{errOverallTitleRatingMessage}</Alert> : null} */}
     </Row>
   );

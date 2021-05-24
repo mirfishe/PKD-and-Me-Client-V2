@@ -78,6 +78,7 @@ switch (profileType) {
   case "localhost":
     API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
     // API_URL = "https://pkd-and-me-server.herokuapp.com";
+    // API_URL = "https://api.philipdick.com";
     siteName = "localhost";
     appName = "PKD and Me";
     metaDescription = "";
@@ -105,7 +106,8 @@ switch (profileType) {
     tagManagerArgs.gtmId = "";
     break;
   case "philipdick":
-    API_URL = "https://pkd-and-me-server.herokuapp.com";
+    // API_URL = "https://pkd-and-me-server.herokuapp.com";
+    API_URL = "https://api.philipdick.com";
     siteName = "Philip K. Dick";
     appName = "PKD and Me";
     metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";
@@ -119,7 +121,8 @@ switch (profileType) {
     tagManagerArgs.gtmId = "GTM-NW2GPF2";
     break;
   case "homeopape":
-    API_URL = "https://pkd-and-me-server.herokuapp.com";
+    // API_URL = "https://pkd-and-me-server.herokuapp.com";
+    API_URL = "https://api.philipdick.com";
     siteName = "Homeopape";
     appName = "Philip K. Dick Bibliography";
     metaDescription = "Purchase digital (i.e. not analog) versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
@@ -134,7 +137,8 @@ switch (profileType) {
     break;
   default:
     // API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
-    API_URL = "https://pkd-and-me-server.herokuapp.com";
+    // API_URL = "https://pkd-and-me-server.herokuapp.com";
+    API_URL = "https://api.philipdick.com";
     siteName = "PKD and Me";
     appName = "Philip K. Dick Bibliography";
     metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";

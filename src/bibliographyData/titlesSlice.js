@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const componentName = "titlesSlice.js";
 
@@ -84,7 +84,7 @@ const titlesSlice = createSlice({
           if (titleItem.hasOwnProperty("categoryID")) {
             state.arrayTitles[titleItem.titleItemIndex].categoryID = titleItem.categoryID;
           };
-          
+
           if (titleItem.hasOwnProperty("shortDescription")) {
             state.arrayTitles[titleItem.titleItemIndex].shortDescription = titleItem.shortDescription;
           };
@@ -101,6 +101,7 @@ const titlesSlice = createSlice({
             state.arrayTitles[titleItem.titleItemIndex].updatedAt = titleItem.updatedAt;
           };
 
+          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
           if (titleItem.hasOwnProperty("category")) {
 
             if (titleItem.category.hasOwnProperty("categoryID")) {
@@ -163,7 +164,7 @@ const titlesSlice = createSlice({
           if (titleItem.hasOwnProperty("userReviewSum")) {
             state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
           };
-          
+
           if (titleItem.hasOwnProperty("userReviewAverage")) {
             state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
           };
@@ -188,9 +189,9 @@ const titlesSlice = createSlice({
 
       }
     }
-}
+  }
 });
 
-export const {loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, updateStateTitleRating, setTitlesDataOffline, setTitleSortBy} = titlesSlice.actions;
+export const { loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, updateStateTitleRating, setTitlesDataOffline, setTitleSortBy } = titlesSlice.actions;
 
 export default titlesSlice.reducer;

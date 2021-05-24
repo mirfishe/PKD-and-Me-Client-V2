@@ -383,7 +383,7 @@ const EditTitle = (props) => {
                 dispatch(updateStateTitle({ titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, updatedAt: new Date().toISOString(), category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt } }));
                 // ? Update local storage also?
 
-                // Update/Delete related editions also if active is set to false
+                // * Update/Delete related editions also if active is set to false
                 if (data.active === false) {
                   for (let i = 0; i < editionList.length; i++) {
 

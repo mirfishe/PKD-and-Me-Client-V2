@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Nav, NavItem, Collapse, Card } from "reactstrap";
-import { encodeURL } from "../../app/sharedFunctions";
+import { encodeURL, IsEmpty, ConvertBitTrueFalse } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddCategory from "./AddCategory";
 import EditCategories from "./EditCategories";
@@ -19,21 +19,36 @@ const Category = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, "admin", admin);
 
-  const [isOpen, setIsOpen] = useState(true);
-
   const categoryListState = useSelector(state => state.categories.arrayCategories);
   // console.log(componentName, "categoryListState", categoryListState);
 
-  let categoryList = [];
+  const [isOpen, setIsOpen] = useState(true);
 
-  if (admin !== undefined && admin !== null && admin === true) {
-    categoryList = [...categoryListState];
-  } else {
-    categoryList = categoryListState.filter(category => category.active === true);
-  };
-  // console.log(componentName, "categoryList", categoryList);
+  const [categoryList, setCategoryList] = useState([]);
 
-  categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
+  useEffect(() => {
+    // console.log(componentName, "useEffect categoryListState", categoryListState);
+
+    let categoryListSort = [];
+
+    if (IsEmpty(categoryListState) === false) {
+
+      if (admin !== undefined && admin !== null && admin === true) {
+        categoryListSort = [...categoryListState];
+      } else {
+        categoryListSort = categoryListState.filter(category => category.active === true);
+      };
+      // console.log(componentName, "useEffect categoryListSort", categoryListSort);
+
+      categoryListSort.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
+      setCategoryList(categoryListSort);
+
+    };
+
+  }, [categoryListState]);
+
 
   const redirectPage = (linkName) => {
     // console.log(componentName, "redirectPage", linkName);
@@ -41,15 +56,18 @@ const Category = (props) => {
     history.push("/" + linkName);
   };
 
+
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+
 
   return (
     <React.Fragment>
       <Card onClick={toggle} color="light" className="mt-2 p-2"><h5>Categories</h5></Card>
       <Collapse isOpen={isOpen}>
         <Nav vertical>
+
           {categoryList.map((category) => {
 
             let activeString = "";
@@ -71,8 +89,9 @@ const Category = (props) => {
                   {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                 </Link>
               </NavItem>
-            )
+            );
           })}
+
         </Nav>
       </Collapse>
       {admin !== undefined && admin !== null && admin === true ? <AddCategory displayButton={true} /> : null}

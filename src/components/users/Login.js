@@ -54,6 +54,7 @@ const Login = (props) => {
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
 
+
   const updateToken = (newToken) => {
     if (newToken !== undefined && newToken !== null && newToken !== "") {
       localStorage.setItem("token", newToken);
@@ -62,6 +63,7 @@ const Login = (props) => {
       // console.log(componentName, "updateToken User token changed.");
     };
   };
+
 
   const logIn = () => {
     // console.log(componentName, "logIn");
@@ -206,6 +208,7 @@ const Login = (props) => {
 
   };
 
+
   const getChecklist = (token) => {
     // console.log(componentName, "getChecklist");
     // console.log(componentName, "getChecklist baseURL", baseURL);
@@ -264,6 +267,7 @@ const Login = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, "useEffect userResultsFound", userResultsFound);
     if (userResultsFound !== undefined && userResultsFound !== null && userResultsFound !== false) {
@@ -277,6 +281,7 @@ const Login = (props) => {
 
   }, [userResultsFound]);
 
+
   useEffect(() => {
     // console.log(componentName, "useEffect sessionToken", sessionToken);
     if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
@@ -289,9 +294,24 @@ const Login = (props) => {
 
   }, [sessionToken]);
 
+
+  useEffect(() => {
+    // console.log(componentName, "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
+
+    if (process.env.NODE_ENV === "development") {
+
+      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
+      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
+
+    };
+
+  }, []);
+
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

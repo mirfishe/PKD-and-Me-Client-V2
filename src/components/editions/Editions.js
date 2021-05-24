@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
-import { displayDate, displayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -50,7 +50,7 @@ const Editions = (props) => {
   };
 
   const sortEditions = (sortBy) => {
-    // console.log("Titles.js sortTitles sortBy", sortBy);
+    // console.log("componentName, sortTitles sortBy", sortBy);
     if (editionList !== undefined && editionList !== null && editionList.length > 0) {
       if (sortBy === "releaseDate") {
         // * Sort the editionList array by edition.publicationDate, title.titleSort, (would like to add media.sortID)
@@ -80,12 +80,15 @@ const Editions = (props) => {
         editionListReleaseDate.sort(
           function (a, b) {
             if (a.publicationDate === b.publicationDate) {
-              if (a.title.titleSort === b.title.titleSort) {
+              // if (a.title.titleSort === b.title.titleSort) {
+              if (a.titleSort === b.titleSort) {
                 // * Media is only important when title.titleSort are the same
-                return a.medium.sortID - b.medium.sortID;
+                // return a.medium.sortID - b.medium.sortID;
+                return a.sortID - b.sortID;
               };
               // * titleSort is only important when publicationDate are the same
-              return a.title.titleSort - b.title.titleSort;
+              // return a.title.titleSort - b.title.titleSort;
+              return a.titleSort - b.titleSort;
             };
             return a.publicationDate > b.publicationDate ? 1 : -1;
           });
@@ -95,7 +98,8 @@ const Editions = (props) => {
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListNoReleaseDate.sort(
           function (a, b) {
-            if (a.title.titleSort === b.title.titleSort) {
+            // if (a.title.titleSort === b.title.titleSort) {
+            if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
               //     console.log(componentName, "a.title.titleName", a.title.titleName);
@@ -104,15 +108,17 @@ const Editions = (props) => {
               //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
               //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
-              return a.medium.sortID - b.medium.sortID;
+              // return a.medium.sortID - b.medium.sortID;
+              return a.sortID - b.sortID;
             };
-            return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            // return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            return a.titleSort > b.titleSort ? 1 : -1;
           });
         // console.log(componentName, "editionListNoReleaseDate", editionListNoReleaseDate);
 
         let newEditionList = [...editionListReleaseDate];
         newEditionList.push(...editionListNoReleaseDate);
-        // console.log(componentName, "newEditionList", newEditionList);
+        console.log(componentName, "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -143,15 +149,20 @@ const Editions = (props) => {
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListPublicationDate.sort(
           function (a, b) {
-            if (a.title.publicationDate === b.title.publicationDate) {
-              if (a.title.titleSort === b.title.titleSort) {
+            // if (a.title.publicationDate === b.title.publicationDate) {
+            if (a.publicationDate === b.publicationDate) {
+              // if (a.title.titleSort === b.title.titleSort) {
+              if (a.titleSort === b.titleSort) {
                 // * Media is only important when title.titleSort are the same
-                return a.medium.sortID - b.medium.sortID;
+                // return a.medium.sortID - b.medium.sortID;
+                return a.sortID - b.sortID;
               };
               // * titleSort is only important when publicationDate are the same
-              return a.title.titleSort - b.title.titleSort;
+              // return a.title.titleSort - b.title.titleSort;
+              return a.titleSort - b.titleSort;
             };
-            return a.title.publicationDate > b.title.publicationDate ? 1 : -1;
+            // return a.title.publicationDate > b.title.publicationDate ? 1 : -1;
+            return a.publicationDate > b.publicationDate ? 1 : -1;
           });
         // console.log(componentName, "editionListPublicationDate", editionListPublicationDate);
 
@@ -159,7 +170,8 @@ const Editions = (props) => {
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListNoPublicationDate.sort(
           function (a, b) {
-            if (a.title.titleSort === b.title.titleSort) {
+            // if (a.title.titleSort === b.title.titleSort) {
+            if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
               //     console.log(componentName, "a.title.titleName", a.title.titleName);
@@ -168,9 +180,11 @@ const Editions = (props) => {
               //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
               //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
-              return a.medium.sortID - b.medium.sortID;
+              // return a.medium.sortID - b.medium.sortID;
+              return a.sortID - b.sortID;
             };
-            return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            // return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            return a.titleSort > b.titleSort ? 1 : -1;
           });
         // console.log(componentName, "editionListNoPublicationDate", editionListNoPublicationDate);
 
@@ -190,7 +204,8 @@ const Editions = (props) => {
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionList.sort(
           function (a, b) {
-            if (a.title.titleSort === b.title.titleSort) {
+            // if (a.title.titleSort === b.title.titleSort) {
+            if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
               //     console.log(componentName, "a.title.titleName", a.title.titleName);
@@ -199,9 +214,11 @@ const Editions = (props) => {
               //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
               //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
-              return a.medium.sortID - b.medium.sortID;
+              // return a.medium.sortID - b.medium.sortID;
+              return a.sortID - b.sortID;
             };
-            return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            // return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            return a.titleSort > b.titleSort ? 1 : -1;
           });
 
       } else {
@@ -214,7 +231,8 @@ const Editions = (props) => {
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionList.sort(
           function (a, b) {
-            if (a.title.titleSort === b.title.titleSort) {
+            // if (a.title.titleSort === b.title.titleSort) {
+            if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
               //     console.log(componentName, "a.title.titleName", a.title.titleName);
@@ -223,9 +241,11 @@ const Editions = (props) => {
               //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
               //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
-              return a.medium.sortID - b.medium.sortID;
+              // return a.medium.sortID - b.medium.sortID;
+              return a.sortID - b.sortID;
             };
-            return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            // return a.title.titleSort > b.title.titleSort ? 1 : -1;
+            return a.titleSort > b.titleSort ? 1 : -1;
           });
 
       };
@@ -263,9 +283,15 @@ const Editions = (props) => {
   };
 
   if (electronicOnly === true || userElectronicOnly === true) {
-    editionList = editionList.filter(edition => edition.medium.electronic === true);
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // editionList = editionList.filter(edition => edition.medium.electronic === true);
+    editionList = editionList.filter(edition => edition.electronic === true);
+
   } else if (physicalOnly === true || userPhysicalOnly === true) {
-    editionList = editionList.filter(edition => edition.medium.electronic === false);
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // editionList = editionList.filter(edition => edition.medium.electronic === false);
+    editionList = editionList.filter(edition => edition.electronic === false);
+
   } else {
     editionList = [...editionList];
   };
@@ -273,7 +299,9 @@ const Editions = (props) => {
   if (admin !== undefined && admin !== null && admin === true) {
     editionList = [...editionList];
   } else {
-    editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
+    editionList = editionList.filter(edition => edition.active === true && edition.active === true);
   };
 
   sortEditions(editionSortBy);
@@ -362,11 +390,11 @@ const Editions = (props) => {
                     {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                     </a>
                     }
-                    {edition.publicationDate !== null ? <CardText>Released: {displayDate(edition.publicationDate)}</CardText> : null}
+                    {edition.publicationDate !== null ? <CardText>Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
                     </CardBody>
                     <CardFooter>
                         <Link to={edition.title.titleURL}>{edition.title.titleName}</Link>
-                        {edition.title.publicationDate !== null ? <span> <small>({displayYear(edition.title.publicationDate)})</small></span> : null}
+                        {edition.title.publicationDate !== null ? <span> <small>({DisplayYear(edition.title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
 
@@ -388,12 +416,12 @@ const Editions = (props) => {
                   </Col>
                   <Col className="col-md-6">
                     <CardBody>
-                      <CardText><Link to={edition.title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(edition.title.titleURL); }}>{edition.title.titleName}</Link>
-                        {edition.title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(edition.title.publicationDate)})</span> : null}
+                      <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
+                        {edition.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(edition.publicationDate)})</span> : null}
                       </CardText>
-                      {edition.publicationDate !== null ? <CardText className="smallerText">Released: {displayDate(edition.publicationDate)}</CardText> : null}
-                      {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={edition.title.titleID} titlePublicationDate={edition.title.publicationDate} displayButton={true} /> : null}
-                      {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.title.publicationDate} displayButton={true} /> : null}
+                      {edition.publicationDate !== null ? <CardText className="smallerText">Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
+                      {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.publicationDate} displayButton={true} /> : null}
+                      {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.publicationDate} displayButton={true} /> : null}
                     </CardBody>
                   </Col>
                 </Row>
@@ -405,7 +433,7 @@ const Editions = (props) => {
               </Card>
 
             </Col>
-          )
+          );
         })}
       </Row>
     </Container>

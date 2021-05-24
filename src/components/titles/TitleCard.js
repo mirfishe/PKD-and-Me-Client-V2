@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { displayYear, encodeURL, decodeURL, truncateText, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { DisplayYear, encodeURL, decodeURL, TruncateText, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -123,10 +123,10 @@ const TitleCard = (props) => {
                     <CardBody>
                       {/* <CardText><Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
                       <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
+                        {title.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
                       <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                       {additionalText !== undefined && additionalText !== "" ? <CardText className="my-4">{additionalText}</CardText> : null}
-                      {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <p className="my-4 displayParagraphs">{truncateText(title.shortDescription, 250)}</p> : null}
+                      {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <p className="my-4 displayParagraphs">{TruncateText(title.shortDescription, 250)}</p> : null}
                       {/* {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
                                 {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                                 {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null} */}
