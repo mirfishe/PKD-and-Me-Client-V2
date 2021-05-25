@@ -55,15 +55,11 @@ const Titles = (props) => {
 
   let editionList = [...editionListState];
   if (electronicOnly === true || userElectronicOnly === true) {
-    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
     // editionList = editionList.filter(edition => edition.medium.electronic === true);
     editionList = editionList.filter(edition => edition.electronic === true);
-
   } else if (physicalOnly === true || userPhysicalOnly === true) {
-    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
     // editionList = editionList.filter(edition => edition.medium.electronic === false);
     editionList = editionList.filter(edition => edition.electronic === false);
-
   } else {
     editionList = [...editionList];
   };
@@ -73,8 +69,7 @@ const Titles = (props) => {
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
     // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
-    editionList = editionList.filter(edition => edition.active === true && edition.active === true);
-
+    editionList = editionList.filter(edition => edition.editionsActive === true && edition.mediaActive === true);
   };
 
   const sortTitles = (sortBy) => {
@@ -165,7 +160,7 @@ const Titles = (props) => {
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
     // titleList = titleList.filter(title => title.active === true && title.category.active === true);
-    titleList = titleList.filter(title => title.active === true && title.active === true);
+    titleList = titleList.filter(title => title.titlesActive === true && title.categoriesActive === true);
   };
 
   sortTitles(titleSortBy);
