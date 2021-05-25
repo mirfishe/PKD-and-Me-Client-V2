@@ -133,7 +133,7 @@ const AddMedia = (props) => {
               // };
             })
             .then(data => {
-              // console.log(componentName, "addMedia data", data);
+              console.log(componentName, "addMedia data", data);
 
               setMediaRecordAdded(data.recordAdded);
               addMessage(data.message);

@@ -142,7 +142,7 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getUserReviewsRatings data", data);
+        console.log(componentName, "getUserReviewsRatings data", data);
         // setOverallTitleRatingMessage(data.message);
 
         if (data.resultsFound === true) {

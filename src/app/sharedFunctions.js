@@ -827,20 +827,43 @@ export const ConvertTemperature = (temperatureScale, temperature) => {
 };
 
 
-export const ConvertBitTrueFalse = (value) => {
-  // console.log(componentName, GetDateTime(), "ConvertBitTrueFalse value", value);
+export const ConvertBitTrueFalse = (records) => {
+  // console.log(componentName, "ConvertBitTrueFalse records", records);
+  // console.log(componentName, "ConvertBitTrueFalse process.env.DATABASE_DIALECT", process.env.DATABASE_DIALECT);
 
-  if (value === 1) {
-    return true;
-  } else if (value === 0) {
-    return false;
-  } else if (value === true) {
-    return 1;
-  } else if (value === false) {
-    return 0;
-  } else {
-    return value;
+  // if (process.env.DATABASE_DIALECT == "mysql") {
+
+  for (let i = 0; i < records.length; i++) {
+
+    if (records[i].active === 1) {
+      records[i].active = true;
+    } else if (records[i].active === 0) {
+      records[i].active = false;
+    };
+
+    if (records[i].electronic === 1) {
+      records[i].electronic = true;
+    } else if (records[i].electronic === 0) {
+      records[i].electronic = false;
+    };
+
+    if (records[i].read === 1) {
+      records[i].read = true;
+    } else if (records[i].read === 0) {
+      records[i].read = false;
+    };
+
+    if (records[i].admin === 1) {
+      records[i].admin = true;
+    } else if (records[i].admin === 0) {
+      records[i].admin = false;
+    };
+
   };
+
+  // };
+
+  return records;
 
 };
 

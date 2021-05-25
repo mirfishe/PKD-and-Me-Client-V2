@@ -98,7 +98,7 @@ function LoadAppSettings() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getAppSettings data", data);
+        console.log(componentName, "getAppSettings data", data);
 
         if (data.resultsFound === true) {
 

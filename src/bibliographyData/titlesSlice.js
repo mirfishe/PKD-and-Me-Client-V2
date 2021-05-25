@@ -44,7 +44,7 @@ const titlesSlice = createSlice({
     },
     updateStateTitle: {
       reducer(state, action) {
-        // console.log(componentName, "updateStateTitle action.payload", action.payload);
+        console.log(componentName, "updateStateTitle action.payload", action.payload);
 
         const titleItem = action.payload;
         // console.log(componentName, "updateStateTitle titleItem", titleItem);
@@ -148,7 +148,7 @@ const titlesSlice = createSlice({
     },
     updateStateTitleRating: {
       reducer(state, action) {
-        // console.log(componentName, "updateStateTitleRating action.payload", action.payload);
+        console.log(componentName, "updateStateTitleRating action.payload", action.payload);
 
         const titleItem = action.payload;
         // console.log(componentName, "updateStateTitleRating titleItem", titleItem);

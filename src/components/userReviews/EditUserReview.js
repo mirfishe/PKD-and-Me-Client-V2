@@ -37,7 +37,7 @@ const EditUserReview = (props) => {
   // console.log(componentName, "userReviewListState", userReviewListState);
 
   // ? Not needed?
-  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) }
+  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
   // console.log(componentName, "userState", userState);
 
   const [message, setMessage] = useState("");
@@ -283,7 +283,7 @@ const EditUserReview = (props) => {
           // };
         })
         .then(data => {
-          // console.log(componentName, "updateUserReview data", data);
+          console.log(componentName, "updateUserReview data", data);
 
           setUserReviewRecordUpdated(data.recordUpdated);
           addMessage(data.message);
@@ -309,7 +309,7 @@ const EditUserReview = (props) => {
             // console.log(componentName, "updateUserReview titleItem", titleItem);
             // console.log(componentName, "updateUserReview typeof data.titleID", typeof data.titleID);
 
-            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
+            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
@@ -324,7 +324,7 @@ const EditUserReview = (props) => {
               userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
             };
 
-            const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID)
+            const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID);
             // console.log(componentName, "updateUserReview userReviewsIndex", userReviewsIndex);
 
             // console.log(componentName, "updateUserReview userReviews", userReviews);
@@ -371,7 +371,7 @@ const EditUserReview = (props) => {
             // console.log(componentName, "updateUserReview titleItemIndex", titleItemIndex);
             dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID)
+            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID);
 
             if (data.active === true) {
               dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString() }));
@@ -435,7 +435,7 @@ const EditUserReview = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "deleteUserReview data", data);
+            console.log(componentName, "deleteUserReview data", data);
 
             setUserReviewRecordDeleted(data.recordDeleted);
 
@@ -451,12 +451,12 @@ const EditUserReview = (props) => {
               titleItem = titleItem[0];
               // console.log(componentName, "deleteUserReview titleItem", titleItem);
 
-              let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
+              let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
 
               // * Recalculate ratings
               let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID && userReview.active === true);
 
-              const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID)
+              const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID);
 
               // console.log(componentName, "deleteUserReview userReviews", userReviews);
               // * Get all reviews for the title

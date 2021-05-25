@@ -351,7 +351,7 @@ const EditTitle = (props) => {
               // };
             })
             .then(data => {
-              // console.log(componentName, "updateTitle data", data);
+              console.log(componentName, "updateTitle data", data);
 
               setTitleRecordUpdated(data.recordUpdated);
               addMessage(data.message);
@@ -487,7 +487,7 @@ const EditTitle = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "deleteTitle data", data);
+            console.log(componentName, "deleteTitle data", data);
 
             setTitleRecordDeleted(data.recordDeleted);
 
@@ -571,7 +571,7 @@ const EditTitle = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "deleteEdition data", data);
+            console.log(componentName, "deleteEdition data", data);
 
             setEditionRecordDeleted(data.recordDeleted);
 
@@ -702,7 +702,7 @@ const EditTitle = (props) => {
                         {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
                         <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
                       </React.Fragment>
-                    )
+                    );
                   })}
                 </Input>
                 {errCategoryID !== undefined && errCategoryID !== null && errCategoryID !== "" ? <Alert color="danger">{errCategoryID}</Alert> : null}

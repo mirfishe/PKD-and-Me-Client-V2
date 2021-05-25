@@ -46,7 +46,7 @@ const Checklist = (props) => {
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
   // console.log(componentName, "userReviewListState", userReviewListState);
 
-  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) }
+  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
   // console.log(componentName, "userState", userState);
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
@@ -192,7 +192,7 @@ const Checklist = (props) => {
           // };
         })
         .then(data => {
-          // console.log(componentName, "updateChecklist data", data);
+          console.log(componentName, "updateChecklist data", data);
 
           let recordChanged = null;
 
@@ -229,7 +229,7 @@ const Checklist = (props) => {
               dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: data.updatedAt }));
             };
 
-            const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID)
+            const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
             // console.log(componentName, "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
@@ -321,13 +321,13 @@ const Checklist = (props) => {
             return (
               <Row /*ListGroupItem*/ key={title.titleID}>
                 <Col className="mx-3">
-                  <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID) }} /> <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                  <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID); }} /> <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
                     {title.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}
                   </p>
                   {/* </ListGroupItem> */}
                 </Col>
               </Row>
-            )
+            );
           })}
           {/* </ListGroup> */}
 

@@ -44,7 +44,7 @@ const editionsSlice = createSlice({
     },
     updateStateEdition: {
       reducer(state, action) {
-        // console.log(componentName, "updateStateEdition action.payload", action.payload);
+        console.log(componentName, "updateStateEdition action.payload", action.payload);
 
         const editionItem = action.payload;
         // console.log(componentName, "updateStateEdition editionItem", editionItem);

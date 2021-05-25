@@ -350,7 +350,7 @@ const EditEdition = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "updateEdition data", data);
+            console.log(componentName, "updateEdition data", data);
 
             setEditionRecordUpdated(data.recordAdded);
             addMessage(data.message);
@@ -446,7 +446,7 @@ const EditEdition = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "deleteEdition data", data);
+            console.log(componentName, "deleteEdition data", data);
 
             setEditionRecordDeleted(data.recordDeleted);
 
@@ -603,7 +603,7 @@ const EditEdition = (props) => {
                   {mediaList.map((media) => {
                     return (
                       <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
-                    )
+                    );
                   })}
                 </Input>
                 {errMediaID !== undefined && errMediaID !== null && errMediaID !== "" ? <Alert color="danger">{errMediaID}</Alert> : null}

@@ -160,7 +160,7 @@ const Login = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "logIn data", data);
+            console.log(componentName, "logIn data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -241,14 +241,14 @@ const Login = (props) => {
           // };
         })
         .then(data => {
-          // console.log(componentName, "getChecklist data", data);
+          console.log(componentName, "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);
 
           if (data.resultsFound === true) {
 
-            dispatch(loadArrayChecklist(data.titles));
+            dispatch(loadArrayChecklist(data.records));
 
           } else {
             console.log(componentName, "getChecklist resultsFound error", data.message);

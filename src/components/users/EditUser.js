@@ -217,7 +217,7 @@ const EditUser = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "updateUser data", data);
+            console.log(componentName, "updateUser data", data);
 
             // if (data !== 500 && data !== 401) {
 

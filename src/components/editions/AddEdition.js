@@ -285,7 +285,7 @@ const AddEdition = (props) => {
             // };
           })
           .then(data => {
-            // console.log(componentName, "addEdition data", data);
+            console.log(componentName, "addEdition data", data);
 
             setEditionRecordAdded(data.recordAdded);
             addMessage(data.message);
@@ -462,7 +462,7 @@ const AddEdition = (props) => {
                   {mediaList.map((media) => {
                     return (
                       <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
-                    )
+                    );
                   })}
                 </Input>
                 {errMediaID !== undefined && errMediaID !== null && errMediaID !== "" ? <Alert color="danger">{errMediaID}</Alert> : null}

@@ -204,7 +204,7 @@ function App() {
           // };
         })
         .then(data => {
-          // console.log(componentName, "getUser data", data);
+          console.log(componentName, "getUser data", data);
 
           setUserResultsFound(data.resultsFound);
           // addMessage(data.message);
@@ -279,7 +279,7 @@ function App() {
           // };
         })
         .then(data => {
-          // console.log(componentName, "getChecklist data", data);
+          console.log(componentName, "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);

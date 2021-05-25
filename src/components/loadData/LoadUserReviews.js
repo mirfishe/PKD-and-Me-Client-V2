@@ -98,7 +98,7 @@ function LoadUserReviews() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getUserReviews data", data);
+        console.log(componentName, "getUserReviews data", data);
         // setUserReviewMessage(data.message);
 
         if (data.resultsFound === true) {

@@ -41,7 +41,7 @@ function UserReviewRatingList() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getUserReviewRatings data", data);
+        console.log(componentName, "getUserReviewRatings data", data);
 
         setUserReviewRatingResultsFound(data.resultsFound);
         setUserReviewRatingMessage(data.message);

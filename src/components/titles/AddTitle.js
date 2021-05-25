@@ -273,7 +273,7 @@ const AddTitle = (props) => {
               // };
             })
             .then(data => {
-              // console.log(componentName, "addTitle data", data);
+              console.log(componentName, "addTitle data", data);
 
               setTitleRecordAdded(data.recordAdded);
               addMessage(data.message);
@@ -442,7 +442,7 @@ const AddTitle = (props) => {
                         {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
                         <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
                       </React.Fragment>
-                    )
+                    );
                   })}
                 </Input>
                 {errCategoryID !== undefined && errCategoryID !== null && errCategoryID !== "" ? <Alert color="danger">{errCategoryID}</Alert> : null}

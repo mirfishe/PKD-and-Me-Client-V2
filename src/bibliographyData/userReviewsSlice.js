@@ -47,7 +47,7 @@ const userReviewsSlice = createSlice({
     },
     updateStateUserReview: {
       reducer(state, action) {
-        // console.log(componentName, "updateStateUserReview action.payload", action.payload);
+        console.log(componentName, "updateStateUserReview action.payload", action.payload);
 
         const userReviewItem = action.payload;
         // console.log(componentName, "updateStateUserReview userReviewItem", userReviewItem);

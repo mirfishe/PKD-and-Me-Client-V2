@@ -36,7 +36,7 @@ const AddUserReview = (props) => {
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
   // console.log(componentName, "userReviewListState", userReviewListState);
 
-  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) }
+  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
   // console.log(componentName, "userState", userState);
 
   // console.log(componentName, "props.titleID", props.titleID);
@@ -184,7 +184,7 @@ const AddUserReview = (props) => {
           // };
         })
         .then(data => {
-          // console.log(componentName, "addUserReview data", data);
+          console.log(componentName, "addUserReview data", data);
 
           setUserReviewRecordAdded(data.recordAdded);
           addMessage(data.message);
@@ -210,7 +210,7 @@ const AddUserReview = (props) => {
             // console.log(componentName, "addUserReview titleItem", titleItem);
             // console.log(componentName, "addUserReview typeof data.titleID", typeof data.titleID);
 
-            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID)
+            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
@@ -244,7 +244,7 @@ const AddUserReview = (props) => {
             // * Update the title ratings
             dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID)
+            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID);
 
             if (data.active === true) {
               dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString() }));

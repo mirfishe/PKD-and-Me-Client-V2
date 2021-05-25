@@ -283,7 +283,7 @@ const Register = (props) => {
           // };
         })
         .then(data => {
-          // console.log(componentName, "getChecklist data", data);
+          console.log(componentName, "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);

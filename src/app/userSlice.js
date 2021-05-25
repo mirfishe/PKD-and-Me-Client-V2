@@ -1,21 +1,21 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const componentName = "userSlice.js";
 
 const initialState = {
-    userID: null,
-    firstName: null,
-    lastName: null,
-    email: null,
-    updatedBy: null,
-    admin: false,
-    active: false,
-    sessionToken: null,
-    userLoaded: false,
-    arrayChecklist: [],
-    checklistLoaded: false,
-    lastDatabaseRetrievalChecklist: null,
-    checklistDataOffline: false
+  userID: null,
+  firstName: null,
+  lastName: null,
+  email: null,
+  updatedBy: null,
+  admin: false,
+  active: false,
+  sessionToken: null,
+  userLoaded: false,
+  arrayChecklist: [],
+  checklistLoaded: false,
+  lastDatabaseRetrievalChecklist: null,
+  checklistDataOffline: false
 };
 
 const userSlice = createSlice({
@@ -29,51 +29,51 @@ const userSlice = createSlice({
         if (typeof action.payload === "object") {
 
 
-            if (action.payload.hasOwnProperty("userID")) {
-                state.userID = action.payload.userID;
-            };
+          if (action.payload.hasOwnProperty("userID")) {
+            state.userID = action.payload.userID;
+          };
 
-            if (action.payload.hasOwnProperty("firstName")) {
-                state.firstName = action.payload.firstName;
-            };
+          if (action.payload.hasOwnProperty("firstName")) {
+            state.firstName = action.payload.firstName;
+          };
 
-            if (action.payload.hasOwnProperty("lastName")) {
-                state.lastName = action.payload.lastName;
-            };
+          if (action.payload.hasOwnProperty("lastName")) {
+            state.lastName = action.payload.lastName;
+          };
 
-            if (action.payload.hasOwnProperty("email")) {
-                state.email = action.payload.email;
-            };
+          if (action.payload.hasOwnProperty("email")) {
+            state.email = action.payload.email;
+          };
 
-            if (action.payload.hasOwnProperty("updatedBy")) {
-                state.updatedBy = action.payload.updatedBy;
-            };
+          if (action.payload.hasOwnProperty("updatedBy")) {
+            state.updatedBy = action.payload.updatedBy;
+          };
 
-            if (action.payload.hasOwnProperty("admin")) {
-                state.admin = action.payload.admin;
-            };
+          if (action.payload.hasOwnProperty("admin")) {
+            state.admin = action.payload.admin;
+          };
 
-            if (action.payload.hasOwnProperty("active")) {
-                state.active = action.payload.active;
-            };
+          if (action.payload.hasOwnProperty("active")) {
+            state.active = action.payload.active;
+          };
 
-            if (action.payload.hasOwnProperty("arrayChecklist")) {
-              state.arrayChecklist = action.payload.arrayChecklist;
-            };
+          if (action.payload.hasOwnProperty("arrayChecklist")) {
+            state.arrayChecklist = action.payload.arrayChecklist;
+          };
 
-            if (action.payload.hasOwnProperty("checklistLoaded")) {
-              state.checklistLoaded = action.payload.checklistLoaded;
-            };
+          if (action.payload.hasOwnProperty("checklistLoaded")) {
+            state.checklistLoaded = action.payload.checklistLoaded;
+          };
 
-            if (action.payload.hasOwnProperty("lastDatabaseRetrievalChecklist")) {
-              state.lastDatabaseRetrievalChecklist = action.payload.lastDatabaseRetrievalChecklist;
-            };
+          if (action.payload.hasOwnProperty("lastDatabaseRetrievalChecklist")) {
+            state.lastDatabaseRetrievalChecklist = action.payload.lastDatabaseRetrievalChecklist;
+          };
 
-            if (action.payload.hasOwnProperty("userLoaded")) {
-              state.userLoaded = action.payload.userLoaded;
-            } else {
-              state.userLoaded = true;
-            };
+          if (action.payload.hasOwnProperty("userLoaded")) {
+            state.userLoaded = action.payload.userLoaded;
+          } else {
+            state.userLoaded = true;
+          };
 
         };
 
@@ -89,7 +89,7 @@ const userSlice = createSlice({
     },
     loadArrayChecklist: {
       reducer(state, action) {
-        // console.log(componentName, "loadArrayChecklist action.payload", action.payload);
+        console.log(componentName, "loadArrayChecklist action.payload", action.payload);
         // console.log(componentName, "loadArrayChecklist action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
@@ -105,18 +105,18 @@ const userSlice = createSlice({
           let userReviewCreatedAt = null;
           let userReviewUpdatedAt = null;
 
-          if (action.payload[i].userReviews[0] !== undefined && action.payload[i].userReviews[0] !== null) {
-              userReviewID = action.payload[i].userReviews[0].reviewID;
-              userReviewUserID = action.payload[i].userReviews[0].userID;
-              userReviewUpdatedBy = action.payload[i].userReviews[0].updatedBy;
-              userReviewRead = action.payload[i].userReviews[0].read;
-              userReviewDateRead = action.payload[i].userReviews[0].dateRead;
-              userReviewActive = action.payload[i].userReviews[0].active;
-              userReviewCreatedAt = action.payload[i].userReviews[0].createdAt;
-              userReviewUpdatedAt = action.payload[i].userReviews[0].updatedAt;
+          if (action.payload[i] !== undefined && action.payload[i] !== null) {
+            userReviewID = action.payload[i].reviewID;
+            userReviewUserID = action.payload[i].userID;
+            userReviewUpdatedBy = action.payload[i].userReviewsUpdatedBy;
+            userReviewRead = action.payload[i].read;
+            userReviewDateRead = action.payload[i].dateRead;
+            userReviewActive = action.payload[i].userReviewsActive;
+            userReviewCreatedAt = action.payload[i].userReviewsCreatedAt;
+            userReviewUpdatedAt = action.payload[i].userReviewsUpdatedAt;
           };
-  
-          state.arrayChecklist.push({titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].publicationDate, imageName: action.payload[i].imageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].active, createdAt: action.payload[i].createdAt, updatedAt: action.payload[i].updatedAt, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedAt: userReviewCreatedAt, userReviewUpdatedAt: userReviewUpdatedAt});
+
+          state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].titlesPublicationDate, titlesImageName: action.payload[i].imageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].titlesActive, createdAt: action.payload[i].titlesCreatedAt, updatedAt: action.payload[i].titlesUpdatedAt, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedAt: userReviewCreatedAt, userReviewUpdatedAt: userReviewUpdatedAt });
         };
 
         state.checklistLoaded = true;
@@ -126,7 +126,7 @@ const userSlice = createSlice({
     },
     updateStateChecklist: {
       reducer(state, action) {
-        // console.log(componentName, "updateStateChecklist action.payload", action.payload);
+        console.log(componentName, "updateStateChecklist action.payload", action.payload);
 
         const checklistItem = action.payload;
         // console.log(componentName, "updateStateChecklist checklistItem", checklistItem);
@@ -162,7 +162,7 @@ const userSlice = createSlice({
           if (checklistItem.hasOwnProperty("userReviewCreatedAt")) {
             state.arrayChecklist[checklistItem.checklistListIndex].userReviewCreatedAt = checklistItem.userReviewCreatedAt;
           };
-          
+
           if (checklistItem.hasOwnProperty("userReviewUpdatedAt")) {
             state.arrayChecklist[checklistItem.checklistListIndex].userReviewUpdatedAt = checklistItem.userReviewUpdatedAt;
           };
@@ -179,9 +179,9 @@ const userSlice = createSlice({
 
       }
     }
-}
+  }
 });
 
-export const {loadUserData, setSessionToken, loadArrayChecklist, updateStateChecklist, setChecklistDataOffline} = userSlice.actions;
+export const { loadUserData, setSessionToken, loadArrayChecklist, updateStateChecklist, setChecklistDataOffline } = userSlice.actions;
 
 export default userSlice.reducer;

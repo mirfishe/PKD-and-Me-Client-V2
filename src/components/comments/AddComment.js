@@ -28,7 +28,7 @@ const AddComment = (props) => {
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
-  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) }
+  const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
   // console.log(componentName, "userState", userState);
 
   const [message, setMessage] = useState("");
@@ -158,7 +158,7 @@ const AddComment = (props) => {
               // };
             })
             .then(data => {
-              // console.log(componentName, "addComment data", data);
+              console.log(componentName, "addComment data", data);
 
               setCommentRecordAdded(data.recordAdded);
               addMessage(data.message);
