@@ -192,7 +192,7 @@ const AddTitleSuggestion = (props) => {
 
         // console.log(componentName, "addTitleSuggestion titleSuggestionObject", titleSuggestionObject);
 
-        let url = baseURL + "title/";
+        let url = baseURL + "titles/";
         // console.log(componentName, "addTitleSuggestion url", url);
 
         if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {

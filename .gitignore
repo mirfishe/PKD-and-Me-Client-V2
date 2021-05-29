@@ -10,6 +10,7 @@
 
 # production
 /build
+/deploy
 
 # misc
 .DS_Store
@@ -91,6 +92,3 @@ node_modules/
 
 # Downloaded Code
 *.zip
-
-# .htaccess file for server
-.htaccess

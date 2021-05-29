@@ -137,7 +137,7 @@ const Login = (props) => {
         };
         // console.log(componentName, "logIn userObject", userObject);
 
-        let url = baseURL + "user/login/";
+        let url = baseURL + "users/login/";
         // console.log(componentName, "logIn url", url);
 
         fetch(url, {
@@ -217,7 +217,7 @@ const Login = (props) => {
     setErrChecklistMessage("");
     setChecklistResultsFound(null);
 
-    let url = baseURL + "title/checklist/list";
+    let url = baseURL + "titles/checklist/list";
 
     if (token !== undefined && token !== null && token !== "") {
 

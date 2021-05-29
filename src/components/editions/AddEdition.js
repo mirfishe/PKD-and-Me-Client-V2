@@ -259,7 +259,7 @@ const AddEdition = (props) => {
 
       // console.log(componentName, "addEdition editionObject", editionObject);
 
-      let url = baseURL + "edition/";
+      let url = baseURL + "editions/";
       // console.log(componentName, "addEdition url", url);
 
       if (sessionToken !== undefined && sessionToken !== null) {
@@ -353,7 +353,7 @@ const AddEdition = (props) => {
     setErrASINMessage("");
     setASINResultsFound(null);
 
-    let url = baseURL + "edition/ASIN/";
+    let url = baseURL + "editions/ASIN/";
 
     if (ASIN !== undefined && ASIN !== null && ASIN !== "") {
       url = url + ASIN;

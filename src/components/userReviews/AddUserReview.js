@@ -158,7 +158,7 @@ const AddUserReview = (props) => {
 
     // console.log(componentName, "addUserReview userReviewObject", userReviewObject);
 
-    let url = baseURL + "userreview/";
+    let url = baseURL + "userreviews/";
     // console.log(componentName, "addUserReview url", url);
 
     if (sessionToken !== undefined && sessionToken !== null) {

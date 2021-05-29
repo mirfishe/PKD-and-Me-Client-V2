@@ -187,7 +187,7 @@ const EditUser = (props) => {
 
         // console.log(componentName, "updateUser userObject", userObject);
 
-        let url = baseURL + "user/";
+        let url = baseURL + "users/";
 
         // ? Does it matter if the user is updating their own record as an admin or not?
         if (admin === true) {

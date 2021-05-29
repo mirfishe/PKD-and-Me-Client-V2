@@ -82,7 +82,7 @@ function LoadUserReviews() {
     setUserReviewMessage("");
     setErrUserReviewMessage("");
 
-    let url = baseURL + "userreview/list";
+    let url = baseURL + "userreviews/list";
 
     fetch(url)
       .then(response => {
@@ -129,7 +129,7 @@ function LoadUserReviews() {
   //     setOverallTitleRatingMessage("");
   //     setErrOverallTitleRatingMessage("");
 
-  //     let url = baseURL + "userreview/";
+  //     let url = baseURL + "userreviews/";
 
   //       url = url + "rating/list";
 

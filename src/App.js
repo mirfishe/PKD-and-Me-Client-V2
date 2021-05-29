@@ -180,7 +180,7 @@ function App() {
 
     clearMessages();
 
-    let url = baseURL + "user/";
+    let url = baseURL + "users/";
 
     if (token !== undefined && token !== null && token !== "") {
 
@@ -255,7 +255,7 @@ function App() {
     setErrChecklistMessage("");
     setChecklistResultsFound(null);
 
-    let url = baseURL + "title/checklist/list";
+    let url = baseURL + "titles/checklist/list";
 
     if (token !== undefined && token !== null && token !== "") {
 

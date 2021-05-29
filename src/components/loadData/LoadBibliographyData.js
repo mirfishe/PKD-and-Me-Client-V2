@@ -122,7 +122,7 @@ function LoadBibliographyData() {
     setOverallTitleRatingMessage("");
     setErrOverallTitleRatingMessage("");
 
-    let url = baseURL + "userreview/";
+    let url = baseURL + "userreviews/";
 
     url = url + "rating/list";
 
@@ -171,7 +171,7 @@ function LoadBibliographyData() {
   const fetchLocalDataUserReviewsRatings = (titleData) => {
     // console.log(componentName, "fetchLocalDataUserReviewsRatings");
 
-    let url = "./bibliographyData/UserReviewsRatings.json";
+    let url = "bibliographyData/userReviewsRatings.json";
 
     fetch(url)
       .then(response => {
@@ -217,7 +217,7 @@ function LoadBibliographyData() {
 
   const loadDataStore = (data, source) => {
 
-    if (source === "category") {
+    if (source === "categories") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayCategories(data));
       // localStorage.setItem("arrayCategories", JSON.stringify(data));
@@ -229,14 +229,14 @@ function LoadBibliographyData() {
       // localStorage.setItem("arrayMedia", JSON.stringify(data));
       // localStorage.setItem("lastDatabaseRetrievalMedia", new Date().toISOString());
       loadURLs(data, source);
-    } else if (source === "title") {
+    } else if (source === "titles") {
       // console.log(componentName, "loadDataStore data", data);
       // dispatch(loadArrayTitles(data));
       getUserReviewsRatings(data);
       // localStorage.setItem("arrayTitles", JSON.stringify(data));
       // localStorage.setItem("lastDatabaseRetrievalTitles", new Date().toISOString());
       loadURLs(data, source);
-    } else if (source === "edition") {
+    } else if (source === "editions") {
       // console.log(componentName, "loadDataStore data", data);
       dispatch(loadArrayEditions(data));
       // localStorage.setItem("arrayEditions", JSON.stringify(data));
@@ -251,13 +251,13 @@ function LoadBibliographyData() {
 
     for (let i = 0; i < data.length; i++) {
 
-      if (source === "category") {
+      if (source === "categories") {
         // console.log(componentName, "loadURLs data[i].category", data[i].category);
         arrayURLs.push({ linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category });
       } else if (source === "media") {
         // console.log(componentName, "loadURLs data[i].media", data[i].media);
         arrayURLs.push({ linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID, linkTypeNameID: data[i].mediaID, linkTypeName: data[i].media });
-      } else if (source === "title") {
+      } else if (source === "titles") {
         // console.log(componentName, "loadURLs data[i].titleURL", data[i].titleURL);
         arrayURLs.push({ linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category.category });
       };
@@ -274,7 +274,7 @@ function LoadBibliographyData() {
     setCategoryMessage("");
     setErrCategoryMessage("");
 
-    let url = baseURL + "category/list";
+    let url = baseURL + "categories/list";
 
     fetch(url)
       .then(response => {
@@ -294,7 +294,7 @@ function LoadBibliographyData() {
         // setCategoryMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.records, "category");
+          loadDataStore(data.records, "categories");
         } else {
           console.log(componentName, "getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
@@ -369,7 +369,7 @@ function LoadBibliographyData() {
     setTitleMessage("");
     setErrTitleMessage("");
 
-    let url = baseURL + "title/list";
+    let url = baseURL + "titles/list";
 
     fetch(url)
       .then(response => {
@@ -390,7 +390,7 @@ function LoadBibliographyData() {
         // setTitleMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.records, "title");
+          loadDataStore(data.records, "titles");
         } else {
           console.log(componentName, "getTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
@@ -417,7 +417,7 @@ function LoadBibliographyData() {
     setEditionMessage("");
     setErrEditionMessage("");
 
-    let url = baseURL + "edition/list";
+    let url = baseURL + "editions/list";
 
     fetch(url)
       .then(response => {
@@ -438,7 +438,7 @@ function LoadBibliographyData() {
         // setEditionMessage(data.message);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.records, "edition");
+          loadDataStore(data.records, "editions");
         } else {
           console.log(componentName, "getEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);
@@ -461,7 +461,7 @@ function LoadBibliographyData() {
   const fetchLocalDataCategories = () => {
     // console.log(componentName, "fetchLocalDataCategories");
 
-    let url = "./bibliographyData/Categories.json";
+    let url = "bibliographyData/categories.json";
 
     fetch(url)
       .then(response => {
@@ -482,12 +482,12 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataCategories data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.categories, "category");
+          loadDataStore(data.categories, "categories");
         } else {
           console.log(componentName, "fetchLocalDataCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
           dispatch(setCategoriesDataOffline(true));
-          loadDataStore(CategoryData, "category");
+          loadDataStore(CategoryData, "categories");
         };
 
       })
@@ -498,7 +498,7 @@ function LoadBibliographyData() {
         // setErrCategoryMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setCategoriesDataOffline(true));
-        loadDataStore(CategoryData, "category");
+        loadDataStore(CategoryData, "categories");
       });
 
   };
@@ -506,7 +506,7 @@ function LoadBibliographyData() {
   const fetchLocalDataMedia = () => {
     // console.log(componentName, "fetchLocalDataMedia");
 
-    let url = "./bibliographyData/Media.json";
+    let url = "bibliographyData/media.json";
 
     fetch(url)
       .then(response => {
@@ -551,7 +551,7 @@ function LoadBibliographyData() {
   const fetchLocalDataTitles = () => {
     // console.log(componentName, "fetchLocalDataTitles");
 
-    let url = "./bibliographyData/Titles.json";
+    let url = "bibliographyData/titles.json";
 
     fetch(url)
       .then(response => {
@@ -572,12 +572,12 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataTitles data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.titles, "title");
+          loadDataStore(data.titles, "titles");
         } else {
           console.log(componentName, "fetchLocalDataTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
           dispatch(setTitlesDataOffline(true));
-          loadDataStore(TitleData, "title");
+          loadDataStore(TitleData, "titles");
         };
 
       })
@@ -588,7 +588,7 @@ function LoadBibliographyData() {
         // setErrTitleMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setTitlesDataOffline(true));
-        loadDataStore(TitleData, "title");
+        loadDataStore(TitleData, "titles");
       });
 
   };
@@ -596,7 +596,7 @@ function LoadBibliographyData() {
   const fetchLocalDataEditions = () => {
     // console.log(componentName, "fetchLocalDataEditions");
 
-    let url = "./bibliographyData/Editions.json";
+    let url = "bibliographyData/editions.json";
 
     fetch(url)
       .then(response => {
@@ -617,12 +617,12 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataEditions data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.editions, "edition");
+          loadDataStore(data.editions, "editions");
         } else {
           console.log(componentName, "fetchLocalDataEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);
           dispatch(setEditionsDataOffline(true));
-          loadDataStore(EditionData, "edition");
+          loadDataStore(EditionData, "editions");
         };
 
       })
@@ -633,7 +633,7 @@ function LoadBibliographyData() {
         // setErrEditionMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setEditionsDataOffline(true));
-        loadDataStore(EditionData, "edition");
+        loadDataStore(EditionData, "editions");
       });
 
   };

@@ -156,7 +156,7 @@ const Checklist = (props) => {
 
     // console.log(componentName, "updateChecklist userReviewObject", userReviewObject);
 
-    let url = baseURL + "userreview/";
+    let url = baseURL + "userreviews/";
     let updateChecklistMethod = "";
 
     if (reviewID !== undefined && reviewID !== null) {

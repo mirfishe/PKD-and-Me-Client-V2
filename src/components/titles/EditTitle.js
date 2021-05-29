@@ -322,7 +322,7 @@ const EditTitle = (props) => {
 
         // console.log(componentName, "updateTitle titleObject", titleObject);
 
-        let url = baseURL + "title/";
+        let url = baseURL + "titles/";
 
         if (props.titleID !== undefined && props.titleID !== null && sessionToken !== undefined && sessionToken !== null) {
 
@@ -457,7 +457,7 @@ const EditTitle = (props) => {
     setErrTitleName("");
     setErrCategoryID("");
 
-    let url = baseURL + "title/";
+    let url = baseURL + "titles/";
 
     if (props.titleID !== undefined && props.titleID !== null) {
 
@@ -542,7 +542,7 @@ const EditTitle = (props) => {
     clearMessages();
     setEditionRecordDeleted(null);
 
-    let url = baseURL + "edition/";
+    let url = baseURL + "editions/";
 
     if (editionID !== undefined && editionID !== null) {
       url = url + editionID;

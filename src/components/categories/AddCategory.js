@@ -102,7 +102,7 @@ const AddCategory = (props) => {
 
         // console.log(componentName, "addCategory categoryObject", categoryObject);
 
-        let url = baseURL + "category/";
+        let url = baseURL + "categories/";
         // console.log(componentName, "addCategory url", url);
 
         if (sessionToken !== undefined && sessionToken !== null) {

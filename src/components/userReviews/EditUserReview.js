@@ -250,7 +250,7 @@ const EditUserReview = (props) => {
 
     // console.log(componentName, "updateUserReview userReviewObject", userReviewObject);
 
-    let url = baseURL + "userreview/";
+    let url = baseURL + "userreviews/";
 
     if (props.reviewID !== undefined && props.reviewID !== null && sessionToken !== undefined && sessionToken !== null) {
 
@@ -405,7 +405,7 @@ const EditUserReview = (props) => {
     clearMessages();
     setUserReviewRecordDeleted(null);
 
-    let url = baseURL + "userreview/";
+    let url = baseURL + "userreviews/";
 
     if (props.reviewID !== undefined && props.reviewID !== null) {
 

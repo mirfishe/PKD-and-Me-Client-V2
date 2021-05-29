@@ -33,7 +33,7 @@ const EditionList = (props) => {
 
     if (baseURL !== undefined && baseURL !== "") {
 
-      let url = baseURL + "edition/list";
+      let url = baseURL + "editions/list";
 
       fetch(url)
         .then(response => {

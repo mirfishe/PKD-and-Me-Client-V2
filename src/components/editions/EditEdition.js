@@ -321,7 +321,7 @@ const EditEdition = (props) => {
 
       // console.log(componentName, "updateEdition editionObject", editionObject);
 
-      let url = baseURL + "edition/";
+      let url = baseURL + "editions/";
 
       if (props.editionID !== undefined && props.editionID !== null && sessionToken !== undefined && sessionToken !== null) {
 
@@ -417,7 +417,7 @@ const EditEdition = (props) => {
     setEditionRecordDeleted(null);
     setErrMediaID("");
 
-    let url = baseURL + "edition/";
+    let url = baseURL + "editions/";
 
     if (props.editionID !== undefined && props.editionID !== null) {
       url = url + props.editionID;
@@ -485,7 +485,7 @@ const EditEdition = (props) => {
     setErrASINMessage("");
     setASINResultsFound(null);
 
-    let url = baseURL + "edition/ASIN/";
+    let url = baseURL + "editions/ASIN/";
 
     if (ASIN !== undefined && ASIN !== null && ASIN !== "") {
       url = url + ASIN;

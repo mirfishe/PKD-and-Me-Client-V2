@@ -179,7 +179,7 @@ const Register = (props) => {
         };
         // console.log(componentName, "register userObject", userObject);
 
-        let url = baseURL + "user/register/";
+        let url = baseURL + "users/register/";
         // console.log(componentName, "register url", url);
 
         fetch(url, {
@@ -259,7 +259,7 @@ const Register = (props) => {
     setErrChecklistMessage("");
     setChecklistResultsFound(null);
 
-    let url = baseURL + "title/checklist/list";
+    let url = baseURL + "titles/checklist/list";
 
     if (token !== undefined && token !== null && token !== "") {
 

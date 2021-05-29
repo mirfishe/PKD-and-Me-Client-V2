@@ -29,7 +29,7 @@ function UserReviewList() {
     setUserReviewMessage("");
     setErrUserReviewMessage("");
 
-    let url = baseURL + "userreview/list";
+    let url = baseURL + "userreviews/list";
 
     fetch(url)
       .then(response => {

@@ -213,7 +213,7 @@ const Title = (props) => {
   //     setOverallTitleRating(null);
   //     setOverallTitleRatingCount(0);
 
-  //     let url = baseURL + "userreview/";
+  //     let url = baseURL + "userreviews/";
 
   //     if (titleID !== null) {
   //         url = url + "rating/" + titleID;

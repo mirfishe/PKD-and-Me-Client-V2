@@ -33,7 +33,7 @@ const CategoryList = (props) => {
 
     if (baseURL !== undefined && baseURL !== "") {
 
-      let url = baseURL + "category/list";
+      let url = baseURL + "categories/list";
 
       fetch(url)
         .then(response => {

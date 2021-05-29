@@ -247,7 +247,7 @@ const AddTitle = (props) => {
 
         // console.log(componentName, "addTitle titleObject", titleObject);
 
-        let url = baseURL + "title/";
+        let url = baseURL + "titles/";
         // console.log(componentName, "addTitle url", url);
 
         if (sessionToken !== undefined && sessionToken !== null) {

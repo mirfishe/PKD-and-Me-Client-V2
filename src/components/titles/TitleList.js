@@ -33,7 +33,7 @@ const TitleList = (props) => {
 
     if (baseURL !== undefined && baseURL !== "") {
 
-      let url = baseURL + "title/list";
+      let url = baseURL + "titles/list";
 
       fetch(url)
         .then(response => {

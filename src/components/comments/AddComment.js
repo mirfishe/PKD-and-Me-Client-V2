@@ -128,7 +128,7 @@ const AddComment = (props) => {
 
         // console.log(componentName, "addComment commentObject", commentObject);
 
-        let url = baseURL + "title/";
+        let url = baseURL + "titles/";
         // console.log(componentName, "addComment url", url);
 
         if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
