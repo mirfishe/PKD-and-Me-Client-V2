@@ -76,7 +76,7 @@ const AddComment = (props) => {
     let emailAddressValidated = false;
     let formValidated = false;
 
-    if (txtComment !== undefined && txtComment !== null) {
+    if (IsEmpty(txtComment) === false) {
       if (txtComment.trim().length > 0) {
         commentValidated = true;
         setErrEmailAddress("");
@@ -90,7 +90,7 @@ const AddComment = (props) => {
       };
     };
 
-    if (txtEmailAddress !== undefined && txtEmailAddress !== null) {
+    if (IsEmpty(txtEmailAddress) === false) {
       if (txtEmailAddress.trim().length > 0 || requireUserLogin === false) {
         emailAddressValidated = true;
         setErrEmailAddress("");
@@ -120,7 +120,7 @@ const AddComment = (props) => {
 
     if (formValidated === true) {
 
-      if (txtComment !== undefined && txtComment !== null && txtEmailAddress !== undefined && txtEmailAddress !== null) {
+      if (IsEmpty(txtComment) === false && IsEmpty(txtEmailAddress) === false) {
 
         let commentObject = {
           comment: txtComment.trim(),
@@ -132,12 +132,12 @@ const AddComment = (props) => {
         let url = baseURL + "titles/";
         // console.log(componentName, GetDateTime(), "addComment url", url);
 
-        if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
+        if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
 
           let headerObject = new Headers({ "Content-Type": "application/json" });
 
           // * If the user isn't logged in and user login isn't required, then it isn't added to the Authorization header
-          if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
+          if (IsEmpty(sessionToken) === false) {
             Object.assign(headerObject, { "Authorization": sessionToken });
           };
 
@@ -198,7 +198,7 @@ const AddComment = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect commentRecordAdded", commentRecordAdded);
-    if (commentRecordAdded !== undefined && commentRecordAdded !== null && commentRecordAdded === true) {
+    if (IsEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
       clearMessages();
       setErrComment("");
       setErrEmailAddress("");
@@ -212,7 +212,7 @@ const AddComment = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
-    if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
+    if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
       // return <Redirect to="/" />;
       setModal(false);
     };
@@ -226,9 +226,9 @@ const AddComment = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Comment</Button></span> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Comment</Button></span> : null}
 
-      {appAllowUserInteractions === true && ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Add Comment</ModalHeader>
@@ -242,14 +242,14 @@ const AddComment = (props) => {
 
               <Label for="txtComment">Comment</Label>
               <Input type="textarea" id="txtComment" rows={10} value={txtComment} onChange={(event) => {/*console.log(event.target.value);*/ setTxtComment(event.target.value); }} />
-              {errComment !== undefined && errComment !== null && errComment !== "" ? <Alert color="danger">{errComment}</Alert> : null}
+              {IsEmpty(errComment) === false ? <Alert color="danger">{errComment}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
 
               <Label for="txtEmailAddress">Email Address</Label>
               <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmailAddress(event.target.value); }} />
-              {errEmailAddress !== undefined && errEmailAddress !== null && errEmailAddress !== "" ? <Alert color="danger">{errEmailAddress}</Alert> : null}
+              {IsEmpty(errEmailAddress) === false ? <Alert color="danger">{errEmailAddress}</Alert> : null}
 
             </FormGroup>
 

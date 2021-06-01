@@ -82,7 +82,7 @@ const EditUserReview = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
 
-    if (props.reviewID !== undefined && props.reviewID !== null) {
+    if (IsEmpty(props.reviewID) === false) {
 
       let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
       // console.log(componentName, GetDateTime(), "useEffect userReviewObject", userReviewObject);
@@ -91,7 +91,7 @@ const EditUserReview = (props) => {
       setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
       // console.log(componentName, GetDateTime(), "useEffect userReviewItemIndex", userReviewItemIndex);
 
-      if (userReviewObject !== undefined) {
+      if (IsEmpty(userReviewObject) === false) {
 
         setUserReviewItem(userReviewObject);
 
@@ -109,7 +109,7 @@ const EditUserReview = (props) => {
 
         setCbxRead(userReviewObject.read);
 
-        if (userReviewObject.dateRead !== undefined && userReviewObject.dateRead !== null) {
+        if (IsEmpty(userReviewObject.dateRead) === false) {
           setTxtDateRead(userReviewObject.dateRead.toString().substring(0, 10));
         } else {
           setTxtDateRead("");
@@ -129,7 +129,7 @@ const EditUserReview = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
 
-    if (props.reviewID !== undefined && props.reviewID !== null) {
+    if (IsEmpty(props.reviewID) === false) {
 
       let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
       // console.log(componentName, GetDateTime(), "useEffect userReviewObject", userReviewObject);
@@ -138,7 +138,7 @@ const EditUserReview = (props) => {
       setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
       // console.log(componentName, GetDateTime(), "useEffect userReviewItemIndex", userReviewItemIndex);
 
-      if (userReviewObject !== undefined) {
+      if (IsEmpty(userReviewObject) === false) {
 
         setUserReviewItem(userReviewObject);
 
@@ -156,7 +156,7 @@ const EditUserReview = (props) => {
 
         setCbxRead(userReviewObject.read);
 
-        if (userReviewObject.dateRead !== undefined && userReviewObject.dateRead !== null) {
+        if (IsEmpty(userReviewObject.dateRead) === false) {
           setTxtDateRead(userReviewObject.dateRead.toString().substring(0, 10));
         } else {
           setTxtDateRead("");
@@ -177,7 +177,7 @@ const EditUserReview = (props) => {
   //     // console.log(componentName, GetDateTime(), "useEffect titleListState", titleListState);
   //     // console.log(componentName, GetDateTime(), "useEffect titleID", titleID);
 
-  //     if (titleID !== undefined && titleID !== null) {
+  //     if (IsEmpty(titleID) === false) {
 
   //         let titleObject = titleListState.filter(title => title.titleID === titleID);
   //         // console.log(componentName, GetDateTime(), "useEffect titleObject", titleObject);
@@ -186,7 +186,7 @@ const EditUserReview = (props) => {
   //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
   //         // console.log(componentName, GetDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
-  //         if (titleObject !== undefined) {
+  //         if (IsEmpty(titleObject) === false) {
 
   //             setTitleItem(titleObject);
 
@@ -219,7 +219,7 @@ const EditUserReview = (props) => {
     // ? Check to make sure that txtDateRead) is a date?
     // ? Check to make sure that props.titleID is a number?
     // * txtDateRead is expecting a date and rdoRating is expecting a number
-    // if (txtDateRead !== null && rdoRating !== null) {
+    // if (IsEmpty(txtDateRead) === false && IsEmpty(rdoRating) === false) {
 
     // console.log(componentName, GetDateTime(), "addUserReview typeof titleID", typeof titleID);
 
@@ -236,28 +236,28 @@ const EditUserReview = (props) => {
     };
 
     // * If the user doesn't enter a date read, then it isn't added/updated
-    if (txtDateRead !== null && txtDateRead !== undefined) {
+    if (IsEmpty(txtDateRead) === false) {
       if (txtDateRead.trim().length !== 0) {
         Object.assign(userReviewObject, { dateRead: txtDateRead.trim() });
       };
     };
 
     // * If the user doesn't enter a ranking, then it isn't added/updated
-    if (txtRanking !== null && txtRanking !== undefined) {
+    if (IsEmpty(txtRanking) === false) {
       if (txtRanking.trim().length !== 0) {
         Object.assign(userReviewObject, { ranking: txtRanking.trim() });
       };
     };
 
     // * If the user doesn't enter a short review, then it isn't added/updated
-    if (txtShortReview !== null && txtShortReview !== undefined) {
+    if (IsEmpty(txtShortReview) === false) {
       if (txtShortReview.trim().length !== 0) {
         Object.assign(userReviewObject, { shortReview: txtShortReview.trim() });
       };
     };
 
     // * If the user doesn't enter a long review, then it isn't added/updated
-    if (txtLongReview !== null && txtLongReview !== undefined) {
+    if (IsEmpty(txtLongReview) === false) {
       if (txtLongReview.trim().length !== 0) {
         Object.assign(userReviewObject, { longReview: txtLongReview.trim() });
       };
@@ -267,10 +267,10 @@ const EditUserReview = (props) => {
 
     let url = baseURL + "userreviews/";
 
-    if (props.reviewID !== undefined && props.reviewID !== null && sessionToken !== undefined && sessionToken !== null) {
+    if (IsEmpty(props.reviewID) === false && IsEmpty(sessionToken) === false) {
 
       // ? Does it matter if the user is updating their own review as an admin or not?
-      if (admin !== undefined && admin !== null && admin === true) {
+      if (IsEmpty(admin) === false && admin === true) {
         url = url + "admin/";
       };
 
@@ -329,6 +329,7 @@ const EditUserReview = (props) => {
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
+            // TODO: Fix the structure of this Redux call.
             // ? Would still work if the createDate and updateDate were left out?
             dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, updateDate: new Date().toISOString(), title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }));
             // ? Add to local storage also?
@@ -344,6 +345,8 @@ const EditUserReview = (props) => {
             // console.log(componentName, GetDateTime(), "updateUserReview userReviewsIndex", userReviewsIndex);
 
             // console.log(componentName, GetDateTime(), "updateUserReview userReviews", userReviews);
+
+            // TODO: Fix the structure of this Redux call.
             // * Get all reviews for the title
             // ? Get the latest from state?
             // ? Update the state user review array?
@@ -423,13 +426,13 @@ const EditUserReview = (props) => {
 
     let url = baseURL + "userreviews/";
 
-    if (props.reviewID !== undefined && props.reviewID !== null) {
+    if (IsEmpty(props.reviewID) === false) {
 
       url = url + props.reviewID;
 
       // console.log(componentName, GetDateTime(), "deleteUserReview url", url);
 
-      if (sessionToken !== undefined && sessionToken !== null) {
+      if (IsEmpty(sessionToken) === false) {
 
         fetch(url, {
           method: "DELETE",
@@ -522,14 +525,14 @@ const EditUserReview = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviewRecordUpdated", userReviewRecordUpdated);
     // console.log(componentName, GetDateTime(), "useEffect userReviewRecordDeleted", userReviewRecordDeleted);
-    if (userReviewRecordUpdated !== undefined && userReviewRecordUpdated !== null && userReviewRecordUpdated === true) {
+    if (IsEmpty(userReviewRecordUpdated) === false && userReviewRecordUpdated === true) {
       clearMessages();
       setUserReviewRecordUpdated(null);
       // setModal(false);
       toggle();
     };
 
-    if (userReviewRecordDeleted !== undefined && userReviewRecordDeleted !== null && userReviewRecordDeleted === true) {
+    if (IsEmpty(userReviewRecordDeleted) === false && userReviewRecordDeleted === true) {
       clearMessages();
       setUserReviewRecordDeleted(null);
       // setModal(false);
@@ -541,7 +544,7 @@ const EditUserReview = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
-    if (sessionToken === undefined || sessionToken === null || sessionToken === "") {
+    if (IsEmpty(sessionToken) === true) {
       // return <Redirect to="/" />;
       setModal(false);
     };
@@ -555,9 +558,9 @@ const EditUserReview = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReviewItem.userID) || (admin !== undefined && admin !== null && admin === true)) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Review</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && ((IsEmpty(userID) === false && userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Review</Button></span> : null}
 
-      {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReviewItem.userID) || (admin !== undefined && admin !== null && admin === true)) && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && ((IsEmpty(userID) === false && userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Update Review</ModalHeader>
@@ -633,7 +636,7 @@ const EditUserReview = (props) => {
 
               <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateUserReview(false); }}>Update Review</Button>
               <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateUserReview(true); }}>Delete Review</Button>
-              {admin !== undefined && admin !== null && admin === true ? <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteUserReview(); }}>Hard Delete Review</Button> : null}
+              {IsEmpty(admin) === false && admin === true ? <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteUserReview(); }}>Hard Delete Review</Button> : null}
               <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
           </Form>

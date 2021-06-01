@@ -46,7 +46,7 @@ const EditCategories = (props) => {
 
   let categoryList = [];
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     categoryList = [...categoryListState];
   } else {
     categoryList = categoryListState.filter(category => category.active === true);
@@ -88,9 +88,9 @@ const EditCategories = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Edit Categories</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Edit Categories</Button></span> : null}
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Update Categories</ModalHeader>
@@ -120,12 +120,12 @@ const EditCategories = (props) => {
 
                   <Col xs="10">
                     <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(event.target.value); console.log(event.target); }} />
-                    {/* {errCategory !== undefined && errCategory !== null && errCategory !== "" ? <Alert color="danger">{errCategory}</Alert> : null} */}
+                    {/* {IsEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
                   </Col>
 
                   <Col xs="2">
                     <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(event.target.value); console.log(event.target); }} />
-                    {/* {errSortID"!== undefined && errSortID !== null && errSortID !== "" ? <Alert color="danger">{errSortID}</Alert> : null} */}
+                    {/* {IsEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
                   </Col>
 
                 </FormGroup>

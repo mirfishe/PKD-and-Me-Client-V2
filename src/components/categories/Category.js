@@ -34,7 +34,7 @@ const Category = (props) => {
 
     if (IsEmpty(categoryListState) === false) {
 
-      if (admin !== undefined && admin !== null && admin === true) {
+      if (IsEmpty(admin) === false && admin === true) {
         categoryListSort = [...categoryListState];
       } else {
         categoryListSort = categoryListState.filter(category => category.active === true);
@@ -86,7 +86,7 @@ const Category = (props) => {
                 <Link to={"/titles/" + category.categoryID}>{category.categoryID}</Link> */}
                 {/* <Link to={"/titles/" + encodeURL(category.category)}>{category.category}</Link> */}
                 <Link to={encodeURL(category.category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(category.category)); }}>{category.category}
-                  {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
+                  {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                 </Link>
               </NavItem>
             );
@@ -94,8 +94,8 @@ const Category = (props) => {
 
         </Nav>
       </Collapse>
-      {admin !== undefined && admin !== null && admin === true ? <AddCategory displayButton={true} /> : null}
-      {admin !== undefined && admin !== null && admin === true ? <EditCategories displayButton={true} /> : null}
+      {IsEmpty(admin) === false && admin === true ? <AddCategory displayButton={true} /> : null}
+      {IsEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null}
     </React.Fragment>
   );
 

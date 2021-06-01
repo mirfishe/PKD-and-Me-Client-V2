@@ -57,7 +57,7 @@ const Login = (props) => {
 
 
   const updateToken = (newToken) => {
-    if (newToken !== undefined && newToken !== null && newToken !== "") {
+    if (IsEmpty(newToken) === false) {
       localStorage.setItem("token", newToken);
       // console.log(componentName, GetDateTime(), "updateToken newToken", newToken);
       // console.log(componentName, GetDateTime(), "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
@@ -86,7 +86,7 @@ const Login = (props) => {
     let passwordValidated = false;
     let formValidated = false;
 
-    if (txtEmail !== undefined && txtEmail !== null) {
+    if (IsEmpty(txtEmail) === false) {
       if (txtEmail.trim().match(emailRegExp) && txtEmail.trim().length > 0) {
         // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
         emailValidated = true;
@@ -101,7 +101,7 @@ const Login = (props) => {
       };
     };
 
-    if (txtPassword !== undefined && txtPassword !== null) {
+    if (IsEmpty(txtPassword) === false) {
       if (txtPassword.trim().length > 4) {
         passwordValidated = true;
         setErrPassword("");
@@ -131,7 +131,7 @@ const Login = (props) => {
 
     if (formValidated === true) {
 
-      if (txtEmail !== undefined && txtEmail !== null && txtPassword !== undefined && txtPassword !== null) {
+      if (IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
         let userObject = {
           email: txtEmail.trim(),
           password: txtPassword.trim()
@@ -161,7 +161,7 @@ const Login = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "logIn data", data);
+            // console.log(componentName, GetDateTime(), "logIn data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -220,7 +220,7 @@ const Login = (props) => {
 
     let url = baseURL + "titles/checklist";
 
-    if (token !== undefined && token !== null && token !== "") {
+    if (IsEmpty(token) === false) {
 
       fetch(url, {
         method: "GET",
@@ -242,7 +242,7 @@ const Login = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "getChecklist data", data);
+          // console.log(componentName, GetDateTime(), "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);
@@ -271,7 +271,7 @@ const Login = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userResultsFound", userResultsFound);
-    if (userResultsFound !== undefined && userResultsFound !== null && userResultsFound !== false) {
+    if (IsEmpty(userResultsFound) === false) {
       clearMessages();
       setErrEmail("");
       setErrPassword("");
@@ -285,7 +285,7 @@ const Login = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
-    if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
+    if (IsEmpty(sessionToken) === false) {
       clearMessages();
       setErrEmail("");
       setErrPassword("");
@@ -316,7 +316,7 @@ const Login = (props) => {
 
   return (
     <React.Fragment>
-      {appAllowUserInteractions === true && sessionToken === undefined || sessionToken === null || sessionToken === "" ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Login</Button> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Login</Button> : null}
       <Modal isOpen={modal} toggle={toggle} size="md">
         <ModalHeader toggle={toggle}>Login</ModalHeader>
         <ModalBody>

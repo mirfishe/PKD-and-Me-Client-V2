@@ -24,19 +24,19 @@ const UserReview = (props) => {
   const [userReviewDisplayCount, setUserReviewDisplayCount] = useState(0);
 
   const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
-  console.log(componentName, GetDateTime(), "userReviewsState", userReviewsState);
+  // console.log(componentName, GetDateTime(), "userReviewsState", userReviewsState);
 
   let userReviews = [...userReviewsState];
 
-  if (props.titleID !== undefined && props.titleID !== null && !isNaN(props.titleID)) {
+  if (IsEmpty(props.titleID) === false && !isNaN(props.titleID)) {
     userReviews = userReviews.filter(userReview => userReview.titleID === props.titleID);
   };
   // console.log(componentName, GetDateTime(), "props.titleID", props.titleID);
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     userReviews = [...userReviews];
   } else {
-    userReviews = userReviews.filter(userReview => userReview.active === true);
+    userReviews = userReviews.filter(userReview => userReview.userReview === true);
   };
   // console.log(componentName, GetDateTime(), "userReviews", userReviews);
 
@@ -47,7 +47,7 @@ const UserReview = (props) => {
 
   let userReviewItem = {};
 
-  if (userID !== undefined && userID !== null && !isNaN(userID)) {
+  if (IsEmpty(userID) === false && !isNaN(userID)) {
     userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
     userReviewItem = userReviewItem[0];
   };
@@ -69,7 +69,7 @@ const UserReview = (props) => {
 
       for (let i = 0; i < userReviews.length; i++) {
 
-        if ((userReviews[i].rating !== undefined && userReviews[i].rating !== null) || (userReviews[i].shortReview !== undefined && userReviews[i].shortReview !== null && userReviews[i].shortReview !== "") || (userReviews[i].longReview !== undefined && userReviews[i].longReview !== null && userReviews[i].longReview !== "")) {
+        if ((IsEmpty(userReviews[i].rating) === false) || (IsEmpty(userReviews[i].shortReview) === false) || (IsEmpty(userReviews[i].longReview) === false)) {
           displayCount++;
         };
       };
@@ -94,13 +94,13 @@ const UserReview = (props) => {
       <Row>
         <Col xs="12">
           <h5 className="text-center">User Reviews
-                {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={props.titleID} displayButton={true} /> : null}
+                {IsEmpty(sessionToken) === false && (IsEmpty(userReviewItem) === true) ? <AddUserReview titleID={props.titleID} displayButton={true} /> : null}
           </h5>
         </Col>
       </Row>
       <Row>
         <Col className="text-center" xs="12">
-          {errUserReviewMessage !== undefined && errUserReviewMessage !== null && errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
+          {IsEmpty(errUserReviewMessage) === false ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
         </Col>
       </Row>
       {/* : null} */}
@@ -108,7 +108,7 @@ const UserReview = (props) => {
         {userReviews.map((userReview) => {
 
           let activeString = "";
-          if (userReview.active === true) {
+          if (userReview.userReviewActive === true) {
             // activeString = "Active";
             activeString = "";
           } else {
@@ -122,7 +122,7 @@ const UserReview = (props) => {
 
                 <Col className="my-4" xs="12" key={userReview.reviewID}>
 
-                  {activeString !== undefined && activeString !== null && activeString !== "" ?
+                  {IsEmpty(activeString) === false ?
                     <Row className="cardHeader inactiveItem">
                       <Col xs="12">
                         ({activeString})

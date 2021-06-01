@@ -291,10 +291,10 @@ function LoadUserReviews() {
 
   return (
     <Row className="text-center">
-      {userReviewMessage !== undefined && userReviewMessage !== null && userReviewMessage !== "" ? <Alert color="info">{userReviewMessage}</Alert> : null}
-      {errUserReviewMessage !== undefined && errUserReviewMessage !== null && errUserReviewMessage !== "" ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
-      {/* {overallTitleRatingMessage !== undefined && overallTitleRatingMessage !== null && overallTitleRatingMessage !== "" ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
-        {errOverallTitleRatingMessage !== undefined && errOverallTitleRatingMessage !== null && errOverallTitleRatingMessage !== "" ? <Alert color="danger">{errOverallTitleRatingMessage}</Alert> : null} */}
+      {IsEmpty(userReviewMessage) === false ? <Alert color="info">{userReviewMessage}</Alert> : null}
+      {IsEmpty(errUserReviewMessage) === false ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
+      {/* {IsEmpty(overallTitleRatingMessage) === false ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
+        {IsEmpty(errOverallTitleRatingMessage) === false ? <Alert color="danger">{errOverallTitleRatingMessage}</Alert> : null} */}
     </Row>
   );
 }

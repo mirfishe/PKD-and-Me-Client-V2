@@ -46,7 +46,7 @@ const Titles = (props) => {
   // console.log(componentName, GetDateTime(), "editionListState", editionListState);
 
   let categoryParam;
-  if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
+  if (IsEmpty(props.linkItem) === false && props.linkItem.hasOwnProperty("linkName")) {
     // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
     // console.log(componentName, GetDateTime(), "props.linkItem.linkName", props.linkItem.linkName);
     categoryParam = props.linkItem.linkName; // props.match.params.category;
@@ -65,17 +65,17 @@ const Titles = (props) => {
     editionList = [...editionList];
   };
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     editionList = [...editionList];
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
     // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
-    editionList = editionList.filter(edition => edition.editionsActive === true && edition.mediaActive === true);
+    editionList = editionList.filter(edition => edition.editionActive === true && edition.mediaActive === true);
   };
 
   const sortTitles = (sortBy) => {
     // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
-    if (titleList !== undefined && titleList !== null && titleList.length > 0) {
+    if (IsEmpty(titleList) === false && titleList.length > 0) {
       if (sortBy === "publicationDate") {
         // * Sort the titleList array by title.publicationDate
         // ! Doesn't handle null values well; treats them as "null"
@@ -100,11 +100,11 @@ const Titles = (props) => {
         // });
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
-        let titleListPublicationDate = titleList.filter(title => title.publicationDate !== undefined && title.publicationDate !== null);
-        titleListPublicationDate.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+        let titleListPublicationDate = titleList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
+        titleListPublicationDate.sort((a, b) => (a.titlePublicationDate > b.titlePublicationDate) ? 1 : -1);
         // console.log(componentName, GetDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
-        let titleListNoPublicationDate = titleList.filter(title => title.publicationDate === undefined || title.publicationDate === null);
+        let titleListNoPublicationDate = titleList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
         titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
         // console.log(componentName, GetDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
 
@@ -128,15 +128,15 @@ const Titles = (props) => {
   if (!isNaN(categoryParam)) {
     // ! This code no longer works with the current URL setup
     // * If categoryParam is a number, then it's the categoryID
-    document.title = titleList[0].category.category + " | " + appName + " | " + siteName;
+    document.title = titleList[0].category + " | " + appName + " | " + siteName;
     titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
-  } else if (categoryParam !== undefined && categoryParam !== null) {
+  } else if (IsEmpty(categoryParam) === false) {
     // * If categoryParam is not a number, then it's the category name
     const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
     // console.log(componentName, GetDateTime(), "typeof category", typeof category);
     // console.log(componentName, GetDateTime(), "category", category);
 
-    if (category !== undefined && category !== null) {
+    if (IsEmpty(category) === false) {
       document.title = category.category + " | " + appName + " | " + siteName;
       titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
     } else {
@@ -156,12 +156,12 @@ const Titles = (props) => {
     // titleList = titleListState.filter(title => title.active === true);
   };
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     titleList = [...titleList];
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
     // titleList = titleList.filter(title => title.active === true && title.category.active === true);
-    titleList = titleList.filter(title => title.titlesActive === true && title.categoriesActive === true);
+    titleList = titleList.filter(title => title.titleActive === true && title.categoryActive === true);
   };
 
   sortTitles(titleSortBy);
@@ -190,7 +190,7 @@ const Titles = (props) => {
         <Col xs="12">
           <Breadcrumb className="breadcrumb mb-2">
             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
-            {categoryParam !== undefined && isNaN(categoryParam) ?
+            {IsEmpty(categoryParam) === false && isNaN(categoryParam) ?
               <BreadcrumbItem active><Link to={categoryParam} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(categoryParam); }}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
               :
               <BreadcrumbItem active><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
@@ -200,8 +200,8 @@ const Titles = (props) => {
       </Row>
       <Row>
         <Col xs="12">
-          <h4 className="text-center mb-4">{categoryParam !== undefined && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
-            {admin !== undefined && admin !== null && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
+          <h4 className="text-center mb-4">{IsEmpty(categoryParam) === false && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
+            {IsEmpty(admin) === false && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
             <span className="text-muted ml-2 smallText">Sort By&nbsp;
                         {titleSortBy !== "publicationDate" ?
                 <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
@@ -250,29 +250,29 @@ const Titles = (props) => {
 
               {/* <Card key={title.titleID}>
 
-                    {categoryParam === undefined ?
+                    {IsEmpty(categoryParam) === false ?
                     <CardHeader>
-                        <Link to={encodeURL(title.category.category)}>{title.category.category}</Link> */}
+                        <Link to={encodeURL(title.category)}>{title.category}</Link> */}
               {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null} */}
+                        {IsEmpty(title.publicationDate) === false ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null} */}
               {/* </CardHeader>  
                     : null} */}
 
               {/* <CardBody>
                         <Link to={title.titleURL}>
-                        {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {IsEmpty(title.imageName) === false ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
                     </CardBody>
                     <CardFooter> */}
-              {/* <Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link> */}
+              {/* <Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link> */}
               {/* <Link to={title.titleURL}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null}
+                        {IsEmpty(title.publicationDate) === false ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
 
               <Card key={title.titleID}>
-                {activeString !== undefined && activeString !== null && activeString !== "" ?
+                {IsEmpty(activeString) === false ?
                   <CardHeader className="cardHeader inactiveItem">
                     ({activeString})
                         </CardHeader>
@@ -280,29 +280,29 @@ const Titles = (props) => {
                 <Row className="no-gutters">
                   <Col className="col-md-4">
                     <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>
-                      {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                      {IsEmpty(title.imageName) === false ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                     </Link>
                   </Col>
                   <Col className="col-md-8">
                     <CardBody>
-                      {/* <CardText><Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
+                      {/* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
                       <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
+                        {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
                       <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                       <CardText className="smallerText">{editionsAvailable}<span> </span>
                         {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
                         {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
                                 edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
-                      {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-                      {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
+                      {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                      {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
                     </CardBody>
                   </Col>
                 </Row>
-                {categoryParam === undefined ?
+                {IsEmpty(categoryParam) === false ?
                   <CardFooter className="cardFooter">
-                    <CardText><Link to={encodeURL(title.category.category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(title.category.category)); }}>{title.category.category}</Link></CardText>
+                    <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
                     {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
-                        {title.publicationDate !== null ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null} */}
+                        {IsEmpty(title.publicationDate) === false ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null} */}
                   </CardFooter>
                   : null}
               </Card>

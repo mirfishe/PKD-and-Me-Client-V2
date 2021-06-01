@@ -65,7 +65,7 @@ const AddCategory = (props) => {
     let categoryValidated = false;
     let formValidated = false;
 
-    if (txtCategory !== undefined && txtCategory !== null) {
+    if (IsEmpty(txtCategory) === false) {
       if (txtCategory.trim().length > 0) {
         categoryValidated = true;
         setErrCategory("");
@@ -94,7 +94,7 @@ const AddCategory = (props) => {
 
     if (formValidated === true) {
 
-      if (txtCategory !== undefined && txtCategory !== null) {
+      if (IsEmpty(txtCategory) === false) {
 
         let categoryObject = {
           category: txtCategory.trim()
@@ -105,7 +105,7 @@ const AddCategory = (props) => {
         let url = baseURL + "categories/";
         // console.log(componentName, GetDateTime(), "addCategory url", url);
 
-        if (sessionToken !== undefined && sessionToken !== null) {
+        if (IsEmpty(sessionToken) === false) {
 
           fetch(url, {
             method: "POST",
@@ -171,7 +171,7 @@ const AddCategory = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect categoryRecordAdded", categoryRecordAdded);
-    if (categoryRecordAdded !== undefined && categoryRecordAdded !== null && categoryRecordAdded === true) {
+    if (IsEmpty(categoryRecordAdded) === false && categoryRecordAdded === true) {
       clearMessages();
       setCategoryRecordAdded(null);
       // setModal(false);
@@ -197,9 +197,9 @@ const AddCategory = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Category</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Category</Button></span> : null}
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="md">
         <ModalHeader toggle={toggle}>Add Category</ModalHeader>
@@ -213,7 +213,7 @@ const AddCategory = (props) => {
 
               <Label for="txtCategory">Category</Label>
               <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => {/*console.log(event.target.value);*/ setTxtCategory(event.target.value); }} />
-              {errCategory !== undefined && errCategory !== null && errCategory !== "" ? <Alert color="danger">{errCategory}</Alert> : null}
+              {IsEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null}
 
             </FormGroup>
 

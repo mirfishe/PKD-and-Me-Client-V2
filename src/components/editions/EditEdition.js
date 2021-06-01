@@ -125,7 +125,7 @@ const EditEdition = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect editionListState", editionListState);
 
-    if (props.editionID !== undefined && props.editionID !== null) {
+    if (IsEmpty(props.editionID) === false) {
 
       let editionObject = editionListState.find(edition => edition.editionID === props.editionID);
       // console.log(componentName, GetDateTime(), "useEffect editionObject", editionObject);
@@ -134,7 +134,7 @@ const EditEdition = (props) => {
       setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === props.editionID));
       // console.log(componentName, GetDateTime(), "useEffect editionItemIndex", editionItemIndex);
 
-      if (editionObject !== undefined) {
+      if (IsEmpty(editionObject) === false) {
 
         setEditionItem(editionObject);
         setEditionID(editionObject.editionID);
@@ -153,7 +153,7 @@ const EditEdition = (props) => {
 
         setDdMediaID(editionObject.mediaID);
 
-        if (editionObject.publicationDate !== undefined && editionObject.publicationDate !== null) {
+        if (IsEmpty(editionObject.publicationDate) === false) {
           setTxtPublicationDate(editionObject.publicationDate.toString().substring(0, 10));
         } else {
           setTxtPublicationDate("");
@@ -205,18 +205,16 @@ const EditEdition = (props) => {
 
     // ? Check to make sure that props.editionID is a number?
 
-    if (ddMediaID !== undefined) {
-      if (ddMediaID !== null) {
-        mediaIDValidated = true;
-        setErrMediaID("");
-        // console.log(componentName, GetDateTime(), "updateEdition Valid mediaID");
-        // console.log(componentName, GetDateTime(), "updateEdition mediaIDValidated true", mediaIDValidated);
-      } else {
-        mediaIDValidated = false;
-        setErrMediaID("Please select a media.");
-        // console.log(componentName, GetDateTime(), "updateEdition Invalid mediaID");
-        // console.log(componentName, GetDateTime(), "updateEdition mediaIDValidated false", mediaIDValidated);
-      };
+    if (IsEmpty(ddMediaID) === false) {
+      mediaIDValidated = true;
+      setErrMediaID("");
+      // console.log(componentName, GetDateTime(), "updateEdition Valid mediaID");
+      // console.log(componentName, GetDateTime(), "updateEdition mediaIDValidated true", mediaIDValidated);
+    } else {
+      mediaIDValidated = false;
+      setErrMediaID("Please select a media.");
+      // console.log(componentName, GetDateTime(), "updateEdition Invalid mediaID");
+      // console.log(componentName, GetDateTime(), "updateEdition mediaIDValidated false", mediaIDValidated);
     };
 
     if (mediaIDValidated === true) {
@@ -257,63 +255,63 @@ const EditEdition = (props) => {
       };
 
       // * If the user doesn't enter a publication date, then it isn't added/updated
-      if (txtPublicationDate !== undefined && txtPublicationDate !== null) {
+      if (IsEmpty(txtPublicationDate) === false) {
         if (txtPublicationDate.trim().length !== 0) {
           Object.assign(editionObject, { publicationDate: txtPublicationDate.trim() });
         };
       };
 
       // * If the user doesn't enter an image name, then it isn't added/updated
-      if (txtImageName !== undefined && txtImageName !== null) {
+      if (IsEmpty(txtImageName) === false) {
         if (txtImageName.trim().length !== 0) {
           Object.assign(editionObject, { imageName: txtImageName.trim() });
         };
       };
 
       // * If the user doesn't enter an ASIN, then it isn't added/updated
-      if (txtASIN !== undefined && txtASIN !== null) {
+      if (IsEmpty(txtASIN) === false) {
         if (txtASIN.trim().length !== 0) {
           Object.assign(editionObject, { ASIN: txtASIN.trim() });
         };
       };
 
       // * If the user doesn't enter a textLinkShort, then it isn't added/updated
-      if (txtTextLinkShort !== undefined && txtTextLinkShort !== null) {
+      if (IsEmpty(txtTextLinkShort) === false) {
         if (txtTextLinkShort.trim().length !== 0) {
           Object.assign(editionObject, { textLinkShort: txtTextLinkShort.trim() });
         };
       };
 
       // * If the user doesn't enter a textLinkFull, then it isn't added/updated
-      if (txtTextLinkFull !== undefined && txtTextLinkFull !== null) {
+      if (IsEmpty(txtTextLinkFull) === false) {
         if (txtTextLinkFull.trim().length !== 0) {
           Object.assign(editionObject, { textLinkFull: txtTextLinkFull.trim() });
         };
       };
 
       // * If the user doesn't enter an imageLinkSmall, then it isn't added/updated
-      if (txtImageLinkSmall !== undefined && txtImageLinkSmall !== null) {
+      if (IsEmpty(txtImageLinkSmall) === false) {
         if (txtImageLinkSmall.trim().length !== 0) {
           Object.assign(editionObject, { imageLinkSmall: txtImageLinkSmall.trim() });
         };
       };
 
       // * If the user doesn't enter an imageLinkMedium, then it isn't added/updated
-      if (txtImageLinkMedium !== undefined && txtImageLinkMedium !== null) {
+      if (IsEmpty(txtImageLinkMedium) === false) {
         if (txtImageLinkMedium.trim().length !== 0) {
           Object.assign(editionObject, { imageLinkMedium: txtImageLinkMedium.trim() });
         };
       };
 
       // * If the user doesn't enter an imageLinkLarge, then it isn't added/updated
-      if (txtImageLinkLarge !== undefined && txtImageLinkLarge !== null) {
+      if (IsEmpty(txtImageLinkLarge) === false) {
         if (txtImageLinkLarge.trim().length !== 0) {
           Object.assign(editionObject, { imageLinkLarge: txtImageLinkLarge.trim() });
         };
       };
 
       // * If the user doesn't enter a textImageLink, then it isn't added/updated
-      if (txtTextImageLink !== undefined && txtTextImageLink !== null) {
+      if (IsEmpty(txtTextImageLink) === false) {
         if (txtTextImageLink.trim().length !== 0) {
           Object.assign(editionObject, { textImageLink: txtTextImageLink.trim() });
         };
@@ -323,7 +321,7 @@ const EditEdition = (props) => {
 
       let url = baseURL + "editions/";
 
-      if (props.editionID !== undefined && props.editionID !== null && sessionToken !== undefined && sessionToken !== null) {
+      if (IsEmpty(props.editionID) === false && IsEmpty(sessionToken) === false) {
 
         url = url + props.editionID;
 
@@ -386,6 +384,7 @@ const EditEdition = (props) => {
               // console.log(componentName, GetDateTime(), "updateEdition typeof data.titleID", typeof data.titleID);
               // console.log(componentName, GetDateTime(), "updateEdition titleItem", titleItem);
 
+              // TODO: Fix the structure of this Redux call.
               // ? Would still work if the createDate and updateDate were left out?
               dispatch(updateStateEdition({ editionItemIndex: editionItemIndex, editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, updateDate: new Date().toISOString(), medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } }));
               // ? Add to local storage also?
@@ -419,12 +418,12 @@ const EditEdition = (props) => {
 
     let url = baseURL + "editions/";
 
-    if (props.editionID !== undefined && props.editionID !== null) {
+    if (IsEmpty(props.editionID) === false) {
       url = url + props.editionID;
 
       // console.log(componentName, GetDateTime(), "deleteEdition url", url);
 
-      if (sessionToken !== undefined && sessionToken !== null) {
+      if (IsEmpty(sessionToken) === false) {
 
         fetch(url, {
           method: "DELETE",
@@ -487,7 +486,7 @@ const EditEdition = (props) => {
 
     let url = baseURL + "editions/ASIN/";
 
-    if (ASIN !== undefined && ASIN !== null && ASIN !== "") {
+    if (IsEmpty(ASIN) === false) {
       url = url + ASIN;
 
       // console.log(componentName, GetDateTime(), "checkASIN url", url);
@@ -508,10 +507,10 @@ const EditEdition = (props) => {
           setASINMessage(data.message);
 
           if (data.resultsFound === true) {
-            setASINMessage(data.message + "That ASIN already exists in the database. " + data.editions[0].title.titleName + " (" + data.editions[0].medium.media + ") editionID=" + data.editions[0].editionID);
+            setASINMessage(data.message + "That ASIN already exists in the database. " + data.editions[0].titleName + " (" + data.editions[0].media + ") editionID=" + data.editions[0].editionID);
 
-            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].title.titleName);
-            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].medium.media);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].titleName);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].media);
             // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].editionID);
 
           } else {
@@ -533,7 +532,7 @@ const EditEdition = (props) => {
   const copyTitlePublicationDate = () => {
     // console.log(componentName, GetDateTime(), "copyTitlePublicationDate props.titlePublicationDate", props.titlePublicationDate);
 
-    if (props.titlePublicationDate !== undefined && props.titlePublicationDate !== null) {
+    if (IsEmpty(props.titlePublicationDate) === false) {
       setTxtPublicationDate(props.titlePublicationDate.toString().substring(0, 10));
     } else {
       setTxtPublicationDate(undefined);
@@ -544,7 +543,7 @@ const EditEdition = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect editionRecordUpdated", editionRecordUpdated);
     // console.log(componentName, GetDateTime(), "useEffect editionRecordDeleted", editionRecordDeleted);
-    if (editionRecordUpdated !== undefined && editionRecordUpdated !== null && editionRecordUpdated === true) {
+    if (IsEmpty(editionRecordUpdated) === false && editionRecordUpdated === true) {
       clearMessages();
       setErrMediaID("");
       setEditionRecordUpdated(null);
@@ -552,7 +551,7 @@ const EditEdition = (props) => {
       toggle();
     };
 
-    if (editionRecordDeleted !== undefined && editionRecordDeleted !== null && editionRecordDeleted === true) {
+    if (IsEmpty(editionRecordDeleted) === false && editionRecordDeleted === true) {
       clearMessages();
       setErrMediaID("");
       setEditionRecordDeleted(null);
@@ -579,9 +578,9 @@ const EditEdition = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Update Edition</ModalHeader>
@@ -590,8 +589,8 @@ const EditEdition = (props) => {
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-              {mediaMessage !== undefined && mediaMessage !== null && mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
-              {errMediaMessage !== undefined && errMediaMessage !== null && errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+              {IsEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
+              {IsEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
             </FormGroup>
 
             <FormGroup row>
@@ -606,12 +605,12 @@ const EditEdition = (props) => {
                     );
                   })}
                 </Input>
-                {errMediaID !== undefined && errMediaID !== null && errMediaID !== "" ? <Alert color="danger">{errMediaID}</Alert> : null}
+                {IsEmpty(errMediaID) === false ? <Alert color="danger">{errMediaID}</Alert> : null}
 
               </Col>
               <Col>
 
-                <Label for="txtPublicationDate">Publication Date</Label> {props.titlePublicationDate !== undefined && props.titlePublicationDate !== null ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
+                <Label for="txtPublicationDate">Publication Date</Label> {IsEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
                 <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(event.target.value);*/ setTxtPublicationDate(event.target.value); }} />
 
               </Col>
@@ -622,14 +621,14 @@ const EditEdition = (props) => {
 
               <Label for="txtImageName">Image Name</Label>
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtImageName(event.target.value); }} />
-              {txtImageName !== undefined && txtImageName !== null && txtImageName !== "" ? <img src={txtImageName} alt="" /> : <Image size="150" className="noImageIcon" />}
+              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="" /> : <Image size="150" className="noImageIcon" />}
 
             </FormGroup>
             <FormGroup>
 
-              {txtTextLinkFull !== undefined && txtTextLinkFull !== null && txtTextLinkFull !== "" ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
-              {ASINMessage !== undefined && ASINMessage !== null && ASINMessage !== "" ? <Alert color="info">{ASINMessage}</Alert> : null}
-              {errASINMessage !== undefined && errASINMessage !== null && errASINMessage !== "" ? <Alert color="danger">{errASINMessage}</Alert> : null}
+              {IsEmpty(txtTextLinkFull) === false ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
+              {IsEmpty(ASINMessage) === false ? <Alert color="info">{ASINMessage}</Alert> : null}
+              {IsEmpty(errASINMessage) === false ? <Alert color="danger">{errASINMessage}</Alert> : null}
               <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={(event) => {/*console.log(event.target.value);*/ checkASIN(txtASIN); }}>Check for ASIN</Button>
               <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => {/*console.log(event.target.value);*/ setTxtASIN(event.target.value); }} />
 
@@ -673,10 +672,10 @@ const EditEdition = (props) => {
 
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(false); }}>Update Edition</Button>
-              {active !== undefined && active !== null && active === false ?
+              {IsEmpty(active) === true && active === false ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(false); }}>Undelete/Restore Edition</Button>
                 : null}
-              {active !== undefined && active !== null && active === true ?
+              {IsEmpty(active) === true && active === true ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(true); }}>Delete Edition</Button>
                 : null}
               <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteEdition(); }}>Hard Delete Edition</Button>

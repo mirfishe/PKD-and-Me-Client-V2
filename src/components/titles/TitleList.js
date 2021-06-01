@@ -32,7 +32,7 @@ const TitleList = (props) => {
     setTitleResultsFound(null);
     setTitleList([]);
 
-    if (baseURL !== undefined && baseURL !== "") {
+    if (IsEmpty(baseURL) === false) {
 
       let url = baseURL + "titles";
 
@@ -76,8 +76,8 @@ const TitleList = (props) => {
   return (
     <Container className="mt-4">
       <Row className="text-center">
-        {titleMessage !== undefined && titleMessage !== null && titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
-        {errTitleMessage !== undefined && errTitleMessage !== null && errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+        {IsEmpty(titleMessage) === false ? <Alert color="info">{titleMessage}</Alert> : null}
+        {IsEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
       </Row>
       {titleResultsFound !== null ?
         <Row>

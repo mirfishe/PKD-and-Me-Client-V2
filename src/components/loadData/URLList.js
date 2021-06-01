@@ -27,8 +27,8 @@ const URLList = (props) => {
   return (
     <Container className="mt-4">
       <Row className="text-center">
-        {urlMessage !== undefined && urlMessage !== null && urlMessage !== "" ? <Alert color="info">{urlMessage}</Alert> : null}
-        {errUrlMessage !== undefined && errUrlMessage !== null && errUrlMessage !== "" ? <Alert color="danger">{errUrlMessage}</Alert> : null}
+        {IsEmpty(urlMessage) === false ? <Alert color="info">{urlMessage}</Alert> : null}
+        {IsEmpty(errUrlMessage) === false ? <Alert color="danger">{errUrlMessage}</Alert> : null}
       </Row>
       {/* <Row>
             <Col xs="2">

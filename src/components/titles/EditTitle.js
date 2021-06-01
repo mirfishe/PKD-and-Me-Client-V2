@@ -128,7 +128,7 @@ const EditTitle = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleListState", titleListState);
 
-    if (props.titleID !== undefined && props.titleID !== null) {
+    if (IsEmpty(props.titleID) === false) {
 
       let titleObject = titleListState.find(title => title.titleID === props.titleID);
       // console.log(componentName, GetDateTime(), "useEffect titleObject", titleObject);
@@ -139,7 +139,7 @@ const EditTitle = (props) => {
 
       editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
 
-      if (titleObject !== undefined) {
+      if (IsEmpty(titleObject) === false) {
 
         setTitleItem(titleObject);
 
@@ -162,7 +162,7 @@ const EditTitle = (props) => {
         setTxtAuthorLastName(titleObject.authorLastName);
         setTxtPublicationDate(titleObject.publicationDate);
 
-        if (titleObject.publicationDate !== undefined && titleObject.publicationDate !== null) {
+        if (IsEmpty(titleObject.publicationDate) === false) {
           setTxtPublicationDate(titleObject.publicationDate.toString().substring(0, 10));
         } else {
           setTxtPublicationDate("");
@@ -209,7 +209,7 @@ const EditTitle = (props) => {
     let categoryIDValidated = false;
     let formValidated = false;
 
-    if (txtTitleName !== undefined && txtTitleName !== null) {
+    if (IsEmpty(txtTitleName) === false) {
       if (txtTitleName.trim().length > 0) {
         titleNameValidated = true;
         setErrTitleName("");
@@ -223,18 +223,16 @@ const EditTitle = (props) => {
       };
     };
 
-    if (ddCategoryID !== undefined) {
-      if (ddCategoryID !== null) {
-        categoryIDValidated = true;
-        setErrCategoryID("");
-        // console.log(componentName, GetDateTime(), "updateTitle Valid CategoryID");
-        // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated true", categoryIDValidated);
-      } else {
-        categoryIDValidated = false;
-        setErrCategoryID("Please select a category.");
-        // console.log(componentName, GetDateTime(), "updateTitle Invalid CategoryID");
-        // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated false", categoryIDValidated);
-      };
+    if (IsEmpty(ddCategoryID) === false) {
+      categoryIDValidated = true;
+      setErrCategoryID("");
+      // console.log(componentName, GetDateTime(), "updateTitle Valid CategoryID");
+      // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated true", categoryIDValidated);
+    } else {
+      categoryIDValidated = false;
+      setErrCategoryID("Please select a category.");
+      // console.log(componentName, GetDateTime(), "updateTitle Invalid CategoryID");
+      // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated false", categoryIDValidated);
     };
 
     if (titleNameValidated === true && categoryIDValidated === true) {
@@ -253,7 +251,7 @@ const EditTitle = (props) => {
 
     if (formValidated === true) {
 
-      if (txtTitleName !== undefined && txtTitleName !== null) {
+      if (IsEmpty(txtTitleName) === false) {
 
         // console.log(componentName, GetDateTime(), "addEdition typeof ddCategoryID", typeof ddCategoryID);
 
@@ -271,35 +269,35 @@ const EditTitle = (props) => {
         };
 
         // * If the user doesn't enter a title URL, then it isn't added/updated
-        if (txtTitleURL !== undefined && txtTitleURL !== null) {
+        if (IsEmpty(txtTitleURL) === false) {
           if (txtTitleURL.trim().length !== 0) {
             Object.assign(titleObject, { titleURL: txtTitleURL.trim() });
           };
         };
 
         // * If the user doesn't enter an author first name, then it isn't added/updated
-        if (txtAuthorFirstName !== undefined && txtAuthorFirstName !== null) {
+        if (IsEmpty(txtAuthorFirstName) === false) {
           if (txtAuthorFirstName.trim().length !== 0) {
             Object.assign(titleObject, { authorFirstName: txtAuthorFirstName.trim() });
           };
         };
 
         // * If the user doesn't enter an author last name, then it isn't added/updated
-        if (txtAuthorLastName !== undefined && txtAuthorLastName !== null) {
+        if (IsEmpty(txtAuthorLastName) === false) {
           if (txtAuthorLastName.trim().length !== 0) {
             Object.assign(titleObject, { authorLastName: txtAuthorLastName.trim() });
           };
         };
 
         // * If the user doesn't enter an image name then it isn't added/updated
-        if (txtImageName !== undefined && txtImageName !== null) {
+        if (IsEmpty(txtImageName) === false) {
           if (txtImageName.trim().length !== 0) {
             Object.assign(titleObject, { imageName: txtImageName.trim() });
           };
         };
 
         // * If the user doesn't enter a publication date, then it isn't added/updated
-        if (txtPublicationDate !== undefined && txtPublicationDate !== null) {
+        if (IsEmpty(txtPublicationDate) === false) {
           if (txtPublicationDate.trim().length !== 0) {
             Object.assign(titleObject, { publicationDate: txtPublicationDate.trim() });
           };
@@ -307,14 +305,14 @@ const EditTitle = (props) => {
 
 
         // * If the user doesn't enter a short description, then it isn't added/updated
-        if (txtShortDescription !== undefined && txtShortDescription !== null) {
+        if (IsEmpty(txtShortDescription) === false) {
           if (txtShortDescription.trim().length !== 0) {
             Object.assign(titleObject, { shortDescription: txtShortDescription.trim() });
           };
         };
 
         // * If the user doesn't enter a url for PKDweb, then it isn't added/updated
-        if (txtUrlPKDweb !== undefined && txtUrlPKDweb !== null) {
+        if (IsEmpty(txtUrlPKDweb) === false) {
           if (txtUrlPKDweb.trim().length !== 0) {
             Object.assign(titleObject, { urlPKDweb: txtUrlPKDweb.trim() });
           };
@@ -324,7 +322,7 @@ const EditTitle = (props) => {
 
         let url = baseURL + "titles/";
 
-        if (props.titleID !== undefined && props.titleID !== null && sessionToken !== undefined && sessionToken !== null) {
+        if (IsEmpty(props.titleID) === false && IsEmpty(sessionToken) === false) {
 
           url = url + props.titleID;
 
@@ -459,13 +457,13 @@ const EditTitle = (props) => {
 
     let url = baseURL + "titles/";
 
-    if (props.titleID !== undefined && props.titleID !== null) {
+    if (IsEmpty(props.titleID) === false) {
 
       url = url + props.titleID;
 
       // console.log(componentName, GetDateTime(), "deleteTitle url", url);
 
-      if (sessionToken !== undefined && sessionToken !== null) {
+      if (IsEmpty(sessionToken) === false) {
 
         fetch(url, {
           method: "DELETE",
@@ -544,12 +542,12 @@ const EditTitle = (props) => {
 
     let url = baseURL + "editions/";
 
-    if (editionID !== undefined && editionID !== null) {
+    if (IsEmpty(editionID) === false) {
       url = url + editionID;
 
       // console.log(componentName, GetDateTime(), "deleteEdition url", url);
 
-      if (sessionToken !== undefined && sessionToken !== null) {
+      if (IsEmpty(sessionToken) === false) {
 
         fetch(url, {
           method: "DELETE",
@@ -605,7 +603,7 @@ const EditTitle = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleRecordUpdated", titleRecordUpdated);
     // console.log(componentName, GetDateTime(), "useEffect titleRecordDeleted", titleRecordDeleted);
-    if (titleRecordUpdated !== undefined && titleRecordUpdated !== null && titleRecordUpdated === true) {
+    if (IsEmpty(titleRecordUpdated) === false && titleRecordUpdated === true) {
       clearMessages();
       setErrTitleName("");
       setErrCategoryID("");
@@ -614,7 +612,7 @@ const EditTitle = (props) => {
       toggle();
     };
 
-    if (titleRecordDeleted !== undefined && titleRecordDeleted !== null && titleRecordDeleted === true) {
+    if (IsEmpty(titleRecordDeleted) === false && titleRecordDeleted === true) {
       clearMessages();
       setErrTitleName("");
       setErrCategoryID("");
@@ -648,9 +646,9 @@ const EditTitle = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Title</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Title</Button></span> : null}
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Update Title</ModalHeader>
@@ -659,15 +657,15 @@ const EditTitle = (props) => {
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-              {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
-              {errCategoryMessage !== undefined && errCategoryMessage !== null && errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+              {IsEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
+              {IsEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
 
               <Label for="txtTitleName">Title</Label>
               <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtTitleName(event.target.value); }} />
-              {errTitleName !== undefined && errTitleName !== null && errTitleName !== "" ? <Alert color="danger">{errTitleName}</Alert> : null}
+              {IsEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
@@ -705,7 +703,7 @@ const EditTitle = (props) => {
                     );
                   })}
                 </Input>
-                {errCategoryID !== undefined && errCategoryID !== null && errCategoryID !== "" ? <Alert color="danger">{errCategoryID}</Alert> : null}
+                {IsEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
 
               </Col>
               <Col>
@@ -722,7 +720,7 @@ const EditTitle = (props) => {
               <Label for="txtImageName">Image Name</Label>
               <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(event.target.value);*/ /*createImageName(txtTitleName);*/ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtImageName(event.target.value); }} />
-              {txtImageName !== undefined && txtImageName !== null && txtImageName !== "" ? <img src={txtImageName} alt={txtTitleName} className="coverThumbnail" /> : <Image size="150" className="noImageIcon" />}
+              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt={txtTitleName} className="coverThumbnail" /> : <Image size="150" className="noImageIcon" />}
 
             </FormGroup>
             <FormGroup>
@@ -741,10 +739,10 @@ const EditTitle = (props) => {
             <ModalFooter>
 
               <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(false); }}>Update Title</Button>
-              {active !== undefined && active !== null && active === false ?
+              {IsEmpty(active) === true && active === false ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(false); }}>Undelete/Restore Title</Button>
                 : null}
-              {active !== undefined && active !== null && active === true ?
+              {IsEmpty(active) === true && active === true ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(true); }}>Delete Title</Button>
                 : null}
               <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteTitle(); }}>Hard Delete Title</Button>

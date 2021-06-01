@@ -42,7 +42,7 @@ const Edition = (props) => {
   let titleItemArray = [];
   let titleItem = {};
 
-  if (props.titleID !== undefined && props.titleID !== null && !isNaN(props.titleID)) {
+  if (IsEmpty(props.titleID) === false && !isNaN(props.titleID)) {
     editionList = editionList.filter(edition => edition.titleID === props.titleID);
     titleItemArray = titleListState.filter(title => title.titleID === props.titleID);
     titleItem = titleItemArray[0];
@@ -61,7 +61,7 @@ const Edition = (props) => {
     editionList = [...editionList];
   };
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     editionList = [...editionList];
   } else {
     editionList = editionList.filter(edition => edition.active === true);
@@ -96,13 +96,13 @@ const Edition = (props) => {
       <Row className="my-4">
         <Col xs="12">
           <h5 className="text-center">Find A Copy
-                    {admin !== undefined && admin !== null && admin === true && titleItem !== undefined ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} displayButton={true} /> : null}
+                    {IsEmpty(admin) === false && admin === true && IsEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} displayButton={true} /> : null}
           </h5>
         </Col>
       </Row>
       <Row className="my-4">
         <Col className="text-center" xs="12">
-          {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+          {IsEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
           {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
           {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
         </Col>
@@ -127,39 +127,39 @@ const Edition = (props) => {
                         <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
                     </CardHeader>
                     <CardBody>
-                    {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
+                    {IsEmpty(edition.imageLinkLarge) === false ? 
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
+                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>
                     <CardFooter>
-                        {edition.publicationDate !== null ? <CardText>Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
+                        {IsEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
                     </CardFooter>
                     </Card> */}
 
               <Card key={edition.editionID}>
-                {activeString !== undefined && activeString !== null && activeString !== "" ?
+                {IsEmpty(activeString) === false ?
                   <CardHeader className="cardHeader inactiveItem">
                     ({activeString})
                         </CardHeader>
                   : null}
                 <Row className="no-gutters">
                   <Col className="col-md-6">
-                    {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ?
+                    {IsEmpty(edition.imageLinkLarge) === false ?
                       <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN) }} />
                       :
                       <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon" />}
+                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon" />}
                       </a>
                     }
                   </Col>
                   <Col className="col-md-6">
                     <CardBody>
-                      {edition.publicationDate !== null ? <CardText className="smallerText">Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
-                      {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titleItem.titlePublicationDate} displayButton={true} /> : null}
+                      {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
+                      {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titleItem.titlePublicationDate} displayButton={true} /> : null}
                     </CardBody>
                   </Col>
                 </Row>

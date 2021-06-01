@@ -81,7 +81,7 @@ const AddUserReview = (props) => {
   // useEffect(() => {
   //     // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
 
-  //     if (props.titleID !== undefined && props.titleID !== null) {
+  //     if (IsEmpty(props.titleID) === false) {
 
   //         let titleObject = titleListState.filter(title => title.titleID === props.titleID);
   //         // console.log(componentName, GetDateTime(), "useEffect titleObject", titleObject);
@@ -90,7 +90,7 @@ const AddUserReview = (props) => {
   //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
   //         // console.log(componentName, GetDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
-  //         if (titleObject !== undefined) {
+  //         if (IsEmpty(titleObject) === false) {
 
   //             setTitleItem(titleObject);
 
@@ -124,7 +124,7 @@ const AddUserReview = (props) => {
     // ? Check to make sure that txtDateRead) is a date?
     // ? Check to make sure that props.titleID is a number?
     // * txtDateRead is expecting a date and rdoRating is expecting a number
-    // if (txtDateRead !== null && rdoRating !== null) {
+    // if (IsEmpty(txtDateRead) === false && IsEmpty(rdoRating) === false) {
 
     // console.log(componentName, GetDateTime(), "addUserReview typeof props.titleID", typeof props.titleID);
 
@@ -140,28 +140,28 @@ const AddUserReview = (props) => {
     };
 
     // * If the user doesn't enter a date read, then it isn't added/updated
-    if (txtDateRead !== null && txtDateRead !== undefined) {
+    if (IsEmpty(txtDateRead) === false) {
       if (txtDateRead.trim().length !== 0) {
         Object.assign(userReviewObject, { dateRead: txtDateRead.trim() });
       };
     };
 
     // * If the user doesn't enter a ranking, then it isn't added/updated
-    if (txtRanking !== null && txtRanking !== undefined) {
+    if (IsEmpty(txtRanking) === false) {
       if (txtRanking.trim().length !== 0) {
         Object.assign(userReviewObject, { ranking: txtRanking.trim() });
       };
     };
 
     // * If the user doesn't enter a short review, then it isn't added/updated
-    if (txtShortReview !== null && txtShortReview !== undefined) {
+    if (IsEmpty(txtShortReview) === false) {
       if (txtShortReview.trim().length !== 0) {
         Object.assign(userReviewObject, { shortReview: txtShortReview.trim() });
       };
     };
 
     // * If the user doesn't enter a long review, then it isn't added/updated
-    if (txtLongReview !== null && txtLongReview !== undefined) {
+    if (IsEmpty(txtLongReview) === false) {
       if (txtLongReview.trim().length !== 0) {
         Object.assign(userReviewObject, { longReview: txtLongReview.trim() });
       };
@@ -172,7 +172,7 @@ const AddUserReview = (props) => {
     let url = baseURL + "userreviews/";
     // console.log(componentName, GetDateTime(), "addUserReview url", url);
 
-    if (sessionToken !== undefined && sessionToken !== null) {
+    if (IsEmpty(sessionToken) === false) {
 
       fetch(url, {
         method: "POST",
@@ -226,6 +226,7 @@ const AddUserReview = (props) => {
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
+            // TODO: Fix the structure of this Redux call.
             // ? Would still work if the createDate and updateDate were left out?
             dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createDate: data.createDate, updateDate: data.updateDate, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
             // ? Add to local storage also?
@@ -234,6 +235,8 @@ const AddUserReview = (props) => {
             let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID);
 
             // console.log(componentName, GetDateTime(), "addUserReview userReviews", userReviews);
+
+            // TODO: Fix the structure of this Redux call.
             // * Get all reviews for the title
             // ? Get the latest from state?
             // ? Update the state user review array?
@@ -283,7 +286,7 @@ const AddUserReview = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviewRecordAdded", userReviewRecordAdded);
-    if (userReviewRecordAdded !== undefined && userReviewRecordAdded !== null && userReviewRecordAdded === true) {
+    if (IsEmpty(userReviewRecordAdded) === false && userReviewRecordAdded === true) {
       clearMessages();
       setUserReviewRecordAdded(null);
       // setModal(false);
@@ -295,7 +298,7 @@ const AddUserReview = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
-    if (sessionToken === undefined || sessionToken === null || sessionToken === "") {
+    if (IsEmpty(sessionToken) === true) {
       // return <Redirect to="/" />;
       setModal(false);
     };
@@ -309,9 +312,9 @@ const AddUserReview = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Review</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && (IsEmpty(userReviewItem) === true) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Review</Button></span> : null}
 
-      {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && (IsEmpty(userReviewItem) === true) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Add Review</ModalHeader>

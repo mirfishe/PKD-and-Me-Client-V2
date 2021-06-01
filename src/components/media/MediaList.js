@@ -32,7 +32,7 @@ const MediaList = (props) => {
     setMediaResultsFound(null);
     setMediaList([]);
 
-    if (baseURL !== undefined && baseURL !== "") {
+    if (IsEmpty(baseURL) === false) {
 
       let url = baseURL + "media";
 
@@ -76,8 +76,8 @@ const MediaList = (props) => {
   return (
     <Container className="mt-4">
       <Row className="text-center">
-        {mediaMessage !== undefined && mediaMessage !== null && mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
-        {errMediaMessage !== undefined && errMediaMessage !== null && errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+        {IsEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
+        {IsEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
       </Row>
       {mediaResultsFound !== null ?
         <Row>

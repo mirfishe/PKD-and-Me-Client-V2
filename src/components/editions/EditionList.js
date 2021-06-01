@@ -32,7 +32,7 @@ const EditionList = (props) => {
     setEditionResultsFound(null);
     setEditionList([]);
 
-    if (baseURL !== undefined && baseURL !== "") {
+    if (IsEmpty(baseURL) === false) {
 
       let url = baseURL + "editions";
 
@@ -76,8 +76,8 @@ const EditionList = (props) => {
   return (
     <Container className="mt-4">
       <Row className="text-center">
-        {editionMessage !== undefined && editionMessage !== null && editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
-        {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+        {IsEmpty(editionMessage) === false ? <Alert color="info">{editionMessage}</Alert> : null}
+        {IsEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
       </Row>
       {editionResultsFound !== null ?
         <Row>

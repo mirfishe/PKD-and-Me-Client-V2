@@ -94,7 +94,7 @@ const AddTitleSuggestion = (props) => {
     let emailAddressValidated = false;
     let formValidated = false;
 
-    if (txtTitleName !== undefined && txtTitleName !== null) {
+    if (IsEmpty(txtTitleName) === false) {
       if (txtTitleName.trim().length > 0) {
         titleNameValidated = true;
         setErrTitleName("");
@@ -108,7 +108,7 @@ const AddTitleSuggestion = (props) => {
       };
     };
 
-    if (txtShortDescription !== undefined && txtShortDescription !== null) {
+    if (IsEmpty(txtShortDescription) === false) {
       if (txtShortDescription.trim().length > 0) {
         shortDescriptionValidated = true;
         setErrShortDescription("");
@@ -122,7 +122,7 @@ const AddTitleSuggestion = (props) => {
       };
     };
 
-    if (txtEmailAddress !== undefined && txtEmailAddress !== null) {
+    if (IsEmpty(txtEmailAddress) === false) {
       if (txtEmailAddress.trim().length > 0 || requireUserLogin === false) {
         emailAddressValidated = true;
         setErrEmailAddress("");
@@ -152,7 +152,7 @@ const AddTitleSuggestion = (props) => {
 
     if (formValidated === true) {
 
-      if (txtTitleName !== undefined && txtTitleName !== null && txtTitleName !== undefined && txtTitleName !== null && txtEmailAddress !== undefined && txtEmailAddress !== null) {
+      if (IsEmpty(txtTitleName) === false && IsEmpty(txtShortDescription) === false && IsEmpty(txtEmailAddress) === false) {
 
         let titleSuggestionObject = {
           titleName: txtTitleName.trim(),
@@ -164,28 +164,28 @@ const AddTitleSuggestion = (props) => {
         };
 
         // * If the user doesn't enter an author first name, then it isn't added/updated
-        if (txtAuthorFirstName !== undefined && txtAuthorFirstName !== null) {
+        if (IsEmpty(txtAuthorFirstName) === false) {
           if (txtAuthorFirstName.trim().length !== 0) {
             Object.assign(titleSuggestionObject, { authorFirstName: txtAuthorFirstName.trim() });
           };
         };
 
         // * If the user doesn't enter an author last name, then it isn't added/updated
-        if (txtAuthorLastName !== undefined && txtAuthorLastName !== null) {
+        if (IsEmpty(txtAuthorLastName) === false) {
           if (txtAuthorLastName.trim().length !== 0) {
             Object.assign(titleSuggestionObject, { authorLastName: txtAuthorLastName.trim() });
           };
         };
 
         // * If the user doesn't enter a publication date, then it isn't added/updated
-        if (txtPublicationDate !== undefined && txtPublicationDate !== null) {
+        if (IsEmpty(txtPublicationDate) === false) {
           if (txtPublicationDate.trim().length !== 0) {
             Object.assign(titleSuggestionObject, { publicationDate: txtPublicationDate.trim() });
           };
         };
 
         // * If the user doesn't enter a title URL, then it isn't added/updated
-        if (txtTitleURL !== undefined && txtTitleURL !== null) {
+        if (IsEmpty(txtTitleURL) === false) {
           if (txtTitleURL.trim().length !== 0) {
             Object.assign(titleSuggestionObject, { titleURL: txtTitleURL.trim() });
           };
@@ -196,12 +196,12 @@ const AddTitleSuggestion = (props) => {
         let url = baseURL + "titles/";
         // console.log(componentName, GetDateTime(), "addTitleSuggestion url", url);
 
-        if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
+        if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
 
           let headerObject = new Headers({ "Content-Type": "application/json" });
 
           // * If the user isn't logged in and user login isn't required, then it isn't added to the Authorization header
-          if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
+          if (IsEmpty(sessionToken) === false) {
             Object.assign(headerObject, { "Authorization": sessionToken });
           };
 
@@ -267,7 +267,7 @@ const AddTitleSuggestion = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleSuggestionRecordAdded", titleSuggestionRecordAdded);
-    if (titleSuggestionRecordAdded !== undefined && titleSuggestionRecordAdded !== null && titleSuggestionRecordAdded === true) {
+    if (IsEmpty(titleSuggestionRecordAdded) === false) {
       clearMessages();
       setErrTitleName("");
       setErrShortDescription("");
@@ -282,7 +282,7 @@ const AddTitleSuggestion = (props) => {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
-    if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
+    if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
       // return <Redirect to="/" />;
       setModal(false);
     };
@@ -296,9 +296,9 @@ const AddTitleSuggestion = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Title Suggestion</Button></span> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Title Suggestion</Button></span> : null}
 
-      {appAllowUserInteractions === true && ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Add Title Suggestion</ModalHeader>
@@ -312,7 +312,7 @@ const AddTitleSuggestion = (props) => {
 
               <Label for="txtTitleName">Title</Label>
               <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtTitleName(event.target.value); }} />
-              {errTitleName !== undefined && errTitleName !== null && errTitleName !== "" ? <Alert color="danger">{errTitleName}</Alert> : null}
+              {IsEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
@@ -337,7 +337,7 @@ const AddTitleSuggestion = (props) => {
 
               <Label for="txtShortDescription">Description Of Why The Title Should Be Added</Label>
               <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => {/*console.log(event.target.value);*/ setTxtShortDescription(event.target.value); }} />
-              {errShortDescription !== undefined && errShortDescription !== null && errShortDescription !== "" ? <Alert color="danger">{errShortDescription}</Alert> : null}
+              {IsEmpty(errShortDescription) === false ? <Alert color="danger">{errShortDescription}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
@@ -350,7 +350,7 @@ const AddTitleSuggestion = (props) => {
 
               <Label for="txtEmailAddress">Email Address</Label>
               <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmailAddress(event.target.value); }} />
-              {errEmailAddress !== undefined && errEmailAddress !== null && errEmailAddress !== "" ? <Alert color="danger">{errEmailAddress}</Alert> : null}
+              {IsEmpty(errEmailAddress) === false ? <Alert color="danger">{errEmailAddress}</Alert> : null}
 
             </FormGroup>
 

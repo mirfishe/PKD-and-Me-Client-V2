@@ -78,8 +78,16 @@ const titlesSlice = createSlice({
             state.arrayTitles[titleItem.titleItemIndex].publicationDate = titleItem.publicationDate;
           };
 
+          if (titleItem.hasOwnProperty("titlePublicationDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].titlePublicationDate = titleItem.titlePublicationDate;
+          };
+
           if (titleItem.hasOwnProperty("imageName")) {
             state.arrayTitles[titleItem.titleItemIndex].imageName = titleItem.imageName;
+          };
+
+          if (titleItem.hasOwnProperty("titleImageName")) {
+            state.arrayTitles[titleItem.titleItemIndex].titleImageName = titleItem.titleImageName;
           };
 
           if (titleItem.hasOwnProperty("categoryID")) {
@@ -98,34 +106,58 @@ const titlesSlice = createSlice({
             state.arrayTitles[titleItem.titleItemIndex].active = titleItem.active;
           };
 
+          if (titleItem.hasOwnProperty("titleActive")) {
+            state.arrayTitles[titleItem.titleItemIndex].titleActive = titleItem.titleActive;
+          };
+
+          if (titleItem.hasOwnProperty("createDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].createDate = titleItem.createDate;
+          };
+
+          if (titleItem.hasOwnProperty("titleCreateDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].titleCreateDate = titleItem.titleCreateDate;
+          };
+
           if (titleItem.hasOwnProperty("updateDate")) {
             state.arrayTitles[titleItem.titleItemIndex].updateDate = titleItem.updateDate;
           };
 
-          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-          if (titleItem.hasOwnProperty("category")) {
-
-            if (titleItem.category.hasOwnProperty("categoryID")) {
-              state.arrayTitles[titleItem.titleItemIndex].category.categoryID = titleItem.category.categoryID;
-            };
-
-            if (titleItem.category.hasOwnProperty("category")) {
-              state.arrayTitles[titleItem.titleItemIndex].category.category = titleItem.category.category;
-            };
-
-            if (titleItem.category.hasOwnProperty("sortID")) {
-              state.arrayTitles[titleItem.titleItemIndex].category.sortID = titleItem.category.sortID;
-            };
-
-            if (titleItem.category.hasOwnProperty("active")) {
-              state.arrayTitles[titleItem.titleItemIndex].category.active = titleItem.category.active;
-            };
-
-            if (titleItem.category.hasOwnProperty("updateDate")) {
-              state.arrayTitles[titleItem.titleItemIndex].category.updateDate = titleItem.category.updateDate;
-            };
-
+          if (titleItem.hasOwnProperty("titleUpdatedDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].titleUpdatedDate = titleItem.titleUpdatedDate;
           };
+
+          // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
+          // if (titleItem.hasOwnProperty("category")) {
+
+          //   if (titleItem.category.hasOwnProperty("categoryID")) {
+          //     state.arrayTitles[titleItem.titleItemIndex].category.categoryID = titleItem.category.categoryID;
+          //   };
+
+          if (titleItem.hasOwnProperty("category")) {
+            state.arrayTitles[titleItem.titleItemIndex].category = titleItem.category;
+          };
+
+          if (titleItem.hasOwnProperty("sortID")) {
+            state.arrayTitles[titleItem.titleItemIndex].sortID = titleItem.sortID;
+          };
+
+          if (titleItem.hasOwnProperty("categorySortID")) {
+            state.arrayTitles[titleItem.titleItemIndex].categorySortID = titleItem.categorySortID;
+          };
+
+          if (titleItem.hasOwnProperty("categoryActive")) {
+            state.arrayTitles[titleItem.titleItemIndex].categoryActive = titleItem.categoryActive;
+          };
+
+          if (titleItem.hasOwnProperty("categoryCreateDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].categoryCreateDate = titleItem.categoryCreateDate;
+          };
+
+          if (titleItem.hasOwnProperty("categoryUpdatedDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].categoryUpdatedDate = titleItem.categoryUpdatedDate;
+          };
+
+          // };
 
         };
 

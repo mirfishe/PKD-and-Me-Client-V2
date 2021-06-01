@@ -106,18 +106,18 @@ const userSlice = createSlice({
           let userReviewCreatedDate = null;
           let userReviewUpdateDate = null;
 
-          if (action.payload[i] !== undefined && action.payload[i] !== null) {
+          if (IsEmpty(action.payload[i]) === false) {
             userReviewID = action.payload[i].reviewID;
             userReviewUserID = action.payload[i].userID;
-            userReviewUpdatedBy = action.payload[i].userReviewsUpdatedBy;
+            userReviewUpdatedBy = action.payload[i].userReviewUpdatedBy;
             userReviewRead = action.payload[i].read;
             userReviewDateRead = action.payload[i].dateRead;
-            userReviewActive = action.payload[i].userReviewsActive;
-            userReviewCreatedDate = action.payload[i].userReviewsCreatedDate;
-            userReviewUpdateDate = action.payload[i].userReviewsUpdateDate;
+            userReviewActive = action.payload[i].userReviewActive;
+            userReviewCreatedDate = action.payload[i].userReviewCreatedDate;
+            userReviewUpdateDate = action.payload[i].userReviewUpdateDate;
           };
 
-          state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].titlesPublicationDate, titlesImageName: action.payload[i].imageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].titlesActive, createDate: action.payload[i].titlesCreatedDate, updateDate: action.payload[i].titlesUpdateDate, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedDate: userReviewCreatedDate, userReviewUpdateDate: userReviewUpdateDate });
+          state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].titlePublicationDate, titleImageName: action.payload[i].imageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].titleActive, createDate: action.payload[i].titleCreatedDate, updateDate: action.payload[i].titleUpdateDate, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedDate: userReviewCreatedDate, userReviewUpdateDate: userReviewUpdateDate });
         };
 
         state.checklistLoaded = true;

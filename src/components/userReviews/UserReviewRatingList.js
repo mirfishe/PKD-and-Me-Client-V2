@@ -96,8 +96,8 @@ function UserReviewRatingList() {
   return (
     <Container className="mt-4">
       <Row className="text-center">
-        {userReviewRatingMessage !== undefined && userReviewRatingMessage !== null && userReviewRatingMessage !== "" ? <Alert color="info">{userReviewRatingMessage}</Alert> : null}
-        {errUserReviewRatingMessage !== undefined && errUserReviewRatingMessage !== null && errUserReviewRatingMessage !== "" ? <Alert color="danger">{errUserReviewRatingMessage}</Alert> : null}
+        {IsEmpty(userReviewRatingMessage) === false ? <Alert color="info">{userReviewRatingMessage}</Alert> : null}
+        {IsEmpty(errUserReviewRatingMessage) === false ? <Alert color="danger">{errUserReviewRatingMessage}</Alert> : null}
       </Row>
       {userReviewRatingResultsFound !== null ?
         <Row>

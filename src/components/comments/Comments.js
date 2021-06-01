@@ -45,7 +45,7 @@ const Comments = (props) => {
       </Row>
       <Row>
         <Col className="text-center" xs="12">
-          {errCommentMessage !== undefined && errCommentMessage !== null && errCommentMessage !== "" ? <Alert color="danger">{errCommentMessage}</Alert> : null}
+          {IsEmpty(errCommentMessage) === false ? <Alert color="danger">{errCommentMessage}</Alert> : null}
         </Col>
       </Row>
       <Row>
@@ -56,14 +56,14 @@ const Comments = (props) => {
 
               <Row>
                 <Col xs="12">
-                  {comment.comment !== undefined && comment.comment !== null && comment.comment !== "" ? <p className="displayParagraphs">{comment.comment}</p> : null}
+                  {IsEmpty(comment.comment) === false ? <p className="displayParagraphs">{comment.comment}</p> : null}
                 </Col>
               </Row>
 
               <Row>
                 <Col xs="12">
                   <p>
-                    Submitted by {comment.user.firstName !== undefined && comment.user.firstName !== null ? comment.user.firstName : null} {comment.user.lastName !== undefined && comment.user.lastName !== null ? comment.user.lastName : null} {comment.emailAddress !== undefined && comment.emailAddress !== null ? comment.emailAddress : null} {comment.updateDate !== undefined && comment.updateDate !== null ? <small>on {DisplayDate(comment.updateDate)}</small> : null}
+                    Submitted by {IsEmpty(comment.firstName) === false ? comment.firstName : null} {IsEmpty(comment.lastName) === false ? comment.lastName : null} {IsEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {IsEmpty(comment.updateDate) === false ? <small>on {DisplayDate(comment.updateDate)}</small> : null}
                   </p>
                 </Col>
               </Row>

@@ -71,25 +71,25 @@ const Title = (props) => {
   if (!isNaN(titleParam)) {
     // ! This code no longer works with the current URL setup
     // * If titleParam is a number, then it's the titleID
-    document.title = titleList[0].title.titleName + " | " + appName + " | " + siteName;
-    titleNameBreadCrumb = titleList[0].title.titleName;
-    titleID = titleList[0].title.titleID;
-    titlePublicationDate = titleList[0].title.publicationDate;
-    // setTitleID(titleList[0].title.titleID);
-    // setTitlePublicationDate(titleList[0].title.publicationDate);
+    document.title = titleList[0].titleName + " | " + appName + " | " + siteName;
+    titleNameBreadCrumb = titleList[0].titleName;
+    titleID = titleList[0].titleID;
+    titlePublicationDate = titleList[0].publicationDate;
+    // setTitleID(titleList[0].titleID);
+    // setTitlePublicationDate(titleList[0].publicationDate);
 
     titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
 
     // editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
 
-  } else if (titleParam !== undefined && titleParam !== null) {
+  } else if (IsEmpty(titleParam) === false) {
     // * If titleParam is not a number, then it's the title name
     titleList = titleListState.filter(title => title.titleURL === titleParam);
     const title = titleListState.find(title => title.titleURL === titleParam);
     // console.log(componentName, GetDateTime(), "typeof title", typeof title);
     // console.log(componentName, GetDateTime(), "title", title);
 
-    if (title !== undefined && title !== null) {
+    if (IsEmpty(title) === false) {
       document.title = title.titleName + " | " + appName + " | " + siteName;
       titleNameBreadCrumb = title.titleName;
       titleID = title.titleID;
@@ -132,7 +132,7 @@ const Title = (props) => {
   //   editionList = [...editionList];
   // };
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     titleList = [...titleList];
     // editionList = [...editionList];
   } else {
@@ -159,7 +159,7 @@ const Title = (props) => {
 
   let userReviewItem = {};
 
-  if (userID !== undefined && userID !== null && !isNaN(userID)) {
+  if (IsEmpty(userID) === false && !isNaN(userID)) {
     userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
     userReviewItem = userReviewItem[0];
   };
@@ -179,7 +179,7 @@ const Title = (props) => {
   // let userReviewRatingItem = {};
   // // console.log(componentName, GetDateTime(), "userReviewRatingItem", userReviewRatingItem);
 
-  // if (titleID !== undefined && titleID !== null && !isNaN(titleID)) {
+  // if (IsEmpty(titleID) === false && !isNaN(titleID)) {
   //     userReviewRatingItem = userReviewsRatingsState.filter(userReview => userReview.titleID === titleID);
   //     userReviewRatingItem = userReviewRatingItem[0];
   // };
@@ -187,7 +187,7 @@ const Title = (props) => {
   // let overallTitleRatingCount = 0;
   // let overallTitleRating = 0;
 
-  // if (userReviewRatingItem !== undefined && userReviewRatingItem !== null) {
+  // if (IsEmpty(userReviewRatingItem) === false) {
   //     if (userReviewRatingItem.hasOwnProperty("userReviewAverage")) {
   //         overallTitleRating = userReviewRatingItem.userReviewAverage;
   //     };
@@ -215,7 +215,7 @@ const Title = (props) => {
 
   //     let url = baseURL + "userreviews/";
 
-  //     if (titleID !== null) {
+  //     if (IsEmpty(titleID) === false) {
   //         url = url + "rating/" + titleID;
 
   //         // console.log(componentName, GetDateTime(), "getTitleRating url", url);
@@ -294,7 +294,7 @@ const Title = (props) => {
   // useEffect(() => {
   //     // console.log(componentName, GetDateTime(), "useEffect titleID", titleID);
 
-  //     if (titleID !== undefined && titleID !== null && titleID !== "" && overallTitleRatingResultsFound === null) {
+  //     if (IsEmpty(titleID) === false && IsEmpty(overallTitleRatingResultsFound) === false) {
   //         getTitleRating();
   //     };
 
@@ -315,8 +315,8 @@ const Title = (props) => {
         <Col xs="12">
           <Breadcrumb className="breadcrumb mb-2">
             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
-            {titleList[0] !== undefined && titleList[0].category !== undefined && titleList[0].category.category !== undefined && isNaN(titleList[0].category.category) ?
-              <BreadcrumbItem><Link to={encodeURL(titleList[0].category.category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(titleList[0].category.category)); }}>{titleList[0].category.category}</Link></BreadcrumbItem>
+            {IsEmpty(titleList[0]) === false && IsEmpty(titleList[0].category) === false && isNaN(titleList[0].category) ?
+              <BreadcrumbItem><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></BreadcrumbItem>
               :
               <BreadcrumbItem><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
             }
@@ -326,7 +326,7 @@ const Title = (props) => {
       </Row>
       <Row>
         <Col className="text-center" xs="12">
-          {errTitleMessage !== undefined && errTitleMessage !== null && errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+          {IsEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
         </Col>
       </Row>
       {titleList.map((title) => {
@@ -345,13 +345,13 @@ const Title = (props) => {
               <Col xs="12">
                 <h4>{title.titleName}
 
-                  {title.publicationDate !== undefined && title.publicationDate !== null ? <span className="ml-2 smallerText"> ({DisplayYear(title.publicationDate)})</span> : null}
+                  {IsEmpty(title.publicationDate) === false ? <span className="ml-2 smallerText"> ({DisplayYear(title.publicationDate)})</span> : null}
 
-                  {/* {title.category.category !== null && title.category.category !== "" ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category.category)}>{title.category.category}</Link>
+                  {/* {IsEmpty(title.category) === false ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category)}>{title.category}</Link>
                             </span> : null} */}
-                  {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
-                  {admin !== undefined && admin !== null && admin === true ? <AddTitle displayButton={true} /> : null}
-                  {admin !== undefined && admin !== null && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                  {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
+                  {IsEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
+                  {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                 </h4>
               </Col>
             </Row>
@@ -364,30 +364,30 @@ const Title = (props) => {
 
             <Row className="mb-4">
               <Col xs="4">
-                {title.imageName !== undefined && title.imageName !== null && title.imageName !== "" ? <img src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon" />}
+                {IsEmpty(title.imageName) === false ? <img src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon" />}
               </Col>
               <Col xs="8">
 
-                {title.userReviewCount !== undefined && title.userReviewCount !== null && title.userReviewCount > 0 ?
+                {IsEmpty(title.userReviewCount) === false && title.userReviewCount > 0 ?
                   <React.Fragment>
                     <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} />
                     <p><small>out of {title.userReviewCount} review(s)</small></p>
                   </React.Fragment>
                   : null}
 
-                {userReviewItem !== undefined && userReviewItem !== null ?
+                {IsEmpty(userReviewItem) === false ?
                   <React.Fragment>
-                    {userReviewItem.read !== undefined && userReviewItem.read !== null && userReviewItem.read === true && (userReviewItem.dateRead === undefined || userReviewItem.dateRead === null || userReviewItem.dateRead === "") ? <p>Read</p> : null}
-                    {userReviewItem.dateRead !== undefined && userReviewItem.dateRead !== null && userReviewItem.dateRead !== "" ? <p>Read on {DisplayDate(userReviewItem.dateRead)}</p> : null}
+                    {IsEmpty(userReviewItem.read) === false && userReviewItem.read === true && (IsEmpty(userReviewItem.dateRead) === true) ? <p>Read</p> : null}
+                    {IsEmpty(userReviewItem.dateRead) === false && userReviewItem.dateRead !== "" ? <p>Read on {DisplayDate(userReviewItem.dateRead)}</p> : null}
                   </React.Fragment>
                   : null}
 
-                {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && (userReviewItem === undefined || userReviewItem === null) ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
-                {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && userReviewItem !== undefined && userReviewItem !== null ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
+                {IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
+                {IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
-                {title.shortDescription !== "" && title.shortDescription !== null ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
-                {title.urlPKDweb !== "" && title.urlPKDweb !== null ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
-                {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
+                {IsEmpty(title.shortDescription) === false ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
+                {IsEmpty(title.urlPKDweb) === false ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
+                {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
               </Col>
             </Row>
 
@@ -397,7 +397,7 @@ const Title = (props) => {
 
       {/* <Row className="my-4">
                 <Col className="text-center" xs="12">
-                {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+                {IsEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
                 {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
                 {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
                 </Col>
@@ -406,7 +406,7 @@ const Title = (props) => {
             <Row className="my-4">
                 <Col xs="12">
                     <h5 className="text-center">Find A Copy 
-                    {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={titleID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
+                    {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={titleID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
                     </h5>
                 </Col>
             </Row>
@@ -430,39 +430,39 @@ const Title = (props) => {
                         <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
                     </CardHeader>
                     <CardBody>
-                    {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
+                    {IsEmpty(edition.imageLinkLarge) === false ? 
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
+                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>
                     <CardFooter>
-                        {edition.publicationDate !== null ? <CardText>Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
+                        {IsEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
                     </CardFooter>
                     </Card> */}
 
       {/* <Card key={edition.editionID}>
-                    {activeString !== undefined && activeString !== null && activeString !== "" ?
+                    {IsEmpty(activeString) === false ?
                         <CardHeader className="cardHeader inactiveItem">
                             ({activeString})
                         </CardHeader>
                     : null}
                     <Row className="no-gutters">
                         <Col className="col-md-6">
-                        {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
+                        {IsEmpty(edition.imageLinkLarge) === false ? 
                             <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
                         :
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
+                            {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
                             </a>
                         }
                         </Col>
                         <Col className="col-md-6">
                             <CardBody>
-                                {edition.publicationDate !== null ? <CardText className="smallerText">Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
-                                {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
+                                {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
+                                {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
                             </CardBody>
                         </Col>
                     </Row>

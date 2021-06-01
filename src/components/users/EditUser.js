@@ -85,7 +85,7 @@ const EditUser = (props) => {
     let passwordValidated = false;
     let formValidated = false;
 
-    if (txtFirstName !== undefined && txtFirstName !== null) {
+    if (IsEmpty(txtFirstName) === false) {
       if (txtFirstName.trim().length > 0) {
         firstNameValidated = true;
         setErrFirstName("");
@@ -99,7 +99,7 @@ const EditUser = (props) => {
       };
     };
 
-    if (txtLastName !== undefined && txtLastName !== null) {
+    if (IsEmpty(txtLastName) === false) {
       if (txtLastName.trim().length > 0) {
         lastNameValidated = true;
         setErrLastName("");
@@ -113,7 +113,7 @@ const EditUser = (props) => {
       };
     };
 
-    if (txtEmail !== undefined && txtEmail !== null) {
+    if (IsEmpty(txtEmail) === false) {
       if (txtEmail.trim().match(emailRegExp) && txtEmail.trim().length > 0) {
         // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
         emailValidated = true;
@@ -129,7 +129,7 @@ const EditUser = (props) => {
     };
 
     // * If the user doesn't enter a password, then it isn't updated
-    if (txtPassword !== undefined && txtPassword !== null) {
+    if (IsEmpty(txtPassword) === false) {
       if (txtPassword.trim().length !== 0) {
         if (txtPassword.trim().length > 4) {
           passwordValidated = true;
@@ -169,7 +169,7 @@ const EditUser = (props) => {
 
     if (formValidated === true) {
 
-      if (txtFirstName !== undefined && txtFirstName !== null && txtLastName !== undefined && txtLastName !== null && txtEmail !== undefined && txtEmail !== null && txtPassword !== undefined && txtPassword !== null) {
+      if (IsEmpty(txtFirstName) === false && IsEmpty(txtLastName) === false && IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
         let userObject = {
           firstName: txtFirstName.trim(),
           lastName: txtLastName.trim(),
@@ -180,7 +180,7 @@ const EditUser = (props) => {
         };
 
         // * If the user doesn't enter a password, then it isn't updated
-        if (txtPassword !== undefined && txtPassword !== null) {
+        if (IsEmpty(txtPassword) === false) {
           if (txtPassword.trim().length !== 0) {
             Object.assign(userObject, { password: txtPassword.trim() });
           };
@@ -264,7 +264,7 @@ const EditUser = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userRecordUpdated", userRecordUpdated);
-    if (userRecordUpdated !== undefined && userRecordUpdated !== null && userRecordUpdated !== false) {
+    if (IsEmpty(userRecordUpdated) === false) {
       clearMessages();
       setErrFirstName("");
       setErrLastName("");
@@ -279,7 +279,7 @@ const EditUser = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
-    if (userLoaded !== undefined && userLoaded !== null && userLoaded === false) {
+    if (IsEmpty(userLoaded) === false && userLoaded === false) {
       clearMessages();
       setErrEmail("");
       setErrPassword("");
@@ -294,7 +294,7 @@ const EditUser = (props) => {
 
   return (
     <React.Fragment>
-      {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
+      {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update User</Button> : null}
       <Modal isOpen={modal} toggle={toggle} size="md">
         <ModalHeader toggle={toggle}>Update User</ModalHeader>
         <ModalBody>

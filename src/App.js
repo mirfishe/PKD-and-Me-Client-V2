@@ -182,7 +182,7 @@ function App() {
 
     let url = baseURL + "users/";
 
-    if (token !== undefined && token !== null && token !== "") {
+    if (IsEmpty(token) === false) {
 
       fetch(url, {
         method: "GET",
@@ -257,7 +257,7 @@ function App() {
 
     let url = baseURL + "titles/checklist";
 
-    if (token !== undefined && token !== null && token !== "") {
+    if (IsEmpty(token) === false) {
 
       fetch(url, {
         method: "GET",
@@ -309,7 +309,7 @@ function App() {
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect");
 
-    if (appAllowUserInteractions === true && localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null && localStorage.getItem("token") !== "") {
+    if (appAllowUserInteractions === true && IsEmpty(localStorage.getItem("token")) === false) {
 
       dispatch(setSessionToken(localStorage.getItem("token")));
       // console.log(componentName, GetDateTime(), "componentDidMount localStorage token", localStorage.getItem("token"));
@@ -356,7 +356,7 @@ function App() {
     // console.log(componentName, GetDateTime(), "useEffect pageURL", pageURL);
     // console.log(componentName, GetDateTime(), "useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
 
-    if (pageURL !== undefined && pageURL !== "") {
+    if (IsEmpty(pageURL) === false) {
 
       let linkArrayItem = {};
 
@@ -402,22 +402,22 @@ function App() {
               <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
             </NavItem>
             : null}
-          {(showAbout || showAllMenuItems) && admin !== undefined && admin !== null && admin === true ?
+          {(showAbout || showAllMenuItems) && IsEmpty(admin) === false && admin === true ?
             <NavItem className="mx-3">
               <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
             </NavItem>
             : null}
-          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ?
+          {appAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
             <NavItem className="mx-3">
               <Login />
             </NavItem>
             : null}
-          {appAllowUserInteractions === true && (sessionToken === undefined || sessionToken === null || sessionToken === "") ?
+          {appAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
             <NavItem className="mx-3">
               <Register />
             </NavItem>
             : null}
-          {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true ?
+          {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
             <NavItem className="mx-3">
               <EditUser />
             </NavItem>
@@ -428,14 +428,14 @@ function App() {
           <NavItem className="mx-3">
             <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
-          {appAllowUserInteractions === true && userLoaded !== undefined && userLoaded !== null && userLoaded === true && firstName !== undefined && firstName !== null && firstName !== "" && lastName !== undefined && lastName !== null && lastName !== "" ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
+          {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true && IsEmpty(firstName) === false && IsEmpty(lastName) === false ? <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
             : null}
-          {appAllowUserInteractions === true && checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true ?
+          {appAllowUserInteractions === true && IsEmpty(checklistLoaded) === false && checklistLoaded === true ?
             <NavItem className="mx-3">
               <Checklist displayButton={true} />
             </NavItem>
             : null}
-          {appAllowUserInteractions === true && sessionToken !== undefined && sessionToken !== null && sessionToken !== "" ?
+          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
             <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
             : null}
         </Nav>
@@ -505,17 +505,17 @@ function App() {
                 <Link to="/urlList"><NavbarText>URL List</NavbarText></Link>
               </NavItem>
               : null} */}
-            {showAddCategory && admin !== undefined && admin !== null && admin === true ?
+            {showAddCategory && IsEmpty(admin) === false && admin === true ?
               <NavItem className="mx-3">
                 <AddCategory displayButton={true} />
               </NavItem>
               : null}
-            {showAddMedia && admin !== undefined && admin !== null && admin === true ?
+            {showAddMedia && IsEmpty(admin) === false && admin === true ?
               <NavItem className="mx-3">
                 <AddMedia displayButton={true} />
               </NavItem>
               : null}
-            {showAddTitle && admin !== undefined && admin !== null && admin === true ?
+            {showAddTitle && IsEmpty(admin) === false && admin === true ?
               <NavItem className="mx-3">
                 <AddTitle displayButton={true} />
               </NavItem>
@@ -530,10 +530,10 @@ function App() {
             {(showUserPhysicalOnly === true || showUserElectronicOnly === true) && (userPhysicalOnly === true || userElectronicOnly === true) ?
               <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(false)); }}>All Editions</Button></NavItem>
               : null}
-            {showUserPhysicalOnly === true && userPhysicalOnly !== undefined && userPhysicalOnly !== null && userPhysicalOnly === false ?
+            {showUserPhysicalOnly === true && IsEmpty(userPhysicalOnly) === false && userPhysicalOnly === false ?
               <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(true)); dispatch(setUserElectronicOnly(false)); }}>Only Physical Editions</Button></NavItem>
               : null}
-            {showUserElectronicOnly === true && userElectronicOnly !== undefined && userElectronicOnly !== null && userElectronicOnly === false ?
+            {showUserElectronicOnly === true && IsEmpty(userElectronicOnly) === false && userElectronicOnly === false ?
               <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(true)); }}>Only Electronic Editions</Button></NavItem>
               : null}
           </Nav>
@@ -554,11 +554,11 @@ function App() {
           <Col xs="10">
 
             <Row className="text-center">
-              {/* {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
+              {/* {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-              {checklistMessage !== undefined && checklistMessage !== null && checklistMessage !== "" ? <Alert color="info">{checklistMessage}</Alert> : null}
-              {errChecklistMessage !== undefined && errChecklistMessage !== null && errChecklistMessage !== "" ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
+              {IsEmpty(checklistMessage) === false ? <Alert color="info">{checklistMessage}</Alert> : null}
+              {IsEmpty(errChecklistMessage) === false ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
               <LoadAppSettings />
               <LoadBibliographyData />
               <LoadUserReviews />
@@ -606,9 +606,9 @@ function App() {
               {/* <Route exact path="/editions/:media" component={Editions} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. */}
-              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "categories" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
-              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "titles" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
-              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "categories" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "titles" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
 
             </Switch>
           </Col>

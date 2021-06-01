@@ -69,7 +69,7 @@ const AddMedia = (props) => {
     let mediaValidated = false;
     let formValidated = false;
 
-    if (txtMedia !== undefined && txtMedia !== null) {
+    if (IsEmpty(txtMedia) === false) {
       if (txtMedia.trim().length > 0) {
         mediaValidated = true;
         setErrMedia("");
@@ -98,7 +98,7 @@ const AddMedia = (props) => {
 
     if (formValidated === true) {
 
-      if (txtMedia !== undefined && txtMedia !== null) {
+      if (IsEmpty(txtMedia) === false) {
 
         let mediaObject = {
           media: txtMedia.trim(),
@@ -110,7 +110,7 @@ const AddMedia = (props) => {
         let url = baseURL + "media/";
         // console.log(componentName, GetDateTime(), "addMedia url", url);
 
-        if (sessionToken !== undefined && sessionToken !== null) {
+        if (IsEmpty(sessionToken) === false) {
 
           fetch(url, {
             method: "POST",
@@ -177,7 +177,7 @@ const AddMedia = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect mediaRecordAdded", mediaRecordAdded);
-    if (mediaRecordAdded !== undefined && mediaRecordAdded !== null && mediaRecordAdded === true) {
+    if (IsEmpty(mediaRecordAdded) === false && mediaRecordAdded === true) {
       clearMessages();
       setMediaRecordAdded(null);
       // setModal(false);
@@ -203,9 +203,9 @@ const AddMedia = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
 
-      {appAllowUserInteractions === true && admin !== undefined && admin !== null && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="md">
         <ModalHeader toggle={toggle}>Add Media</ModalHeader>
@@ -219,7 +219,7 @@ const AddMedia = (props) => {
 
               <Label for="txtMedia">Media</Label>
               <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => {/*console.log(event.target.value);*/ setTxtMedia(event.target.value); }} />
-              {errMedia !== undefined && errMedia !== null && errMedia !== "" ? <Alert color="danger">{errMedia}</Alert> : null}
+              {IsEmpty(errMedia) === false ? <Alert color="danger">{errMedia}</Alert> : null}
 
             </FormGroup>
             <FormGroup className="ml-4">

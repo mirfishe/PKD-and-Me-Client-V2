@@ -9,7 +9,7 @@ export const encodeURL = (titleName) => {
 
   let newTitleName = titleName;
 
-  if (titleName !== undefined) {
+  if (IsEmpty(titleName) === false) {
 
     // Changes the - to |
     newTitleName = newTitleName.replaceAll("-", "|");
@@ -32,7 +32,7 @@ export const decodeURL = (titleName) => {
 
   let newTitleName = titleName;
 
-  if (titleName !== undefined) {
+  if (IsEmpty(titleName) === false) {
 
     // Changes it back from a safe URL
     newTitleName = decodeURIComponent(newTitleName);
@@ -56,7 +56,7 @@ export const decodeURL = (titleName) => {
 
 //     let newText = text;
 
-//     if (newText !== undefined) {
+//     if (IsEmpty(newText) === false) {
 
 //         // newText = "<p>" + newText;
 
@@ -80,7 +80,7 @@ export const removeOnePixelImage = (text, ASIN) => {
 
   let newText = text;
 
-  if (newText !== undefined && newText !== null && newText !== "") {
+  if (IsEmpty(newText) === false) {
 
     // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
     // * This is not working.
@@ -120,7 +120,7 @@ export const setLocalImagePath = (text) => {
 
   let newText = text;
 
-  if (newText !== undefined && newText !== null && newText !== "") {
+  if (IsEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images
     if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
@@ -145,7 +145,7 @@ export const setLocalPath = (text) => {
 
   let newText = text;
 
-  if (newText !== undefined && newText !== null && newText !== "") {
+  if (IsEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images
     if (AppSettings.profileType === "philipdick") {
@@ -169,7 +169,7 @@ export const createImageName = (titleName) => {
 
   let newImageName = "";
 
-  if (titleName !== undefined && titleName !== null && titleName !== "") {
+  if (IsEmpty(titleName) === false) {
     // * Capitalize the first letter of every word
     newImageName = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
     // * I'm sure there's a more elegant way to do this
@@ -214,7 +214,7 @@ export const createTitleURL = (titleName) => {
 
   let newTitleURL = "";
 
-  if (titleName !== undefined && titleName !== null && titleName !== "") {
+  if (IsEmpty(titleName) === false) {
     // * Capitalize the first letter of every word
     newTitleURL = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
     // I'm sure there's a more elegant way to do this
@@ -266,7 +266,7 @@ export const getASIN = (textLinkFull) => {
 
   // select substring("textLinkFull" from position('/dp/' in "textLinkFull") + 4 for 10) from editions
 
-  if (textLinkFull !== undefined && textLinkFull !== null && textLinkFull !== "") {
+  if (IsEmpty(textLinkFull) === false) {
 
     // console.log(componentName, GetDateTime(), GetDateTime(), "getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
     // console.log(componentName, GetDateTime(), GetDateTime(), "getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));

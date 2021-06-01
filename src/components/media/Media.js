@@ -39,7 +39,7 @@ const Media = (props) => {
     // mediaList = mediaListState.filter(media => media.active === true);
   };
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     mediaList = [...mediaList];
   } else {
     mediaList = mediaList.filter(media => media.active === true);
@@ -80,19 +80,19 @@ const Media = (props) => {
               <NavItem key={media.mediaID} className="mt-2 pl-3">
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}
                 {/* <Link to={`/editions/${media.mediaID}`}>{media.mediaID}</Link>
-                <Link to={`/editions/${media.media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</Link>
+                <Link to={`/editions/${media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</Link>
                 <Link to={"/editions/" + media.mediaID}>{media.mediaID}</Link> */}
                 {/* <Link to={"/editions/" + encodeURL(media.media)}>{media.media}</Link> */}
                 {/* <Link to={encodeURL(media.media)}>{media.media}</Link> */}
                 <Link to={encodeURL(media.media)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(media.media)); }}>{media.media}
-                  {activeString !== undefined && activeString !== null && activeString !== "" ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
+                  {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                 </Link>
               </NavItem>
             );
           })}
         </Nav>
       </Collapse>
-      {admin !== undefined && admin !== null && admin === true ? <AddMedia displayButton={true} /> : null}
+      {IsEmpty(admin) === false && admin === true ? <AddMedia displayButton={true} /> : null}
     </React.Fragment>
   );
 

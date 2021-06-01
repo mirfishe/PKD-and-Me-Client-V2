@@ -66,8 +66,16 @@ const editionsSlice = createSlice({
             state.arrayEditions[editionItem.editionItemIndex].publicationDate = editionItem.publicationDate;
           };
 
+          if (editionItem.hasOwnProperty("editionPublicationDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].editionPublicationDate = editionItem.editionPublicationDate;
+          };
+
           if (editionItem.hasOwnProperty("imageName")) {
             state.arrayEditions[editionItem.editionItemIndex].imageName = editionItem.imageName;
+          };
+
+          if (editionItem.hasOwnProperty("editionImageName")) {
+            state.arrayEditions[editionItem.editionItemIndex].editionImageName = editionItem.editionImageName;
           };
 
           if (editionItem.hasOwnProperty("ASIN")) {
@@ -102,96 +110,108 @@ const editionsSlice = createSlice({
             state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
           };
 
+          if (editionItem.hasOwnProperty("editionActive")) {
+            state.arrayEditions[editionItem.editionItemIndex].editionActive = editionItem.editionActive;
+          };
+
           if (editionItem.hasOwnProperty("updateDate")) {
             state.arrayEditions[editionItem.editionItemIndex].updateDate = editionItem.updateDate;
           };
 
-          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-          if (editionItem.hasOwnProperty("medium")) {
-            // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
-
-            if (editionItem.medium.hasOwnProperty("mediaID")) {
-              state.arrayEditions[editionItem.editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
-            };
-
-            if (editionItem.medium.hasOwnProperty("media")) {
-              state.arrayEditions[editionItem.editionItemIndex].medium.media = editionItem.medium.media;
-            };
-
-            if (editionItem.medium.hasOwnProperty("electronic")) {
-              state.arrayEditions[editionItem.editionItemIndex].medium.electronic = editionItem.medium.electronic;
-            };
-
-            if (editionItem.medium.hasOwnProperty("sortID")) {
-              state.arrayEditions[editionItem.editionItemIndex].medium.sortID = editionItem.medium.sortID;
-            };
-
-            if (editionItem.medium.hasOwnProperty("active")) {
-              state.arrayEditions[editionItem.editionItemIndex].medium.active = editionItem.medium.active;
-            };
-
-            if (editionItem.medium.hasOwnProperty("updateDate")) {
-              state.arrayEditions[editionItem.editionItemIndex].medium.updateDate = editionItem.medium.updateDate;
-            };
-
+          if (editionItem.hasOwnProperty("editionUpdatedDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].editionUpdatedDate = editionItem.editionUpdatedDate;
           };
 
-          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-          if (editionItem.hasOwnProperty("title")) {
+          // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
+          // if (editionItem.hasOwnProperty("medium")) {
+          // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
 
-            if (editionItem.title.hasOwnProperty("titleID")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.titleID = editionItem.title.titleID;
-            };
+          // if (editionItem.medium.hasOwnProperty("mediaID")) {
+          //   state.arrayEditions[editionItem.editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
+          // };
 
-            if (editionItem.title.hasOwnProperty("titleName")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.titleName = editionItem.title.titleName;
-            };
-
-            if (editionItem.title.hasOwnProperty("titleSort")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.titleSort = editionItem.title.titleSort;
-            };
-
-            if (editionItem.title.hasOwnProperty("titleURL")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.titleURL = editionItem.title.titleURL;
-            };
-
-            if (editionItem.title.hasOwnProperty("authorFirstName")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.authorFirstName = editionItem.title.authorFirstName;
-            };
-
-            if (editionItem.title.hasOwnProperty("authorLastName")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.authorLastName = editionItem.title.authorLastName;
-            };
-
-            if (editionItem.title.hasOwnProperty("publicationDate")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.publicationDate = editionItem.title.publicationDate;
-            };
-
-            if (editionItem.title.hasOwnProperty("imageName")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.imageName = editionItem.title.imageName;
-            };
-
-            if (editionItem.title.hasOwnProperty("categoryID")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.categoryID = editionItem.title.categoryID;
-            };
-
-            if (editionItem.title.hasOwnProperty("shortDescription")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.shortDescription = editionItem.title.shortDescription;
-            };
-
-            if (editionItem.title.hasOwnProperty("urlPKDweb")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.urlPKDweb = editionItem.title.urlPKDweb;
-            };
-
-            if (editionItem.title.hasOwnProperty("active")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.active = editionItem.title.active;
-            };
-
-            if (editionItem.title.hasOwnProperty("updateDate")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.updateDate = editionItem.title.updateDate;
-            };
-
+          if (editionItem.hasOwnProperty("media")) {
+            state.arrayEditions[editionItem.editionItemIndex].media = editionItem.media;
           };
+
+          if (editionItem.hasOwnProperty("electronic")) {
+            state.arrayEditions[editionItem.editionItemIndex].electronic = editionItem.electronic;
+          };
+
+          if (editionItem.hasOwnProperty("mediaSortID")) {
+            state.arrayEditions[editionItem.editionItemIndex].mediaSortID = editionItem.mediaSortID;
+          };
+
+          if (editionItem.hasOwnProperty("mediaActive")) {
+            state.arrayEditions[editionItem.editionItemIndex].mediaActive = editionItem.mediaActive;
+          };
+
+          if (editionItem.hasOwnProperty("mediaCreateDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].mediaCreateDate = editionItem.mediaCreateDate;
+          };
+
+          if (editionItem.hasOwnProperty("mediaUpdatedDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].mediaUpdatedDate = editionItem.mediaUpdatedDate;
+          };
+
+          // };
+
+          // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
+          // if (editionItem.hasOwnProperty("title")) {
+
+          //   if (editionItem.title.hasOwnProperty("titleID")) {
+          //     state.arrayEditions[editionItem.editionItemIndex].title.titleID = editionItem.title.titleID;
+          //   };
+
+          if (editionItem.hasOwnProperty("titleName")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleName = editionItem.titleName;
+          };
+
+          if (editionItem.hasOwnProperty("titleSort")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleSort = editionItem.titleSort;
+          };
+
+          if (editionItem.hasOwnProperty("titleURL")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleURL = editionItem.titleURL;
+          };
+
+          if (editionItem.hasOwnProperty("authorFirstName")) {
+            state.arrayEditions[editionItem.editionItemIndex].authorFirstName = editionItem.authorFirstName;
+          };
+
+          if (editionItem.hasOwnProperty("authorLastName")) {
+            state.arrayEditions[editionItem.editionItemIndex].authorLastName = editionItem.authorLastName;
+          };
+
+          if (editionItem.hasOwnProperty("titlePublicationDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].titlePublicationDate = editionItem.titlePublicationDate;
+          };
+
+          if (editionItem.hasOwnProperty("titleImageName")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleImageName = editionItem.titleImageName;
+          };
+
+          if (editionItem.hasOwnProperty("categoryID")) {
+            state.arrayEditions[editionItem.editionItemIndex].categoryID = editionItem.categoryID;
+          };
+
+          if (editionItem.hasOwnProperty("shortDescription")) {
+            state.arrayEditions[editionItem.editionItemIndex].shortDescription = editionItem.shortDescription;
+          };
+
+          if (editionItem.hasOwnProperty("urlPKDweb")) {
+            state.arrayEditions[editionItem.editionItemIndex].urlPKDweb = editionItem.urlPKDweb;
+          };
+
+          if (editionItem.hasOwnProperty("titleCreateDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleCreateDate = editionItem.titleCreateDate;
+          };
+
+          if (editionItem.hasOwnProperty("titleUpdatedDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleUpdatedDate = editionItem.titleUpdatedDate;
+          };
+
+          // };
 
         };
 

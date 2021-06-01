@@ -42,7 +42,7 @@ const Editions = (props) => {
   // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
   let mediaParam;
-  if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
+  if (IsEmpty(props.linkItem) === false && props.linkItem.hasOwnProperty("linkName")) {
     // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
     mediaParam = props.linkItem.linkName; // props.match.params.media;
     // console.log(componentName, GetDateTime(), "typeof mediaParam", typeof mediaParam);
@@ -51,9 +51,9 @@ const Editions = (props) => {
 
   const sortEditions = (sortBy) => {
     // console.log("componentName, sortTitles sortBy", sortBy);
-    if (editionList !== undefined && editionList !== null && editionList.length > 0) {
+    if (IsEmpty(editionList) === false && editionList.length > 0) {
       if (sortBy === "releaseDate") {
-        // * Sort the editionList array by edition.publicationDate, title.titleSort, (would like to add media.sortID)
+        // * Sort the editionList array by editionPublicationDate, title.titleSort, (would like to add media.sortID)
         // ! Doesn't handle null values well; treats them as "null"
         // editionList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : (a.publicationDate > b.publicationDate) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
 
@@ -75,11 +75,11 @@ const Editions = (props) => {
         //     });
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
-        let editionListReleaseDate = editionList.filter(edition => edition.publicationDate !== undefined && edition.publicationDate !== null);
+        let editionListReleaseDate = editionList.filter(edition => edition.editionPublicationDate !== undefined && edition.editionPublicationDate !== null);
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListReleaseDate.sort(
           function (a, b) {
-            if (a.publicationDate === b.publicationDate) {
+            if (a.editionPublicationDate === b.editionPublicationDate) {
               // if (a.title.titleSort === b.title.titleSort) {
               if (a.titleSort === b.titleSort) {
                 // * Media is only important when title.titleSort are the same
@@ -90,11 +90,11 @@ const Editions = (props) => {
               // return a.title.titleSort - b.title.titleSort;
               return a.titleSort - b.titleSort;
             };
-            return a.publicationDate > b.publicationDate ? 1 : -1;
+            return a.editionPublicationDate > b.editionPublicationDate ? 1 : -1;
           });
         // console.log(componentName, GetDateTime(), "editionListReleaseDate", editionListReleaseDate);
 
-        let editionListNoReleaseDate = editionList.filter(edition => edition.publicationDate === undefined || edition.publicationDate === null);
+        let editionListNoReleaseDate = editionList.filter(edition => edition.editionPublicationDate === undefined || edition.editionPublicationDate === null);
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListNoReleaseDate.sort(
           function (a, b) {
@@ -118,7 +118,7 @@ const Editions = (props) => {
 
         let newEditionList = [...editionListReleaseDate];
         newEditionList.push(...editionListNoReleaseDate);
-        console.log(componentName, GetDateTime(), "newEditionList", newEditionList);
+        // console.log(componentName, GetDateTime(), "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -145,12 +145,12 @@ const Editions = (props) => {
         //     });
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
-        let editionListPublicationDate = editionList.filter(edition => edition.title.publicationDate !== undefined && edition.title.publicationDate !== null);
+        let editionListPublicationDate = editionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListPublicationDate.sort(
           function (a, b) {
             // if (a.title.publicationDate === b.title.publicationDate) {
-            if (a.publicationDate === b.publicationDate) {
+            if (a.titlePublicationDate === b.titlePublicationDate) {
               // if (a.title.titleSort === b.title.titleSort) {
               if (a.titleSort === b.titleSort) {
                 // * Media is only important when title.titleSort are the same
@@ -162,11 +162,11 @@ const Editions = (props) => {
               return a.titleSort - b.titleSort;
             };
             // return a.title.publicationDate > b.title.publicationDate ? 1 : -1;
-            return a.publicationDate > b.publicationDate ? 1 : -1;
+            return a.titlePublicationDate > b.titlePublicationDate ? 1 : -1;
           });
         // console.log(componentName, GetDateTime(), "editionListPublicationDate", editionListPublicationDate);
 
-        let editionListNoPublicationDate = editionList.filter(edition => edition.title.publicationDate === undefined || edition.title.publicationDate === null);
+        let editionListNoPublicationDate = editionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListNoPublicationDate.sort(
           function (a, b) {
@@ -258,13 +258,13 @@ const Editions = (props) => {
     // * If mediaParam is a number, then it's the mediaID
     document.title = editionList[0].medium.media + " | " + appName + " | " + siteName;
     editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
-  } else if (mediaParam !== undefined) {
+  } else if (IsEmpty(mediaParam) === false) {
     // * If mediaParam is not a number, then it's the media name
     const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
     // console.log(componentName, GetDateTime(), "typeof media", typeof media);
     // console.log(componentName, GetDateTime(), "media", media);
 
-    if (media !== undefined) {
+    if (IsEmpty(media) === false) {
       document.title = media.media + " | " + appName + " | " + siteName;
       editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
     } else {
@@ -292,12 +292,12 @@ const Editions = (props) => {
     editionList = [...editionList];
   };
 
-  if (admin !== undefined && admin !== null && admin === true) {
+  if (IsEmpty(admin) === false && admin === true) {
     editionList = [...editionList];
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
     // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
-    editionList = editionList.filter(edition => edition.editionsActive === true && edition.mediaActive === true);
+    editionList = editionList.filter(edition => edition.editionActive === true && edition.mediaActive === true);
   };
 
   sortEditions(editionSortBy);
@@ -324,7 +324,7 @@ const Editions = (props) => {
         <Col xs="12">
           <Breadcrumb className="breadcrumb mb-2">
             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
-            {mediaParam !== undefined && isNaN(mediaParam) ?
+            {IsEmpty(mediaParam) === false && isNaN(mediaParam) ?
               <BreadcrumbItem active><Link to={mediaParam} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(mediaParam); }}>{decodeURL(mediaParam)}</Link></BreadcrumbItem>
               :
               <BreadcrumbItem active><Link to={"/editions/"} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/editions/"); }}>All Editions</Link></BreadcrumbItem>
@@ -334,7 +334,7 @@ const Editions = (props) => {
       </Row>
       <Row>
         <Col xs="12">
-          <h4 className="text-center mb-4">{mediaParam !== undefined && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
+          <h4 className="text-center mb-4">{IsEmpty(mediaParam) === false && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
             <span className="text-muted ml-2 smallText">Sort By
                         {editionSortBy !== "releaseDate" ?
                 <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSortBy("releaseDate")); }}>Release Date</a>
@@ -351,7 +351,7 @@ const Editions = (props) => {
       </Row>
       <Row>
         <Col className="text-center" xs="12">
-          {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+          {IsEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
           {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
           {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
         </Col>
@@ -372,58 +372,58 @@ const Editions = (props) => {
 
               {/* <Card key={edition.editionID}>
 
-                    {mediaParam === undefined ?
+                    {IsEmpty(mediaParam) === false ?
                     <CardHeader>
                         <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
                     </CardHeader>
                     : null}
 
                     <CardBody className="editionImage">
-                    {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ? 
+                    {IsEmpty(edition.imageLinkLarge) === false ? 
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                     <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                    {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="coverDisplay" /> : <Image className="noImageIcon"/>}
                     </a>
                     }
-                    {edition.publicationDate !== null ? <CardText>Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
+                    {IsEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
                     </CardBody>
                     <CardFooter>
                         <Link to={edition.title.titleURL}>{edition.title.titleName}</Link>
-                        {edition.title.publicationDate !== null ? <span> <small>({DisplayYear(edition.title.publicationDate)})</small></span> : null}
+                        {IsEmpty(edition.editionPublicationDate) === false ? <span> <small>({DisplayYear(edition.title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
 
               <Card key={edition.editionID}>
-                {activeString !== undefined && activeString !== null && activeString !== "" ?
+                {IsEmpty(activeString) === false ?
                   <CardHeader className="cardHeader inactiveItem">
                     ({activeString})
                         </CardHeader>
                   : null}
                 <Row className="no-gutters">
                   <Col className="col-md-6">
-                    {edition.imageLinkLarge !== null && edition.imageLinkLarge !== "" ?
+                    {IsEmpty(edition.imageLinkLarge) === false ?
                       <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN) }} />
                       :
                       <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {edition.imageName !== null && edition.imageName !== undefined && edition.imageName !== "" ? <CardImg src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon" />}
+                        {IsEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon" />}
                       </a>
                     }
                   </Col>
                   <Col className="col-md-6">
                     <CardBody>
                       <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
-                        {edition.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(edition.publicationDate)})</span> : null}
+                        {IsEmpty(edition.editionPublicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(edition.editionPublicationDate)})</span> : null}
                       </CardText>
-                      {edition.publicationDate !== null ? <CardText className="smallerText">Released: {DisplayDate(edition.publicationDate)}</CardText> : null}
-                      {admin !== undefined && admin !== null && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.publicationDate} displayButton={true} /> : null}
-                      {admin !== undefined && admin !== null && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.publicationDate} displayButton={true} /> : null}
+                      {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
+                      {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.editionPublicationDate} displayButton={true} /> : null}
+                      {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.editionPublicationDate} displayButton={true} /> : null}
                     </CardBody>
                   </Col>
                 </Row>
-                {mediaParam === undefined ?
+                {IsEmpty(mediaParam) === false ?
                   <CardFooter className="cardFooter">
-                    <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(edition.medium.media)); }}>{edition.medium.media}</Link></CardText>
+                    <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
                   </CardFooter>
                   : null}
               </Card>

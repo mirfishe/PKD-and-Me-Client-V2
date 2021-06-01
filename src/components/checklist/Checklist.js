@@ -57,7 +57,7 @@ const Checklist = (props) => {
 
   const sortChecklistList = (sortBy) => {
     // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
-    if (checklistList !== undefined && checklistList !== null && checklistList.length > 0) {
+    if (IsEmpty(checklistList) === false && checklistList.length > 0) {
       if (sortBy === "publicationDate") {
         // * Sort the checklistList array by title.publicationDate
         // ! // ! Doesn't handle null values well; treats them as "null"
@@ -78,11 +78,11 @@ const Checklist = (props) => {
         // });
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
-        let titleListPublicationDate = checklistList.filter(title => title.publicationDate !== undefined && title.publicationDate !== null);
+        let titleListPublicationDate = checklistList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
         titleListPublicationDate.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
         // console.log(componentName, GetDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
-        let titleListNoPublicationDate = checklistList.filter(title => title.publicationDate === undefined || title.publicationDate === null);
+        let titleListNoPublicationDate = checklistList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
         titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
         // console.log(componentName, GetDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
 
@@ -109,7 +109,7 @@ const Checklist = (props) => {
   // console.log(componentName, GetDateTime(), "checklistList", checklistList);
 
   // * Filter by category
-  if (linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkType") === true) {
+  if (IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkType") === true) {
 
     if (linkItem.linkType === "categories") {
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkID);
@@ -159,7 +159,7 @@ const Checklist = (props) => {
     let url = baseURL + "userreviews/";
     let updateChecklistMethod = "";
 
-    if (reviewID !== undefined && reviewID !== null) {
+    if (IsEmpty(reviewID) === false) {
       url = url + reviewID;
       updateChecklistMethod = "PUT";
     } else {
@@ -169,7 +169,7 @@ const Checklist = (props) => {
     // console.log(componentName, GetDateTime(), "updateChecklist url", url);
     // console.log(componentName, GetDateTime(), "updateChecklist updateChecklistMethod", updateChecklistMethod);
 
-    if (sessionToken !== undefined && sessionToken !== null) {
+    if (IsEmpty(sessionToken) === false) {
 
       fetch(url, {
         method: updateChecklistMethod,
@@ -238,6 +238,7 @@ const Checklist = (props) => {
 
             } else if (updateChecklistMethod === "POST") {
 
+              // TODO: Fix the structure of this Redux call.
               dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createDate: data.createDate, updateDate: data.updateDate, title: { titleID: checklistListItem.titleID, titleName: checklistListItem.titleName, titleSort: checklistListItem.titleSort, titleURL: checklistListItem.titleURL, authorFirstName: checklistListItem.authorFirstName, authorLastName: checklistListItem.authorLastName, publicationDate: checklistListItem.publicationDate, imageName: checklistListItem.imageName, categoryID: checklistListItem.categoryID, shortDescription: checklistListItem.shortDescription, urlPKDweb: checklistListItem.urlPKDweb, active: checklistListItem.active, createDate: checklistListItem.createDate, updateDate: checklistListItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
 
             };
@@ -278,13 +279,13 @@ const Checklist = (props) => {
   return (
     <React.Fragment>
 
-      {/* {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Checklist</Button> : null}
+      {/* {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Checklist</Button> : null}
 
         <Modal isOpen={modal} toggle={toggle} size="lg">
            <ModalHeader toggle={toggle}>Checklist</ModalHeader>
            <ModalBody> */}
 
-      {checklistLoaded !== undefined && checklistLoaded !== null && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Checklist</Button> : null}
+      {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Checklist</Button> : null}
 
       <Drawer anchor="right" open={drawer} onClose={toggleDrawer}>
 
@@ -297,7 +298,7 @@ const Checklist = (props) => {
 
           {/* <ListGroup flush> */}
 
-          {linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkTypeName") === true ?
+          {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkTypeName") === true ?
             <Row className="justify-content-center">
               <Col xs="8">
                 {/* <ListGroupItem> */}
@@ -322,7 +323,7 @@ const Checklist = (props) => {
               <Row /*ListGroupItem*/ key={title.titleID}>
                 <Col className="mx-3">
                   <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID); }} /> <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                    {title.publicationDate !== null ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}
+                    {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}
                   </p>
                   {/* </ListGroupItem> */}
                 </Col>

@@ -45,7 +45,7 @@ const TitleSuggestions = (props) => {
       </Row>
       <Row>
         <Col className="text-center" xs="12">
-          {errTitleSuggestionMessage !== undefined && errTitleSuggestionMessage !== null && errTitleSuggestionMessage !== "" ? <Alert color="danger">{errTitleSuggestionMessage}</Alert> : null}
+          {IsEmpty(errTitleSuggestionMessage) === false ? <Alert color="danger">{errTitleSuggestionMessage}</Alert> : null}
         </Col>
       </Row>
       <Row>
@@ -57,7 +57,7 @@ const TitleSuggestions = (props) => {
               <Row>
                 <Col xs="12">
                   <h6>{titleSuggestion.titleName}
-                    {titleSuggestion.publicationDate !== undefined && titleSuggestion.publicationDate !== null ? <span className="ml-2 smallerText"> ({DisplayDate(titleSuggestion.publicationDate)})</span> : null}
+                    {IsEmpty(titleSuggestion.publicationDate) === false ? <span className="ml-2 smallerText"> ({DisplayDate(titleSuggestion.publicationDate)})</span> : null}
                   </h6>
                 </Col>
               </Row>
@@ -70,20 +70,20 @@ const TitleSuggestions = (props) => {
 
               <Row>
                 <Col xs="12">
-                  {titleSuggestion.shortDescription !== undefined && titleSuggestion.shortDescription !== null && titleSuggestion.shortDescription !== "" ? <p className="displayParagraphs">{titleSuggestion.shortDescription}</p> : null}
+                  {IsEmpty(titleSuggestion.shortDescription) === false ? <p className="displayParagraphs">{titleSuggestion.shortDescription}</p> : null}
                 </Col>
               </Row>
 
               <Row>
                 <Col xs="12">
-                  {titleSuggestion.titleURL !== undefined && titleSuggestion.titleURL !== null && titleSuggestion.titleURL !== "" ? <p>{titleSuggestion.titleURL}</p> : null}
+                  {IsEmpty(titleSuggestion.titleURL) === false ? <p>{titleSuggestion.titleURL}</p> : null}
                 </Col>
               </Row>
 
               <Row>
                 <Col xs="12">
                   <p>
-                    Suggested by {titleSuggestion.user.firstName !== undefined && titleSuggestion.user.firstName !== null ? titleSuggestion.user.firstName : null} {titleSuggestion.user.lastName !== undefined && titleSuggestion.user.lastName !== null ? titleSuggestion.user.lastName : null} {titleSuggestion.emailAddress !== undefined && titleSuggestion.emailAddress !== null ? titleSuggestion.emailAddress : null} {titleSuggestion.updateDate !== undefined && titleSuggestion.updateDate !== null ? <small>on {DisplayDate(titleSuggestion.updateDate)}</small> : null}
+                    Suggested by {IsEmpty(titleSuggestion.firstName) === false ? titleSuggestion.firstName : null} {IsEmpty(titleSuggestion.lastName) === false ? titleSuggestion.lastName : null} {IsEmpty(titleSuggestion.emailAddress) === false ? titleSuggestion.emailAddress : null} {IsEmpty(titleSuggestion.updateDate) === false ? <small>on {DisplayDate(titleSuggestion.updateDate)}</small> : null}
                   </p>
                 </Col>
               </Row>

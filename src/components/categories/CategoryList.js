@@ -32,7 +32,7 @@ const CategoryList = (props) => {
     setCategoryResultsFound(null);
     setCategoryList([]);
 
-    if (baseURL !== undefined && baseURL !== "") {
+    if (IsEmpty(baseURL) === false) {
 
       let url = baseURL + "categories";
 
@@ -109,8 +109,8 @@ const CategoryList = (props) => {
   return (
     <Container className="mt-4">
       <Row className="text-center">
-        {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
-        {errCategoryMessage !== undefined && errCategoryMessage !== null && errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+        {IsEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
+        {IsEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
       </Row>
       {/* <Row>
             <Col xs="2">

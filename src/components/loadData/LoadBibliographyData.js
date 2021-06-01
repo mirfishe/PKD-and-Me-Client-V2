@@ -72,7 +72,7 @@ function LoadBibliographyData() {
       let userReviewRatingItem = {};
       // console.log(componentName, GetDateTime(), "addRatings userReviewRatingItem", userReviewRatingItem);
 
-      if (arrayTitles[i].titleID !== undefined && arrayTitles[i].titleID !== null && !isNaN(arrayTitles[i].titleID)) {
+      if (IsEmpty(arrayTitles[i].titleID) === false && !isNaN(arrayTitles[i].titleID)) {
         userReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === arrayTitles[i].titleID);
         userReviewRatingItem = userReviewRatingItem[0];
       };
@@ -81,7 +81,7 @@ function LoadBibliographyData() {
       let userReviewSum = 0;
       let userReviewAverage = 0;
 
-      if (userReviewRatingItem !== undefined && userReviewRatingItem !== null) {
+      if (IsEmpty(userReviewRatingItem) === false) {
 
         // console.log(componentName, GetDateTime(), "addRatings userReviewRatingItem", userReviewRatingItem);
 
@@ -268,7 +268,7 @@ function LoadBibliographyData() {
         arrayURLs.push({ linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID, linkTypeNameID: data[i].mediaID, linkTypeName: data[i].media });
       } else if (source === "titles") {
         // console.log(componentName, GetDateTime(), "loadURLs data[i].titleURL", data[i].titleURL);
-        arrayURLs.push({ linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category.category });
+        arrayURLs.push({ linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category });
       };
 
     };
@@ -647,6 +647,7 @@ function LoadBibliographyData() {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect");
 
@@ -660,7 +661,7 @@ function LoadBibliographyData() {
     // // console.log(componentName, GetDateTime(), "useEffect currentDateTime", currentDateTime);
     // // console.log(componentName, GetDateTime(), "useEffect new Date(currentDateTime).toISOString()", new Date(currentDateTime).toISOString());
 
-    // if (!categoriesLoaded && localStorage.getItem("lastDatabaseRetrievalCategories") !== undefined && localStorage.getItem("lastDatabaseRetrievalCategories") !== null) {
+    // if (!categoriesLoaded && IsEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
 
     //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalCategories\")", localStorage.getItem("lastDatabaseRetrievalCategories"));
 
@@ -674,7 +675,7 @@ function LoadBibliographyData() {
     //   // console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
-    //     if (localStorage.getItem("arrayCategories") !== undefined && localStorage.getItem("arrayCategories") !== null) {
+    //     if (IsEmpty(localStorage.getItem("arrayCategories")) === false) {
     //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayCategories\")", localStorage.getItem("arrayCategories"));
 
     //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
@@ -686,7 +687,7 @@ function LoadBibliographyData() {
 
     // };
 
-    // if (!mediaLoaded && localStorage.getItem("lastDatabaseRetrievalMedia") !== undefined && localStorage.getItem("lastDatabaseRetrievalMedia") !== null) {
+    // if (!mediaLoaded && IsEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
 
     //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalMedia\")", localStorage.getItem("lastDatabaseRetrievalMedia"));
 
@@ -695,7 +696,7 @@ function LoadBibliographyData() {
     //   // console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
-    //     if (localStorage.getItem("arrayMedia") !== undefined && localStorage.getItem("arrayMedia") !== null) {
+    //     if (IsEmpty(localStorage.getItem("arrayMedia")) === false) {
     //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayMedia\")", localStorage.getItem("arrayMedia"));
 
     //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
@@ -707,7 +708,7 @@ function LoadBibliographyData() {
 
     // };
 
-    // if (!titlesLoaded && localStorage.getItem("lastDatabaseRetrievalTitles") !== undefined && localStorage.getItem("lastDatabaseRetrievalTitles") !== null) {
+    // if (!titlesLoaded && IsEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
 
     //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalTitles\")", localStorage.getItem("lastDatabaseRetrievalTitles"));
 
@@ -716,7 +717,7 @@ function LoadBibliographyData() {
     //   console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
-    //     if (localStorage.getItem("arrayTitles") !== undefined && localStorage.getItem("arrayTitles") !== null) {
+    //     if (IsEmpty(localStorage.getItem("arrayTitles")) === false) {
     //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayTitles\")", localStorage.getItem("arrayTitles"));
 
     //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
@@ -728,7 +729,7 @@ function LoadBibliographyData() {
 
     // };
 
-    // if (!editionsLoaded && localStorage.getItem("lastDatabaseRetrievalEditions") !== undefined && localStorage.getItem("lastDatabaseRetrievalEditions") !== null) {
+    // if (!editionsLoaded && IsEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
 
     //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalEditions\")", localStorage.getItem("lastDatabaseRetrievalEditions"));
 
@@ -737,7 +738,7 @@ function LoadBibliographyData() {
     //   console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
-    //   if (localStorage.getItem("arrayEditions") !== undefined && localStorage.getItem("arrayEditions") !== null) {
+    //   if (IsEmpty(localStorage.getItem("arrayEditions")) === false) {
     //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayEditions\")", localStorage.getItem("arrayEditions"));
 
     //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
@@ -796,16 +797,16 @@ function LoadBibliographyData() {
 
   return (
     <Row className="text-center">
-      {categoryMessage !== undefined && categoryMessage !== null && categoryMessage !== "" ? <Alert color="info">{categoryMessage}</Alert> : null}
-      {errCategoryMessage !== undefined && errCategoryMessage !== null && errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
-      {mediaMessage !== undefined && mediaMessage !== null && mediaMessage !== "" ? <Alert color="info">{mediaMessage}</Alert> : null}
-      {errMediaMessage !== undefined && errMediaMessage !== null && errMediaMessage !== "" ? <Alert color="danger">{errMediaMessage}</Alert> : null}
-      {titleMessage !== undefined && titleMessage !== null && titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
-      {errTitleMessage !== undefined && errTitleMessage !== null && errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-      {editionMessage !== undefined && editionMessage !== null && editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
-      {errEditionMessage !== undefined && errEditionMessage !== null && errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
-      {overallTitleRatingMessage !== undefined && overallTitleRatingMessage !== null && overallTitleRatingMessage !== "" ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
-      {errOverallTitleRatingMessage !== undefined && errOverallTitleRatingMessage !== null && errOverallTitleRatingMessage !== "" ? <Alert color="danger">{errOverallTitleRatingMessage}</Alert> : null}
+      {IsEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
+      {IsEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+      {IsEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
+      {IsEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+      {IsEmpty(titleMessage) === false ? <Alert color="info">{titleMessage}</Alert> : null}
+      {IsEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+      {IsEmpty(editionMessage) === false ? <Alert color="info">{editionMessage}</Alert> : null}
+      {IsEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+      {IsEmpty(overallTitleRatingMessage) === false ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
+      {IsEmpty(errOverallTitleRatingMessage) === false ? <Alert color="danger">{errOverallTitleRatingMessage}</Alert> : null}
     </Row>
   );
 }

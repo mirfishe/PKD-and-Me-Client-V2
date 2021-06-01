@@ -69,6 +69,10 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
           };
 
+          if (userReviewItem.hasOwnProperty("userReviewUpdatedBy")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewUpdatedBy = userReviewItem.userReviewUpdatedBy;
+          };
+
           if (userReviewItem.hasOwnProperty("titleID")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleID = userReviewItem.titleID;
           };
@@ -89,6 +93,14 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].ranking = userReviewItem.ranking;
           };
 
+          if (userReviewItem.hasOwnProperty("owned")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].owned = userReviewItem.owned;
+          };
+
+          if (userReviewItem.hasOwnProperty("purchaseDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].purchaseDate = userReviewItem.purchaseDate;
+          };
+
           if (userReviewItem.hasOwnProperty("shortReview")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
           };
@@ -101,99 +113,147 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
           };
 
+          if (userReviewItem.hasOwnProperty("userReviewActive")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewActive = userReviewItem.userReviewActive;
+          };
+
+          if (userReviewItem.hasOwnProperty("createDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].createDate = userReviewItem.createDate;
+          };
+
+          if (userReviewItem.hasOwnProperty("userReviewCreateDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewCreateDate = userReviewItem.userReviewCreateDate;
+          };
+
           if (userReviewItem.hasOwnProperty("updateDate")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].updateDate = userReviewItem.updateDate;
           };
 
-          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-          if (userReviewItem.hasOwnProperty("title")) {
-
-            if (userReviewItem.title.hasOwnProperty("titleID")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleID = userReviewItem.title.titleID;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("titleName")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleName = userReviewItem.title.titleName;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("titleSort")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleSort = userReviewItem.title.titleSort;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("titleURL")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleURL = userReviewItem.title.titleURL;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("authorFirstName")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.authorFirstName = userReviewItem.title.authorFirstName;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("authorLastName")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.authorLastName = userReviewItem.title.authorLastName;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("publicationDate")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.publicationDate = userReviewItem.title.publicationDate;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("imageName")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.imageName = userReviewItem.title.imageName;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("categoryID")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.categoryID = userReviewItem.title.categoryID;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("shortDescription")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.shortDescription = userReviewItem.title.shortDescription;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("urlPKDweb")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.urlPKDweb = userReviewItem.title.urlPKDweb;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("active")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.active = userReviewItem.title.active;
-            };
-
-            if (userReviewItem.title.hasOwnProperty("updateDate")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.updateDate = userReviewItem.title.updateDate;
-            };
-
+          if (userReviewItem.hasOwnProperty("userReviewUpdatedDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewUpdatedDate = userReviewItem.userReviewUpdatedDate;
           };
 
-          // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-          if (userReviewItem.hasOwnProperty("user")) {
+          // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
+          // if (userReviewItem.hasOwnProperty("title")) {
 
-            if (userReviewItem.user.hasOwnProperty("userID")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].user.userID = userReviewItem.user.userID;
-            };
+          //   if (userReviewItem.title.hasOwnProperty("titleID")) {
+          //     state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleID = userReviewItem.title.titleID;
+          //   };
 
-            if (userReviewItem.user.hasOwnProperty("firstName")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].firstName = userReviewItem.user.firstName;
-            };
-
-            if (userReviewItem.user.hasOwnProperty("lastName")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].lastName = userReviewItem.user.lastName;
-            };
-
-            if (userReviewItem.user.hasOwnProperty("email")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].email = userReviewItem.user.email;
-            };
-
-            if (userReviewItem.user.hasOwnProperty("updatedBy")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.user.updatedBy;
-            };
-
-            if (userReviewItem.user.hasOwnProperty("admin")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].admin = userReviewItem.user.admin;
-            };
-
-            if (userReviewItem.user.hasOwnProperty("active")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.user.active;
-            };
-
+          if (userReviewItem.hasOwnProperty("titleName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleName = userReviewItem.titleName;
           };
+
+          if (userReviewItem.hasOwnProperty("titleSort")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleSort = userReviewItem.titleSort;
+          };
+
+          if (userReviewItem.hasOwnProperty("titleURL")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleURL = userReviewItem.titleURL;
+          };
+
+          if (userReviewItem.hasOwnProperty("authorFirstName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].authorFirstName = userReviewItem.authorFirstName;
+          };
+
+          if (userReviewItem.hasOwnProperty("authorLastName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].authorLastName = userReviewItem.authorLastName;
+          };
+
+          if (userReviewItem.hasOwnProperty("publicationDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].publicationDate = userReviewItem.publicationDate;
+          };
+
+          if (userReviewItem.hasOwnProperty("titlePublicationDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titlePublicationDate = userReviewItem.titlePublicationDate;
+          };
+
+          if (userReviewItem.hasOwnProperty("imageName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].imageName = userReviewItem.imageName;
+          };
+
+          if (userReviewItem.hasOwnProperty("titleImageName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleImageName = userReviewItem.titleImageName;
+          };
+
+          if (userReviewItem.hasOwnProperty("categoryID")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].categoryID = userReviewItem.categoryID;
+          };
+
+          if (userReviewItem.hasOwnProperty("shortDescription")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortDescription = userReviewItem.shortDescription;
+          };
+
+          if (userReviewItem.hasOwnProperty("urlPKDweb")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].urlPKDweb = userReviewItem.urlPKDweb;
+          };
+
+          if (userReviewItem.hasOwnProperty("active")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+          };
+
+          if (userReviewItem.hasOwnProperty("titleActive")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleActive = userReviewItem.titleActive;
+          };
+
+          if (userReviewItem.hasOwnProperty("createDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].createDate = userReviewItem.createDate;
+          };
+
+          if (userReviewItem.hasOwnProperty("titleCreateDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleCreateDate = userReviewItem.titleCreateDate;
+          };
+
+          if (userReviewItem.hasOwnProperty("updateDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updateDate = userReviewItem.updateDate;
+          };
+
+          if (userReviewItem.hasOwnProperty("titleUpdatedDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleUpdatedDate = userReviewItem.titleUpdatedDate;
+          };
+
+          // };
+
+          // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
+          // if (userReviewItem.hasOwnProperty("user")) {
+
+          //   if (userReviewItem.user.hasOwnProperty("userID")) {
+          //     state.arrayUserReviews[userReviewItem.userReviewItemIndex].user.userID = userReviewItem.user.userID;
+          //   };
+
+          if (userReviewItem.hasOwnProperty("firstName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].firstName = userReviewItem.firstName;
+          };
+
+          if (userReviewItem.hasOwnProperty("lastName")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].lastName = userReviewItem.lastName;
+          };
+
+          if (userReviewItem.hasOwnProperty("email")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].email = userReviewItem.email;
+          };
+
+          if (userReviewItem.hasOwnProperty("updatedBy")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
+          };
+
+          if (userReviewItem.hasOwnProperty("userUpdatedBy")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userUpdatedBy = userReviewItem.userUpdatedBy;
+          };
+
+          if (userReviewItem.hasOwnProperty("admin")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].admin = userReviewItem.admin;
+          };
+
+          if (userReviewItem.hasOwnProperty("active")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+          };
+
+          if (userReviewItem.hasOwnProperty("userActive")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userActive = userReviewItem.userActive;
+          };
+
+          // };
 
         };
 
