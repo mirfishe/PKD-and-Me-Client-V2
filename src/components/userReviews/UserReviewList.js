@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 function UserReviewList() {
 
@@ -11,7 +12,7 @@ function UserReviewList() {
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
@@ -23,17 +24,17 @@ function UserReviewList() {
   const [userReviewList, setUserReviewList] = useState([]);
 
   const getUserReviews = () => {
-    // console.log(componentName, "getUserReviews");
-    // console.log(componentName, "getUserReviews baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getUserReviews");
+    // console.log(componentName, GetDateTime(), "getUserReviews baseURL", baseURL);
 
     setUserReviewMessage("");
     setErrUserReviewMessage("");
 
-    let url = baseURL + "userreviews/list";
+    let url = baseURL + "userreviews";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getUserReviews response", response);
+        // console.log(componentName, GetDateTime(), "getUserReviews response", response);
         if (!response.ok) {
           throw Error(response.status + " " + response.statusText + " " + response.url);
         } else {
@@ -41,7 +42,7 @@ function UserReviewList() {
         };
       })
       .then(data => {
-        console.log(componentName, "getUserReviews data", data);
+        console.log(componentName, GetDateTime(), "getUserReviews data", data);
 
         setUserReviewResultsFound(data.resultsFound);
         setUserReviewMessage(data.message);
@@ -54,9 +55,9 @@ function UserReviewList() {
 
       })
       .catch(error => {
-        console.log(componentName, "getUserReviews error", error);
-        // console.log(componentName, "getUserReviews error.name", error.name);
-        // console.log(componentName, "getUserReviews error.message", error.message);
+        console.log(componentName, GetDateTime(), "getUserReviews error", error);
+        // console.log(componentName, GetDateTime(), "getUserReviews error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getUserReviews error.message", error.message);
         setErrUserReviewMessage(error.name + ": " + error.message);
       });
 

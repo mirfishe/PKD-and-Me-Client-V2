@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Nav, NavItem, Collapse, Card } from "reactstrap";
-import { encodeURL, IsEmpty, ConvertBitTrueFalse } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddCategory from "./AddCategory";
 import EditCategories from "./EditCategories";
@@ -15,12 +15,12 @@ const Category = (props) => {
   const history = useHistory();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, "categoryListState", categoryListState);
+  // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -28,7 +28,7 @@ const Category = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect categoryListState", categoryListState);
+    // console.log(componentName, GetDateTime(), "useEffect categoryListState", categoryListState);
 
     let categoryListSort = [];
 
@@ -39,7 +39,7 @@ const Category = (props) => {
       } else {
         categoryListSort = categoryListState.filter(category => category.active === true);
       };
-      // console.log(componentName, "useEffect categoryListSort", categoryListSort);
+      // console.log(componentName, GetDateTime(), "useEffect categoryListSort", categoryListSort);
 
       categoryListSort.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
@@ -51,7 +51,7 @@ const Category = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };

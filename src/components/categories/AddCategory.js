@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { encodeURL } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
 import { addStateCategory } from "../../bibliographyData/categoriesSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -14,15 +14,15 @@ const AddCategory = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -50,8 +50,8 @@ const AddCategory = (props) => {
   const [active, setActive] = useState(null);
 
   const addCategory = () => {
-    // console.log(componentName, "addCategory");
-    // console.log(componentName, "addCategory baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addCategory");
+    // console.log(componentName, GetDateTime(), "addCategory baseURL", baseURL);
 
     clearMessages();
     setCategoryRecordAdded(null);
@@ -69,28 +69,28 @@ const AddCategory = (props) => {
       if (txtCategory.trim().length > 0) {
         categoryValidated = true;
         setErrCategory("");
-        // console.log(componentName, "addCategory Valid Category");
-        // console.log(componentName, "addCategory categoryValidated true", categoryValidated);
+        // console.log(componentName, GetDateTime(), "addCategory Valid Category");
+        // console.log(componentName, GetDateTime(), "addCategory categoryValidated true", categoryValidated);
       } else {
         categoryValidated = false;
         setErrCategory("Please enter a category.");
-        // console.log(componentName, "addCategory Invalid Category");
-        // console.log(componentName, "addCategory categoryValidated false", categoryValidated);
+        // console.log(componentName, GetDateTime(), "addCategory Invalid Category");
+        // console.log(componentName, GetDateTime(), "addCategory categoryValidated false", categoryValidated);
       };
     };
 
     if (categoryValidated === true) {
       formValidated = true;
-      // console.log(componentName, "addCategory Valid Form");
-      // console.log(componentName, "addCategory formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "addCategory Valid Form");
+      // console.log(componentName, GetDateTime(), "addCategory formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "addCategory Invalid Form");
-      // console.log(componentName, "addCategory formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "addCategory Invalid Form");
+      // console.log(componentName, GetDateTime(), "addCategory formValidated false", formValidated);
     };
 
-    // console.log(componentName, "addCategory categoryValidated", categoryValidated);
-    // console.log(componentName, "addCategory formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "addCategory categoryValidated", categoryValidated);
+    // console.log(componentName, GetDateTime(), "addCategory formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -100,10 +100,10 @@ const AddCategory = (props) => {
           category: txtCategory.trim()
         };
 
-        // console.log(componentName, "addCategory categoryObject", categoryObject);
+        // console.log(componentName, GetDateTime(), "addCategory categoryObject", categoryObject);
 
         let url = baseURL + "categories/";
-        // console.log(componentName, "addCategory url", url);
+        // console.log(componentName, GetDateTime(), "addCategory url", url);
 
         if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -116,7 +116,7 @@ const AddCategory = (props) => {
             body: JSON.stringify({ category: categoryObject })
           })
             .then(response => {
-              // console.log(componentName, "addCategory response", response);
+              // console.log(componentName, GetDateTime(), "addCategory response", response);
               // if (!response.ok) {
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
               // } else {
@@ -128,7 +128,7 @@ const AddCategory = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, "addCategory data", data);
+              console.log(componentName, GetDateTime(), "addCategory data", data);
 
               setCategoryRecordAdded(data.recordAdded);
               addMessage(data.message);
@@ -142,8 +142,8 @@ const AddCategory = (props) => {
                 setSortID(data.sortID);
                 setActive(data.active);
 
-                // ? Would still work if the createdAt and updatedAt were left out?
-                dispatch(addStateCategory([{ categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt }]));
+                // ? Would still work if the createDate and updateDate were left out?
+                dispatch(addStateCategory([{ categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createDate: data.createDate, updateDate: data.updateDate }]));
                 // ? Add to local storage also?
 
                 dispatch(addStateURL([{ linkName: encodeURL(data.category), linkType: "category", linkID: data.categoryID }]));
@@ -155,9 +155,9 @@ const AddCategory = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, "addCategory error", error);
-              // console.log(componentName, "addCategory error.name", error.name);
-              // console.log(componentName, "addCategory error.message", error.message);
+              console.log(componentName, GetDateTime(), "addCategory error", error);
+              // console.log(componentName, GetDateTime(), "addCategory error.name", error.name);
+              // console.log(componentName, GetDateTime(), "addCategory error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
@@ -170,7 +170,7 @@ const AddCategory = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect categoryRecordAdded", categoryRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect categoryRecordAdded", categoryRecordAdded);
     if (categoryRecordAdded !== undefined && categoryRecordAdded !== null && categoryRecordAdded === true) {
       clearMessages();
       setCategoryRecordAdded(null);
@@ -181,7 +181,7 @@ const AddCategory = (props) => {
   }, [categoryRecordAdded]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for admin", admin);
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
       // return <Redirect to="/" />;

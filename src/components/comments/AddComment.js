@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const AddComment = (props) => {
 
@@ -11,25 +12,25 @@ const AddComment = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
   const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, "userID", userID);
+  // console.log(componentName, GetDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const requireUserLogin = useSelector(state => state.app.requireUserLogin);
-  // console.log(componentName, "requireUserLogin", requireUserLogin);
+  // console.log(componentName, GetDateTime(), "requireUserLogin", requireUserLogin);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, "userState", userState);
+  // console.log(componentName, GetDateTime(), "userState", userState);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -57,8 +58,8 @@ const AddComment = (props) => {
   const [commentEmailAddress, setCommentEmailAddress] = useState(null);
 
   const addComment = () => {
-    // console.log(componentName, "addComment");
-    // console.log(componentName, "addComment baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addComment");
+    // console.log(componentName, GetDateTime(), "addComment baseURL", baseURL);
 
     clearMessages();
     setCommentRecordAdded(null);
@@ -79,13 +80,13 @@ const AddComment = (props) => {
       if (txtComment.trim().length > 0) {
         commentValidated = true;
         setErrEmailAddress("");
-        // console.log(componentName, "addComment Valid emailAddress");
-        // console.log(componentName, "addComment emailAddressValidated true", emailAddressValidated);
+        // console.log(componentName, GetDateTime(), "addComment Valid emailAddress");
+        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated true", emailAddressValidated);
       } else {
         commentValidated = false;
         setErrEmailAddress("Please enter a comment.");
-        // console.log(componentName, "addComment Invalid emailAddress");
-        // console.log(componentName, "addComment emailAddressValidated false", emailAddressValidated);
+        // console.log(componentName, GetDateTime(), "addComment Invalid emailAddress");
+        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated false", emailAddressValidated);
       };
     };
 
@@ -93,29 +94,29 @@ const AddComment = (props) => {
       if (txtEmailAddress.trim().length > 0 || requireUserLogin === false) {
         emailAddressValidated = true;
         setErrEmailAddress("");
-        // console.log(componentName, "addComment Valid emailAddress");
-        // console.log(componentName, "addComment emailAddressValidated true", emailAddressValidated);
+        // console.log(componentName, GetDateTime(), "addComment Valid emailAddress");
+        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated true", emailAddressValidated);
       } else {
         emailAddressValidated = false;
         setErrEmailAddress("Please enter an email address.");
-        // console.log(componentName, "addComment Invalid emailAddress");
-        // console.log(componentName, "addComment emailAddressValidated false", emailAddressValidated);
+        // console.log(componentName, GetDateTime(), "addComment Invalid emailAddress");
+        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated false", emailAddressValidated);
       };
     };
 
     if (commentValidated === true && emailAddressValidated === true) {
       formValidated = true;
-      // console.log(componentName, "addComment Valid Form");
-      // console.log(componentName, "addComment formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "addComment Valid Form");
+      // console.log(componentName, GetDateTime(), "addComment formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "addComment Invalid Form");
-      // console.log(componentName, "addComment formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "addComment Invalid Form");
+      // console.log(componentName, GetDateTime(), "addComment formValidated false", formValidated);
     };
 
-    // console.log(componentName, "addComment emailAddressValidated", emailAddressValidated);
-    // console.log(componentName, "addComment categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, "addComment formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "addComment emailAddressValidated", emailAddressValidated);
+    // console.log(componentName, GetDateTime(), "addComment categoryIDValidated", categoryIDValidated);
+    // console.log(componentName, GetDateTime(), "addComment formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -126,10 +127,10 @@ const AddComment = (props) => {
           emailAddress: txtEmailAddress.trim()
         };
 
-        // console.log(componentName, "addComment commentObject", commentObject);
+        // console.log(componentName, GetDateTime(), "addComment commentObject", commentObject);
 
         let url = baseURL + "titles/";
-        // console.log(componentName, "addComment url", url);
+        // console.log(componentName, GetDateTime(), "addComment url", url);
 
         if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
 
@@ -146,7 +147,7 @@ const AddComment = (props) => {
             body: JSON.stringify({ comment: commentObject })
           })
             .then(response => {
-              // console.log(componentName, "addComment response", response);
+              // console.log(componentName, GetDateTime(), "addComment response", response);
               // if (!response.ok) {
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
               // } else {
@@ -158,7 +159,7 @@ const AddComment = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, "addComment data", data);
+              console.log(componentName, GetDateTime(), "addComment data", data);
 
               setCommentRecordAdded(data.recordAdded);
               addMessage(data.message);
@@ -171,8 +172,8 @@ const AddComment = (props) => {
                 setComment(data.Comment);
                 setCommentEmailAddress(data.emailAddress);
 
-                // ? Would still work if the createdAt and updatedAt were left out?
-                // dispatch(addStateTitle([{titleID: data.titleID, emailAddress: data.EmailAddress, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, Comment: data.Comment, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                // ? Would still work if the createDate and updateDate were left out?
+                // dispatch(addStateTitle([{titleID: data.titleID, emailAddress: data.EmailAddress, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, Comment: data.Comment, urlPKDweb: data.urlPKDweb, active: data.active, createDate: data.createDate, updateDate: data.updateDate}]));
                 // ? Add to local storage also?
 
               } else {
@@ -182,9 +183,9 @@ const AddComment = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, "addComment error", error);
-              // console.log(componentName, "addComment error.name", error.name);
-              // console.log(componentName, "addComment error.message", error.message);
+              console.log(componentName, GetDateTime(), "addComment error", error);
+              // console.log(componentName, GetDateTime(), "addComment error.name", error.name);
+              // console.log(componentName, GetDateTime(), "addComment error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
@@ -196,7 +197,7 @@ const AddComment = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect commentRecordAdded", commentRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect commentRecordAdded", commentRecordAdded);
     if (commentRecordAdded !== undefined && commentRecordAdded !== null && commentRecordAdded === true) {
       clearMessages();
       setErrComment("");
@@ -209,7 +210,7 @@ const AddComment = (props) => {
   }, [commentRecordAdded]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for sessionToken", sessionToken);
+    // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
       // return <Redirect to="/" />;

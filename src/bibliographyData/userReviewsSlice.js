@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
 
 const componentName = "userReviewsSlice.js";
 
@@ -19,11 +20,11 @@ const userReviewsSlice = createSlice({
   reducers: {
     loadArrayUserReviews: {
       reducer(state, action) {
-        // console.log(componentName, "loadArrayUserReviews action.payload", action.payload);
-        // console.log(componentName, "loadArrayUserReviews action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "loadArrayUserReviews action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "loadArrayUserReviews action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "loadArrayTitles action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "loadArrayTitles action.payload[i]", action.payload[i]);
           state.arrayUserReviews.push(action.payload[i]);
         };
 
@@ -34,12 +35,12 @@ const userReviewsSlice = createSlice({
     },
     addStateUserReview: {
       reducer(state, action) {
-        // console.log(componentName, "addStateUserReview action.payload", action.payload);
-        // console.log(componentName, "addStateUserReview action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "addStateUserReview action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "addStateUserReview action.payload.length", action.payload.length);
 
         // * Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "addStateUserReview action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "addStateUserReview action.payload[i]", action.payload[i]);
           state.arrayUserReviews.push(action.payload[i]);
         };
 
@@ -47,12 +48,12 @@ const userReviewsSlice = createSlice({
     },
     updateStateUserReview: {
       reducer(state, action) {
-        console.log(componentName, "updateStateUserReview action.payload", action.payload);
+        console.log(componentName, GetDateTime(), "updateStateUserReview action.payload", action.payload);
 
         const userReviewItem = action.payload;
-        // console.log(componentName, "updateStateUserReview userReviewItem", userReviewItem);
-        // console.log(componentName, "updateStateUserReview userReviewItem.userReviewID", userReviewItem.reviewID);
-        // console.log(componentName, "updateStateUserReview userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
+        // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem", userReviewItem);
+        // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem.userReviewID", userReviewItem.reviewID);
+        // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
 
         if (typeof userReviewItem === "object") {
 
@@ -100,8 +101,8 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
           };
 
-          if (userReviewItem.hasOwnProperty("updatedAt")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedAt = userReviewItem.updatedAt;
+          if (userReviewItem.hasOwnProperty("updateDate")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updateDate = userReviewItem.updateDate;
           };
 
           // TODO: Fix how this is handled with the change in the left outer joins from Knex.
@@ -155,8 +156,8 @@ const userReviewsSlice = createSlice({
               state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.active = userReviewItem.title.active;
             };
 
-            if (userReviewItem.title.hasOwnProperty("updatedAt")) {
-              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.updatedAt = userReviewItem.title.updatedAt;
+            if (userReviewItem.title.hasOwnProperty("updateDate")) {
+              state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.updateDate = userReviewItem.title.updateDate;
             };
 
           };
@@ -200,7 +201,7 @@ const userReviewsSlice = createSlice({
     },
     deleteStateUserReview: {
       reducer(state, action) {
-        // console.log(componentName, "deleteStateUserReview action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "deleteStateUserReview action.payload", action.payload);
 
         const userReviewItemIndex = action.payload;
         // const userReviewID = action.payload;
@@ -208,7 +209,7 @@ const userReviewsSlice = createSlice({
         // ? This doesn't work because state.arrayUserReviews isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingUserReviewIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
-        // console.log(componentName, "deleteStateUserReview existingUserReviewIndex", existingUserReviewIndex);
+        // console.log(componentName, GetDateTime(), "deleteStateUserReview existingUserReviewIndex", existingUserReviewIndex);
 
         state.arrayUserReviews.splice(userReviewItemIndex, 1);
 
@@ -216,8 +217,8 @@ const userReviewsSlice = createSlice({
     },
     setUserReviewsDataOffline: {
       reducer(state, action) {
-        // console.log(componentName, "setUserReviewsDataOffline action.payload", action.payload);
-        // console.log(componentName, "setUserReviewsDataOffline action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "setUserReviewsDataOffline action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setUserReviewsDataOffline action.payload.length", action.payload.length);
 
         state.userReviewsDataOffline = action.payload;
 
@@ -225,11 +226,11 @@ const userReviewsSlice = createSlice({
     },
     //   loadArrayUserReviewsRatings: {
     //     reducer(state, action) {
-    //       // console.log(componentName, "loadArrayUserReviewsRatings action.payload", action.payload);
-    //       // console.log(componentName, "loadArrayUserReviewsRatings action.payload.length", action.payload.length);
+    //       // console.log(componentName, GetDateTime(), "loadArrayUserReviewsRatings action.payload", action.payload);
+    //       // console.log(componentName, GetDateTime(), "loadArrayUserReviewsRatings action.payload.length", action.payload.length);
 
     //       for (let i = 0; i < action.payload.length; i++) {
-    //         // console.log(componentName, "loadArrayTitles action.payload[i]", action.payload[i]);
+    //         // console.log(componentName, GetDateTime(), "loadArrayTitles action.payload[i]", action.payload[i]);
     //         state.arrayUserReviewsRatings.push(action.payload[i]);
     //       };
 
@@ -240,12 +241,12 @@ const userReviewsSlice = createSlice({
     //   },
     //   addStateUserReviewsRatings: {
     //     reducer(state, action) {
-    //       // console.log(componentName, "addStateUserReviewsRatings action.payload", action.payload);
-    //       // console.log(componentName, "addStateUserReviewsRatings action.payload.length", action.payload.length);
+    //       // console.log(componentName, GetDateTime(), "addStateUserReviewsRatings action.payload", action.payload);
+    //       // console.log(componentName, GetDateTime(), "addStateUserReviewsRatings action.payload.length", action.payload.length);
 
     //       // Could change this to accept an object and add that object to the store
     //       for (let i = 0; i < action.payload.length; i++) {
-    //         // console.log(componentName, "addStateUserReviewsRatings action.payload[i]", action.payload[i]);
+    //         // console.log(componentName, GetDateTime(), "addStateUserReviewsRatings action.payload[i]", action.payload[i]);
     //         state.arrayUserReviewsRatings.push(action.payload[i]);
     //       };
 
@@ -253,12 +254,12 @@ const userReviewsSlice = createSlice({
     //   },
     // updateStateUserReviewsRatings: {
     //   reducer(state, action) {
-    //     // console.log(componentName, "updateStateUserReviewsRatings action.payload", action.payload);
+    //     // console.log(componentName, GetDateTime(), "updateStateUserReviewsRatings action.payload", action.payload);
 
     //     const userReviewRatingItem = action.payload;
-    //     // console.log(componentName, "updateStateUserReviewsRatings userReviewRatingItem", userReviewRatingItem);
-    //     // console.log(componentName, "updateStateUserReviewsRatings userReviewRatingItem.titleID", userReviewRatingItem.titleID);
-    //     // console.log(componentName, "updateStateUserReviewsRatings userReviewRatingItem.userReviewItemIndex", userReviewRatingItem.userReviewRatingItemIndex);
+    //     // console.log(componentName, GetDateTime(), "updateStateUserReviewsRatings userReviewRatingItem", userReviewRatingItem);
+    //     // console.log(componentName, GetDateTime(), "updateStateUserReviewsRatings userReviewRatingItem.titleID", userReviewRatingItem.titleID);
+    //     // console.log(componentName, GetDateTime(), "updateStateUserReviewsRatings userReviewRatingItem.userReviewItemIndex", userReviewRatingItem.userReviewRatingItemIndex);
 
     //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].titleID = userReviewRatingItem.titleID;
     //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].userReviewCount = userReviewRatingItem.userReviewCount;
@@ -269,7 +270,7 @@ const userReviewsSlice = createSlice({
     // },
     // deleteStateUserReviewsRatings: {
     //   reducer(state, action) {
-    //     console.log(componentName, "deleteStateUserReviewsRatings action.payload", action.payload);
+    //     console.log(componentName, GetDateTime(), "deleteStateUserReviewsRatings action.payload", action.payload);
 
     //     const userReviewItemIndex = action.payload;
     //     // const userReviewID = action.payload;
@@ -277,7 +278,7 @@ const userReviewsSlice = createSlice({
     //     // This doesn't work because state.arrayUserReviewsRatings isn't stored as an array of objects?
     //     // Need to copy the array?
     //     // const existingUserReviewIndex = state.arrayUserReviewsRatings.findIndex(userReview => userReview.reviewID === reviewID);
-    //     // console.log(componentName, "deleteStateUserReviewsRatings existingUserReviewIndex", existingUserReviewIndex);
+    //     // console.log(componentName, GetDateTime(), "deleteStateUserReviewsRatings existingUserReviewIndex", existingUserReviewIndex);
 
     //     state.arrayUserReviewsRatings.splice(userReviewItemIndex, 1);
 
@@ -285,8 +286,8 @@ const userReviewsSlice = createSlice({
     // },
     setUserReviewsRatingsLoaded: {
       reducer(state, action) {
-        // console.log(componentName, "setUserReviewsRatingsLoaded action.payload", action.payload);
-        // console.log(componentName, "setUserReviewsRatingsLoaded action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "setUserReviewsRatingsLoaded action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setUserReviewsRatingsLoaded action.payload.length", action.payload.length);
 
         state.userReviewsRatingsLoaded = action.payload;
 
@@ -294,8 +295,8 @@ const userReviewsSlice = createSlice({
     },
     setLastDatabaseRetrievalUserReviewsRatings: {
       reducer(state, action) {
-        // console.log(componentName, "setLastDatabaseRetrievalUserReviewsRatings action.payload", action.payload);
-        // console.log(componentName, "setLastDatabaseRetrievalUserReviewsRatings action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "setLastDatabaseRetrievalUserReviewsRatings action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setLastDatabaseRetrievalUserReviewsRatings action.payload.length", action.payload.length);
 
         state.lastDatabaseRetrievalUserReviewsRatings = action.payload;
 
@@ -303,8 +304,8 @@ const userReviewsSlice = createSlice({
     },
     setUserReviewsRatingsDataOffline: {
       reducer(state, action) {
-        // console.log(componentName, "setUserReviewsRatingsDataOffline action.payload", action.payload);
-        // console.log(componentName, "setUserReviewsRatingsDataOffline action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "setUserReviewsRatingsDataOffline action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setUserReviewsRatingsDataOffline action.payload.length", action.payload.length);
 
         state.userReviewsRatingsDataOffline = action.payload;
 

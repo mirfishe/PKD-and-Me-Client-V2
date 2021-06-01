@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Register = (props) => {
@@ -18,7 +19,7 @@ const Register = (props) => {
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -64,15 +65,15 @@ const Register = (props) => {
   const updateToken = (newToken) => {
     if (newToken !== undefined && newToken !== null && newToken !== "") {
       localStorage.setItem("token", newToken);
-      // console.log(componentName, "updateToken newToken", newToken);
-      // console.log(componentName, "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
-      // console.log(componentName, "updateToken User token changed.");
+      // console.log(componentName, GetDateTime(), "updateToken newToken", newToken);
+      // console.log(componentName, GetDateTime(), "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
+      // console.log(componentName, GetDateTime(), "updateToken User token changed.");
     };
   };
 
 
   const register = () => {
-    // console.log(componentName, "register");
+    // console.log(componentName, GetDateTime(), "register");
 
     clearMessages();
     setErrFirstName("");
@@ -99,13 +100,13 @@ const Register = (props) => {
       if (txtFirstName.trim().length > 0) {
         firstNameValidated = true;
         setErrFirstName("");
-        // console.log(componentName, "register Valid First Name");
-        // console.log(componentName, "register firstNameValidated true", firstNameValidated);
+        // console.log(componentName, GetDateTime(), "register Valid First Name");
+        // console.log(componentName, GetDateTime(), "register firstNameValidated true", firstNameValidated);
       } else {
         firstNameValidated = false;
         setErrFirstName("Please enter a first name.");
-        // console.log(componentName, "register Invalid First Name");
-        // console.log(componentName, "register firstNameValidated false", firstNameValidated);
+        // console.log(componentName, GetDateTime(), "register Invalid First Name");
+        // console.log(componentName, GetDateTime(), "register firstNameValidated false", firstNameValidated);
       };
     };
 
@@ -113,13 +114,13 @@ const Register = (props) => {
       if (txtLastName.trim().length > 0) {
         lastNameValidated = true;
         setErrLastName("");
-        // console.log(componentName, "register Valid Last Name");
-        // console.log(componentName, "register lastNameValidated true", lastNameValidated);
+        // console.log(componentName, GetDateTime(), "register Valid Last Name");
+        // console.log(componentName, GetDateTime(), "register lastNameValidated true", lastNameValidated);
       } else {
         lastNameValidated = false;
         setErrLastName("Please enter a last name.");
-        // console.log(componentName, "register Invalid Last Name");
-        // console.log(componentName, "register lastNameValidated false", lastNameValidated);
+        // console.log(componentName, GetDateTime(), "register Invalid Last Name");
+        // console.log(componentName, GetDateTime(), "register lastNameValidated false", lastNameValidated);
       };
     };
 
@@ -128,13 +129,13 @@ const Register = (props) => {
         // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, "register Valid Email Address");
-        // console.log(componentName, "register emailValidated true", emailValidated);
+        // console.log(componentName, GetDateTime(), "register Valid Email Address");
+        // console.log(componentName, GetDateTime(), "register emailValidated true", emailValidated);
       } else {
         emailValidated = false;
         setErrEmail("Please enter a valid email address.");
-        // console.log(componentName, "register Invalid Email Address");
-        // console.log(componentName, "register emailValidated false", emailValidated);
+        // console.log(componentName, GetDateTime(), "register Invalid Email Address");
+        // console.log(componentName, GetDateTime(), "register emailValidated false", emailValidated);
       };
     };
 
@@ -142,31 +143,31 @@ const Register = (props) => {
       if (txtPassword.trim().length > 4) {
         passwordValidated = true;
         setErrPassword("");
-        // console.log(componentName, "register Valid Password");
-        // console.log(componentName, "register passwordValidated true", passwordValidated);
+        // console.log(componentName, GetDateTime(), "register Valid Password");
+        // console.log(componentName, GetDateTime(), "register passwordValidated true", passwordValidated);
       } else {
         passwordValidated = false;
         setErrPassword("Password must be at least 5 characters.");
-        // console.log(componentName, "register Invalid Password");
-        // console.log(componentName, "register passwordValidated false", passwordValidated);
+        // console.log(componentName, GetDateTime(), "register Invalid Password");
+        // console.log(componentName, GetDateTime(), "register passwordValidated false", passwordValidated);
       };
     };
 
     if (firstNameValidated === true && lastNameValidated === true && emailValidated === true && passwordValidated === true) {
       formValidated = true;
-      // console.log(componentName, "register Valid Form");
-      // console.log(componentName, "register formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "register Valid Form");
+      // console.log(componentName, GetDateTime(), "register formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "register Invalid Form");
-      // console.log(componentName, "register formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "register Invalid Form");
+      // console.log(componentName, GetDateTime(), "register formValidated false", formValidated);
     };
 
-    // console.log(componentName, "register firstNameValidated", firstNameValidated);
-    // console.log(componentName, "register lastNameValidated", lastNameValidated);
-    // console.log(componentName, "register emailValidated", emailValidated);
-    // console.log(componentName, "register passwordValidated", passwordValidated);
-    // console.log(componentName, "register formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "register firstNameValidated", firstNameValidated);
+    // console.log(componentName, GetDateTime(), "register lastNameValidated", lastNameValidated);
+    // console.log(componentName, GetDateTime(), "register emailValidated", emailValidated);
+    // console.log(componentName, GetDateTime(), "register passwordValidated", passwordValidated);
+    // console.log(componentName, GetDateTime(), "register formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -177,10 +178,10 @@ const Register = (props) => {
           email: txtEmail.trim(),
           password: txtPassword.trim()
         };
-        // console.log(componentName, "register userObject", userObject);
+        // console.log(componentName, GetDateTime(), "register userObject", userObject);
 
         let url = baseURL + "users/register/";
-        // console.log(componentName, "register url", url);
+        // console.log(componentName, GetDateTime(), "register url", url);
 
         fetch(url, {
           method: "POST",
@@ -190,7 +191,7 @@ const Register = (props) => {
           body: JSON.stringify({ user: userObject })
         })
           .then(response => {
-            // console.log(componentName, "register response", response);
+            // console.log(componentName, GetDateTime(), "register response", response);
             // if (!response.ok) {
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
             // } else {
@@ -202,7 +203,7 @@ const Register = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, "register data", data);
+            console.log(componentName, GetDateTime(), "register data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -238,9 +239,9 @@ const Register = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, "register error", error);
-            // console.log(componentName, "register error.name", error.name);
-            // console.log(componentName, "register error.message", error.message);
+            console.log(componentName, GetDateTime(), "register error", error);
+            // console.log(componentName, GetDateTime(), "register error.name", error.name);
+            // console.log(componentName, GetDateTime(), "register error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -252,14 +253,14 @@ const Register = (props) => {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, "getChecklist");
-    // console.log(componentName, "getChecklist baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getChecklist");
+    // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
     setChecklistResultsFound(null);
 
-    let url = baseURL + "titles/checklist/list";
+    let url = baseURL + "titles/checklist";
 
     if (token !== undefined && token !== null && token !== "") {
 
@@ -271,7 +272,7 @@ const Register = (props) => {
         }),
       })
         .then(response => {
-          // console.log(componentName, "getChecklist response", response);
+          // console.log(componentName, GetDateTime(), "getChecklist response", response);
           // if (!response.ok) {
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
           // } else {
@@ -283,7 +284,7 @@ const Register = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, "getChecklist data", data);
+          console.log(componentName, GetDateTime(), "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);
@@ -293,15 +294,15 @@ const Register = (props) => {
             dispatch(loadArrayChecklist(data.records));
 
           } else {
-            console.log(componentName, "getChecklist resultsFound error", data.message);
+            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", data.message);
             addErrorMessage(data.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, "getChecklist error", error);
-          // console.log(componentName, "getChecklist error.name", error.name);
-          // console.log(componentName, "getChecklist error.message", error.message);
+          console.log(componentName, GetDateTime(), "getChecklist error", error);
+          // console.log(componentName, GetDateTime(), "getChecklist error.name", error.name);
+          // console.log(componentName, GetDateTime(), "getChecklist error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -311,7 +312,7 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect userRecordAdded", userRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect userRecordAdded", userRecordAdded);
     if (userRecordAdded !== undefined && userRecordAdded !== null && userRecordAdded !== false) {
       clearMessages();
       setErrFirstName("");
@@ -327,7 +328,7 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect sessionToken", sessionToken);
+    // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
     if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
       clearMessages();
       setErrFirstName("");
@@ -341,7 +342,7 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
+    // console.log(componentName, GetDateTime(), "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
 
     if (process.env.NODE_ENV === "development") {
 

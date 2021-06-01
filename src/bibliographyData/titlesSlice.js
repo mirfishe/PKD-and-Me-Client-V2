@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
 
 const componentName = "titlesSlice.js";
 
@@ -16,11 +17,11 @@ const titlesSlice = createSlice({
   reducers: {
     loadArrayTitles: {
       reducer(state, action) {
-        // console.log(componentName, "loadArrayTitles action.payload", action.payload);
-        // console.log(componentName, "loadArrayTitles action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "loadArrayTitles action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "loadArrayTitles action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "loadArrayTitles action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "loadArrayTitles action.payload[i]", action.payload[i]);
           state.arrayTitles.push(action.payload[i]);
         };
 
@@ -31,12 +32,12 @@ const titlesSlice = createSlice({
     },
     addStateTitle: {
       reducer(state, action) {
-        // console.log(componentName, "addStateTitle action.payload", action.payload);
-        // console.log(componentName, "addStateTitle action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "addStateTitle action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "addStateTitle action.payload.length", action.payload.length);
 
         // * Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "addStateTitle action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "addStateTitle action.payload[i]", action.payload[i]);
           state.arrayTitles.push(action.payload[i]);
         };
 
@@ -44,12 +45,12 @@ const titlesSlice = createSlice({
     },
     updateStateTitle: {
       reducer(state, action) {
-        console.log(componentName, "updateStateTitle action.payload", action.payload);
+        console.log(componentName, GetDateTime(), "updateStateTitle action.payload", action.payload);
 
         const titleItem = action.payload;
-        // console.log(componentName, "updateStateTitle titleItem", titleItem);
-        // console.log(componentName, "updateStateTitle titleItem.titleID", titleItem.titleID);
-        // console.log(componentName, "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
+        // console.log(componentName, GetDateTime(), "updateStateTitle titleItem", titleItem);
+        // console.log(componentName, GetDateTime(), "updateStateTitle titleItem.titleID", titleItem.titleID);
+        // console.log(componentName, GetDateTime(), "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
 
         if (typeof titleItem === "object") {
 
@@ -97,8 +98,8 @@ const titlesSlice = createSlice({
             state.arrayTitles[titleItem.titleItemIndex].active = titleItem.active;
           };
 
-          if (titleItem.hasOwnProperty("updatedAt")) {
-            state.arrayTitles[titleItem.titleItemIndex].updatedAt = titleItem.updatedAt;
+          if (titleItem.hasOwnProperty("updateDate")) {
+            state.arrayTitles[titleItem.titleItemIndex].updateDate = titleItem.updateDate;
           };
 
           // TODO: Fix how this is handled with the change in the left outer joins from Knex.
@@ -120,8 +121,8 @@ const titlesSlice = createSlice({
               state.arrayTitles[titleItem.titleItemIndex].category.active = titleItem.category.active;
             };
 
-            if (titleItem.category.hasOwnProperty("updatedAt")) {
-              state.arrayTitles[titleItem.titleItemIndex].category.updatedAt = titleItem.category.updatedAt;
+            if (titleItem.category.hasOwnProperty("updateDate")) {
+              state.arrayTitles[titleItem.titleItemIndex].category.updateDate = titleItem.category.updateDate;
             };
 
           };
@@ -132,7 +133,7 @@ const titlesSlice = createSlice({
     },
     deleteStateTitle: {
       reducer(state, action) {
-        // console.log(componentName, "deleteStateTitle action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "deleteStateTitle action.payload", action.payload);
 
         const titleItemIndex = action.payload;
         // const titleID = action.payload;
@@ -140,7 +141,7 @@ const titlesSlice = createSlice({
         // ? This doesn't work because state.arrayTitles isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
-        // console.log(componentName, "deleteStateTitle existingTitleIndex", existingTitleIndex);
+        // console.log(componentName, GetDateTime(), "deleteStateTitle existingTitleIndex", existingTitleIndex);
 
         state.arrayTitles.splice(titleItemIndex, 1);
 
@@ -148,12 +149,12 @@ const titlesSlice = createSlice({
     },
     updateStateTitleRating: {
       reducer(state, action) {
-        console.log(componentName, "updateStateTitleRating action.payload", action.payload);
+        console.log(componentName, GetDateTime(), "updateStateTitleRating action.payload", action.payload);
 
         const titleItem = action.payload;
-        // console.log(componentName, "updateStateTitleRating titleItem", titleItem);
-        // console.log(componentName, "updateStateTitleRating titleItem.titleID", titleItem.titleID);
-        // console.log(componentName, "updateStateTitleRating titleItem.titleItemIndex", titleItem.titleItemIndex);
+        // console.log(componentName, GetDateTime(), "updateStateTitleRating titleItem", titleItem);
+        // console.log(componentName, GetDateTime(), "updateStateTitleRating titleItem.titleID", titleItem.titleID);
+        // console.log(componentName, GetDateTime(), "updateStateTitleRating titleItem.titleItemIndex", titleItem.titleItemIndex);
 
         if (typeof titleItem === "object") {
 
@@ -175,7 +176,7 @@ const titlesSlice = createSlice({
     },
     setTitlesDataOffline: {
       reducer(state, action) {
-        // console.log(componentName, "setTitlesDataOffline action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setTitlesDataOffline action.payload", action.payload);
 
         state.titlesDataOffline = action.payload;
 
@@ -183,7 +184,7 @@ const titlesSlice = createSlice({
     },
     setTitleSortBy: {
       reducer(state, action) {
-        // console.log(componentName, "setTitleSortBy action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setTitleSortBy action.payload", action.payload);
 
         state.titleSortBy = action.payload;
 

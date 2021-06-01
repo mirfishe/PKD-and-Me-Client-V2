@@ -5,7 +5,7 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from "react-bootstrap-icons";
 import { Rating } from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
-import { DisplayDate, DisplayYear, encodeURL, decodeURL, IsEmpty, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -27,17 +27,17 @@ const Title = (props) => {
   const appName = useSelector(state => state.app.appName);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
   const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, "userID", userID);
+  // console.log(componentName, GetDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   // const electronicOnly = useSelector(state => state.app.electronicOnly);
   // const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
@@ -50,14 +50,14 @@ const Title = (props) => {
   const [errEditionMessage, setErrEditionMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, "titleListState", titleListState);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
   // const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, "editionListState", editionListState);
+  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
 
-  // console.log(componentName, "props.match.params", props.match.params);
+  // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
   const titleParam = props.linkItem.linkName; // props.match.params.title;
-  // console.log(componentName, "typeof titleParam", typeof titleParam);
-  // console.log(componentName, "titleParam", titleParam);
+  // console.log(componentName, GetDateTime(), "typeof titleParam", typeof titleParam);
+  // console.log(componentName, GetDateTime(), "titleParam", titleParam);
 
   let titleNameBreadCrumb = "";
   let titleID = "";
@@ -86,8 +86,8 @@ const Title = (props) => {
     // * If titleParam is not a number, then it's the title name
     titleList = titleListState.filter(title => title.titleURL === titleParam);
     const title = titleListState.find(title => title.titleURL === titleParam);
-    // console.log(componentName, "typeof title", typeof title);
-    // console.log(componentName, "title", title);
+    // console.log(componentName, GetDateTime(), "typeof title", typeof title);
+    // console.log(componentName, GetDateTime(), "title", title);
 
     if (title !== undefined && title !== null) {
       document.title = title.titleName + " | " + appName + " | " + siteName;
@@ -102,7 +102,7 @@ const Title = (props) => {
     } else {
       document.title = "Title Not Found | " + appName + " | " + siteName;
       console.log("Title not found.");
-      // console.log(componentName, "titleParam", titleParam);
+      // console.log(componentName, GetDateTime(), "titleParam", titleParam);
       // // Display all active titles
       // titleList = titleListState;
       // // Display all active editions
@@ -121,11 +121,11 @@ const Title = (props) => {
   };
 
   // if (electronicOnly === true || userElectronicOnly === true) {
-  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
   //   // editionList = editionList.filter(edition => edition.medium.electronic === true);
   //   editionList = editionList.filter(edition => edition.electronic === true);
   // } else if (physicalOnly === true || userPhysicalOnly === true) {
-  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
   //   // editionList = editionList.filter(edition => edition.medium.electronic === false);
   //   editionList = editionList.filter(edition => edition.electronic === false);
   // } else {
@@ -139,21 +139,21 @@ const Title = (props) => {
     titleList = titleList.filter(title => title.active === true);
     // editionList = editionList.filter(edition => edition.active === true);
   };
-  // console.log(componentName, "titleList", titleList);
+  // console.log(componentName, GetDateTime(), "titleList", titleList);
 
   // * Sort the titleList array by title.titleSort
   // * Really not needed here since there should only be one item in the array
   titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-  // console.log(componentName, "titleList", titleList);
+  // console.log(componentName, GetDateTime(), "titleList", titleList);
 
   // * Sort the editionList array by media.sortID
-  // console.log(componentName, "editionList", editionList);
+  // console.log(componentName, GetDateTime(), "editionList", editionList);
   // // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
   // editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-  // console.log(componentName, "editionList", editionList);
+  // console.log(componentName, GetDateTime(), "editionList", editionList);
 
   const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, "userReviewsState", userReviewsState);
+  // console.log(componentName, GetDateTime(), "userReviewsState", userReviewsState);
 
   let userReviews = userReviewsState.filter(userReview => userReview.titleID === titleID);
 
@@ -163,21 +163,21 @@ const Title = (props) => {
     userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
     userReviewItem = userReviewItem[0];
   };
-  // console.log(componentName, "userReviewItem", userReviewItem);
-  // console.log(componentName, "typeof userReviewItem.read", typeof userReviewItem.read);
-  // console.log(componentName, "userReviewItem.read", userReviewItem.read);
-  // console.log(componentName, "typeof userReviewItem.dateRead", typeof userReviewItem.dateRead);
-  // console.log(componentName, "userReviewItem.dateRead", userReviewItem.dateRead);
-  // console.log(componentName, "typeof userReviewItem[0].read", typeof userReviewItem[0].read);
-  // console.log(componentName, "userReviewItem[0].read", userReviewItem[0].read);
-  // console.log(componentName, "typeof userReviewItem[0].dateRead", typeof userReviewItem[0].dateRead);
-  // console.log(componentName, "userReviewItem[0].dateRead", userReviewItem[0].dateRead);
+  // console.log(componentName, GetDateTime(), "userReviewItem", userReviewItem);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem.read", typeof userReviewItem.read);
+  // console.log(componentName, GetDateTime(), "userReviewItem.read", userReviewItem.read);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem.dateRead", typeof userReviewItem.dateRead);
+  // console.log(componentName, GetDateTime(), "userReviewItem.dateRead", userReviewItem.dateRead);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem[0].read", typeof userReviewItem[0].read);
+  // console.log(componentName, GetDateTime(), "userReviewItem[0].read", userReviewItem[0].read);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem[0].dateRead", typeof userReviewItem[0].dateRead);
+  // console.log(componentName, GetDateTime(), "userReviewItem[0].dateRead", userReviewItem[0].dateRead);
 
   // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
-  // // console.log(componentName, "userReviewsState", userReviewsState);
+  // // console.log(componentName, GetDateTime(), "userReviewsState", userReviewsState);
 
   // let userReviewRatingItem = {};
-  // // console.log(componentName, "userReviewRatingItem", userReviewRatingItem);
+  // // console.log(componentName, GetDateTime(), "userReviewRatingItem", userReviewRatingItem);
 
   // if (titleID !== undefined && titleID !== null && !isNaN(titleID)) {
   //     userReviewRatingItem = userReviewsRatingsState.filter(userReview => userReview.titleID === titleID);
@@ -204,8 +204,8 @@ const Title = (props) => {
   // const [overallTitleRatingCount, setOverallTitleRatingCount] = useState(0);
 
   // const getTitleRating = () => {
-  //     // console.log(componentName, "getTitleRating");
-  //     // console.log(componentName, "getTitleRating baseURL", baseURL);
+  //     // console.log(componentName, GetDateTime(), "getTitleRating");
+  //     // console.log(componentName, GetDateTime(), "getTitleRating baseURL", baseURL);
 
   //     setOverallTitleRatingMessage("");
   //     setErrOverallTitleRatingMessage("");
@@ -218,11 +218,11 @@ const Title = (props) => {
   //     if (titleID !== null) {
   //         url = url + "rating/" + titleID;
 
-  //         // console.log(componentName, "getTitleRating url", url);
+  //         // console.log(componentName, GetDateTime(), "getTitleRating url", url);
 
   //         fetch(url)
   //         .then(response => {
-  //             // console.log(componentName, "getTitleRating response", response);
+  //             // console.log(componentName, GetDateTime(), "getTitleRating response", response);
   //             if (!response.ok) {
   //                 // throw Error(response.status + " " + response.statusText + " " + response.url);
   //                 return {resultsFound: false, message: "Offline User Reviews Rating data fetch used."};
@@ -231,14 +231,14 @@ const Title = (props) => {
   //             };
   //         })
   //         .then(data => {
-  //             // console.log(componentName, "getTitleRating data", data);
+  //             // console.log(componentName, GetDateTime(), "getTitleRating data", data);
 
   //             setOverallTitleRatingResultsFound(data.resultsFound);
   //             setOverallTitleRatingMessage(data.message);
 
   //             if (data.resultsFound === true) {
-  //                 // console.log(componentName, "getTitleRating data.userReviews[0].userReviewCount", data.userReviews[0].userReviewCount);
-  //                 // console.log(componentName, "getTitleRating data.userReviews[0].userReviewSum", data.userReviews[0].userReviewSum);
+  //                 // console.log(componentName, GetDateTime(), "getTitleRating data.userReviews[0].userReviewCount", data.userReviews[0].userReviewCount);
+  //                 // console.log(componentName, GetDateTime(), "getTitleRating data.userReviews[0].userReviewSum", data.userReviews[0].userReviewSum);
 
   //                 setOverallTitleRatingCount(data.userReviews[0].userReviewCount);
   //                 let userReviewCount = data.userReviews[0].userReviewCount;
@@ -250,24 +250,24 @@ const Title = (props) => {
   //                     // let userReviewAverage: number = userReviewSum/0;
   //                     let userReviewAverage = userReviewSum/userReviewCount;
 
-  //                     // console.log(componentName, "getTitleRating userReviewCount", userReviewCount);
-  //                     // console.log(componentName, "getTitleRating state.overallTitleRatingCount", state.overallTitleRatingCount);
-  //                     // console.log(componentName, "getTitleRating userReviewSum", userReviewSum);
-  //                     // console.log(componentName, "getTitleRating userReviewAverage", userReviewAverage);
+  //                     // console.log(componentName, GetDateTime(), "getTitleRating userReviewCount", userReviewCount);
+  //                     // console.log(componentName, GetDateTime(), "getTitleRating state.overallTitleRatingCount", state.overallTitleRatingCount);
+  //                     // console.log(componentName, GetDateTime(), "getTitleRating userReviewSum", userReviewSum);
+  //                     // console.log(componentName, GetDateTime(), "getTitleRating userReviewAverage", userReviewAverage);
 
   //                     setOverallTitleRating(userReviewAverage);
   //                 };
 
   //             } else {
-  //                 console.log(componentName, "getEditions resultsFound error", data.message);
+  //                 console.log(componentName, GetDateTime(), "getEditions resultsFound error", data.message);
   //                 setErrOverallTitleRatingMessage(data.message);
   //             };
 
   //         })
   //         .catch(error => {
-  //             console.log(componentName, "getTitleRating error", error);
-  //             // console.log(componentName, "getTitleRating error.name", error.name);
-  //             // console.log(componentName, "getTitleRating error.message", error.message);
+  //             console.log(componentName, GetDateTime(), "getTitleRating error", error);
+  //             // console.log(componentName, GetDateTime(), "getTitleRating error.name", error.name);
+  //             // console.log(componentName, GetDateTime(), "getTitleRating error.message", error.message);
   //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
   //         });
 
@@ -276,13 +276,13 @@ const Title = (props) => {
   // };
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect titleList", titleList);
+    // console.log(componentName, GetDateTime(), "useEffect titleList", titleList);
     if (titleList.length > 0) {
       setErrTitleMessage("");
     } else {
@@ -292,7 +292,7 @@ const Title = (props) => {
   }, [titleList]);
 
   // useEffect(() => {
-  //     // console.log(componentName, "useEffect titleID", titleID);
+  //     // console.log(componentName, GetDateTime(), "useEffect titleID", titleID);
 
   //     if (titleID !== undefined && titleID !== null && titleID !== "" && overallTitleRatingResultsFound === null) {
   //         getTitleRating();
@@ -301,7 +301,7 @@ const Title = (props) => {
   // }, [titleID]);
 
   // useEffect(() => {
-  //     // console.log(componentName, "useEffect editionList", editionList);
+  //     // console.log(componentName, GetDateTime(), "useEffect editionList", editionList);
   //     if (editionList.length > 0) {
   //         setErrEditionMessage("");
   //     } else {

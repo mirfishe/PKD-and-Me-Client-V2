@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Container, Col, Row, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import { Drawer } from "@material-ui/core";
 import AppSettings from "../../app/environment";
-import { DisplayYear, encodeURL, decodeURL } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -19,15 +19,15 @@ const Checklist = (props) => {
   const history = useHistory();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
@@ -41,22 +41,22 @@ const Checklist = (props) => {
   const [checklistRecordUpdated, setChecklistRecordUpdated] = useState(null);
 
   const linkItem = useSelector(state => state.urls.linkItem);
-  // console.log(componentName, "linkItem", linkItem);
+  // console.log(componentName, GetDateTime(), "linkItem", linkItem);
 
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, "userReviewListState", userReviewListState);
+  // console.log(componentName, GetDateTime(), "userReviewListState", userReviewListState);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, "userState", userState);
+  // console.log(componentName, GetDateTime(), "userState", userState);
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, "editionListState", editionListState);
+  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
 
   let editionList = [...editionListState];
-  // console.log(componentName, "editionList", editionList);
+  // console.log(componentName, GetDateTime(), "editionList", editionList);
 
   const sortChecklistList = (sortBy) => {
-    // console.log(componentName, "sortTitles sortBy", sortBy);
+    // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
     if (checklistList !== undefined && checklistList !== null && checklistList.length > 0) {
       if (sortBy === "publicationDate") {
         // * Sort the checklistList array by title.publicationDate
@@ -80,15 +80,15 @@ const Checklist = (props) => {
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
         let titleListPublicationDate = checklistList.filter(title => title.publicationDate !== undefined && title.publicationDate !== null);
         titleListPublicationDate.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
-        // console.log(componentName, "titleListPublicationDate", titleListPublicationDate);
+        // console.log(componentName, GetDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
         let titleListNoPublicationDate = checklistList.filter(title => title.publicationDate === undefined || title.publicationDate === null);
         titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-        // console.log(componentName, "titleListNoPublicationDate", titleListNoPublicationDate);
+        // console.log(componentName, GetDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
 
         let newtitleList = [...titleListPublicationDate];
         newtitleList.push(...titleListNoPublicationDate);
-        // console.log(componentName, "newtitleList", newtitleList);
+        // console.log(componentName, GetDateTime(), "newtitleList", newtitleList);
 
         checklistList = [...newtitleList];
 
@@ -103,10 +103,10 @@ const Checklist = (props) => {
   };
 
   const checklistListState = useSelector(state => state.user.arrayChecklist);
-  // console.log(componentName, "checklistListState", checklistListState);
+  // console.log(componentName, GetDateTime(), "checklistListState", checklistListState);
 
   let checklistList = [...checklistListState];
-  // console.log(componentName, "checklistList", checklistList);
+  // console.log(componentName, GetDateTime(), "checklistList", checklistList);
 
   // * Filter by category
   if (linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkType") === true) {
@@ -133,15 +133,15 @@ const Checklist = (props) => {
 
   // checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
   sortChecklistList(titleSortBy);
-  // console.log(componentName, "titleSortBy", titleSortBy);
-  // console.log(componentName, "titleList", titleList);
+  // console.log(componentName, GetDateTime(), "titleSortBy", titleSortBy);
+  // console.log(componentName, GetDateTime(), "titleList", titleList);
 
   const updateChecklist = (titleID, read, reviewID) => {
-    // console.log(componentName, "updateChecklist");
+    // console.log(componentName, GetDateTime(), "updateChecklist");
 
-    // console.log(componentName, "updateChecklist titleID", titleID);
-    // console.log(componentName, "updateChecklist read", read);
-    // console.log(componentName, "updateChecklist reviewID", reviewID);
+    // console.log(componentName, GetDateTime(), "updateChecklist titleID", titleID);
+    // console.log(componentName, GetDateTime(), "updateChecklist read", read);
+    // console.log(componentName, GetDateTime(), "updateChecklist reviewID", reviewID);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
@@ -154,7 +154,7 @@ const Checklist = (props) => {
       active: true // ? always true?
     };
 
-    // console.log(componentName, "updateChecklist userReviewObject", userReviewObject);
+    // console.log(componentName, GetDateTime(), "updateChecklist userReviewObject", userReviewObject);
 
     let url = baseURL + "userreviews/";
     let updateChecklistMethod = "";
@@ -166,8 +166,8 @@ const Checklist = (props) => {
       updateChecklistMethod = "POST";
     };
 
-    // console.log(componentName, "updateChecklist url", url);
-    // console.log(componentName, "updateChecklist updateChecklistMethod", updateChecklistMethod);
+    // console.log(componentName, GetDateTime(), "updateChecklist url", url);
+    // console.log(componentName, GetDateTime(), "updateChecklist updateChecklistMethod", updateChecklistMethod);
 
     if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -180,7 +180,7 @@ const Checklist = (props) => {
         body: JSON.stringify({ userReview: userReviewObject })
       })
         .then(response => {
-          // console.log(componentName, "updateChecklist response", response);
+          // console.log(componentName, GetDateTime(), "updateChecklist response", response);
           // if (!response.ok) {
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
           // } else {
@@ -192,7 +192,7 @@ const Checklist = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, "updateChecklist data", data);
+          console.log(componentName, GetDateTime(), "updateChecklist data", data);
 
           let recordChanged = null;
 
@@ -218,40 +218,40 @@ const Checklist = (props) => {
             // this.props.userReviewUpdated();
 
             const checklistListItem = checklistList.find(title => title.titleID === titleID);
-            // console.log(componentName, "updateChecklist checklistListIndex", checklistListIndex);
+            // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             const checklistListIndex = checklistList.findIndex(title => title.titleID === titleID);
-            // console.log(componentName, "updateChecklist checklistListIndex", checklistListIndex);
+            // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString() }));
+              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: new Date().toISOString() }));
             } else if (updateChecklistMethod === "POST") {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: data.updatedAt }));
+              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: data.updateDate }));
             };
 
             const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
-            // console.log(componentName, "updateChecklist checklistListIndex", checklistListIndex);
+            // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
 
-              dispatch(updateStateUserReview({ userReviewListIndex: userReviewListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, active: data.active, updatedAt: data.updatedAt }));
+              dispatch(updateStateUserReview({ userReviewListIndex: userReviewListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, active: data.active, updateDate: data.updateDate }));
 
             } else if (updateChecklistMethod === "POST") {
 
-              dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: checklistListItem.titleID, titleName: checklistListItem.titleName, titleSort: checklistListItem.titleSort, titleURL: checklistListItem.titleURL, authorFirstName: checklistListItem.authorFirstName, authorLastName: checklistListItem.authorLastName, publicationDate: checklistListItem.publicationDate, imageName: checklistListItem.imageName, categoryID: checklistListItem.categoryID, shortDescription: checklistListItem.shortDescription, urlPKDweb: checklistListItem.urlPKDweb, active: checklistListItem.active, createdAt: checklistListItem.createdAt, updatedAt: checklistListItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
+              dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createDate: data.createDate, updateDate: data.updateDate, title: { titleID: checklistListItem.titleID, titleName: checklistListItem.titleName, titleSort: checklistListItem.titleSort, titleURL: checklistListItem.titleURL, authorFirstName: checklistListItem.authorFirstName, authorLastName: checklistListItem.authorLastName, publicationDate: checklistListItem.publicationDate, imageName: checklistListItem.imageName, categoryID: checklistListItem.categoryID, shortDescription: checklistListItem.shortDescription, urlPKDweb: checklistListItem.urlPKDweb, active: checklistListItem.active, createDate: checklistListItem.createDate, updateDate: checklistListItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
 
             };
 
           } else {
-            console.log(componentName, "updateChecklist resultsFound error", data.message);
+            console.log(componentName, GetDateTime(), "updateChecklist resultsFound error", data.message);
             setErrChecklistMessage(data.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, "updateChecklist error", error);
-          // console.log(componentName, "updateChecklist error.name", error.name);
-          // console.log(componentName, "updateChecklist error.message", error.message);
+          console.log(componentName, GetDateTime(), "updateChecklist error", error);
+          // console.log(componentName, GetDateTime(), "updateChecklist error.name", error.name);
+          // console.log(componentName, GetDateTime(), "updateChecklist error.message", error.message);
           setErrChecklistMessage(error.name + ": " + error.message);
         });
 
@@ -260,7 +260,7 @@ const Checklist = (props) => {
   };
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
 

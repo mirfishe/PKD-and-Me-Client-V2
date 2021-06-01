@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { encodeURL } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
 import { addStateMedia } from "../../bibliographyData/mediaSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -14,15 +14,15 @@ const AddMedia = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -53,8 +53,8 @@ const AddMedia = (props) => {
 
 
   const addMedia = () => {
-    // console.log(componentName, "addMedia");
-    // console.log(componentName, "addMedia baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addMedia");
+    // console.log(componentName, GetDateTime(), "addMedia baseURL", baseURL);
 
     clearMessages();
     setMediaRecordAdded(null);
@@ -73,28 +73,28 @@ const AddMedia = (props) => {
       if (txtMedia.trim().length > 0) {
         mediaValidated = true;
         setErrMedia("");
-        // console.log(componentName, "addMedia Valid Media");
-        // console.log(componentName, "addMedia mediaValidated true", mediaValidated);
+        // console.log(componentName, GetDateTime(), "addMedia Valid Media");
+        // console.log(componentName, GetDateTime(), "addMedia mediaValidated true", mediaValidated);
       } else {
         mediaValidated = false;
         setErrMedia("Please enter a media.");
-        // console.log(componentName, "addMedia Invalid Media");
-        // console.log(componentName, "addMedia mediaValidated false", mediaValidated);
+        // console.log(componentName, GetDateTime(), "addMedia Invalid Media");
+        // console.log(componentName, GetDateTime(), "addMedia mediaValidated false", mediaValidated);
       };
     };
 
     if (mediaValidated === true) {
       formValidated = true;
-      // console.log(componentName, "addMedia Valid Form");
-      // console.log(componentName, "addMedia formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "addMedia Valid Form");
+      // console.log(componentName, GetDateTime(), "addMedia formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "addMedia Invalid Form");
-      // console.log(componentName, "addMedia formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "addMedia Invalid Form");
+      // console.log(componentName, GetDateTime(), "addMedia formValidated false", formValidated);
     };
 
-    // console.log(componentName, "addMedia mediaValidated", mediaValidated);
-    // console.log(componentName, "addMedia formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "addMedia mediaValidated", mediaValidated);
+    // console.log(componentName, GetDateTime(), "addMedia formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -105,10 +105,10 @@ const AddMedia = (props) => {
           electronic: cbxElectronic
         };
 
-        // console.log(componentName, "addMedia mediaObject", mediaObject);
+        // console.log(componentName, GetDateTime(), "addMedia mediaObject", mediaObject);
 
         let url = baseURL + "media/";
-        // console.log(componentName, "addMedia url", url);
+        // console.log(componentName, GetDateTime(), "addMedia url", url);
 
         if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -121,7 +121,7 @@ const AddMedia = (props) => {
             body: JSON.stringify({ media: mediaObject })
           })
             .then(response => {
-              // console.log(componentName, "addMedia response", response);
+              // console.log(componentName, GetDateTime(), "addMedia response", response);
               // if (!response.ok) {
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
               // } else {
@@ -133,7 +133,7 @@ const AddMedia = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, "addMedia data", data);
+              console.log(componentName, GetDateTime(), "addMedia data", data);
 
               setMediaRecordAdded(data.recordAdded);
               addMessage(data.message);
@@ -148,8 +148,8 @@ const AddMedia = (props) => {
                 setSortID(data.sortID);
                 setActive(data.active);
 
-                // ? Would still work if the createdAt and updatedAt were left out?
-                dispatch(addStateMedia([{ mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt }]));
+                // ? Would still work if the createDate and updateDate were left out?
+                dispatch(addStateMedia([{ mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createDate: data.createDate, updateDate: data.updateDate }]));
                 // ? Add to local storage also?
 
                 dispatch(addStateURL([{ linkName: encodeURL(data.media), linkType: "media", linkID: data.mediaID }]));
@@ -161,9 +161,9 @@ const AddMedia = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, "addMedia error", error);
-              // console.log(componentName, "addMedia error.name", error.name);
-              // console.log(componentName, "addMedia error.message", error.message);
+              console.log(componentName, GetDateTime(), "addMedia error", error);
+              // console.log(componentName, GetDateTime(), "addMedia error.name", error.name);
+              // console.log(componentName, GetDateTime(), "addMedia error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
@@ -176,7 +176,7 @@ const AddMedia = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect mediaRecordAdded", mediaRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect mediaRecordAdded", mediaRecordAdded);
     if (mediaRecordAdded !== undefined && mediaRecordAdded !== null && mediaRecordAdded === true) {
       clearMessages();
       setMediaRecordAdded(null);
@@ -187,7 +187,7 @@ const AddMedia = (props) => {
   }, [mediaRecordAdded]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for admin", admin);
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
       // return <Redirect to="/" />;

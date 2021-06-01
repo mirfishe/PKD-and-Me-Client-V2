@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
-import { encodeURL } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import CategoryData from "../../bibliographyData/categories.json";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../bibliographyData/categoriesSlice";
@@ -12,7 +12,7 @@ import MediaData from "../../bibliographyData/media.json";
 import { loadArrayMedia, setMediaDataOffline } from "../../bibliographyData/mediaSlice";
 import TitleData from "../../bibliographyData/titles.json";
 import { loadArrayTitles, setTitlesDataOffline } from "../../bibliographyData/titlesSlice";
-import UserReviewRatingData from "../../bibliographyData/userReviewsRatings.json";
+// import UserReviewRatingData from "../../bibliographyData/userReviewsRatings.json";
 import { setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings, setUserReviewsRatingsDataOffline } from "../../bibliographyData/userReviewsSlice";
 
 function LoadBibliographyData() {
@@ -25,13 +25,13 @@ function LoadBibliographyData() {
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   // ! Loading the appOffline from the state store here is too slow
   // ! Always pulling it from environment.js
   // const appOffline = useSelector(state => state.app.appOffline);
   const appOffline = AppSettings.appOffline;
-  // console.log(componentName, "appOffline", appOffline);
+  // console.log(componentName, GetDateTime(), "appOffline", appOffline);
 
   // * Load settings from Redux slices
   const categoriesLoaded = useSelector(state => state.categories.categoriesLoaded);
@@ -56,16 +56,21 @@ function LoadBibliographyData() {
   const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
 
   const addRatings = (titleData, userReviewsRatingsData) => {
-    // console.log(componentName, "addRatings");
-    // console.log(componentName, "addRatings baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addRatings");
+    // console.log(componentName, GetDateTime(), "addRatings baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addRatings userReviewsRatingsData", userReviewsRatingsData);
 
     let arrayTitles = [...titleData];
-    let arrayUserReviewsRatings = [...userReviewsRatingsData];
+    let arrayUserReviewsRatings = [];
+
+    if (IsEmpty(userReviewsRatingsData) === false) {
+      arrayUserReviewsRatings = [...userReviewsRatingsData];
+    };
 
     for (let i = 0; i < arrayTitles.length; i++) {
 
       let userReviewRatingItem = {};
-      // console.log(componentName, "addRatings userReviewRatingItem", userReviewRatingItem);
+      // console.log(componentName, GetDateTime(), "addRatings userReviewRatingItem", userReviewRatingItem);
 
       if (arrayTitles[i].titleID !== undefined && arrayTitles[i].titleID !== null && !isNaN(arrayTitles[i].titleID)) {
         userReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === arrayTitles[i].titleID);
@@ -78,7 +83,7 @@ function LoadBibliographyData() {
 
       if (userReviewRatingItem !== undefined && userReviewRatingItem !== null) {
 
-        // console.log(componentName, "addRatings userReviewRatingItem", userReviewRatingItem);
+        // console.log(componentName, GetDateTime(), "addRatings userReviewRatingItem", userReviewRatingItem);
 
         if (userReviewRatingItem.hasOwnProperty("userReviewCount")) {
           userReviewCount = userReviewRatingItem.userReviewCount;
@@ -94,15 +99,15 @@ function LoadBibliographyData() {
           userReviewAverage = userReviewSum / userReviewCount;
         };
 
-        // console.log(componentName, "addRatings userReviewCount", userReviewCount);
-        // console.log(componentName, "addRatings userReviewSum", userReviewSum);
-        // console.log(componentName, "addRatings userReviewAverage", userReviewAverage);
+        // console.log(componentName, GetDateTime(), "addRatings userReviewCount", userReviewCount);
+        // console.log(componentName, GetDateTime(), "addRatings userReviewSum", userReviewSum);
+        // console.log(componentName, GetDateTime(), "addRatings userReviewAverage", userReviewAverage);
 
       };
 
-      // console.log(componentName, "addRatings userReviewCount", userReviewCount);
-      // console.log(componentName, "addRatings userReviewSum", userReviewSum);
-      // console.log(componentName, "addRatings userReviewAverage", userReviewAverage);
+      // console.log(componentName, GetDateTime(), "addRatings userReviewCount", userReviewCount);
+      // console.log(componentName, GetDateTime(), "addRatings userReviewSum", userReviewSum);
+      // console.log(componentName, GetDateTime(), "addRatings userReviewAverage", userReviewAverage);
 
       Object.assign(arrayTitles[i], { userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage });
 
@@ -115,22 +120,22 @@ function LoadBibliographyData() {
   };
 
   const getUserReviewsRatings = (titleData) => {
-    // console.log(componentName, "getUserReviewsRatings");
-    // console.log(componentName, "getUserReviewsRatings baseURL", baseURL);
-    // console.log(componentName, "getUserReviewsRatings titleData", titleData);
+    // console.log(componentName, GetDateTime(), "getUserReviewsRatings");
+    // console.log(componentName, GetDateTime(), "getUserReviewsRatings baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getUserReviewsRatings titleData", titleData);
 
     setOverallTitleRatingMessage("");
     setErrOverallTitleRatingMessage("");
 
     let url = baseURL + "userreviews/";
 
-    url = url + "rating/list";
+    url = url + "rating";
 
-    // console.log(componentName, "getUserReviewsRatings url", url);
+    // console.log(componentName, GetDateTime(), "getUserReviewsRatings url", url);
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getUserReviewsRatings response", response);
+        // console.log(componentName, GetDateTime(), "getUserReviewsRatings response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
@@ -142,7 +147,7 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        console.log(componentName, "getUserReviewsRatings data", data);
+        console.log(componentName, GetDateTime(), "getUserReviewsRatings data", data);
         // setOverallTitleRatingMessage(data.message);
 
         if (data.resultsFound === true) {
@@ -150,7 +155,7 @@ function LoadBibliographyData() {
           addRatings(titleData, data.records);
 
         } else {
-          console.log(componentName, "getUserReviewsRatings resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "getUserReviewsRatings resultsFound error", data.message);
           // setErrOverallTitleRatingMessage(data.message);
           dispatch(setUserReviewsRatingsDataOffline(true));
           fetchLocalDataUserReviewsRatings(titleData);
@@ -158,9 +163,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "getUserReviewsRatings error", error);
-        // console.log(componentName, "getUserReviewsRatings error.name", error.name);
-        // console.log(componentName, "getUserReviewsRatings error.message", error.message);
+        console.log(componentName, GetDateTime(), "getUserReviewsRatings error", error);
+        // console.log(componentName, GetDateTime(), "getUserReviewsRatings error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getUserReviewsRatings error.message", error.message);
         // setErrOverallTitleRatingMessage(error.name + ": " + error.message);
         dispatch(setUserReviewsRatingsDataOffline(true));
         fetchLocalDataUserReviewsRatings(titleData);
@@ -169,13 +174,13 @@ function LoadBibliographyData() {
   };
 
   const fetchLocalDataUserReviewsRatings = (titleData) => {
-    // console.log(componentName, "fetchLocalDataUserReviewsRatings");
+    // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings");
 
     let url = "bibliographyData/userReviewsRatings.json";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "fetchLocalDataUserReviewsRatings response", response);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
@@ -188,29 +193,33 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        console.log(componentName, "fetchLocalDataUserReviewsRatings data", data);
+        console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings data", data);
 
         if (data.resultsFound === true) {
           // loadDataStore(data.userReviews, "userReviewRating");
           addRatings(titleData, data.records);
         } else {
-          console.log(componentName, "fetchLocalDataUserReviewsRatings resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings resultsFound error", data.message);
           // setErrUserReviewMessage(data.message);
           dispatch(setUserReviewsRatingsDataOffline(true));
           // loadDataStore(UserReviewData, "userReviewRating");
-          addRatings(titleData, UserReviewRatingData);
+          // addRatings(titleData, UserReviewRatingData);
+          // * Not going to need to load user review ratings from local data.
+          addRatings(titleData, []);
         };
 
       })
       .catch(error => {
-        console.log(componentName, "fetchLocalDataUserReviewsRatings error", error);
-        // console.log(componentName, "fetchLocalDataUserReviewsRatings error.name", error.name);
-        // console.log(componentName, "fetchLocalDataUserReviewsRatings error.message", error.message);
+        console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error", error);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.name", error.name);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.message", error.message);
         // setErrUserReviewMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setUserReviewsRatingsDataOffline(true));
         // loadDataStore(UserReviewRatingData, "userReviewRating");
-        addRatings(titleData, UserReviewRatingData);
+        // addRatings(titleData, UserReviewRatingData);
+        // * Not going to need to load user review ratings from local data.
+        addRatings(titleData, []);
       });
 
   };
@@ -218,26 +227,26 @@ function LoadBibliographyData() {
   const loadDataStore = (data, source) => {
 
     if (source === "categories") {
-      // console.log(componentName, "loadDataStore data", data);
+      // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayCategories(data));
       // localStorage.setItem("arrayCategories", JSON.stringify(data));
       // localStorage.setItem("lastDatabaseRetrievalCategories", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "media") {
-      // console.log(componentName, "loadDataStore data", data);
+      // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayMedia(data));
       // localStorage.setItem("arrayMedia", JSON.stringify(data));
       // localStorage.setItem("lastDatabaseRetrievalMedia", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "titles") {
-      // console.log(componentName, "loadDataStore data", data);
+      // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       // dispatch(loadArrayTitles(data));
       getUserReviewsRatings(data);
       // localStorage.setItem("arrayTitles", JSON.stringify(data));
       // localStorage.setItem("lastDatabaseRetrievalTitles", new Date().toISOString());
       loadURLs(data, source);
     } else if (source === "editions") {
-      // console.log(componentName, "loadDataStore data", data);
+      // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayEditions(data));
       // localStorage.setItem("arrayEditions", JSON.stringify(data));
       // localStorage.setItem("lastDatabaseRetrievalEditions", new Date().toISOString());
@@ -252,13 +261,13 @@ function LoadBibliographyData() {
     for (let i = 0; i < data.length; i++) {
 
       if (source === "categories") {
-        // console.log(componentName, "loadURLs data[i].category", data[i].category);
+        // console.log(componentName, GetDateTime(), "loadURLs data[i].category", data[i].category);
         arrayURLs.push({ linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category });
       } else if (source === "media") {
-        // console.log(componentName, "loadURLs data[i].media", data[i].media);
+        // console.log(componentName, GetDateTime(), "loadURLs data[i].media", data[i].media);
         arrayURLs.push({ linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID, linkTypeNameID: data[i].mediaID, linkTypeName: data[i].media });
       } else if (source === "titles") {
-        // console.log(componentName, "loadURLs data[i].titleURL", data[i].titleURL);
+        // console.log(componentName, GetDateTime(), "loadURLs data[i].titleURL", data[i].titleURL);
         arrayURLs.push({ linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category.category });
       };
 
@@ -268,17 +277,17 @@ function LoadBibliographyData() {
   };
 
   const getCategories = () => {
-    // console.log(componentName, "getCategories");
-    // console.log(componentName, "getCategories baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getCategories");
+    // console.log(componentName, GetDateTime(), "getCategories baseURL", baseURL);
 
     setCategoryMessage("");
     setErrCategoryMessage("");
 
-    let url = baseURL + "categories/list";
+    let url = baseURL + "categories";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getCategories response", response);
+        // console.log(componentName, GetDateTime(), "getCategories response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
@@ -290,13 +299,13 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getCategories data", data);
+        // console.log(componentName, GetDateTime(), "getCategories data", data);
         // setCategoryMessage(data.message);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "categories");
         } else {
-          console.log(componentName, "getCategories resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "getCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
           dispatch(setCategoriesDataOffline(true));
           fetchLocalDataCategories();
@@ -304,9 +313,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "getCategories error", error);
-        // console.log(componentName, "getCategories error.name", error.name);
-        // console.log(componentName, "getCategories error.message", error.message);
+        console.log(componentName, GetDateTime(), "getCategories error", error);
+        // console.log(componentName, GetDateTime(), "getCategories error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
@@ -315,17 +324,17 @@ function LoadBibliographyData() {
   };
 
   const getMedia = () => {
-    // console.log(componentName, "getMedia");
-    // console.log(componentName, "getMedia baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getMedia");
+    // console.log(componentName, GetDateTime(), "getMedia baseURL", baseURL);
 
     setMediaMessage("");
     setErrMediaMessage("");
 
-    let url = baseURL + "media/list";
+    let url = baseURL + "media";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getMedia response", response);
+        // console.log(componentName, GetDateTime(), "getMedia response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
@@ -338,13 +347,13 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getMedia data", data);
+        // console.log(componentName, GetDateTime(), "getMedia data", data);
         // setMediaMessage(data.message);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "media");
         } else {
-          console.log(componentName, "getMedia resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "getMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
           dispatch(setMediaDataOffline(true));
           fetchLocalDataMedia();
@@ -352,9 +361,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "getMedia error", error);
-        // console.log(componentName, "getMedia error.name", error.name);
-        // console.log(componentName, "getMedia error.message", error.message);
+        console.log(componentName, GetDateTime(), "getMedia error", error);
+        // console.log(componentName, GetDateTime(), "getMedia error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getMedia error.message", error.message);
         // setErrMediaMessage(error.name + ": " + error.message);
         dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
@@ -363,17 +372,17 @@ function LoadBibliographyData() {
   };
 
   const getTitles = () => {
-    // console.log(componentName, "getTitle");
-    // console.log(componentName, "getTitle baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getTitle");
+    // console.log(componentName, GetDateTime(), "getTitle baseURL", baseURL);
 
     setTitleMessage("");
     setErrTitleMessage("");
 
-    let url = baseURL + "titles/list";
+    let url = baseURL + "titles";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getTitle response", response);
+        // console.log(componentName, GetDateTime(), "getTitle response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
@@ -386,13 +395,13 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getTitle data", data);
+        // console.log(componentName, GetDateTime(), "getTitle data", data);
         // setTitleMessage(data.message);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "titles");
         } else {
-          console.log(componentName, "getTitles resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "getTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
           dispatch(setTitlesDataOffline(true));
           fetchLocalDataTitles();
@@ -400,9 +409,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "getTitle error", error);
-        // console.log(componentName, "getTitle error.name", error.name);
-        // console.log(componentName, "getTitle error.message", error.message);
+        console.log(componentName, GetDateTime(), "getTitle error", error);
+        // console.log(componentName, GetDateTime(), "getTitle error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getTitle error.message", error.message);
         // setErrTitleMessage(error.name + ": " + error.message);
         dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
@@ -411,17 +420,17 @@ function LoadBibliographyData() {
   };
 
   const getEditions = () => {
-    // console.log(componentName, "getEdition");
-    // console.log(componentName, "getEdition baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getEdition");
+    // console.log(componentName, GetDateTime(), "getEdition baseURL", baseURL);
 
     setEditionMessage("");
     setErrEditionMessage("");
 
-    let url = baseURL + "editions/list";
+    let url = baseURL + "editions";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getEdition response", response);
+        // console.log(componentName, GetDateTime(), "getEdition response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
@@ -434,13 +443,13 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "getEdition data", data);
+        // console.log(componentName, GetDateTime(), "getEdition data", data);
         // setEditionMessage(data.message);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "editions");
         } else {
-          console.log(componentName, "getEditions resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "getEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);
           dispatch(setEditionsDataOffline(true));
           fetchLocalDataEditions();
@@ -448,9 +457,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "getEditions error", error);
-        // console.log(componentName, "getEdition error.name", error.name);
-        // console.log(componentName, "getEdition error.message", error.message);
+        console.log(componentName, GetDateTime(), "getEditions error", error);
+        // console.log(componentName, GetDateTime(), "getEdition error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getEdition error.message", error.message);
         // setErrEditionMessage(error.name + ": " + error.message);
         dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
@@ -459,13 +468,13 @@ function LoadBibliographyData() {
   };
 
   const fetchLocalDataCategories = () => {
-    // console.log(componentName, "fetchLocalDataCategories");
+    // console.log(componentName, GetDateTime(), "fetchLocalDataCategories");
 
     let url = "bibliographyData/categories.json";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "fetchLocalDataCategories response", response);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer.
@@ -479,12 +488,12 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "fetchLocalDataCategories data", data);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories data", data);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "categories");
         } else {
-          console.log(componentName, "fetchLocalDataCategories resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
           dispatch(setCategoriesDataOffline(true));
           loadDataStore(CategoryData, "categories");
@@ -492,9 +501,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "fetchLocalDataCategories error", error);
-        // console.log(componentName, "fetchLocalDataCategories error.name", error.name);
-        // console.log(componentName, "fetchLocalDataCategories error.message", error.message);
+        console.log(componentName, GetDateTime(), "fetchLocalDataCategories error", error);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories error.name", error.name);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setCategoriesDataOffline(true));
@@ -504,13 +513,13 @@ function LoadBibliographyData() {
   };
 
   const fetchLocalDataMedia = () => {
-    // console.log(componentName, "fetchLocalDataMedia");
+    // console.log(componentName, GetDateTime(), "fetchLocalDataMedia");
 
     let url = "bibliographyData/media.json";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "fetchLocalDataMedia response", response);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer.
@@ -524,12 +533,12 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "fetchLocalDataMedia data", data);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia data", data);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "media");
         } else {
-          console.log(componentName, "fetchLocalDataMedia resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
           dispatch(setMediaDataOffline(true));
           loadDataStore(MediaData, "media");
@@ -537,9 +546,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "fetchLocalDataMedia error", error);
-        // console.log(componentName, "fetchLocalDataMedia error.name", error.name);
-        // console.log(componentName, "fetchLocalDataMedia error.message", error.message);
+        console.log(componentName, GetDateTime(), "fetchLocalDataMedia error", error);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia error.name", error.name);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia error.message", error.message);
         // setErrMediaMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setMediaDataOffline(true));
@@ -549,13 +558,13 @@ function LoadBibliographyData() {
   };
 
   const fetchLocalDataTitles = () => {
-    // console.log(componentName, "fetchLocalDataTitles");
+    // console.log(componentName, GetDateTime(), "fetchLocalDataTitles");
 
     let url = "bibliographyData/titles.json";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "fetchLocalDataTitles response", response);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer.
@@ -569,12 +578,12 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "fetchLocalDataTitles data", data);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles data", data);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "titles");
         } else {
-          console.log(componentName, "fetchLocalDataTitles resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
           dispatch(setTitlesDataOffline(true));
           loadDataStore(TitleData, "titles");
@@ -582,9 +591,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "fetchLocalDataTitles error", error);
-        // console.log(componentName, "fetchLocalDataTitles error.name", error.name);
-        // console.log(componentName, "fetchLocalDataTitles error.message", error.message);
+        console.log(componentName, GetDateTime(), "fetchLocalDataTitles error", error);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles error.name", error.name);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles error.message", error.message);
         // setErrTitleMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setTitlesDataOffline(true));
@@ -594,13 +603,13 @@ function LoadBibliographyData() {
   };
 
   const fetchLocalDataEditions = () => {
-    // console.log(componentName, "fetchLocalDataEditions");
+    // console.log(componentName, GetDateTime(), "fetchLocalDataEditions");
 
     let url = "bibliographyData/editions.json";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "fetchLocalDataEditions response", response);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer.
@@ -614,12 +623,12 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        // console.log(componentName, "fetchLocalDataEditions data", data);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions data", data);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "editions");
         } else {
-          console.log(componentName, "fetchLocalDataEditions resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);
           dispatch(setEditionsDataOffline(true));
           loadDataStore(EditionData, "editions");
@@ -627,9 +636,9 @@ function LoadBibliographyData() {
 
       })
       .catch(error => {
-        console.log(componentName, "fetchLocalDataEditions error", error);
-        // console.log(componentName, "fetchLocalDataEditions error.name", error.name);
-        // console.log(componentName, "fetchLocalDataEditions error.message", error.message);
+        console.log(componentName, GetDateTime(), "fetchLocalDataEditions error", error);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions error.name", error.name);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions error.message", error.message);
         // setErrEditionMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setEditionsDataOffline(true));
@@ -639,7 +648,7 @@ function LoadBibliographyData() {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect");
+    // console.log(componentName, GetDateTime(), "useEffect");
 
     // ! Experiment in adding bibliographical data to local storage that doesn't work
     // let categoriesDataLocalStorage = false;
@@ -648,25 +657,25 @@ function LoadBibliographyData() {
     // let editionsDataLocalStorage = false;
 
     // let currentDateTime = new Date().setTime(new Date().getTime());
-    // // console.log(componentName, "useEffect currentDateTime", currentDateTime);
-    // // console.log(componentName, "useEffect new Date(currentDateTime).toISOString()", new Date(currentDateTime).toISOString());
+    // // console.log(componentName, GetDateTime(), "useEffect currentDateTime", currentDateTime);
+    // // console.log(componentName, GetDateTime(), "useEffect new Date(currentDateTime).toISOString()", new Date(currentDateTime).toISOString());
 
     // if (!categoriesLoaded && localStorage.getItem("lastDatabaseRetrievalCategories") !== undefined && localStorage.getItem("lastDatabaseRetrievalCategories") !== null) {
 
-    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalCategories\")", localStorage.getItem("lastDatabaseRetrievalCategories"));
+    //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalCategories\")", localStorage.getItem("lastDatabaseRetrievalCategories"));
 
     //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
-    //   // console.log(componentName, "useEffect localStoragelastDatabaseRetrievalCategories", localStoragelastDatabaseRetrievalCategories);
-    //   // console.log(componentName, "useEffect localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime())", localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime()));
-    //   // console.log(componentName, "useEffect typeof localStoragelastDatabaseRetrievalCategories", typeof localStoragelastDatabaseRetrievalCategories);
+    //   // console.log(componentName, GetDateTime(), "useEffect localStoragelastDatabaseRetrievalCategories", localStoragelastDatabaseRetrievalCategories);
+    //   // console.log(componentName, GetDateTime(), "useEffect localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime())", localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime()));
+    //   // console.log(componentName, GetDateTime(), "useEffect typeof localStoragelastDatabaseRetrievalCategories", typeof localStoragelastDatabaseRetrievalCategories);
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
-    //   // console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+    //   // console.log(componentName, GetDateTime(), "useEffect checkDateTime", checkDateTime);
+    //   // console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
     //     if (localStorage.getItem("arrayCategories") !== undefined && localStorage.getItem("arrayCategories") !== null) {
-    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayCategories\")", localStorage.getItem("arrayCategories"));
+    //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayCategories\")", localStorage.getItem("arrayCategories"));
 
     //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
     //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
@@ -679,15 +688,15 @@ function LoadBibliographyData() {
 
     // if (!mediaLoaded && localStorage.getItem("lastDatabaseRetrievalMedia") !== undefined && localStorage.getItem("lastDatabaseRetrievalMedia") !== null) {
 
-    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalMedia\")", localStorage.getItem("lastDatabaseRetrievalMedia"));
+    //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalMedia\")", localStorage.getItem("lastDatabaseRetrievalMedia"));
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
-    //   // console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+    //   // console.log(componentName, GetDateTime(), "useEffect checkDateTime", checkDateTime);
+    //   // console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
     //     if (localStorage.getItem("arrayMedia") !== undefined && localStorage.getItem("arrayMedia") !== null) {
-    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayMedia\")", localStorage.getItem("arrayMedia"));
+    //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayMedia\")", localStorage.getItem("arrayMedia"));
 
     //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
     //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
@@ -700,15 +709,15 @@ function LoadBibliographyData() {
 
     // if (!titlesLoaded && localStorage.getItem("lastDatabaseRetrievalTitles") !== undefined && localStorage.getItem("lastDatabaseRetrievalTitles") !== null) {
 
-    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalTitles\")", localStorage.getItem("lastDatabaseRetrievalTitles"));
+    //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalTitles\")", localStorage.getItem("lastDatabaseRetrievalTitles"));
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
-    //   console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+    //   // console.log(componentName, GetDateTime(), "useEffect checkDateTime", checkDateTime);
+    //   console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
     //     if (localStorage.getItem("arrayTitles") !== undefined && localStorage.getItem("arrayTitles") !== null) {
-    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayTitles\")", localStorage.getItem("arrayTitles"));
+    //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayTitles\")", localStorage.getItem("arrayTitles"));
 
     //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
     //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
@@ -721,15 +730,15 @@ function LoadBibliographyData() {
 
     // if (!editionsLoaded && localStorage.getItem("lastDatabaseRetrievalEditions") !== undefined && localStorage.getItem("lastDatabaseRetrievalEditions") !== null) {
 
-    //   // console.log(componentName, "useEffect localStorage.getItem(\"lastDatabaseRetrievalEditions\")", localStorage.getItem("lastDatabaseRetrievalEditions"));
+    //   // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalEditions\")", localStorage.getItem("lastDatabaseRetrievalEditions"));
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, "useEffect checkDateTime", checkDateTime);
-    //   console.log(componentName, "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
+    //   // console.log(componentName, GetDateTime(), "useEffect checkDateTime", checkDateTime);
+    //   console.log(componentName, GetDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
     //   if (localStorage.getItem("arrayEditions") !== undefined && localStorage.getItem("arrayEditions") !== null) {
-    //       // console.log(componentName, "useEffect localStorage.getItem(\"arrayEditions\")", localStorage.getItem("arrayEditions"));
+    //       // console.log(componentName, GetDateTime(), "useEffect localStorage.getItem(\"arrayEditions\")", localStorage.getItem("arrayEditions"));
 
     //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
     //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");

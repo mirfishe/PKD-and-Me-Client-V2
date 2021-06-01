@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
-import { DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -21,9 +21,9 @@ const Editions = (props) => {
   const appName = useSelector(state => state.app.appName);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const editionSortBy = useSelector(state => state.editions.editionSortBy);
 
@@ -37,16 +37,16 @@ const Editions = (props) => {
   const [errEditionMessage, setErrEditionMessage] = useState("");
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, "editionListState", editionListState);
+  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
   const mediaListState = useSelector(state => state.media.arrayMedia);
-  // console.log(componentName, "mediaListState", mediaListState);
+  // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
   let mediaParam;
   if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
-    // console.log(componentName, "props.match.params", props.match.params);
+    // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
     mediaParam = props.linkItem.linkName; // props.match.params.media;
-    // console.log(componentName, "typeof mediaParam", typeof mediaParam);
-    // console.log(componentName, "mediaParam", mediaParam);
+    // console.log(componentName, GetDateTime(), "typeof mediaParam", typeof mediaParam);
+    // console.log(componentName, GetDateTime(), "mediaParam", mediaParam);
   };
 
   const sortEditions = (sortBy) => {
@@ -92,7 +92,7 @@ const Editions = (props) => {
             };
             return a.publicationDate > b.publicationDate ? 1 : -1;
           });
-        // console.log(componentName, "editionListReleaseDate", editionListReleaseDate);
+        // console.log(componentName, GetDateTime(), "editionListReleaseDate", editionListReleaseDate);
 
         let editionListNoReleaseDate = editionList.filter(edition => edition.publicationDate === undefined || edition.publicationDate === null);
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
@@ -102,11 +102,11 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-              //     console.log(componentName, "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
@@ -114,11 +114,11 @@ const Editions = (props) => {
             // return a.title.titleSort > b.title.titleSort ? 1 : -1;
             return a.titleSort > b.titleSort ? 1 : -1;
           });
-        // console.log(componentName, "editionListNoReleaseDate", editionListNoReleaseDate);
+        // console.log(componentName, GetDateTime(), "editionListNoReleaseDate", editionListNoReleaseDate);
 
         let newEditionList = [...editionListReleaseDate];
         newEditionList.push(...editionListNoReleaseDate);
-        console.log(componentName, "newEditionList", newEditionList);
+        console.log(componentName, GetDateTime(), "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -164,7 +164,7 @@ const Editions = (props) => {
             // return a.title.publicationDate > b.title.publicationDate ? 1 : -1;
             return a.publicationDate > b.publicationDate ? 1 : -1;
           });
-        // console.log(componentName, "editionListPublicationDate", editionListPublicationDate);
+        // console.log(componentName, GetDateTime(), "editionListPublicationDate", editionListPublicationDate);
 
         let editionListNoPublicationDate = editionList.filter(edition => edition.title.publicationDate === undefined || edition.title.publicationDate === null);
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
@@ -174,11 +174,11 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-              //     console.log(componentName, "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
@@ -186,11 +186,11 @@ const Editions = (props) => {
             // return a.title.titleSort > b.title.titleSort ? 1 : -1;
             return a.titleSort > b.titleSort ? 1 : -1;
           });
-        // console.log(componentName, "editionListNoPublicationDate", editionListNoPublicationDate);
+        // console.log(componentName, GetDateTime(), "editionListNoPublicationDate", editionListNoPublicationDate);
 
         let newEditionList = [...editionListPublicationDate];
         newEditionList.push(...editionListNoPublicationDate);
-        // console.log(componentName, "newEditionList", newEditionList);
+        // console.log(componentName, GetDateTime(), "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -208,11 +208,11 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-              //     console.log(componentName, "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
@@ -235,11 +235,11 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-              //     console.log(componentName, "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
@@ -261,8 +261,8 @@ const Editions = (props) => {
   } else if (mediaParam !== undefined) {
     // * If mediaParam is not a number, then it's the media name
     const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
-    // console.log(componentName, "typeof media", typeof media);
-    // console.log(componentName, "media", media);
+    // console.log(componentName, GetDateTime(), "typeof media", typeof media);
+    // console.log(componentName, GetDateTime(), "media", media);
 
     if (media !== undefined) {
       document.title = media.media + " | " + appName + " | " + siteName;
@@ -295,22 +295,22 @@ const Editions = (props) => {
   if (admin !== undefined && admin !== null && admin === true) {
     editionList = [...editionList];
   } else {
-    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
     // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
     editionList = editionList.filter(edition => edition.editionsActive === true && edition.mediaActive === true);
   };
 
   sortEditions(editionSortBy);
-  // console.log(componentName, "editionList", editionList);
+  // console.log(componentName, GetDateTime(), "editionList", editionList);
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect editionList", editionList);
+    // console.log(componentName, GetDateTime(), "useEffect editionList", editionList);
     if (editionList.length > 0) {
       setErrEditionMessage("");
     } else {

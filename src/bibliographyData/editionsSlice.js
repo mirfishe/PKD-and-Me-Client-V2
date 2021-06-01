@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
 
 const componentName = "editionsSlice.js";
 
@@ -16,11 +17,11 @@ const editionsSlice = createSlice({
   reducers: {
     loadArrayEditions: {
       reducer(state, action) {
-        // console.log(componentName, "loadArrayEditions action.payload", action.payload);
-        // console.log(componentName, "loadArrayEditions action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "loadArrayEditions action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "loadArrayEditions action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "loadArrayEditions action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "loadArrayEditions action.payload[i]", action.payload[i]);
           state.arrayEditions.push(action.payload[i]);
         };
 
@@ -31,12 +32,12 @@ const editionsSlice = createSlice({
     },
     addStateEdition: {
       reducer(state, action) {
-        // console.log(componentName, "addStateEdition action.payload", action.payload);
-        // console.log(componentName, "addStateEdition action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "addStateEdition action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "addStateEdition action.payload.length", action.payload.length);
 
         // * Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "addStateEdition action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "addStateEdition action.payload[i]", action.payload[i]);
           state.arrayEditions.push(action.payload[i]);
         };
 
@@ -44,12 +45,12 @@ const editionsSlice = createSlice({
     },
     updateStateEdition: {
       reducer(state, action) {
-        console.log(componentName, "updateStateEdition action.payload", action.payload);
+        console.log(componentName, GetDateTime(), "updateStateEdition action.payload", action.payload);
 
         const editionItem = action.payload;
-        // console.log(componentName, "updateStateEdition editionItem", editionItem);
-        // console.log(componentName, "updateStateEdition editionItem.editionID", editionItem.editionID);
-        // console.log(componentName, "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
+        // console.log(componentName, GetDateTime(), "updateStateEdition editionItem", editionItem);
+        // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.editionID", editionItem.editionID);
+        // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
 
         if (typeof editionItem === "object") {
 
@@ -101,13 +102,13 @@ const editionsSlice = createSlice({
             state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
           };
 
-          if (editionItem.hasOwnProperty("updatedAt")) {
-            state.arrayEditions[editionItem.editionItemIndex].updatedAt = editionItem.updatedAt;
+          if (editionItem.hasOwnProperty("updateDate")) {
+            state.arrayEditions[editionItem.editionItemIndex].updateDate = editionItem.updateDate;
           };
 
           // TODO: Fix how this is handled with the change in the left outer joins from Knex.
           if (editionItem.hasOwnProperty("medium")) {
-            // console.log(componentName, "updateStateEdition editionItem.medium", editionItem.medium);
+            // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
 
             if (editionItem.medium.hasOwnProperty("mediaID")) {
               state.arrayEditions[editionItem.editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
@@ -129,8 +130,8 @@ const editionsSlice = createSlice({
               state.arrayEditions[editionItem.editionItemIndex].medium.active = editionItem.medium.active;
             };
 
-            if (editionItem.medium.hasOwnProperty("updatedAt")) {
-              state.arrayEditions[editionItem.editionItemIndex].medium.updatedAt = editionItem.medium.updatedAt;
+            if (editionItem.medium.hasOwnProperty("updateDate")) {
+              state.arrayEditions[editionItem.editionItemIndex].medium.updateDate = editionItem.medium.updateDate;
             };
 
           };
@@ -186,8 +187,8 @@ const editionsSlice = createSlice({
               state.arrayEditions[editionItem.editionItemIndex].title.active = editionItem.title.active;
             };
 
-            if (editionItem.title.hasOwnProperty("updatedAt")) {
-              state.arrayEditions[editionItem.editionItemIndex].title.updatedAt = editionItem.title.updatedAt;
+            if (editionItem.title.hasOwnProperty("updateDate")) {
+              state.arrayEditions[editionItem.editionItemIndex].title.updateDate = editionItem.title.updateDate;
             };
 
           };
@@ -198,7 +199,7 @@ const editionsSlice = createSlice({
     },
     deleteStateEdition: {
       reducer(state, action) {
-        // console.log(componentName, "deleteStateEdition action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "deleteStateEdition action.payload", action.payload);
 
         const editionItemIndex = action.payload;
         // const editionID = action.payload;
@@ -206,7 +207,7 @@ const editionsSlice = createSlice({
         // ? This doesn't work because state.arrayEditions isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingEditionIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
-        // console.log(componentName, "deleteStateEdition existingEditionIndex", existingEditionIndex);
+        // console.log(componentName, GetDateTime(), "deleteStateEdition existingEditionIndex", existingEditionIndex);
 
         state.arrayEditions.splice(editionItemIndex, 1);
 
@@ -214,7 +215,7 @@ const editionsSlice = createSlice({
     },
     setEditionsDataOffline: {
       reducer(state, action) {
-        // console.log(componentName, "setEditionsDataOffline action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setEditionsDataOffline action.payload", action.payload);
 
         state.editionsDataOffline = action.payload;
 
@@ -222,7 +223,7 @@ const editionsSlice = createSlice({
     },
     setEditionSortBy: {
       reducer(state, action) {
-        // console.log(componentName, "setEditionSortBy action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setEditionSortBy action.payload", action.payload);
 
         state.editionSortBy = action.payload;
 

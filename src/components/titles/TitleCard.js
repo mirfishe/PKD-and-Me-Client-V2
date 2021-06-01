@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { DisplayYear, encodeURL, decodeURL, TruncateText, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL, TruncateText, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -17,14 +17,14 @@ const TitleCard = (props) => {
   const history = useHistory();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const [errTitleMessage, setErrTitleMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, "titleListState", titleListState);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
 
   let imageSide = "left";
   if (props.imageSide !== undefined && props.imageSide !== "") {
@@ -32,26 +32,26 @@ const TitleCard = (props) => {
   } else {
     imageSide = "left";
   };
-  // console.log(componentName, "props.imageSide", props.imageSide);
-  // console.log(componentName, "imageSide", imageSide);
+  // console.log(componentName, GetDateTime(), "props.imageSide", props.imageSide);
+  // console.log(componentName, GetDateTime(), "imageSide", imageSide);
 
   const showShortDescription = props.showShortDescription;
-  // console.log(componentName, "props.showShortDescription", props.showShortDescription);
-  // console.log(componentName, "typeof props.showShortDescription", typeof props.showShortDescription);
+  // console.log(componentName, GetDateTime(), "props.showShortDescription", props.showShortDescription);
+  // console.log(componentName, GetDateTime(), "typeof props.showShortDescription", typeof props.showShortDescription);
 
   const headerText = props.headerText;
-  // console.log(componentName, "props.headerText", props.headerText);
+  // console.log(componentName, GetDateTime(), "props.headerText", props.headerText);
 
   const additionalText = props.additionalText;
-  // console.log(componentName, "props.additionalText", props.additionalText);
+  // console.log(componentName, GetDateTime(), "props.additionalText", props.additionalText);
 
   let titleParam = props.linkName;
-  // console.log(componentName, "typeof titleParam", typeof titleParam);
-  // console.log(componentName, "titleParam", titleParam);
+  // console.log(componentName, GetDateTime(), "typeof titleParam", typeof titleParam);
+  // console.log(componentName, GetDateTime(), "titleParam", titleParam);
 
   const randomTitle = props.randomTitle;
-  // console.log(componentName, "props.randomTitle", props.randomTitle);
-  // console.log(componentName, "typeof props.randomTitle", typeof props.randomTitle);
+  // console.log(componentName, GetDateTime(), "props.randomTitle", props.randomTitle);
+  // console.log(componentName, GetDateTime(), "typeof props.randomTitle", typeof props.randomTitle);
 
   // * Only show title in certain categories or by certain authors
   // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category.category === "Novels" || title.category.category === "Short Story Collections" || title.category.category === "Non Fiction"));
@@ -67,8 +67,8 @@ const TitleCard = (props) => {
     if (randomTitle) {
       // * Active titles were filtered out above
       titleList = randomTitleList.filter(title => title.active === true && title.titleID === parseInt(titleParam));
-      // console.log(componentName, "randomTitle titleParam", titleParam);
-      // console.log(componentName, "randomTitle titleList", titleList);
+      // console.log(componentName, GetDateTime(), "randomTitle titleParam", titleParam);
+      // console.log(componentName, GetDateTime(), "randomTitle titleList", titleList);
     } else {
       titleList = titleListState.filter(title => title.active === true && title.titleID === parseInt(titleParam));
     };
@@ -82,13 +82,13 @@ const TitleCard = (props) => {
   };
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect titleList", titleList);
+    // console.log(componentName, GetDateTime(), "useEffect titleList", titleList);
     if (titleList.length > 0) {
       setErrTitleMessage("");
     } else {
@@ -148,7 +148,7 @@ const TitleCard = (props) => {
               </Card>
 
             </Col>
-          )
+          );
         })}
       </Row>
     </Container>

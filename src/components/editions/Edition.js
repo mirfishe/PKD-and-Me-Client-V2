@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { DisplayDate, DisplayYear, encodeURL, decodeURL, IsEmpty, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
@@ -16,9 +16,9 @@ const Edition = (props) => {
   const history = useHistory();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const electronicOnly = useSelector(state => state.app.electronicOnly);
   const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
@@ -32,12 +32,12 @@ const Edition = (props) => {
   const [editionResultsFound, setEditionResultsFound] = useState(null);
 
   const editionsState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, "editionsState", editionsState);
+  // console.log(componentName, GetDateTime(), "editionsState", editionsState);
 
   let editionList = [...editionsState];
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, "titleListState", titleListState);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
 
   let titleItemArray = [];
   let titleItem = {};
@@ -48,8 +48,8 @@ const Edition = (props) => {
     titleItem = titleItemArray[0];
   };
 
-  // console.log(componentName, "props.titleID", props.titleID);
-  // console.log(componentName, "titleItem", titleItem);
+  // console.log(componentName, GetDateTime(), "props.titleID", props.titleID);
+  // console.log(componentName, GetDateTime(), "titleItem", titleItem);
 
   if (electronicOnly === true || userElectronicOnly === true) {
     // editionList = editionList.filter(edition => edition.medium.electronic === true);
@@ -66,23 +66,23 @@ const Edition = (props) => {
   } else {
     editionList = editionList.filter(edition => edition.active === true);
   };
-  // console.log(componentName, "editionList", editionList);
+  // console.log(componentName, GetDateTime(), "editionList", editionList);
 
   // * Sort the editionList array by media.sortID
-  // console.log(componentName, "editionList", editionList);
+  // console.log(componentName, GetDateTime(), "editionList", editionList);
   // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
   editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
-  // console.log(componentName, "editionList", editionList);
+  // console.log(componentName, GetDateTime(), "editionList", editionList);
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect editionList", editionList);
+    // console.log(componentName, GetDateTime(), "useEffect editionList", editionList);
     if (editionList.length > 0) {
       setErrEditionMessage("");
     } else {

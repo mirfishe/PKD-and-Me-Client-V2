@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { PencilSquare } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const EditCategories = (props) => {
 
@@ -11,15 +12,15 @@ const EditCategories = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -41,7 +42,7 @@ const EditCategories = (props) => {
   const [errSortID, setErrSortID] = useState("");
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, "categoryListState", categoryListState);
+  // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
 
   let categoryList = [];
 
@@ -50,18 +51,18 @@ const EditCategories = (props) => {
   } else {
     categoryList = categoryListState.filter(category => category.active === true);
   };
-  // console.log(componentName, "categoryList", categoryList);
+  // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
   let categoryListForm = [...categoryList];
 
   const updateCategories = () => {
-    // console.log(componentName, "updateCategories");
+    // console.log(componentName, GetDateTime(), "updateCategories");
 
     // Need to restructure the form for this to work
     // let formElements = event.target.elements;
-    // console.log(componentName, "updateCategories formElements", formElements);
+    // console.log(componentName, GetDateTime(), "updateCategories formElements", formElements);
 
     // for (let i = 0; i < .length; i++) {
 
@@ -71,7 +72,7 @@ const EditCategories = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for admin", admin);
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
       // return <Redirect to="/" />;
@@ -129,7 +130,7 @@ const EditCategories = (props) => {
 
                 </FormGroup>
 
-              )
+              );
             })}
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={updateCategories}>Update Categories</Button>

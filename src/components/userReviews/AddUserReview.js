@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { Plus } from 'react-bootstrap-icons';
 import { Rating } from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 import { addStateUserReview } from "../../bibliographyData/userReviewsSlice";
 import { updateStateTitleRating } from "../../bibliographyData/titlesSlice";
 import { updateStateChecklist } from "../../app/userSlice";
@@ -15,31 +16,31 @@ const AddUserReview = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, "titleListState", titleListState);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
 
   const checklistListState = useSelector(state => state.user.arrayChecklist);
-  // console.log(componentName, "checklistListState", checklistListState);
+  // console.log(componentName, GetDateTime(), "checklistListState", checklistListState);
 
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, "userReviewListState", userReviewListState);
+  // console.log(componentName, GetDateTime(), "userReviewListState", userReviewListState);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, "userState", userState);
+  // console.log(componentName, GetDateTime(), "userState", userState);
 
-  // console.log(componentName, "props.titleID", props.titleID);
+  // console.log(componentName, GetDateTime(), "props.titleID", props.titleID);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -78,16 +79,16 @@ const AddUserReview = (props) => {
   // const [titleItem, setTitleItem] = useState(null);
 
   // useEffect(() => {
-  //     // console.log(componentName, "useEffect userReviewListState", userReviewListState);
+  //     // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
 
   //     if (props.titleID !== undefined && props.titleID !== null) {
 
   //         let titleObject = titleListState.filter(title => title.titleID === props.titleID);
-  //         // console.log(componentName, "useEffect titleObject", titleObject);
-  //         // console.log(componentName, "useEffect typeof titleObject", typeof titleObject);
+  //         // console.log(componentName, GetDateTime(), "useEffect titleObject", titleObject);
+  //         // console.log(componentName, GetDateTime(), "useEffect typeof titleObject", typeof titleObject);
 
   //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
-  //         // console.log(componentName, "useEffect titleItemIndex", titleItemIndex);
+  //         // console.log(componentName, GetDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
   //         if (titleObject !== undefined) {
 
@@ -100,9 +101,9 @@ const AddUserReview = (props) => {
   // }, [props.titleID, titleListState]);
 
   const addUserReview = () => {
-    // console.log(componentName, "addUserReview");
-    // console.log(componentName, "addUserReview baseURL", baseURL);
-    // console.log(componentName, "addUserReview props.titleID", props.titleID);
+    // console.log(componentName, GetDateTime(), "addUserReview");
+    // console.log(componentName, GetDateTime(), "addUserReview baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addUserReview props.titleID", props.titleID);
 
     clearMessages();
     setUserReviewRecordAdded(null);
@@ -125,9 +126,9 @@ const AddUserReview = (props) => {
     // * txtDateRead is expecting a date and rdoRating is expecting a number
     // if (txtDateRead !== null && rdoRating !== null) {
 
-    // console.log(componentName, "addUserReview typeof props.titleID", typeof props.titleID);
+    // console.log(componentName, GetDateTime(), "addUserReview typeof props.titleID", typeof props.titleID);
 
-    // console.log(componentName, "addUserReview parseInt(props.titleID)", parseInt(props.titleID));
+    // console.log(componentName, GetDateTime(), "addUserReview parseInt(props.titleID)", parseInt(props.titleID));
 
     let userReviewObject = {
       titleID: parseInt(props.titleID),
@@ -166,10 +167,10 @@ const AddUserReview = (props) => {
       };
     };
 
-    // console.log(componentName, "addUserReview userReviewObject", userReviewObject);
+    // console.log(componentName, GetDateTime(), "addUserReview userReviewObject", userReviewObject);
 
     let url = baseURL + "userreviews/";
-    // console.log(componentName, "addUserReview url", url);
+    // console.log(componentName, GetDateTime(), "addUserReview url", url);
 
     if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -182,7 +183,7 @@ const AddUserReview = (props) => {
         body: JSON.stringify({ userReview: userReviewObject })
       })
         .then(response => {
-          // console.log(componentName, "addUserReview response", response);
+          // console.log(componentName, GetDateTime(), "addUserReview response", response);
           // if (!response.ok) {
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
           // } else {
@@ -194,7 +195,7 @@ const AddUserReview = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, "addUserReview data", data);
+          console.log(componentName, GetDateTime(), "addUserReview data", data);
 
           setUserReviewRecordAdded(data.recordAdded);
           addMessage(data.message);
@@ -215,50 +216,50 @@ const AddUserReview = (props) => {
             setActive(data.active);
 
             let titleItem = titleListState.filter(title => title.titleID === data.titleID);
-            // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}
+            // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
             titleItem = titleItem[0];
 
-            // console.log(componentName, "addUserReview titleItem", titleItem);
-            // console.log(componentName, "addUserReview typeof data.titleID", typeof data.titleID);
+            // console.log(componentName, GetDateTime(), "addUserReview titleItem", titleItem);
+            // console.log(componentName, GetDateTime(), "addUserReview typeof data.titleID", typeof data.titleID);
 
             let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
-            // ? Would still work if the createdAt and updatedAt were left out?
-            dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
+            // ? Would still work if the createDate and updateDate were left out?
+            dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createDate: data.createDate, updateDate: data.updateDate, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
             // ? Add to local storage also?
 
             // * Recalculate ratings
             let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID);
 
-            // console.log(componentName, "addUserReview userReviews", userReviews);
+            // console.log(componentName, GetDateTime(), "addUserReview userReviews", userReviews);
             // * Get all reviews for the title
             // ? Get the latest from state?
             // ? Update the state user review array?
-            userReviews.push({ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } });
-            // console.log(componentName, "addUserReview userReviews", userReviews);
+            userReviews.push({ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createDate: data.createDate, updateDate: data.updateDate, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } });
+            // console.log(componentName, GetDateTime(), "addUserReview userReviews", userReviews);
             // * Recompute the average
             let userReviewCount = userReviews.length;
             let userReviewSum = 0;
             for (let i = 0; i < userReviews.length; i++) {
               userReviewSum += userReviews[i].rating;
             };
-            // console.log(componentName, "addUserReview userReviewSum", userReviewSum);
+            // console.log(componentName, GetDateTime(), "addUserReview userReviewSum", userReviewSum);
             let userReviewAverage = 0;
             if (userReviewCount > 0) {
               // ? Check for division by zero?
               // let userReviewAverage: number = userReviewSum/0;
               userReviewAverage = userReviewSum / userReviewCount;
             };
-            // console.log(componentName, "addUserReview userReviewAverage", userReviewAverage);
+            // console.log(componentName, GetDateTime(), "addUserReview userReviewAverage", userReviewAverage);
             // * Update the title ratings
             dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID);
 
             if (data.active === true) {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdatedAt: new Date().toISOString() }));
+              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: new Date().toISOString() }));
             };
 
           } else {
@@ -268,9 +269,9 @@ const AddUserReview = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, "addUserReview error", error);
-          // console.log(componentName, "addUserReview error.name", error.name);
-          // console.log(componentName, "addUserReview error.message", error.message);
+          console.log(componentName, GetDateTime(), "addUserReview error", error);
+          // console.log(componentName, GetDateTime(), "addUserReview error.name", error.name);
+          // console.log(componentName, GetDateTime(), "addUserReview error.message", error.message);
           addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -281,7 +282,7 @@ const AddUserReview = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect userReviewRecordAdded", userReviewRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect userReviewRecordAdded", userReviewRecordAdded);
     if (userReviewRecordAdded !== undefined && userReviewRecordAdded !== null && userReviewRecordAdded === true) {
       clearMessages();
       setUserReviewRecordAdded(null);
@@ -292,7 +293,7 @@ const AddUserReview = (props) => {
   }, [userReviewRecordAdded]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for sessionToken", sessionToken);
+    // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if (sessionToken === undefined || sessionToken === null || sessionToken === "") {
       // return <Redirect to="/" />;

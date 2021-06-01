@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import Edition from "./Edition";
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const EditionList = (props) => {
 
@@ -23,8 +24,8 @@ const EditionList = (props) => {
   const [editionList, setEditionList] = useState([]);
 
   const getEditions = () => {
-    // console.log(componentName, "getEdition");
-    // console.log(componentName, "getEdition baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getEdition");
+    // console.log(componentName, GetDateTime(), "getEdition baseURL", baseURL);
 
     setEditionMessage("");
     setErrEditionMessage("");
@@ -33,11 +34,11 @@ const EditionList = (props) => {
 
     if (baseURL !== undefined && baseURL !== "") {
 
-      let url = baseURL + "editions/list";
+      let url = baseURL + "editions";
 
       fetch(url)
         .then(response => {
-          // console.log(componentName, "getEdition response", response);
+          // console.log(componentName, GetDateTime(), "getEdition response", response);
           if (!response.ok) {
             throw Error(response.status + " " + response.statusText + " " + response.url);
           } else {
@@ -45,7 +46,7 @@ const EditionList = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, "getEdition data", data);
+          console.log(componentName, GetDateTime(), "getEdition data", data);
 
           setEditionResultsFound(data.resultsFound);
           setEditionMessage(data.message);
@@ -58,9 +59,9 @@ const EditionList = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, "getEdition error", error);
-          // console.log(componentName, "getEdition error.name", error.name);
-          // console.log(componentName, "getEdition error.message", error.message);
+          console.log(componentName, GetDateTime(), "getEdition error", error);
+          // console.log(componentName, GetDateTime(), "getEdition error.name", error.name);
+          // console.log(componentName, GetDateTime(), "getEdition error.message", error.message);
           setErrEditionMessage(error.name + ": " + error.message);
         });
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IsEmpty, DisplayValue, GetDateTime } from "./sharedFunctions";
 
 const componentName = "urlsSlice.js";
 
@@ -15,11 +16,11 @@ const urlsSlice = createSlice({
   reducers: {
     loadArrayURLs: {
       reducer(state, action) {
-        // console.log(componentName, "loadArrayURLs action.payload", action.payload);
-        // console.log(componentName, "loadArrayURLs action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "loadArrayURLs action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "loadArrayURLs action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "loadArrayURLs action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "loadArrayURLs action.payload[i]", action.payload[i]);
           state.arrayURLs.push(action.payload[i]);
         };
 
@@ -29,12 +30,12 @@ const urlsSlice = createSlice({
     },
     addStateURL: {
       reducer(state, action) {
-        // console.log(componentName, "addStateTitle action.payload", action.payload);
-        // console.log(componentName, "addStateTitle action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "addStateTitle action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "addStateTitle action.payload.length", action.payload.length);
 
         // Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "addStateTitle action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "addStateTitle action.payload[i]", action.payload[i]);
           state.arrayURLs.push(action.payload[i]);
         };
 
@@ -42,14 +43,14 @@ const urlsSlice = createSlice({
     },
     updateStateURL: {
       reducer(state, action) {
-        // console.log(componentName, "updateStateURL action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "updateStateURL action.payload", action.payload);
 
         // ? Doesn't seem to be updating the state for some reason?
 
         const urlItem = action.payload;
-        // console.log(componentName, "updateStateURL urlItem", urlItem);
-        // console.log(componentName, "updateStateURL urlItem.linkID", urlItem.linkID);
-        // console.log(componentName, "updateStateURL urlItem.urlListIndex", urlItem.urlListIndex);
+        // console.log(componentName, GetDateTime(), "updateStateURL urlItem", urlItem);
+        // console.log(componentName, GetDateTime(), "updateStateURL urlItem.linkID", urlItem.linkID);
+        // console.log(componentName, GetDateTime(), "updateStateURL urlItem.urlListIndex", urlItem.urlListIndex);
 
         if (typeof urlItem === "object") {
 
@@ -79,7 +80,7 @@ const urlsSlice = createSlice({
     },
     deleteStateURL: {
       reducer(state, action) {
-        // console.log(componentName, "deleteStateURL action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "deleteStateURL action.payload", action.payload);
 
         const urlListIndex = action.payload;
 
@@ -89,7 +90,7 @@ const urlsSlice = createSlice({
     },
     setPageURL: {
       reducer(state, action) {
-        // console.log(componentName, "setPageURL action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setPageURL action.payload", action.payload);
 
         state.pageURL = action.payload;
 
@@ -97,7 +98,7 @@ const urlsSlice = createSlice({
     },
     setLinkItem: {
       reducer(state, action) {
-        // console.log(componentName, "setLinkItem action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setLinkItem action.payload", action.payload);
 
         state.linkItem = action.payload;
 

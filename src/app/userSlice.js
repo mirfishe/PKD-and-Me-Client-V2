@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IsEmpty, DisplayValue, GetDateTime } from "./sharedFunctions";
 
 const componentName = "userSlice.js";
 
@@ -24,7 +25,7 @@ const userSlice = createSlice({
   reducers: {
     loadUserData: {
       reducer(state, action) {
-        // console.log(componentName, "loadUserData action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "loadUserData action.payload", action.payload);
 
         if (typeof action.payload === "object") {
 
@@ -81,7 +82,7 @@ const userSlice = createSlice({
     },
     setSessionToken: {
       reducer(state, action) {
-        // console.log(componentName, "setLinkItem action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setLinkItem action.payload", action.payload);
 
         state.sessionToken = action.payload;
 
@@ -89,11 +90,11 @@ const userSlice = createSlice({
     },
     loadArrayChecklist: {
       reducer(state, action) {
-        // console.log(componentName, "loadArrayChecklist action.payload", action.payload);
-        // console.log(componentName, "loadArrayChecklist action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "loadArrayChecklist action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "loadArrayChecklist action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "loadArrayChecklist action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "loadArrayChecklist action.payload[i]", action.payload[i]);
           // state.arrayChecklist.push(action.payload[i]);
 
           let userReviewID = null;
@@ -102,8 +103,8 @@ const userSlice = createSlice({
           let userReviewRead = null;
           let userReviewDateRead = null;
           let userReviewActive = null;
-          let userReviewCreatedAt = null;
-          let userReviewUpdatedAt = null;
+          let userReviewCreatedDate = null;
+          let userReviewUpdateDate = null;
 
           if (action.payload[i] !== undefined && action.payload[i] !== null) {
             userReviewID = action.payload[i].reviewID;
@@ -112,11 +113,11 @@ const userSlice = createSlice({
             userReviewRead = action.payload[i].read;
             userReviewDateRead = action.payload[i].dateRead;
             userReviewActive = action.payload[i].userReviewsActive;
-            userReviewCreatedAt = action.payload[i].userReviewsCreatedAt;
-            userReviewUpdatedAt = action.payload[i].userReviewsUpdatedAt;
+            userReviewCreatedDate = action.payload[i].userReviewsCreatedDate;
+            userReviewUpdateDate = action.payload[i].userReviewsUpdateDate;
           };
 
-          state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].titlesPublicationDate, titlesImageName: action.payload[i].imageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].titlesActive, createdAt: action.payload[i].titlesCreatedAt, updatedAt: action.payload[i].titlesUpdatedAt, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedAt: userReviewCreatedAt, userReviewUpdatedAt: userReviewUpdatedAt });
+          state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].titlesPublicationDate, titlesImageName: action.payload[i].imageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].titlesActive, createDate: action.payload[i].titlesCreatedDate, updateDate: action.payload[i].titlesUpdateDate, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedDate: userReviewCreatedDate, userReviewUpdateDate: userReviewUpdateDate });
         };
 
         state.checklistLoaded = true;
@@ -126,12 +127,12 @@ const userSlice = createSlice({
     },
     updateStateChecklist: {
       reducer(state, action) {
-        console.log(componentName, "updateStateChecklist action.payload", action.payload);
+        console.log(componentName, GetDateTime(), "updateStateChecklist action.payload", action.payload);
 
         const checklistItem = action.payload;
-        // console.log(componentName, "updateStateChecklist checklistItem", checklistItem);
-        // console.log(componentName, "updateStateChecklist checklistItem.titleID", checklistItem.titleID);
-        // console.log(componentName, "updateStateChecklist checklistItem.checklistListIndex", checklistItem.checklistListIndex);
+        // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem", checklistItem);
+        // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem.titleID", checklistItem.titleID);
+        // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem.checklistListIndex", checklistItem.checklistListIndex);
 
         if (typeof checklistItem === "object") {
 
@@ -159,12 +160,12 @@ const userSlice = createSlice({
             state.arrayChecklist[checklistItem.checklistListIndex].userReviewActive = checklistItem.userReviewActive;
           };
 
-          if (checklistItem.hasOwnProperty("userReviewCreatedAt")) {
-            state.arrayChecklist[checklistItem.checklistListIndex].userReviewCreatedAt = checklistItem.userReviewCreatedAt;
+          if (checklistItem.hasOwnProperty("userReviewCreatedDate")) {
+            state.arrayChecklist[checklistItem.checklistListIndex].userReviewCreatedDate = checklistItem.userReviewCreatedDate;
           };
 
-          if (checklistItem.hasOwnProperty("userReviewUpdatedAt")) {
-            state.arrayChecklist[checklistItem.checklistListIndex].userReviewUpdatedAt = checklistItem.userReviewUpdatedAt;
+          if (checklistItem.hasOwnProperty("userReviewUpdateDate")) {
+            state.arrayChecklist[checklistItem.checklistListIndex].userReviewUpdateDate = checklistItem.userReviewUpdateDate;
           };
 
         };
@@ -173,7 +174,7 @@ const userSlice = createSlice({
     },
     setChecklistDataOffline: {
       reducer(state, action) {
-        // console.log(componentName, "setChecklistDataOffline action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setChecklistDataOffline action.payload", action.payload);
 
         state.checklistDataOffline = action.payload;
 

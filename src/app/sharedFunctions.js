@@ -5,7 +5,7 @@ const componentName = "sharedFunctions.js";
 
 export const encodeURL = (titleName) => {
 
-  // console.log(componentName, GetDateTime(), "encodeURL titleName", titleName);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "encodeURL titleName", titleName);
 
   let newTitleName = titleName;
 
@@ -20,7 +20,7 @@ export const encodeURL = (titleName) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "encodeURL newTitleName", newTitleName);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "encodeURL newTitleName", newTitleName);
 
   return newTitleName;
 };
@@ -28,7 +28,7 @@ export const encodeURL = (titleName) => {
 
 export const decodeURL = (titleName) => {
 
-  // console.log(componentName, GetDateTime(), "decodeURL titleName", titleName);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "decodeURL titleName", titleName);
 
   let newTitleName = titleName;
 
@@ -43,7 +43,7 @@ export const decodeURL = (titleName) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "decodeURL newTitleName", newTitleName);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "decodeURL newTitleName", newTitleName);
 
   return newTitleName;
 };
@@ -52,7 +52,7 @@ export const decodeURL = (titleName) => {
 // export const displayParagraphs = (text) => {
 //     // Not needed; Use the .displayParagraphs css style
 
-//     // console.log(componentName, GetDateTime(), "displayParagraphs text", text);
+//     // console.log(componentName, GetDateTime(), GetDateTime(), "displayParagraphs text", text);
 
 //     let newText = text;
 
@@ -67,7 +67,7 @@ export const decodeURL = (titleName) => {
 
 //     };
 
-//     // console.log(componentName, GetDateTime(), "displayParagraphs newText", newText);
+//     // console.log(componentName, GetDateTime(), GetDateTime(), "displayParagraphs newText", newText);
 
 //     return newText;
 // };
@@ -75,8 +75,8 @@ export const decodeURL = (titleName) => {
 
 export const removeOnePixelImage = (text, ASIN) => {
 
-  // console.log(componentName, GetDateTime(), "removeOnePixelImage text", text);
-  // console.log(componentName, GetDateTime(), "removeOnePixelImage ASIN", ASIN);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "removeOnePixelImage text", text);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "removeOnePixelImage ASIN", ASIN);
 
   let newText = text;
 
@@ -101,13 +101,13 @@ export const removeOnePixelImage = (text, ASIN) => {
 
 
     if (newText.includes("https://ir-na.amazon-adsystem.com")) {
-      console.log(componentName, GetDateTime(), "removeOnePixelImage ASIN", ASIN);
-      console.log(componentName, GetDateTime(), "removeOnePixelImage newText", newText);
+      console.log(componentName, GetDateTime(), GetDateTime(), "removeOnePixelImage ASIN", ASIN);
+      console.log(componentName, GetDateTime(), GetDateTime(), "removeOnePixelImage newText", newText);
     };
 
   };
 
-  // console.log(componentName, GetDateTime(), "removeOnePixelImage newText", newText);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "removeOnePixelImage newText", newText);
 
   return newText;
 };
@@ -115,8 +115,8 @@ export const removeOnePixelImage = (text, ASIN) => {
 
 export const setLocalImagePath = (text) => {
 
-  // console.log(componentName, GetDateTime(), "setLocalImagePath text", text);
-  // console.log(componentName, GetDateTime(), "setLocalImagePath AppSettings.profileType", AppSettings.profileType);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "setLocalImagePath text", text);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "setLocalImagePath AppSettings.profileType", AppSettings.profileType);
 
   let newText = text;
 
@@ -132,7 +132,7 @@ export const setLocalImagePath = (text) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "setLocalPath newText", newText);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "setLocalPath newText", newText);
 
   return newText;
 };
@@ -140,8 +140,8 @@ export const setLocalImagePath = (text) => {
 
 export const setLocalPath = (text) => {
 
-  // console.log(componentName, GetDateTime(), "setLocalPath text", text);
-  // console.log(componentName, GetDateTime(), "setLocalPath AppSettings.profileType", AppSettings.profileType);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "setLocalPath text", text);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "setLocalPath AppSettings.profileType", AppSettings.profileType);
 
   let newText = text;
 
@@ -157,7 +157,7 @@ export const setLocalPath = (text) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "setLocalPath newText", newText);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "setLocalPath newText", newText);
 
   return newText;
 };
@@ -165,7 +165,7 @@ export const setLocalPath = (text) => {
 
 export const createImageName = (titleName) => {
 
-  // console.log(componentName, GetDateTime(), "createImageName titleName", titleName);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "createImageName titleName", titleName);
 
   let newImageName = "";
 
@@ -202,7 +202,7 @@ export const createImageName = (titleName) => {
     newImageName = "https://philipdick.com/images/covers/" + newImageName + ".jpg";
   };
 
-  // console.log(componentName, GetDateTime(), "createImageName newImageName", newImageName);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "createImageName newImageName", newImageName);
 
   return newImageName;
 };
@@ -210,7 +210,7 @@ export const createImageName = (titleName) => {
 
 export const createTitleURL = (titleName) => {
 
-  // console.log(componentName, GetDateTime(), "createImageName titleName", titleName);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "createImageName titleName", titleName);
 
   let newTitleURL = "";
 
@@ -252,7 +252,7 @@ export const createTitleURL = (titleName) => {
     // newTitleURL = "https://philipdick.com/images/covers/" + newTitleURL + ".jpg";
   };
 
-  // console.log(componentName, GetDateTime(), "createImageName newTitleURL", newTitleURL);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "createImageName newTitleURL", newTitleURL);
 
   return newTitleURL;
 };
@@ -260,7 +260,7 @@ export const createTitleURL = (titleName) => {
 
 export const getASIN = (textLinkFull) => {
 
-  // console.log(componentName, GetDateTime(), "getASIN textLinkFull", textLinkFull);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "getASIN textLinkFull", textLinkFull);
 
   let txtASIN = "";
 
@@ -268,17 +268,17 @@ export const getASIN = (textLinkFull) => {
 
   if (textLinkFull !== undefined && textLinkFull !== null && textLinkFull !== "") {
 
-    // console.log(componentName, GetDateTime(), "getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
-    // console.log(componentName, GetDateTime(), "getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));
+    // console.log(componentName, GetDateTime(), GetDateTime(), "getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
+    // console.log(componentName, GetDateTime(), GetDateTime(), "getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));
 
     if (textLinkFull.indexOf("/dp/") !== -1) {
 
-      // console.log(componentName, GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
       txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
 
     } else if (textLinkFull.indexOf("/product/") !== -1) {
 
-      // console.log(componentName, GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
       txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
 
     };
@@ -295,7 +295,7 @@ export const getASIN = (textLinkFull) => {
 
 
 export const IsEmpty = (value) => {
-  // console.log(componentName, GetDateTime(), "IsEmpty value", value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty value", value);
 
   // * https://stackoverflow.com/questions/4597900/checking-something-isempty-in-javascript
   // * https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in
@@ -313,24 +313,24 @@ export const IsEmpty = (value) => {
   return value === undefined || value === null || (typeof value === "object" && Object.keys(value).length === 0) || (typeof value === "string" && value.trim().length === 0);
 
   // * Returns true
-  // console.log(componentName, GetDateTime(), "IsEmpty(\"\")", IsEmpty(""));
-  // console.log(componentName, GetDateTime(), "IsEmpty(null)", IsEmpty(null));
-  // console.log(componentName, GetDateTime(), "IsEmpty(undefined)", IsEmpty(undefined));
-  // console.log(componentName, GetDateTime(), "IsEmpty([])", IsEmpty([]));
-  // console.log(componentName, GetDateTime(), "IsEmpty({})", IsEmpty({}));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty(\"\")", IsEmpty(""));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty(null)", IsEmpty(null));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty(undefined)", IsEmpty(undefined));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty([])", IsEmpty([]));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty({})", IsEmpty({}));
 
   // * Returns false
-  // console.log(componentName, GetDateTime(), "IsEmpty(\"test\")", IsEmpty("test"));
-  // console.log(componentName, GetDateTime(), "IsEmpty(5)", IsEmpty(5));
-  // console.log(componentName, GetDateTime(), "IsEmpty(true)", IsEmpty(true));
-  // console.log(componentName, GetDateTime(), "IsEmpty([\"test\"])", IsEmpty(["test"]));
-  // console.log(componentName, GetDateTime(), "IsEmpty({test: \"test\"})", IsEmpty({ test: "test" }));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty(\"test\")", IsEmpty("test"));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty(5)", IsEmpty(5));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty(true)", IsEmpty(true));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty([\"test\"])", IsEmpty(["test"]));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsEmpty({test: \"test\"})", IsEmpty({ test: "test" }));
 
 };
 
 
 export const DisplayValue = (variableValue) => {
-  // console.log(componentName, GetDateTime(), "DisplayValue variableValue", variableValue);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayValue variableValue", variableValue);
 
   let displayValue = "";
 
@@ -356,7 +356,7 @@ export const DisplayValue = (variableValue) => {
 
 
 export const TryParseJSON = (jsonString) => {
-  // console.log(componentName, GetDateTime(), "TryParseJSON jsonString", jsonString);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "TryParseJSON jsonString", jsonString);
 
   // * https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try
   try {
@@ -372,7 +372,7 @@ export const TryParseJSON = (jsonString) => {
   }
   catch (error) {
     // ! Don't display this error in the console. This function is already returning false is the JSON file is not in the correct format.
-    // console.log(componentName, GetDateTime(), "TryParseJSON error", error);
+    // console.log(componentName, GetDateTime(), GetDateTime(), "TryParseJSON error", error);
   };
 
   return false;
@@ -381,7 +381,7 @@ export const TryParseJSON = (jsonString) => {
 
 
 export const DisplayObjectData = (ObjectData) => {
-  // console.log(componentName, GetDateTime(), "DisplayObjectData ObjectData", ObjectData);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayObjectData ObjectData", ObjectData);
 
   let objectDataString = JSON.stringify(ObjectData);
 
@@ -430,7 +430,7 @@ export const GetDateTime = () => {
 
 
 export const GetCurrentDay = () => {
-  // console.log(componentName, GetDateTime(), "GetCurrentDay");
+  // console.log(componentName, GetDateTime(), GetDateTime(), "GetCurrentDay");
 
   return new Date().getDate();
 
@@ -438,7 +438,7 @@ export const GetCurrentDay = () => {
 
 
 export const GetCurrentMonth = () => {
-  // console.log(componentName, GetDateTime(), "GetCurrentMonth");
+  // console.log(componentName, GetDateTime(), GetDateTime(), "GetCurrentMonth");
 
   return new Date().getMonth() + 1;
 
@@ -446,7 +446,7 @@ export const GetCurrentMonth = () => {
 
 
 export const GetCurrentYear = () => {
-  // console.log(componentName, GetDateTime(), "GetCurrentYear");
+  // console.log(componentName, GetDateTime(), GetDateTime(), "GetCurrentYear");
 
   return new Date().getFullYear();
 
@@ -454,7 +454,7 @@ export const GetCurrentYear = () => {
 
 
 export const DisplayDate = (dateToDisplay) => {
-  // console.log(componentName, GetDateTime(), "DisplayDate dateToDisplay", dateToDisplay);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayDate dateToDisplay", dateToDisplay);
 
   let newDisplayDate = "";
 
@@ -471,14 +471,14 @@ export const DisplayDate = (dateToDisplay) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "DisplayDate dateToDisplay", dateToDisplay);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayDate dateToDisplay", dateToDisplay);
 
   return newDisplayDate;
 };
 
 
 export const DisplayDateAndTime = (dateToDisplay) => {
-  // console.log(componentName, GetDateTime(), "DisplayDateAndTime dateToDisplay", dateToDisplay);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayDateAndTime dateToDisplay", dateToDisplay);
 
   let newDisplayDateAndTime = "";
 
@@ -503,14 +503,14 @@ export const DisplayDateAndTime = (dateToDisplay) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "DisplayDateAndTime newDisplayDateAndTime", newDisplayDateAndTime);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayDateAndTime newDisplayDateAndTime", newDisplayDateAndTime);
 
   return newDisplayDateAndTime;
 };
 
 
 export const DisplayYear = (dateToDisplay) => {
-  // console.log(componentName, GetDateTime(), "DisplayYear dateToDisplay", dateToDisplay);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayYear dateToDisplay", dateToDisplay);
 
   let newDisplayDate = "";
 
@@ -529,7 +529,7 @@ export const DisplayYear = (dateToDisplay) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "DisplayYear dateToDisplay", dateToDisplay);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "DisplayYear dateToDisplay", dateToDisplay);
 
   return newDisplayDate;
 };
@@ -538,7 +538,7 @@ export const DisplayYear = (dateToDisplay) => {
 // export const displayParagraphs = (text) => {
 //     // * Not needed; Use the .displayParagraphs css style
 
-//     // console.log(componentName, GetDateTime(), "displayParagraphs text", text);
+//     // console.log(componentName, GetDateTime(), GetDateTime(), "displayParagraphs text", text);
 
 //     let newText = text;
 
@@ -553,14 +553,14 @@ export const DisplayYear = (dateToDisplay) => {
 
 //     };
 
-//     // console.log(componentName, GetDateTime(), "displayParagraphs newText", newText);
+//     // console.log(componentName, GetDateTime(), GetDateTime(), "displayParagraphs newText", newText);
 
 //     return newText;
 // };
 
 
 export const TruncateText = (text, limit) => {
-  // console.log(componentName, GetDateTime(), "TruncateText text", text);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "TruncateText text", text);
 
   // * https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript
 
@@ -580,15 +580,15 @@ export const TruncateText = (text, limit) => {
     return text;
   };
 
-  // console.log(componentName, GetDateTime(), "TruncateText newText", newText);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "TruncateText newText", newText);
 
   // return newText;
 };
 
 
 export const CalculateDate = (days, timeline) => {
-  // console.log(componentName, GetDateTime(), "CalculateDate days", days);
-  // console.log(componentName, GetDateTime(), "CalculateDate timeline", timeline);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateDate days", days);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateDate timeline", timeline);
 
   let date = new Date();
 
@@ -608,16 +608,16 @@ export const CalculateDate = (days, timeline) => {
 
 
 export const CalculateBirthDate = (birthMonth, birthDay, age) => {
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate birthMonth", birthMonth);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate birthDay", birthDay);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate age", age);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof birthMonth", typeof birthMonth);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof birthDay", typeof birthDay);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof age", typeof age);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate GetCurrentMonth()", GetCurrentMonth());
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate GetCurrentDay()", GetCurrentDay());
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof GetCurrentMonth()", typeof GetCurrentMonth());
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof GetCurrentDay()", typeof GetCurrentDay());
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate birthMonth", birthMonth);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate birthDay", birthDay);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate age", age);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate typeof birthMonth", typeof birthMonth);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate typeof birthDay", typeof birthDay);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate typeof age", typeof age);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate GetCurrentMonth()", GetCurrentMonth());
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate GetCurrentDay()", GetCurrentDay());
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate typeof GetCurrentMonth()", typeof GetCurrentMonth());
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate typeof GetCurrentDay()", typeof GetCurrentDay());
 
   let birthdate = 0;
 
@@ -654,7 +654,7 @@ export const CalculateBirthDate = (birthMonth, birthDay, age) => {
     birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age);
   };
 
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate birthdate", birthdate);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "CalculateBirthDate birthdate", birthdate);
 
   return birthdate;
 
@@ -662,7 +662,7 @@ export const CalculateBirthDate = (birthMonth, birthDay, age) => {
 
 
 export const ValidateMilitaryTime = (timeEntered) => {
-  // console.log(componentName, GetDateTime(), "ValidateMilitaryTime timeEntered", timeEntered);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime timeEntered", timeEntered);
 
   // * Time in 24 clock, no colon
 
@@ -673,7 +673,7 @@ export const ValidateMilitaryTime = (timeEntered) => {
   // * third digit is either a 0 or 1 or 2 or 3 or 4 or 5 
 
   // * Make sure that it is a string
-  // console.log(componentName, GetDateTime(), "typeof \"8\"", typeof "8");
+  // console.log(componentName, GetDateTime(), GetDateTime(), "typeof \"8\"", typeof "8");
 
   let validTimeFormat = true;
 
@@ -712,38 +712,38 @@ export const ValidateMilitaryTime = (timeEntered) => {
       };
 
 
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"8\")", ValidateMilitaryTime("8"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"18\")", ValidateMilitaryTime("10"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"800\")", ValidateMilitaryTime("800"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"0800\")", ValidateMilitaryTime("0800"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"0880\")", ValidateMilitaryTime("0880"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"1600\")", ValidateMilitaryTime("1600"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"1645\")", ValidateMilitaryTime("1645"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"1650\")", ValidateMilitaryTime("1650"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"1680\")", ValidateMilitaryTime("1680"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"2150\")", ValidateMilitaryTime("2150"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"2160\")", ValidateMilitaryTime("2160"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"2300\")", ValidateMilitaryTime("2300"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"2500\")", ValidateMilitaryTime("2500"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(\"3000\")", ValidateMilitaryTime("3000"));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(8)", ValidateMilitaryTime(8));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(18)", ValidateMilitaryTime(10));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(800)", ValidateMilitaryTime(800));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(1600)", ValidateMilitaryTime(1600));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(1680)", ValidateMilitaryTime(1680));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(2500)", ValidateMilitaryTime(2500));
-      // console.log(componentName, GetDateTime(), "ValidateMilitaryTime(3000)", ValidateMilitaryTime(3000));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"8\")", ValidateMilitaryTime("8"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"18\")", ValidateMilitaryTime("10"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"800\")", ValidateMilitaryTime("800"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"0800\")", ValidateMilitaryTime("0800"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"0880\")", ValidateMilitaryTime("0880"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"1600\")", ValidateMilitaryTime("1600"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"1645\")", ValidateMilitaryTime("1645"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"1650\")", ValidateMilitaryTime("1650"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"1680\")", ValidateMilitaryTime("1680"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"2150\")", ValidateMilitaryTime("2150"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"2160\")", ValidateMilitaryTime("2160"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"2300\")", ValidateMilitaryTime("2300"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"2500\")", ValidateMilitaryTime("2500"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(\"3000\")", ValidateMilitaryTime("3000"));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(8)", ValidateMilitaryTime(8));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(18)", ValidateMilitaryTime(10));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(800)", ValidateMilitaryTime(800));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(1600)", ValidateMilitaryTime(1600));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(1680)", ValidateMilitaryTime(1680));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(2500)", ValidateMilitaryTime(2500));
+      // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime(3000)", ValidateMilitaryTime(3000));
 
 
 
       // let timeArray = timeEnteredString.split("");
 
-      // // console.log(componentName, GetDateTime(), "ValidateMilitaryTime timeArray", timeArray);
+      // // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime timeArray", timeArray);
 
       // for (let i = 0; i < timeArray.length; i++) {
 
-      //   // console.log(componentName, GetDateTime(), "ValidateMilitaryTime parseInt(timeArray[i])", parseInt(timeArray[i]));
-      //   // console.log(componentName, GetDateTime(), "ValidateMilitaryTime isNaN(parseInt(timeArray[i]))", isNaN(parseInt(timeArray[i])));
+      //   // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime parseInt(timeArray[i])", parseInt(timeArray[i]));
+      //   // console.log(componentName, GetDateTime(), GetDateTime(), "ValidateMilitaryTime isNaN(parseInt(timeArray[i]))", isNaN(parseInt(timeArray[i])));
 
       //   if (isNaN(parseInt(timeArray[i])) === false) {
 
@@ -792,8 +792,8 @@ export const ValidateMilitaryTime = (timeEntered) => {
 
 
 export const ConvertTemperature = (temperatureScale, temperature) => {
-  // console.log(componentName, GetDateTime(), "ConvertTemperature temperatureScale", temperatureScale);
-  // console.log(componentName, GetDateTime(), "ConvertTemperature temperature", temperature);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "ConvertTemperature temperatureScale", temperatureScale);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "ConvertTemperature temperature", temperature);
 
   // let temperatureFloat = parseFloat(temperature.toString().trim());
   let temperatureFloat = parseFloat(temperature);
@@ -820,7 +820,7 @@ export const ConvertTemperature = (temperatureScale, temperature) => {
   };
 
 
-  // console.log(componentName, GetDateTime(), "ConvertTemperature temperatureConverted", temperatureConverted);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "ConvertTemperature temperatureConverted", temperatureConverted);
 
   return temperatureConverted;
 
@@ -828,8 +828,8 @@ export const ConvertTemperature = (temperatureScale, temperature) => {
 
 
 export const ConvertBitTrueFalse = (records) => {
-  // console.log(componentName, "ConvertBitTrueFalse records", records);
-  // console.log(componentName, "ConvertBitTrueFalse process.env.DATABASE_DIALECT", process.env.DATABASE_DIALECT);
+  // console.log(componentName, GetDateTime(), "ConvertBitTrueFalse records", records);
+  // console.log(componentName, GetDateTime(), "ConvertBitTrueFalse process.env.DATABASE_DIALECT", process.env.DATABASE_DIALECT);
 
   // if (process.env.DATABASE_DIALECT == "mysql") {
 
@@ -869,7 +869,7 @@ export const ConvertBitTrueFalse = (records) => {
 
 
 export const ConvertYesNoTrueFalse = (value) => {
-  // console.log(componentName, GetDateTime(), "ConvertYesNoTrueFalse value", value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "ConvertYesNoTrueFalse value", value);
 
   // if (isNaN(value) === true && value.toString().trim() === "Yes") {
   //   return true;
@@ -899,7 +899,7 @@ export const ConvertYesNoTrueFalse = (value) => {
 
 
 export const ConvertNormalAbnormalTrueFalse = (value) => {
-  // console.log(componentName, GetDateTime(), "ConvertNormalAbnormalTrueFalse value", value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "ConvertNormalAbnormalTrueFalse value", value);
 
   // if (isNaN(value) === true && value.toString().trim() === "Normal") {
   //   return true;
@@ -929,7 +929,7 @@ export const ConvertNormalAbnormalTrueFalse = (value) => {
 
 
 export const ConvertEnableDisableTrueFalse = (value) => {
-  // console.log(componentName, GetDateTime(), "ConvertEnableDisableTrueFalse value", value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "ConvertEnableDisableTrueFalse value", value);
 
   // if (isNaN(value) === true && value.toString().trim() === "Enable") {
   //   return true;
@@ -959,8 +959,8 @@ export const ConvertEnableDisableTrueFalse = (value) => {
 
 
 export const ConvertNullEmptyString = (value) => {
-  // console.log(componentName, GetDateTime(), "convertNullToEmptyString value", value);
-  // console.log(componentName, GetDateTime(), "convertNullToEmptyString typeof value", typeof value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "convertNullToEmptyString value", value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "convertNullToEmptyString typeof value", typeof value);
 
   // if (value === null) {
   //   return "";
@@ -977,19 +977,19 @@ export const ConvertNullEmptyString = (value) => {
   // ! This can't be done in one function like this to handle both conversions because what if the database value is set to an empty string.
   // TODO: Change this function so that it can handle if there are already empty string values in the database.
   if (value === null) {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString null value", value);
+    // console.log(componentName, GetDateTime(), GetDateTime(), "convertNullToEmptyString null value", value);
     return "";
   } else if (value === undefined) {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString undefined value", value);
+    // console.log(componentName, GetDateTime(), GetDateTime(), "convertNullToEmptyString undefined value", value);
     return "";
   } else if (isNaN(value) === true && value === "") {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString isNaN \"\" value", value);
+    // console.log(componentName, GetDateTime(), GetDateTime(), "convertNullToEmptyString isNaN \"\" value", value);
     return null;
   } else if (value === "") {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString \"\" value", value);
+    // console.log(componentName, GetDateTime(), GetDateTime(), "convertNullToEmptyString \"\" value", value);
     return null;
   } else {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString else value", value);
+    // console.log(componentName, GetDateTime(), GetDateTime(), "convertNullToEmptyString else value", value);
     return value;
   };
 
@@ -997,7 +997,7 @@ export const ConvertNullEmptyString = (value) => {
 
 
 export const RequiredFieldAsterisk = () => {
-  // console.log(componentName, GetDateTime(), "RequiredFieldAsterisk");
+  // console.log(componentName, GetDateTime(), GetDateTime(), "RequiredFieldAsterisk");
 
   // return (<span className="error"> *</span>);
 
@@ -1007,12 +1007,12 @@ export const RequiredFieldAsterisk = () => {
 
 
 export const IsWholeNumber = (value) => {
-  // console.log(componentName, GetDateTime(), "IsWholeNumber value", value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsWholeNumber value", value);
 
   // * I think this is always returning true because the decimal is stripped off before the check is done.
-  // console.log(componentName, GetDateTime(), "IsWholeNumber parseInt(value.toString().trim())", parseInt(value.toString().trim()));
-  // console.log(componentName, GetDateTime(), "IsWholeNumber isNaN(parseInt(value.toString().trim()))", isNaN(parseInt(value.toString().trim())));
-  // console.log(componentName, GetDateTime(), "IsWholeNumber Number.isInteger(parseFloat(value.toString().trim()))", Number.isInteger(parseFloat(value.toString().trim())));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsWholeNumber parseInt(value.toString().trim())", parseInt(value.toString().trim()));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsWholeNumber isNaN(parseInt(value.toString().trim()))", isNaN(parseInt(value.toString().trim())));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "IsWholeNumber Number.isInteger(parseFloat(value.toString().trim()))", Number.isInteger(parseFloat(value.toString().trim())));
 
   // if (isNaN(parseInt(value.toString().trim())) === true) {
   //   return false;
@@ -1030,11 +1030,11 @@ export const IsWholeNumber = (value) => {
 
 
 export const HasDecimalPlaces = (value, decimalPlaces) => {
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces value", value);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "HasDecimalPlaces value", value);
 
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces parseFloat(value.toString().trim())", parseFloat(value.toString().trim()));
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces isNaN(parseFloat(value.toString().trim()))", isNaN(parseFloat(value.toString().trim())));
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces Number.isInteger(parseFloat(value.toString().trim()) * 10)", Number.isInteger(parseFloat(value.toString().trim()) * 10));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "HasDecimalPlaces parseFloat(value.toString().trim())", parseFloat(value.toString().trim()));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "HasDecimalPlaces isNaN(parseFloat(value.toString().trim()))", isNaN(parseFloat(value.toString().trim())));
+  // console.log(componentName, GetDateTime(), GetDateTime(), "HasDecimalPlaces Number.isInteger(parseFloat(value.toString().trim()) * 10)", Number.isInteger(parseFloat(value.toString().trim()) * 10));
 
   let currentDecimalPlaces = 1;
 
@@ -1053,7 +1053,7 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
     valueDecimals = value.toString().trim().substring(value.toString().trim().indexOf(".") + 1);
   };
 
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces currentDecimalPlaces", currentDecimalPlaces);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "HasDecimalPlaces currentDecimalPlaces", currentDecimalPlaces);
 
   // if (isNaN(parseFloat(value.toString().trim())) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(parseFloat(value.toString().trim()) * 10 ** currentDecimalPlaces) === false)) {
   // if (isNaN(valueToTest) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(valueToTest * 10 ** currentDecimalPlaces) === false)) {
@@ -1068,8 +1068,8 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
 
 
 export const GenerateRandomNumberDigits = (digits) => {
-  // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits");
-  // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits digits", digits);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "GenerateRandomNumberDigits");
+  // console.log(componentName, GetDateTime(), GetDateTime(), "GenerateRandomNumberDigits digits", digits);
 
   let randomNumber = Math.floor(Math.random() * 10 ** digits).toString();
 
@@ -1077,7 +1077,7 @@ export const GenerateRandomNumberDigits = (digits) => {
     randomNumber = "0" + randomNumber;
   };
 
-  // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits randomNumber", randomNumber);
+  // console.log(componentName, GetDateTime(), GetDateTime(), "GenerateRandomNumberDigits randomNumber", randomNumber);
 
   return randomNumber;
 

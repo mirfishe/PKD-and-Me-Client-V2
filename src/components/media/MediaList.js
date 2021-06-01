@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import Media from "./Media";
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const MediaList = (props) => {
 
@@ -23,8 +24,8 @@ const MediaList = (props) => {
   const [mediaList, setMediaList] = useState([]);
 
   const getMedia = () => {
-    // console.log(componentName, "getMedia");
-    // console.log(componentName, "getMedia baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getMedia");
+    // console.log(componentName, GetDateTime(), "getMedia baseURL", baseURL);
 
     setMediaMessage("");
     setErrMediaMessage("");
@@ -33,11 +34,11 @@ const MediaList = (props) => {
 
     if (baseURL !== undefined && baseURL !== "") {
 
-      let url = baseURL + "media/list";
+      let url = baseURL + "media";
 
       fetch(url)
         .then(response => {
-          // console.log(componentName, "getMedia response", response);
+          // console.log(componentName, GetDateTime(), "getMedia response", response);
           if (!response.ok) {
             throw Error(response.status + " " + response.statusText + " " + response.url);
           } else {
@@ -45,7 +46,7 @@ const MediaList = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, "getMedia data", data);
+          console.log(componentName, GetDateTime(), "getMedia data", data);
 
           setMediaResultsFound(data.resultsFound);
           setMediaMessage(data.message);
@@ -58,9 +59,9 @@ const MediaList = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, "getMedia error", error);
-          // console.log(componentName, "getMedia error.name", error.name);
-          // console.log(componentName, "getMedia error.message", error.message);
+          console.log(componentName, GetDateTime(), "getMedia error", error);
+          // console.log(componentName, GetDateTime(), "getMedia error.name", error.name);
+          // console.log(componentName, GetDateTime(), "getMedia error.message", error.message);
           setErrMediaMessage(error.name + ": " + error.message);
         });
 

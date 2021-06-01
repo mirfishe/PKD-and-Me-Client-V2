@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 import { loadUserData } from "../../app/userSlice";
 
 const EditUser = (props) => {
@@ -18,7 +19,7 @@ const EditUser = (props) => {
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -61,7 +62,7 @@ const EditUser = (props) => {
   const [errPassword, setErrPassword] = useState("");
 
   const updateUser = (deleteUser) => {
-    // console.log(componentName, "updateUser");
+    // console.log(componentName, GetDateTime(), "updateUser");
 
     clearMessages();
     setErrFirstName("");
@@ -88,13 +89,13 @@ const EditUser = (props) => {
       if (txtFirstName.trim().length > 0) {
         firstNameValidated = true;
         setErrFirstName("");
-        // console.log(componentName, "updateUser Valid First Name");
-        // console.log(componentName, "updateUser firstNameValidated true", firstNameValidated);
+        // console.log(componentName, GetDateTime(), "updateUser Valid First Name");
+        // console.log(componentName, GetDateTime(), "updateUser firstNameValidated true", firstNameValidated);
       } else {
         firstNameValidated = false;
         setErrFirstName("Please enter a first name.");
-        // console.log(componentName, "updateUser Invalid First Name");
-        // console.log(componentName, "updateUser firstNameValidated false", firstNameValidated);
+        // console.log(componentName, GetDateTime(), "updateUser Invalid First Name");
+        // console.log(componentName, GetDateTime(), "updateUser firstNameValidated false", firstNameValidated);
       };
     };
 
@@ -102,13 +103,13 @@ const EditUser = (props) => {
       if (txtLastName.trim().length > 0) {
         lastNameValidated = true;
         setErrLastName("");
-        // console.log(componentName, "updateUser Valid Last Name");
-        // console.log(componentName, "updateUser lastNameValidated true", lastNameValidated);
+        // console.log(componentName, GetDateTime(), "updateUser Valid Last Name");
+        // console.log(componentName, GetDateTime(), "updateUser lastNameValidated true", lastNameValidated);
       } else {
         lastNameValidated = false;
         setErrLastName("Please enter a last name.");
-        // console.log(componentName, "updateUser Invalid Last Name");
-        // console.log(componentName, "updateUser lastNameValidated false", lastNameValidated);
+        // console.log(componentName, GetDateTime(), "updateUser Invalid Last Name");
+        // console.log(componentName, GetDateTime(), "updateUser lastNameValidated false", lastNameValidated);
       };
     };
 
@@ -117,13 +118,13 @@ const EditUser = (props) => {
         // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, "updateUser Valid Email Address");
-        // console.log(componentName, "updateUser emailValidated true", emailValidated);
+        // console.log(componentName, GetDateTime(), "updateUser Valid Email Address");
+        // console.log(componentName, GetDateTime(), "updateUser emailValidated true", emailValidated);
       } else {
         emailValidated = false;
         setErrEmail("Please enter a valid email address.");
-        // console.log(componentName, "updateUser Invalid Email Address");
-        // console.log(componentName, "updateUser emailValidated false", emailValidated);
+        // console.log(componentName, GetDateTime(), "updateUser Invalid Email Address");
+        // console.log(componentName, GetDateTime(), "updateUser emailValidated false", emailValidated);
       };
     };
 
@@ -133,13 +134,13 @@ const EditUser = (props) => {
         if (txtPassword.trim().length > 4) {
           passwordValidated = true;
           setErrPassword("");
-          // console.log(componentName, "updateUser Valid Password");
-          // console.log(componentName, "updateUser passwordValidated true", passwordValidated);
+          // console.log(componentName, GetDateTime(), "updateUser Valid Password");
+          // console.log(componentName, GetDateTime(), "updateUser passwordValidated true", passwordValidated);
         } else {
           passwordValidated = false;
           setErrPassword("Password must be at least 5 characters.");
-          // console.log(componentName, "updateUser Invalid Password");
-          // console.log(componentName, "updateUser passwordValidated false", passwordValidated);
+          // console.log(componentName, GetDateTime(), "updateUser Invalid Password");
+          // console.log(componentName, GetDateTime(), "updateUser passwordValidated false", passwordValidated);
         };
       } else {
         passwordValidated = true;
@@ -152,19 +153,19 @@ const EditUser = (props) => {
 
     if (firstNameValidated === true && lastNameValidated === true && emailValidated === true && passwordValidated === true) {
       formValidated = true;
-      // console.log(componentName, "updateUser Valid Form");
-      // console.log(componentName, "updateUser formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "updateUser Valid Form");
+      // console.log(componentName, GetDateTime(), "updateUser formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "updateUser Invalid Form");
-      // console.log(componentName, "updateUser formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "updateUser Invalid Form");
+      // console.log(componentName, GetDateTime(), "updateUser formValidated false", formValidated);
     };
 
-    // console.log(componentName, "updateUser firstNameValidated", firstNameValidated);
-    // console.log(componentName, "updateUser lastNameValidated", lastNameValidated);
-    // console.log(componentName, "updateUser emailValidated", emailValidated);
-    // console.log(componentName, "updateUser passwordValidated", passwordValidated);
-    // console.log(componentName, "updateUser formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "updateUser firstNameValidated", firstNameValidated);
+    // console.log(componentName, GetDateTime(), "updateUser lastNameValidated", lastNameValidated);
+    // console.log(componentName, GetDateTime(), "updateUser emailValidated", emailValidated);
+    // console.log(componentName, GetDateTime(), "updateUser passwordValidated", passwordValidated);
+    // console.log(componentName, GetDateTime(), "updateUser formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -185,7 +186,7 @@ const EditUser = (props) => {
           };
         };
 
-        // console.log(componentName, "updateUser userObject", userObject);
+        // console.log(componentName, GetDateTime(), "updateUser userObject", userObject);
 
         let url = baseURL + "users/";
 
@@ -194,7 +195,7 @@ const EditUser = (props) => {
           url = url + userID;
         };
 
-        // console.log(componentName, "updateUser url", url);
+        // console.log(componentName, GetDateTime(), "updateUser url", url);
 
         fetch(url, {
           method: "PUT",
@@ -205,7 +206,7 @@ const EditUser = (props) => {
           body: JSON.stringify({ user: userObject })
         })
           .then(response => {
-            // console.log(componentName, "updateUser response", response);
+            // console.log(componentName, GetDateTime(), "updateUser response", response);
             // if (!response.ok) {
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
             // } else {
@@ -217,7 +218,7 @@ const EditUser = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, "updateUser data", data);
+            console.log(componentName, GetDateTime(), "updateUser data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -249,9 +250,9 @@ const EditUser = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, "updateUser error", error);
-            // console.log(componentName, "updateUser error.name", error.name);
-            // console.log(componentName, "updateUser error.message", error.message);
+            console.log(componentName, GetDateTime(), "updateUser error", error);
+            // console.log(componentName, GetDateTime(), "updateUser error.name", error.name);
+            // console.log(componentName, GetDateTime(), "updateUser error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -262,7 +263,7 @@ const EditUser = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect userRecordUpdated", userRecordUpdated);
+    // console.log(componentName, GetDateTime(), "useEffect userRecordUpdated", userRecordUpdated);
     if (userRecordUpdated !== undefined && userRecordUpdated !== null && userRecordUpdated !== false) {
       clearMessages();
       setErrFirstName("");
@@ -277,7 +278,7 @@ const EditUser = (props) => {
   }, [userRecordUpdated]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect sessionToken", sessionToken);
+    // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
     if (userLoaded !== undefined && userLoaded !== null && userLoaded === false) {
       clearMessages();
       setErrEmail("");

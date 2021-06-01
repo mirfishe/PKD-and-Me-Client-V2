@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const URLList = (props) => {
 
@@ -21,7 +22,7 @@ const URLList = (props) => {
   const [urlResultsFound, setUrlResultsFound] = useState(null);
 
   const urlList = useSelector(state => state.urls.arrayURLs);
-  // console.log(componentName, "urlList", urlList);
+  // console.log(componentName, GetDateTime(), "urlList", urlList);
 
   return (
     <Container className="mt-4">

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { createTitleURL, createImageName } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, createTitleURL, createImageName } from "../../app/sharedFunctions";
 import { addStateTitle } from "../../bibliographyData/titlesSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -14,15 +14,15 @@ const AddTitle = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -31,10 +31,10 @@ const AddTitle = (props) => {
   const [categoryResultsFound, setCategoryResultsFound] = useState(null);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, "categoryListState", categoryListState);
+  // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
 
   const categoryList = categoryListState.filter(category => category.active === true);
-  // console.log(componentName, "categoryList", categoryList);
+  // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
   // * Sort the list alphabetically instead of by sortID
@@ -42,24 +42,24 @@ const AddTitle = (props) => {
 
   // ! This code is causing React to have too many re-renders in this location
   // if (categoryList.length < 1) {
-  //     console.log(componentName, "categoryList is empty", categoryList.length);
+  //     console.log(componentName, GetDateTime(), "categoryList is empty", categoryList.length);
   //     setErrCategoryMessage("categoryList is empty", categoryList.length);
   //     setCategoryResultsFound(false);
   // } else {
-  //     console.log(componentName, "categoryList.length", categoryList.length);
+  //     console.log(componentName, GetDateTime(), "categoryList.length", categoryList.length);
   //     setCategoryMessage("categoryList.length", categoryList.length);
   //     setCategoryResultsFound(true);
   // };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect categoryList", categoryList);
+    // console.log(componentName, GetDateTime(), "useEffect categoryList", categoryList);
 
     if (categoryList.length < 1) {
-      console.log(componentName, "categoryList is empty", categoryList.length);
+      console.log(componentName, GetDateTime(), "categoryList is empty", categoryList.length);
       setErrCategoryMessage("categoryList is empty", categoryList.length);
       setCategoryResultsFound(false);
     } else {
-      // console.log(componentName, "useEffect categoryList.length", categoryList.length);
+      // console.log(componentName, GetDateTime(), "useEffect categoryList.length", categoryList.length);
       // setCategoryMessage("categoryList.length", categoryList.length);
       setCategoryResultsFound(true);
     };
@@ -109,8 +109,8 @@ const AddTitle = (props) => {
   const [active, setActive] = useState(null);
 
   const addTitle = () => {
-    // console.log(componentName, "addTitle");
-    // console.log(componentName, "addTitle baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addTitle");
+    // console.log(componentName, GetDateTime(), "addTitle baseURL", baseURL);
 
     clearMessages();
     setTitleRecordAdded(null);
@@ -139,13 +139,13 @@ const AddTitle = (props) => {
       if (txtTitleName.trim().length > 0) {
         titleNameValidated = true;
         setErrTitleName("");
-        // console.log(componentName, "addTitle Valid TitleName");
-        // console.log(componentName, "addTitle titleNameValidated true", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "addTitle Valid TitleName");
+        // console.log(componentName, GetDateTime(), "addTitle titleNameValidated true", titleNameValidated);
       } else {
         titleNameValidated = false;
         setErrTitleName("Please enter a title.");
-        // console.log(componentName, "addTitle Invalid TitleName");
-        // console.log(componentName, "addTitle titleNameValidated false", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "addTitle Invalid TitleName");
+        // console.log(componentName, GetDateTime(), "addTitle titleNameValidated false", titleNameValidated);
       };
     };
 
@@ -153,37 +153,37 @@ const AddTitle = (props) => {
       if (ddCategoryID !== null) {
         categoryIDValidated = true;
         setErrCategoryID("");
-        // console.log(componentName, "addTitle Valid CategoryID");
-        // console.log(componentName, "addTitle categoryIDValidated true", categoryIDValidated);
+        // console.log(componentName, GetDateTime(), "addTitle Valid CategoryID");
+        // console.log(componentName, GetDateTime(), "addTitle categoryIDValidated true", categoryIDValidated);
       } else {
         categoryIDValidated = false;
         setErrCategoryID("Please select a category.");
-        // console.log(componentName, "addTitle Invalid CategoryID");
-        // console.log(componentName, "addTitle categoryIDValidated false", categoryIDValidated);
+        // console.log(componentName, GetDateTime(), "addTitle Invalid CategoryID");
+        // console.log(componentName, GetDateTime(), "addTitle categoryIDValidated false", categoryIDValidated);
       };
     };
 
     if (titleNameValidated === true && categoryIDValidated === true) {
       formValidated = true;
-      // console.log(componentName, "addTitle Valid Form");
-      // console.log(componentName, "addTitle formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "addTitle Valid Form");
+      // console.log(componentName, GetDateTime(), "addTitle formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "addTitle Invalid Form");
-      // console.log(componentName, "addTitle formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "addTitle Invalid Form");
+      // console.log(componentName, GetDateTime(), "addTitle formValidated false", formValidated);
     };
 
-    // console.log(componentName, "addTitle titleNameValidated", titleNameValidated);
-    // console.log(componentName, "addTitle categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, "addTitle formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "addTitle titleNameValidated", titleNameValidated);
+    // console.log(componentName, GetDateTime(), "addTitle categoryIDValidated", categoryIDValidated);
+    // console.log(componentName, GetDateTime(), "addTitle formValidated", formValidated);
 
     if (formValidated === true) {
 
       if (txtTitleName !== undefined && txtTitleName !== null) {
 
-        // console.log(componentName, "addEdition typeof ddCategoryID", typeof ddCategoryID);
+        // console.log(componentName, GetDateTime(), "addEdition typeof ddCategoryID", typeof ddCategoryID);
 
-        // console.log(componentName, "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
+        // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
         let titleObject = {
           titleName: txtTitleName.trim(),
@@ -245,10 +245,10 @@ const AddTitle = (props) => {
           };
         };
 
-        // console.log(componentName, "addTitle titleObject", titleObject);
+        // console.log(componentName, GetDateTime(), "addTitle titleObject", titleObject);
 
         let url = baseURL + "titles/";
-        // console.log(componentName, "addTitle url", url);
+        // console.log(componentName, GetDateTime(), "addTitle url", url);
 
         if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -261,7 +261,7 @@ const AddTitle = (props) => {
             body: JSON.stringify({ title: titleObject })
           })
             .then(response => {
-              // console.log(componentName, "addTitle response", response);
+              // console.log(componentName, GetDateTime(), "addTitle response", response);
               // if (!response.ok) {
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
               // } else {
@@ -273,7 +273,7 @@ const AddTitle = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, "addTitle data", data);
+              console.log(componentName, GetDateTime(), "addTitle data", data);
 
               setTitleRecordAdded(data.recordAdded);
               addMessage(data.message);
@@ -295,14 +295,14 @@ const AddTitle = (props) => {
                 setActive(data.active);
 
                 let categoryItem = categoryList.filter(category => category.categoryID === data.categoryID);
-                // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt}
+                // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
                 categoryItem = categoryItem[0];
 
-                // console.log(componentName, "addTitle typeof data.categoryID", typeof data.categoryID);
-                // console.log(componentName, "addTitle categoryItem", categoryItem);
+                // console.log(componentName, GetDateTime(), "addTitle typeof data.categoryID", typeof data.categoryID);
+                // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
 
-                // ? Would still work if the createdAt and updatedAt were left out?
-                dispatch(addStateTitle([{ titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt } }]));
+                // ? Would still work if the createDate and updateDate were left out?
+                dispatch(addStateTitle([{ titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createDate: data.createDate, updateDate: data.updateDate, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } }]));
                 // ? Add to local storage also?
 
                 dispatch(addStateURL([{ linkName: data.titleURL, linkType: "title", linkID: data.titleID }]));
@@ -314,9 +314,9 @@ const AddTitle = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, "addTitle error", error);
-              // console.log(componentName, "addTitle error.name", error.name);
-              // console.log(componentName, "addTitle error.message", error.message);
+              console.log(componentName, GetDateTime(), "addTitle error", error);
+              // console.log(componentName, GetDateTime(), "addTitle error.name", error.name);
+              // console.log(componentName, GetDateTime(), "addTitle error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
@@ -329,17 +329,17 @@ const AddTitle = (props) => {
 
   // ! This code is causing React to have too many re-renders in this location
   const getCategoryIDFromCategoryName = (categoryName) => {
-    // console.log(componentName, "getCategoryIDFromCategoryName categoryName", categoryName);
+    // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryName", categoryName);
 
     if (categoryName !== undefined && categoryName !== null && categoryName !== "") {
-      // console.log(componentName, "getCategoryIDFromCategoryName categoryName", categoryName);
+      // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryName", categoryName);
 
       // * Could use a find here also
       const categoryProps = categoryList.filter(category => category.category === categoryName);
-      // console.log(componentName, "getCategoryIDFromCategoryName categoryProps", categoryProps);
+      // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryProps", categoryProps);
 
       if (!isNaN(categoryProps[0].categoryID)) {
-        // console.log(componentName, "getCategoryIDFromCategoryName categoryProps[0].categoryID", categoryProps[0].categoryID);
+        // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryProps[0].categoryID", categoryProps[0].categoryID);
 
         // setDdCategoryID(categoryProps[0].categoryID);
 
@@ -358,7 +358,7 @@ const AddTitle = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect titleRecordAdded", titleRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect titleRecordAdded", titleRecordAdded);
     if (titleRecordAdded !== undefined && titleRecordAdded !== null && titleRecordAdded === true) {
       clearMessages();
       setErrTitleName("");
@@ -371,7 +371,7 @@ const AddTitle = (props) => {
   }, [titleRecordAdded]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for admin", admin);
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
       // return <Redirect to="/" />;
@@ -432,7 +432,7 @@ const AddTitle = (props) => {
             <FormGroup row>
               <Col>
 
-                {/* {console.log(componentName, "ddCategoryID", ddCategoryID)} */}
+                {/* {console.log(componentName, GetDateTime(), "ddCategoryID", ddCategoryID)} */}
                 <Label id="lblCategoryID" for="lblCategoryID">Category</Label>
                 <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => {/*console.log(event.target.value);*/ setDdCategoryID(event.target.value); }}>
                   <option value="">Select a Category</option>

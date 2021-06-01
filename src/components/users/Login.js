@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Login = (props) => {
@@ -17,7 +18,7 @@ const Login = (props) => {
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -58,15 +59,15 @@ const Login = (props) => {
   const updateToken = (newToken) => {
     if (newToken !== undefined && newToken !== null && newToken !== "") {
       localStorage.setItem("token", newToken);
-      // console.log(componentName, "updateToken newToken", newToken);
-      // console.log(componentName, "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
-      // console.log(componentName, "updateToken User token changed.");
+      // console.log(componentName, GetDateTime(), "updateToken newToken", newToken);
+      // console.log(componentName, GetDateTime(), "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
+      // console.log(componentName, GetDateTime(), "updateToken User token changed.");
     };
   };
 
 
   const logIn = () => {
-    // console.log(componentName, "logIn");
+    // console.log(componentName, GetDateTime(), "logIn");
 
     clearMessages();
     setErrEmail("");
@@ -90,13 +91,13 @@ const Login = (props) => {
         // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, "logIn Valid Email Address");
-        // console.log(componentName, "logIn emailValidated true", emailValidated);
+        // console.log(componentName, GetDateTime(), "logIn Valid Email Address");
+        // console.log(componentName, GetDateTime(), "logIn emailValidated true", emailValidated);
       } else {
         emailValidated = false;
         setErrEmail("Please enter a valid email address.");
-        // console.log(componentName, "logIn Invalid Email Address");
-        // console.log(componentName, "logIn emailValidated false", emailValidated);
+        // console.log(componentName, GetDateTime(), "logIn Invalid Email Address");
+        // console.log(componentName, GetDateTime(), "logIn emailValidated false", emailValidated);
       };
     };
 
@@ -104,29 +105,29 @@ const Login = (props) => {
       if (txtPassword.trim().length > 4) {
         passwordValidated = true;
         setErrPassword("");
-        // console.log(componentName, "logIn Valid Password");
-        // console.log(componentName, "logIn passwordValidated true", passwordValidated);
+        // console.log(componentName, GetDateTime(), "logIn Valid Password");
+        // console.log(componentName, GetDateTime(), "logIn passwordValidated true", passwordValidated);
       } else {
         passwordValidated = false;
         setErrPassword("Password must be at least 5 characters.");
-        // console.log(componentName, "logIn Invalid Password");
-        // console.log(componentName, "logIn passwordValidated false", passwordValidated);
+        // console.log(componentName, GetDateTime(), "logIn Invalid Password");
+        // console.log(componentName, GetDateTime(), "logIn passwordValidated false", passwordValidated);
       };
     };
 
     if (emailValidated === true && passwordValidated === true) {
       formValidated = true;
-      // console.log(componentName, "logIn Valid Form");
-      // console.log(componentName, "logIn formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "logIn Valid Form");
+      // console.log(componentName, GetDateTime(), "logIn formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "logIn Invalid Form");
-      // console.log(componentName, "logIn formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "logIn Invalid Form");
+      // console.log(componentName, GetDateTime(), "logIn formValidated false", formValidated);
     };
 
-    // console.log(componentName, "logIn emailValidated", emailValidated);
-    // console.log(componentName, "logIn passwordValidated", passwordValidated);
-    // console.log(componentName, "logIn formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "logIn emailValidated", emailValidated);
+    // console.log(componentName, GetDateTime(), "logIn passwordValidated", passwordValidated);
+    // console.log(componentName, GetDateTime(), "logIn formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -135,10 +136,10 @@ const Login = (props) => {
           email: txtEmail.trim(),
           password: txtPassword.trim()
         };
-        // console.log(componentName, "logIn userObject", userObject);
+        // console.log(componentName, GetDateTime(), "logIn userObject", userObject);
 
         let url = baseURL + "users/login/";
-        // console.log(componentName, "logIn url", url);
+        // console.log(componentName, GetDateTime(), "logIn url", url);
 
         fetch(url, {
           method: "POST",
@@ -148,7 +149,7 @@ const Login = (props) => {
           body: JSON.stringify({ user: userObject })
         })
           .then(response => {
-            // console.log(componentName, "logIn response", response);
+            // console.log(componentName, GetDateTime(), "logIn response", response);
             // if (!response.ok) {
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
             // } else {
@@ -160,7 +161,7 @@ const Login = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, "logIn data", data);
+            console.log(componentName, GetDateTime(), "logIn data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -196,9 +197,9 @@ const Login = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, "logIn error", error);
-            // console.log(componentName, "logIn error.name", error.name);
-            // console.log(componentName, "logIn error.message", error.message);
+            console.log(componentName, GetDateTime(), "logIn error", error);
+            // console.log(componentName, GetDateTime(), "logIn error.name", error.name);
+            // console.log(componentName, GetDateTime(), "logIn error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -210,14 +211,14 @@ const Login = (props) => {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, "getChecklist");
-    // console.log(componentName, "getChecklist baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getChecklist");
+    // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
     setChecklistResultsFound(null);
 
-    let url = baseURL + "titles/checklist/list";
+    let url = baseURL + "titles/checklist";
 
     if (token !== undefined && token !== null && token !== "") {
 
@@ -229,7 +230,7 @@ const Login = (props) => {
         }),
       })
         .then(response => {
-          // console.log(componentName, "getChecklist response", response);
+          // console.log(componentName, GetDateTime(), "getChecklist response", response);
           // if (!response.ok) {
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
           // } else {
@@ -241,7 +242,7 @@ const Login = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, "getChecklist data", data);
+          console.log(componentName, GetDateTime(), "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);
@@ -251,15 +252,15 @@ const Login = (props) => {
             dispatch(loadArrayChecklist(data.records));
 
           } else {
-            console.log(componentName, "getChecklist resultsFound error", data.message);
+            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", data.message);
             addErrorMessage(data.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, "getChecklist error", error);
-          // console.log(componentName, "getChecklist error.name", error.name);
-          // console.log(componentName, "getChecklist error.message", error.message);
+          console.log(componentName, GetDateTime(), "getChecklist error", error);
+          // console.log(componentName, GetDateTime(), "getChecklist error.name", error.name);
+          // console.log(componentName, GetDateTime(), "getChecklist error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -269,7 +270,7 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect userResultsFound", userResultsFound);
+    // console.log(componentName, GetDateTime(), "useEffect userResultsFound", userResultsFound);
     if (userResultsFound !== undefined && userResultsFound !== null && userResultsFound !== false) {
       clearMessages();
       setErrEmail("");
@@ -283,7 +284,7 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect sessionToken", sessionToken);
+    // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
     if (sessionToken !== undefined && sessionToken !== null && sessionToken !== "") {
       clearMessages();
       setErrEmail("");
@@ -296,7 +297,7 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
+    // console.log(componentName, GetDateTime(), "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
 
     if (process.env.NODE_ENV === "development") {
 

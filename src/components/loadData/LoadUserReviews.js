@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
-import UserReviewData from "../../bibliographyData/userReviews.json";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
+// import UserReviewData from "../../bibliographyData/userReviews.json";
 // import UserReviewRatingData from "../../bibliographyData/UserReviewsRatings.json";
 import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../bibliographyData/userReviewsSlice";
 
@@ -16,13 +17,13 @@ function LoadUserReviews() {
   // Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   // Loading the appOffline from the state store here is too slow
   // Always pulling it from environment.js
   // const appOffline = useSelector(state => state.app.appOffline);
   const appOffline = AppSettings.appOffline;
-  // console.log(componentName, "appOffline", appOffline);
+  // console.log(componentName, GetDateTime(), "appOffline", appOffline);
 
   // Load settings from Redux slices
   const userReviewsLoaded = useSelector(state => state.userReviews.userReviewsLoaded);
@@ -36,12 +37,12 @@ function LoadUserReviews() {
   const loadDataStore = (data, source) => {
 
     if (source === "userReview") {
-      // console.log(componentName, "loadDataStore data", data);
+      // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayUserReviews(data));
       // localStorage.setItem("arrayUserReviews", data);
       // localStorage.setItem("lastDatabaseRetrievalUserReviews", new Date().toISOString());
       // } else if (source === "userReviewRating") {
-      //   // console.log(componentName, "loadDataStore data", data);
+      //   // console.log(componentName, GetDateTime(), "loadDataStore data", data);
 
       //   let userReviewsRatings = data;
 
@@ -59,13 +60,13 @@ function LoadUserReviews() {
       //           Object.assign(userReviewsRatings[i], {userReviewAverage: userReviewAverage});
       //       };
 
-      //       // console.log(componentName, "getUserReviewsRatings userReviewCount", userReviewCount);
-      //       // console.log(componentName, "getUserReviewsRatings userReviewSum", userReviewSum);
-      //       // console.log(componentName, "getUserReviewsRatings userReviewAverage", userReviewAverage);
+      //       // console.log(componentName, GetDateTime(), "getUserReviewsRatings userReviewCount", userReviewCount);
+      //       // console.log(componentName, GetDateTime(), "getUserReviewsRatings userReviewSum", userReviewSum);
+      //       // console.log(componentName, GetDateTime(), "getUserReviewsRatings userReviewAverage", userReviewAverage);
 
       //   };
 
-      //   // console.log(componentName, "getUserReviewsRatings userReviewsRatings", userReviewsRatings);
+      //   // console.log(componentName, GetDateTime(), "getUserReviewsRatings userReviewsRatings", userReviewsRatings);
 
       //   // dispatch(loadArrayUserReviewsRatings(data));
       //   dispatch(loadArrayUserReviewsRatings(userReviewsRatings));
@@ -76,17 +77,17 @@ function LoadUserReviews() {
   };
 
   const getUserReviews = () => {
-    // console.log(componentName, "getUserReviews");
-    // console.log(componentName, "getUserReviews baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getUserReviews");
+    // console.log(componentName, GetDateTime(), "getUserReviews baseURL", baseURL);
 
     setUserReviewMessage("");
     setErrUserReviewMessage("");
 
-    let url = baseURL + "userreviews/list";
+    let url = baseURL + "userreviews";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getUserReviews response", response);
+        // console.log(componentName, GetDateTime(), "getUserReviews response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * load offline data
@@ -98,13 +99,13 @@ function LoadUserReviews() {
         };
       })
       .then(data => {
-        console.log(componentName, "getUserReviews data", data);
+        console.log(componentName, GetDateTime(), "getUserReviews data", data);
         // setUserReviewMessage(data.message);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "userReview");
         } else {
-          console.log(componentName, "getUserReviews resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "getUserReviews resultsFound error", data.message);
           // setErrUserReviewMessage(data.message);
           dispatch(setUserReviewsDataOffline(true));
           fetchLocalDataUserReviews();
@@ -112,9 +113,9 @@ function LoadUserReviews() {
 
       })
       .catch(error => {
-        console.log(componentName, "getUserReviews error", error);
-        // console.log(componentName, "getUserReviews error.name", error.name);
-        // console.log(componentName, "getUserReviews error.message", error.message);
+        console.log(componentName, GetDateTime(), "getUserReviews error", error);
+        // console.log(componentName, GetDateTime(), "getUserReviews error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getUserReviews error.message", error.message);
         // setErrUserReviewMessage(error.name + ": " + error.message);
         dispatch(setUserReviewsDataOffline(true));
         fetchLocalDataUserReviews();
@@ -123,21 +124,21 @@ function LoadUserReviews() {
   };
 
   //   const getUserReviewsRatings = () => {
-  //     // console.log(componentName, "getUserReviewsRatings");
-  //     // console.log(componentName, "getUserReviewsRatings baseURL", baseURL);
+  //     // console.log(componentName, GetDateTime(), "getUserReviewsRatings");
+  //     // console.log(componentName, GetDateTime(), "getUserReviewsRatings baseURL", baseURL);
 
   //     setOverallTitleRatingMessage("");
   //     setErrOverallTitleRatingMessage("");
 
   //     let url = baseURL + "userreviews/";
 
-  //       url = url + "rating/list";
+  //       url = url + "rating";
 
-  //       // console.log(componentName, "getUserReviewsRatings url", url);
+  //       // console.log(componentName, GetDateTime(), "getUserReviewsRatings url", url);
 
   //       fetch(url)
   //       .then(response => {
-  //           // console.log(componentName, "getUserReviewsRatings response", response);
+  //           // console.log(componentName, GetDateTime(), "getUserReviewsRatings response", response);
   //           if (!response.ok) {
   //               // throw Error(response.status + " " + response.statusText + " " + response.url);
   //               // * load offline data
@@ -149,13 +150,13 @@ function LoadUserReviews() {
   //           };
   //       })
   //       .then(data => {
-  //         // console.log(componentName, "getUserReviewsRatings data", data);
+  //         // console.log(componentName, GetDateTime(), "getUserReviewsRatings data", data);
   //         // setOverallTitleRatingMessage(data.message);
 
   //         if (data.resultsFound === true) {
   //           loadDataStore(data.userReviews, "userReviewRating");
   //         } else {
-  //           console.log(componentName, "getUserReviewsRatings resultsFound error", data.message);
+  //           console.log(componentName, GetDateTime(), "getUserReviewsRatings resultsFound error", data.message);
   //           // setErrOverallTitleRatingMessage(data.message);
   //           dispatch(setUserReviewsRatingsDataOffline(true));
   //           fetchLocalDataUserReviewsRatings();
@@ -163,9 +164,9 @@ function LoadUserReviews() {
 
   //     })
   //       .catch(error => {
-  //           console.log(componentName, "getUserReviewsRatings error", error);
-  //           // console.log(componentName, "getUserReviewsRatings error.name", error.name);
-  //           // console.log(componentName, "getUserReviewsRatings error.message", error.message);
+  //           console.log(componentName, GetDateTime(), "getUserReviewsRatings error", error);
+  //           // console.log(componentName, GetDateTime(), "getUserReviewsRatings error.name", error.name);
+  //           // console.log(componentName, GetDateTime(), "getUserReviewsRatings error.message", error.message);
   //           // setErrOverallTitleRatingMessage(error.name + ": " + error.message);
   //           dispatch(setUserReviewsRatingsDataOffline(true));
   //           fetchLocalDataUserReviewsRatings();
@@ -174,13 +175,13 @@ function LoadUserReviews() {
   // };
 
   const fetchLocalDataUserReviews = () => {
-    // console.log(componentName, "fetchLocalDataUserReviews");
+    // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews");
 
-    let url = "./bibliographyData/UserReviews.json";
+    let url = "bibliographyData/UserReviews.json";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "fetchLocalDataUserReviews response", response);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews response", response);
         if (!response.ok) {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer.
@@ -194,38 +195,40 @@ function LoadUserReviews() {
         };
       })
       .then(data => {
-        // console.log(componentName, "fetchLocalDataUserReviews data", data);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews data", data);
 
         if (data.resultsFound === true) {
           loadDataStore(data.records, "userReview");
         } else {
-          console.log(componentName, "fetchLocalDataUserReviews resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews resultsFound error", data.message);
           // setErrUserReviewMessage(data.message);
           dispatch(setUserReviewsDataOffline(true));
-          loadDataStore(UserReviewData, "userReview");
+          // * Not going to need to load user reviews from local data.
+          // loadDataStore(UserReviewData, "userReview");
         };
 
       })
       .catch(error => {
-        console.log(componentName, "fetchLocalDataUserReviews error", error);
-        // console.log(componentName, "fetchLocalDataUserReviews error.name", error.name);
-        // console.log(componentName, "fetchLocalDataUserReviews error.message", error.message);
+        console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews error", error);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews error.name", error.name);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews error.message", error.message);
         // setErrUserReviewMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setUserReviewsDataOffline(true));
-        loadDataStore(UserReviewData, "userReview");
+        // * Not going to need to load user reviews from local data.
+        // loadDataStore(UserReviewData, "userReview");
       });
 
   };
 
   // const fetchLocalDataUserReviewsRatings = () => {
-  //   // console.log(componentName, "fetchLocalDataUserReviewsRatings");
+  //   // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings");
 
-  //   let url = "./bibliographyData/UserReviewsRatings.json";
+  //   let url = "bibliographyData/UserReviewsRatings.json";
 
   //   fetch(url)
   //   .then(response => {
-  //       // console.log(componentName, "fetchLocalDataUserReviewsRatings response", response);
+  //       // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings response", response);
   //       if (!response.ok) {
   //         // throw Error(response.status + " " + response.statusText + " " + response.url);
   //         // * load offline data
@@ -238,12 +241,12 @@ function LoadUserReviews() {
   //       };
   //   })
   //   .then(data => {
-  //       console.log(componentName, "fetchLocalDataUserReviewsRatings data", data);
+  //       console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings data", data);
 
   //       if (data.resultsFound === true) {
   //         loadDataStore(data.userReviews, "userReviewRating");
   //       } else {
-  //         console.log(componentName, "fetchLocalDataUserReviewsRatings resultsFound error", data.message);
+  //         console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings resultsFound error", data.message);
   //         // setErrUserReviewMessage(data.message);
   //         dispatch(setUserReviewsRatingsDataOffline(true));
   //         loadDataStore(UserReviewRatingData, "userReviewRating");
@@ -251,9 +254,9 @@ function LoadUserReviews() {
 
   //   })
   //   .catch(error => {
-  //       console.log(componentName, "fetchLocalDataUserReviewsRatings error", error);
-  //       // console.log(componentName, "fetchLocalDataUserReviewsRatings error.name", error.name);
-  //       // console.log(componentName, "fetchLocalDataUserReviewsRatings error.message", error.message);
+  //       console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error", error);
+  //       // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.name", error.name);
+  //       // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.message", error.message);
   //       // setErrUserReviewMessage(error.name + ": " + error.message);
   //       // ! This doesn't actually run as far as I can tell
   //       dispatch(setUserReviewsRatingsDataOffline(true));
@@ -263,7 +266,7 @@ function LoadUserReviews() {
   // };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect");
+    // console.log(componentName, GetDateTime(), "useEffect");
 
     // * Only load the bibliography data once per session unless the data is changed
     if (appOffline) {

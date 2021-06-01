@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const AddTitleSuggestion = (props) => {
 
@@ -11,25 +12,25 @@ const AddTitleSuggestion = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
   const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, "userID", userID);
+  // console.log(componentName, GetDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const requireUserLogin = useSelector(state => state.app.requireUserLogin);
-  // console.log(componentName, "requireUserLogin", requireUserLogin);
+  // console.log(componentName, GetDateTime(), "requireUserLogin", requireUserLogin);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, "userState", userState);
+  // console.log(componentName, GetDateTime(), "userState", userState);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -68,8 +69,8 @@ const AddTitleSuggestion = (props) => {
   const [titleSuggestionEmailAddress, setTitleSuggestionEmailAddress] = useState(null);
 
   const addTitleSuggestion = () => {
-    // console.log(componentName, "addTitleSuggestion");
-    // console.log(componentName, "addTitleSuggestion baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addTitleSuggestion");
+    // console.log(componentName, GetDateTime(), "addTitleSuggestion baseURL", baseURL);
 
     clearMessages();
     setTitleSuggestionRecordAdded(null);
@@ -97,13 +98,13 @@ const AddTitleSuggestion = (props) => {
       if (txtTitleName.trim().length > 0) {
         titleNameValidated = true;
         setErrTitleName("");
-        // console.log(componentName, "addTitleSuggestion Valid TitleName");
-        // console.log(componentName, "addTitleSuggestion titleNameValidated true", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion Valid TitleName");
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated true", titleNameValidated);
       } else {
         titleNameValidated = false;
         setErrTitleName("Please enter a title.");
-        // console.log(componentName, "addTitleSuggestion Invalid TitleName");
-        // console.log(componentName, "addTitleSuggestion titleNameValidated false", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion Invalid TitleName");
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated false", titleNameValidated);
       };
     };
 
@@ -111,13 +112,13 @@ const AddTitleSuggestion = (props) => {
       if (txtShortDescription.trim().length > 0) {
         shortDescriptionValidated = true;
         setErrShortDescription("");
-        // console.log(componentName, "addTitleSuggestion Valid TitleName");
-        // console.log(componentName, "addTitleSuggestion titleNameValidated true", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion Valid TitleName");
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated true", titleNameValidated);
       } else {
         shortDescriptionValidated = false;
         setErrShortDescription("Please enter a description of why the title should be added.");
-        // console.log(componentName, "addTitleSuggestion Invalid TitleName");
-        // console.log(componentName, "addTitleSuggestion titleNameValidated false", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion Invalid TitleName");
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated false", titleNameValidated);
       };
     };
 
@@ -125,29 +126,29 @@ const AddTitleSuggestion = (props) => {
       if (txtEmailAddress.trim().length > 0 || requireUserLogin === false) {
         emailAddressValidated = true;
         setErrEmailAddress("");
-        // console.log(componentName, "addMessage Valid emailAddress");
-        // console.log(componentName, "addMessage emailAddressValidated true", emailAddressValidated);
+        // console.log(componentName, GetDateTime(), "addMessage Valid emailAddress");
+        // console.log(componentName, GetDateTime(), "addMessage emailAddressValidated true", emailAddressValidated);
       } else {
         emailAddressValidated = false;
         setErrEmailAddress("Please enter an email address.");
-        // console.log(componentName, "addMessage Invalid emailAddress");
-        // console.log(componentName, "addMessage emailAddressValidated false", emailAddressValidated);
+        // console.log(componentName, GetDateTime(), "addMessage Invalid emailAddress");
+        // console.log(componentName, GetDateTime(), "addMessage emailAddressValidated false", emailAddressValidated);
       };
     };
 
     if (titleNameValidated === true && shortDescriptionValidated === true && emailAddressValidated === true) {
       formValidated = true;
-      // console.log(componentName, "addTitleSuggestion Valid Form");
-      // console.log(componentName, "addTitleSuggestion formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "addTitleSuggestion Valid Form");
+      // console.log(componentName, GetDateTime(), "addTitleSuggestion formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "addTitleSuggestion Invalid Form");
-      // console.log(componentName, "addTitleSuggestion formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "addTitleSuggestion Invalid Form");
+      // console.log(componentName, GetDateTime(), "addTitleSuggestion formValidated false", formValidated);
     };
 
-    // console.log(componentName, "addTitleSuggestion titleNameValidated", titleNameValidated);
-    // console.log(componentName, "addTitleSuggestion categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, "addTitleSuggestion formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated", titleNameValidated);
+    // console.log(componentName, GetDateTime(), "addTitleSuggestion categoryIDValidated", categoryIDValidated);
+    // console.log(componentName, GetDateTime(), "addTitleSuggestion formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -190,10 +191,10 @@ const AddTitleSuggestion = (props) => {
           };
         };
 
-        // console.log(componentName, "addTitleSuggestion titleSuggestionObject", titleSuggestionObject);
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion titleSuggestionObject", titleSuggestionObject);
 
         let url = baseURL + "titles/";
-        // console.log(componentName, "addTitleSuggestion url", url);
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion url", url);
 
         if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
 
@@ -210,7 +211,7 @@ const AddTitleSuggestion = (props) => {
             body: JSON.stringify({ titleSuggestion: titleSuggestionObject })
           })
             .then(response => {
-              // console.log(componentName, "addTitleSuggestion response", response);
+              // console.log(componentName, GetDateTime(), "addTitleSuggestion response", response);
               // if (!response.ok) {
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
               // } else {
@@ -222,7 +223,7 @@ const AddTitleSuggestion = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, "addTitleSuggestion data", data);
+              console.log(componentName, GetDateTime(), "addTitleSuggestion data", data);
 
               setTitleSuggestionRecordAdded(data.recordAdded);
               addMessage(data.message);
@@ -240,8 +241,8 @@ const AddTitleSuggestion = (props) => {
                 setTitleURL(data.titleURL);
                 setTitleSuggestionEmailAddress(data.emailAddress);
 
-                // ? Would still work if the createdAt and updatedAt were left out?
-                // dispatch(addStateTitle([{titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt}]));
+                // ? Would still work if the createDate and updateDate were left out?
+                // dispatch(addStateTitle([{titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createDate: data.createDate, updateDate: data.updateDate}]));
                 // ? Add to local storage also?
 
               } else {
@@ -251,9 +252,9 @@ const AddTitleSuggestion = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, "addTitleSuggestion error", error);
-              // console.log(componentName, "addTitleSuggestion error.name", error.name);
-              // console.log(componentName, "addTitleSuggestion error.message", error.message);
+              console.log(componentName, GetDateTime(), "addTitleSuggestion error", error);
+              // console.log(componentName, GetDateTime(), "addTitleSuggestion error.name", error.name);
+              // console.log(componentName, GetDateTime(), "addTitleSuggestion error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
@@ -265,7 +266,7 @@ const AddTitleSuggestion = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect titleSuggestionRecordAdded", titleSuggestionRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect titleSuggestionRecordAdded", titleSuggestionRecordAdded);
     if (titleSuggestionRecordAdded !== undefined && titleSuggestionRecordAdded !== null && titleSuggestionRecordAdded === true) {
       clearMessages();
       setErrTitleName("");
@@ -279,7 +280,7 @@ const AddTitleSuggestion = (props) => {
   }, [titleSuggestionRecordAdded]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for sessionToken", sessionToken);
+    // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((sessionToken !== undefined && sessionToken !== null && sessionToken !== "") || requireUserLogin === false) {
       // return <Redirect to="/" />;

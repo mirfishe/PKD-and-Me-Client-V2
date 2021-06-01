@@ -2,33 +2,33 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Container, Col, Row, Alert } from "reactstrap";
-import { DisplayDate } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../app/sharedFunctions";
 
 const TitleSuggestions = (props) => {
 
   const componentName = "TitleSuggestions.js";
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const [titleSuggestionMessage, setTitleSuggestionMessage] = useState("");
   const [errTitleSuggestionMessage, setErrTitleSuggestionMessage] = useState("");
   const [titleSuggestionResultsFound, setTitleSuggestionResultsFound] = useState(null);
 
   const titleSuggestionsState = useSelector(state => state.titleSuggestions.arraytitleSuggestions);
-  // console.log(componentName, "titleSuggestionsState", titleSuggestionsState);
+  // console.log(componentName, GetDateTime(), "titleSuggestionsState", titleSuggestionsState);
 
   let titleSuggestions = [...titleSuggestionsState];
 
-  // * Sort the list by createdAt
-  titleSuggestions.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1);
-  // * Sort the list by updatedAt
-  // titleSuggestions.sort((a, b) => (a.updatedAt > b.updatedAt) ? 1 : -1);
+  // * Sort the list by createDate
+  titleSuggestions.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
+  // * Sort the list by updateDate
+  // titleSuggestions.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for admin", admin);
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
       return <Redirect to="/" />;
@@ -83,13 +83,13 @@ const TitleSuggestions = (props) => {
               <Row>
                 <Col xs="12">
                   <p>
-                    Suggested by {titleSuggestion.user.firstName !== undefined && titleSuggestion.user.firstName !== null ? titleSuggestion.user.firstName : null} {titleSuggestion.user.lastName !== undefined && titleSuggestion.user.lastName !== null ? titleSuggestion.user.lastName : null} {titleSuggestion.emailAddress !== undefined && titleSuggestion.emailAddress !== null ? titleSuggestion.emailAddress : null} {titleSuggestion.updatedAt !== undefined && titleSuggestion.updatedAt !== null ? <small>on {DisplayDate(titleSuggestion.updatedAt)}</small> : null}
+                    Suggested by {titleSuggestion.user.firstName !== undefined && titleSuggestion.user.firstName !== null ? titleSuggestion.user.firstName : null} {titleSuggestion.user.lastName !== undefined && titleSuggestion.user.lastName !== null ? titleSuggestion.user.lastName : null} {titleSuggestion.emailAddress !== undefined && titleSuggestion.emailAddress !== null ? titleSuggestion.emailAddress : null} {titleSuggestion.updateDate !== undefined && titleSuggestion.updateDate !== null ? <small>on {DisplayDate(titleSuggestion.updateDate)}</small> : null}
                   </p>
                 </Col>
               </Row>
 
             </Col>
-          )
+          );
         })}
       </Row>
     </Container>

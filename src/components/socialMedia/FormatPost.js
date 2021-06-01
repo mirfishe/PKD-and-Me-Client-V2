@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { IsEmpty } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const FormatPost = () => {
 
@@ -48,7 +48,7 @@ const FormatPost = () => {
   };
 
   const formatPost = () => {
-    // console.log(componentName, "formatPost");
+    // console.log(componentName, GetDateTime(), "formatPost");
 
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
 
@@ -96,7 +96,7 @@ const FormatPost = () => {
     param = "fbclid";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, "formatPost newURL", newURL);
+    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_medium=
     // * Google Analytics and tracking
@@ -104,7 +104,7 @@ const FormatPost = () => {
     param = "utm_medium";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, "formatPost newURL", newURL);
+    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_campaign=
     // * Google Analytics and tracking
@@ -112,7 +112,7 @@ const FormatPost = () => {
     param = "utm_campaign";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, "formatPost newURL", newURL);
+    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_source=
     // * Google Analytics and tracking
@@ -120,7 +120,7 @@ const FormatPost = () => {
     param = "utm_source";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, "formatPost newURL", newURL);
+    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
 
 
     post = post + newURL;
@@ -224,7 +224,7 @@ const FormatPost = () => {
                 <FormGroup className="text-center">
                   <Alert color="info">{formattedPost}</Alert>
                 </FormGroup>
-              )
+              );
             })}
 
           </Form>

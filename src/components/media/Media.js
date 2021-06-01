@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Nav, NavItem, Collapse, Card } from "reactstrap";
-import { encodeURL, IsEmpty } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddMedia from "./AddMedia";
 
@@ -14,9 +14,9 @@ const Media = (props) => {
   const history = useHistory();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const electronicOnly = useSelector(state => state.app.electronicOnly);
   const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
@@ -24,7 +24,7 @@ const Media = (props) => {
   const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
-  // console.log(componentName, "mediaListState", mediaListState);
+  // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -44,13 +44,13 @@ const Media = (props) => {
   } else {
     mediaList = mediaList.filter(media => media.active === true);
   };
-  // console.log(componentName, "mediaList", mediaList);
+  // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
   mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };

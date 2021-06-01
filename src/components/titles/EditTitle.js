@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { createTitleURL, createImageName } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, createTitleURL, createImageName } from "../../app/sharedFunctions";
 import { updateStateTitle, deleteStateTitle } from "../../bibliographyData/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../bibliographyData/editionsSlice";
 import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
@@ -17,15 +17,15 @@ const EditTitle = (props) => {
   const history = useHistory();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
@@ -34,10 +34,10 @@ const EditTitle = (props) => {
   const [categoryResultsFound, setCategoryResultsFound] = useState(null);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, "categoryListState", categoryListState);
+  // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
 
   const categoryList = categoryListState.filter(category => category.active === true);
-  // console.log(componentName, "categoryList", categoryList);
+  // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
   // * Sort the list alphabetically instead of by sortID
@@ -45,24 +45,24 @@ const EditTitle = (props) => {
 
   // ! This code is causing React to have too many re-renders in this location
   // if (categoryList.length < 1) {
-  //     console.log(componentName, "categoryList is empty", categoryList.length);
+  //     console.log(componentName, GetDateTime(), "categoryList is empty", categoryList.length);
   //     setErrCategoryMessage("categoryList is empty", categoryList.length);
   //     setCategoryResultsFound(false);
   // } else {
-  //     console.log(componentName, "categoryList.length", categoryList.length);
+  //     console.log(componentName, GetDateTime(), "categoryList.length", categoryList.length);
   //     setCategoryMessage("categoryList.length", categoryList.length);
   //     setCategoryResultsFound(true);
   // };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect categoryList", categoryList);
+    // console.log(componentName, GetDateTime(), "useEffect categoryList", categoryList);
 
     if (categoryList.length < 1) {
-      console.log(componentName, "categoryList is empty", categoryList.length);
+      console.log(componentName, GetDateTime(), "categoryList is empty", categoryList.length);
       setErrCategoryMessage("categoryList is empty", categoryList.length);
       setCategoryResultsFound(false);
     } else {
-      // console.log(componentName, "useEffect categoryList.length", categoryList.length);
+      // console.log(componentName, GetDateTime(), "useEffect categoryList.length", categoryList.length);
       // setCategoryMessage("categoryList.length", categoryList.length);
       setCategoryResultsFound(true);
     };
@@ -114,28 +114,28 @@ const EditTitle = (props) => {
   const [active, setActive] = useState(null);
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, "editionListState", editionListState);
+  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
   let editionList = [];
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, "titleListState", titleListState);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
 
   const urlLookup = useSelector(state => state.urls.arrayURLs);
 
   const linkItem = useSelector(state => state.urls.linkItem);
-  // console.log(componentName, "linkItem", linkItem);
+  // console.log(componentName, GetDateTime(), "linkItem", linkItem);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect titleListState", titleListState);
+    // console.log(componentName, GetDateTime(), "useEffect titleListState", titleListState);
 
     if (props.titleID !== undefined && props.titleID !== null) {
 
       let titleObject = titleListState.find(title => title.titleID === props.titleID);
-      // console.log(componentName, "useEffect titleObject", titleObject);
-      // console.log(componentName, "useEffect typeof titleObject", typeof titleObject);
+      // console.log(componentName, GetDateTime(), "useEffect titleObject", titleObject);
+      // console.log(componentName, GetDateTime(), "useEffect typeof titleObject", typeof titleObject);
 
       setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
-      // console.log(componentName, "useEffect titleItemIndex", titleItemIndex);
+      // console.log(componentName, GetDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
       editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
 
@@ -180,11 +180,11 @@ const EditTitle = (props) => {
   }, [props.titleID, titleListState]);
 
   const updateTitle = (deleteTitle) => {
-    // console.log(componentName, "updateTitle");
-    // console.log(componentName, "updateTitle deleteTitle", deleteTitle);
-    // console.log(componentName, "updateTitle baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "updateTitle");
+    // console.log(componentName, GetDateTime(), "updateTitle deleteTitle", deleteTitle);
+    // console.log(componentName, GetDateTime(), "updateTitle baseURL", baseURL);
 
-    // console.log(componentName, "titleItemIndex", titleItemIndex);
+    // console.log(componentName, GetDateTime(), "titleItemIndex", titleItemIndex);
 
     clearMessages();
     setTitleRecordDeleted(null);
@@ -213,13 +213,13 @@ const EditTitle = (props) => {
       if (txtTitleName.trim().length > 0) {
         titleNameValidated = true;
         setErrTitleName("");
-        // console.log(componentName, "updateTitle Valid TitleName");
-        // console.log(componentName, "updateTitle titleNameValidated true", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "updateTitle Valid TitleName");
+        // console.log(componentName, GetDateTime(), "updateTitle titleNameValidated true", titleNameValidated);
       } else {
         titleNameValidated = false;
         setErrTitleName("Please enter a title.");
-        // console.log(componentName, "updateTitle Invalid TitleName");
-        // console.log(componentName, "updateTitle titleNameValidated false", titleNameValidated);
+        // console.log(componentName, GetDateTime(), "updateTitle Invalid TitleName");
+        // console.log(componentName, GetDateTime(), "updateTitle titleNameValidated false", titleNameValidated);
       };
     };
 
@@ -227,37 +227,37 @@ const EditTitle = (props) => {
       if (ddCategoryID !== null) {
         categoryIDValidated = true;
         setErrCategoryID("");
-        // console.log(componentName, "updateTitle Valid CategoryID");
-        // console.log(componentName, "updateTitle categoryIDValidated true", categoryIDValidated);
+        // console.log(componentName, GetDateTime(), "updateTitle Valid CategoryID");
+        // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated true", categoryIDValidated);
       } else {
         categoryIDValidated = false;
         setErrCategoryID("Please select a category.");
-        // console.log(componentName, "updateTitle Invalid CategoryID");
-        // console.log(componentName, "updateTitle categoryIDValidated false", categoryIDValidated);
+        // console.log(componentName, GetDateTime(), "updateTitle Invalid CategoryID");
+        // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated false", categoryIDValidated);
       };
     };
 
     if (titleNameValidated === true && categoryIDValidated === true) {
       formValidated = true;
-      // console.log(componentName, "updateTitle Valid Form");
-      // console.log(componentName, "updateTitle formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "updateTitle Valid Form");
+      // console.log(componentName, GetDateTime(), "updateTitle formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "updateTitle Invalid Form");
-      // console.log(componentName, "updateTitle formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "updateTitle Invalid Form");
+      // console.log(componentName, GetDateTime(), "updateTitle formValidated false", formValidated);
     };
 
-    // console.log(componentName, "updateTitle titleNameValidated", titleNameValidated);
-    // console.log(componentName, "updateTitle categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, "updateTitle formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "updateTitle titleNameValidated", titleNameValidated);
+    // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated", categoryIDValidated);
+    // console.log(componentName, GetDateTime(), "updateTitle formValidated", formValidated);
 
     if (formValidated === true) {
 
       if (txtTitleName !== undefined && txtTitleName !== null) {
 
-        // console.log(componentName, "addEdition typeof ddCategoryID", typeof ddCategoryID);
+        // console.log(componentName, GetDateTime(), "addEdition typeof ddCategoryID", typeof ddCategoryID);
 
-        // console.log(componentName, "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
+        // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
         let titleObject = {
           titleName: txtTitleName.trim(),
@@ -320,7 +320,7 @@ const EditTitle = (props) => {
           };
         };
 
-        // console.log(componentName, "updateTitle titleObject", titleObject);
+        // console.log(componentName, GetDateTime(), "updateTitle titleObject", titleObject);
 
         let url = baseURL + "titles/";
 
@@ -328,7 +328,7 @@ const EditTitle = (props) => {
 
           url = url + props.titleID;
 
-          // console.log(componentName, "updateTitle url", url);
+          // console.log(componentName, GetDateTime(), "updateTitle url", url);
 
           fetch(url, {
             method: "PUT",
@@ -339,7 +339,7 @@ const EditTitle = (props) => {
             body: JSON.stringify({ title: titleObject })
           })
             .then(response => {
-              // console.log(componentName, "updateTitle response", response);
+              // console.log(componentName, GetDateTime(), "updateTitle response", response);
               // if (!response.ok) {
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
               // } else {
@@ -351,7 +351,7 @@ const EditTitle = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, "updateTitle data", data);
+              console.log(componentName, GetDateTime(), "updateTitle data", data);
 
               setTitleRecordUpdated(data.recordUpdated);
               addMessage(data.message);
@@ -373,14 +373,14 @@ const EditTitle = (props) => {
                 setActive(data.active);
 
                 let categoryItem = categoryList.filter(category => category.categoryID === data.categoryID);
-                // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt}
+                // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
                 categoryItem = categoryItem[0];
 
-                // console.log(componentName, "addTitle typeof data.categoryID", typeof data.categoryID);
-                // console.log(componentName, "addTitle categoryItem", categoryItem);
+                // console.log(componentName, GetDateTime(), "addTitle typeof data.categoryID", typeof data.categoryID);
+                // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
 
-                // ? Would still work if the createdAt and updatedAt were left out?
-                dispatch(updateStateTitle({ titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, updatedAt: new Date().toISOString(), category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createdAt: categoryItem.createdAt, updatedAt: categoryItem.updatedAt } }));
+                // ? Would still work if the createDate and updateDate were left out?
+                dispatch(updateStateTitle({ titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, updateDate: new Date().toISOString(), category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } }));
                 // ? Update local storage also?
 
                 // * Update/Delete related editions also if active is set to false
@@ -389,30 +389,30 @@ const EditTitle = (props) => {
 
                     let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
-                    // ? Would still work if the createdAt and updatedAt were left out?
-                    dispatch(updateStateEdition({ editionItemIndex: editionItemIndex, editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createdAt: editionList[i].createdAt, updatedAt: editionList[i].updatedAt }));
+                    // ? Would still work if the createDate and updateDate were left out?
+                    dispatch(updateStateEdition({ editionItemIndex: editionItemIndex, editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
 
                   };
 
                 };
 
                 let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
-                // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
+                // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
 
                 // * Update/Delete related urls in arrayURLs also
                 if (data.active === false) {
                   dispatch(deleteStateURL(urlListIndex));
                 } else {
-                  // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
-                  // console.log(componentName, "updateTitle data.titleURL", data.titleURL);
-                  // console.log(componentName, "updateTitle data.titleID", data.titleID);
-                  // console.log(componentName, "updateTitle data.categoryID", data.categoryID);
+                  // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
+                  // console.log(componentName, GetDateTime(), "updateTitle data.titleURL", data.titleURL);
+                  // console.log(componentName, GetDateTime(), "updateTitle data.titleID", data.titleID);
+                  // console.log(componentName, GetDateTime(), "updateTitle data.categoryID", data.categoryID);
 
                   let categoryName = categoryList.find(category => category.categoryID === data.categoryID);
-                  // console.log(componentName, "updateTitle categoryName", categoryName);
-                  // console.log(componentName, "updateTitle categoryName.category", categoryName.category);
+                  // console.log(componentName, GetDateTime(), "updateTitle categoryName", categoryName);
+                  // console.log(componentName, GetDateTime(), "updateTitle categoryName.category", categoryName.category);
 
-                  // console.log(componentName, "updateTitle typeof data.categoryID", typeof data.categoryID);
+                  // console.log(componentName, GetDateTime(), "updateTitle typeof data.categoryID", typeof data.categoryID);
 
                   // ? Doesn't seem to be updating the state for some reason?
                   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID, linkTypeNameID: data.categoryID, linkTypeName: categoryName.category}]));
@@ -434,9 +434,9 @@ const EditTitle = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, "updateTitle error", error);
-              // console.log(componentName, "updateTitle error.name", error.name);
-              // console.log(componentName, "updateTitle error.message", error.message);
+              console.log(componentName, GetDateTime(), "updateTitle error", error);
+              // console.log(componentName, GetDateTime(), "updateTitle error.name", error.name);
+              // console.log(componentName, GetDateTime(), "updateTitle error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
@@ -449,8 +449,8 @@ const EditTitle = (props) => {
   };
 
   const deleteTitle = () => {
-    // console.log(componentName, "deleteTitle");
-    // console.log(componentName, "deleteTitle baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "deleteTitle");
+    // console.log(componentName, GetDateTime(), "deleteTitle baseURL", baseURL);
 
     clearMessages();
     setTitleRecordDeleted(null);
@@ -463,7 +463,7 @@ const EditTitle = (props) => {
 
       url = url + props.titleID;
 
-      // console.log(componentName, "deleteTitle url", url);
+      // console.log(componentName, GetDateTime(), "deleteTitle url", url);
 
       if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -475,7 +475,7 @@ const EditTitle = (props) => {
           })
         })
           .then(response => {
-            // console.log(componentName, "deleteTitle response", response);
+            // console.log(componentName, GetDateTime(), "deleteTitle response", response);
             // if (!response.ok) {
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
             // } else {
@@ -487,7 +487,7 @@ const EditTitle = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, "deleteTitle data", data);
+            console.log(componentName, GetDateTime(), "deleteTitle data", data);
 
             setTitleRecordDeleted(data.recordDeleted);
 
@@ -509,7 +509,7 @@ const EditTitle = (props) => {
               };
 
               let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
-              // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
+              // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
 
               // Update/Delete related urls in arrayURLs also
               dispatch(deleteStateURL(urlListIndex));
@@ -523,9 +523,9 @@ const EditTitle = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, "deleteTitle error", error);
-            // console.log(componentName, "deleteTitle error.name", error.name);
-            // console.log(componentName, "deleteTitle error.message", error.message);
+            console.log(componentName, GetDateTime(), "deleteTitle error", error);
+            // console.log(componentName, GetDateTime(), "deleteTitle error.name", error.name);
+            // console.log(componentName, GetDateTime(), "deleteTitle error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -536,8 +536,8 @@ const EditTitle = (props) => {
   };
 
   const deleteEdition = (editionID, editionItemIndex) => {
-    // console.log(componentName, "deleteEdition");
-    // console.log(componentName, "deleteEdition baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "deleteEdition");
+    // console.log(componentName, GetDateTime(), "deleteEdition baseURL", baseURL);
 
     clearMessages();
     setEditionRecordDeleted(null);
@@ -547,7 +547,7 @@ const EditTitle = (props) => {
     if (editionID !== undefined && editionID !== null) {
       url = url + editionID;
 
-      // console.log(componentName, "deleteEdition url", url);
+      // console.log(componentName, GetDateTime(), "deleteEdition url", url);
 
       if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -559,7 +559,7 @@ const EditTitle = (props) => {
           })
         })
           .then(response => {
-            // console.log(componentName, "deleteEdition response", response);
+            // console.log(componentName, GetDateTime(), "deleteEdition response", response);
             // if (!response.ok) {
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
             // } else {
@@ -571,7 +571,7 @@ const EditTitle = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, "deleteEdition data", data);
+            console.log(componentName, GetDateTime(), "deleteEdition data", data);
 
             setEditionRecordDeleted(data.recordDeleted);
 
@@ -590,9 +590,9 @@ const EditTitle = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, "deleteEdition error", error);
-            // console.log(componentName, "deleteEdition error.name", error.name);
-            // console.log(componentName, "deleteEdition error.message", error.message);
+            console.log(componentName, GetDateTime(), "deleteEdition error", error);
+            // console.log(componentName, GetDateTime(), "deleteEdition error.name", error.name);
+            // console.log(componentName, GetDateTime(), "deleteEdition error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -603,8 +603,8 @@ const EditTitle = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect titleRecordUpdated", titleRecordUpdated);
-    // console.log(componentName, "useEffect titleRecordDeleted", titleRecordDeleted);
+    // console.log(componentName, GetDateTime(), "useEffect titleRecordUpdated", titleRecordUpdated);
+    // console.log(componentName, GetDateTime(), "useEffect titleRecordDeleted", titleRecordDeleted);
     if (titleRecordUpdated !== undefined && titleRecordUpdated !== null && titleRecordUpdated === true) {
       clearMessages();
       setErrTitleName("");
@@ -626,13 +626,13 @@ const EditTitle = (props) => {
   }, [titleRecordUpdated, titleRecordDeleted]);
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for admin", admin);
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
       // return <Redirect to="/" />;

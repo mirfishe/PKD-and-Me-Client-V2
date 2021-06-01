@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button } from "reactstrap";
 import AppSettings from "./app/environment";
-import { IsEmpty } from "./app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "./app/sharedFunctions";
 import { setAppOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/appSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
@@ -45,22 +45,22 @@ function App() {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
   const firstName = useSelector(state => state.user.firstName);
-  // console.log(componentName, "firstName", firstName);
+  // console.log(componentName, GetDateTime(), "firstName", firstName);
   const lastName = useSelector(state => state.user.lastName);
-  // console.log(componentName, "lastName", lastName);
+  // console.log(componentName, GetDateTime(), "lastName", lastName);
 
   // * Load settings from Redux slices
   const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
@@ -79,23 +79,23 @@ function App() {
   let showAllMenuItems = useSelector(state => state.app.menuSettings.showAllMenuItems);
 
   let showNew = useSelector(state => state.app.menuSettings.showNew);
-  // console.log(componentName, "showNew", showNew);
+  // console.log(componentName, GetDateTime(), "showNew", showNew);
   // * show New page unless set specifically to false
   if (showNew !== false) {
     showNew = true;
   };
 
   let showAbout = useSelector(state => state.app.menuSettings.showAbout);
-  // console.log(componentName, "showAbout", showAbout);
+  // console.log(componentName, GetDateTime(), "showAbout", showAbout);
   // * show About page unless set specifically to false
   if (showAbout !== false) {
     showAbout = true;
   };
 
   let showHomeopape = useSelector(state => state.app.menuSettings.showHomeopape);
-  // console.log(componentName, "showHomeopape", showHomeopape);
+  // console.log(componentName, GetDateTime(), "showHomeopape", showHomeopape);
   let showDickian = useSelector(state => state.app.menuSettings.showDickian);
-  // console.log(componentName, "showDickian", showDickian);
+  // console.log(componentName, GetDateTime(), "showDickian", showDickian);
 
   let showCategoryList = useSelector(state => state.app.menuSettings.showCategoryList);
   let showMediaList = useSelector(state => state.app.menuSettings.showMediaList);
@@ -106,7 +106,7 @@ function App() {
   let showURLList = useSelector(state => state.app.menuSettings.showURLList);
 
   let showAddCategory = useSelector(state => state.app.menuSettings.showAddCategory);
-  // console.log(componentName, "showAddCategory", showAddCategory);
+  // console.log(componentName, GetDateTime(), "showAddCategory", showAddCategory);
   let showAddMedia = useSelector(state => state.app.menuSettings.showAddMedia);
   let showAddTitle = useSelector(state => state.app.menuSettings.showAddTitle);
   let showAddEdition = useSelector(state => state.app.menuSettings.showAddEdition);
@@ -157,9 +157,9 @@ function App() {
   const clearToken = () => {
     localStorage.clear();
     // setSessionToken("");
-    // console.log(componentName, "clearToken localStorage token", localStorage.getItem("token"));
-    // console.log(componentName, "sessionToken", sessionToken); // Never shows the current value of sessionToken
-    // console.log(componentName, "clearToken User logged out.");
+    // console.log(componentName, GetDateTime(), "clearToken localStorage token", localStorage.getItem("token"));
+    // console.log(componentName, GetDateTime(), "sessionToken", sessionToken); // Never shows the current value of sessionToken
+    // console.log(componentName, GetDateTime(), "clearToken User logged out.");
   };
 
 
@@ -175,8 +175,8 @@ function App() {
 
 
   const getUser = (token) => {
-    // console.log(componentName, "getUser");
-    // console.log(componentName, "getUser baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getUser");
+    // console.log(componentName, GetDateTime(), "getUser baseURL", baseURL);
 
     clearMessages();
 
@@ -192,7 +192,7 @@ function App() {
         }),
       })
         .then(response => {
-          // console.log(componentName, "getUser response", response);
+          // console.log(componentName, GetDateTime(), "getUser response", response);
           // if (!response.ok) {
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
           // } else {
@@ -204,7 +204,7 @@ function App() {
           // };
         })
         .then(data => {
-          console.log(componentName, "getUser data", data);
+          console.log(componentName, GetDateTime(), "getUser data", data);
 
           setUserResultsFound(data.resultsFound);
           // addMessage(data.message);
@@ -215,9 +215,9 @@ function App() {
 
               dispatch(loadUserData(data));
 
-              // console.log(componentName, "getUser checklistLoaded", checklistLoaded);
-              // console.log(componentName, "getUser data.sessionToken", data.sessionToken);
-              // console.log(componentName, "getUser token", token);
+              // console.log(componentName, GetDateTime(), "getUser checklistLoaded", checklistLoaded);
+              // console.log(componentName, GetDateTime(), "getUser data.sessionToken", data.sessionToken);
+              // console.log(componentName, GetDateTime(), "getUser token", token);
               if (!checklistLoaded) {
                 getChecklist(token);
               };
@@ -228,16 +228,16 @@ function App() {
             };
 
           } else {
-            // console.log(componentName, "getUser data.resultsFound !== true", data.message);
+            // console.log(componentName, GetDateTime(), "getUser data.resultsFound !== true", data.message);
             // addErrorMessage(data.message);
             logOut();
           };
 
         })
         .catch(error => {
-          console.log(componentName, "getUser error", error);
-          // console.log(componentName, "getUser error.name", error.name);
-          // console.log(componentName, "getUser error.message", error.message);
+          console.log(componentName, GetDateTime(), "getUser error", error);
+          // console.log(componentName, GetDateTime(), "getUser error.name", error.name);
+          // console.log(componentName, GetDateTime(), "getUser error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -247,15 +247,15 @@ function App() {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, "getChecklist");
-    // console.log(componentName, "getChecklist baseURL", baseURL);
-    // console.log(componentName, "getChecklist token", token);
+    // console.log(componentName, GetDateTime(), "getChecklist");
+    // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getChecklist token", token);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
     setChecklistResultsFound(null);
 
-    let url = baseURL + "titles/checklist/list";
+    let url = baseURL + "titles/checklist";
 
     if (token !== undefined && token !== null && token !== "") {
 
@@ -267,7 +267,7 @@ function App() {
         }),
       })
         .then(response => {
-          // console.log(componentName, "getChecklist response", response);
+          // console.log(componentName, GetDateTime(), "getChecklist response", response);
           // if (!response.ok) {
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
           // } else {
@@ -279,7 +279,7 @@ function App() {
           // };
         })
         .then(data => {
-          console.log(componentName, "getChecklist data", data);
+          // console.log(componentName, GetDateTime(), "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);
@@ -289,15 +289,15 @@ function App() {
             dispatch(loadArrayChecklist(data.records));
 
           } else {
-            console.log(componentName, "getChecklist resultsFound error", data.message);
+            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", data.message);
             // addErrorMessage(data.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, "getChecklist error", error);
-          // console.log(componentName, "getChecklist error.name", error.name);
-          // console.log(componentName, "getChecklist error.message", error.message);
+          console.log(componentName, GetDateTime(), "getChecklist error", error);
+          // console.log(componentName, GetDateTime(), "getChecklist error.name", error.name);
+          // console.log(componentName, GetDateTime(), "getChecklist error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -307,13 +307,13 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect");
+    // console.log(componentName, GetDateTime(), "useEffect");
 
     if (appAllowUserInteractions === true && localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== null && localStorage.getItem("token") !== "") {
 
       dispatch(setSessionToken(localStorage.getItem("token")));
-      // console.log(componentName, "componentDidMount localStorage token", localStorage.getItem("token"));
-      // console.log(componentName, "componentDidMount state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
+      // console.log(componentName, GetDateTime(), "componentDidMount localStorage token", localStorage.getItem("token"));
+      // console.log(componentName, GetDateTime(), "componentDidMount state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
 
       // ! Doesn't store if the user is active or is an admin
       // ! Doesn't store the userID except inside the sessionToken hash
@@ -339,13 +339,13 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect categoriesDataOffline", categoriesDataOffline);
-    // console.log(componentName, "useEffect mediaDataOffline", mediaDataOffline);
-    // console.log(componentName, "useEffect titlesDataOffline", titlesDataOffline);
-    // console.log(componentName, "useEffect editionsDataOffline", editionsDataOffline);
+    // console.log(componentName, GetDateTime(), "useEffect categoriesDataOffline", categoriesDataOffline);
+    // console.log(componentName, GetDateTime(), "useEffect mediaDataOffline", mediaDataOffline);
+    // console.log(componentName, GetDateTime(), "useEffect titlesDataOffline", titlesDataOffline);
+    // console.log(componentName, GetDateTime(), "useEffect editionsDataOffline", editionsDataOffline);
 
     if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
-      // console.log(componentName, "useEffect setAppOffline");
+      // console.log(componentName, GetDateTime(), "useEffect setAppOffline");
       dispatch(setAppOffline(true));
     };
 
@@ -353,8 +353,8 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, "useEffect pageURL", pageURL);
-    // console.log(componentName, "useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
+    // console.log(componentName, GetDateTime(), "useEffect pageURL", pageURL);
+    // console.log(componentName, GetDateTime(), "useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
 
     if (pageURL !== undefined && pageURL !== "") {
 
@@ -362,12 +362,12 @@ function App() {
 
       for (let i = 0; i < urlLookup.length; i++) {
         linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
-        // console.log(componentName, "useEffect linkArrayItem", linkArrayItem);
+        // console.log(componentName, GetDateTime(), "useEffect linkArrayItem", linkArrayItem);
         // setLinkItem(linkArrayItem);
       };
 
-      // console.log(componentName, "useEffect linkArrayItem", linkArrayItem);
-      // console.log(componentName, "useEffect typeof linkArrayItem", typeof linkArrayItem);
+      // console.log(componentName, GetDateTime(), "useEffect linkArrayItem", linkArrayItem);
+      // console.log(componentName, GetDateTime(), "useEffect typeof linkArrayItem", typeof linkArrayItem);
       dispatch(setLinkItem(linkArrayItem));
 
     };

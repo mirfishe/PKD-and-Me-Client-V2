@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 function UserReviewRatingList() {
 
@@ -11,7 +12,7 @@ function UserReviewRatingList() {
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
@@ -23,17 +24,17 @@ function UserReviewRatingList() {
   const [userReviewRatingList, setUserReviewRatingList] = useState([]);
 
   const getUserReviewRatings = () => {
-    // console.log(componentName, "getUserReviewRatings");
-    // console.log(componentName, "getUserReviewRatings baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getUserReviewRatings");
+    // console.log(componentName, GetDateTime(), "getUserReviewRatings baseURL", baseURL);
 
     setUserReviewRatingMessage("");
     setErrUserReviewRatingMessage("");
 
-    let url = baseURL + "userreviews/rating/list";
+    let url = baseURL + "userreviews/rating";
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, "getUserReviewRatings response", response);
+        // console.log(componentName, GetDateTime(), "getUserReviewRatings response", response);
         if (!response.ok) {
           throw Error(response.status + " " + response.statusText + " " + response.url);
         } else {
@@ -41,7 +42,7 @@ function UserReviewRatingList() {
         };
       })
       .then(data => {
-        console.log(componentName, "getUserReviewRatings data", data);
+        console.log(componentName, GetDateTime(), "getUserReviewRatings data", data);
 
         setUserReviewRatingResultsFound(data.resultsFound);
         setUserReviewRatingMessage(data.message);
@@ -64,13 +65,13 @@ function UserReviewRatingList() {
               Object.assign(userReviewsRatings[i], { userReviewAverage: userReviewAverage });
             };
 
-            // console.log(componentName, "getTitleRating userReviewCount", userReviewCount);
-            // console.log(componentName, "getTitleRating userReviewSum", userReviewSum);
-            // console.log(componentName, "getTitleRating userReviewAverage", userReviewAverage);
+            // console.log(componentName, GetDateTime(), "getTitleRating userReviewCount", userReviewCount);
+            // console.log(componentName, GetDateTime(), "getTitleRating userReviewSum", userReviewSum);
+            // console.log(componentName, GetDateTime(), "getTitleRating userReviewAverage", userReviewAverage);
 
           };
 
-          // console.log(componentName, "getTitleRating userReviewsRatings", userReviewsRatings);
+          // console.log(componentName, GetDateTime(), "getTitleRating userReviewsRatings", userReviewsRatings);
 
           setUserReviewRatingList(userReviewsRatings);
 
@@ -80,9 +81,9 @@ function UserReviewRatingList() {
 
       })
       .catch(error => {
-        console.log(componentName, "getUserReviewRatings error", error);
-        // console.log(componentName, "getUserReviewRatings error.name", error.name);
-        // console.log(componentName, "getUserReviewRatings error.message", error.message);
+        console.log(componentName, GetDateTime(), "getUserReviewRatings error", error);
+        // console.log(componentName, GetDateTime(), "getUserReviewRatings error.name", error.name);
+        // console.log(componentName, GetDateTime(), "getUserReviewRatings error.message", error.message);
         setErrUserReviewRatingMessage(error.name + ": " + error.message);
       });
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { DisplayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -22,9 +22,9 @@ const Titles = (props) => {
   const appName = useSelector(state => state.app.appName);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
@@ -39,19 +39,19 @@ const Titles = (props) => {
   const [errTitleMessage, setErrTitleMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, "titleListState", titleListState);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, "categoryListState", categoryListState);
+  // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, "editionListState", editionListState);
+  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
 
   let categoryParam;
   if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
-    // console.log(componentName, "props.match.params", props.match.params);
-    // console.log(componentName, "props.linkItem.linkName", props.linkItem.linkName);
+    // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
+    // console.log(componentName, GetDateTime(), "props.linkItem.linkName", props.linkItem.linkName);
     categoryParam = props.linkItem.linkName; // props.match.params.category;
-    // console.log(componentName, "typeof categoryParam", typeof categoryParam);
-    // console.log(componentName, "categoryParam", categoryParam);
+    // console.log(componentName, GetDateTime(), "typeof categoryParam", typeof categoryParam);
+    // console.log(componentName, GetDateTime(), "categoryParam", categoryParam);
   };
 
   let editionList = [...editionListState];
@@ -68,13 +68,13 @@ const Titles = (props) => {
   if (admin !== undefined && admin !== null && admin === true) {
     editionList = [...editionList];
   } else {
-    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
     // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
     editionList = editionList.filter(edition => edition.editionsActive === true && edition.mediaActive === true);
   };
 
   const sortTitles = (sortBy) => {
-    // console.log(componentName, "sortTitles sortBy", sortBy);
+    // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
     if (titleList !== undefined && titleList !== null && titleList.length > 0) {
       if (sortBy === "publicationDate") {
         // * Sort the titleList array by title.publicationDate
@@ -102,15 +102,15 @@ const Titles = (props) => {
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
         let titleListPublicationDate = titleList.filter(title => title.publicationDate !== undefined && title.publicationDate !== null);
         titleListPublicationDate.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
-        // console.log(componentName, "titleListPublicationDate", titleListPublicationDate);
+        // console.log(componentName, GetDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
         let titleListNoPublicationDate = titleList.filter(title => title.publicationDate === undefined || title.publicationDate === null);
         titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-        // console.log(componentName, "titleListNoPublicationDate", titleListNoPublicationDate);
+        // console.log(componentName, GetDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
 
         let newTitleList = [...titleListPublicationDate];
         newTitleList.push(...titleListNoPublicationDate);
-        // console.log(componentName, "newTitleList", newTitleList);
+        // console.log(componentName, GetDateTime(), "newTitleList", newTitleList);
 
         titleList = [...newTitleList];
 
@@ -133,8 +133,8 @@ const Titles = (props) => {
   } else if (categoryParam !== undefined && categoryParam !== null) {
     // * If categoryParam is not a number, then it's the category name
     const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
-    // console.log(componentName, "typeof category", typeof category);
-    // console.log(componentName, "category", category);
+    // console.log(componentName, GetDateTime(), "typeof category", typeof category);
+    // console.log(componentName, GetDateTime(), "category", category);
 
     if (category !== undefined && category !== null) {
       document.title = category.category + " | " + appName + " | " + siteName;
@@ -159,23 +159,23 @@ const Titles = (props) => {
   if (admin !== undefined && admin !== null && admin === true) {
     titleList = [...titleList];
   } else {
-    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createdAt, updatedAt
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
     // titleList = titleList.filter(title => title.active === true && title.category.active === true);
     titleList = titleList.filter(title => title.titlesActive === true && title.categoriesActive === true);
   };
 
   sortTitles(titleSortBy);
-  // console.log(componentName, "titleSortBy", titleSortBy);
-  // console.log(componentName, "titleList", titleList);
+  // console.log(componentName, GetDateTime(), "titleSortBy", titleSortBy);
+  // console.log(componentName, GetDateTime(), "titleList", titleList);
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "redirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect titleList", titleList);
+    // console.log(componentName, GetDateTime(), "useEffect titleList", titleList);
     if (titleList.length > 0) {
       setErrTitleMessage("");
     } else {
@@ -231,9 +231,9 @@ const Titles = (props) => {
           };
 
           const editionsAvailable = editionList.reduce((titleCount, edition) => edition.titleID === title.titleID ? ++titleCount : titleCount, 0);
-          // console.log(componentName, "useEffect title.titleID", title.titleID);
-          // console.log(componentName, "useEffect title.titleName", title.titleName);
-          // console.log(componentName, "useEffect editionsAvailable", editionsAvailable);
+          // console.log(componentName, GetDateTime(), "useEffect title.titleID", title.titleID);
+          // console.log(componentName, GetDateTime(), "useEffect title.titleName", title.titleName);
+          // console.log(componentName, GetDateTime(), "useEffect editionsAvailable", editionsAvailable);
 
           return (
             <Col key={title.titleID} xs="4" className="mb-4">

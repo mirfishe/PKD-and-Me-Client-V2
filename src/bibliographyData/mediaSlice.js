@@ -1,4 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
 
 const componentName = "mediaSlice.js";
 
@@ -15,11 +16,11 @@ const mediaSlice = createSlice({
   reducers: {
     loadArrayMedia: {
       reducer(state, action) {
-        // console.log(componentName, "loadArrayMedia action.payload", action.payload);
-        // console.log(componentName, "loadArrayMedia action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "loadArrayMedia action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "loadArrayMedia action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "loadArrayMedia action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "loadArrayMedia action.payload[i]", action.payload[i]);
           state.arrayMedia.push(action.payload[i]);
         };
 
@@ -30,12 +31,12 @@ const mediaSlice = createSlice({
     },
     addStateMedia: {
       reducer(state, action) {
-        // console.log(componentName, "addStateMedia action.payload", action.payload);
-        // console.log(componentName, "addStateMedia action.payload.length", action.payload.length);
+        // console.log(componentName, GetDateTime(), "addStateMedia action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "addStateMedia action.payload.length", action.payload.length);
 
         // * Could change this to accept an object and add that object to the store
         for (let i = 0; i < action.payload.length; i++) {
-          // console.log(componentName, "addStateMedia action.payload[i]", action.payload[i]);
+          // console.log(componentName, GetDateTime(), "addStateMedia action.payload[i]", action.payload[i]);
           state.arrayMedia.push(action.payload[i]);
         };
 
@@ -43,12 +44,12 @@ const mediaSlice = createSlice({
     },
     updateStateMedia: {
       reducer(state, action) {
-        console.log(componentName, "updateStateMedia action.payload", action.payload);
+        console.log(componentName, GetDateTime(), "updateStateMedia action.payload", action.payload);
 
         const mediaItem = action.payload;
-        console.log(componentName, "updateStateMedia mediaItem", mediaItem);
-        console.log(componentName, "updateStateMedia mediaItem.mediaID", mediaItem.mediaID);
-        console.log(componentName, "updateStateMedia mediaItem.mediaItemIndex", mediaItem.mediaItemIndex);
+        console.log(componentName, GetDateTime(), "updateStateMedia mediaItem", mediaItem);
+        console.log(componentName, GetDateTime(), "updateStateMedia mediaItem.mediaID", mediaItem.mediaID);
+        console.log(componentName, GetDateTime(), "updateStateMedia mediaItem.mediaItemIndex", mediaItem.mediaItemIndex);
 
         if (typeof mediaItem === "object") {
 
@@ -67,9 +68,9 @@ const mediaSlice = createSlice({
           if (mediaItem.hasOwnProperty("active")) {
             state.arrayMedia[mediaItem.mediaItemIndex].active = mediaItem.active;
           };
-          
-          if (mediaItem.hasOwnProperty("updatedAt")) {
-            state.arrayMedia[mediaItem.mediaItemIndex].updatedAt = mediaItem.updatedAt;
+
+          if (mediaItem.hasOwnProperty("updateDate")) {
+            state.arrayMedia[mediaItem.mediaItemIndex].updateDate = mediaItem.updateDate;
           };
 
         };
@@ -78,15 +79,15 @@ const mediaSlice = createSlice({
     },
     deleteStateMedia: {
       reducer(state, action) {
-        console.log(componentName, "deleteStateMedia action.payload", action.payload);
+        console.log(componentName, GetDateTime(), "deleteStateMedia action.payload", action.payload);
 
         const mediaItemIndex = action.payload;
         // const mediaID = action.payload;
-        
+
         // ? This doesn't work because state.arrayMedia isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
-        // console.log(componentName, "deleteStateMedia existingMediaIndex", existingMediaIndex);
+        // console.log(componentName, GetDateTime(), "deleteStateMedia existingMediaIndex", existingMediaIndex);
 
         state.arrayMedia.splice(mediaItemIndex, 1);
 
@@ -94,15 +95,15 @@ const mediaSlice = createSlice({
     },
     setMediaDataOffline: {
       reducer(state, action) {
-        // console.log(componentName, "setMediaDataOffline action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "setMediaDataOffline action.payload", action.payload);
 
         state.mediaDataOffline = action.payload;
 
       }
     }
-}
+  }
 });
 
-export const {loadArrayMedia, addStateMedia, updateStateMedia, deleteStateMedia, setMediaDataOffline} = mediaSlice.actions;
+export const { loadArrayMedia, addStateMedia, updateStateMedia, deleteStateMedia, setMediaDataOffline } = mediaSlice.actions;
 
 export default mediaSlice.reducer;

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import Title from "./Title";
 import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const TitleList = (props) => {
 
@@ -23,8 +24,8 @@ const TitleList = (props) => {
   const [titleList, setTitleList] = useState([]);
 
   const getTitles = () => {
-    // console.log(componentName, "getTitle");
-    // console.log(componentName, "getTitle baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "getTitle");
+    // console.log(componentName, GetDateTime(), "getTitle baseURL", baseURL);
 
     setTitleMessage("");
     setErrTitleMessage("");
@@ -33,11 +34,11 @@ const TitleList = (props) => {
 
     if (baseURL !== undefined && baseURL !== "") {
 
-      let url = baseURL + "titles/list";
+      let url = baseURL + "titles";
 
       fetch(url)
         .then(response => {
-          // console.log(componentName, "getTitle response", response);
+          // console.log(componentName, GetDateTime(), "getTitle response", response);
           if (!response.ok) {
             throw Error(response.status + " " + response.statusText + " " + response.url);
           } else {
@@ -45,7 +46,7 @@ const TitleList = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, "getTitle data", data);
+          console.log(componentName, GetDateTime(), "getTitle data", data);
 
           setTitleResultsFound(data.resultsFound);
           setTitleMessage(data.message);
@@ -58,9 +59,9 @@ const TitleList = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, "getTitle error", error);
-          // console.log(componentName, "getTitle error.name", error.name);
-          // console.log(componentName, "getTitle error.message", error.message);
+          console.log(componentName, GetDateTime(), "getTitle error", error);
+          // console.log(componentName, GetDateTime(), "getTitle error.name", error.name);
+          // console.log(componentName, GetDateTime(), "getTitle error.message", error.message);
           setErrTitleMessage(error.name + ": " + error.message);
         });
 

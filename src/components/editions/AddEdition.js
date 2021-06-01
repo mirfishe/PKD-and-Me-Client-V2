@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { getASIN, removeOnePixelImage } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, getASIN, removeOnePixelImage } from "../../app/sharedFunctions";
 import { addStateEdition } from "../../bibliographyData/editionsSlice";
 
 const AddEdition = (props) => {
@@ -13,30 +13,30 @@ const AddEdition = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
-  // console.log(componentName, "baseURL", baseURL);
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
-  // console.log(componentName, "props.titleID", props.titleID);
-  // console.log(componentName, "props.titlePublicationDate", props.titlePublicationDate);
+  // console.log(componentName, GetDateTime(), "props.titleID", props.titleID);
+  // console.log(componentName, GetDateTime(), "props.titlePublicationDate", props.titlePublicationDate);
 
   const [mediaMessage, setMediaMessage] = useState("");
   const [errMediaMessage, setErrMediaMessage] = useState("");
   const [mediaResultsFound, setMediaResultsFound] = useState(null);
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
-  // console.log(componentName, "mediaListState", mediaListState);
+  // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
   const mediaList = mediaListState.filter(media => media.active === true);
-  // console.log(componentName, "mediaList", mediaList);
+  // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
   // * Sort the list alphabetically instead of by sortID
@@ -44,24 +44,24 @@ const AddEdition = (props) => {
 
   // ! This code is causing React to have too many re-renders in this location
   // if (mediaList.length < 1) {
-  //     console.log(componentName, "mediaList is empty", mediaList.length);
+  //     console.log(componentName, GetDateTime(), "mediaList is empty", mediaList.length);
   //     setErrMediaMessage("mediaList is empty", mediaList.length);
   //     setMediaResultsFound(false);
   // } else {
-  //     console.log(componentName, "mediaList.length", mediaList.length);
+  //     console.log(componentName, GetDateTime(), "mediaList.length", mediaList.length);
   //     setMediaMessage("mediaList.length", mediaList.length);
   //     setMediaResultsFound(true);
   // };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect mediaList", mediaList);
+    // console.log(componentName, GetDateTime(), "useEffect mediaList", mediaList);
 
     if (mediaList.length < 1) {
-      console.log(componentName, "mediaList is empty", mediaList.length);
+      console.log(componentName, GetDateTime(), "mediaList is empty", mediaList.length);
       setErrMediaMessage("mediaList is empty", mediaList.length);
       setMediaResultsFound(false);
     } else {
-      // console.log(componentName, "mediaList.length", mediaList.length);
+      // console.log(componentName, GetDateTime(), "mediaList.length", mediaList.length);
       // setMediaMessage("mediaList.length", mediaList.length);
       setMediaResultsFound(true);
     };
@@ -69,7 +69,7 @@ const AddEdition = (props) => {
   }, [mediaList]);
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, "titleListState", titleListState);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -117,9 +117,9 @@ const AddEdition = (props) => {
   const [ASINResultsFound, setASINResultsFound] = useState(null);
 
   const addEdition = () => {
-    // console.log(componentName, "addEdition");
-    // console.log(componentName, "addEdition baseURL", baseURL);
-    // console.log(componentName, "addEdition props.titleID", props.titleID);
+    // console.log(componentName, GetDateTime(), "addEdition");
+    // console.log(componentName, GetDateTime(), "addEdition baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addEdition props.titleID", props.titleID);
 
     clearMessages();
     setEditionRecordAdded(null);
@@ -149,37 +149,37 @@ const AddEdition = (props) => {
       if (ddMediaID !== null) {
         mediaIDValidated = true;
         setErrMediaID("");
-        // console.log(componentName, "addEdition Valid mediaID");
-        // console.log(componentName, "addEdition mediaIDValidated true", mediaIDValidated);
+        // console.log(componentName, GetDateTime(), "addEdition Valid mediaID");
+        // console.log(componentName, GetDateTime(), "addEdition mediaIDValidated true", mediaIDValidated);
       } else {
         mediaIDValidated = false;
         setErrMediaID("Please select a media.");
-        // console.log(componentName, "addEdition Invalid mediaID");
-        // console.log(componentName, "addEdition mediaIDValidated false", mediaIDValidated);
+        // console.log(componentName, GetDateTime(), "addEdition Invalid mediaID");
+        // console.log(componentName, GetDateTime(), "addEdition mediaIDValidated false", mediaIDValidated);
       };
     };
 
     if (mediaIDValidated === true) {
       formValidated = true;
-      // console.log(componentName, "addEdition Valid Form");
-      // console.log(componentName, "addEdition formValidated true", formValidated);
+      // console.log(componentName, GetDateTime(), "addEdition Valid Form");
+      // console.log(componentName, GetDateTime(), "addEdition formValidated true", formValidated);
     } else {
       formValidated = false;
-      // console.log(componentName, "addEdition Invalid Form");
-      // console.log(componentName, "addEdition formValidated false", formValidated);
+      // console.log(componentName, GetDateTime(), "addEdition Invalid Form");
+      // console.log(componentName, GetDateTime(), "addEdition formValidated false", formValidated);
     };
 
-    // console.log(componentName, "addEdition titleIDValidated", titleIDValidated);
-    // console.log(componentName, "addEdition mediaIDValidated", mediaIDValidated);
-    // console.log(componentName, "addEdition formValidated", formValidated);
+    // console.log(componentName, GetDateTime(), "addEdition titleIDValidated", titleIDValidated);
+    // console.log(componentName, GetDateTime(), "addEdition mediaIDValidated", mediaIDValidated);
+    // console.log(componentName, GetDateTime(), "addEdition formValidated", formValidated);
 
     if (formValidated === true) {
 
-      // console.log(componentName, "addEdition typeof props.titleID", typeof props.titleID);
-      // console.log(componentName, "addEdition typeof ddMediaID", typeof ddMediaID);
+      // console.log(componentName, GetDateTime(), "addEdition typeof props.titleID", typeof props.titleID);
+      // console.log(componentName, GetDateTime(), "addEdition typeof ddMediaID", typeof ddMediaID);
 
-      // console.log(componentName, "addEdition parseInt(props.titleID)", parseInt(props.titleID));
-      // console.log(componentName, "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
+      // console.log(componentName, GetDateTime(), "addEdition parseInt(props.titleID)", parseInt(props.titleID));
+      // console.log(componentName, GetDateTime(), "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
 
       let editionObject = {
         titleID: parseInt(props.titleID),
@@ -257,10 +257,10 @@ const AddEdition = (props) => {
         };
       };
 
-      // console.log(componentName, "addEdition editionObject", editionObject);
+      // console.log(componentName, GetDateTime(), "addEdition editionObject", editionObject);
 
       let url = baseURL + "editions/";
-      // console.log(componentName, "addEdition url", url);
+      // console.log(componentName, GetDateTime(), "addEdition url", url);
 
       if (sessionToken !== undefined && sessionToken !== null) {
 
@@ -273,7 +273,7 @@ const AddEdition = (props) => {
           body: JSON.stringify({ edition: editionObject })
         })
           .then(response => {
-            // console.log(componentName, "addEdition response", response);
+            // console.log(componentName, GetDateTime(), "addEdition response", response);
             // if (!response.ok) {
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
             // } else {
@@ -285,7 +285,7 @@ const AddEdition = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, "addEdition data", data);
+            console.log(componentName, GetDateTime(), "addEdition data", data);
 
             setEditionRecordAdded(data.recordAdded);
             addMessage(data.message);
@@ -308,21 +308,21 @@ const AddEdition = (props) => {
               setActive(data.active);
 
               let mediaItem = mediaListState.filter(media => media.mediaID === data.mediaID);
-              // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createdAt: mediaItem.createdAt, updatedAt: mediaItem.updatedAt}
+              // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
               mediaItem = mediaItem[0];
 
-              // console.log(componentName, "addEdition typeof data.mediaID", typeof data.mediaID);
-              // console.log(componentName, "addEdition mediaItem", mediaItem);
+              // console.log(componentName, GetDateTime(), "addEdition typeof data.mediaID", typeof data.mediaID);
+              // console.log(componentName, GetDateTime(), "addEdition mediaItem", mediaItem);
 
               let titleItem = titleListState.filter(title => title.titleID === data.titleID);
-              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt}
+              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
               titleItem = titleItem[0];
 
-              // console.log(componentName, "addEdition typeof data.titleID", typeof data.titleID);
-              // console.log(componentName, "addEdition titleItem", titleItem);
+              // console.log(componentName, GetDateTime(), "addEdition typeof data.titleID", typeof data.titleID);
+              // console.log(componentName, GetDateTime(), "addEdition titleItem", titleItem);
 
-              // ? Would still work if the createdAt and updatedAt were left out?
-              dispatch(addStateEdition([{ editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createdAt: mediaItem.createdAt, updatedAt: mediaItem.updatedAt }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt } }]));
+              // ? Would still work if the createDate and updateDate were left out?
+              dispatch(addStateEdition([{ editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, createDate: data.createDate, updateDate: data.updateDate, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } }]));
 
               // ? Add to local storage also?
 
@@ -333,9 +333,9 @@ const AddEdition = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, "addEdition error", error);
-            // console.log(componentName, "addEdition error.name", error.name);
-            // console.log(componentName, "addEdition error.message", error.message);
+            console.log(componentName, GetDateTime(), "addEdition error", error);
+            // console.log(componentName, GetDateTime(), "addEdition error.name", error.name);
+            // console.log(componentName, GetDateTime(), "addEdition error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -346,8 +346,8 @@ const AddEdition = (props) => {
   };
 
   const checkASIN = (ASIN) => {
-    // console.log(componentName, "checkASIN");
-    // console.log(componentName, "checkASIN baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "checkASIN");
+    // console.log(componentName, GetDateTime(), "checkASIN baseURL", baseURL);
 
     setASINMessage("");
     setErrASINMessage("");
@@ -358,11 +358,11 @@ const AddEdition = (props) => {
     if (ASIN !== undefined && ASIN !== null && ASIN !== "") {
       url = url + ASIN;
 
-      // console.log(componentName, "checkASIN url", url);
+      // console.log(componentName, GetDateTime(), "checkASIN url", url);
 
       fetch(url)
         .then(response => {
-          // console.log(componentName, "checkASIN response", response);
+          // console.log(componentName, GetDateTime(), "checkASIN response", response);
           if (!response.ok) {
             throw Error(response.status + " " + response.statusText + " " + response.url);
           } else {
@@ -370,7 +370,7 @@ const AddEdition = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, "checkASIN data", data);
+          console.log(componentName, GetDateTime(), "checkASIN data", data);
 
           setASINResultsFound(data.resultsFound);
           setASINMessage(data.message);
@@ -378,9 +378,9 @@ const AddEdition = (props) => {
           if (data.resultsFound === true) {
             setASINMessage(data.message + "That ASIN already exists in the database. " + data.editions[0].title.titleName + " (" + data.editions[0].medium.media + ") editionID=" + data.editions[0].editionID);
 
-            // console.log(componentName, "checkASIN", data.editions[0].title.titleName);
-            // console.log(componentName, "checkASIN", data.editions[0].medium.media);
-            // console.log(componentName, "checkASIN", data.editions[0].editionID);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].title.titleName);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].medium.media);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].editionID);
 
           } else {
             setErrASINMessage(data.message + "That ASIN does not exist in the database");
@@ -388,9 +388,9 @@ const AddEdition = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, "checkASIN error", error);
-          // console.log(componentName, "checkASIN error.name", error.name);
-          // console.log(componentName, "checkASIN error.message", error.message);
+          console.log(componentName, GetDateTime(), "checkASIN error", error);
+          // console.log(componentName, GetDateTime(), "checkASIN error.name", error.name);
+          // console.log(componentName, GetDateTime(), "checkASIN error.message", error.message);
           setErrASINMessage(error.name + ": " + error.message);
         });
 
@@ -399,7 +399,7 @@ const AddEdition = (props) => {
   };
 
   const copyTitlePublicationDate = () => {
-    // console.log(componentName, "copyTitlePublicationDate props.titlePublicationDate", props.titlePublicationDate);
+    // console.log(componentName, GetDateTime(), "copyTitlePublicationDate props.titlePublicationDate", props.titlePublicationDate);
 
     if (props.titlePublicationDate !== undefined && props.titlePublicationDate !== null) {
       setTxtPublicationDate(props.titlePublicationDate.toString().substring(0, 10));
@@ -410,7 +410,7 @@ const AddEdition = (props) => {
   };
 
   useEffect(() => {
-    // console.log(componentName, "useEffect editionRecordAdded", editionRecordAdded);
+    // console.log(componentName, GetDateTime(), "useEffect editionRecordAdded", editionRecordAdded);
     if (editionRecordAdded !== undefined && editionRecordAdded !== null && editionRecordAdded === true) {
       clearMessages();
       setErrMediaID("");
@@ -422,7 +422,7 @@ const AddEdition = (props) => {
   }, [editionRecordAdded]);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect check for admin", admin);
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
       // return <Redirect to="/" />;

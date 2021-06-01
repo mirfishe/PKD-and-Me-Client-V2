@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 import { Rating } from "@material-ui/lab/";
-import { DisplayDate } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../app/sharedFunctions";
 import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 
@@ -11,11 +11,11 @@ const UserReview = (props) => {
   const componentName = "UserReview.js";
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, "sessionToken", sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, "admin", admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
   const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, "userID", userID);
+  // console.log(componentName, GetDateTime(), "userID", userID);
 
   const [userReviewMessage, setUserReviewMessage] = useState("");
   const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
@@ -24,26 +24,26 @@ const UserReview = (props) => {
   const [userReviewDisplayCount, setUserReviewDisplayCount] = useState(0);
 
   const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, "userReviewsState", userReviewsState);
+  console.log(componentName, GetDateTime(), "userReviewsState", userReviewsState);
 
   let userReviews = [...userReviewsState];
 
   if (props.titleID !== undefined && props.titleID !== null && !isNaN(props.titleID)) {
     userReviews = userReviews.filter(userReview => userReview.titleID === props.titleID);
   };
-  // console.log(componentName, "props.titleID", props.titleID);
+  // console.log(componentName, GetDateTime(), "props.titleID", props.titleID);
 
   if (admin !== undefined && admin !== null && admin === true) {
     userReviews = [...userReviews];
   } else {
     userReviews = userReviews.filter(userReview => userReview.active === true);
   };
-  // console.log(componentName, "userReviews", userReviews);
+  // console.log(componentName, GetDateTime(), "userReviews", userReviews);
 
-  // * Sort the list by createdAt
-  userReviews.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1);
-  // * Sort the list by updatedAt
-  // userReviews.sort((a, b) => (a.updatedAt > b.updatedAt) ? 1 : -1);
+  // * Sort the list by createDate
+  userReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
+  // * Sort the list by updateDate
+  // userReviews.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
 
   let userReviewItem = {};
 
@@ -51,18 +51,18 @@ const UserReview = (props) => {
     userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
     userReviewItem = userReviewItem[0];
   };
-  // console.log(componentName, "userReviewItem", userReviewItem);
-  // console.log(componentName, "typeof userReviewItem.read", typeof userReviewItem.read);
-  // console.log(componentName, "userReviewItem.read", userReviewItem.read);
-  // console.log(componentName, "typeof userReviewItem.dateRead", typeof userReviewItem.dateRead);
-  // console.log(componentName, "userReviewItem.dateRead", userReviewItem.dateRead);
-  // console.log(componentName, "typeof userReviewItem[0].read", typeof userReviewItem[0].read);
-  // console.log(componentName, "userReviewItem[0].read", userReviewItem[0].read);
-  // console.log(componentName, "typeof userReviewItem[0].dateRead", typeof userReviewItem[0].dateRead);
-  // console.log(componentName, "userReviewItem[0].dateRead", userReviewItem[0].dateRead);
+  // console.log(componentName, GetDateTime(), "userReviewItem", userReviewItem);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem.read", typeof userReviewItem.read);
+  // console.log(componentName, GetDateTime(), "userReviewItem.read", userReviewItem.read);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem.dateRead", typeof userReviewItem.dateRead);
+  // console.log(componentName, GetDateTime(), "userReviewItem.dateRead", userReviewItem.dateRead);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem[0].read", typeof userReviewItem[0].read);
+  // console.log(componentName, GetDateTime(), "userReviewItem[0].read", userReviewItem[0].read);
+  // console.log(componentName, GetDateTime(), "typeof userReviewItem[0].dateRead", typeof userReviewItem[0].dateRead);
+  // console.log(componentName, GetDateTime(), "userReviewItem[0].dateRead", userReviewItem[0].dateRead);
 
   useEffect(() => {
-    // console.log(componentName, "useEffect userReviews", userReviews);
+    // console.log(componentName, GetDateTime(), "useEffect userReviews", userReviews);
     if (userReviews.length > 0) {
 
       let displayCount = 0;
@@ -74,7 +74,7 @@ const UserReview = (props) => {
         };
       };
 
-      // console.log(componentName, "useEffect displayCount", displayCount);
+      // console.log(componentName, GetDateTime(), "useEffect displayCount", displayCount);
 
       if (displayCount > 0) {
         setErrUserReviewMessage("");
@@ -118,7 +118,7 @@ const UserReview = (props) => {
           return (
             <React.Fragment key={userReview.reviewID}>
 
-              {(userReview.rating !== undefined && userReview.rating !== null) || (userReview.shortReview !== undefined && userReview.shortReview !== null && userReview.shortReview !== "") || (userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "") ?
+              {IsEmpty(userReview.rating) === false || IsEmpty(userReview.shortReview) === false || IsEmpty(userReview.longReview) === false ?
 
                 <Col className="my-4" xs="12" key={userReview.reviewID}>
 
@@ -131,7 +131,7 @@ const UserReview = (props) => {
                     : null}
                   <Row>
                     <Col xs="12">
-                      {userReview.shortReview !== undefined && userReview.shortReview !== null && userReview.shortReview !== "" ? <h6>{userReview.shortReview}
+                      {IsEmpty(userReview.shortReview) === false ? <h6>{userReview.shortReview}
                         {/* {props.userID === userReview.userID || props.isAdmin === true ? <UpdateUserReview userID={props.userID} isAdmin={props.isAdmin} sessionToken={props.sessionToken} titleID={props.titleID} userReviewUpdated={props.userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
                       </h6> : null}
                     </Col>
@@ -139,24 +139,24 @@ const UserReview = (props) => {
 
                   <Row>
                     <Col xs="12">
-                      {userReview.longReview !== undefined && userReview.longReview !== null && userReview.longReview !== "" ? <p className="displayParagraphs">{userReview.longReview}</p> : null}
+                      {IsEmpty(userReview.longReview) === false ? <p className="displayParagraphs">{userReview.longReview}</p> : null}
                     </Col>
                   </Row>
 
                   <Row>
                     <Col xs="5">
-                      {userReview.rating !== undefined && userReview.rating !== null ? <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={userReview.rating} /> : null}
+                      {IsEmpty(userReview.rating) === false ? <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={userReview.rating} /> : null}
                     </Col>
                     <Col xs="7">
                       <p>
-                        Reviewed by {userReview.user.firstName} {userReview.updatedAt !== undefined && userReview.updatedAt !== null ? <small>on {DisplayDate(userReview.updatedAt)}</small> : null}
+                        Reviewed by {userReview.firstName} {IsEmpty(userReview.updateDate) === false ? <small>on {DisplayDate(userReview.updateDate)}</small> : null}
                       </p>
                     </Col>
                   </Row>
 
                   <Row>
                     <Col xs="12">
-                      {sessionToken !== undefined && sessionToken !== null && sessionToken !== "" && ((userID !== undefined && userID !== null && userID === userReview.userID) || (admin !== undefined && admin !== null && admin === true)) ? <EditUserReview reviewID={userReview.reviewID} displayButton={true} /> : null}
+                      {IsEmpty(sessionToken) === false && ((IsEmpty(userID) === false && userID === userReview.userID) || (IsEmpty(admin) === false && admin === true)) ? <EditUserReview reviewID={userReview.reviewID} displayButton={true} /> : null}
                     </Col>
                   </Row>
 
@@ -165,7 +165,7 @@ const UserReview = (props) => {
                 : null}
 
             </React.Fragment>
-          )
+          );
         })}
       </Row>
     </Container>

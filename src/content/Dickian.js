@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { setLocalPath, setLocalImagePath } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../app/sharedFunctions";
 import { setPageURL } from "../app/urlsSlice";
 
 const Dickian = () => {
@@ -17,7 +17,7 @@ const Dickian = () => {
   document.title = "Home | " + appName + " | " + siteName;
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, "edirectPage", linkName);
+    // console.log(componentName, GetDateTime(), "edirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
