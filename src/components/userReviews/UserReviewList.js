@@ -47,7 +47,7 @@ function UserReviewList() {
         setUserReviewMessage(data.message);
 
         if (data.resultsFound === true) {
-          setUserReviewList(data.userReviews);
+          setUserReviewList(data.records);
         } else {
           setErrUserReviewMessage(data.message);
         };
@@ -78,7 +78,7 @@ function UserReviewList() {
                 {JSON.stringify(userReviewList)}
             </pre> */}
           <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline User Reviews data used.", "userReviews": userReviewList })}
+            {JSON.stringify({ "resultsFound": true, "message": "Offline User Reviews data used.", "records": userReviewList })}
           </span>
         </Row>
         : null}

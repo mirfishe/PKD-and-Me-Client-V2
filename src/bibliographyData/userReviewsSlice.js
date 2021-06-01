@@ -84,6 +84,10 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].rating = userReviewItem.rating;
           };
 
+          if (userReviewItem.hasOwnProperty("ranking")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].ranking = userReviewItem.ranking;
+          };
+
           if (userReviewItem.hasOwnProperty("shortReview")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
           };

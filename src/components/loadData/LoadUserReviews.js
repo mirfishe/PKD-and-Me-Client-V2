@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
-import UserReviewData from "../../bibliographyData/UserReviews.json";
+import UserReviewData from "../../bibliographyData/userReviews.json";
 // import UserReviewRatingData from "../../bibliographyData/UserReviewsRatings.json";
 import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../bibliographyData/userReviewsSlice";
 
@@ -197,7 +197,7 @@ function LoadUserReviews() {
         // console.log(componentName, "fetchLocalDataUserReviews data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.userReviews, "userReview");
+          loadDataStore(data.records, "userReview");
         } else {
           console.log(componentName, "fetchLocalDataUserReviews resultsFound error", data.message);
           // setErrUserReviewMessage(data.message);

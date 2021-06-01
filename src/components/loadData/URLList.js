@@ -39,7 +39,7 @@ const URLList = (props) => {
                     {JSON.stringify(urlList)}
                 </pre> */}
         <span>
-          {JSON.stringify({ "resultsFound": true, "message": "Offline URL data used.", "urls": urlList })}
+          {JSON.stringify({ "resultsFound": true, "message": "Offline URL data used.", "records": urlList })}
         </span>
       </Row>
       <Row>

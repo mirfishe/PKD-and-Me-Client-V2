@@ -57,6 +57,7 @@ const AddUserReview = (props) => {
   const [cbxRead, setCbxRead] = useState(false);
   const [txtDateRead, setTxtDateRead] = useState("");
   const [rdoRating, setRdoRating] = useState(null);
+  const [txtRanking, setTxtRanking] = useState("");
   const [txtShortReview, setTxtShortReview] = useState("");
   const [txtLongReview, setTxtLongReview] = useState("");
 
@@ -68,6 +69,7 @@ const AddUserReview = (props) => {
   const [read, setRead] = useState(null);
   const [dateRead, setDateRead] = useState(null);
   const [rating, setRating] = useState(null);
+  const [ranking, setRanking] = useState(null);
   const [shortReview, setShortReview] = useState(null);
   const [longReview, setLongReview] = useState(null);
   const [active, setActive] = useState(null);
@@ -113,6 +115,7 @@ const AddUserReview = (props) => {
     setRead(null);
     setDateRead(null);
     setRating(null);
+    setRanking(null);
     setShortReview(null);
     setLongReview(null);
     setActive(null);
@@ -139,6 +142,13 @@ const AddUserReview = (props) => {
     if (txtDateRead !== null && txtDateRead !== undefined) {
       if (txtDateRead.trim().length !== 0) {
         Object.assign(userReviewObject, { dateRead: txtDateRead.trim() });
+      };
+    };
+
+    // * If the user doesn't enter a ranking, then it isn't added/updated
+    if (txtRanking !== null && txtRanking !== undefined) {
+      if (txtRanking.trim().length !== 0) {
+        Object.assign(userReviewObject, { ranking: txtRanking.trim() });
       };
     };
 
@@ -199,6 +209,7 @@ const AddUserReview = (props) => {
             setRead(data.read);
             setDateRead(data.dateRead);
             setRating(data.rating);
+            setRanking(data.ranking);
             setShortReview(data.shortReview);
             setLongReview(data.longReview);
             setActive(data.active);
@@ -215,7 +226,7 @@ const AddUserReview = (props) => {
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // ? Would still work if the createdAt and updatedAt were left out?
-            dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
+            dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
             // ? Add to local storage also?
 
             // * Recalculate ratings
@@ -225,7 +236,7 @@ const AddUserReview = (props) => {
             // * Get all reviews for the title
             // ? Get the latest from state?
             // ? Update the state user review array?
-            userReviews.push({ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } });
+            userReviews.push({ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createdAt: data.createdAt, updatedAt: data.updatedAt, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } });
             // console.log(componentName, "addUserReview userReviews", userReviews);
             // * Recompute the average
             let userReviewCount = userReviews.length;
@@ -350,6 +361,12 @@ const AddUserReview = (props) => {
                   <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => {/*console.log(event.target.value);*/ setTxtDateRead(event.target.value); }} />
                 </FormGroup>
               </Col>
+
+            </FormGroup>
+            <FormGroup>
+
+              <Label for="txtRanking">Ranking</Label>
+              <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => {/*console.log(event.target.value);*/ setTxtRanking(event.target.value); }} />
 
             </FormGroup>
             <FormGroup>

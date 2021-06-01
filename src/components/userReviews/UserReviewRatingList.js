@@ -48,7 +48,7 @@ function UserReviewRatingList() {
 
         if (data.resultsFound === true) {
 
-          let userReviewsRatings = data.userReviews;
+          let userReviewsRatings = data.records;
 
           for (let i = 0; i < userReviewsRatings.length; i++) {
 
@@ -104,7 +104,7 @@ function UserReviewRatingList() {
                 {JSON.stringify(userReviewRatingList)}
             </pre> */}
           <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline User Reviews Ratings data used.", "userReviews": userReviewRatingList })}
+            {JSON.stringify({ "resultsFound": true, "message": "Offline User Reviews Ratings data used.", "records": userReviewRatingList })}
           </span>
         </Row>
         : null}

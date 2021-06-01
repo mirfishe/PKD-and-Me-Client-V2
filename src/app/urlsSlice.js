@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const componentName = "urlsSlice.js";
 
@@ -68,7 +68,7 @@ const urlsSlice = createSlice({
           if (urlItem.hasOwnProperty("linkTypeNameID")) {
             state.arrayURLs[urlItem.urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
           };
-          
+
           if (urlItem.hasOwnProperty("linkTypeName")) {
             state.arrayURLs[urlItem.urlListIndex].linkTypeName = urlItem.linkTypeName;
           };
@@ -103,9 +103,9 @@ const urlsSlice = createSlice({
 
       }
     }
-}
+  }
 });
 
-export const {loadArrayURLs, addStateURL, updateStateURL, deleteStateURL, setPageURL, setLinkItem} = urlsSlice.actions;
+export const { loadArrayURLs, addStateURL, updateStateURL, deleteStateURL, setPageURL, setLinkItem } = urlsSlice.actions;
 
 export default urlsSlice.reducer;

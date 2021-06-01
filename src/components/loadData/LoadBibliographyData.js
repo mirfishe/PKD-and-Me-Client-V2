@@ -4,15 +4,15 @@ import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { encodeURL } from "../../app/sharedFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
-import CategoryData from "../../bibliographyData/Categories.json";
+import CategoryData from "../../bibliographyData/categories.json";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../bibliographyData/categoriesSlice";
-import EditionData from "../../bibliographyData/Editions.json";
+import EditionData from "../../bibliographyData/editions.json";
 import { loadArrayEditions, setEditionsDataOffline } from "../../bibliographyData/editionsSlice";
-import MediaData from "../../bibliographyData/Media.json";
+import MediaData from "../../bibliographyData/media.json";
 import { loadArrayMedia, setMediaDataOffline } from "../../bibliographyData/mediaSlice";
-import TitleData from "../../bibliographyData/Titles.json";
+import TitleData from "../../bibliographyData/titles.json";
 import { loadArrayTitles, setTitlesDataOffline } from "../../bibliographyData/titlesSlice";
-import UserReviewRatingData from "../../bibliographyData/UserReviewsRatings.json";
+import UserReviewRatingData from "../../bibliographyData/userReviewsRatings.json";
 import { setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings, setUserReviewsRatingsDataOffline } from "../../bibliographyData/userReviewsSlice";
 
 function LoadBibliographyData() {
@@ -192,7 +192,7 @@ function LoadBibliographyData() {
 
         if (data.resultsFound === true) {
           // loadDataStore(data.userReviews, "userReviewRating");
-          addRatings(titleData, data.userReviews);
+          addRatings(titleData, data.records);
         } else {
           console.log(componentName, "fetchLocalDataUserReviewsRatings resultsFound error", data.message);
           // setErrUserReviewMessage(data.message);
@@ -482,7 +482,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataCategories data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.categories, "categories");
+          loadDataStore(data.records, "categories");
         } else {
           console.log(componentName, "fetchLocalDataCategories resultsFound error", data.message);
           // setErrCategoryMessage(data.message);
@@ -527,7 +527,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataMedia data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.media, "media");
+          loadDataStore(data.records, "media");
         } else {
           console.log(componentName, "fetchLocalDataMedia resultsFound error", data.message);
           // setErrMediaMessage(data.message);
@@ -572,7 +572,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataTitles data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.titles, "titles");
+          loadDataStore(data.records, "titles");
         } else {
           console.log(componentName, "fetchLocalDataTitles resultsFound error", data.message);
           // setErrTitleMessage(data.message);
@@ -617,7 +617,7 @@ function LoadBibliographyData() {
         // console.log(componentName, "fetchLocalDataEditions data", data);
 
         if (data.resultsFound === true) {
-          loadDataStore(data.editions, "editions");
+          loadDataStore(data.records, "editions");
         } else {
           console.log(componentName, "fetchLocalDataEditions resultsFound error", data.message);
           // setErrEditionMessage(data.message);

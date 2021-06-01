@@ -51,7 +51,7 @@ const TitleList = (props) => {
           setTitleMessage(data.message);
 
           if (data.resultsFound === true) {
-            setTitleList(data.titles);
+            setTitleList(data.records);
           } else {
             setErrTitleMessage(data.message);
           };
@@ -84,7 +84,7 @@ const TitleList = (props) => {
                     {JSON.stringify(titleList)}
                 </pre> */}
           <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline Titles data used.", "titles": titleList })}
+            {JSON.stringify({ "resultsFound": true, "message": "Offline Titles data used.", "records": titleList })}
           </span>
         </Row>
         : null}

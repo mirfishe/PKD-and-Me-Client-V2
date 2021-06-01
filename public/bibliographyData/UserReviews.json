@@ -1,1 +1,5 @@
-{"resultsFound":true,"message":"Offline User Reviews data used.","userReviews":[]}
+{
+  "resultsFound": true,
+  "message": "Offline User Reviews data used.",
+  "records": []
+}

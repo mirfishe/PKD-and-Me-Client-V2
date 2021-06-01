@@ -51,7 +51,7 @@ const EditionList = (props) => {
           setEditionMessage(data.message);
 
           if (data.resultsFound === true) {
-            setEditionList(data.editions);
+            setEditionList(data.records);
           } else {
             setErrEditionMessage(data.message);
           };
@@ -84,7 +84,7 @@ const EditionList = (props) => {
                     {JSON.stringify(editionList)}
                 </pre> */}
           <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline Editions data used.", "editions": editionList })}
+            {JSON.stringify({ "resultsFound": true, "message": "Offline Editions data used.", "records": editionList })}
           </span>
         </Row>
         : null}

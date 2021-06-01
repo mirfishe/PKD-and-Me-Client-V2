@@ -53,7 +53,7 @@ const CategoryList = (props) => {
           if (data.resultsFound === true) {
             // Would like to remove categories that don't have titles associated with them
             // if (data.categories.titles.length > 0) {
-            setCategoryList(data.categories);
+            setCategoryList(data.records);
             // };
           } else {
             setErrCategoryMessage(data.message);
@@ -122,7 +122,7 @@ const CategoryList = (props) => {
                     {JSON.stringify(categoryList)}
                 </pre> */}
           <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline Categories data used.", "categories": categoryList })}
+            {JSON.stringify({ "resultsFound": true, "message": "Offline Categories data used.", "records": categoryList })}
           </span>
         </Row>
         : null}

@@ -111,7 +111,7 @@ const Checklist = (props) => {
   // * Filter by category
   if (linkItem !== undefined && linkItem !== null && linkItem.hasOwnProperty("linkType") === true) {
 
-    if (linkItem.linkType === "category") {
+    if (linkItem.linkType === "categories") {
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkID);
     } else if (linkItem.linkType === "media") {
       // ! This won't work; media is not available
@@ -125,7 +125,7 @@ const Checklist = (props) => {
         });
       });
 
-    } else if (linkItem.linkType === "title") {
+    } else if (linkItem.linkType === "titles") {
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkTypeNameID);
     };
 

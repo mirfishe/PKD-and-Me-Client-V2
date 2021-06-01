@@ -89,7 +89,7 @@ const userSlice = createSlice({
     },
     loadArrayChecklist: {
       reducer(state, action) {
-        console.log(componentName, "loadArrayChecklist action.payload", action.payload);
+        // console.log(componentName, "loadArrayChecklist action.payload", action.payload);
         // console.log(componentName, "loadArrayChecklist action.payload.length", action.payload.length);
 
         for (let i = 0; i < action.payload.length; i++) {

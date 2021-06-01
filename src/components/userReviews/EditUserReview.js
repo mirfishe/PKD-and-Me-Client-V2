@@ -57,6 +57,7 @@ const EditUserReview = (props) => {
   const [cbxRead, setCbxRead] = useState(false);
   const [txtDateRead, setTxtDateRead] = useState("");
   const [rdoRating, setRdoRating] = useState(null);
+  const [txtRanking, setTxtRanking] = useState("");
   const [txtShortReview, setTxtShortReview] = useState("");
   const [txtLongReview, setTxtLongReview] = useState("");
 
@@ -69,6 +70,7 @@ const EditUserReview = (props) => {
   const [read, setRead] = useState(null);
   const [dateRead, setDateRead] = useState(null);
   const [rating, setRating] = useState(null);
+  const [ranking, setRanking] = useState(null);
   const [shortReview, setShortReview] = useState(null);
   const [longReview, setLongReview] = useState(null);
   const [active, setActive] = useState(null);
@@ -99,6 +101,7 @@ const EditUserReview = (props) => {
         setRead(userReviewObject.read);
         setDateRead(userReviewObject.dateRead);
         setRating(userReviewObject.rating);
+        setRanking(userReviewObject.ranking);
         setShortReview(userReviewObject.shortReview);
         setLongReview(userReviewObject.longReview);
         setActive(userReviewObject.active);
@@ -112,6 +115,7 @@ const EditUserReview = (props) => {
         };
 
         setRdoRating(userReviewObject.rating);
+        setTxtRanking(userReviewObject.ranking);
         setTxtShortReview(userReviewObject.shortReview);
         setTxtLongReview(userReviewObject.longReview);
 
@@ -144,6 +148,7 @@ const EditUserReview = (props) => {
         setRead(userReviewObject.read);
         setDateRead(userReviewObject.dateRead);
         setRating(userReviewObject.rating);
+        setRanking(userReviewObject.ranking);
         setShortReview(userReviewObject.shortReview);
         setLongReview(userReviewObject.longReview);
         setActive(userReviewObject.active);
@@ -157,6 +162,7 @@ const EditUserReview = (props) => {
         };
 
         setRdoRating(userReviewObject.rating);
+        setTxtRanking(userReviewObject.ranking);
         setTxtShortReview(userReviewObject.shortReview);
         setTxtLongReview(userReviewObject.longReview);
 
@@ -204,6 +210,7 @@ const EditUserReview = (props) => {
     setRead(null);
     setDateRead(null);
     setRating(null);
+    setRanking(null);
     setShortReview(null);
     setLongReview(null);
     setActive(null);
@@ -231,6 +238,13 @@ const EditUserReview = (props) => {
     if (txtDateRead !== null && txtDateRead !== undefined) {
       if (txtDateRead.trim().length !== 0) {
         Object.assign(userReviewObject, { dateRead: txtDateRead.trim() });
+      };
+    };
+
+    // * If the user doesn't enter a ranking, then it isn't added/updated
+    if (txtRanking !== null && txtRanking !== undefined) {
+      if (txtRanking.trim().length !== 0) {
+        Object.assign(userReviewObject, { ranking: txtRanking.trim() });
       };
     };
 
@@ -298,6 +312,7 @@ const EditUserReview = (props) => {
             setRead(data.read);
             setDateRead(data.dateRead);
             setRating(data.rating);
+            setRanking(data.ranking);
             setShortReview(data.shortReview);
             setLongReview(data.longReview);
             setActive(data.active);
@@ -314,7 +329,7 @@ const EditUserReview = (props) => {
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // ? Would still work if the createdAt and updatedAt were left out?
-            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, updatedAt: new Date().toISOString(), title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }));
+            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, updatedAt: new Date().toISOString(), title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createdAt: titleItem.createdAt, updatedAt: titleItem.updatedAt }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }));
             // ? Add to local storage also?
 
             // * Recalculate ratings
@@ -346,7 +361,7 @@ const EditUserReview = (props) => {
               // console.log(componentName, "updateUserReview data.rating", data.rating);
 
               // ! This line of code is not working for some reason
-              userReviews.push({ reviewID: parseInt(data.reviewID), userID: data.userID, updatedBy: data.updatedBy, rating: data.rating });
+              userReviews.push({ reviewID: parseInt(data.reviewID), userID: data.userID, updatedBy: data.updatedBy, rating: data.rating, ranking: data.ranking });
 
               // console.log(componentName, "updateUserReview userReviews", userReviews);
             };
@@ -592,6 +607,12 @@ const EditUserReview = (props) => {
                   <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => {/*console.log(event.target.value);*/ setTxtDateRead(event.target.value); }} />
                 </FormGroup>
               </Col>
+
+            </FormGroup>
+            <FormGroup>
+
+              <Label for="txtRanking">Ranking</Label>
+              <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => {/*console.log(event.target.value);*/ setTxtRanking(event.target.value); }} />
 
             </FormGroup>
             <FormGroup>

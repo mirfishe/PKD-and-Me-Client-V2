@@ -48,6 +48,7 @@ const Titles = (props) => {
   let categoryParam;
   if (props.linkItem !== undefined && props.linkItem !== null && props.linkItem.hasOwnProperty("linkName")) {
     // console.log(componentName, "props.match.params", props.match.params);
+    // console.log(componentName, "props.linkItem.linkName", props.linkItem.linkName);
     categoryParam = props.linkItem.linkName; // props.match.params.category;
     // console.log(componentName, "typeof categoryParam", typeof categoryParam);
     // console.log(componentName, "categoryParam", categoryParam);

@@ -21,13 +21,13 @@ import FormatPost from "./components/socialMedia/FormatPost";
 import AddCategory from "./components/categories/AddCategory";
 import AddMedia from "./components/media/AddMedia";
 import AddTitle from "./components/titles/AddTitle";
-import CategoryList from "./components/categories/CategoryList";
-import MediaList from "./components/media/MediaList";
-import TitleList from "./components/titles/TitleList";
-import EditionList from "./components/editions/EditionList";
-import UserReviewList from "./components/userReviews/UserReviewList";
-import UserReviewRatingList from "./components/userReviews/UserReviewRatingList";
-import URLList from "./components/loadData/URLList";
+// import CategoryList from "./components/categories/CategoryList";
+// import MediaList from "./components/media/MediaList";
+// import TitleList from "./components/titles/TitleList";
+// import EditionList from "./components/editions/EditionList";
+// import UserReviewList from "./components/userReviews/UserReviewList";
+// import UserReviewRatingList from "./components/userReviews/UserReviewRatingList";
+// import URLList from "./components/loadData/URLList";
 import Category from "./components/categories/Category";
 import Media from "./components/media/Media";
 import Titles from "./components/titles/Titles";
@@ -286,7 +286,7 @@ function App() {
 
           if (data.resultsFound === true) {
 
-            dispatch(loadArrayChecklist(data.titles));
+            dispatch(loadArrayChecklist(data.records));
 
           } else {
             console.log(componentName, "getChecklist resultsFound error", data.message);
@@ -402,7 +402,7 @@ function App() {
               <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
             </NavItem>
             : null}
-          {showAbout || showAllMenuItems ?
+          {(showAbout || showAllMenuItems) && admin !== undefined && admin !== null && admin === true ?
             <NavItem className="mx-3">
               <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
             </NavItem>
@@ -470,7 +470,7 @@ function App() {
       {showCategoryList || showMediaList || showTitleList || showEditionList || showUserReviewList || showUserReviewRatingList || showURLList || showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
         <Navbar>
           <Nav>
-            {showCategoryList || showAllMenuItems ?
+            {/* {showCategoryList || showAllMenuItems ?
               <NavItem className="mx-3">
                 <Link to="/categoryList"><NavbarText>Category List</NavbarText></Link>
               </NavItem>
@@ -504,7 +504,7 @@ function App() {
               <NavItem className="mx-3">
                 <Link to="/urlList"><NavbarText>URL List</NavbarText></Link>
               </NavItem>
-              : null}
+              : null} */}
             {showAddCategory && admin !== undefined && admin !== null && admin === true ?
               <NavItem className="mx-3">
                 <AddCategory displayButton={true} />
@@ -585,13 +585,13 @@ function App() {
               <Route exact path="/socialMedia" component={FormatPost} />
               <Route exact path="/homeopape" component={Homeopape} />
               <Route exact path="/dickian" component={Dickian} />
-              <Route exact path="/categoryList" component={CategoryList} />
+              {/* <Route exact path="/categoryList" component={CategoryList} />
               <Route exact path="/mediaList" component={MediaList} />
               <Route exact path="/titleList" component={TitleList} />
               <Route exact path="/editionList" component={EditionList} />
               <Route exact path="/userReviewList" component={UserReviewList} />
               <Route exact path="/userReviewRatingList" component={UserReviewRatingList} />
-              <Route exact path="/urlList" component={URLList} />
+              <Route exact path="/urlList" component={URLList} /> */}
               <Route exact path="/categories" component={Category} />
               <Route exact path="/media" component={Media} />
 
@@ -606,8 +606,8 @@ function App() {
               {/* <Route exact path="/editions/:media" component={Editions} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. */}
-              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "category" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
-              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "title" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
+              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "categories" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
+              {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "titles" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
               {linkItem !== undefined && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
 
             </Switch>

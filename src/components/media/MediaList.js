@@ -51,7 +51,7 @@ const MediaList = (props) => {
           setMediaMessage(data.message);
 
           if (data.resultsFound === true) {
-            setMediaList(data.media);
+            setMediaList(data.records);
           } else {
             setErrMediaMessage(data.message);
           };
@@ -84,7 +84,7 @@ const MediaList = (props) => {
                     {JSON.stringify(mediaList)}
                 </pre> */}
           <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline Media data used.", "media": mediaList })}
+            {JSON.stringify({ "resultsFound": true, "message": "Offline Media data used.", "records": mediaList })}
           </span>
         </Row>
         : null}

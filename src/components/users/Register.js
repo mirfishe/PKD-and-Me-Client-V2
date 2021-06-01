@@ -290,7 +290,7 @@ const Register = (props) => {
 
           if (data.resultsFound === true) {
 
-            dispatch(loadArrayChecklist(data.titles));
+            dispatch(loadArrayChecklist(data.records));
 
           } else {
             console.log(componentName, "getChecklist resultsFound error", data.message);

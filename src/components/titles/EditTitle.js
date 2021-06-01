@@ -396,7 +396,7 @@ const EditTitle = (props) => {
 
                 };
 
-                let urlListIndex = urlLookup.findIndex(url => url.linkType === "title" && url.linkID === data.titleID);
+                let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
                 // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
 
                 // * Update/Delete related urls in arrayURLs also
@@ -508,7 +508,7 @@ const EditTitle = (props) => {
 
               };
 
-              let urlListIndex = urlLookup.findIndex(url => url.linkType === "title" && url.linkID === data.titleID);
+              let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
               // console.log(componentName, "updateTitle urlListIndex", urlListIndex);
 
               // Update/Delete related urls in arrayURLs also
