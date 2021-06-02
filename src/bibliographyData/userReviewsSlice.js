@@ -52,7 +52,7 @@ const userReviewsSlice = createSlice({
 
         const userReviewItem = action.payload;
         // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem", userReviewItem);
-        // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem.userReviewID", userReviewItem.reviewID);
+        // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem.reviewID", userReviewItem.reviewID);
         // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
 
         if (typeof userReviewItem === "object") {
@@ -264,7 +264,7 @@ const userReviewsSlice = createSlice({
         // console.log(componentName, GetDateTime(), "deleteStateUserReview action.payload", action.payload);
 
         const userReviewItemIndex = action.payload;
-        // const userReviewID = action.payload;
+        // const reviewID = action.payload;
 
         // ? This doesn't work because state.arrayUserReviews isn't stored as an array of objects?
         // ? Need to copy the array?
@@ -333,7 +333,7 @@ const userReviewsSlice = createSlice({
     //     console.log(componentName, GetDateTime(), "deleteStateUserReviewsRatings action.payload", action.payload);
 
     //     const userReviewItemIndex = action.payload;
-    //     // const userReviewID = action.payload;
+    //     // const reviewID = action.payload;
 
     //     // This doesn't work because state.arrayUserReviewsRatings isn't stored as an array of objects?
     //     // Need to copy the array?

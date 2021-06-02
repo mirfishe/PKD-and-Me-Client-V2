@@ -49,10 +49,10 @@ const Checklist = (props) => {
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
   // console.log(componentName, GetDateTime(), "userState", userState);
 
-  const editionListState = useSelector(state => state.editions.arrayEditions);
+  // const editionListState = useSelector(state => state.editions.arrayEditions);
   // console.log(componentName, GetDateTime(), "editionListState", editionListState);
 
-  let editionList = [...editionListState];
+  // let editionList = [...editionListState];
   // console.log(componentName, GetDateTime(), "editionList", editionList);
 
   const sortChecklistList = (sortBy) => {
@@ -79,7 +79,7 @@ const Checklist = (props) => {
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
         let titleListPublicationDate = checklistList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
-        titleListPublicationDate.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+        titleListPublicationDate.sort((a, b) => (a.titlePublicationDate > b.titlePublicationDate) ? 1 : -1);
         // console.log(componentName, GetDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
         let titleListNoPublicationDate = checklistList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
@@ -113,17 +113,17 @@ const Checklist = (props) => {
 
     if (linkItem.linkType === "categories") {
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkID);
-    } else if (linkItem.linkType === "media") {
-      // ! This won't work; media is not available
-      // checklistList = checklistList.filter(title => title.mediaID === linkItem.linkID);
+      // } else if (linkItem.linkType === "media") {
+      //   // ! This won't work; media is not available
+      //   // checklistList = checklistList.filter(title => title.mediaID === linkItem.linkID);
 
-      editionList = editionList.filter(edition => edition.mediaID === linkItem.linkID);
+      //   editionList = editionList.filter(edition => edition.mediaID === linkItem.linkID);
 
-      checklistList = checklistList.filter((title) => {
-        return editionList.some((edition) => {
-          return edition.titleID === title.titleID;
-        });
-      });
+      //   checklistList = checklistList.filter((title) => {
+      //     return editionList.some((edition) => {
+      //       return edition.titleID === title.titleID;
+      //     });
+      //   });
 
     } else if (linkItem.linkType === "titles") {
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkTypeNameID);
