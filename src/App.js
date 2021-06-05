@@ -38,6 +38,8 @@ import Register from "./components/users/Register";
 import EditUser from "./components/users/EditUser";
 import Checklist from "./components/checklist/Checklist";
 
+import FromTheHomeopape from "./components/fromTheHomeopape/FromTheHomeopape";
+
 function App() {
 
   const componentName = "App.js";
@@ -377,6 +379,7 @@ function App() {
 
   return (
     <BrowserRouter basename={routerBaseName}>
+      <FromTheHomeopape />
       <Navbar color="light" light>
         <Nav>
           <NavbarBrand href="/" className="mx-3">
