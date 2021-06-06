@@ -379,7 +379,6 @@ function App() {
 
   return (
     <BrowserRouter basename={routerBaseName}>
-      <FromTheHomeopape />
       <Navbar color="light" light>
         <Nav>
           <NavbarBrand href="/" className="mx-3">
@@ -614,6 +613,9 @@ function App() {
               {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
 
             </Switch>
+
+            <FromTheHomeopape />
+
           </Col>
         </Row>
       </Container>
