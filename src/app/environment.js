@@ -52,11 +52,15 @@ switch (window.location.hostname) {
   case "pkd-and-me-client":
     profileType = "heroku";
     break;
-  case "pkd-and-me":
-    profileType = "heroku";
-    break;
   case "pkd-and-me.herokuapp.com":
     profileType = "heroku";
+    break;
+  case "pkd-and-me":
+    // profileType = "heroku";
+    profileType = "pkd-and-me";
+    break;
+  case "pkd-and-me.philipdick.com":
+    profileType = "philipdick";
     break;
   case "philipdick.com":
     profileType = "philipdick";
@@ -114,6 +118,20 @@ switch (profileType) {
     defaultPageComponent = "Home";
     routerBaseName = "/pkd-and-me";
     appOffline = true;
+    electronicOnly = false;
+    physicalOnly = false;
+    appAllowUserInteractions = true;
+    requireUserLogin = true;
+    tagManagerArgs.gtmId = "GTM-NW2GPF2";
+    break;
+  case "pkd-and-me":
+    API_URL = "https://api.philipdick.com";
+    siteName = "Philip K. Dick";
+    appName = "PKD and Me";
+    metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";
+    defaultPageComponent = "Home";
+    routerBaseName = "";
+    appOffline = false;
     electronicOnly = false;
     physicalOnly = false;
     appAllowUserInteractions = true;

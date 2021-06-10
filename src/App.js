@@ -614,7 +614,9 @@ function App() {
 
             </Switch>
 
-            <FromTheHomeopape />
+            {process.env.NODE_ENV === "development" ?
+              <FromTheHomeopape />
+              : null}
 
           </Col>
         </Row>

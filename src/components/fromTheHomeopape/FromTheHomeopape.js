@@ -79,442 +79,442 @@ const FromTheHomeopape = (props) => {
   }, []);
 
 
-  useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect feedItems", feedItems);
-
-    if (IsEmpty(feedItems) === false) {
-
-      let url = baseURL + "fromthehomeopape/";
-
-      for (let i = 0; i < feedItems.length; i++) {
-
-        let recordObject = {
-          feedID: feedItems[i].feedID,
-          feedTitle: feedItems[i].feedTitle,
-          feedLink: feedItems[i].feedLink,
-          feedUpdated: feedItems[i].feedUpdated,
-          feedLastBuildDate: feedItems[i].feedLastBuildDate,
-          feedUrl: feedItems[i].feedUrl,
-          itemID: feedItems[i].itemID,
-          itemTitle: feedItems[i].itemTitle,
-          itemLink: feedItems[i].itemLink,
-          itemPubDate: feedItems[i].itemPubDate,
-          itemUpdated: feedItems[i].itemUpdated,
-          itemContent: feedItems[i].itemContent,
-          itemContentSnippet: feedItems[i].itemContentSnippet,
-          itemISODate: feedItems[i].itemISODate,
-          itemCreator: feedItems[i].itemCreator,
-          itemAuthor: feedItems[i].itemAuthor
-        };
-
-        let headerObject = new Headers({ "Content-Type": "application/json" });
-
-        fetch(url, {
-          method: "POST",
-          headers: headerObject,
-          body: JSON.stringify({ recordObject: recordObject })
-        })
-          .then(response => {
-            // console.log(componentName, GetDateTime(), "fetchNews response", response);
-            // if (!response.ok) {
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-            // } else {
-            // if (response.status === 200) {
-            return response.json();
-            // } else {
-            //     return response.status;
-            // };
-            // };
-          })
-          .then(data => {
-            console.log(componentName, GetDateTime(), "fetchNews data", data);
-
-          })
-          .catch(error => {
-            console.log(componentName, GetDateTime(), "fetchNews error", error);
-            // console.log(componentName, GetDateTime(), "fetchNews error.name", error.name);
-            // console.log(componentName, GetDateTime(), "fetchNews error.message", error.message);
-            // addErrorMessage(error.name + ": " + error.message);
-          });
-
-      };
-
-    };
-
-  }, [feedItems]);
-
-
-  const fetchNews = async () => {
-    // console.log(componentName, GetDateTime(), "fetchNews");
-
-    setMessage("");
-    setErrorMessage("");
-
-    // https://cors-anywhere.herokuapp.com
-    // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
-    // let url = proxyurl;
-    let url;
-
-    // * Google Alert - Philip Dick New
-    url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
-    // url = "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
-    // * Google Alert - Philip Dick
-    // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/2465476321108416249";
-    // * Google Alert - Philip Dick All Except Web
-    // * Doesn't appear to work anymore.
-    // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/11918400074382766835";
-    // * Google Alert - Philip Dick News
-    // * Doesn't appear to work anymore.
-    // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/17162147117770349674";
-
-    let rssParser = new Parser({
-      // * Doesn't prevent the CORS error.
-      // headers: {
-      //   "access-control-allow-origin": "*", "access-control-allow-methods": "GET, POST, PUT, DELETE", "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-      // },
-      customFields: {
-        feed: ["id", "updated", "lastBuildDate"],
-        item: ["updated", "contentSnippet", "isoDate", "author"], // , "author.name", "name"
-      },
-      xml2js: {
-        emptyTag: '--EMPTY--',
-      }
-    });
-
-    const feed = await rssParser.parseURL(url);
-
-    // <feed xmlns="http://www.w3.org/2005/Atom" xmlns:idx="urn:atom-extension:indexing">
-    // <id>tag:google.com,2005:reader/user/17849810695950872924/state/com.google/alerts/15842463258895766468</id>
-    // <title>Google Alert - Philip Dick New</title>
-    // <link href="https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468" rel="self"></link>
-    // <updated>2021-06-04T16:18:45Z</updated>
-    // <entry>
-    // <id>tag:google.com,2013:googlealerts/feed:12501224780620368192</id>
-    // <title type="html">This week in Concord history</title>
-    // <link href="https://www.google.com/url?rct=j&amp;sa=t&amp;url=https://www.theconcordinsider.com/2021/06/04/this-week-in-concord-history-502/&amp;ct=ga&amp;cd=CAIyGjUwMjhiYWRmMWQ5M2MzMGE6Y29tOmVuOlVT&amp;usg=AFQjCNGc3F9NBj810v400CL5oepfu5PTwQ"></link>
-    // <published>2021-06-04T14:26:15Z</published>
-    // <updated>2021-06-04T14:26:15Z</updated>
-    // <content type="html">Samuel Bell, on horseback, from Boscawen to the &lt;b&gt;new&lt;/b&gt; State House. ... fences to escape from the North State Street prison in Concord, &lt;b&gt;Philip Dick&lt;/b&gt;,&amp;nbsp;...</content>
-    // <author>
-    //     <name></name>
-    // </author>;
-    // </entry>
-
-    // Notes from https://github.com/rbren/rss-parser
-    // The contentSnippet field strips out HTML tags and unescapes HTML entities
-    // The dc: prefix will be removed from all fields
-    // Both dc:date and pubDate will be available in ISO 8601 format as isoDate
-    // If author is specified, but not dc:creator, creator will be set to author (see article)
-    // Atom's updated becomes lastBuildDate for consistency
-
-    console.log(componentName, GetDateTime(), "fetchNews feed", feed);
-    console.log(componentName, GetDateTime(), "fetchNews feed.id", feed.id);
-    console.log(componentName, GetDateTime(), "fetchNews feed.title", feed.title);
-    console.log(componentName, GetDateTime(), "fetchNews feed.link", feed.link);
-    console.log(componentName, GetDateTime(), "fetchNews feed.updated", feed.updated);
-    console.log(componentName, GetDateTime(), "fetchNews feed.lastBuildDate", feed.lastBuildDate);
-
-    console.log(componentName, GetDateTime(), "fetchNews feed.feedUrl", feed.feedUrl);
-
-    console.log(componentName, GetDateTime(), "fetchNews feed.items", feed.items);
-
-    let itemsArray = [];
-
-    feed.items.forEach(item => {
-
-      let feedObject = {
-        feedID: feed.id,
-        feedTitle: feed.title,
-        feedLink: feed.link,
-        feedUpdated: feed.updated,
-        feedLastBuildDate: feed.lastBuildDate,
-        feedUrl: feed.feedUrl,
-        itemID: item.id,
-        itemTitle: item.title,
-        itemLink: item.link,
-        itemPubDate: item.pubDate,
-        itemUpdated: item.updated,
-        itemContent: item.content,
-        itemContentSnippet: item.contentSnippet,
-        itemISODate: item.isoDate,
-        itemCreator: item.creator,
-        itemAuthor: item.author
-      };
-
-      itemsArray.push(feedObject);
-
-      console.log(componentName, GetDateTime(), "fetchNews item.id", item.id);
-      console.log(componentName, GetDateTime(), "fetchNews item.title", item.title);
-      console.log(componentName, GetDateTime(), "fetchNews item.link", item.link);
-      console.log(componentName, GetDateTime(), "fetchNews item.pubDate", item.pubDate);
-      console.log(componentName, GetDateTime(), "fetchNews item.updated", item.updated);
-      console.log(componentName, GetDateTime(), "fetchNews item.content", item.content);
-      console.log(componentName, GetDateTime(), "fetchNews item.contentSnippet", item.contentSnippet);
-      console.log(componentName, GetDateTime(), "fetchNews item.isoDate", item.isoDate);
-      console.log(componentName, GetDateTime(), "fetchNews item.creator", item.creator);
-      console.log(componentName, GetDateTime(), "fetchNews item.author", item.author);
-      // console.log(componentName, GetDateTime(), "fetchNews item.author.name", item.author.name);
-      // console.log(componentName, GetDateTime(), "fetchNews item.name", item.name);
-
-      // console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
-
-      //   fetch(url, {
-      //     method: "GET",
-      //     headers: new Headers({
-      //       "Content-Type": "application/json"
-      //     }),
-      //   })
-      //     .then(results => {
-      //       console.log(componentName, GetDateTime(), "fetchNews results", results);
-
-      //       if (!results.ok) {
-      //         // throw Error(results.status + " " + results.statusText + " " + results.url);
-      //       } else {
-      //         // return results.json();
-      //         return rssParser(results);
-      //         // return results.text();
-      //       };
-
-      //     })
-      //     .then(results => {
-      //       console.log(componentName, GetDateTime(), "fetchNews results", results);
-
-
-      //     })
-      //     .catch(error => {
-      //       console.log(componentName, GetDateTime(), "fetchNews error", error);
-      //       setErrorMessage(error.name + ": " + error.message);
-
-      //     });
-
-    });
-
-    console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
-
-    setFeedItems(itemsArray);
-
-  };
-
-
-  useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect feedItems2", feedItems2);
-
-    if (IsEmpty(feedItems2) === false) {
-
-      let url = baseURL + "fromthehomeopape/";
-
-      for (let i = 0; i < feedItems2.length; i++) {
-
-        let recordObject = {
-          feedID: feedItems2[i].feedID,
-          feedTitle: feedItems2[i].feedTitle,
-          feedLink: feedItems2[i].feedLink,
-          feedUpdated: feedItems2[i].feedUpdated,
-          feedLastBuildDate: feedItems2[i].feedLastBuildDate,
-          feedUrl: feedItems2[i].feedUrl,
-          itemID: feedItems2[i].itemID,
-          itemTitle: feedItems2[i].itemTitle,
-          itemLink: feedItems2[i].itemLink,
-          itemPubDate: feedItems2[i].itemPubDate,
-          itemUpdated: feedItems2[i].itemUpdated,
-          itemContent: feedItems2[i].itemContent,
-          itemContentSnippet: feedItems2[i].itemContentSnippet,
-          itemISODate: feedItems2[i].itemISODate,
-          itemCreator: feedItems2[i].itemCreator,
-          itemAuthor: feedItems2[i].itemAuthor
-        };
-
-        let headerObject = new Headers({ "Content-Type": "application/json" });
-
-        fetch(url, {
-          method: "POST",
-          headers: headerObject,
-          body: JSON.stringify({ recordObject: recordObject })
-        })
-          .then(response => {
-            // console.log(componentName, GetDateTime(), "fetchNews response", response);
-            // if (!response.ok) {
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-            // } else {
-            // if (response.status === 200) {
-            return response.json();
-            // } else {
-            //     return response.status;
-            // };
-            // };
-          })
-          .then(data => {
-            console.log(componentName, GetDateTime(), "fetchNews data", data);
-
-          })
-          .catch(error => {
-            console.log(componentName, GetDateTime(), "fetchNews error", error);
-            // console.log(componentName, GetDateTime(), "fetchNews error.name", error.name);
-            // console.log(componentName, GetDateTime(), "fetchNews error.message", error.message);
-            // addErrorMessage(error.name + ": " + error.message);
-          });
-
-      };
-
-    };
-
-  }, [feedItems2]);
-
-
-  const fetchNews2 = async () => {
-    // console.log(componentName, GetDateTime(), "fetchNews");
-
-    setMessage("");
-    setErrorMessage("");
-
-    // https://cors-anywhere.herokuapp.com
-    // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
-    // let url = proxyurl;
-    let url;
-
-    // * Google Alert - Philip Dick New
-    // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
-    // url = "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
-    // * Google Alert - Philip Dick
-    url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/2465476321108416249";
-    // * Google Alert - Philip Dick All Except Web
-    // * Doesn't appear to work anymore.
-    // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/11918400074382766835";
-    // * Google Alert - Philip Dick News
-    // * Doesn't appear to work anymore.
-    // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/17162147117770349674";
-
-    let rssParser = new Parser({
-      // * Doesn't prevent the CORS error.
-      // headers: {
-      //   "access-control-allow-origin": "*", "access-control-allow-methods": "GET, POST, PUT, DELETE", "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-      // },
-      customFields: {
-        feed: ["id", "updated", "lastBuildDate"],
-        item: ["updated", "contentSnippet", "isoDate", "author"], // , "author.name", "name"
-      },
-      xml2js: {
-        emptyTag: '--EMPTY--',
-      }
-    });
-
-    const feed = await rssParser.parseURL(url);
-
-    // <feed xmlns="http://www.w3.org/2005/Atom" xmlns:idx="urn:atom-extension:indexing">
-    // <id>tag:google.com,2005:reader/user/17849810695950872924/state/com.google/alerts/15842463258895766468</id>
-    // <title>Google Alert - Philip Dick New</title>
-    // <link href="https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468" rel="self"></link>
-    // <updated>2021-06-04T16:18:45Z</updated>
-    // <entry>
-    // <id>tag:google.com,2013:googlealerts/feed:12501224780620368192</id>
-    // <title type="html">This week in Concord history</title>
-    // <link href="https://www.google.com/url?rct=j&amp;sa=t&amp;url=https://www.theconcordinsider.com/2021/06/04/this-week-in-concord-history-502/&amp;ct=ga&amp;cd=CAIyGjUwMjhiYWRmMWQ5M2MzMGE6Y29tOmVuOlVT&amp;usg=AFQjCNGc3F9NBj810v400CL5oepfu5PTwQ"></link>
-    // <published>2021-06-04T14:26:15Z</published>
-    // <updated>2021-06-04T14:26:15Z</updated>
-    // <content type="html">Samuel Bell, on horseback, from Boscawen to the &lt;b&gt;new&lt;/b&gt; State House. ... fences to escape from the North State Street prison in Concord, &lt;b&gt;Philip Dick&lt;/b&gt;,&amp;nbsp;...</content>
-    // <author>
-    //     <name></name>
-    // </author>;
-    // </entry>
-
-    // Notes from https://github.com/rbren/rss-parser
-    // The contentSnippet field strips out HTML tags and unescapes HTML entities
-    // The dc: prefix will be removed from all fields
-    // Both dc:date and pubDate will be available in ISO 8601 format as isoDate
-    // If author is specified, but not dc:creator, creator will be set to author (see article)
-    // Atom's updated becomes lastBuildDate for consistency
-
-    console.log(componentName, GetDateTime(), "fetchNews feed", feed);
-    console.log(componentName, GetDateTime(), "fetchNews feed.id", feed.id);
-    console.log(componentName, GetDateTime(), "fetchNews feed.title", feed.title);
-    console.log(componentName, GetDateTime(), "fetchNews feed.link", feed.link);
-    console.log(componentName, GetDateTime(), "fetchNews feed.updated", feed.updated);
-    console.log(componentName, GetDateTime(), "fetchNews feed.lastBuildDate", feed.lastBuildDate);
-
-    console.log(componentName, GetDateTime(), "fetchNews feed.feedUrl", feed.feedUrl);
-
-    console.log(componentName, GetDateTime(), "fetchNews feed.items", feed.items);
-
-    let itemsArray = [];
-
-    feed.items.forEach(item => {
-
-      let feedObject = {
-        feedID: feed.id,
-        feedTitle: feed.title,
-        feedLink: feed.link,
-        feedUpdated: feed.updated,
-        feedLastBuildDate: feed.lastBuildDate,
-        feedUrl: feed.feedUrl,
-        itemID: item.id,
-        itemTitle: item.title,
-        itemLink: item.link,
-        itemPubDate: item.pubDate,
-        itemUpdated: item.updated,
-        itemContent: item.content,
-        itemContentSnippet: item.contentSnippet,
-        itemISODate: item.isoDate,
-        itemCreator: item.creator,
-        itemAuthor: item.author
-      };
-
-      itemsArray.push(feedObject);
-
-      console.log(componentName, GetDateTime(), "fetchNews item.id", item.id);
-      console.log(componentName, GetDateTime(), "fetchNews item.title", item.title);
-      console.log(componentName, GetDateTime(), "fetchNews item.link", item.link);
-      console.log(componentName, GetDateTime(), "fetchNews item.pubDate", item.pubDate);
-      console.log(componentName, GetDateTime(), "fetchNews item.updated", item.updated);
-      console.log(componentName, GetDateTime(), "fetchNews item.content", item.content);
-      console.log(componentName, GetDateTime(), "fetchNews item.contentSnippet", item.contentSnippet);
-      console.log(componentName, GetDateTime(), "fetchNews item.isoDate", item.isoDate);
-      console.log(componentName, GetDateTime(), "fetchNews item.creator", item.creator);
-      console.log(componentName, GetDateTime(), "fetchNews item.author", item.author);
-      // console.log(componentName, GetDateTime(), "fetchNews item.author.name", item.author.name);
-      // console.log(componentName, GetDateTime(), "fetchNews item.name", item.name);
-
-      // console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
-
-      //   fetch(url, {
-      //     method: "GET",
-      //     headers: new Headers({
-      //       "Content-Type": "application/json"
-      //     }),
-      //   })
-      //     .then(results => {
-      //       console.log(componentName, GetDateTime(), "fetchNews results", results);
-
-      //       if (!results.ok) {
-      //         // throw Error(results.status + " " + results.statusText + " " + results.url);
-      //       } else {
-      //         // return results.json();
-      //         return rssParser(results);
-      //         // return results.text();
-      //       };
-
-      //     })
-      //     .then(results => {
-      //       console.log(componentName, GetDateTime(), "fetchNews results", results);
-
-
-      //     })
-      //     .catch(error => {
-      //       console.log(componentName, GetDateTime(), "fetchNews error", error);
-      //       setErrorMessage(error.name + ": " + error.message);
-
-      //     });
-
-    });
-
-    console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
-
-    setFeedItems2(itemsArray);
-
-  };
+  // useEffect(() => {
+  //   // console.log(componentName, GetDateTime(), "useEffect feedItems", feedItems);
+
+  //   if (IsEmpty(feedItems) === false) {
+
+  //     let url = baseURL + "fromthehomeopape/";
+
+  //     for (let i = 0; i < feedItems.length; i++) {
+
+  //       let recordObject = {
+  //         feedID: feedItems[i].feedID,
+  //         feedTitle: feedItems[i].feedTitle,
+  //         feedLink: feedItems[i].feedLink,
+  //         feedUpdated: feedItems[i].feedUpdated,
+  //         feedLastBuildDate: feedItems[i].feedLastBuildDate,
+  //         feedUrl: feedItems[i].feedUrl,
+  //         itemID: feedItems[i].itemID,
+  //         itemTitle: feedItems[i].itemTitle,
+  //         itemLink: feedItems[i].itemLink,
+  //         itemPubDate: feedItems[i].itemPubDate,
+  //         itemUpdated: feedItems[i].itemUpdated,
+  //         itemContent: feedItems[i].itemContent,
+  //         itemContentSnippet: feedItems[i].itemContentSnippet,
+  //         itemISODate: feedItems[i].itemISODate,
+  //         itemCreator: feedItems[i].itemCreator,
+  //         itemAuthor: feedItems[i].itemAuthor
+  //       };
+
+  //       let headerObject = new Headers({ "Content-Type": "application/json" });
+
+  //       fetch(url, {
+  //         method: "POST",
+  //         headers: headerObject,
+  //         body: JSON.stringify({ recordObject: recordObject })
+  //       })
+  //         .then(response => {
+  //           // console.log(componentName, GetDateTime(), "fetchNews response", response);
+  //           // if (!response.ok) {
+  //           //     throw Error(response.status + " " + response.statusText + " " + response.url);
+  //           // } else {
+  //           // if (response.status === 200) {
+  //           return response.json();
+  //           // } else {
+  //           //     return response.status;
+  //           // };
+  //           // };
+  //         })
+  //         .then(data => {
+  //           console.log(componentName, GetDateTime(), "fetchNews data", data);
+
+  //         })
+  //         .catch(error => {
+  //           console.log(componentName, GetDateTime(), "fetchNews error", error);
+  //           // console.log(componentName, GetDateTime(), "fetchNews error.name", error.name);
+  //           // console.log(componentName, GetDateTime(), "fetchNews error.message", error.message);
+  //           // addErrorMessage(error.name + ": " + error.message);
+  //         });
+
+  //     };
+
+  //   };
+
+  // }, [feedItems]);
+
+
+  // const fetchNews = async () => {
+  //   // console.log(componentName, GetDateTime(), "fetchNews");
+
+  //   setMessage("");
+  //   setErrorMessage("");
+
+  //   // https://cors-anywhere.herokuapp.com
+  //   // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+  //   const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+  //   // let url = proxyurl;
+  //   let url;
+
+  //   // * Google Alert - Philip Dick New
+  //   url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
+  //   // url = "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
+  //   // * Google Alert - Philip Dick
+  //   // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/2465476321108416249";
+  //   // * Google Alert - Philip Dick All Except Web
+  //   // * Doesn't appear to work anymore.
+  //   // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/11918400074382766835";
+  //   // * Google Alert - Philip Dick News
+  //   // * Doesn't appear to work anymore.
+  //   // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/17162147117770349674";
+
+  //   let rssParser = new Parser({
+  //     // * Doesn't prevent the CORS error.
+  //     // headers: {
+  //     //   "access-control-allow-origin": "*", "access-control-allow-methods": "GET, POST, PUT, DELETE", "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  //     // },
+  //     customFields: {
+  //       feed: ["id", "updated", "lastBuildDate"],
+  //       item: ["updated", "contentSnippet", "isoDate", "author"], // , "author.name", "name"
+  //     },
+  //     xml2js: {
+  //       emptyTag: '--EMPTY--',
+  //     }
+  //   });
+
+  //   const feed = await rssParser.parseURL(url);
+
+  //   // <feed xmlns="http://www.w3.org/2005/Atom" xmlns:idx="urn:atom-extension:indexing">
+  //   // <id>tag:google.com,2005:reader/user/17849810695950872924/state/com.google/alerts/15842463258895766468</id>
+  //   // <title>Google Alert - Philip Dick New</title>
+  //   // <link href="https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468" rel="self"></link>
+  //   // <updated>2021-06-04T16:18:45Z</updated>
+  //   // <entry>
+  //   // <id>tag:google.com,2013:googlealerts/feed:12501224780620368192</id>
+  //   // <title type="html">This week in Concord history</title>
+  //   // <link href="https://www.google.com/url?rct=j&amp;sa=t&amp;url=https://www.theconcordinsider.com/2021/06/04/this-week-in-concord-history-502/&amp;ct=ga&amp;cd=CAIyGjUwMjhiYWRmMWQ5M2MzMGE6Y29tOmVuOlVT&amp;usg=AFQjCNGc3F9NBj810v400CL5oepfu5PTwQ"></link>
+  //   // <published>2021-06-04T14:26:15Z</published>
+  //   // <updated>2021-06-04T14:26:15Z</updated>
+  //   // <content type="html">Samuel Bell, on horseback, from Boscawen to the &lt;b&gt;new&lt;/b&gt; State House. ... fences to escape from the North State Street prison in Concord, &lt;b&gt;Philip Dick&lt;/b&gt;,&amp;nbsp;...</content>
+  //   // <author>
+  //   //     <name></name>
+  //   // </author>;
+  //   // </entry>
+
+  //   // Notes from https://github.com/rbren/rss-parser
+  //   // The contentSnippet field strips out HTML tags and unescapes HTML entities
+  //   // The dc: prefix will be removed from all fields
+  //   // Both dc:date and pubDate will be available in ISO 8601 format as isoDate
+  //   // If author is specified, but not dc:creator, creator will be set to author (see article)
+  //   // Atom's updated becomes lastBuildDate for consistency
+
+  //   console.log(componentName, GetDateTime(), "fetchNews feed", feed);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.id", feed.id);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.title", feed.title);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.link", feed.link);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.updated", feed.updated);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.lastBuildDate", feed.lastBuildDate);
+
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.feedUrl", feed.feedUrl);
+
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.items", feed.items);
+
+  //   let itemsArray = [];
+
+  //   feed.items.forEach(item => {
+
+  //     let feedObject = {
+  //       feedID: feed.id,
+  //       feedTitle: feed.title,
+  //       feedLink: feed.link,
+  //       feedUpdated: feed.updated,
+  //       feedLastBuildDate: feed.lastBuildDate,
+  //       feedUrl: feed.feedUrl,
+  //       itemID: item.id,
+  //       itemTitle: item.title,
+  //       itemLink: item.link,
+  //       itemPubDate: item.pubDate,
+  //       itemUpdated: item.updated,
+  //       itemContent: item.content,
+  //       itemContentSnippet: item.contentSnippet,
+  //       itemISODate: item.isoDate,
+  //       itemCreator: item.creator,
+  //       itemAuthor: item.author
+  //     };
+
+  //     itemsArray.push(feedObject);
+
+  //     console.log(componentName, GetDateTime(), "fetchNews item.id", item.id);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.title", item.title);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.link", item.link);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.pubDate", item.pubDate);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.updated", item.updated);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.content", item.content);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.contentSnippet", item.contentSnippet);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.isoDate", item.isoDate);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.creator", item.creator);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.author", item.author);
+  //     // console.log(componentName, GetDateTime(), "fetchNews item.author.name", item.author.name);
+  //     // console.log(componentName, GetDateTime(), "fetchNews item.name", item.name);
+
+  //     // console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
+
+  //     //   fetch(url, {
+  //     //     method: "GET",
+  //     //     headers: new Headers({
+  //     //       "Content-Type": "application/json"
+  //     //     }),
+  //     //   })
+  //     //     .then(results => {
+  //     //       console.log(componentName, GetDateTime(), "fetchNews results", results);
+
+  //     //       if (!results.ok) {
+  //     //         // throw Error(results.status + " " + results.statusText + " " + results.url);
+  //     //       } else {
+  //     //         // return results.json();
+  //     //         return rssParser(results);
+  //     //         // return results.text();
+  //     //       };
+
+  //     //     })
+  //     //     .then(results => {
+  //     //       console.log(componentName, GetDateTime(), "fetchNews results", results);
+
+
+  //     //     })
+  //     //     .catch(error => {
+  //     //       console.log(componentName, GetDateTime(), "fetchNews error", error);
+  //     //       setErrorMessage(error.name + ": " + error.message);
+
+  //     //     });
+
+  //   });
+
+  //   console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
+
+  //   setFeedItems(itemsArray);
+
+  // };
+
+
+  // useEffect(() => {
+  //   // console.log(componentName, GetDateTime(), "useEffect feedItems2", feedItems2);
+
+  //   if (IsEmpty(feedItems2) === false) {
+
+  //     let url = baseURL + "fromthehomeopape/";
+
+  //     for (let i = 0; i < feedItems2.length; i++) {
+
+  //       let recordObject = {
+  //         feedID: feedItems2[i].feedID,
+  //         feedTitle: feedItems2[i].feedTitle,
+  //         feedLink: feedItems2[i].feedLink,
+  //         feedUpdated: feedItems2[i].feedUpdated,
+  //         feedLastBuildDate: feedItems2[i].feedLastBuildDate,
+  //         feedUrl: feedItems2[i].feedUrl,
+  //         itemID: feedItems2[i].itemID,
+  //         itemTitle: feedItems2[i].itemTitle,
+  //         itemLink: feedItems2[i].itemLink,
+  //         itemPubDate: feedItems2[i].itemPubDate,
+  //         itemUpdated: feedItems2[i].itemUpdated,
+  //         itemContent: feedItems2[i].itemContent,
+  //         itemContentSnippet: feedItems2[i].itemContentSnippet,
+  //         itemISODate: feedItems2[i].itemISODate,
+  //         itemCreator: feedItems2[i].itemCreator,
+  //         itemAuthor: feedItems2[i].itemAuthor
+  //       };
+
+  //       let headerObject = new Headers({ "Content-Type": "application/json" });
+
+  //       fetch(url, {
+  //         method: "POST",
+  //         headers: headerObject,
+  //         body: JSON.stringify({ recordObject: recordObject })
+  //       })
+  //         .then(response => {
+  //           // console.log(componentName, GetDateTime(), "fetchNews response", response);
+  //           // if (!response.ok) {
+  //           //     throw Error(response.status + " " + response.statusText + " " + response.url);
+  //           // } else {
+  //           // if (response.status === 200) {
+  //           return response.json();
+  //           // } else {
+  //           //     return response.status;
+  //           // };
+  //           // };
+  //         })
+  //         .then(data => {
+  //           console.log(componentName, GetDateTime(), "fetchNews data", data);
+
+  //         })
+  //         .catch(error => {
+  //           console.log(componentName, GetDateTime(), "fetchNews error", error);
+  //           // console.log(componentName, GetDateTime(), "fetchNews error.name", error.name);
+  //           // console.log(componentName, GetDateTime(), "fetchNews error.message", error.message);
+  //           // addErrorMessage(error.name + ": " + error.message);
+  //         });
+
+  //     };
+
+  //   };
+
+  // }, [feedItems2]);
+
+
+  // const fetchNews2 = async () => {
+  //   // console.log(componentName, GetDateTime(), "fetchNews");
+
+  //   setMessage("");
+  //   setErrorMessage("");
+
+  //   // https://cors-anywhere.herokuapp.com
+  //   // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+  //   const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+  //   // let url = proxyurl;
+  //   let url;
+
+  //   // * Google Alert - Philip Dick New
+  //   // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
+  //   // url = "https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468";
+  //   // * Google Alert - Philip Dick
+  //   url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/2465476321108416249";
+  //   // * Google Alert - Philip Dick All Except Web
+  //   // // * Doesn't appear to work anymore.
+  //   // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/11918400074382766835";
+  //   // * Google Alert - Philip Dick News
+  //   // // * Doesn't appear to work anymore.
+  //   // url = proxyurl + "https://www.google.com/alerts/feeds/17849810695950872924/17162147117770349674";
+
+  //   let rssParser = new Parser({
+  //     // * Doesn't prevent the CORS error.
+  //     // headers: {
+  //     //   "access-control-allow-origin": "*", "access-control-allow-methods": "GET, POST, PUT, DELETE", "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  //     // },
+  //     customFields: {
+  //       feed: ["id", "updated", "lastBuildDate"],
+  //       item: ["updated", "contentSnippet", "isoDate", "author"], // , "author.name", "name"
+  //     },
+  //     xml2js: {
+  //       emptyTag: '--EMPTY--',
+  //     }
+  //   });
+
+  //   const feed = await rssParser.parseURL(url);
+
+  //   // <feed xmlns="http://www.w3.org/2005/Atom" xmlns:idx="urn:atom-extension:indexing">
+  //   // <id>tag:google.com,2005:reader/user/17849810695950872924/state/com.google/alerts/15842463258895766468</id>
+  //   // <title>Google Alert - Philip Dick New</title>
+  //   // <link href="https://www.google.com/alerts/feeds/17849810695950872924/15842463258895766468" rel="self"></link>
+  //   // <updated>2021-06-04T16:18:45Z</updated>
+  //   // <entry>
+  //   // <id>tag:google.com,2013:googlealerts/feed:12501224780620368192</id>
+  //   // <title type="html">This week in Concord history</title>
+  //   // <link href="https://www.google.com/url?rct=j&amp;sa=t&amp;url=https://www.theconcordinsider.com/2021/06/04/this-week-in-concord-history-502/&amp;ct=ga&amp;cd=CAIyGjUwMjhiYWRmMWQ5M2MzMGE6Y29tOmVuOlVT&amp;usg=AFQjCNGc3F9NBj810v400CL5oepfu5PTwQ"></link>
+  //   // <published>2021-06-04T14:26:15Z</published>
+  //   // <updated>2021-06-04T14:26:15Z</updated>
+  //   // <content type="html">Samuel Bell, on horseback, from Boscawen to the &lt;b&gt;new&lt;/b&gt; State House. ... fences to escape from the North State Street prison in Concord, &lt;b&gt;Philip Dick&lt;/b&gt;,&amp;nbsp;...</content>
+  //   // <author>
+  //   //     <name></name>
+  //   // </author>;
+  //   // </entry>
+
+  //   // Notes from https://github.com/rbren/rss-parser
+  //   // The contentSnippet field strips out HTML tags and unescapes HTML entities
+  //   // The dc: prefix will be removed from all fields
+  //   // Both dc:date and pubDate will be available in ISO 8601 format as isoDate
+  //   // If author is specified, but not dc:creator, creator will be set to author (see article)
+  //   // Atom's updated becomes lastBuildDate for consistency
+
+  //   console.log(componentName, GetDateTime(), "fetchNews feed", feed);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.id", feed.id);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.title", feed.title);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.link", feed.link);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.updated", feed.updated);
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.lastBuildDate", feed.lastBuildDate);
+
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.feedUrl", feed.feedUrl);
+
+  //   console.log(componentName, GetDateTime(), "fetchNews feed.items", feed.items);
+
+  //   let itemsArray = [];
+
+  //   feed.items.forEach(item => {
+
+  //     let feedObject = {
+  //       feedID: feed.id,
+  //       feedTitle: feed.title,
+  //       feedLink: feed.link,
+  //       feedUpdated: feed.updated,
+  //       feedLastBuildDate: feed.lastBuildDate,
+  //       feedUrl: feed.feedUrl,
+  //       itemID: item.id,
+  //       itemTitle: item.title,
+  //       itemLink: item.link,
+  //       itemPubDate: item.pubDate,
+  //       itemUpdated: item.updated,
+  //       itemContent: item.content,
+  //       itemContentSnippet: item.contentSnippet,
+  //       itemISODate: item.isoDate,
+  //       itemCreator: item.creator,
+  //       itemAuthor: item.author
+  //     };
+
+  //     itemsArray.push(feedObject);
+
+  //     console.log(componentName, GetDateTime(), "fetchNews item.id", item.id);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.title", item.title);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.link", item.link);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.pubDate", item.pubDate);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.updated", item.updated);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.content", item.content);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.contentSnippet", item.contentSnippet);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.isoDate", item.isoDate);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.creator", item.creator);
+  //     console.log(componentName, GetDateTime(), "fetchNews item.author", item.author);
+  //     // console.log(componentName, GetDateTime(), "fetchNews item.author.name", item.author.name);
+  //     // console.log(componentName, GetDateTime(), "fetchNews item.name", item.name);
+
+  //     // console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
+
+  //     //   fetch(url, {
+  //     //     method: "GET",
+  //     //     headers: new Headers({
+  //     //       "Content-Type": "application/json"
+  //     //     }),
+  //     //   })
+  //     //     .then(results => {
+  //     //       console.log(componentName, GetDateTime(), "fetchNews results", results);
+
+  //     //       if (!results.ok) {
+  //     //         // throw Error(results.status + " " + results.statusText + " " + results.url);
+  //     //       } else {
+  //     //         // return results.json();
+  //     //         return rssParser(results);
+  //     //         // return results.text();
+  //     //       };
+
+  //     //     })
+  //     //     .then(results => {
+  //     //       console.log(componentName, GetDateTime(), "fetchNews results", results);
+
+
+  //     //     })
+  //     //     .catch(error => {
+  //     //       console.log(componentName, GetDateTime(), "fetchNews error", error);
+  //     //       setErrorMessage(error.name + ": " + error.message);
+
+  //     //     });
+
+  //   });
+
+  //   console.log(componentName, GetDateTime(), "fetchNews itemsArray", itemsArray);
+
+  //   setFeedItems2(itemsArray);
+
+  // };
 
 
   // DROP TABLE IF EXISTS`homeopapeRSSImport`;
@@ -575,17 +575,35 @@ const FromTheHomeopape = (props) => {
 
         let display = true;
 
-        if (homeopapeItem.itemLink.includes("ebay")) {
+        // if (homeopapeItem.itemLink.includes("ebay.com")) {
+        if (homeopapeItem.itemLink.includes(".ebay.")) {
           display = false;
         };
 
-        if (homeopapeItem.itemLink.includes("reddit")) {
+        if (homeopapeItem.itemLink.includes("reddit.")) {
           display = false;
         };
 
-        if (homeopapeItem.itemLink.includes("pinterest")) {
+        if (homeopapeItem.itemLink.includes("pinterest.")) {
           display = false;
         };
+
+        if (homeopapeItem.itemLink.includes("twitter.")) {
+          display = false;
+        };
+
+        if (homeopapeItem.itemLink.includes("sites.google.")) {
+          display = false;
+        };
+
+        if (homeopapeItem.itemLink.includes("books.google.")) {
+          display = false;
+        };
+
+        if (homeopapeItem.itemLink.includes("elasticsearch.columbian.com")) {
+          display = false;
+        };
+
 
         let itemLink;
         let param = "";
