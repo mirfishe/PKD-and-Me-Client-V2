@@ -36,7 +36,7 @@ const EditEdition = (props) => {
   const mediaListState = useSelector(state => state.media.arrayMedia);
   // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
-  const mediaList = mediaListState.filter(media => media.active === true);
+  const mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
   // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -54,6 +54,7 @@ const EditEdition = (props) => {
   //     setMediaResultsFound(true);
   // };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect mediaList", mediaList);
 
@@ -68,6 +69,7 @@ const EditEdition = (props) => {
     };
 
   }, [mediaList]);
+
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
   // console.log(componentName, GetDateTime(), "titleListState", titleListState);
@@ -122,6 +124,7 @@ const EditEdition = (props) => {
   const editionListState = useSelector(state => state.editions.arrayEditions);
   // console.log(componentName, GetDateTime(), "editionListState", editionListState);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect editionListState", editionListState);
 
@@ -173,6 +176,7 @@ const EditEdition = (props) => {
     };
 
   }, [props.editionID, editionListState]);
+
 
   const updateEdition = (deleteEdition) => {
     // console.log(componentName, GetDateTime(), "updateEdition");
@@ -408,6 +412,7 @@ const EditEdition = (props) => {
 
   };
 
+
   const deleteEdition = () => {
     // console.log(componentName, GetDateTime(), "deleteEdition");
     // console.log(componentName, GetDateTime(), "deleteEdition baseURL", baseURL);
@@ -476,6 +481,7 @@ const EditEdition = (props) => {
 
   };
 
+
   const checkASIN = (ASIN) => {
     // console.log(componentName, GetDateTime(), "checkASIN");
     // console.log(componentName, GetDateTime(), "checkASIN baseURL", baseURL);
@@ -529,6 +535,7 @@ const EditEdition = (props) => {
 
   };
 
+
   const copyTitlePublicationDate = () => {
     // console.log(componentName, GetDateTime(), "copyTitlePublicationDate props.titlePublicationDate", props.titlePublicationDate);
 
@@ -539,6 +546,7 @@ const EditEdition = (props) => {
     };
 
   };
+
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect editionRecordUpdated", editionRecordUpdated);
@@ -561,6 +569,7 @@ const EditEdition = (props) => {
 
   }, [editionRecordUpdated, editionRecordDeleted]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -571,9 +580,11 @@ const EditEdition = (props) => {
 
   }, [admin]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>
@@ -672,10 +683,10 @@ const EditEdition = (props) => {
 
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(false); }}>Update Edition</Button>
-              {IsEmpty(active) === true && active === false ?
+              {IsEmpty(active) === true && (active === false || active === 0) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(false); }}>Undelete/Restore Edition</Button>
                 : null}
-              {IsEmpty(active) === true && active === true ?
+              {IsEmpty(active) === true && (active === true || active === 1) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateEdition(true); }}>Delete Edition</Button>
                 : null}
               <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteEdition(); }}>Hard Delete Edition</Button>

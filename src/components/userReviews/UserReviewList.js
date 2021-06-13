@@ -23,6 +23,7 @@ function UserReviewList() {
   const [userReviewResultsFound, setUserReviewResultsFound] = useState(null);
   const [userReviewList, setUserReviewList] = useState([]);
 
+
   const getUserReviews = () => {
     // console.log(componentName, GetDateTime(), "getUserReviews");
     // console.log(componentName, GetDateTime(), "getUserReviews baseURL", baseURL);
@@ -63,9 +64,11 @@ function UserReviewList() {
 
   };
 
+
   useEffect(() => {
     getUserReviews();
   }, []);
+
 
   return (
     <Container className="mt-4">

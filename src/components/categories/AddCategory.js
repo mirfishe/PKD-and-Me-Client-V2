@@ -49,6 +49,7 @@ const AddCategory = (props) => {
   const [sortID, setSortID] = useState(null);
   const [active, setActive] = useState(null);
 
+
   const addCategory = () => {
     // console.log(componentName, GetDateTime(), "addCategory");
     // console.log(componentName, GetDateTime(), "addCategory baseURL", baseURL);
@@ -180,6 +181,7 @@ const AddCategory = (props) => {
 
   }, [categoryRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -190,9 +192,11 @@ const AddCategory = (props) => {
 
   }, [admin]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

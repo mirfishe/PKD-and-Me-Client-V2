@@ -55,6 +55,7 @@ function LoadBibliographyData() {
   const [overallTitleRatingMessage, setOverallTitleRatingMessage] = useState("");
   const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
 
+
   const addRatings = (titleData, userReviewsRatingsData) => {
     // console.log(componentName, GetDateTime(), "addRatings");
     // console.log(componentName, GetDateTime(), "addRatings baseURL", baseURL);
@@ -119,6 +120,7 @@ function LoadBibliographyData() {
 
   };
 
+
   const getUserReviewsRatings = (titleData) => {
     // console.log(componentName, GetDateTime(), "getUserReviewsRatings");
     // console.log(componentName, GetDateTime(), "getUserReviewsRatings baseURL", baseURL);
@@ -173,6 +175,7 @@ function LoadBibliographyData() {
 
   };
 
+
   const fetchLocalDataUserReviewsRatings = (titleData) => {
     // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings");
 
@@ -224,6 +227,7 @@ function LoadBibliographyData() {
 
   };
 
+
   const loadDataStore = (data, source) => {
 
     if (source === "categories") {
@@ -254,6 +258,7 @@ function LoadBibliographyData() {
 
   };
 
+
   const loadURLs = (data, source) => {
 
     let arrayURLs = [];
@@ -275,6 +280,7 @@ function LoadBibliographyData() {
     dispatch(loadArrayURLs(arrayURLs));
 
   };
+
 
   const getCategories = () => {
     // console.log(componentName, GetDateTime(), "getCategories");
@@ -322,6 +328,7 @@ function LoadBibliographyData() {
       });
 
   };
+
 
   const getMedia = () => {
     // console.log(componentName, GetDateTime(), "getMedia");
@@ -371,6 +378,7 @@ function LoadBibliographyData() {
 
   };
 
+
   const getTitles = () => {
     // console.log(componentName, GetDateTime(), "getTitle");
     // console.log(componentName, GetDateTime(), "getTitle baseURL", baseURL);
@@ -418,6 +426,7 @@ function LoadBibliographyData() {
       });
 
   };
+
 
   const getEditions = () => {
     // console.log(componentName, GetDateTime(), "getEdition");
@@ -467,6 +476,7 @@ function LoadBibliographyData() {
 
   };
 
+
   const fetchLocalDataCategories = () => {
     // console.log(componentName, GetDateTime(), "fetchLocalDataCategories");
 
@@ -511,6 +521,7 @@ function LoadBibliographyData() {
       });
 
   };
+
 
   const fetchLocalDataMedia = () => {
     // console.log(componentName, GetDateTime(), "fetchLocalDataMedia");
@@ -557,6 +568,7 @@ function LoadBibliographyData() {
 
   };
 
+
   const fetchLocalDataTitles = () => {
     // console.log(componentName, GetDateTime(), "fetchLocalDataTitles");
 
@@ -601,6 +613,7 @@ function LoadBibliographyData() {
       });
 
   };
+
 
   const fetchLocalDataEditions = () => {
     // console.log(componentName, GetDateTime(), "fetchLocalDataEditions");

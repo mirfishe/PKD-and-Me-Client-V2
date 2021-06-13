@@ -36,7 +36,7 @@ const EditTitle = (props) => {
   const categoryListState = useSelector(state => state.categories.arrayCategories);
   // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
 
-  const categoryList = categoryListState.filter(category => category.active === true);
+  const categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
   // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -54,6 +54,7 @@ const EditTitle = (props) => {
   //     setCategoryResultsFound(true);
   // };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect categoryList", categoryList);
 
@@ -68,6 +69,7 @@ const EditTitle = (props) => {
     };
 
   }, [categoryList]);
+
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -125,6 +127,7 @@ const EditTitle = (props) => {
   const linkItem = useSelector(state => state.urls.linkItem);
   // console.log(componentName, GetDateTime(), "linkItem", linkItem);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleListState", titleListState);
 
@@ -178,6 +181,7 @@ const EditTitle = (props) => {
     };
 
   }, [props.titleID, titleListState]);
+
 
   const updateTitle = (deleteTitle) => {
     // console.log(componentName, GetDateTime(), "updateTitle");
@@ -446,6 +450,7 @@ const EditTitle = (props) => {
 
   };
 
+
   const deleteTitle = () => {
     // console.log(componentName, GetDateTime(), "deleteTitle");
     // console.log(componentName, GetDateTime(), "deleteTitle baseURL", baseURL);
@@ -533,6 +538,7 @@ const EditTitle = (props) => {
 
   };
 
+
   const deleteEdition = (editionID, editionItemIndex) => {
     // console.log(componentName, GetDateTime(), "deleteEdition");
     // console.log(componentName, GetDateTime(), "deleteEdition baseURL", baseURL);
@@ -600,6 +606,7 @@ const EditTitle = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleRecordUpdated", titleRecordUpdated);
     // console.log(componentName, GetDateTime(), "useEffect titleRecordDeleted", titleRecordDeleted);
@@ -623,11 +630,13 @@ const EditTitle = (props) => {
 
   }, [titleRecordUpdated, titleRecordDeleted]);
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
@@ -639,9 +648,11 @@ const EditTitle = (props) => {
 
   }, [admin]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>
@@ -739,10 +750,10 @@ const EditTitle = (props) => {
             <ModalFooter>
 
               <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(false); }}>Update Title</Button>
-              {IsEmpty(active) === true && active === false ?
+              {IsEmpty(active) === true && (active === false || active === 0) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(false); }}>Undelete/Restore Title</Button>
                 : null}
-              {IsEmpty(active) === true && active === true ?
+              {IsEmpty(active) === true && (active === true || active === 1) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateTitle(true); }}>Delete Title</Button>
                 : null}
               <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(event.target.value);*/ deleteTitle(); }}>Hard Delete Title</Button>

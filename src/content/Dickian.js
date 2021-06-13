@@ -16,11 +16,13 @@ const Dickian = () => {
   const appName = useSelector(state => state.app.appName);
   document.title = "Home | " + appName + " | " + siteName;
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "edirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   return (
     <Container className="mt-4">
@@ -35,7 +37,7 @@ const Dickian = () => {
 
           Definition.
 
-            </Col>
+        </Col>
         <Col xs="3">
           <img src={setLocalImagePath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg")} alt="Philip K. Dick" />
         </Col>

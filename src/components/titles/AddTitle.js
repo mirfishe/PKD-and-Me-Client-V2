@@ -33,7 +33,7 @@ const AddTitle = (props) => {
   const categoryListState = useSelector(state => state.categories.arrayCategories);
   // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
 
-  const categoryList = categoryListState.filter(category => category.active === true);
+  const categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
   // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -51,6 +51,7 @@ const AddTitle = (props) => {
   //     setCategoryResultsFound(true);
   // };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect categoryList", categoryList);
 
@@ -67,6 +68,7 @@ const AddTitle = (props) => {
     // setDdCategoryID(getCategoryIDFromCategoryName(props.categoryName));
 
   }, [categoryList]);
+
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -107,6 +109,7 @@ const AddTitle = (props) => {
   const [shortDescription, setShortDescription] = useState(null);
   const [urlPKDweb, setUrlPKDweb] = useState(null);
   const [active, setActive] = useState(null);
+
 
   const addTitle = () => {
     // console.log(componentName, GetDateTime(), "addTitle");
@@ -325,6 +328,7 @@ const AddTitle = (props) => {
     };
   };
 
+
   // ! This code is causing React to have too many re-renders in this location
   const getCategoryIDFromCategoryName = (categoryName) => {
     // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryName", categoryName);
@@ -355,6 +359,7 @@ const AddTitle = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleRecordAdded", titleRecordAdded);
     if (IsEmpty(titleRecordAdded) === false && titleRecordAdded === true) {
@@ -368,6 +373,7 @@ const AddTitle = (props) => {
 
   }, [titleRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -378,9 +384,11 @@ const AddTitle = (props) => {
 
   }, [admin]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

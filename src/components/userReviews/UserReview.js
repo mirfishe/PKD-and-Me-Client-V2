@@ -61,6 +61,7 @@ const UserReview = (props) => {
   // console.log(componentName, GetDateTime(), "typeof userReviewItem[0].dateRead", typeof userReviewItem[0].dateRead);
   // console.log(componentName, GetDateTime(), "userReviewItem[0].dateRead", userReviewItem[0].dateRead);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviews", userReviews);
     if (userReviews.length > 0) {
@@ -87,6 +88,7 @@ const UserReview = (props) => {
     };
   }, [userReviews]);
 
+
   return (
     <Container className="my-4">
       {/* // * This is not filtering correctly if there are reviews with no text or ratings in them; only read and dateRead reviews
@@ -94,7 +96,7 @@ const UserReview = (props) => {
       <Row>
         <Col xs="12">
           <h5 className="text-center">User Reviews
-                {IsEmpty(sessionToken) === false && (IsEmpty(userReviewItem) === true) ? <AddUserReview titleID={props.titleID} displayButton={true} /> : null}
+            {IsEmpty(sessionToken) === false && (IsEmpty(userReviewItem) === true) ? <AddUserReview titleID={props.titleID} displayButton={true} /> : null}
           </h5>
         </Col>
       </Row>
@@ -126,7 +128,7 @@ const UserReview = (props) => {
                     <Row className="cardHeader inactiveItem">
                       <Col xs="12">
                         ({activeString})
-                    </Col>
+                      </Col>
                     </Row>
                     : null}
                   <Row>

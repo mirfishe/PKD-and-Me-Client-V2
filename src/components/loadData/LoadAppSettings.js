@@ -12,6 +12,7 @@ function LoadAppSettings() {
 
   const appSettingsLoaded = useSelector(state => state.app.appSettingsLoaded);
 
+
   // * Loads the settings from environment.js first and then if there are any settings in the AppSettings.json file on the server, those override what was set in environment.js
   const getAppSettings = () => {
     // console.log(componentName, GetDateTime(), "getAppSettings");

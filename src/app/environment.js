@@ -46,21 +46,21 @@ switch (window.location.hostname) {
   case "localhost" || "127.0.0.1":
     profileType = "localhost";
     break;
-  case "pkd-and-me-server":
-    profileType = "heroku";
-    break;
-  case "pkd-and-me-client":
-    profileType = "heroku";
-    break;
-  case "pkd-and-me.herokuapp.com":
-    profileType = "heroku";
-    break;
+  // case "pkd-and-me-server":
+  //   profileType = "heroku";
+  //   break;
+  // case "pkd-and-me-client":
+  //   profileType = "heroku";
+  //   break;
+  // case "pkd-and-me.herokuapp.com":
+  //   profileType = "heroku";
+  //   break;
   case "pkd-and-me":
     // profileType = "heroku";
     profileType = "pkd-and-me";
     break;
   case "pkd-and-me.philipdick.com":
-    profileType = "philipdick";
+    profileType = "pkd-and-me";
     break;
   case "philipdick.com":
     profileType = "philipdick";
@@ -95,20 +95,20 @@ switch (profileType) {
     requireUserLogin = true;
     tagManagerArgs.gtmId = "";
     break;
-  case "heroku":
-    API_URL = "https://pkd-and-me-server.herokuapp.com";
-    siteName = "PKD and Me";
-    appName = "Philip K. Dick Bibliography";
-    metaDescription = "Purchase versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
-    defaultPageComponent = "Home";
-    routerBaseName = "";
-    appOffline = false;
-    electronicOnly = false;
-    physicalOnly = false;
-    appAllowUserInteractions = true;
-    requireUserLogin = true;
-    tagManagerArgs.gtmId = "";
-    break;
+  // case "heroku":
+  //   API_URL = "https://pkd-and-me-server.herokuapp.com";
+  //   siteName = "PKD and Me";
+  //   appName = "Philip K. Dick Bibliography";
+  //   metaDescription = "Purchase versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
+  //   defaultPageComponent = "Home";
+  //   routerBaseName = "";
+  //   appOffline = false;
+  //   electronicOnly = false;
+  //   physicalOnly = false;
+  //   appAllowUserInteractions = true;
+  //   requireUserLogin = true;
+  //   tagManagerArgs.gtmId = "";
+  //   break;
   case "philipdick":
     // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";

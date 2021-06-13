@@ -69,9 +69,10 @@ const Titles = (props) => {
     editionList = [...editionList];
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
-    // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
-    editionList = editionList.filter(edition => edition.editionActive === true && edition.mediaActive === true);
+    // editionList = editionList.filter(edition => (edition.active === true || edition.active === 1) && (edition.medium.active === true || edition.medium.active === 1));
+    editionList = editionList.filter(edition => (edition.editionActive === true || edition.editionActive === 1) && (edition.mediaActive === true || edition.mediaActive === 1));
   };
+
 
   const sortTitles = (sortBy) => {
     // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
@@ -124,6 +125,7 @@ const Titles = (props) => {
     };
   };
 
+
   let titleList = [];
   if (!isNaN(categoryParam)) {
     // ! This code no longer works with the current URL setup
@@ -153,26 +155,28 @@ const Titles = (props) => {
     document.title = "All Titles | " + appName + " | " + siteName;
     // Display all active titles
     titleList = [...titleListState];
-    // titleList = titleListState.filter(title => title.active === true);
+    // titleList = titleListState.filter(title => title.active === true || title.active === 1);
   };
 
   if (IsEmpty(admin) === false && admin === true) {
     titleList = [...titleList];
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
-    // titleList = titleList.filter(title => title.active === true && title.category.active === true);
-    titleList = titleList.filter(title => title.titleActive === true && title.categoryActive === true);
+    // titleList = titleList.filter(title => (title.active === true || title.active === 1) && (title.category.active === true || title.category.active === 1));
+    titleList = titleList.filter(title => (title.titleActive === true || title.titleActive === 1) && (title.categoryActive === true || title.categoryActive === 1));
   };
 
   sortTitles(titleSortBy);
   // console.log(componentName, GetDateTime(), "titleSortBy", titleSortBy);
   // console.log(componentName, GetDateTime(), "titleList", titleList);
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleList", titleList);
@@ -183,6 +187,7 @@ const Titles = (props) => {
     };
 
   }, [titleList]);
+
 
   return (
     <Container className="mt-4">
@@ -203,7 +208,7 @@ const Titles = (props) => {
           <h4 className="text-center mb-4">{IsEmpty(categoryParam) === false && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
             {IsEmpty(admin) === false && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
             <span className="text-muted ml-2 smallText">Sort By&nbsp;
-                        {titleSortBy !== "publicationDate" ?
+              {titleSortBy !== "publicationDate" ?
                 <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
                 : null}
               {titleSortBy !== "titleName" ?
@@ -223,7 +228,7 @@ const Titles = (props) => {
         {titleList.map((title) => {
 
           let activeString = "";
-          if (title.active === true) {
+          if (title.titleActive === true || title.titleActive === 1) {
             // activeString = "Active";
             activeString = "";
           } else {
@@ -275,7 +280,7 @@ const Titles = (props) => {
                 {IsEmpty(activeString) === false ?
                   <CardHeader className="cardHeader inactiveItem">
                     ({activeString})
-                        </CardHeader>
+                  </CardHeader>
                   : null}
                 <Row className="no-gutters">
                   <Col className="col-md-4">
@@ -292,7 +297,7 @@ const Titles = (props) => {
                       <CardText className="smallerText">{editionsAvailable}<span> </span>
                         {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
                         {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
-                                edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
+                        edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
                       {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
                       {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
                     </CardBody>

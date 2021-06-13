@@ -55,6 +55,7 @@ const Checklist = (props) => {
   // let editionList = [...editionListState];
   // console.log(componentName, GetDateTime(), "editionList", editionList);
 
+
   const sortChecklistList = (sortBy) => {
     // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
     if (IsEmpty(checklistList) === false && checklistList.length > 0) {
@@ -135,6 +136,7 @@ const Checklist = (props) => {
   sortChecklistList(titleSortBy);
   // console.log(componentName, GetDateTime(), "titleSortBy", titleSortBy);
   // console.log(componentName, GetDateTime(), "titleList", titleList);
+
 
   const updateChecklist = (titleID, read, reviewID) => {
     // console.log(componentName, GetDateTime(), "updateChecklist");
@@ -260,6 +262,7 @@ const Checklist = (props) => {
 
   };
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
@@ -268,13 +271,16 @@ const Checklist = (props) => {
     // toggle();
   };
 
+
   // const toggle = () => {
   //     setModal(!modal);
   // };
 
+
   const toggleDrawer = () => {
     setDrawer(!drawer);
   };
+
 
   return (
     <React.Fragment>
@@ -305,7 +311,7 @@ const Checklist = (props) => {
                 <h6 className="text-center mb-2">{linkItem.linkTypeName}
                   <br />
                   <span className="text-muted ml-2 smallText">Sort By&nbsp;
-                        {titleSortBy !== "publicationDate" ?
+                    {titleSortBy !== "publicationDate" ?
                       <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortChecklistList("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
                       : null}
                     {titleSortBy !== "titleName" ?

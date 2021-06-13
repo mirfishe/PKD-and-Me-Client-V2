@@ -79,52 +79,6 @@ const EditUserReview = (props) => {
   // const [titleItemIndex, setTitleItemIndex] = useState(null);
   // const [titleItem, setTitleItem] = useState(null);
 
-  useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
-
-    if (IsEmpty(props.reviewID) === false) {
-
-      let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
-      // console.log(componentName, GetDateTime(), "useEffect userReviewObject", userReviewObject);
-      // console.log(componentName, GetDateTime(), "useEffect typeof userReviewObject", typeof userReviewObject);
-
-      setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
-      // console.log(componentName, GetDateTime(), "useEffect userReviewItemIndex", userReviewItemIndex);
-
-      if (IsEmpty(userReviewObject) === false) {
-
-        setUserReviewItem(userReviewObject);
-
-        setReviewID(userReviewObject.reviewID);
-        setUserID(userReviewObject.userID);
-        setUpdatedBy(userReviewObject.updatedBy);
-        setTitleID(userReviewObject.titleID);
-        setRead(userReviewObject.read);
-        setDateRead(userReviewObject.dateRead);
-        setRating(userReviewObject.rating);
-        setRanking(userReviewObject.ranking);
-        setShortReview(userReviewObject.shortReview);
-        setLongReview(userReviewObject.longReview);
-        setActive(userReviewObject.active);
-
-        setCbxRead(userReviewObject.read);
-
-        if (IsEmpty(userReviewObject.dateRead) === false) {
-          setTxtDateRead(userReviewObject.dateRead.toString().substring(0, 10));
-        } else {
-          setTxtDateRead("");
-        };
-
-        setRdoRating(userReviewObject.rating);
-        setTxtRanking(userReviewObject.ranking);
-        setTxtShortReview(userReviewObject.shortReview);
-        setTxtLongReview(userReviewObject.longReview);
-
-      };
-
-    };
-
-  }, [props.reviewID, userReviewListState]);
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
@@ -172,6 +126,55 @@ const EditUserReview = (props) => {
     };
 
   }, [props.reviewID, userReviewListState]);
+
+
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
+
+    if (IsEmpty(props.reviewID) === false) {
+
+      let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
+      // console.log(componentName, GetDateTime(), "useEffect userReviewObject", userReviewObject);
+      // console.log(componentName, GetDateTime(), "useEffect typeof userReviewObject", typeof userReviewObject);
+
+      setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
+      // console.log(componentName, GetDateTime(), "useEffect userReviewItemIndex", userReviewItemIndex);
+
+      if (IsEmpty(userReviewObject) === false) {
+
+        setUserReviewItem(userReviewObject);
+
+        setReviewID(userReviewObject.reviewID);
+        setUserID(userReviewObject.userID);
+        setUpdatedBy(userReviewObject.updatedBy);
+        setTitleID(userReviewObject.titleID);
+        setRead(userReviewObject.read);
+        setDateRead(userReviewObject.dateRead);
+        setRating(userReviewObject.rating);
+        setRanking(userReviewObject.ranking);
+        setShortReview(userReviewObject.shortReview);
+        setLongReview(userReviewObject.longReview);
+        setActive(userReviewObject.active);
+
+        setCbxRead(userReviewObject.read);
+
+        if (IsEmpty(userReviewObject.dateRead) === false) {
+          setTxtDateRead(userReviewObject.dateRead.toString().substring(0, 10));
+        } else {
+          setTxtDateRead("");
+        };
+
+        setRdoRating(userReviewObject.rating);
+        setTxtRanking(userReviewObject.ranking);
+        setTxtShortReview(userReviewObject.shortReview);
+        setTxtLongReview(userReviewObject.longReview);
+
+      };
+
+    };
+
+  }, [props.reviewID, userReviewListState]);
+
 
   // useEffect(() => {
   //     // console.log(componentName, GetDateTime(), "useEffect titleListState", titleListState);
@@ -195,6 +198,7 @@ const EditUserReview = (props) => {
   //     };
 
   // }, [titleID, titleListState]);
+
 
   const updateUserReview = (deleteUserReview) => {
     // console.log(componentName, GetDateTime(), "updateUserReview");
@@ -335,7 +339,7 @@ const EditUserReview = (props) => {
             // ? Add to local storage also?
 
             // * Recalculate ratings
-            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === data.titleID && userReview.active === true);
+            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === data.titleID && ((userReview.userReviewActive === true || userReview.userReviewActive === 1)));
             let userReviews = [];
             for (let i = 0; i < userReviewsList.length; i++) {
               userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
@@ -358,7 +362,7 @@ const EditUserReview = (props) => {
 
             // console.log(componentName, GetDateTime(), "updateUserReview data.active", data.active);
 
-            if (data.active === true) {
+            if (data.active === true || data.active === 1) {
               // console.log(componentName, GetDateTime(), "updateUserReview data.reviewID", data.reviewID);
               // console.log(componentName, GetDateTime(), "updateUserReview data.userID", data.userID);
               // console.log(componentName, GetDateTime(), "updateUserReview data.updatedBy", data.updatedBy);
@@ -392,7 +396,7 @@ const EditUserReview = (props) => {
 
             const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID);
 
-            if (data.active === true) {
+            if (data.active === true || data.active === 1) {
               dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: new Date().toISOString() }));
             } else {
               dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: null, userID: null, updatedBy: null, titleID: data.titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
@@ -416,6 +420,7 @@ const EditUserReview = (props) => {
     // };
 
   };
+
 
   const deleteUserReview = () => {
     // console.log(componentName, GetDateTime(), "deleteUserReview");
@@ -473,7 +478,7 @@ const EditUserReview = (props) => {
               let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
 
               // * Recalculate ratings
-              let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID && userReview.active === true);
+              let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1));
 
               const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID);
 
@@ -522,6 +527,7 @@ const EditUserReview = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviewRecordUpdated", userReviewRecordUpdated);
     // console.log(componentName, GetDateTime(), "useEffect userReviewRecordDeleted", userReviewRecordDeleted);
@@ -541,6 +547,7 @@ const EditUserReview = (props) => {
 
   }, [userReviewRecordUpdated, userReviewRecordDeleted]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
@@ -551,9 +558,11 @@ const EditUserReview = (props) => {
 
   }, [sessionToken]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

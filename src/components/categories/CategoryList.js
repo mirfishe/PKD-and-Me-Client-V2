@@ -23,6 +23,7 @@ const CategoryList = (props) => {
   const [categoryResultsFound, setCategoryResultsFound] = useState(null);
   const [categoryList, setCategoryList] = useState([]);
 
+
   const getCategories = () => {
     // console.log(componentName, GetDateTime(), "getCategories");
     // console.log(componentName, GetDateTime(), "getCategories baseURL", baseURL);
@@ -72,9 +73,11 @@ const CategoryList = (props) => {
 
   };
 
+
   useEffect(() => {
     getCategories();
   }, []);
+
 
   // const copyText = () => {
   //     txtCategoryList = document.getElementById("txtCategoryList");
@@ -105,6 +108,7 @@ const CategoryList = (props) => {
   //     // https://reedbarger.com/how-to-create-a-custom-usecopytoclipboard-react-hook/
 
   // };
+
 
   return (
     <Container className="mt-4">

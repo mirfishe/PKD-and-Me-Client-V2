@@ -23,6 +23,7 @@ function UserReviewRatingList() {
   const [userReviewRatingResultsFound, setUserReviewRatingResultsFound] = useState(null);
   const [userReviewRatingList, setUserReviewRatingList] = useState([]);
 
+
   const getUserReviewRatings = () => {
     // console.log(componentName, GetDateTime(), "getUserReviewRatings");
     // console.log(componentName, GetDateTime(), "getUserReviewRatings baseURL", baseURL);
@@ -89,9 +90,11 @@ function UserReviewRatingList() {
 
   };
 
+
   useEffect(() => {
     getUserReviewRatings();
   }, []);
+
 
   return (
     <Container className="mt-4">

@@ -175,6 +175,7 @@ const AddMedia = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect mediaRecordAdded", mediaRecordAdded);
     if (IsEmpty(mediaRecordAdded) === false && mediaRecordAdded === true) {
@@ -186,6 +187,7 @@ const AddMedia = (props) => {
 
   }, [mediaRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -196,9 +198,11 @@ const AddMedia = (props) => {
 
   }, [admin]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

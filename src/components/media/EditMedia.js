@@ -54,6 +54,7 @@ const EditMedia = (props) => {
     setModal(!modal);
   };
 
+
   return (
     <React.Fragment>
       <Button outline size="sm" color="info" onClick={toggle}>Open</Button>

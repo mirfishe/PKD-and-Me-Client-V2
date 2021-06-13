@@ -61,6 +61,7 @@ const EditUser = (props) => {
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
 
+
   const updateUser = (deleteUser) => {
     // console.log(componentName, GetDateTime(), "updateUser");
 
@@ -262,6 +263,7 @@ const EditUser = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userRecordUpdated", userRecordUpdated);
     if (IsEmpty(userRecordUpdated) === false) {
@@ -277,6 +279,7 @@ const EditUser = (props) => {
 
   }, [userRecordUpdated]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
     if (IsEmpty(userLoaded) === false && userLoaded === false) {
@@ -288,9 +291,11 @@ const EditUser = (props) => {
 
   }, [userLoaded]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

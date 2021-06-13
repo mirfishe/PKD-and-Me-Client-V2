@@ -23,6 +23,7 @@ const EditionList = (props) => {
   const [editionResultsFound, setEditionResultsFound] = useState(null);
   const [editionList, setEditionList] = useState([]);
 
+
   const getEditions = () => {
     // console.log(componentName, GetDateTime(), "getEdition");
     // console.log(componentName, GetDateTime(), "getEdition baseURL", baseURL);
@@ -69,9 +70,11 @@ const EditionList = (props) => {
 
   };
 
+
   useEffect(() => {
     getEditions();
   }, []);
+
 
   return (
     <Container className="mt-4">

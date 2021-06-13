@@ -27,6 +27,7 @@ const TitleSuggestions = (props) => {
   // * Sort the list by updateDate
   // titleSuggestions.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -35,6 +36,7 @@ const TitleSuggestions = (props) => {
     };
 
   }, [admin]);
+
 
   return (
     <Container className="my-4">

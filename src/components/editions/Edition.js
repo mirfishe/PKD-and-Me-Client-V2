@@ -64,7 +64,7 @@ const Edition = (props) => {
   if (IsEmpty(admin) === false && admin === true) {
     editionList = [...editionList];
   } else {
-    editionList = editionList.filter(edition => edition.active === true);
+    editionList = editionList.filter(edition => edition.active === true || edition.active === 1);
   };
   // console.log(componentName, GetDateTime(), "editionList", editionList);
 
@@ -75,11 +75,13 @@ const Edition = (props) => {
 
   // console.log(componentName, GetDateTime(), "editionList", editionList);
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect editionList", editionList);
@@ -90,13 +92,14 @@ const Edition = (props) => {
     };
   }, [editionList]);
 
+
   return (
     <Container className="my-4">
       {/* {editionList.length > 0 ? */}
       <Row className="my-4">
         <Col xs="12">
           <h5 className="text-center">Find A Copy
-                    {IsEmpty(admin) === false && admin === true && IsEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} displayButton={true} /> : null}
+            {IsEmpty(admin) === false && admin === true && IsEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} displayButton={true} /> : null}
           </h5>
         </Col>
       </Row>
@@ -112,7 +115,7 @@ const Edition = (props) => {
         {editionList.map((edition) => {
 
           let activeString = "";
-          if (edition.active === true) {
+          if (edition.active === true || edition.active === 1) {
             // activeString = "Active";
             activeString = "";
           } else {
@@ -144,7 +147,7 @@ const Edition = (props) => {
                 {IsEmpty(activeString) === false ?
                   <CardHeader className="cardHeader inactiveItem">
                     ({activeString})
-                        </CardHeader>
+                  </CardHeader>
                   : null}
                 <Row className="no-gutters">
                   <Col className="col-md-6">

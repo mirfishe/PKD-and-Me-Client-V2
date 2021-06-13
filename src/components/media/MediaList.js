@@ -23,6 +23,7 @@ const MediaList = (props) => {
   const [mediaResultsFound, setMediaResultsFound] = useState(null);
   const [mediaList, setMediaList] = useState([]);
 
+
   const getMedia = () => {
     // console.log(componentName, GetDateTime(), "getMedia");
     // console.log(componentName, GetDateTime(), "getMedia baseURL", baseURL);
@@ -69,9 +70,11 @@ const MediaList = (props) => {
 
   };
 
+
   useEffect(() => {
     getMedia();
   }, []);
+
 
   return (
     <Container className="mt-4">

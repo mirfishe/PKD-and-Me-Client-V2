@@ -37,7 +37,7 @@ const Category = (props) => {
       if (IsEmpty(admin) === false && admin === true) {
         categoryListSort = [...categoryListState];
       } else {
-        categoryListSort = categoryListState.filter(category => category.active === true);
+        categoryListSort = categoryListState.filter(category => category.active === true || category.active === 1);
       };
       // console.log(componentName, GetDateTime(), "useEffect categoryListSort", categoryListSort);
 
@@ -71,7 +71,7 @@ const Category = (props) => {
           {categoryList.map((category) => {
 
             let activeString = "";
-            if (category.active === true) {
+            if (category.active === true || category.active === 1) {
               // activeString = "Active";
               activeString = "";
             } else {

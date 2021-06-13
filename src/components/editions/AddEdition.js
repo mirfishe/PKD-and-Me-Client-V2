@@ -35,7 +35,7 @@ const AddEdition = (props) => {
   const mediaListState = useSelector(state => state.media.arrayMedia);
   // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
-  const mediaList = mediaListState.filter(media => media.active === true);
+  const mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
   // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -53,6 +53,7 @@ const AddEdition = (props) => {
   //     setMediaResultsFound(true);
   // };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect mediaList", mediaList);
 
@@ -67,6 +68,7 @@ const AddEdition = (props) => {
     };
 
   }, [mediaList]);
+
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
   // console.log(componentName, GetDateTime(), "titleListState", titleListState);
@@ -115,6 +117,7 @@ const AddEdition = (props) => {
   const [ASINMessage, setASINMessage] = useState("");
   const [errASINMessage, setErrASINMessage] = useState("");
   const [ASINResultsFound, setASINResultsFound] = useState(null);
+
 
   const addEdition = () => {
     // console.log(componentName, GetDateTime(), "addEdition");
@@ -344,6 +347,7 @@ const AddEdition = (props) => {
 
   };
 
+
   const checkASIN = (ASIN) => {
     // console.log(componentName, GetDateTime(), "checkASIN");
     // console.log(componentName, GetDateTime(), "checkASIN baseURL", baseURL);
@@ -397,6 +401,7 @@ const AddEdition = (props) => {
 
   };
 
+
   const copyTitlePublicationDate = () => {
     // console.log(componentName, GetDateTime(), "copyTitlePublicationDate props.titlePublicationDate", props.titlePublicationDate);
 
@@ -407,6 +412,7 @@ const AddEdition = (props) => {
     };
 
   };
+
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect editionRecordAdded", editionRecordAdded);
@@ -420,6 +426,7 @@ const AddEdition = (props) => {
 
   }, [editionRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -430,9 +437,11 @@ const AddEdition = (props) => {
 
   }, [admin]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

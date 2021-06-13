@@ -100,6 +100,7 @@ const AddUserReview = (props) => {
 
   // }, [props.titleID, titleListState]);
 
+
   const addUserReview = () => {
     // console.log(componentName, GetDateTime(), "addUserReview");
     // console.log(componentName, GetDateTime(), "addUserReview baseURL", baseURL);
@@ -261,7 +262,7 @@ const AddUserReview = (props) => {
 
             const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID);
 
-            if (data.active === true) {
+            if (data.active === true || data.active === 1) {
               dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: new Date().toISOString() }));
             };
 
@@ -284,6 +285,7 @@ const AddUserReview = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect userReviewRecordAdded", userReviewRecordAdded);
     if (IsEmpty(userReviewRecordAdded) === false && userReviewRecordAdded === true) {
@@ -295,6 +297,7 @@ const AddUserReview = (props) => {
 
   }, [userReviewRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
@@ -305,9 +308,11 @@ const AddUserReview = (props) => {
 
   }, [sessionToken]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

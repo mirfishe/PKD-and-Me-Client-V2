@@ -21,6 +21,7 @@ const FormatPost = () => {
   // const [formattedPost, setFormattedPost] = useState("");
   const [formattedPosts, setFormattedPosts] = useState([]);
 
+
   const toTitleCase = (title) => {
     // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
     let i, j, str, lowers, uppers;
@@ -46,6 +47,7 @@ const FormatPost = () => {
 
     return str;
   };
+
 
   const formatPost = () => {
     // console.log(componentName, GetDateTime(), "formatPost");

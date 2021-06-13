@@ -68,6 +68,7 @@ const AddTitleSuggestion = (props) => {
   const [titleURL, setTitleURL] = useState(null);
   const [titleSuggestionEmailAddress, setTitleSuggestionEmailAddress] = useState(null);
 
+
   const addTitleSuggestion = () => {
     // console.log(componentName, GetDateTime(), "addTitleSuggestion");
     // console.log(componentName, GetDateTime(), "addTitleSuggestion baseURL", baseURL);
@@ -265,6 +266,7 @@ const AddTitleSuggestion = (props) => {
     };
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleSuggestionRecordAdded", titleSuggestionRecordAdded);
     if (IsEmpty(titleSuggestionRecordAdded) === false) {
@@ -279,6 +281,7 @@ const AddTitleSuggestion = (props) => {
 
   }, [titleSuggestionRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
@@ -289,9 +292,11 @@ const AddTitleSuggestion = (props) => {
 
   }, [sessionToken]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

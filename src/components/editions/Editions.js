@@ -49,6 +49,7 @@ const Editions = (props) => {
     // console.log(componentName, GetDateTime(), "mediaParam", mediaParam);
   };
 
+
   const sortEditions = (sortBy) => {
     // console.log("componentName, sortTitles sortBy", sortBy);
     if (IsEmpty(editionList) === false && editionList.length > 0) {
@@ -252,6 +253,7 @@ const Editions = (props) => {
     };
   };
 
+
   let editionList = [];
   if (!isNaN(mediaParam)) {
     // ! This code no longer works with the current URL setup
@@ -279,7 +281,7 @@ const Editions = (props) => {
     document.title = "All Editions | " + appName + " | " + siteName;
     // * Display all active editions
     editionList = [...editionListState];
-    // editionList = editionListState.filter(edition => edition.active === true);
+    // editionList = editionListState.filter(edition => edition.active === true || edition.active === 1);
   };
 
   if (electronicOnly === true || userElectronicOnly === true) {
@@ -296,18 +298,20 @@ const Editions = (props) => {
     editionList = [...editionList];
   } else {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
-    // editionList = editionList.filter(edition => edition.active === true && edition.medium.active === true);
-    editionList = editionList.filter(edition => edition.editionActive === true && edition.mediaActive === true);
+    // editionList = editionList.filter(edition => (edition.active === true || edition.active === 1) && (edition.medium.active === true || edition.medium.active === 1));
+    editionList = editionList.filter(edition => (edition.editionActive === true || edition.editionActive === 1) && (edition.mediaActive === true || edition.mediaActive === 1));
   };
 
   sortEditions(editionSortBy);
   // console.log(componentName, GetDateTime(), "editionList", editionList);
+
 
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect editionList", editionList);
@@ -317,6 +321,7 @@ const Editions = (props) => {
       setErrEditionMessage("No editions found.");
     };
   }, [editionList]);
+
 
   return (
     <Container className="mt-4">
@@ -336,7 +341,7 @@ const Editions = (props) => {
         <Col xs="12">
           <h4 className="text-center mb-4">{IsEmpty(mediaParam) === false && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
             <span className="text-muted ml-2 smallText">Sort By
-                        {editionSortBy !== "releaseDate" ?
+              {editionSortBy !== "releaseDate" ?
                 <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSortBy("releaseDate")); }}>Release Date</a>
                 : null}
               {editionSortBy !== "publicationDate" ?
@@ -360,7 +365,7 @@ const Editions = (props) => {
         {editionList.map((edition) => {
 
           let activeString = "";
-          if (edition.active === true) {
+          if (edition.editionActive === true || edition.editionActive === 1) {
             // activeString = "Active";
             activeString = "";
           } else {
@@ -398,7 +403,7 @@ const Editions = (props) => {
                 {IsEmpty(activeString) === false ?
                   <CardHeader className="cardHeader inactiveItem">
                     ({activeString})
-                        </CardHeader>
+                  </CardHeader>
                   : null}
                 <Row className="no-gutters">
                   <Col className="col-md-6">

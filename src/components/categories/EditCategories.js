@@ -49,13 +49,14 @@ const EditCategories = (props) => {
   if (IsEmpty(admin) === false && admin === true) {
     categoryList = [...categoryListState];
   } else {
-    categoryList = categoryListState.filter(category => category.active === true);
+    categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
   };
   // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
   let categoryListForm = [...categoryList];
+
 
   const updateCategories = () => {
     // console.log(componentName, GetDateTime(), "updateCategories");
@@ -71,6 +72,7 @@ const EditCategories = (props) => {
 
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -81,9 +83,11 @@ const EditCategories = (props) => {
 
   }, [admin]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

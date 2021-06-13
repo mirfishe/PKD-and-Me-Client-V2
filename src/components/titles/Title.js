@@ -114,10 +114,10 @@ const Title = (props) => {
     document.title = "All Titles | " + appName + " | " + siteName;
     // * Display all active titles
     // titleList = [...titleListState];
-    titleList = titleListState.filter(title => title.active === true);
+    titleList = titleListState.filter(title => title.active === true || title.active === 1);
     // * Display all active editions
     // editionList = [...editionListState];
-    // editionList = editionListState.filter(edition => edition.active === true);
+    // editionList = editionListState.filter(edition => edition.active === true || edition.active === 1);
   };
 
   // if (electronicOnly === true || userElectronicOnly === true) {
@@ -136,8 +136,8 @@ const Title = (props) => {
     titleList = [...titleList];
     // editionList = [...editionList];
   } else {
-    titleList = titleList.filter(title => title.active === true);
-    // editionList = editionList.filter(edition => edition.active === true);
+    titleList = titleList.filter(title => title.active === true || title.active === 1);
+    // editionList = editionList.filter(edition => edition.active === true || edition.active === 1);
   };
   // console.log(componentName, GetDateTime(), "titleList", titleList);
 
@@ -275,11 +275,13 @@ const Title = (props) => {
 
   // };
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleList", titleList);
@@ -291,6 +293,7 @@ const Title = (props) => {
 
   }, [titleList]);
 
+
   // useEffect(() => {
   //     // console.log(componentName, GetDateTime(), "useEffect titleID", titleID);
 
@@ -300,6 +303,7 @@ const Title = (props) => {
 
   // }, [titleID]);
 
+
   // useEffect(() => {
   //     // console.log(componentName, GetDateTime(), "useEffect editionList", editionList);
   //     if (editionList.length > 0) {
@@ -308,6 +312,7 @@ const Title = (props) => {
   //         setErrEditionMessage("No editions found.");
   //     };
   // }, [editionList]);
+
 
   return (
     <Container className="mt-4">
@@ -332,7 +337,7 @@ const Title = (props) => {
       {titleList.map((title) => {
 
         let activeString = "";
-        if (title.active === true) {
+        if (title.active === true || title.active === 1) {
           // activeString = "Active";
           activeString = "";
         } else {
@@ -415,7 +420,7 @@ const Title = (props) => {
             {editionList.map((edition) => {
 
                 let activeString = "";
-                if (edition.active === true) {
+                if (edition.active === true || edition.active === 1) {
                     // activeString = "Active";
                     activeString = "";
                 } else {

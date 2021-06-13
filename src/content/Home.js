@@ -17,11 +17,13 @@ const Home = () => {
   const appName = useSelector(state => state.app.appName);
   document.title = "Home | " + appName + " | " + siteName;
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   return (
     <Container className="mt-4">

@@ -16,11 +16,13 @@ const About = () => {
   const appName = useSelector(state => state.app.appName);
   document.title = "About Philip K. Dick | " + appName + " | " + siteName;
 
+
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
   };
+
 
   return (
     <Container className="mt-4">

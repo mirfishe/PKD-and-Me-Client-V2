@@ -34,6 +34,7 @@ function LoadUserReviews() {
   // const [overallTitleRatingMessage, setOverallTitleRatingMessage] = useState("");
   // const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
 
+
   const loadDataStore = (data, source) => {
 
     if (source === "userReview") {
@@ -75,6 +76,7 @@ function LoadUserReviews() {
     };
 
   };
+
 
   const getUserReviews = () => {
     // console.log(componentName, GetDateTime(), "getUserReviews");
@@ -122,6 +124,7 @@ function LoadUserReviews() {
       });
 
   };
+
 
   //   const getUserReviewsRatings = () => {
   //     // console.log(componentName, GetDateTime(), "getUserReviewsRatings");
@@ -173,6 +176,7 @@ function LoadUserReviews() {
   //       });
 
   // };
+
 
   const fetchLocalDataUserReviews = () => {
     // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews");

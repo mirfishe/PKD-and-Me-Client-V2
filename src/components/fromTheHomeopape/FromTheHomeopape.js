@@ -34,11 +34,9 @@ const FromTheHomeopape = (props) => {
   const [feedItems2, setFeedItems2] = useState([]);
   const [homeopapeItems, setHomeopapeItems] = useState([]);
 
-  useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect");
 
-    // fetchNews();
-    // fetchNews2();
+  const getNews = () => {
+    // console.log(componentName, GetDateTime(), "getNews");
 
     let url = baseURL + "fromthehomeopape";
 
@@ -75,6 +73,92 @@ const FromTheHomeopape = (props) => {
         setErrorMessage(error.name + ": " + error.message);
 
       });
+
+  };
+
+
+  const fetchNews = () => {
+    // console.log(componentName, GetDateTime(), "fetchNews");
+
+    let url = baseURL + "fromthehomeopape/new";
+
+    fetch(url, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+    })
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "fetchNews results", results);
+
+        if (!results.ok) {
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
+        } else {
+          return results.json();
+          // return results.text();
+        };
+
+      })
+      .then(results => {
+        console.log(componentName, GetDateTime(), "fetchNews results", results);
+
+        // ! This happens too fast before the records have been written to the table.
+        fetchNewsUpdate();
+
+      })
+      .catch(error => {
+        console.log(componentName, GetDateTime(), "fetchNews error", error);
+        setErrorMessage(error.name + ": " + error.message);
+
+      });
+
+  };
+
+
+  const fetchNewsUpdate = () => {
+    // console.log(componentName, GetDateTime(), "fetchNewsUpdate");
+
+    let url = baseURL + "fromthehomeopape/update";
+
+    fetch(url, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+    })
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "fetchNewsUpdate results", results);
+
+        if (!results.ok) {
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
+        } else {
+          return results.json();
+          // return results.text();
+        };
+
+      })
+      .then(results => {
+        console.log(componentName, GetDateTime(), "fetchNewsUpdate results", results);
+
+      })
+      .catch(error => {
+        console.log(componentName, GetDateTime(), "fetchNewsUpdate error", error);
+        setErrorMessage(error.name + ": " + error.message);
+
+      });
+
+  };
+
+
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect");
+
+    // fetchNews();
+    // fetchNews2();
+
+    fetchNews();
+
+    getNews();
 
   }, []);
 
@@ -624,7 +708,7 @@ const FromTheHomeopape = (props) => {
 
         return (
           <React.Fragment>
-            { display === true ?
+            {display === true ?
               <p key={homeopapeItem.itemID}>
                 <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
                 <a href={itemLink} target="_blank">{itemLink}</a><br />

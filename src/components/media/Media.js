@@ -36,13 +36,13 @@ const Media = (props) => {
     mediaList = mediaListState.filter(media => media.electronic === false);
   } else {
     mediaList = [...mediaListState];
-    // mediaList = mediaListState.filter(media => media.active === true);
+    // mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
   };
 
   if (IsEmpty(admin) === false && admin === true) {
     mediaList = [...mediaList];
   } else {
-    mediaList = mediaList.filter(media => media.active === true);
+    mediaList = mediaList.filter(media => media.active === true || media.active === 1);
   };
   // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
@@ -69,7 +69,7 @@ const Media = (props) => {
           {mediaList.map((media) => {
 
             let activeString = "";
-            if (media.active === true) {
+            if (media.active === true || media.active === 1) {
               // activeString = "Active";
               activeString = "";
             } else {

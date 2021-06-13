@@ -57,6 +57,7 @@ const AddComment = (props) => {
   const [comment, setComment] = useState(null);
   const [commentEmailAddress, setCommentEmailAddress] = useState(null);
 
+
   const addComment = () => {
     // console.log(componentName, GetDateTime(), "addComment");
     // console.log(componentName, GetDateTime(), "addComment baseURL", baseURL);
@@ -196,6 +197,7 @@ const AddComment = (props) => {
     };
   };
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect commentRecordAdded", commentRecordAdded);
     if (IsEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
@@ -209,6 +211,7 @@ const AddComment = (props) => {
 
   }, [commentRecordAdded]);
 
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
@@ -219,9 +222,11 @@ const AddComment = (props) => {
 
   }, [sessionToken]);
 
+
   const toggle = () => {
     setModal(!modal);
   };
+
 
   return (
     <React.Fragment>

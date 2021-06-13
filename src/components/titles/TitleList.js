@@ -23,6 +23,7 @@ const TitleList = (props) => {
   const [titleResultsFound, setTitleResultsFound] = useState(null);
   const [titleList, setTitleList] = useState([]);
 
+
   const getTitles = () => {
     // console.log(componentName, GetDateTime(), "getTitle");
     // console.log(componentName, GetDateTime(), "getTitle baseURL", baseURL);
@@ -69,9 +70,11 @@ const TitleList = (props) => {
 
   };
 
+
   useEffect(() => {
     getTitles();
   }, []);
+
 
   return (
     <Container className="mt-4">
