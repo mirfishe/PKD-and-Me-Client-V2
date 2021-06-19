@@ -88,6 +88,8 @@ function LoadAppSettings() {
 
     let url = "appSettings/" + profileType + ".json";
 
+    // console.log(componentName, GetDateTime(), "getAppSettings url", url);
+
     fetch(url)
       .then(response => {
         // console.log(componentName, GetDateTime(), "getAppSettings response", response);
@@ -100,7 +102,7 @@ function LoadAppSettings() {
         };
       })
       .then(data => {
-        console.log(componentName, GetDateTime(), "getAppSettings data", data);
+        // console.log(componentName, GetDateTime(), "getAppSettings data", data);
 
         if (data.resultsFound === true) {
 

@@ -161,7 +161,7 @@ const Login = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "logIn data", data);
+            // console.log(componentName, GetDateTime(), "logIn data", data);
 
             // if (data !== 500 && data !== 401) {
 

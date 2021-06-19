@@ -231,19 +231,19 @@ const AddTitleSuggestion = (props) => {
 
               if (data.recordAdded === true) {
 
-                setTitleSuggestionItem(data);
-                setTitleSuggestionID(data.titleSuggestionID);
-                setTitleSuggestionUserID(data.userID);
-                setTitleName(data.titleName);
-                setAuthorFirstName(data.authorFirstName);
-                setAuthorLastName(data.authorLastName);
-                setPublicationDate(data.publicationDate);
-                setShortDescription(data.shortDescription);
-                setTitleURL(data.titleURL);
-                setTitleSuggestionEmailAddress(data.emailAddress);
+                setTitleSuggestionItem(data.records[0]);
+                setTitleSuggestionID(data.records[0].titleSuggestionID);
+                setTitleSuggestionUserID(data.records[0].userID);
+                setTitleName(data.records[0].titleName);
+                setAuthorFirstName(data.records[0].authorFirstName);
+                setAuthorLastName(data.records[0].authorLastName);
+                setPublicationDate(data.records[0].publicationDate);
+                setShortDescription(data.records[0].shortDescription);
+                setTitleURL(data.records[0].titleURL);
+                setTitleSuggestionEmailAddress(data.records[0].emailAddress);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                // dispatch(addStateTitle([{titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createDate: data.createDate, updateDate: data.updateDate}]));
+                // dispatch(addStateTitle([{titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
                 // ? Add to local storage also?
 
               } else {

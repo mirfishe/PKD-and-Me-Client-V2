@@ -281,32 +281,32 @@ const AddTitle = (props) => {
 
               if (data.recordAdded === true) {
 
-                setTitleItem(data);
-                setTitleID(data.titleID);
-                setTitleName(data.titleName);
-                setTitleSort(data.titleSort);
-                setTitleURL(data.titleURL);
-                setAuthorFirstName(data.authorFirstName);
-                setAuthorLastName(data.authorLastName);
-                setPublicationDate(data.publicationDate);
-                setImageName(data.imageName);
-                setCategoryID(data.categoryID);
-                setShortDescription(data.shortDescription);
-                setUrlPKDweb(data.urlPKDweb);
-                setActive(data.active);
+                setTitleItem(data.records[0]);
+                setTitleID(data.records[0].titleID);
+                setTitleName(data.records[0].titleName);
+                setTitleSort(data.records[0].titleSort);
+                setTitleURL(data.records[0].titleURL);
+                setAuthorFirstName(data.records[0].authorFirstName);
+                setAuthorLastName(data.records[0].authorLastName);
+                setPublicationDate(data.records[0].publicationDate);
+                setImageName(data.records[0].imageName);
+                setCategoryID(data.records[0].categoryID);
+                setShortDescription(data.records[0].shortDescription);
+                setUrlPKDweb(data.records[0].urlPKDweb);
+                setActive(data.records[0].active);
 
-                let categoryItem = categoryList.filter(category => category.categoryID === data.categoryID);
+                let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
                 // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
                 categoryItem = categoryItem[0];
 
-                // console.log(componentName, GetDateTime(), "addTitle typeof data.categoryID", typeof data.categoryID);
+                // console.log(componentName, GetDateTime(), "addTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
                 // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(addStateTitle([{ titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, createDate: data.createDate, updateDate: data.updateDate, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } }]));
+                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
                 // ? Add to local storage also?
 
-                dispatch(addStateURL([{ linkName: data.titleURL, linkType: "title", linkID: data.titleID }]));
+                dispatch(addStateURL([{ linkName: data.records[0].titleURL, linkType: "title", linkID: data.records[0].titleID }]));
 
               } else {
                 // addErrorMessage(data.error);

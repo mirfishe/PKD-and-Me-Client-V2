@@ -167,14 +167,14 @@ const AddComment = (props) => {
 
               if (data.recordAdded === true) {
 
-                setCommentItem(data);
-                setCommentID(data.CommentID);
-                setCommentUserID(data.userID);
-                setComment(data.Comment);
-                setCommentEmailAddress(data.emailAddress);
+                setCommentItem(data.records[0]);
+                setCommentID(data.records[0].CommentID);
+                setCommentUserID(data.records[0].userID);
+                setComment(data.records[0].Comment);
+                setCommentEmailAddress(data.records[0].emailAddress);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                // dispatch(addStateTitle([{titleID: data.titleID, emailAddress: data.EmailAddress, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, Comment: data.Comment, urlPKDweb: data.urlPKDweb, active: data.active, createDate: data.createDate, updateDate: data.updateDate}]));
+                // dispatch(addStateTitle([{titleID: data.records[0].titleID, emailAddress: data.records[0].EmailAddress, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, Comment: data.records[0].Comment, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
                 // ? Add to local storage also?
 
               } else {

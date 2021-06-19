@@ -359,38 +359,37 @@ const EditEdition = (props) => {
 
             if (data.recordUpdated === true) {
 
-              setEditionItem(data);
-              setEditionID(data.editionID);
-              setTitleID(data.titleID);
-              setMediaID(data.mediaID);
-              setPublicationDate(data.publicationDate);
-              setImageName(data.imageName);
-              setASIN(data.ASIN);
-              setTextLinkShort(data.textLinkShort);
-              setTextLinkFull(data.textLinkFull);
-              setImageLinkSmall(data.imageLinkSmall);
-              setImageLinkMedium(data.imageLinkMedium);
-              setImageLinkLarge(data.imageLinkLarge);
-              setTextImageLink(data.textImageLink);
-              setActive(data.active);
+              setEditionItem(data.records[0]);
+              // setEditionID(data.records[0].editionID);
+              setTitleID(data.records[0].titleID);
+              setMediaID(data.records[0].mediaID);
+              setPublicationDate(data.records[0].publicationDate);
+              setImageName(data.records[0].imageName);
+              setASIN(data.records[0].ASIN);
+              setTextLinkShort(data.records[0].textLinkShort);
+              setTextLinkFull(data.records[0].textLinkFull);
+              setImageLinkSmall(data.records[0].imageLinkSmall);
+              setImageLinkMedium(data.records[0].imageLinkMedium);
+              setImageLinkLarge(data.records[0].imageLinkLarge);
+              setTextImageLink(data.records[0].textImageLink);
+              setActive(data.records[0].active);
 
-              let mediaItem = mediaListState.filter(media => media.mediaID === data.mediaID);
+              let mediaItem = mediaListState.filter(media => media.mediaID === data.records[0].mediaID);
               // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
               mediaItem = mediaItem[0];
 
-              // console.log(componentName, GetDateTime(), "updateEdition typeof data.mediaID", typeof data.mediaID);
+              // console.log(componentName, GetDateTime(), "updateEdition typeof data.records[0].mediaID", typeof data.records[0].mediaID);
               // console.log(componentName, GetDateTime(), "updateEdition mediaItem", mediaItem);
 
-              let titleItem = titleListState.filter(title => title.titleID === data.titleID);
+              let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
               // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
               titleItem = titleItem[0];
 
-              // console.log(componentName, GetDateTime(), "updateEdition typeof data.titleID", typeof data.titleID);
+              // console.log(componentName, GetDateTime(), "updateEdition typeof data.records[0].titleID", typeof data.records[0].titleID);
               // console.log(componentName, GetDateTime(), "updateEdition titleItem", titleItem);
 
-              // TODO: Fix the structure of this Redux call.
               // ? Would still work if the createDate and updateDate were left out?
-              dispatch(updateStateEdition({ editionItemIndex: editionItemIndex, editionID: data.editionID, titleID: data.titleID, mediaID: data.mediaID, publicationDate: data.publicationDate, imageName: data.imageName, ASIN: data.ASIN, textLinkShort: data.textLinkShort, textLinkFull: data.textLinkFull, imageLinkSmall: data.imageLinkSmall, imageLinkMedium: data.imageLinkMedium, imageLinkLarge: data.imageLinkLarge, textImageLink: data.textImageLink, active: data.active, updateDate: new Date().toISOString(), medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } }));
+              dispatch(updateStateEdition({ editionItemIndex: editionItemIndex, editionID: props.editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, updateDate: GetDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
               // ? Add to local storage also?
 
             } else {
@@ -513,11 +512,11 @@ const EditEdition = (props) => {
           setASINMessage(data.message);
 
           if (data.resultsFound === true) {
-            setASINMessage(data.message + "That ASIN already exists in the database. " + data.editions[0].titleName + " (" + data.editions[0].media + ") editionID=" + data.editions[0].editionID);
+            setASINMessage(data.message + "That ASIN already exists in the database. " + data.records[0].titleName + " (" + data.records[0].media + ") editionID=" + data.records[0].editionID);
 
-            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].titleName);
-            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].media);
-            // console.log(componentName, GetDateTime(), "checkASIN", data.editions[0].editionID);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].titleName);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].media);
+            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].editionID);
 
           } else {
             setErrASINMessage(data.message + "That ASIN does not exist in the database");

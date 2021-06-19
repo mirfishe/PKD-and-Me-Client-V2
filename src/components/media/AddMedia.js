@@ -140,19 +140,19 @@ const AddMedia = (props) => {
 
               if (data.recordAdded === true) {
 
-                // setMediaItem(data);
+                // setMediaItem(data.records[0]);
 
-                setMediaID(data.mediaID);
-                setMedia(data.media);
-                setElectronic(data.electronic);
-                setSortID(data.sortID);
-                setActive(data.active);
+                setMediaID(data.records[0].mediaID);
+                setMedia(data.records[0].media);
+                setElectronic(data.records[0].electronic);
+                setSortID(data.records[0].sortID);
+                setActive(data.records[0].active);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(addStateMedia([{ mediaID: data.mediaID, media: data.media, electronic: data.electronic, sortID: data.sortID, active: data.active, createDate: data.createDate, updateDate: data.updateDate }]));
+                dispatch(addStateMedia([{ mediaID: data.records[0].mediaID, media: data.records[0].media, electronic: data.records[0].electronic, sortID: data.records[0].sortID, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
                 // ? Add to local storage also?
 
-                dispatch(addStateURL([{ linkName: encodeURL(data.media), linkType: "media", linkID: data.mediaID }]));
+                dispatch(addStateURL([{ linkName: encodeURL(data.records[0].media), linkType: "media", linkID: data.records[0].mediaID }]));
 
               } else {
                 // addErrorMessage(data.error);

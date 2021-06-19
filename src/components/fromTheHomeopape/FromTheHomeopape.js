@@ -47,7 +47,7 @@ const FromTheHomeopape = (props) => {
       }),
     })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "fetchNews results", results);
+        // console.log(componentName, GetDateTime(), "getNews results", results);
 
         if (!results.ok) {
           // throw Error(results.status + " " + results.statusText + " " + results.url);
@@ -58,7 +58,7 @@ const FromTheHomeopape = (props) => {
 
       })
       .then(results => {
-        console.log(componentName, GetDateTime(), "fetchNews results", results);
+        // console.log(componentName, GetDateTime(), "getNews results", results);
 
         if (results.resultsFound === true) {
 
@@ -69,7 +69,7 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchNews error", error);
+        // console.log(componentName, GetDateTime(), "getNews error", error);
         setErrorMessage(error.name + ": " + error.message);
 
       });
@@ -156,7 +156,8 @@ const FromTheHomeopape = (props) => {
     // fetchNews();
     // fetchNews2();
 
-    fetchNews();
+    // * Handled in a cron job on the server now.
+    // fetchNews();
 
     getNews();
 
@@ -712,7 +713,7 @@ const FromTheHomeopape = (props) => {
               <p key={homeopapeItem.itemID}>
                 <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
                 <a href={itemLink} target="_blank">{itemLink}</a><br />
-                {homeopapeItem.itemContentSnippet}<br />
+                ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
               </p>
               : null}
           </React.Fragment>

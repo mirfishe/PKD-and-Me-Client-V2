@@ -25,7 +25,7 @@ const mediaSlice = createSlice({
         };
 
         state.mediaLoaded = true;
-        state.lastDatabaseRetrievalMedia = new Date().toISOString();
+        state.lastDatabaseRetrievalMedia = GetDateTime();
 
       }
     },

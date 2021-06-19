@@ -26,7 +26,7 @@ const titlesSlice = createSlice({
         };
 
         state.titlesLoaded = true;
-        state.lastDatabaseRetrievalTitles = new Date().toISOString();
+        state.lastDatabaseRetrievalTitles = GetDateTime();
 
       }
     },

@@ -43,6 +43,9 @@ const Checklist = (props) => {
   const linkItem = useSelector(state => state.urls.linkItem);
   // console.log(componentName, GetDateTime(), "linkItem", linkItem);
 
+  const titleListState = useSelector(state => state.titles.arrayTitles);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
+
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
   // console.log(componentName, GetDateTime(), "userReviewListState", userReviewListState);
 
@@ -226,9 +229,9 @@ const Checklist = (props) => {
             // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: new Date().toISOString() }));
+              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
             } else if (updateChecklistMethod === "POST") {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: data.updateDate }));
+              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate }));
             };
 
             const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
@@ -236,12 +239,15 @@ const Checklist = (props) => {
 
             if (updateChecklistMethod === "PUT") {
 
-              dispatch(updateStateUserReview({ userReviewListIndex: userReviewListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, active: data.active, updateDate: data.updateDate }));
+              dispatch(updateStateUserReview({ userReviewListIndex: userReviewListIndex, reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, active: data.records[0].active, updateDate: data.records[0].updateDate }));
 
             } else if (updateChecklistMethod === "POST") {
 
-              // TODO: Fix the structure of this Redux call.
-              dispatch(addStateUserReview([{ reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createDate: data.createDate, updateDate: data.updateDate, title: { titleID: checklistListItem.titleID, titleName: checklistListItem.titleName, titleSort: checklistListItem.titleSort, titleURL: checklistListItem.titleURL, authorFirstName: checklistListItem.authorFirstName, authorLastName: checklistListItem.authorLastName, publicationDate: checklistListItem.publicationDate, imageName: checklistListItem.imageName, categoryID: checklistListItem.categoryID, shortDescription: checklistListItem.shortDescription, urlPKDweb: checklistListItem.urlPKDweb, active: checklistListItem.active, createDate: checklistListItem.createDate, updateDate: checklistListItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }]));
+              let titleItem = titleListState.filter(title => title.titleID === titleID);
+              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
+              titleItem = titleItem[0];
+
+              dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
 
             };
 

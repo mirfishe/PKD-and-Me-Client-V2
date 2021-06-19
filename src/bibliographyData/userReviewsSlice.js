@@ -29,7 +29,7 @@ const userReviewsSlice = createSlice({
         };
 
         state.userReviewsLoaded = true;
-        state.lastDatabaseRetrievalUserReviews = new Date().toISOString();
+        state.lastDatabaseRetrievalUserReviews = GetDateTime();
 
       }
     },
@@ -188,25 +188,25 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].urlPKDweb = userReviewItem.urlPKDweb;
           };
 
-          if (userReviewItem.hasOwnProperty("active")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
-          };
+          // if (userReviewItem.hasOwnProperty("active")) {
+          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+          // };
 
           if (userReviewItem.hasOwnProperty("titleActive")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleActive = userReviewItem.titleActive;
           };
 
-          if (userReviewItem.hasOwnProperty("createDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].createDate = userReviewItem.createDate;
-          };
+          // if (userReviewItem.hasOwnProperty("createDate")) {
+          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].createDate = userReviewItem.createDate;
+          // };
 
           if (userReviewItem.hasOwnProperty("titleCreateDate")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleCreateDate = userReviewItem.titleCreateDate;
           };
 
-          if (userReviewItem.hasOwnProperty("updateDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updateDate = userReviewItem.updateDate;
-          };
+          // if (userReviewItem.hasOwnProperty("updateDate")) {
+          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].updateDate = userReviewItem.updateDate;
+          // };
 
           if (userReviewItem.hasOwnProperty("titleUpdatedDate")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleUpdatedDate = userReviewItem.titleUpdatedDate;
@@ -233,9 +233,9 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].email = userReviewItem.email;
           };
 
-          if (userReviewItem.hasOwnProperty("updatedBy")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
-          };
+          // if (userReviewItem.hasOwnProperty("updatedBy")) {
+          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
+          // };
 
           if (userReviewItem.hasOwnProperty("userUpdatedBy")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].userUpdatedBy = userReviewItem.userUpdatedBy;
@@ -245,9 +245,9 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].admin = userReviewItem.admin;
           };
 
-          if (userReviewItem.hasOwnProperty("active")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
-          };
+          // if (userReviewItem.hasOwnProperty("active")) {
+          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+          // };
 
           if (userReviewItem.hasOwnProperty("userActive")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].userActive = userReviewItem.userActive;
@@ -295,7 +295,7 @@ const userReviewsSlice = createSlice({
     //       };
 
     //       state.userReviewsRatingsLoaded = true;
-    //       state.lastDatabaseRetrievalUserReviewsRatings = new Date().toISOString();
+    //       state.lastDatabaseRetrievalUserReviewsRatings = GetDateTime();
 
     //     }
     //   },

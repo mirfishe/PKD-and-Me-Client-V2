@@ -26,7 +26,7 @@ const editionsSlice = createSlice({
         };
 
         state.editionsLoaded = true;
-        state.lastDatabaseRetrievalEditions = new Date().toISOString();
+        state.lastDatabaseRetrievalEditions = GetDateTime();
 
       }
     },
@@ -138,9 +138,17 @@ const editionsSlice = createSlice({
             state.arrayEditions[editionItem.editionItemIndex].electronic = editionItem.electronic;
           };
 
+          if (editionItem.hasOwnProperty("sortID")) {
+            state.arrayEditions[editionItem.editionItemIndex].sortID = editionItem.sortID;
+          };
+
           if (editionItem.hasOwnProperty("mediaSortID")) {
             state.arrayEditions[editionItem.editionItemIndex].mediaSortID = editionItem.mediaSortID;
           };
+
+          // if (editionItem.hasOwnProperty("active")) {
+          //   state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
+          // };
 
           if (editionItem.hasOwnProperty("mediaActive")) {
             state.arrayEditions[editionItem.editionItemIndex].mediaActive = editionItem.mediaActive;
@@ -201,6 +209,10 @@ const editionsSlice = createSlice({
 
           if (editionItem.hasOwnProperty("urlPKDweb")) {
             state.arrayEditions[editionItem.editionItemIndex].urlPKDweb = editionItem.urlPKDweb;
+          };
+
+          if (editionItem.hasOwnProperty("titleActive")) {
+            state.arrayEditions[editionItem.editionItemIndex].titleActive = editionItem.titleActive;
           };
 
           if (editionItem.hasOwnProperty("titleCreateDate")) {

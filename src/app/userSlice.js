@@ -121,7 +121,7 @@ const userSlice = createSlice({
         };
 
         state.checklistLoaded = true;
-        state.lastDatabaseRetrievalChecklist = new Date().toISOString();
+        state.lastDatabaseRetrievalChecklist = GetDateTime();
 
       }
     },

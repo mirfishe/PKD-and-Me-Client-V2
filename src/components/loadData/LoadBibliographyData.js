@@ -116,7 +116,7 @@ function LoadBibliographyData() {
 
     dispatch(loadArrayTitles(arrayTitles));
     dispatch(setUserReviewsRatingsLoaded(true));
-    dispatch(setLastDatabaseRetrievalUserReviewsRatings(new Date().toISOString()));
+    dispatch(setLastDatabaseRetrievalUserReviewsRatings(GetDateTime()));
 
   };
 
@@ -234,26 +234,26 @@ function LoadBibliographyData() {
       // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayCategories(data));
       // localStorage.setItem("arrayCategories", JSON.stringify(data));
-      // localStorage.setItem("lastDatabaseRetrievalCategories", new Date().toISOString());
+      // localStorage.setItem("lastDatabaseRetrievalCategories", GetDateTime());
       loadURLs(data, source);
     } else if (source === "media") {
       // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayMedia(data));
       // localStorage.setItem("arrayMedia", JSON.stringify(data));
-      // localStorage.setItem("lastDatabaseRetrievalMedia", new Date().toISOString());
+      // localStorage.setItem("lastDatabaseRetrievalMedia", GetDateTime());
       loadURLs(data, source);
     } else if (source === "titles") {
       // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       // dispatch(loadArrayTitles(data));
       getUserReviewsRatings(data);
       // localStorage.setItem("arrayTitles", JSON.stringify(data));
-      // localStorage.setItem("lastDatabaseRetrievalTitles", new Date().toISOString());
+      // localStorage.setItem("lastDatabaseRetrievalTitles", GetDateTime());
       loadURLs(data, source);
     } else if (source === "editions") {
       // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayEditions(data));
       // localStorage.setItem("arrayEditions", JSON.stringify(data));
-      // localStorage.setItem("lastDatabaseRetrievalEditions", new Date().toISOString());
+      // localStorage.setItem("lastDatabaseRetrievalEditions", GetDateTime());
     };
 
   };

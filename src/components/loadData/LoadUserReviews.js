@@ -41,7 +41,7 @@ function LoadUserReviews() {
       // console.log(componentName, GetDateTime(), "loadDataStore data", data);
       dispatch(loadArrayUserReviews(data));
       // localStorage.setItem("arrayUserReviews", data);
-      // localStorage.setItem("lastDatabaseRetrievalUserReviews", new Date().toISOString());
+      // localStorage.setItem("lastDatabaseRetrievalUserReviews", GetDateTime());
       // } else if (source === "userReviewRating") {
       //   // console.log(componentName, GetDateTime(), "loadDataStore data", data);
 
@@ -72,7 +72,7 @@ function LoadUserReviews() {
       //   // dispatch(loadArrayUserReviewsRatings(data));
       //   dispatch(loadArrayUserReviewsRatings(userReviewsRatings));
       //   // localStorage.setItem("arrayUserReviewsRatings", JSON.stringify(data));
-      //   // localStorage.setItem("lastDatabaseRetrievalUserReviewsRatings", new Date().toISOString());
+      //   // localStorage.setItem("lastDatabaseRetrievalUserReviewsRatings", GetDateTime());
     };
 
   };

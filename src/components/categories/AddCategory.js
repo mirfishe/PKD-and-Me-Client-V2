@@ -136,18 +136,18 @@ const AddCategory = (props) => {
 
               if (data.recordAdded === true) {
 
-                // setCategoryItem(data);
+                // setCategoryItem(data.records[0]);
 
-                setCategoryID(data.categoryID);
-                setCategory(data.category);
-                setSortID(data.sortID);
-                setActive(data.active);
+                setCategoryID(data.records[0].categoryID);
+                setCategory(data.records[0].category);
+                setSortID(data.records[0].sortID);
+                setActive(data.records[0].active);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(addStateCategory([{ categoryID: data.categoryID, category: data.category, sortID: data.sortID, active: data.active, createDate: data.createDate, updateDate: data.updateDate }]));
+                dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
                 // ? Add to local storage also?
 
-                dispatch(addStateURL([{ linkName: encodeURL(data.category), linkType: "category", linkID: data.categoryID }]));
+                dispatch(addStateURL([{ linkName: encodeURL(data.records[0].category), linkType: "category", linkID: data.records[0].categoryID }]));
 
               } else {
                 // addErrorMessage(data.error);

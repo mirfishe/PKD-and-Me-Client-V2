@@ -360,33 +360,36 @@ const EditTitle = (props) => {
 
               if (data.recordUpdated === true) {
 
-                setTitleItem(data);
-                setTitleID(data.titleID);
-                setTitleName(data.titleName);
-                setTitleSort(data.titleSort);
-                setTitleURL(data.titleURL);
-                setAuthorFirstName(data.authorFirstName);
-                setAuthorLastName(data.authorLastName);
-                setPublicationDate(data.publicationDate);
-                setImageName(data.imageName);
-                setCategoryID(data.categoryID);
-                setShortDescription(data.shortDescription);
-                setUrlPKDweb(data.urlPKDweb);
-                setActive(data.active);
+                setTitleItem(data.records[0]);
+                // setTitleID(data.records[0].titleID);
+                setTitleName(data.records[0].titleName);
+                setTitleSort(data.records[0].titleSort);
+                setTitleURL(data.records[0].titleURL);
+                setAuthorFirstName(data.records[0].authorFirstName);
+                setAuthorLastName(data.records[0].authorLastName);
+                setPublicationDate(data.records[0].publicationDate);
+                setImageName(data.records[0].imageName);
+                setCategoryID(data.records[0].categoryID);
+                setShortDescription(data.records[0].shortDescription);
+                setUrlPKDweb(data.records[0].urlPKDweb);
+                setActive(data.records[0].active);
 
-                let categoryItem = categoryList.filter(category => category.categoryID === data.categoryID);
-                // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
+                // console.log(componentName, GetDateTime(), "updateTitle categoryList", categoryList);
+
+                let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
+                // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
                 categoryItem = categoryItem[0];
 
-                // console.log(componentName, GetDateTime(), "addTitle typeof data.categoryID", typeof data.categoryID);
-                // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
+                // console.log(componentName, GetDateTime(), "updateTitle data.records[0].categoryID", data.records[0].categoryID);
+                // console.log(componentName, GetDateTime(), "updateTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
+                // console.log(componentName, GetDateTime(), "updateTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(updateStateTitle({ titleItemIndex: titleItemIndex, titleID: data.titleID, titleName: data.titleName, titleSort: data.titleSort, titleURL: data.titleURL, authorFirstName: data.authorFirstName, authorLastName: data.authorLastName, publicationDate: data.publicationDate, imageName: data.imageName, categoryID: data.categoryID, shortDescription: data.shortDescription, urlPKDweb: data.urlPKDweb, active: data.active, updateDate: new Date().toISOString(), category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } }));
+                dispatch(updateStateTitle({ titleItemIndex: titleItemIndex, titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
                 // ? Update local storage also?
 
                 // * Update/Delete related editions also if active is set to false
-                if (data.active === false) {
+                if (data.records[0].active === false) {
                   for (let i = 0; i < editionList.length; i++) {
 
                     let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
@@ -398,35 +401,35 @@ const EditTitle = (props) => {
 
                 };
 
-                let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
+                let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
                 // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
 
                 // * Update/Delete related urls in arrayURLs also
-                if (data.active === false) {
+                if (data.records[0].active === false) {
                   dispatch(deleteStateURL(urlListIndex));
                 } else {
                   // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
-                  // console.log(componentName, GetDateTime(), "updateTitle data.titleURL", data.titleURL);
-                  // console.log(componentName, GetDateTime(), "updateTitle data.titleID", data.titleID);
-                  // console.log(componentName, GetDateTime(), "updateTitle data.categoryID", data.categoryID);
+                  // console.log(componentName, GetDateTime(), "updateTitle data.records[0].titleURL", data.records[0].titleURL);
+                  // console.log(componentName, GetDateTime(), "updateTitle props.titleID", props.titleID);
+                  // console.log(componentName, GetDateTime(), "updateTitle data.records[0].categoryID", data.records[0].categoryID);
 
-                  let categoryName = categoryList.find(category => category.categoryID === data.categoryID);
+                  let categoryName = categoryList.find(category => category.categoryID === data.records[0].categoryID);
                   // console.log(componentName, GetDateTime(), "updateTitle categoryName", categoryName);
                   // console.log(componentName, GetDateTime(), "updateTitle categoryName.category", categoryName.category);
 
-                  // console.log(componentName, GetDateTime(), "updateTitle typeof data.categoryID", typeof data.categoryID);
+                  // console.log(componentName, GetDateTime(), "updateTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
 
                   // ? Doesn't seem to be updating the state for some reason?
-                  // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID, linkTypeNameID: data.categoryID, linkTypeName: categoryName.category}]));
+                  // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
 
                   dispatch(deleteStateURL(urlListIndex));
-                  dispatch(addStateURL([{ urlListIndex: urlListIndex, linkName: data.titleURL, linkType: "title", linkID: data.titleID, linkTypeNameID: data.categoryID, linkTypeName: categoryName.category }]));
+                  dispatch(addStateURL([{ urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
 
                 };
 
                 // * Redirect to the new titleURL is that was changed
-                if (linkItem.linkName !== data.titleURL) {
-                  redirectPage(data.titleURL);
+                if (linkItem.linkName !== data.records[0].titleURL) {
+                  redirectPage(data.records[0].titleURL);
                 };
 
               } else {

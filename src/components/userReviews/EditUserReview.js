@@ -309,37 +309,36 @@ const EditUserReview = (props) => {
 
           if (data.recordUpdated === true) {
 
-            setUserReviewItem(data);
-            setReviewID(data.reviewID);
-            setUserID(data.userID);
-            setUpdatedBy(data.updatedBy);
-            setTitleID(data.titleID);
-            setRead(data.read);
-            setDateRead(data.dateRead);
-            setRating(data.rating);
-            setRanking(data.ranking);
-            setShortReview(data.shortReview);
-            setLongReview(data.longReview);
-            setActive(data.active);
+            setUserReviewItem(data.records[0]);
+            // setReviewID(data.records[0].reviewID);
+            setUserID(data.records[0].userID);
+            setUpdatedBy(data.records[0].updatedBy);
+            setTitleID(data.records[0].titleID);
+            setRead(data.records[0].read);
+            setDateRead(data.records[0].dateRead);
+            setRating(data.records[0].rating);
+            setRanking(data.records[0].ranking);
+            setShortReview(data.records[0].shortReview);
+            setLongReview(data.records[0].longReview);
+            setActive(data.records[0].active);
 
-            let titleItem = titleListState.filter(title => title.titleID === data.titleID);
+            let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
             // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
             titleItem = titleItem[0];
 
             // console.log(componentName, GetDateTime(), "updateUserReview titleItem", titleItem);
-            // console.log(componentName, GetDateTime(), "updateUserReview typeof data.titleID", typeof data.titleID);
+            // console.log(componentName, GetDateTime(), "updateUserReview typeof data.records[0].titleID", typeof data.records[0].titleID);
 
-            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
+            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.records[0].titleID);
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
-            // TODO: Fix the structure of this Redux call.
             // ? Would still work if the createDate and updateDate were left out?
-            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, ranking: data.ranking, shortReview: data.shortReview, longReview: data.longReview, active: data.active, updateDate: new Date().toISOString(), title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } }));
+            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, updateDate: GetDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
             // ? Add to local storage also?
 
             // * Recalculate ratings
-            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === data.titleID && ((userReview.userReviewActive === true || userReview.userReviewActive === 1)));
+            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID && ((userReview.userReviewActive === true || userReview.userReviewActive === 1)));
             let userReviews = [];
             for (let i = 0; i < userReviewsList.length; i++) {
               userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
@@ -350,26 +349,25 @@ const EditUserReview = (props) => {
 
             // console.log(componentName, GetDateTime(), "updateUserReview userReviews", userReviews);
 
-            // TODO: Fix the structure of this Redux call.
             // * Get all reviews for the title
             // ? Get the latest from state?
             // ? Update the state user review array?
             // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>'
             // console.log(componentName, GetDateTime(), "updateUserReview userReviews[userReviewsIndex].rating", userReviews[userReviewsIndex].rating);
-            // userReviews[userReviewsIndex].rating = data.rating;
+            // userReviews[userReviewsIndex].rating = data.records[0].rating;
             userReviews.splice(userReviewsIndex, 1);
-            // userReviews.push({reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, rating: data.rating, shortReview: data.shortReview, longReview: data.longReview, active: data.active, createDate: data.createDate, updateDate: data.updateDate, title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}, user: {userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active}});
+            // userReviews.push({ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
 
-            // console.log(componentName, GetDateTime(), "updateUserReview data.active", data.active);
+            // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].active", data.records[0].active);
 
-            if (data.active === true || data.active === 1) {
-              // console.log(componentName, GetDateTime(), "updateUserReview data.reviewID", data.reviewID);
-              // console.log(componentName, GetDateTime(), "updateUserReview data.userID", data.userID);
-              // console.log(componentName, GetDateTime(), "updateUserReview data.updatedBy", data.updatedBy);
-              // console.log(componentName, GetDateTime(), "updateUserReview data.rating", data.rating);
+            if (data.records[0].active === true || data.records[0].active === 1) {
+              // console.log(componentName, GetDateTime(), "updateUserReview props.reviewID", props.reviewID);
+              // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].userID", data.records[0].userID);
+              // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].updatedBy", data.records[0].updatedBy);
+              // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].rating", data.records[0].rating);
 
               // ! This line of code is not working for some reason
-              userReviews.push({ reviewID: parseInt(data.reviewID), userID: data.userID, updatedBy: data.updatedBy, rating: data.rating, ranking: data.ranking });
+              userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, rating: data.records[0].rating, ranking: data.records[0].ranking });
 
               // console.log(componentName, GetDateTime(), "updateUserReview userReviews", userReviews);
             };
@@ -394,12 +392,12 @@ const EditUserReview = (props) => {
             // console.log(componentName, GetDateTime(), "updateUserReview titleItemIndex", titleItemIndex);
             dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.titleID);
+            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
 
-            if (data.active === true || data.active === 1) {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.reviewID, userID: data.userID, updatedBy: data.updatedBy, titleID: data.titleID, read: data.read, dateRead: data.dateRead, userReviewActive: data.active, userReviewUpdateDate: new Date().toISOString() }));
+            if (data.records[0].active === true || data.records[0].active === 1) {
+              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
             } else {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: null, userID: null, updatedBy: null, titleID: data.titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
+              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: null, userID: null, updatedBy: null, titleID: data.records[0].titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
             };
 
           } else {

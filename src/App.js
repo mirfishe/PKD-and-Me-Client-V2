@@ -37,7 +37,6 @@ import Login from "./components/users/Login";
 import Register from "./components/users/Register";
 import EditUser from "./components/users/EditUser";
 import Checklist from "./components/checklist/Checklist";
-
 import FromTheHomeopape from "./components/fromTheHomeopape/FromTheHomeopape";
 
 function App() {
@@ -206,7 +205,7 @@ function App() {
           // };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "getUser data", data);
+          // console.log(componentName, GetDateTime(), "getUser data", data);
 
           setUserResultsFound(data.resultsFound);
           // addMessage(data.message);
@@ -404,7 +403,12 @@ function App() {
               <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
             </NavItem>
             : null}
-          {(showAbout || showAllMenuItems) && IsEmpty(admin) === false && admin === true ?
+          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
+            <NavItem className="mx-3">
+              <Link to="/fromTheHomeopape"><NavbarText>From The Homeopape</NavbarText></Link>
+            </NavItem>
+            : null}
+          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
             <NavItem className="mx-3">
               <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
             </NavItem>
@@ -587,6 +591,9 @@ function App() {
               <Route exact path="/socialMedia" component={FormatPost} />
               <Route exact path="/homeopape" component={Homeopape} />
               <Route exact path="/dickian" component={Dickian} />
+
+              <Route exact path="/fromTheHomeopape" component={FromTheHomeopape} />
+
               {/* <Route exact path="/categoryList" component={CategoryList} />
               <Route exact path="/mediaList" component={MediaList} />
               <Route exact path="/titleList" component={TitleList} />
@@ -614,9 +621,9 @@ function App() {
 
             </Switch>
 
-            {/* {process.env.NODE_ENV === "development" ? */}
+            {/* {process.env.NODE_ENV === "development" ?
             <FromTheHomeopape />
-            {/* : null} */}
+            : null} */}
 
           </Col>
         </Row>

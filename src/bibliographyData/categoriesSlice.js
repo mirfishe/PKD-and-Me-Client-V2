@@ -25,7 +25,7 @@ const categoriesSlice = createSlice({
         };
 
         state.categoriesLoaded = true;
-        state.lastDatabaseRetrievalCategories = new Date().toISOString();
+        state.lastDatabaseRetrievalCategories = GetDateTime();
 
       }
     },
