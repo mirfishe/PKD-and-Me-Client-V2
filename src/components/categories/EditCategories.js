@@ -123,12 +123,12 @@ const EditCategories = (props) => {
                 <FormGroup row key={category.categoryID}>
 
                   <Col xs="10">
-                    <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(event.target.value); console.log(event.target); }} />
+                    <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(componentName, GetDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
                     {/* {IsEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
                   </Col>
 
                   <Col xs="2">
-                    <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(event.target.value); console.log(event.target); }} />
+                    <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(componentName, GetDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
                     {/* {IsEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
                   </Col>
 

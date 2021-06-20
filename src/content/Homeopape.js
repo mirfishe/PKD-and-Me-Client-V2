@@ -45,7 +45,7 @@ const Homeopape = () => {
           <Container>
             <blockquote className="blockquote-reverse">
               <p>In a corner of the large room a chime sounded and a tinkling mechanical voice called, “I’m your free homeopape machine, a service supplied exclusively by all the fine Rootes hotels throughout Earth and the colonies. Simply dial the classification of news that you wish, and in a matter of seconds I’ll speedily provide you with a fresh, up-to-the-minute homeopape tailored to your individual requirements; and, let me repeat, at no cost to you!”</p>
-              <footer>From <Link to="/Ubik" onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("Ubik"); }}>Ubik</Link>, by <Link to="/about">Philip K. Dick</Link></footer>
+              <footer>From <Link to="/Ubik" onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage("Ubik"); }}>Ubik</Link>, by <Link to="/about">Philip K. Dick</Link></footer>
             </blockquote>
           </Container>
 

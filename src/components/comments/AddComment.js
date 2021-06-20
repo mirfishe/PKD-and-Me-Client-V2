@@ -246,14 +246,14 @@ const AddComment = (props) => {
             <FormGroup>
 
               <Label for="txtComment">Comment</Label>
-              <Input type="textarea" id="txtComment" rows={10} value={txtComment} onChange={(event) => {/*console.log(event.target.value);*/ setTxtComment(event.target.value); }} />
+              <Input type="textarea" id="txtComment" rows={10} value={txtComment} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtComment(event.target.value); }} />
               {IsEmpty(errComment) === false ? <Alert color="danger">{errComment}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
 
               <Label for="txtEmailAddress">Email Address</Label>
-              <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmailAddress(event.target.value); }} />
+              <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmailAddress(event.target.value); }} />
               {IsEmpty(errEmailAddress) === false ? <Alert color="danger">{errEmailAddress}</Alert> : null}
 
             </FormGroup>

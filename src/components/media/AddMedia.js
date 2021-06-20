@@ -149,7 +149,7 @@ const AddMedia = (props) => {
                 setActive(data.records[0].active);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(addStateMedia([{ mediaID: data.records[0].mediaID, media: data.records[0].media, electronic: data.records[0].electronic, sortID: data.records[0].sortID, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
+                dispatch(addStateMedia([{ mediaID: data.records[0].mediaID, media: data.records[0].media, electronic: data.records[0].electronic, sortID: data.records[0].sortID, active: data.records[0].active, mediaActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
                 // ? Add to local storage also?
 
                 dispatch(addStateURL([{ linkName: encodeURL(data.records[0].media), linkType: "media", linkID: data.records[0].mediaID }]));
@@ -222,13 +222,13 @@ const AddMedia = (props) => {
             <FormGroup>
 
               <Label for="txtMedia">Media</Label>
-              <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => {/*console.log(event.target.value);*/ setTxtMedia(event.target.value); }} />
+              <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtMedia(event.target.value); }} />
               {IsEmpty(errMedia) === false ? <Alert color="danger">{errMedia}</Alert> : null}
 
             </FormGroup>
             <FormGroup className="ml-4">
 
-              <Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(event.target.value);*/ setCbxElectronic(!cbxElectronic); }} />
+              <Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxElectronic(!cbxElectronic); }} />
               <Label for="cbxElectronic">Electronic</Label>
 
             </FormGroup>

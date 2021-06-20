@@ -78,13 +78,13 @@ const Media = (props) => {
 
             return (
               <NavItem key={media.mediaID} className="mt-2 pl-3">
-                {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}
+                {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(componentName, GetDateTime(), "event.target.value", event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}
                 {/* <Link to={`/editions/${media.mediaID}`}>{media.mediaID}</Link>
                 <Link to={`/editions/${media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</Link>
                 <Link to={"/editions/" + media.mediaID}>{media.mediaID}</Link> */}
                 {/* <Link to={"/editions/" + encodeURL(media.media)}>{media.media}</Link> */}
                 {/* <Link to={encodeURL(media.media)}>{media.media}</Link> */}
-                <Link to={encodeURL(media.media)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(media.media)); }}>{media.media}
+                <Link to={encodeURL(media.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(media.media)); }}>{media.media}
                   {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                 </Link>
               </NavItem>

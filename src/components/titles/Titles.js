@@ -196,9 +196,9 @@ const Titles = (props) => {
           <Breadcrumb className="breadcrumb mb-2">
             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
             {IsEmpty(categoryParam) === false && isNaN(categoryParam) ?
-              <BreadcrumbItem active><Link to={categoryParam} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(categoryParam); }}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={categoryParam} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(categoryParam); }}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
               :
-              <BreadcrumbItem active><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
             }
           </Breadcrumb>
         </Col>
@@ -284,14 +284,14 @@ const Titles = (props) => {
                   : null}
                 <Row className="no-gutters">
                   <Col className="col-md-4">
-                    <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>
+                    <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
                       {IsEmpty(title.imageName) === false ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                     </Link>
                   </Col>
                   <Col className="col-md-8">
                     <CardBody>
                       {/* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
-                      <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                      <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
                         {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
                       <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
                       <CardText className="smallerText">{editionsAvailable}<span> </span>
@@ -299,13 +299,13 @@ const Titles = (props) => {
                         {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
                         edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
                       {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-                      {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
+                      {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null}
                     </CardBody>
                   </Col>
                 </Row>
                 {IsEmpty(categoryParam) === false ?
                   <CardFooter className="cardFooter">
-                    <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
+                    <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
                     {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
                         {IsEmpty(title.publicationDate) === false ? <span> <small>({DisplayYear(title.publicationDate)})</small></span> : null} */}
                   </CardFooter>

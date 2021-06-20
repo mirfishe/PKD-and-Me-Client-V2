@@ -144,7 +144,7 @@ const AddCategory = (props) => {
                 setActive(data.records[0].active);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
+                dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, categoryActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
                 // ? Add to local storage also?
 
                 dispatch(addStateURL([{ linkName: encodeURL(data.records[0].category), linkType: "category", linkID: data.records[0].categoryID }]));
@@ -216,7 +216,7 @@ const AddCategory = (props) => {
             <FormGroup>
 
               <Label for="txtCategory">Category</Label>
-              <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => {/*console.log(event.target.value);*/ setTxtCategory(event.target.value); }} />
+              <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtCategory(event.target.value); }} />
               {IsEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null}
 
             </FormGroup>

@@ -62,6 +62,7 @@ const Title = (props) => {
   let titleNameBreadCrumb = "";
   let titleID = "";
   let titlePublicationDate = "";
+  let titleImageName = "";
   // ! This code is causing React to have too many re-renders in this location
   // const [titleID, setTitleID] = useState("");
   // const [titlePublicationDate, setTitlePublicationDate] = useState("");
@@ -75,6 +76,7 @@ const Title = (props) => {
     titleNameBreadCrumb = titleList[0].titleName;
     titleID = titleList[0].titleID;
     titlePublicationDate = titleList[0].publicationDate;
+    titleImageName = titleList[0].imageName;
     // setTitleID(titleList[0].titleID);
     // setTitlePublicationDate(titleList[0].publicationDate);
 
@@ -94,6 +96,7 @@ const Title = (props) => {
       titleNameBreadCrumb = title.titleName;
       titleID = title.titleID;
       titlePublicationDate = title.publicationDate;
+      titleImageName = title.imageName;
       // setTitleID(title.titleID);
       // setTitlePublicationDate(title.publicationDate);
 
@@ -321,9 +324,9 @@ const Title = (props) => {
           <Breadcrumb className="breadcrumb mb-2">
             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
             {IsEmpty(titleList[0]) === false && IsEmpty(titleList[0].category) === false && isNaN(titleList[0].category) ?
-              <BreadcrumbItem><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></BreadcrumbItem>
+              <BreadcrumbItem><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></BreadcrumbItem>
               :
-              <BreadcrumbItem><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
+              <BreadcrumbItem><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
             }
             <BreadcrumbItem active>{titleNameBreadCrumb}</BreadcrumbItem>
           </Breadcrumb>
@@ -392,7 +395,7 @@ const Title = (props) => {
 
                 {IsEmpty(title.shortDescription) === false ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
                 {IsEmpty(title.urlPKDweb) === false ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
-                {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} displayButton={true} /> : null}
+                {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null}
               </Col>
             </Row>
 
@@ -411,7 +414,7 @@ const Title = (props) => {
             <Row className="my-4">
                 <Col xs="12">
                     <h5 className="text-center">Find A Copy 
-                    {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={titleID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
+                    {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
                     </h5>
                 </Col>
             </Row>
@@ -467,7 +470,7 @@ const Title = (props) => {
                         <Col className="col-md-6">
                             <CardBody>
                                 {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
-                                {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} displayButton={true} /> : null}
+                                {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
                             </CardBody>
                         </Col>
                     </Row>
@@ -482,7 +485,7 @@ const Title = (props) => {
             </Row> */}
 
       <Row>
-        <Edition titleID={titleID} titlePublicationDate={titlePublicationDate} />
+        <Edition titleID={titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} />
       </Row>
 
       <Row>

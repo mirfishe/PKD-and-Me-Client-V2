@@ -311,35 +311,35 @@ const EditUser = (props) => {
             <FormGroup>
 
               <Label for="txtFirstName">First Name</Label>
-              <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtFirstName(event.target.value); }} />
+              <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtFirstName(event.target.value); }} />
               {errFirstName !== "" ? <Alert color="danger">{errFirstName}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
 
               <Label for="txtLastName">Last Name</Label>
-              <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(event.target.value);*/ setTxtLastName(event.target.value); }} />
+              <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtLastName(event.target.value); }} />
               {errLastName !== "" ? <Alert color="danger">{errLastName}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
 
               <Label for="txtEmail">Email Address</Label>
-              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(event.target.value);*/ setTxtEmail(event.target.value); }} />
+              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
               {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
 
             </FormGroup>
             <FormGroup>
 
               <Label for="txtPassword">Password</Label>
-              <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(event.target.value);*/ setTxtPassword(event.target.value); }} />
+              <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
               {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
 
             </FormGroup>
 
             <ModalFooter>
-              <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(event.target.value);*/ updateUser(false); }}>Update</Button>
-              <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(event.target.value);*/ updateUser(true); }}>Delete</Button>
+              <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateUser(false); }}>Update</Button>
+              <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateUser(true); }}>Delete</Button>
               <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
           </Form>
