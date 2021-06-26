@@ -23,6 +23,8 @@ const FormatPost = () => {
 
 
   const toTitleCase = (title) => {
+    // console.log(componentName, GetDateTime(), "toTitleCase title", title);
+
     // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
     let i, j, str, lowers, uppers;
     str = title.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
@@ -46,6 +48,7 @@ const FormatPost = () => {
         uppers[i].toUpperCase());
 
     return str;
+
   };
 
 
@@ -86,7 +89,6 @@ const FormatPost = () => {
       post = post + " #MinorityReport ";
     };
 
-
     let param = "";
     let regExp = "";
     let newURL = txtArticleURL;
@@ -124,7 +126,6 @@ const FormatPost = () => {
     newURL = newURL.replace(regExp, "");
     // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
 
-
     post = post + newURL;
 
     // setFormattedPost(post);
@@ -134,7 +135,6 @@ const FormatPost = () => {
     formattedPostsArray.push(post);
 
     setFormattedPosts(formattedPostsArray);
-
 
   };
 
@@ -220,10 +220,10 @@ const FormatPost = () => {
                             {IsEmpty(formattedPost) === false ? <Alert color="info">{formattedPost}</Alert> : null}
                         </FormGroup> */}
 
-            {formattedPosts.map((formattedPost) => {
+            {formattedPosts.map((formattedPost, index) => {
 
               return (
-                <FormGroup className="text-center">
+                <FormGroup key={index} className="text-center">
                   <Alert color="info">{formattedPost}</Alert>
                 </FormGroup>
               );

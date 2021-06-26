@@ -694,10 +694,10 @@ const EditEdition = (props) => {
 
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Update Edition</Button>
-              {IsEmpty(active) === true && (active === false || active === 0) ?
+              {IsEmpty(active) === false && (active === false || active === 0) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Undelete/Restore Edition</Button>
                 : null}
-              {IsEmpty(active) === true && (active === true || active === 1) ?
+              {IsEmpty(active) === false && (active === true || active === 1) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(true); }}>Delete Edition</Button>
                 : null}
               <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ deleteEdition(); }}>Hard Delete Edition</Button>

@@ -444,7 +444,7 @@ const AddTitle = (props) => {
                   <option value="">Select a Category</option>
                   {categoryList.map((category) => {
                     return (
-                      <React.Fragment>
+                      <React.Fragment key={category.categoryID}>
                         {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
                         <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
                       </React.Fragment>

@@ -197,7 +197,7 @@ const Checklist = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "updateChecklist data", data);
+          // console.log(componentName, GetDateTime(), "updateChecklist data", data);
 
           let recordChanged = null;
 
@@ -222,16 +222,16 @@ const Checklist = (props) => {
             // ! Need to update the other components after this function runs
             // this.props.userReviewUpdated();
 
-            const checklistListItem = checklistList.find(title => title.titleID === titleID);
-            // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
+            // const checklistListItem = checklistList.find(title => title.titleID === titleID);
+            // console.log(componentName, GetDateTime(), "updateChecklist checklistListItem", checklistListItem);
 
-            const checklistListIndex = checklistList.findIndex(title => title.titleID === titleID);
+            // const checklistListIndex = checklistList.findIndex(title => title.titleID === titleID);
             // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
             } else if (updateChecklistMethod === "POST") {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate }));
             };
 
             const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);

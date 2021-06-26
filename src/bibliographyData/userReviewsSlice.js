@@ -48,7 +48,7 @@ const userReviewsSlice = createSlice({
     },
     updateStateUserReview: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "updateStateUserReview action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "updateStateUserReview action.payload", action.payload);
 
         const userReviewItem = action.payload;
         // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem", userReviewItem);
@@ -93,20 +93,20 @@ const userReviewsSlice = createSlice({
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].ranking = userReviewItem.ranking;
           };
 
-          if (userReviewItem.hasOwnProperty("owned")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].owned = userReviewItem.owned;
-          };
-
-          if (userReviewItem.hasOwnProperty("purchaseDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].purchaseDate = userReviewItem.purchaseDate;
-          };
-
           if (userReviewItem.hasOwnProperty("shortReview")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
           };
 
           if (userReviewItem.hasOwnProperty("longReview")) {
             state.arrayUserReviews[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
+          };
+
+          if (userReviewItem.hasOwnProperty("owned")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].owned = userReviewItem.owned;
+          };
+
+          if (userReviewItem.hasOwnProperty("datePurchased")) {
+            state.arrayUserReviews[userReviewItem.userReviewItemIndex].datePurchased = userReviewItem.datePurchased;
           };
 
           if (userReviewItem.hasOwnProperty("active")) {

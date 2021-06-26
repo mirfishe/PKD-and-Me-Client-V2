@@ -45,7 +45,7 @@ const titlesSlice = createSlice({
     },
     updateStateTitle: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "updateStateTitle action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "updateStateTitle action.payload", action.payload);
 
         const titleItem = action.payload;
         // console.log(componentName, GetDateTime(), "updateStateTitle titleItem", titleItem);
@@ -181,7 +181,7 @@ const titlesSlice = createSlice({
     },
     updateStateTitleRating: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "updateStateTitleRating action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "updateStateTitleRating action.payload", action.payload);
 
         const titleItem = action.payload;
         // console.log(componentName, GetDateTime(), "updateStateTitleRating titleItem", titleItem);

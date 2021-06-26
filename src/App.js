@@ -37,7 +37,7 @@ import Login from "./components/users/Login";
 import Register from "./components/users/Register";
 import EditUser from "./components/users/EditUser";
 import Checklist from "./components/checklist/Checklist";
-import FromTheHomeopape from "./components/fromTheHomeopape/FromTheHomeopape";
+import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
 
 function App() {
 
@@ -592,7 +592,7 @@ function App() {
               <Route exact path="/homeopape" component={Homeopape} />
               <Route exact path="/dickian" component={Dickian} />
 
-              <Route exact path="/fromTheHomeopape" component={FromTheHomeopape} />
+              <Route exact path="/fromTheHomeopape" component={UpdateFromTheHomeopape} />
 
               {/* <Route exact path="/categoryList" component={CategoryList} />
               <Route exact path="/mediaList" component={MediaList} />

@@ -54,7 +54,7 @@ const TitleSuggestions = (props) => {
         {titleSuggestions.map((titleSuggestion) => {
 
           return (
-            <Col className="my-4" xs="12" key={titleSuggestion.titleSuggestionID}>
+            <Col key={titleSuggestion.titleSuggestionID} className="my-4" xs="12">
 
               <Row>
                 <Col xs="12">

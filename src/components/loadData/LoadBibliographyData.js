@@ -149,7 +149,7 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        console.log(componentName, GetDateTime(), "getUserReviewsRatings data", data);
+        // console.log(componentName, GetDateTime(), "getUserReviewsRatings data", data);
         // setOverallTitleRatingMessage(data.message);
 
         if (data.resultsFound === true) {

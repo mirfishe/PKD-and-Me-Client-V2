@@ -61,6 +61,8 @@ const EditUserReview = (props) => {
   const [txtRanking, setTxtRanking] = useState("");
   const [txtShortReview, setTxtShortReview] = useState("");
   const [txtLongReview, setTxtLongReview] = useState("");
+  const [cbxOwned, setCbxOwned] = useState(false);
+  const [txtDatePurchased, setTxtDatePurchased] = useState("");
 
   const [userReviewItemIndex, setUserReviewItemIndex] = useState(null);
   const [userReviewItem, setUserReviewItem] = useState(null);
@@ -74,6 +76,8 @@ const EditUserReview = (props) => {
   const [ranking, setRanking] = useState(null);
   const [shortReview, setShortReview] = useState(null);
   const [longReview, setLongReview] = useState(null);
+  const [owned, setOwned] = useState(null);
+  const [datePurchased, setDatePurchased] = useState(null);
   const [active, setActive] = useState(null);
 
   // const [titleItemIndex, setTitleItemIndex] = useState(null);
@@ -106,6 +110,8 @@ const EditUserReview = (props) => {
         setRanking(userReviewObject.ranking);
         setShortReview(userReviewObject.shortReview);
         setLongReview(userReviewObject.longReview);
+        setOwned(userReviewObject.owned);
+        setDatePurchased(userReviewObject.datePurchased);
         setActive(userReviewObject.active);
 
         setCbxRead(userReviewObject.read);
@@ -120,6 +126,14 @@ const EditUserReview = (props) => {
         setTxtRanking(userReviewObject.ranking);
         setTxtShortReview(userReviewObject.shortReview);
         setTxtLongReview(userReviewObject.longReview);
+
+        setCbxOwned(userReviewObject.owned);
+
+        if (IsEmpty(userReviewObject.datePurchased) === false) {
+          setTxtDatePurchased(userReviewObject.datePurchased.toString().substring(0, 10));
+        } else {
+          setTxtDatePurchased("");
+        };
 
       };
 
@@ -154,6 +168,8 @@ const EditUserReview = (props) => {
         setRanking(userReviewObject.ranking);
         setShortReview(userReviewObject.shortReview);
         setLongReview(userReviewObject.longReview);
+        setOwned(userReviewObject.owned);
+        setDatePurchased(userReviewObject.datePurchased);
         setActive(userReviewObject.active);
 
         setCbxRead(userReviewObject.read);
@@ -168,6 +184,14 @@ const EditUserReview = (props) => {
         setTxtRanking(userReviewObject.ranking);
         setTxtShortReview(userReviewObject.shortReview);
         setTxtLongReview(userReviewObject.longReview);
+
+        setCbxOwned(userReviewObject.owned);
+
+        if (IsEmpty(userReviewObject.datePurchased) === false) {
+          setTxtDatePurchased(userReviewObject.datePurchased.toString().substring(0, 10));
+        } else {
+          setTxtDatePurchased("");
+        };
 
       };
 
@@ -218,6 +242,8 @@ const EditUserReview = (props) => {
     setRanking(null);
     setShortReview(null);
     setLongReview(null);
+    setOwned(null);
+    setDatePurchased(null);
     setActive(null);
 
     // ? Check to make sure that txtDateRead) is a date?
@@ -230,12 +256,14 @@ const EditUserReview = (props) => {
     // console.log(componentName, GetDateTime(), "addUserReview parseInt(titleID)", parseInt(titleID));
 
     let userReviewObject = {
-      titleID: parseInt(titleID),
       read: cbxRead,
       // dateRead: txtDateRead.trim(),
       rating: rdoRating,
+      // ranking: req.body.userReview.ranking,
       // shortReview: txtShortReview.trim(),
       // longReview: txtLongReview.trim(),
+      owned: cbxOwned,
+      // datePurchased: txtDatePurchased.trim()
       active: !deleteUserReview
     };
 
@@ -264,6 +292,13 @@ const EditUserReview = (props) => {
     if (IsEmpty(txtLongReview) === false) {
       if (txtLongReview.trim().length !== 0) {
         Object.assign(userReviewObject, { longReview: txtLongReview.trim() });
+      };
+    };
+
+    // * If the user doesn't enter a date purchased, then it isn't added/updated
+    if (IsEmpty(txtDatePurchased) === false) {
+      if (txtDatePurchased.trim().length !== 0) {
+        Object.assign(userReviewObject, { datePurchased: txtDatePurchased.trim() });
       };
     };
 
@@ -334,7 +369,7 @@ const EditUserReview = (props) => {
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // ? Would still work if the createDate and updateDate were left out?
-            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: GetDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
+            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: GetDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
             // ? Add to local storage also?
 
             // * Recalculate ratings
@@ -392,12 +427,12 @@ const EditUserReview = (props) => {
             // console.log(componentName, GetDateTime(), "updateUserReview titleItemIndex", titleItemIndex);
             dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
+            // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
 
             if (data.records[0].active === true || data.records[0].active === 1) {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
             } else {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: null, userID: null, updatedBy: null, titleID: data.records[0].titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: null, userID: null, updatedBy: null, titleID: data.records[0].titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
             };
 
           } else {
@@ -624,6 +659,25 @@ const EditUserReview = (props) => {
 
               <Label for="txtRanking">Ranking</Label>
               <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtRanking(event.target.value); }} />
+
+            </FormGroup>
+            <FormGroup row>
+
+              <Col>
+                <FormGroup className="ml-4">
+
+                  <Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxOwned(!cbxOwned); }} />
+                  <Label for="cbxOwned">Owned</Label>
+
+                </FormGroup>
+              </Col>
+
+              <Col>
+                <FormGroup>
+                  <Label for="txtDatePurchased">Date Purchased</Label>
+                  <Input type="date" id="txtDatePurchased" value={txtDatePurchased} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtDatePurchased(event.target.value); }} />
+                </FormGroup>
+              </Col>
 
             </FormGroup>
             <FormGroup>

@@ -121,8 +121,6 @@ export const removeOnePixelImage = (text, ASIN) => {
     // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=B083G6CVZB" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
     newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
 
-    <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=B086VXYZNH" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />;
-
 
     if (newText.includes("https://ir-na.amazon-adsystem.com")) {
       console.log(componentName, GetDateTime(), "removeOnePixelImage ASIN", ASIN);
@@ -293,16 +291,56 @@ export const getASIN = (textLinkFull) => {
     if (textLinkFull.indexOf("/dp/") !== -1) {
 
       // console.log(componentName, GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
-      txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
+      // txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
 
-      txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?&linkCode="));
+      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?&linkCode="));
+
+      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?coliid="));
+
+      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?_encoding="));
+
+      if (textLinkFull.indexOf("/ref=") !== -1) {
+
+        txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
+
+      } else if (textLinkFull.indexOf("?&linkCode=") !== -1) {
+
+        txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?&linkCode="));
+
+      } else if (textLinkFull.indexOf("?coliid=") !== -1) {
+
+        txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?coliid="));
+
+      } else if (textLinkFull.indexOf("?_encoding=") !== -1) {
+
+        txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?_encoding="));
+
+      };
 
     } else if (textLinkFull.indexOf("/product/") !== -1) {
 
       // console.log(componentName, GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
-      txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
+      // txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
 
-      txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("?&linkCode="));
+      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("?&linkCode="));
+
+      if (textLinkFull.indexOf("/ref=") !== -1) {
+
+        txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
+
+      } else if (textLinkFull.indexOf("?&linkCode=") !== -1) {
+
+        txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("?&linkCode="));
+
+      } else if (textLinkFull.indexOf("?coliid=") !== -1) {
+
+        txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 4, textLinkFull.indexOf("?coliid="));
+
+      } else if (textLinkFull.indexOf("?_encoding=") !== -1) {
+
+        txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 4, textLinkFull.indexOf("?_encoding="));
+
+      };
 
     };
 
@@ -855,8 +893,8 @@ export const ConvertTemperature = (temperatureScale, temperature) => {
 
 
 export const ConvertBitTrueFalse = (records) => {
-  // console.log(componentName, GetDateTime(), "ConvertBitTrueFalse records", records);
-  // console.log(componentName, GetDateTime(), "ConvertBitTrueFalse process.env.DATABASE_DIALECT", process.env.DATABASE_DIALECT);
+  // console.log(componentName, "ConvertBitTrueFalse records", records);
+  // console.log(componentName, "ConvertBitTrueFalse process.env.DATABASE_DIALECT", process.env.DATABASE_DIALECT);
 
   // if (process.env.DATABASE_DIALECT == "mysql") {
 
@@ -1048,10 +1086,31 @@ export const IsWholeNumber = (value) => {
   //   return true;
   // };
 
-  if (Number.isInteger(parseFloat(value.toString().trim())) === true) {
-    return true;
-  } else {
+  // * This removes any values from the string starting at and after a non-number value in the string.
+  // if (Number.isInteger(parseFloat(value.toString().trim())) === true) {
+  //   return true;
+  // } else {
+  //   return false;
+  // };
+
+  if (isNaN(value.toString().trim()) === true) {
+
     return false;
+
+  } else {
+
+    // * https://www.w3resource.com/javascript-exercises/javascript-math-exercise-38.php
+    if (value - Math.floor(value) !== 0) {
+
+      return false;
+
+    }
+    else {
+
+      return true;
+
+    };
+
   };
 
 };
@@ -1064,32 +1123,47 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
   // console.log(componentName, GetDateTime(), "HasDecimalPlaces isNaN(parseFloat(value.toString().trim()))", isNaN(parseFloat(value.toString().trim())));
   // console.log(componentName, GetDateTime(), "HasDecimalPlaces Number.isInteger(parseFloat(value.toString().trim()) * 10)", Number.isInteger(parseFloat(value.toString().trim()) * 10));
 
-  let currentDecimalPlaces = 1;
+  if (isNaN(value.toString().trim()) === true) {
 
-  if (Number.isInteger(parseFloat(decimalPlaces)) === true) {
-    currentDecimalPlaces = decimalPlaces;
-  };
-
-  // * Parse the value to see if it is a float.
-  let valueToTest = parseFloat(value.toString().trim());
-
-  let valueDecimals = 0;
-
-  // if (value.toString().trim().indexOf(".") > -1) {
-  if (value.toString().trim().includes(".")) {
-    // * Remove the characters after the decimal point to be counted later if there is a decimal point.
-    valueDecimals = value.toString().trim().substring(value.toString().trim().indexOf(".") + 1);
-  };
-
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces currentDecimalPlaces", currentDecimalPlaces);
-
-  // if (isNaN(parseFloat(value.toString().trim())) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(parseFloat(value.toString().trim()) * 10 ** currentDecimalPlaces) === false)) {
-  // if (isNaN(valueToTest) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(valueToTest * 10 ** currentDecimalPlaces) === false)) {
-  // if (isNaN(parseFloat(value.toString().trim())) === true || (IsEmpty(currentDecimalPlaces) === false && value.toString().trim().substring(value.toString().trim().indexOf(".") + 1).length > currentDecimalPlaces)) {
-  if (isNaN(valueToTest) === true || (IsEmpty(currentDecimalPlaces) === false && valueDecimals.length > currentDecimalPlaces)) {
     return false;
+
   } else {
-    return true;
+
+    let currentDecimalPlaces = 1;
+
+    if (Number.isInteger(parseFloat(decimalPlaces)) === true) {
+      currentDecimalPlaces = decimalPlaces;
+    };
+
+    // * This removes any values from the string starting at and after a non-number value in the string.
+    // * Parse the value to see if it is a float.
+    let valueToTest = parseFloat(value.toString().trim());
+
+    let valueDecimals = 0;
+
+    // if (value.toString().trim().indexOf(".") > -1) {
+    if (value.toString().trim().includes(".")) {
+      // * Remove the characters after the decimal point to be counted later if there is a decimal point.
+      valueDecimals = value.toString().trim().substring(value.toString().trim().indexOf(".") + 1);
+    };
+
+    // console.log(componentName, GetDateTime(), "HasDecimalPlaces currentDecimalPlaces", currentDecimalPlaces);
+
+    // if (isNaN(parseFloat(value.toString().trim())) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(parseFloat(value.toString().trim()) * 10 ** currentDecimalPlaces) === false)) {
+    // if (isNaN(valueToTest) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(valueToTest * 10 ** currentDecimalPlaces) === false)) {
+    // if (isNaN(parseFloat(value.toString().trim())) === true || (IsEmpty(currentDecimalPlaces) === false && value.toString().trim().substring(value.toString().trim().indexOf(".") + 1).length > currentDecimalPlaces)) {
+
+    // console.log(componentName, GetDateTime(), "HasDecimalPlaces valueToTest", valueToTest);
+    // console.log(componentName, GetDateTime(), "HasDecimalPlaces isNaN(valueToTest)", isNaN(valueToTest));
+    // console.log(componentName, GetDateTime(), "HasDecimalPlaces IsEmpty(currentDecimalPlaces)", IsEmpty(currentDecimalPlaces));
+    // console.log(componentName, GetDateTime(), "HasDecimalPlaces valueDecimals.length > currentDecimalPlaces", valueDecimals.length > currentDecimalPlaces);
+
+    if (isNaN(valueToTest) === true || (IsEmpty(currentDecimalPlaces) === false && valueDecimals.length > currentDecimalPlaces)) {
+      return false;
+    } else {
+      return true;
+    };
+
   };
 
 };

@@ -61,6 +61,8 @@ const AddUserReview = (props) => {
   const [txtRanking, setTxtRanking] = useState("");
   const [txtShortReview, setTxtShortReview] = useState("");
   const [txtLongReview, setTxtLongReview] = useState("");
+  const [cbxOwned, setCbxOwned] = useState(false);
+  const [txtDatePurchased, setTxtDatePurchased] = useState("");
 
   const [userReviewItem, setUserReviewItem] = useState(null);
   const [reviewID, setReviewID] = useState(null);
@@ -73,6 +75,8 @@ const AddUserReview = (props) => {
   const [ranking, setRanking] = useState(null);
   const [shortReview, setShortReview] = useState(null);
   const [longReview, setLongReview] = useState(null);
+  const [owned, setOwned] = useState(null);
+  const [datePurchased, setDatePurchased] = useState(null);
   const [active, setActive] = useState(null);
 
   // const [titleItemIndex, setTitleItemIndex] = useState(null);
@@ -120,6 +124,8 @@ const AddUserReview = (props) => {
     setRanking(null);
     setShortReview(null);
     setLongReview(null);
+    setOwned(null);
+    setDatePurchased(null);
     setActive(null);
 
     // ? Check to make sure that txtDateRead) is a date?
@@ -135,9 +141,12 @@ const AddUserReview = (props) => {
       titleID: parseInt(props.titleID),
       read: cbxRead,
       // dateRead: txtDateRead.trim(),
-      rating: rdoRating
+      rating: rdoRating,
+      // ranking: req.body.userReview.ranking,
       // shortReview: txtShortReview.trim(),
-      // longReview: txtLongReview.trim()
+      // longReview: txtLongReview.trim(),
+      owned: cbxOwned
+      // datePurchased: txtDatePurchased.trim()
     };
 
     // * If the user doesn't enter a date read, then it isn't added/updated
@@ -165,6 +174,13 @@ const AddUserReview = (props) => {
     if (IsEmpty(txtLongReview) === false) {
       if (txtLongReview.trim().length !== 0) {
         Object.assign(userReviewObject, { longReview: txtLongReview.trim() });
+      };
+    };
+
+    // * If the user doesn't enter a date purchased, then it isn't added/updated
+    if (IsEmpty(txtDatePurchased) === false) {
+      if (txtDatePurchased.trim().length !== 0) {
+        Object.assign(userReviewObject, { datePurchased: txtDatePurchased.trim() });
       };
     };
 
@@ -214,6 +230,8 @@ const AddUserReview = (props) => {
             setRanking(data.records[0].ranking);
             setShortReview(data.records[0].shortReview);
             setLongReview(data.records[0].longReview);
+            setOwned(data.records[0].owned);
+            setDatePurchased(data.records[0].datePurchased);
             setActive(data.records[0].active);
 
             let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
@@ -228,7 +246,7 @@ const AddUserReview = (props) => {
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // ? Would still work if the createDate and updateDate were left out?
-            dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
+            dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
             // ? Add to local storage also?
 
             // * Recalculate ratings
@@ -258,10 +276,12 @@ const AddUserReview = (props) => {
             // * Update the title ratings
             dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
+            // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
+
+            // console.log(componentName, GetDateTime(), "addUserReview checklistListIndex", checklistListIndex);
 
             if (data.records[0].active === true || data.records[0].active === 1) {
-              dispatch(updateStateChecklist({ checklistListIndex: checklistListIndex, reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
             };
 
           } else {
@@ -374,6 +394,25 @@ const AddUserReview = (props) => {
 
               <Label for="txtRanking">Ranking</Label>
               <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtRanking(event.target.value); }} />
+
+            </FormGroup>
+            <FormGroup row>
+
+              <Col>
+                <FormGroup className="ml-4">
+
+                  <Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxOwned(!cbxOwned); }} />
+                  <Label for="cbxOwned">Owned</Label>
+
+                </FormGroup>
+              </Col>
+
+              <Col>
+                <FormGroup>
+                  <Label for="txtDatePurchased">Date Purchased</Label>
+                  <Input type="date" id="txtDatePurchased" value={txtDatePurchased} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtDatePurchased(event.target.value); }} />
+                </FormGroup>
+              </Col>
 
             </FormGroup>
             <FormGroup>

@@ -710,7 +710,7 @@ const EditTitle = (props) => {
                   <option value="">Select a Category</option>
                   {categoryList.map((category) => {
                     return (
-                      <React.Fragment>
+                      <React.Fragment key={category.categoryID}>
                         {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
                         <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
                       </React.Fragment>
@@ -753,10 +753,10 @@ const EditTitle = (props) => {
             <ModalFooter>
 
               <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Update Title</Button>
-              {IsEmpty(active) === true && (active === false || active === 0) ?
+              {IsEmpty(active) === false && (active === false || active === 0) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Undelete/Restore Title</Button>
                 : null}
-              {IsEmpty(active) === true && (active === true || active === 1) ?
+              {IsEmpty(active) === false && (active === true || active === 1) ?
                 <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(true); }}>Delete Title</Button>
                 : null}
               <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ deleteTitle(); }}>Hard Delete Title</Button>

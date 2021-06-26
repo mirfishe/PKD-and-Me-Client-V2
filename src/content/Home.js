@@ -5,6 +5,7 @@ import { Container, Col, Row } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../app/sharedFunctions";
 import { setPageURL } from "../app/urlsSlice";
 import TitleCard from "../components/titles/TitleCard";
+import FromTheHomeopape from "../components/fromTheHomeopape/FromTheHomeopape";
 
 const Home = () => {
 
@@ -54,11 +55,26 @@ const Home = () => {
         </Col>
       </Row>
 
-      <Row className="my-4">
+      <Row className="mx-4">
         <Col xs="12">
           <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
         </Col>
       </Row>
+
+      <Row className="my-4">
+        <Col xs="12">
+          <FromTheHomeopape headerText="From the Homeopape" />
+        </Col>
+      </Row>
+
+      {/* <Row className="my-4">
+        <Col xs="8">
+          <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+        </Col>
+        <Col xs="4">
+          <FromTheHomeopape headerText="From the Homeopape" />
+        </Col>
+      </Row> */}
 
     </Container>
   );
