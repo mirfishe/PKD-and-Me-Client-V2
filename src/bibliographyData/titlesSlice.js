@@ -184,25 +184,50 @@ const titlesSlice = createSlice({
         // console.log(componentName, GetDateTime(), "updateStateTitleRating action.payload", action.payload);
 
         const titleItem = action.payload;
+        let titleItemIndex;
         // console.log(componentName, GetDateTime(), "updateStateTitleRating titleItem", titleItem);
         // console.log(componentName, GetDateTime(), "updateStateTitleRating titleItem.titleID", titleItem.titleID);
-        // console.log(componentName, GetDateTime(), "updateStateTitleRating titleItem.titleItemIndex", titleItem.titleItemIndex);
 
         if (typeof titleItem === "object") {
 
+          if (titleItem.hasOwnProperty("titleID")) {
+
+            titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
+
+            // console.log(componentName, GetDateTime(), "updateStateChecklist titleItemIndex", titleItemIndex);
+
+            // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
+          };
+
           if (titleItem.hasOwnProperty("userReviewCount")) {
-            state.arrayTitles[titleItem.titleItemIndex].userReviewCount = titleItem.userReviewCount;
+            state.arrayTitles[titleItemIndex].userReviewCount = titleItem.userReviewCount;
           };
 
           if (titleItem.hasOwnProperty("userReviewSum")) {
-            state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
+            state.arrayTitles[titleItemIndex].userReviewSum = titleItem.userReviewSum;
           };
 
           if (titleItem.hasOwnProperty("userReviewAverage")) {
-            state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
+            state.arrayTitles[titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
           };
 
         };
+
+        // if (typeof titleItem === "object") {
+
+        //   if (titleItem.hasOwnProperty("userReviewCount")) {
+        //     state.arrayTitles[titleItem.titleItemIndex].userReviewCount = titleItem.userReviewCount;
+        //   };
+
+        //   if (titleItem.hasOwnProperty("userReviewSum")) {
+        //     state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
+        //   };
+
+        //   if (titleItem.hasOwnProperty("userReviewAverage")) {
+        //     state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
+        //   };
+
+        // };
 
       }
     },

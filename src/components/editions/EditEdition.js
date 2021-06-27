@@ -352,7 +352,7 @@ const EditEdition = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "updateEdition data", data);
+            // console.log(componentName, GetDateTime(), "updateEdition data", data);
 
             setEditionRecordUpdated(data.recordAdded);
             addMessage(data.message);
@@ -449,7 +449,7 @@ const EditEdition = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "deleteEdition data", data);
+            // console.log(componentName, GetDateTime(), "deleteEdition data", data);
 
             setEditionRecordDeleted(data.recordDeleted);
 
@@ -506,7 +506,7 @@ const EditEdition = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "checkASIN data", data);
+          // console.log(componentName, GetDateTime(), "checkASIN data", data);
 
           setASINResultsFound(data.resultsFound);
           setASINMessage(data.message);

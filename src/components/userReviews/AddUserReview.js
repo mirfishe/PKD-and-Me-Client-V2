@@ -19,6 +19,8 @@ const AddUserReview = (props) => {
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
+  // const userID = useSelector(state => state.user.userID);
+  // console.log(componentName, GetDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
@@ -212,7 +214,7 @@ const AddUserReview = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "addUserReview data", data);
+          // console.log(componentName, GetDateTime(), "addUserReview data", data);
 
           setUserReviewRecordAdded(data.recordAdded);
           addMessage(data.message);
@@ -241,7 +243,7 @@ const AddUserReview = (props) => {
             // console.log(componentName, GetDateTime(), "addUserReview titleItem", titleItem);
             // console.log(componentName, GetDateTime(), "addUserReview typeof data.records[0].titleID", typeof data.records[0].titleID);
 
-            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.records[0].titleID);
+            // let titleItemIndex = titleListState.findIndex(title => title.titleID === data.records[0].titleID);
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
@@ -250,17 +252,27 @@ const AddUserReview = (props) => {
             // ? Add to local storage also?
 
             // * Recalculate ratings
-            let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID);
+            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*data.records[0].*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && IsEmpty(rating) === false);
+            let userReviews = [];
+            for (let i = 0; i < userReviewsList.length; i++) {
+              userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
+            };
+            // let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && IsEmpty(rating) === false);
 
             // console.log(componentName, GetDateTime(), "addUserReview userReviews", userReviews);
 
             // * Get all reviews for the title
             // ? Get the latest from state?
             // ? Update the state user review array?
-            userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active });
+            if (IsEmpty(data.records[0].rating) === false) {
+              // userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active });
+              userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, rating: data.records[0].rating });
+            };
             // console.log(componentName, GetDateTime(), "addUserReview userReviews", userReviews);
             // * Recompute the average
             let userReviewCount = userReviews.length;
+            // console.log(componentName, GetDateTime(), "addUserReview userReviewCount", userReviewCount);
+
             let userReviewSum = 0;
             for (let i = 0; i < userReviews.length; i++) {
               userReviewSum += userReviews[i].rating;
@@ -274,7 +286,7 @@ const AddUserReview = (props) => {
             };
             // console.log(componentName, GetDateTime(), "addUserReview userReviewAverage", userReviewAverage);
             // * Update the title ratings
-            dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+            dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
 

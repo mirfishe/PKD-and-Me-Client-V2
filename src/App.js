@@ -212,7 +212,7 @@ function App() {
 
           if (data.resultsFound === true) {
 
-            if (data.active === true) {
+            if (data.active === true || data.active === 1) {
 
               dispatch(loadUserData(data));
 

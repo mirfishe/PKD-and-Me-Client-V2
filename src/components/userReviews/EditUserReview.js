@@ -19,6 +19,8 @@ const EditUserReview = (props) => {
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
+  // const userID = useSelector(state => state.user.userID);
+  // console.log(componentName, GetDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow
   // ! Always pulling it from environment.js
@@ -37,7 +39,6 @@ const EditUserReview = (props) => {
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
   // console.log(componentName, GetDateTime(), "userReviewListState", userReviewListState);
 
-  // ? Not needed?
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
   // console.log(componentName, GetDateTime(), "userState", userState);
 
@@ -233,7 +234,7 @@ const EditUserReview = (props) => {
 
     setUserReviewItem(null);
     setReviewID(null);
-    setUserID(null);
+    // setUserID(null);
     setUpdatedBy(null);
     // setTitleID(null);
     setRead(null);
@@ -310,7 +311,11 @@ const EditUserReview = (props) => {
 
       // ? Does it matter if the user is updating their own review as an admin or not?
       if (IsEmpty(admin) === false && admin === true) {
+
         url = url + "admin/";
+
+        Object.assign(userReviewObject, { userID: userID });
+
       };
 
       url = url + props.reviewID;
@@ -337,7 +342,7 @@ const EditUserReview = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "updateUserReview data", data);
+          // console.log(componentName, GetDateTime(), "updateUserReview data", data);
 
           setUserReviewRecordUpdated(data.recordUpdated);
           addMessage(data.message);
@@ -348,7 +353,7 @@ const EditUserReview = (props) => {
             // setReviewID(data.records[0].reviewID);
             setUserID(data.records[0].userID);
             setUpdatedBy(data.records[0].updatedBy);
-            setTitleID(data.records[0].titleID);
+            // setTitleID(data.records[0].titleID);
             setRead(data.records[0].read);
             setDateRead(data.records[0].dateRead);
             setRating(data.records[0].rating);
@@ -357,26 +362,25 @@ const EditUserReview = (props) => {
             setLongReview(data.records[0].longReview);
             setActive(data.records[0].active);
 
-            let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
+            let titleItem = titleListState.filter(title => title.titleID === /*data.records[0].*/titleID);
             // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
             titleItem = titleItem[0];
 
             // console.log(componentName, GetDateTime(), "updateUserReview titleItem", titleItem);
-            // console.log(componentName, GetDateTime(), "updateUserReview typeof data.records[0].titleID", typeof data.records[0].titleID);
 
-            let titleItemIndex = titleListState.findIndex(title => title.titleID === data.records[0].titleID);
+            // let titleItemIndex = titleListState.findIndex(title => title.titleID === /*data.records[0].*/titleID);
 
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // ? Would still work if the createDate and updateDate were left out?
-            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: GetDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
+            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: GetDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
             // ? Add to local storage also?
 
             // * Recalculate ratings
-            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID && ((userReview.userReviewActive === true || userReview.userReviewActive === 1)));
+            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*data.records[0].*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && IsEmpty(rating) === false);
             let userReviews = [];
             for (let i = 0; i < userReviewsList.length; i++) {
-              userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
+              userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, titleID: userReviewsList[i].titleID, rating: userReviewsList[i].rating });
             };
 
             const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID);
@@ -390,19 +394,20 @@ const EditUserReview = (props) => {
             // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>'
             // console.log(componentName, GetDateTime(), "updateUserReview userReviews[userReviewsIndex].rating", userReviews[userReviewsIndex].rating);
             // userReviews[userReviewsIndex].rating = data.records[0].rating;
-            userReviews.splice(userReviewsIndex, 1);
-            // userReviews.push({ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
+            if (userReviewsIndex > -1) {
+              userReviews.splice(userReviewsIndex, 1);
+            };
+            // userReviews.push({ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
 
             // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].active", data.records[0].active);
 
-            if (data.records[0].active === true || data.records[0].active === 1) {
+            if (data.records[0].active === true || data.records[0].active === 1 && IsEmpty(data.records[0].rating) === false) {
               // console.log(componentName, GetDateTime(), "updateUserReview props.reviewID", props.reviewID);
               // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].userID", data.records[0].userID);
               // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].updatedBy", data.records[0].updatedBy);
               // console.log(componentName, GetDateTime(), "updateUserReview data.records[0].rating", data.records[0].rating);
 
-              // ! This line of code is not working for some reason
-              userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, rating: data.records[0].rating, ranking: data.records[0].ranking });
+              userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, rating: data.records[0].rating });
 
               // console.log(componentName, GetDateTime(), "updateUserReview userReviews", userReviews);
             };
@@ -411,6 +416,7 @@ const EditUserReview = (props) => {
             // * Recompute the average
             let userReviewCount = userReviews.length;
             // console.log(componentName, GetDateTime(), "updateUserReview userReviewCount", userReviewCount);
+
             let userReviewSum = 0;
             for (let i = 0; i < userReviews.length; i++) {
               userReviewSum += userReviews[i].rating;
@@ -425,14 +431,14 @@ const EditUserReview = (props) => {
             // console.log(componentName, GetDateTime(), "updateUserReview userReviewAverage", userReviewAverage);
             // * Update the title ratings
             // console.log(componentName, GetDateTime(), "updateUserReview titleItemIndex", titleItemIndex);
-            dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+            dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
+            // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /*data.records[0].*/titleID);
 
             if (data.records[0].active === true || data.records[0].active === 1) {
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
             } else {
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: null, userID: null, updatedBy: null, titleID: data.records[0].titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: null, userID: null, updatedBy: null, titleID: /*data.records[0].*/titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
             };
 
           } else {
@@ -492,7 +498,7 @@ const EditUserReview = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "deleteUserReview data", data);
+            // console.log(componentName, GetDateTime(), "deleteUserReview data", data);
 
             setUserReviewRecordDeleted(data.recordDeleted);
 
@@ -511,7 +517,7 @@ const EditUserReview = (props) => {
               let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
 
               // * Recalculate ratings
-              let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1));
+              let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && IsEmpty(rating) === false);
 
               const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID);
 
@@ -522,7 +528,9 @@ const EditUserReview = (props) => {
               // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>'
               // console.log(componentName, GetDateTime(), "deleteUserReview userReviews[userReviewsIndex].rating", userReviews[userReviewsIndex].rating);
               // userReviews[userReviewsIndex].rating = data.rating;
-              userReviews.splice(userReviewsIndex, 1);
+              if (userReviewsIndex > -1) {
+                userReviews.splice(userReviewsIndex, 1);
+              };
               // console.log(componentName, GetDateTime(), "deleteUserReview userReviews", userReviews);
               // * Recompute the average
               let userReviewCount = userReviews.length;
@@ -600,9 +608,9 @@ const EditUserReview = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && ((IsEmpty(userID) === false && userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Review</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Review</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && ((IsEmpty(userID) === false && userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Update Review</ModalHeader>

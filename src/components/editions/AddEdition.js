@@ -286,7 +286,7 @@ const AddEdition = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "addEdition data", data);
+            // console.log(componentName, GetDateTime(), "addEdition data", data);
 
             setEditionRecordAdded(data.recordAdded);
             addMessage(data.message);
@@ -372,7 +372,7 @@ const AddEdition = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "checkASIN data", data);
+          // console.log(componentName, GetDateTime(), "checkASIN data", data);
 
           setASINResultsFound(data.resultsFound);
           setASINMessage(data.message);

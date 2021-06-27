@@ -47,7 +47,7 @@ const EditionList = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "getEdition data", data);
+          // console.log(componentName, GetDateTime(), "getEdition data", data);
 
           setEditionResultsFound(data.resultsFound);
           setEditionMessage(data.message);

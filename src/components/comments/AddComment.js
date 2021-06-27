@@ -160,7 +160,7 @@ const AddComment = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, GetDateTime(), "addComment data", data);
+              // console.log(componentName, GetDateTime(), "addComment data", data);
 
               setCommentRecordAdded(data.recordAdded);
               addMessage(data.message);

@@ -110,7 +110,7 @@ const UserReview = (props) => {
         {userReviews.map((userReview) => {
 
           let activeString = "";
-          if (userReview.userReviewActive === true) {
+          if (userReview.userReviewActive === true || userReview.userReviewActive === 1) {
             // activeString = "Active";
             activeString = "";
           } else {

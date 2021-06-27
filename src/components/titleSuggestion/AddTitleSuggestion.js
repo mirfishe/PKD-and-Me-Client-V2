@@ -224,7 +224,7 @@ const AddTitleSuggestion = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, GetDateTime(), "addTitleSuggestion data", data);
+              // console.log(componentName, GetDateTime(), "addTitleSuggestion data", data);
 
               setTitleSuggestionRecordAdded(data.recordAdded);
               addMessage(data.message);

@@ -47,7 +47,7 @@ const TitleList = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "getTitle data", data);
+          // console.log(componentName, GetDateTime(), "getTitle data", data);
 
           setTitleResultsFound(data.resultsFound);
           setTitleMessage(data.message);

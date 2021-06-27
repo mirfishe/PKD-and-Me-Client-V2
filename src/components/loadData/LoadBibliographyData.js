@@ -196,7 +196,7 @@ function LoadBibliographyData() {
         };
       })
       .then(data => {
-        console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings data", data);
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings data", data);
 
         if (data.resultsFound === true) {
           // loadDataStore(data.userReviews, "userReviewRating");

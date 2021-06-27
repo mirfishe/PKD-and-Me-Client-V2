@@ -166,6 +166,8 @@ const Title = (props) => {
     userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
     userReviewItem = userReviewItem[0];
   };
+  // console.log(componentName, GetDateTime(), "userReviewsState", userReviewsState);
+  // console.log(componentName, GetDateTime(), "userReviews", userReviews);
   // console.log(componentName, GetDateTime(), "userReviewItem", userReviewItem);
   // console.log(componentName, GetDateTime(), "typeof userReviewItem.read", typeof userReviewItem.read);
   // console.log(componentName, GetDateTime(), "userReviewItem.read", userReviewItem.read);
@@ -376,7 +378,7 @@ const Title = (props) => {
               </Col>
               <Col xs="8">
 
-                {IsEmpty(title.userReviewCount) === false && title.userReviewCount > 0 ?
+                {IsEmpty(title.userReviewCount) === false && title.userReviewCount > 0 && title.userReviewAverage > 0 ?
                   <React.Fragment>
                     <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} />
                     <p><small>out of {title.userReviewCount} review(s)</small></p>
@@ -390,8 +392,8 @@ const Title = (props) => {
                   </React.Fragment>
                   : null}
 
-                {IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
-                {IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
+                {IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
+                {IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
                 {IsEmpty(title.shortDescription) === false ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
                 {IsEmpty(title.urlPKDweb) === false ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}

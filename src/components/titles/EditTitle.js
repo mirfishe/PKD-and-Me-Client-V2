@@ -353,7 +353,7 @@ const EditTitle = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, GetDateTime(), "updateTitle data", data);
+              // console.log(componentName, GetDateTime(), "updateTitle data", data);
 
               setTitleRecordUpdated(data.recordUpdated);
               addMessage(data.message);
@@ -389,7 +389,7 @@ const EditTitle = (props) => {
                 // ? Update local storage also?
 
                 // * Update/Delete related editions also if active is set to false
-                if (data.records[0].active === false) {
+                if (data.records[0].active === false || data.records[0].active === 0) {
                   for (let i = 0; i < editionList.length; i++) {
 
                     let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
@@ -405,7 +405,7 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
 
                 // * Update/Delete related urls in arrayURLs also
-                if (data.records[0].active === false) {
+                if (data.records[0].active === false || data.records[0].active === 0) {
                   dispatch(deleteStateURL(urlListIndex));
                 } else {
                   // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
@@ -493,7 +493,7 @@ const EditTitle = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "deleteTitle data", data);
+            // console.log(componentName, GetDateTime(), "deleteTitle data", data);
 
             setTitleRecordDeleted(data.recordDeleted);
 
@@ -578,7 +578,7 @@ const EditTitle = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "deleteEdition data", data);
+            // console.log(componentName, GetDateTime(), "deleteEdition data", data);
 
             setEditionRecordDeleted(data.recordDeleted);
 

@@ -43,7 +43,7 @@ function UserReviewList() {
         };
       })
       .then(data => {
-        console.log(componentName, GetDateTime(), "getUserReviews data", data);
+        // console.log(componentName, GetDateTime(), "getUserReviews data", data);
 
         setUserReviewResultsFound(data.resultsFound);
         setUserReviewMessage(data.message);

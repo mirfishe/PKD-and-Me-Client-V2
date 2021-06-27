@@ -146,7 +146,7 @@ const userSlice = createSlice({
         let checklistListIndex;
         // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem", checklistItem);
         // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem.titleID", checklistItem.titleID);
-        // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem.checklistListIndex", checklistItem.checklistListIndex);
+
 
         if (typeof checklistItem === "object") {
 
@@ -154,7 +154,9 @@ const userSlice = createSlice({
 
             checklistListIndex = state.arrayChecklist.findIndex(title => title.titleID === checklistItem.titleID);
 
-            state.arrayChecklist[checklistListIndex].titleID = checklistItem.titleID;
+            // console.log(componentName, GetDateTime(), "updateStateChecklist checklistListIndex", checklistListIndex);
+
+            // state.arrayChecklist[checklistListIndex].titleID = checklistItem.titleID;
           };
 
           if (checklistItem.hasOwnProperty("reviewID")) {

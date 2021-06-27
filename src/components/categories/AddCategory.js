@@ -129,7 +129,7 @@ const AddCategory = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, GetDateTime(), "addCategory data", data);
+              // console.log(componentName, GetDateTime(), "addCategory data", data);
 
               setCategoryRecordAdded(data.recordAdded);
               addMessage(data.message);

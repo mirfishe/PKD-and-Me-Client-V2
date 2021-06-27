@@ -47,7 +47,7 @@ const CategoryList = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "getCategories data", data);
+          // console.log(componentName, GetDateTime(), "getCategories data", data);
 
           setCategoryResultsFound(data.resultsFound);
           setCategoryMessage(data.message);

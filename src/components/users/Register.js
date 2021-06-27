@@ -203,7 +203,7 @@ const Register = (props) => {
             // };
           })
           .then(data => {
-            console.log(componentName, GetDateTime(), "register data", data);
+            // console.log(componentName, GetDateTime(), "register data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -284,7 +284,7 @@ const Register = (props) => {
           // };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "getChecklist data", data);
+          // console.log(componentName, GetDateTime(), "getChecklist data", data);
 
           setChecklistResultsFound(data.resultsFound);
           // setChecklistMessage(data.message);

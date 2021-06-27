@@ -47,7 +47,7 @@ const MediaList = (props) => {
           };
         })
         .then(data => {
-          console.log(componentName, GetDateTime(), "getMedia data", data);
+          // console.log(componentName, GetDateTime(), "getMedia data", data);
 
           setMediaResultsFound(data.resultsFound);
           setMediaMessage(data.message);

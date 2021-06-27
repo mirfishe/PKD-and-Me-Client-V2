@@ -274,7 +274,7 @@ const AddTitle = (props) => {
               // };
             })
             .then(data => {
-              console.log(componentName, GetDateTime(), "addTitle data", data);
+              // console.log(componentName, GetDateTime(), "addTitle data", data);
 
               setTitleRecordAdded(data.recordAdded);
               addMessage(data.message);
