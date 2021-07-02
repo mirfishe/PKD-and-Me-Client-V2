@@ -44,29 +44,38 @@ const categoriesSlice = createSlice({
     },
     updateStateCategory: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "updateStateCategory action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "updateStateCategory action.payload", action.payload);
 
         const categoryItem = action.payload;
-        console.log(componentName, GetDateTime(), "updateStateTitle categoryItem", categoryItem);
-        console.log(componentName, GetDateTime(), "updateStateTitle categoryItem.categoryID", categoryItem.categoryID);
-        console.log(componentName, GetDateTime(), "updateStateTitle categoryItem.categoryItemIndex", categoryItem.categoryItemIndex);
+        let categoryItemIndex;
+        // console.log(componentName, GetDateTime(), "updateStateTitle categoryItem", categoryItem);
+        // console.log(componentName, GetDateTime(), "updateStateTitle categoryItem.categoryID", categoryItem.categoryID);
 
         if (typeof categoryItem === "object") {
 
+          if (categoryItem.hasOwnProperty("categoryID")) {
+
+            categoryItemIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryItem.categoryID);
+
+            // console.log(componentName, GetDateTime(), "updateStateUserReview categoryItemIndex", categoryItemIndex);
+
+            // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
+          };
+
           if (categoryItem.hasOwnProperty("category")) {
-            state.arrayCategories[categoryItem.categoryItemIndex].category = categoryItem.category;
+            state.arrayCategories[categoryItemIndex].category = categoryItem.category;
           };
 
           if (categoryItem.hasOwnProperty("sortID")) {
-            state.arrayCategories[categoryItem.categoryItemIndex].sortID = categoryItem.sortID;
+            state.arrayCategories[categoryItemIndex].sortID = categoryItem.sortID;
           };
 
           if (categoryItem.hasOwnProperty("active")) {
-            state.arrayCategories[categoryItem.categoryItemIndex].active = categoryItem.active;
+            state.arrayCategories[categoryItemIndex].active = categoryItem.active;
           };
 
           if (categoryItem.hasOwnProperty("updateDate")) {
-            state.arrayCategories[categoryItem.categoryItemIndex].updateDate = categoryItem.updateDate;
+            state.arrayCategories[categoryItemIndex].updateDate = categoryItem.updateDate;
           };
 
         };
@@ -75,17 +84,26 @@ const categoriesSlice = createSlice({
     },
     deleteStateCategory: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "deleteStateCategory action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "deleteStateCategory action.payload", action.payload);
 
-        const categoryItemIndex = action.payload;
-        // const categoryID = action.payload;
+        // const categoryItemIndex = action.payload;
+        let categoryListIndex;
+        const categoryID = action.payload;
 
         // ? This doesn't work because state.arrayCategories isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
         // console.log(componentName, GetDateTime(), "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
 
-        state.arrayCategories.splice(categoryItemIndex, 1);
+        if (IsEmpty(categoryID) === false) {
+
+          categoryListIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
+
+          // console.log(componentName, GetDateTime(), "updateStateUserReview categoryListIndex", categoryListIndex);
+
+          state.arrayCategories.splice(categoryListIndex, 1);
+
+        };
 
       }
     },

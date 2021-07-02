@@ -51,165 +51,170 @@ const userReviewsSlice = createSlice({
         // console.log(componentName, GetDateTime(), "updateStateUserReview action.payload", action.payload);
 
         const userReviewItem = action.payload;
+        let userReviewListIndex;
         // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem", userReviewItem);
         // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem.reviewID", userReviewItem.reviewID);
-        // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewItem.userReviewItemIndex", userReviewItem.userReviewItemIndex);
 
         if (typeof userReviewItem === "object") {
 
           if (userReviewItem.hasOwnProperty("reviewID")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].reviewID = userReviewItem.reviewID;
+
+            userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === userReviewItem.reviewID);
+
+            // console.log(componentName, GetDateTime(), "updateStateUserReview userReviewListIndex", userReviewListIndex);
+
+            // state.arrayUserReviews[userReviewListIndex].reviewID = userReviewItem.reviewID;
           };
 
           if (userReviewItem.hasOwnProperty("userID")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userID = userReviewItem.userID;
+            state.arrayUserReviews[userReviewListIndex].userID = userReviewItem.userID;
           };
 
           if (userReviewItem.hasOwnProperty("updatedBy")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
+            state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
           };
 
           if (userReviewItem.hasOwnProperty("userReviewUpdatedBy")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewUpdatedBy = userReviewItem.userReviewUpdatedBy;
+            state.arrayUserReviews[userReviewListIndex].userReviewUpdatedBy = userReviewItem.userReviewUpdatedBy;
           };
 
           if (userReviewItem.hasOwnProperty("titleID")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleID = userReviewItem.titleID;
+            state.arrayUserReviews[userReviewListIndex].titleID = userReviewItem.titleID;
           };
 
           if (userReviewItem.hasOwnProperty("read")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].read = userReviewItem.read;
+            state.arrayUserReviews[userReviewListIndex].read = userReviewItem.read;
           };
 
           if (userReviewItem.hasOwnProperty("dateRead")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].dateRead = userReviewItem.dateRead;
+            state.arrayUserReviews[userReviewListIndex].dateRead = userReviewItem.dateRead;
           };
 
           if (userReviewItem.hasOwnProperty("rating")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].rating = userReviewItem.rating;
+            state.arrayUserReviews[userReviewListIndex].rating = userReviewItem.rating;
           };
 
           if (userReviewItem.hasOwnProperty("ranking")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].ranking = userReviewItem.ranking;
+            state.arrayUserReviews[userReviewListIndex].ranking = userReviewItem.ranking;
           };
 
           if (userReviewItem.hasOwnProperty("shortReview")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortReview = userReviewItem.shortReview;
+            state.arrayUserReviews[userReviewListIndex].shortReview = userReviewItem.shortReview;
           };
 
           if (userReviewItem.hasOwnProperty("longReview")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].longReview = userReviewItem.longReview;
+            state.arrayUserReviews[userReviewListIndex].longReview = userReviewItem.longReview;
           };
 
           if (userReviewItem.hasOwnProperty("owned")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].owned = userReviewItem.owned;
+            state.arrayUserReviews[userReviewListIndex].owned = userReviewItem.owned;
           };
 
           if (userReviewItem.hasOwnProperty("datePurchased")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].datePurchased = userReviewItem.datePurchased;
+            state.arrayUserReviews[userReviewListIndex].datePurchased = userReviewItem.datePurchased;
           };
 
           if (userReviewItem.hasOwnProperty("active")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+            state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
           };
 
           if (userReviewItem.hasOwnProperty("userReviewActive")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewActive = userReviewItem.userReviewActive;
+            state.arrayUserReviews[userReviewListIndex].userReviewActive = userReviewItem.userReviewActive;
           };
 
           if (userReviewItem.hasOwnProperty("createDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].createDate = userReviewItem.createDate;
+            state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
           };
 
           if (userReviewItem.hasOwnProperty("userReviewCreateDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewCreateDate = userReviewItem.userReviewCreateDate;
+            state.arrayUserReviews[userReviewListIndex].userReviewCreateDate = userReviewItem.userReviewCreateDate;
           };
 
           if (userReviewItem.hasOwnProperty("updateDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].updateDate = userReviewItem.updateDate;
+            state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
           };
 
           if (userReviewItem.hasOwnProperty("userReviewUpdatedDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userReviewUpdatedDate = userReviewItem.userReviewUpdatedDate;
+            state.arrayUserReviews[userReviewListIndex].userReviewUpdatedDate = userReviewItem.userReviewUpdatedDate;
           };
 
           // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
           // if (userReviewItem.hasOwnProperty("title")) {
 
           //   if (userReviewItem.title.hasOwnProperty("titleID")) {
-          //     state.arrayUserReviews[userReviewItem.userReviewItemIndex].title.titleID = userReviewItem.title.titleID;
+          //     state.arrayUserReviews[userReviewListIndex].title.titleID = userReviewItem.title.titleID;
           //   };
 
           if (userReviewItem.hasOwnProperty("titleName")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleName = userReviewItem.titleName;
+            state.arrayUserReviews[userReviewListIndex].titleName = userReviewItem.titleName;
           };
 
           if (userReviewItem.hasOwnProperty("titleSort")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleSort = userReviewItem.titleSort;
+            state.arrayUserReviews[userReviewListIndex].titleSort = userReviewItem.titleSort;
           };
 
           if (userReviewItem.hasOwnProperty("titleURL")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleURL = userReviewItem.titleURL;
+            state.arrayUserReviews[userReviewListIndex].titleURL = userReviewItem.titleURL;
           };
 
           if (userReviewItem.hasOwnProperty("authorFirstName")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].authorFirstName = userReviewItem.authorFirstName;
+            state.arrayUserReviews[userReviewListIndex].authorFirstName = userReviewItem.authorFirstName;
           };
 
           if (userReviewItem.hasOwnProperty("authorLastName")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].authorLastName = userReviewItem.authorLastName;
+            state.arrayUserReviews[userReviewListIndex].authorLastName = userReviewItem.authorLastName;
           };
 
           if (userReviewItem.hasOwnProperty("publicationDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].publicationDate = userReviewItem.publicationDate;
+            state.arrayUserReviews[userReviewListIndex].publicationDate = userReviewItem.publicationDate;
           };
 
           if (userReviewItem.hasOwnProperty("titlePublicationDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titlePublicationDate = userReviewItem.titlePublicationDate;
+            state.arrayUserReviews[userReviewListIndex].titlePublicationDate = userReviewItem.titlePublicationDate;
           };
 
           if (userReviewItem.hasOwnProperty("imageName")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].imageName = userReviewItem.imageName;
+            state.arrayUserReviews[userReviewListIndex].imageName = userReviewItem.imageName;
           };
 
           if (userReviewItem.hasOwnProperty("titleImageName")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleImageName = userReviewItem.titleImageName;
+            state.arrayUserReviews[userReviewListIndex].titleImageName = userReviewItem.titleImageName;
           };
 
           if (userReviewItem.hasOwnProperty("categoryID")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].categoryID = userReviewItem.categoryID;
+            state.arrayUserReviews[userReviewListIndex].categoryID = userReviewItem.categoryID;
           };
 
           if (userReviewItem.hasOwnProperty("shortDescription")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].shortDescription = userReviewItem.shortDescription;
+            state.arrayUserReviews[userReviewListIndex].shortDescription = userReviewItem.shortDescription;
           };
 
           if (userReviewItem.hasOwnProperty("urlPKDweb")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].urlPKDweb = userReviewItem.urlPKDweb;
+            state.arrayUserReviews[userReviewListIndex].urlPKDweb = userReviewItem.urlPKDweb;
           };
 
           // if (userReviewItem.hasOwnProperty("active")) {
-          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+          //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
           // };
 
           if (userReviewItem.hasOwnProperty("titleActive")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleActive = userReviewItem.titleActive;
+            state.arrayUserReviews[userReviewListIndex].titleActive = userReviewItem.titleActive;
           };
 
           // if (userReviewItem.hasOwnProperty("createDate")) {
-          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].createDate = userReviewItem.createDate;
+          //   state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
           // };
 
           if (userReviewItem.hasOwnProperty("titleCreateDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleCreateDate = userReviewItem.titleCreateDate;
+            state.arrayUserReviews[userReviewListIndex].titleCreateDate = userReviewItem.titleCreateDate;
           };
 
           // if (userReviewItem.hasOwnProperty("updateDate")) {
-          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].updateDate = userReviewItem.updateDate;
+          //   state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
           // };
 
           if (userReviewItem.hasOwnProperty("titleUpdatedDate")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].titleUpdatedDate = userReviewItem.titleUpdatedDate;
+            state.arrayUserReviews[userReviewListIndex].titleUpdatedDate = userReviewItem.titleUpdatedDate;
           };
 
           // };
@@ -218,39 +223,39 @@ const userReviewsSlice = createSlice({
           // if (userReviewItem.hasOwnProperty("user")) {
 
           //   if (userReviewItem.user.hasOwnProperty("userID")) {
-          //     state.arrayUserReviews[userReviewItem.userReviewItemIndex].user.userID = userReviewItem.user.userID;
+          //     state.arrayUserReviews[userReviewListIndex].user.userID = userReviewItem.user.userID;
           //   };
 
           if (userReviewItem.hasOwnProperty("firstName")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].firstName = userReviewItem.firstName;
+            state.arrayUserReviews[userReviewListIndex].firstName = userReviewItem.firstName;
           };
 
           if (userReviewItem.hasOwnProperty("lastName")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].lastName = userReviewItem.lastName;
+            state.arrayUserReviews[userReviewListIndex].lastName = userReviewItem.lastName;
           };
 
           if (userReviewItem.hasOwnProperty("email")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].email = userReviewItem.email;
+            state.arrayUserReviews[userReviewListIndex].email = userReviewItem.email;
           };
 
           // if (userReviewItem.hasOwnProperty("updatedBy")) {
-          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].updatedBy = userReviewItem.updatedBy;
+          //   state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
           // };
 
           if (userReviewItem.hasOwnProperty("userUpdatedBy")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userUpdatedBy = userReviewItem.userUpdatedBy;
+            state.arrayUserReviews[userReviewListIndex].userUpdatedBy = userReviewItem.userUpdatedBy;
           };
 
           if (userReviewItem.hasOwnProperty("admin")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].admin = userReviewItem.admin;
+            state.arrayUserReviews[userReviewListIndex].admin = userReviewItem.admin;
           };
 
           // if (userReviewItem.hasOwnProperty("active")) {
-          //   state.arrayUserReviews[userReviewItem.userReviewItemIndex].active = userReviewItem.active;
+          //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
           // };
 
           if (userReviewItem.hasOwnProperty("userActive")) {
-            state.arrayUserReviews[userReviewItem.userReviewItemIndex].userActive = userReviewItem.userActive;
+            state.arrayUserReviews[userReviewListIndex].userActive = userReviewItem.userActive;
           };
 
           // };
@@ -263,15 +268,24 @@ const userReviewsSlice = createSlice({
       reducer(state, action) {
         // console.log(componentName, GetDateTime(), "deleteStateUserReview action.payload", action.payload);
 
-        const userReviewItemIndex = action.payload;
-        // const reviewID = action.payload;
+        // let userReviewItemIndex = action.payload;
+        let userReviewListIndex;
+        const reviewID = action.payload;
 
         // ? This doesn't work because state.arrayUserReviews isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingUserReviewIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
         // console.log(componentName, GetDateTime(), "deleteStateUserReview existingUserReviewIndex", existingUserReviewIndex);
 
-        state.arrayUserReviews.splice(userReviewItemIndex, 1);
+        if (IsEmpty(reviewID) === false) {
+
+          userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
+
+          // console.log(componentName, GetDateTime(), "deleteStateUserReview userReviewListIndex", userReviewListIndex);
+
+          state.arrayUserReviews.splice(userReviewListIndex, 1);
+
+        };
 
       }
     },

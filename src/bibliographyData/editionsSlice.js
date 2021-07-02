@@ -45,81 +45,91 @@ const editionsSlice = createSlice({
     },
     updateStateEdition: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "updateStateEdition action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "updateStateEdition action.payload", action.payload);
 
         const editionItem = action.payload;
+        let editionItemIndex;
         // console.log(componentName, GetDateTime(), "updateStateEdition editionItem", editionItem);
         // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.editionID", editionItem.editionID);
         // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
 
         if (typeof editionItem === "object") {
 
+          if (editionItem.hasOwnProperty("editionID")) {
+
+            editionItemIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionItem.editionID);
+
+            // console.log(componentName, GetDateTime(), "updateStateUserReview editionItemIndex", editionItemIndex);
+
+            // state.arrayEditions[editionItemIndex].editionID = editionItem.editionID;
+          };
+
           if (editionItem.hasOwnProperty("titleID")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleID = editionItem.titleID;
+            state.arrayEditions[editionItemIndex].titleID = editionItem.titleID;
           };
 
           if (editionItem.hasOwnProperty("mediaID")) {
-            state.arrayEditions[editionItem.editionItemIndex].mediaID = editionItem.mediaID;
+            state.arrayEditions[editionItemIndex].mediaID = editionItem.mediaID;
           };
 
           if (editionItem.hasOwnProperty("publicationDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].publicationDate = editionItem.publicationDate;
+            state.arrayEditions[editionItemIndex].publicationDate = editionItem.publicationDate;
           };
 
           if (editionItem.hasOwnProperty("editionPublicationDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].editionPublicationDate = editionItem.editionPublicationDate;
+            state.arrayEditions[editionItemIndex].editionPublicationDate = editionItem.editionPublicationDate;
           };
 
           if (editionItem.hasOwnProperty("imageName")) {
-            state.arrayEditions[editionItem.editionItemIndex].imageName = editionItem.imageName;
+            state.arrayEditions[editionItemIndex].imageName = editionItem.imageName;
           };
 
           if (editionItem.hasOwnProperty("editionImageName")) {
-            state.arrayEditions[editionItem.editionItemIndex].editionImageName = editionItem.editionImageName;
+            state.arrayEditions[editionItemIndex].editionImageName = editionItem.editionImageName;
           };
 
           if (editionItem.hasOwnProperty("ASIN")) {
-            state.arrayEditions[editionItem.editionItemIndex].ASIN = editionItem.ASIN;
+            state.arrayEditions[editionItemIndex].ASIN = editionItem.ASIN;
           };
 
           if (editionItem.hasOwnProperty("textLinkShort")) {
-            state.arrayEditions[editionItem.editionItemIndex].textLinkShort = editionItem.textLinkShort;
+            state.arrayEditions[editionItemIndex].textLinkShort = editionItem.textLinkShort;
           };
 
           if (editionItem.hasOwnProperty("textLinkFull")) {
-            state.arrayEditions[editionItem.editionItemIndex].textLinkFull = editionItem.textLinkFull;
+            state.arrayEditions[editionItemIndex].textLinkFull = editionItem.textLinkFull;
           };
 
           if (editionItem.hasOwnProperty("imageLinkSmall")) {
-            state.arrayEditions[editionItem.editionItemIndex].imageLinkSmall = editionItem.imageLinkSmall;
+            state.arrayEditions[editionItemIndex].imageLinkSmall = editionItem.imageLinkSmall;
           };
 
           if (editionItem.hasOwnProperty("imageLinkMedium")) {
-            state.arrayEditions[editionItem.editionItemIndex].imageLinkMedium = editionItem.imageLinkMedium;
+            state.arrayEditions[editionItemIndex].imageLinkMedium = editionItem.imageLinkMedium;
           };
 
           if (editionItem.hasOwnProperty("imageLinkLarge")) {
-            state.arrayEditions[editionItem.editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
+            state.arrayEditions[editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
           };
 
           if (editionItem.hasOwnProperty("textImageLink")) {
-            state.arrayEditions[editionItem.editionItemIndex].textImageLink = editionItem.textImageLink;
+            state.arrayEditions[editionItemIndex].textImageLink = editionItem.textImageLink;
           };
 
           if (editionItem.hasOwnProperty("active")) {
-            state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
+            state.arrayEditions[editionItemIndex].active = editionItem.active;
           };
 
           if (editionItem.hasOwnProperty("editionActive")) {
-            state.arrayEditions[editionItem.editionItemIndex].editionActive = editionItem.editionActive;
+            state.arrayEditions[editionItemIndex].editionActive = editionItem.editionActive;
           };
 
           if (editionItem.hasOwnProperty("updateDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].updateDate = editionItem.updateDate;
+            state.arrayEditions[editionItemIndex].updateDate = editionItem.updateDate;
           };
 
           if (editionItem.hasOwnProperty("editionUpdatedDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].editionUpdatedDate = editionItem.editionUpdatedDate;
+            state.arrayEditions[editionItemIndex].editionUpdatedDate = editionItem.editionUpdatedDate;
           };
 
           // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
@@ -127,39 +137,39 @@ const editionsSlice = createSlice({
           // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
 
           // if (editionItem.medium.hasOwnProperty("mediaID")) {
-          //   state.arrayEditions[editionItem.editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
+          //   state.arrayEditions[editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
           // };
 
           if (editionItem.hasOwnProperty("media")) {
-            state.arrayEditions[editionItem.editionItemIndex].media = editionItem.media;
+            state.arrayEditions[editionItemIndex].media = editionItem.media;
           };
 
           if (editionItem.hasOwnProperty("electronic")) {
-            state.arrayEditions[editionItem.editionItemIndex].electronic = editionItem.electronic;
+            state.arrayEditions[editionItemIndex].electronic = editionItem.electronic;
           };
 
           if (editionItem.hasOwnProperty("sortID")) {
-            state.arrayEditions[editionItem.editionItemIndex].sortID = editionItem.sortID;
+            state.arrayEditions[editionItemIndex].sortID = editionItem.sortID;
           };
 
           if (editionItem.hasOwnProperty("mediaSortID")) {
-            state.arrayEditions[editionItem.editionItemIndex].mediaSortID = editionItem.mediaSortID;
+            state.arrayEditions[editionItemIndex].mediaSortID = editionItem.mediaSortID;
           };
 
           // if (editionItem.hasOwnProperty("active")) {
-          //   state.arrayEditions[editionItem.editionItemIndex].active = editionItem.active;
+          //   state.arrayEditions[editionItemIndex].active = editionItem.active;
           // };
 
           if (editionItem.hasOwnProperty("mediaActive")) {
-            state.arrayEditions[editionItem.editionItemIndex].mediaActive = editionItem.mediaActive;
+            state.arrayEditions[editionItemIndex].mediaActive = editionItem.mediaActive;
           };
 
           if (editionItem.hasOwnProperty("mediaCreateDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].mediaCreateDate = editionItem.mediaCreateDate;
+            state.arrayEditions[editionItemIndex].mediaCreateDate = editionItem.mediaCreateDate;
           };
 
           if (editionItem.hasOwnProperty("mediaUpdatedDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].mediaUpdatedDate = editionItem.mediaUpdatedDate;
+            state.arrayEditions[editionItemIndex].mediaUpdatedDate = editionItem.mediaUpdatedDate;
           };
 
           // };
@@ -168,59 +178,59 @@ const editionsSlice = createSlice({
           // if (editionItem.hasOwnProperty("title")) {
 
           //   if (editionItem.title.hasOwnProperty("titleID")) {
-          //     state.arrayEditions[editionItem.editionItemIndex].title.titleID = editionItem.title.titleID;
+          //     state.arrayEditions[editionItemIndex].title.titleID = editionItem.title.titleID;
           //   };
 
           if (editionItem.hasOwnProperty("titleName")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleName = editionItem.titleName;
+            state.arrayEditions[editionItemIndex].titleName = editionItem.titleName;
           };
 
           if (editionItem.hasOwnProperty("titleSort")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleSort = editionItem.titleSort;
+            state.arrayEditions[editionItemIndex].titleSort = editionItem.titleSort;
           };
 
           if (editionItem.hasOwnProperty("titleURL")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleURL = editionItem.titleURL;
+            state.arrayEditions[editionItemIndex].titleURL = editionItem.titleURL;
           };
 
           if (editionItem.hasOwnProperty("authorFirstName")) {
-            state.arrayEditions[editionItem.editionItemIndex].authorFirstName = editionItem.authorFirstName;
+            state.arrayEditions[editionItemIndex].authorFirstName = editionItem.authorFirstName;
           };
 
           if (editionItem.hasOwnProperty("authorLastName")) {
-            state.arrayEditions[editionItem.editionItemIndex].authorLastName = editionItem.authorLastName;
+            state.arrayEditions[editionItemIndex].authorLastName = editionItem.authorLastName;
           };
 
           if (editionItem.hasOwnProperty("titlePublicationDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].titlePublicationDate = editionItem.titlePublicationDate;
+            state.arrayEditions[editionItemIndex].titlePublicationDate = editionItem.titlePublicationDate;
           };
 
           if (editionItem.hasOwnProperty("titleImageName")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleImageName = editionItem.titleImageName;
+            state.arrayEditions[editionItemIndex].titleImageName = editionItem.titleImageName;
           };
 
           if (editionItem.hasOwnProperty("categoryID")) {
-            state.arrayEditions[editionItem.editionItemIndex].categoryID = editionItem.categoryID;
+            state.arrayEditions[editionItemIndex].categoryID = editionItem.categoryID;
           };
 
           if (editionItem.hasOwnProperty("shortDescription")) {
-            state.arrayEditions[editionItem.editionItemIndex].shortDescription = editionItem.shortDescription;
+            state.arrayEditions[editionItemIndex].shortDescription = editionItem.shortDescription;
           };
 
           if (editionItem.hasOwnProperty("urlPKDweb")) {
-            state.arrayEditions[editionItem.editionItemIndex].urlPKDweb = editionItem.urlPKDweb;
+            state.arrayEditions[editionItemIndex].urlPKDweb = editionItem.urlPKDweb;
           };
 
           if (editionItem.hasOwnProperty("titleActive")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleActive = editionItem.titleActive;
+            state.arrayEditions[editionItemIndex].titleActive = editionItem.titleActive;
           };
 
           if (editionItem.hasOwnProperty("titleCreateDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleCreateDate = editionItem.titleCreateDate;
+            state.arrayEditions[editionItemIndex].titleCreateDate = editionItem.titleCreateDate;
           };
 
           if (editionItem.hasOwnProperty("titleUpdatedDate")) {
-            state.arrayEditions[editionItem.editionItemIndex].titleUpdatedDate = editionItem.titleUpdatedDate;
+            state.arrayEditions[editionItemIndex].titleUpdatedDate = editionItem.titleUpdatedDate;
           };
 
           // };
@@ -233,15 +243,24 @@ const editionsSlice = createSlice({
       reducer(state, action) {
         // console.log(componentName, GetDateTime(), "deleteStateEdition action.payload", action.payload);
 
-        const editionItemIndex = action.payload;
-        // const editionID = action.payload;
+        // const editionItemIndex = action.payload;
+        let editionListIndex;
+        const editionID = action.payload;
 
         // ? This doesn't work because state.arrayEditions isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingEditionIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
         // console.log(componentName, GetDateTime(), "deleteStateEdition existingEditionIndex", existingEditionIndex);
 
-        state.arrayEditions.splice(editionItemIndex, 1);
+        if (IsEmpty(editionID) === false) {
+
+          editionListIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
+
+          // console.log(componentName, GetDateTime(), "deleteStateEdition editionListIndex", editionListIndex);
+
+          state.arrayEditions.splice(editionListIndex, 1);
+
+        };
 
       }
     },

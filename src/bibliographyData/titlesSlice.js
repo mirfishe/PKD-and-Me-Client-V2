@@ -48,11 +48,21 @@ const titlesSlice = createSlice({
         // console.log(componentName, GetDateTime(), "updateStateTitle action.payload", action.payload);
 
         const titleItem = action.payload;
+        let titleItemIndex;
         // console.log(componentName, GetDateTime(), "updateStateTitle titleItem", titleItem);
         // console.log(componentName, GetDateTime(), "updateStateTitle titleItem.titleID", titleItem.titleID);
         // console.log(componentName, GetDateTime(), "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
 
         if (typeof titleItem === "object") {
+
+          if (titleItem.hasOwnProperty("titleID")) {
+
+            titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
+
+            // console.log(componentName, GetDateTime(), "updateStateTitle titleItemIndex", titleItemIndex);
+
+            // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
+          };
 
           if (titleItem.hasOwnProperty("titleName")) {
             state.arrayTitles[titleItem.titleItemIndex].titleName = titleItem.titleName;
@@ -167,15 +177,24 @@ const titlesSlice = createSlice({
       reducer(state, action) {
         // console.log(componentName, GetDateTime(), "deleteStateTitle action.payload", action.payload);
 
-        const titleItemIndex = action.payload;
-        // const titleID = action.payload;
+        // const titleItemIndex = action.payload;
+        let titleListIndex;
+        const titleID = action.payload;
 
         // ? This doesn't work because state.arrayTitles isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
         // console.log(componentName, GetDateTime(), "deleteStateTitle existingTitleIndex", existingTitleIndex);
 
-        state.arrayTitles.splice(titleItemIndex, 1);
+        if (IsEmpty(titleID) === false) {
+
+          titleListIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
+
+          // console.log(componentName, GetDateTime(), "deleteStateTitle titleListIndex", titleListIndex);
+
+          state.arrayTitles.splice(titleListIndex, 1);
+
+        };
 
       }
     },

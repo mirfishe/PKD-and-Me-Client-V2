@@ -44,33 +44,42 @@ const mediaSlice = createSlice({
     },
     updateStateMedia: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "updateStateMedia action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "updateStateMedia action.payload", action.payload);
 
         const mediaItem = action.payload;
-        console.log(componentName, GetDateTime(), "updateStateMedia mediaItem", mediaItem);
-        console.log(componentName, GetDateTime(), "updateStateMedia mediaItem.mediaID", mediaItem.mediaID);
-        console.log(componentName, GetDateTime(), "updateStateMedia mediaItem.mediaItemIndex", mediaItem.mediaItemIndex);
+        let mediaItemIndex;
+        // console.log(componentName, GetDateTime(), "updateStateMedia mediaItem", mediaItem);
+        // console.log(componentName, GetDateTime(), "updateStateMedia mediaItem.mediaID", mediaItem.mediaID);
 
         if (typeof mediaItem === "object") {
 
+          if (mediaItem.hasOwnProperty("mediaID")) {
+
+            mediaItemIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaItem.mediaID);
+
+            // console.log(componentName, GetDateTime(), "updateStateMedia mediaItemIndex", mediaItemIndex);
+
+            // state.arrayMedia[mediaItemIndex].mediaID = mediaItem.mediaID;
+          };
+
           if (mediaItem.hasOwnProperty("media")) {
-            state.arrayMedia[mediaItem.mediaItemIndex].media = mediaItem.media;
+            state.arrayMedia[mediaItemIndex].media = mediaItem.media;
           };
 
           if (mediaItem.hasOwnProperty("electronic")) {
-            state.arrayMedia[mediaItem.mediaItemIndex].electronic = mediaItem.electronic;
+            state.arrayMedia[mediaItemIndex].electronic = mediaItem.electronic;
           };
 
           if (mediaItem.hasOwnProperty("sortID")) {
-            state.arrayMedia[mediaItem.mediaItemIndex].sortID = mediaItem.sortID;
+            state.arrayMedia[mediaItemIndex].sortID = mediaItem.sortID;
           };
 
           if (mediaItem.hasOwnProperty("active")) {
-            state.arrayMedia[mediaItem.mediaItemIndex].active = mediaItem.active;
+            state.arrayMedia[mediaItemIndex].active = mediaItem.active;
           };
 
           if (mediaItem.hasOwnProperty("updateDate")) {
-            state.arrayMedia[mediaItem.mediaItemIndex].updateDate = mediaItem.updateDate;
+            state.arrayMedia[mediaItemIndex].updateDate = mediaItem.updateDate;
           };
 
         };
@@ -79,17 +88,26 @@ const mediaSlice = createSlice({
     },
     deleteStateMedia: {
       reducer(state, action) {
-        console.log(componentName, GetDateTime(), "deleteStateMedia action.payload", action.payload);
+        // console.log(componentName, GetDateTime(), "deleteStateMedia action.payload", action.payload);
 
-        const mediaItemIndex = action.payload;
-        // const mediaID = action.payload;
+        // const mediaItemIndex = action.payload;
+        let mediaListIndex;
+        const mediaID = action.payload;
 
         // ? This doesn't work because state.arrayMedia isn't stored as an array of objects?
         // ? Need to copy the array?
         // const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
         // console.log(componentName, GetDateTime(), "deleteStateMedia existingMediaIndex", existingMediaIndex);
 
-        state.arrayMedia.splice(mediaItemIndex, 1);
+        if (IsEmpty(mediaID) === false) {
+
+          mediaListIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
+
+          // console.log(componentName, GetDateTime(), "deleteStateMedia mediaListIndex", mediaListIndex);
+
+          state.arrayMedia.splice(mediaListIndex, 1);
+
+        };
 
       }
     },

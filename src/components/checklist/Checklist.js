@@ -40,6 +40,8 @@ const Checklist = (props) => {
   const [errChecklistMessage, setErrChecklistMessage] = useState("");
   const [checklistRecordUpdated, setChecklistRecordUpdated] = useState(null);
 
+  const [readOrOwned, setReadOrOwned] = useState("read");
+
   const linkItem = useSelector(state => state.urls.linkItem);
   // console.log(componentName, GetDateTime(), "linkItem", linkItem);
 
@@ -141,7 +143,7 @@ const Checklist = (props) => {
   // console.log(componentName, GetDateTime(), "titleList", titleList);
 
 
-  const updateChecklist = (titleID, read, reviewID) => {
+  const updateChecklist = (titleID, reviewID, read, owned) => {
     // console.log(componentName, GetDateTime(), "updateChecklist");
 
     // console.log(componentName, GetDateTime(), "updateChecklist titleID", titleID);
@@ -156,6 +158,7 @@ const Checklist = (props) => {
     let userReviewObject = {
       titleID: titleID,
       read: read,
+      owned: owned,
       active: true // ? always true?
     };
 
@@ -229,17 +232,19 @@ const Checklist = (props) => {
             // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime() }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime()
+              }));
             } else if (updateChecklistMethod === "POST") {
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate }));
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate
+              }));
             };
 
-            const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
+            // const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
             // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
 
-              dispatch(updateStateUserReview({ userReviewListIndex: userReviewListIndex, reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: data.records[0].updateDate }));
+              dispatch(updateStateUserReview({ /*userReviewListIndex: userReviewListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: data.records[0].updateDate }));
 
             } else if (updateChecklistMethod === "POST") {
 
@@ -247,7 +252,7 @@ const Checklist = (props) => {
               // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
               titleItem = titleItem[0];
 
-              dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
+              dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
 
             };
 
@@ -308,6 +313,15 @@ const Checklist = (props) => {
             </Col>
           </Row>
 
+          <Row className="mb-2">
+            <Col>
+              <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("read"); }}>Read</Button>
+              <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("owned"); }}>Own</Button>
+              {readOrOwned === "read" ? <p>Read</p> : null}
+              {readOrOwned === "owned" ? <p>Owned</p> : null}
+            </Col>
+          </Row>
+
           {/* <ListGroup flush> */}
 
           {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkTypeName") === true ?
@@ -334,7 +348,12 @@ const Checklist = (props) => {
             return (
               <Row /*ListGroupItem*/ key={title.titleID}>
                 <Col className="mx-3">
-                  <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read} /*value={title.read}*/ onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, !title.read, title.reviewID); }} /> <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
+
+                  {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
+
+                  {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
+
+                  <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
                     {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}
                   </p>
                   {/* </ListGroupItem> */}

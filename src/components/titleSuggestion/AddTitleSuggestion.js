@@ -51,11 +51,11 @@ const AddTitleSuggestion = (props) => {
   const [txtPublicationDate, setTxtPublicationDate] = useState("");
   const [txtShortDescription, setTxtShortDescription] = useState("");
   const [txtTitleURL, setTxtTitleURL] = useState("");
-  const [txtEmailAddress, setTxtEmailAddress] = useState("");
+  const [txtEmail, setTxtEmail] = useState("");
 
   const [errTitleName, setErrTitleName] = useState("");
   const [errShortDescription, setErrShortDescription] = useState("");
-  const [errEmailAddress, setErrEmailAddress] = useState("");
+  const [errEmail, setErrEmail] = useState("");
 
   const [titleSuggestionItem, setTitleSuggestionItem] = useState(null);
   const [titleSuggestionID, setTitleSuggestionID] = useState(null);
@@ -66,18 +66,29 @@ const AddTitleSuggestion = (props) => {
   const [publicationDate, setPublicationDate] = useState(null);
   const [shortDescription, setShortDescription] = useState(null);
   const [titleURL, setTitleURL] = useState(null);
-  const [titleSuggestionEmailAddress, setTitleSuggestionEmailAddress] = useState(null);
+  const [titleSuggestionEmail, setTitleSuggestionEmail] = useState(null);
+
+
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
+
+    if ((IsEmpty(userState) === false)) {
+      setTxtEmail(userState.email);
+    };
+
+  }, [userState]);
 
 
   const addTitleSuggestion = () => {
     // console.log(componentName, GetDateTime(), "addTitleSuggestion");
     // console.log(componentName, GetDateTime(), "addTitleSuggestion baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addTitleSuggestion sessionToken", sessionToken);
 
     clearMessages();
     setTitleSuggestionRecordAdded(null);
     setErrTitleName("");
     setErrShortDescription("");
-    setErrEmailAddress("");
+    setErrEmail("");
 
     setTitleSuggestionItem(null);
     setTitleSuggestionID(null);
@@ -88,11 +99,11 @@ const AddTitleSuggestion = (props) => {
     setPublicationDate(null);
     setShortDescription(null);
     setTitleURL(null);
-    setTitleSuggestionEmailAddress(null);
+    setTitleSuggestionEmail(null);
 
     let titleNameValidated = false;
     let shortDescriptionValidated = false;
-    let emailAddressValidated = false;
+    let emailValidated = false;
     let formValidated = false;
 
     if (IsEmpty(txtTitleName) === false) {
@@ -123,21 +134,21 @@ const AddTitleSuggestion = (props) => {
       };
     };
 
-    if (IsEmpty(txtEmailAddress) === false) {
-      if (txtEmailAddress.trim().length > 0 || requireUserLogin === false) {
-        emailAddressValidated = true;
-        setErrEmailAddress("");
-        // console.log(componentName, GetDateTime(), "addMessage Valid emailAddress");
-        // console.log(componentName, GetDateTime(), "addMessage emailAddressValidated true", emailAddressValidated);
+    if (IsEmpty(txtEmail) === false) {
+      if (txtEmail.trim().length > 0 || requireUserLogin === false) {
+        emailValidated = true;
+        setErrEmail("");
+        // console.log(componentName, GetDateTime(), "addMessage Valid email");
+        // console.log(componentName, GetDateTime(), "addMessage emailValidated true", emailValidated);
       } else {
-        emailAddressValidated = false;
-        setErrEmailAddress("Please enter an email address.");
-        // console.log(componentName, GetDateTime(), "addMessage Invalid emailAddress");
-        // console.log(componentName, GetDateTime(), "addMessage emailAddressValidated false", emailAddressValidated);
+        emailValidated = false;
+        setErrEmail("Please enter an email address.");
+        // console.log(componentName, GetDateTime(), "addMessage Invalid email");
+        // console.log(componentName, GetDateTime(), "addMessage emailValidated false", emailValidated);
       };
     };
 
-    if (titleNameValidated === true && shortDescriptionValidated === true && emailAddressValidated === true) {
+    if (titleNameValidated === true && shortDescriptionValidated === true && emailValidated === true) {
       formValidated = true;
       // console.log(componentName, GetDateTime(), "addTitleSuggestion Valid Form");
       // console.log(componentName, GetDateTime(), "addTitleSuggestion formValidated true", formValidated);
@@ -153,7 +164,7 @@ const AddTitleSuggestion = (props) => {
 
     if (formValidated === true) {
 
-      if (IsEmpty(txtTitleName) === false && IsEmpty(txtShortDescription) === false && IsEmpty(txtEmailAddress) === false) {
+      if (IsEmpty(txtTitleName) === false && IsEmpty(txtShortDescription) === false && IsEmpty(txtEmail) === false) {
 
         let titleSuggestionObject = {
           titleName: txtTitleName.trim(),
@@ -161,7 +172,8 @@ const AddTitleSuggestion = (props) => {
           // authorLastName: txtAuthorLastName.trim(),
           shortDescription: txtShortDescription.trim(),
           // titleURL: txtTitleURL.trim(),
-          emailAddress: txtEmailAddress.trim()
+          userID: userState.userID,
+          email: txtEmail.trim()
         };
 
         // * If the user doesn't enter an author first name, then it isn't added/updated
@@ -194,7 +206,7 @@ const AddTitleSuggestion = (props) => {
 
         // console.log(componentName, GetDateTime(), "addTitleSuggestion titleSuggestionObject", titleSuggestionObject);
 
-        let url = baseURL + "titles/";
+        let url = baseURL + "titleSuggestions/";
         // console.log(componentName, GetDateTime(), "addTitleSuggestion url", url);
 
         if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
@@ -240,7 +252,7 @@ const AddTitleSuggestion = (props) => {
                 setPublicationDate(data.records[0].publicationDate);
                 setShortDescription(data.records[0].shortDescription);
                 setTitleURL(data.records[0].titleURL);
-                setTitleSuggestionEmailAddress(data.records[0].emailAddress);
+                setTitleSuggestionEmail(data.records[0].email);
 
                 // ? Would still work if the createDate and updateDate were left out?
                 // dispatch(addStateTitle([{titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
@@ -273,7 +285,7 @@ const AddTitleSuggestion = (props) => {
       clearMessages();
       setErrTitleName("");
       setErrShortDescription("");
-      setErrEmailAddress("");
+      setErrEmail("");
       setTitleSuggestionRecordAdded(null);
       // setModal(false);
       toggle();
@@ -353,9 +365,9 @@ const AddTitleSuggestion = (props) => {
             </FormGroup>
             <FormGroup>
 
-              <Label for="txtEmailAddress">Email Address</Label>
-              <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmailAddress(event.target.value); }} />
-              {IsEmpty(errEmailAddress) === false ? <Alert color="danger">{errEmailAddress}</Alert> : null}
+              <Label for="txtEmail">Email Address</Label>
+              <Input type="text" id="txtEmail" value={txtEmail} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
+              {IsEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
 
             </FormGroup>
 

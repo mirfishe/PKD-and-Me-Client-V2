@@ -48,30 +48,42 @@ const urlsSlice = createSlice({
         // ? Doesn't seem to be updating the state for some reason?
 
         const urlItem = action.payload;
+        let urlListIndex;
         // console.log(componentName, GetDateTime(), "updateStateURL urlItem", urlItem);
         // console.log(componentName, GetDateTime(), "updateStateURL urlItem.linkID", urlItem.linkID);
-        // console.log(componentName, GetDateTime(), "updateStateURL urlItem.urlListIndex", urlItem.urlListIndex);
 
         if (typeof urlItem === "object") {
 
-          if (urlItem.hasOwnProperty("linkName")) {
-            state.arrayURLs[urlItem.urlListIndex].linkName = urlItem.linkName;
-          };
+          if (urlItem.hasOwnProperty("linkID") && urlItem.hasOwnProperty("linkType")) {
 
-          if (urlItem.hasOwnProperty("linkType")) {
-            state.arrayURLs[urlItem.urlListIndex].linkType = urlItem.linkType;
-          };
+            urlListIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 
-          if (urlItem.hasOwnProperty("linkID")) {
-            state.arrayURLs[urlItem.urlListIndex].linkID = urlItem.linkID;
-          };
+            // console.log(componentName, GetDateTime(), "updateStateURL urlListIndex", urlListIndex);
 
-          if (urlItem.hasOwnProperty("linkTypeNameID")) {
-            state.arrayURLs[urlItem.urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
-          };
+            if (IsEmpty(urlListIndex) === false) {
 
-          if (urlItem.hasOwnProperty("linkTypeName")) {
-            state.arrayURLs[urlItem.urlListIndex].linkTypeName = urlItem.linkTypeName;
+              if (urlItem.hasOwnProperty("linkName")) {
+                state.arrayURLs[urlListIndex].linkName = urlItem.linkName;
+              };
+
+              if (urlItem.hasOwnProperty("linkType")) {
+                state.arrayURLs[urlListIndex].linkType = urlItem.linkType;
+              };
+
+              if (urlItem.hasOwnProperty("linkID")) {
+                state.arrayURLs[urlListIndex].linkID = urlItem.linkID;
+              };
+
+              if (urlItem.hasOwnProperty("linkTypeNameID")) {
+                state.arrayURLs[urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
+              };
+
+              if (urlItem.hasOwnProperty("linkTypeName")) {
+                state.arrayURLs[urlListIndex].linkTypeName = urlItem.linkTypeName;
+              };
+
+            };
+
           };
 
         };
@@ -82,9 +94,27 @@ const urlsSlice = createSlice({
       reducer(state, action) {
         // console.log(componentName, GetDateTime(), "deleteStateURL action.payload", action.payload);
 
-        const urlListIndex = action.payload;
+        // const urlListIndex = action.payload;
+        const urlItem = action.payload;
+        let urlItemIndex;
 
-        state.arrayURLs.splice(urlListIndex, 1);
+        if (typeof urlItem === "object") {
+
+          if (urlItem.hasOwnProperty("linkID") && urlItem.hasOwnProperty("linkType")) {
+
+            urlItemIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
+
+            // console.log(componentName, GetDateTime(), "deleteStateURL urlItemIndex", urlItemIndex);
+
+            if (IsEmpty(urlItemIndex) === false) {
+
+              state.arrayURLs.splice(urlItemIndex, 1);
+
+            };
+
+          };
+
+        };
 
       }
     },

@@ -95,29 +95,30 @@ const userSlice = createSlice({
 
         for (let i = 0; i < action.payload.length; i++) {
           // console.log(componentName, GetDateTime(), "loadArrayChecklist action.payload[i]", action.payload[i]);
-          // state.arrayChecklist.push(action.payload[i]);
 
-          let userReviewID = null;
-          let userReviewUserID = null;
-          let userReviewUpdatedBy = null;
-          let userReviewRead = null;
-          let userReviewDateRead = null;
-          let userReviewActive = null;
-          let userReviewCreatedDate = null;
-          let userReviewUpdateDate = null;
+          state.arrayChecklist.push(action.payload[i]);
 
-          if (IsEmpty(action.payload[i]) === false) {
-            userReviewID = action.payload[i].reviewID;
-            userReviewUserID = action.payload[i].userID;
-            userReviewUpdatedBy = action.payload[i].userReviewUpdatedBy;
-            userReviewRead = action.payload[i].read;
-            userReviewDateRead = action.payload[i].dateRead;
-            userReviewActive = action.payload[i].userReviewActive;
-            userReviewCreatedDate = action.payload[i].userReviewCreatedDate;
-            userReviewUpdateDate = action.payload[i].userReviewUpdateDate;
-          };
+          // let userReviewID = null;
+          // let userReviewUserID = null;
+          // let userReviewUpdatedBy = null;
+          // let userReviewRead = null;
+          // let userReviewDateRead = null;
+          // let userReviewActive = null;
+          // let userReviewCreatedDate = null;
+          // let userReviewUpdateDate = null;
 
-          state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].publicationDate, titlePublicationDate: action.payload[i].titlePublicationDate, imageName: action.payload[i].imageName, titleImageName: action.payload[i].titleImageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].active, titleActive: action.payload[i].titleActive, createDate: action.payload[i].createdDate, titleCreatedDate: action.payload[i].titleCreatedDate, updateDate: action.payload[i].updateDate, titleUpdateDate: action.payload[i].titleUpdateDate, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedDate: userReviewCreatedDate, userReviewUpdateDate: userReviewUpdateDate });
+          // if (IsEmpty(action.payload[i]) === false) {
+          //   userReviewID = action.payload[i].reviewID;
+          //   userReviewUserID = action.payload[i].userID;
+          //   userReviewUpdatedBy = action.payload[i].userReviewUpdatedBy;
+          //   userReviewRead = action.payload[i].read;
+          //   userReviewDateRead = action.payload[i].dateRead;
+          //   userReviewActive = action.payload[i].userReviewActive;
+          //   userReviewCreatedDate = action.payload[i].userReviewCreatedDate;
+          //   userReviewUpdateDate = action.payload[i].userReviewUpdateDate;
+          // };
+
+          // state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].publicationDate, titlePublicationDate: action.payload[i].titlePublicationDate, imageName: action.payload[i].imageName, titleImageName: action.payload[i].titleImageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].active, titleActive: action.payload[i].titleActive, createDate: action.payload[i].createdDate, titleCreatedDate: action.payload[i].titleCreatedDate, updateDate: action.payload[i].updateDate, titleUpdateDate: action.payload[i].titleUpdateDate, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedDate: userReviewCreatedDate, userReviewUpdateDate: userReviewUpdateDate });
         };
 
         state.checklistLoaded = true;

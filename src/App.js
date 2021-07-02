@@ -38,6 +38,8 @@ import Register from "./components/users/Register";
 import EditUser from "./components/users/EditUser";
 import Checklist from "./components/checklist/Checklist";
 import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
+import AddComment from "./components/comments/AddComment";
+import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
 
 function App() {
 
@@ -439,6 +441,14 @@ function App() {
           {appAllowUserInteractions === true && IsEmpty(checklistLoaded) === false && checklistLoaded === true ?
             <NavItem className="mx-3">
               <Checklist displayButton={true} />
+            </NavItem>
+            : null}
+          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+            <NavItem className="mx-3"><AddTitleSuggestion displayButton={true} />
+            </NavItem>
+            : null}
+          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+            <NavItem className="mx-3"><AddComment displayButton={true} />
             </NavItem>
             : null}
           {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?

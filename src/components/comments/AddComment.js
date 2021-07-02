@@ -46,16 +46,26 @@ const AddComment = (props) => {
   const [commentRecordAdded, setCommentRecordAdded] = useState(null);
 
   const [txtComment, setTxtComment] = useState("");
-  const [txtEmailAddress, setTxtEmailAddress] = useState("");
+  const [txtEmail, setTxtEmail] = useState("");
 
   const [errComment, setErrComment] = useState("");
-  const [errEmailAddress, setErrEmailAddress] = useState("");
+  const [errEmail, setErrEmail] = useState("");
 
   const [commentItem, setCommentItem] = useState(null);
   const [commentID, setCommentID] = useState(null);
   const [commentUserID, setCommentUserID] = useState(null);
   const [comment, setComment] = useState(null);
-  const [commentEmailAddress, setCommentEmailAddress] = useState(null);
+  const [commentEmail, setCommentEmail] = useState(null);
+
+
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
+
+    if ((IsEmpty(userState) === false)) {
+      setTxtEmail(userState.email);
+    };
+
+  }, [userState]);
 
 
   const addComment = () => {
@@ -65,47 +75,47 @@ const AddComment = (props) => {
     clearMessages();
     setCommentRecordAdded(null);
     setErrComment("");
-    setErrEmailAddress("");
+    setErrEmail("");
 
     setCommentItem(null);
     setCommentID(null);
     setCommentUserID(null);
     setComment(null);
-    setCommentEmailAddress(null);
+    setCommentEmail(null);
 
     let commentValidated = false;
-    let emailAddressValidated = false;
+    let emailValidated = false;
     let formValidated = false;
 
     if (IsEmpty(txtComment) === false) {
       if (txtComment.trim().length > 0) {
         commentValidated = true;
-        setErrEmailAddress("");
-        // console.log(componentName, GetDateTime(), "addComment Valid emailAddress");
-        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated true", emailAddressValidated);
+        setErrComment("");
+        // console.log(componentName, GetDateTime(), "addComment Valid Comment");
+        // console.log(componentName, GetDateTime(), "addComment commentValidated true", commentValidated);
       } else {
         commentValidated = false;
-        setErrEmailAddress("Please enter a comment.");
-        // console.log(componentName, GetDateTime(), "addComment Invalid emailAddress");
-        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated false", emailAddressValidated);
+        setErrComment("Please enter a comment.");
+        // console.log(componentName, GetDateTime(), "addComment Invalid Comment");
+        // console.log(componentName, GetDateTime(), "addComment commentValidated false", commentValidated);
       };
     };
 
-    if (IsEmpty(txtEmailAddress) === false) {
-      if (txtEmailAddress.trim().length > 0 || requireUserLogin === false) {
-        emailAddressValidated = true;
-        setErrEmailAddress("");
-        // console.log(componentName, GetDateTime(), "addComment Valid emailAddress");
-        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated true", emailAddressValidated);
+    if (IsEmpty(txtEmail) === false) {
+      if (txtEmail.trim().length > 0 || requireUserLogin === false) {
+        emailValidated = true;
+        setErrEmail("");
+        // console.log(componentName, GetDateTime(), "addComment Valid email");
+        // console.log(componentName, GetDateTime(), "addComment emailValidated true", emailValidated);
       } else {
-        emailAddressValidated = false;
-        setErrEmailAddress("Please enter an email address.");
-        // console.log(componentName, GetDateTime(), "addComment Invalid emailAddress");
-        // console.log(componentName, GetDateTime(), "addComment emailAddressValidated false", emailAddressValidated);
+        emailValidated = false;
+        setErrEmail("Please enter an email address.");
+        // console.log(componentName, GetDateTime(), "addComment Invalid email");
+        // console.log(componentName, GetDateTime(), "addComment emailValidated false", emailValidated);
       };
     };
 
-    if (commentValidated === true && emailAddressValidated === true) {
+    if (commentValidated === true /*&& emailValidated === true*/) {
       formValidated = true;
       // console.log(componentName, GetDateTime(), "addComment Valid Form");
       // console.log(componentName, GetDateTime(), "addComment formValidated true", formValidated);
@@ -115,22 +125,24 @@ const AddComment = (props) => {
       // console.log(componentName, GetDateTime(), "addComment formValidated false", formValidated);
     };
 
-    // console.log(componentName, GetDateTime(), "addComment emailAddressValidated", emailAddressValidated);
+    // console.log(componentName, GetDateTime(), "addComment emailValidated", emailValidated);
     // console.log(componentName, GetDateTime(), "addComment categoryIDValidated", categoryIDValidated);
     // console.log(componentName, GetDateTime(), "addComment formValidated", formValidated);
 
     if (formValidated === true) {
 
-      if (IsEmpty(txtComment) === false && IsEmpty(txtEmailAddress) === false) {
+      if (IsEmpty(txtComment) === false /*&& IsEmpty(txtEmail) === false*/) {
 
         let commentObject = {
           comment: txtComment.trim(),
-          emailAddress: txtEmailAddress.trim()
+          userID: userState.userID,
+          email: txtEmail.trim()
+          // email: userState.email
         };
 
         // console.log(componentName, GetDateTime(), "addComment commentObject", commentObject);
 
-        let url = baseURL + "titles/";
+        let url = baseURL + "comments/";
         // console.log(componentName, GetDateTime(), "addComment url", url);
 
         if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
@@ -171,10 +183,10 @@ const AddComment = (props) => {
                 setCommentID(data.records[0].CommentID);
                 setCommentUserID(data.records[0].userID);
                 setComment(data.records[0].Comment);
-                setCommentEmailAddress(data.records[0].emailAddress);
+                setCommentEmail(data.records[0].email);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                // dispatch(addStateTitle([{titleID: data.records[0].titleID, emailAddress: data.records[0].EmailAddress, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, Comment: data.records[0].Comment, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
+                // dispatch(addStateTitle([{titleID: data.records[0].titleID, email: data.records[0].Email, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, Comment: data.records[0].Comment, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
                 // ? Add to local storage also?
 
               } else {
@@ -203,7 +215,7 @@ const AddComment = (props) => {
     if (IsEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
       clearMessages();
       setErrComment("");
-      setErrEmailAddress("");
+      setErrEmail("");
       setCommentRecordAdded(null);
       // setModal(false);
       toggle();
@@ -252,9 +264,9 @@ const AddComment = (props) => {
             </FormGroup>
             <FormGroup>
 
-              <Label for="txtEmailAddress">Email Address</Label>
-              <Input type="text" id="txtEmailAddress" value={txtEmailAddress} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmailAddress(event.target.value); }} />
-              {IsEmpty(errEmailAddress) === false ? <Alert color="danger">{errEmailAddress}</Alert> : null}
+              <Label for="txtEmail">Email Address</Label>
+              <Input type="text" id="txtEmail" value={txtEmail} onChange={(event) => { setTxtEmail(event.target.value); }} />
+              {IsEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
 
             </FormGroup>
 

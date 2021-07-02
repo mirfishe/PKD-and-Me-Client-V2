@@ -101,7 +101,7 @@ const EditEdition = (props) => {
 
   const [errMediaID, setErrMediaID] = useState("");
 
-  const [editionItemIndex, setEditionItemIndex] = useState(null);
+  // const [editionItemIndex, setEditionItemIndex] = useState(null);
   const [editionItem, setEditionItem] = useState(null);
   const [editionID, setEditionID] = useState(null);
   const [titleID, setTitleID] = useState(null);
@@ -134,7 +134,7 @@ const EditEdition = (props) => {
       // console.log(componentName, GetDateTime(), "useEffect editionObject", editionObject);
       // console.log(componentName, GetDateTime(), "useEffect typeof editionObject", typeof editionObject);
 
-      setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === props.editionID));
+      // setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === props.editionID));
       // console.log(componentName, GetDateTime(), "useEffect editionItemIndex", editionItemIndex);
 
       if (IsEmpty(editionObject) === false) {
@@ -389,7 +389,7 @@ const EditEdition = (props) => {
               // console.log(componentName, GetDateTime(), "updateEdition titleItem", titleItem);
 
               // ? Would still work if the createDate and updateDate were left out?
-              dispatch(updateStateEdition({ editionItemIndex: editionItemIndex, editionID: props.editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: GetDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
+              dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: props.editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: GetDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
               // ? Add to local storage also?
 
             } else {
@@ -458,7 +458,8 @@ const EditEdition = (props) => {
             if (data.recordDeleted === true) {
 
               // dispatch(deleteStateEdition(props.editionID));
-              dispatch(deleteStateEdition(editionItemIndex));
+              // dispatch(deleteStateEdition(editionItemIndex));
+              dispatch(deleteStateEdition(data.editionID));
               // ? Update local storage also?
 
             } else {

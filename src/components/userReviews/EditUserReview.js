@@ -94,65 +94,7 @@ const EditUserReview = (props) => {
       // console.log(componentName, GetDateTime(), "useEffect userReviewObject", userReviewObject);
       // console.log(componentName, GetDateTime(), "useEffect typeof userReviewObject", typeof userReviewObject);
 
-      setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
-      // console.log(componentName, GetDateTime(), "useEffect userReviewItemIndex", userReviewItemIndex);
-
-      if (IsEmpty(userReviewObject) === false) {
-
-        setUserReviewItem(userReviewObject);
-
-        setReviewID(userReviewObject.reviewID);
-        setUserID(userReviewObject.userID);
-        setUpdatedBy(userReviewObject.updatedBy);
-        setTitleID(userReviewObject.titleID);
-        setRead(userReviewObject.read);
-        setDateRead(userReviewObject.dateRead);
-        setRating(userReviewObject.rating);
-        setRanking(userReviewObject.ranking);
-        setShortReview(userReviewObject.shortReview);
-        setLongReview(userReviewObject.longReview);
-        setOwned(userReviewObject.owned);
-        setDatePurchased(userReviewObject.datePurchased);
-        setActive(userReviewObject.active);
-
-        setCbxRead(userReviewObject.read);
-
-        if (IsEmpty(userReviewObject.dateRead) === false) {
-          setTxtDateRead(userReviewObject.dateRead.toString().substring(0, 10));
-        } else {
-          setTxtDateRead("");
-        };
-
-        setRdoRating(userReviewObject.rating);
-        setTxtRanking(userReviewObject.ranking);
-        setTxtShortReview(userReviewObject.shortReview);
-        setTxtLongReview(userReviewObject.longReview);
-
-        setCbxOwned(userReviewObject.owned);
-
-        if (IsEmpty(userReviewObject.datePurchased) === false) {
-          setTxtDatePurchased(userReviewObject.datePurchased.toString().substring(0, 10));
-        } else {
-          setTxtDatePurchased("");
-        };
-
-      };
-
-    };
-
-  }, [props.reviewID, userReviewListState]);
-
-
-  useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect userReviewListState", userReviewListState);
-
-    if (IsEmpty(props.reviewID) === false) {
-
-      let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
-      // console.log(componentName, GetDateTime(), "useEffect userReviewObject", userReviewObject);
-      // console.log(componentName, GetDateTime(), "useEffect typeof userReviewObject", typeof userReviewObject);
-
-      setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
+      // setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
       // console.log(componentName, GetDateTime(), "useEffect userReviewItemIndex", userReviewItemIndex);
 
       if (IsEmpty(userReviewObject) === false) {
@@ -373,7 +315,7 @@ const EditUserReview = (props) => {
             // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // ? Would still work if the createDate and updateDate were left out?
-            dispatch(updateStateUserReview({ userReviewItemIndex: userReviewItemIndex, reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: GetDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
+            dispatch(updateStateUserReview({ /*userReviewItemIndex: userReviewItemIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: GetDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
             // ? Add to local storage also?
 
             // * Recalculate ratings
@@ -383,7 +325,7 @@ const EditUserReview = (props) => {
               userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, titleID: userReviewsList[i].titleID, rating: userReviewsList[i].rating });
             };
 
-            const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID);
+            const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === props.reviewID);
             // console.log(componentName, GetDateTime(), "updateUserReview userReviewsIndex", userReviewsIndex);
 
             // console.log(componentName, GetDateTime(), "updateUserReview userReviews", userReviews);
@@ -506,20 +448,25 @@ const EditUserReview = (props) => {
 
             if (data.recordDeleted === true) {
 
-              dispatch(deleteStateUserReview(userReviewItemIndex));
+              // dispatch(deleteStateUserReview(userReviewItemIndex));
+              dispatch(deleteStateUserReview(data.reviewID));
               // ? Update local storage also?
 
-              let titleItem = titleListState.filter(title => title.titleID === data.titleID);
-              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-              titleItem = titleItem[0];
-              // console.log(componentName, GetDateTime(), "deleteUserReview titleItem", titleItem);
+              // let titleItem = titleListState.filter(title => title.titleID === data.titleID);
+              // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
+              // titleItem = titleItem[0];
+              // // console.log(componentName, GetDateTime(), "deleteUserReview titleItem", titleItem);
 
-              let titleItemIndex = titleListState.findIndex(title => title.titleID === data.titleID);
+              let userReviewItem = userReviewListState.filter(userReview => userReview.reviewID === data.reviewID);
+              userReviewItem = userReviewItem[0];
+              // console.log(componentName, GetDateTime(), "deleteUserReview userReviewItem", userReviewItem);
+
+              // let titleItemIndex = titleListState.findIndex(title => title.titleID === userReviewItem.titleID);
 
               // * Recalculate ratings
-              let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && IsEmpty(rating) === false);
+              let userReviews = userReviewListState.filter(userReview => userReview.titleID === userReviewItem.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && IsEmpty(rating) === false);
 
-              const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === userReview.reviewID);
+              const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === data.reviewID);
 
               // console.log(componentName, GetDateTime(), "deleteUserReview userReviews", userReviews);
               // * Get all reviews for the title
@@ -547,7 +494,7 @@ const EditUserReview = (props) => {
               };
               // console.log(componentName, GetDateTime(), "deleteUserReview userReviewAverage", userReviewAverage);
               // * Update the title ratings
-              dispatch(updateStateTitleRating({ titleItemIndex: titleItemIndex, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+              dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: userReviewItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             } else {
               // addErrorMessage(data.error);

@@ -137,7 +137,7 @@ const EditTitle = (props) => {
       // console.log(componentName, GetDateTime(), "useEffect titleObject", titleObject);
       // console.log(componentName, GetDateTime(), "useEffect typeof titleObject", typeof titleObject);
 
-      setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
+      // setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
       // console.log(componentName, GetDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
       editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
@@ -385,28 +385,29 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "updateTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(updateStateTitle({ titleItemIndex: titleItemIndex, titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
                 // ? Update local storage also?
 
                 // * Update/Delete related editions also if active is set to false
                 if (data.records[0].active === false || data.records[0].active === 0) {
                   for (let i = 0; i < editionList.length; i++) {
 
-                    let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+                    // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
                     // ? Would still work if the createDate and updateDate were left out?
-                    dispatch(updateStateEdition({ editionItemIndex: editionItemIndex, editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
+                    dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
 
                   };
 
                 };
 
-                let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
+                // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
                 // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
 
                 // * Update/Delete related urls in arrayURLs also
                 if (data.records[0].active === false || data.records[0].active === 0) {
-                  dispatch(deleteStateURL(urlListIndex));
+                  // dispatch(deleteStateURL(urlListIndex));
+                  dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
                 } else {
                   // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
                   // console.log(componentName, GetDateTime(), "updateTitle data.records[0].titleURL", data.records[0].titleURL);
@@ -422,8 +423,9 @@ const EditTitle = (props) => {
                   // ? Doesn't seem to be updating the state for some reason?
                   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
 
-                  dispatch(deleteStateURL(urlListIndex));
-                  dispatch(addStateURL([{ urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
+                  // dispatch(deleteStateURL(urlListIndex));
+                  dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
+                  dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: data.records[0].titleURL, linkType: "titles", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
 
                 };
 
@@ -501,24 +503,25 @@ const EditTitle = (props) => {
 
             if (data.recordDeleted === true) {
 
-              // dispatch(deleteStateTitle(props.titleID));
-              dispatch(deleteStateTitle(titleItemIndex));
+              dispatch(deleteStateTitle(props.titleID));
+              // dispatch(deleteStateTitle(titleItemIndex));
               // ? Update local storage also?
 
               // * Delete related editions also
               for (let i = 0; i < editionList.length; i++) {
 
-                let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+                // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
-                deleteEdition = (editionList[i].editionID, editionItemIndex);
+                deleteEdition(editionList[i].editionID/*, editionItemIndex*/);
 
               };
 
-              let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
+              // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
               // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
 
               // Update/Delete related urls in arrayURLs also
-              dispatch(deleteStateURL(urlListIndex));
+              // dispatch(deleteStateURL(urlListIndex));
+              dispatch(deleteStateURL({ linkID: data.titleID, linkType: "titles" }));
 
               // ? Redirect when the title is deleted?
 
@@ -542,7 +545,7 @@ const EditTitle = (props) => {
   };
 
 
-  const deleteEdition = (editionID, editionItemIndex) => {
+  const deleteEdition = (editionID/*, editionItemIndex*/) => {
     // console.log(componentName, GetDateTime(), "deleteEdition");
     // console.log(componentName, GetDateTime(), "deleteEdition baseURL", baseURL);
 
@@ -586,8 +589,8 @@ const EditTitle = (props) => {
 
             if (data.recordDeleted === true) {
 
-              // dispatch(deleteStateEdition(props.editionID));
-              dispatch(deleteStateEdition(editionItemIndex));
+              dispatch(deleteStateEdition(props.editionID));
+              // dispatch(deleteStateEdition(editionItemIndex));
               // ? Update local storage also?
 
             } else {
