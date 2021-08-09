@@ -50,7 +50,7 @@ const FromTheHomeopape = (props) => {
 
     let url = baseURL + "fromthehomeopape/";
     // TODO: Fix the way that the limit works on the server because it works differently than the local version.
-    // let url = baseURL + "fromthehomeopape/10";
+    // let url = baseURL + "fromthehomeopape/top/10/10";
 
     fetch(url, {
       method: "GET",
