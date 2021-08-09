@@ -34,6 +34,7 @@ const AddTitle = (props) => {
   // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
 
   const categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
+  // const categoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
   // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -315,9 +316,9 @@ const AddTitle = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, GetDateTime(), "addTitle error", error);
-              // console.log(componentName, GetDateTime(), "addTitle error.name", error.name);
-              // console.log(componentName, GetDateTime(), "addTitle error.message", error.message);
+              console.error(componentName, GetDateTime(), "addTitle error", error);
+              // console.error(componentName, GetDateTime(), "addTitle error.name", error.name);
+              // console.error(componentName, GetDateTime(), "addTitle error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 

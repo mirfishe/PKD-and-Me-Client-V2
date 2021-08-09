@@ -161,9 +161,9 @@ const AddMedia = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, GetDateTime(), "addMedia error", error);
-              // console.log(componentName, GetDateTime(), "addMedia error.name", error.name);
-              // console.log(componentName, GetDateTime(), "addMedia error.message", error.message);
+              console.error(componentName, GetDateTime(), "addMedia error", error);
+              // console.error(componentName, GetDateTime(), "addMedia error.name", error.name);
+              // console.error(componentName, GetDateTime(), "addMedia error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
@@ -228,8 +228,7 @@ const AddMedia = (props) => {
             </FormGroup>
             <FormGroup className="ml-4">
 
-              <Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxElectronic(!cbxElectronic); }} />
-              <Label for="cbxElectronic">Electronic</Label>
+              <Label for="cbxElectronic"><Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxElectronic(!cbxElectronic); }} />Electronic</Label>
 
             </FormGroup>
 

@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
+import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
-import AddTitle from "./AddTitle";
+// import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
-import AddEdition from "../editions/AddEdition";
+// import AddEdition from "../editions/AddEdition";
+import EditEdition from "../editions/EditEdition";
 
 const Titles = (props) => {
 
@@ -17,6 +19,12 @@ const Titles = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // ! Loading the baseURL from the state store here is too slow
+  // ! Always pulling it from environment.js
+  // const baseURL = useSelector(state => state.app.baseURL);
+  const baseURL = AppSettings.baseURL;
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
@@ -57,10 +65,10 @@ const Titles = (props) => {
   let editionList = [...editionListState];
   if (electronicOnly === true || userElectronicOnly === true) {
     // editionList = editionList.filter(edition => edition.medium.electronic === true);
-    editionList = editionList.filter(edition => edition.electronic === true);
+    editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
   } else if (physicalOnly === true || userPhysicalOnly === true) {
     // editionList = editionList.filter(edition => edition.medium.electronic === false);
-    editionList = editionList.filter(edition => edition.electronic === false);
+    editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
   } else {
     editionList = [...editionList];
   };
@@ -125,6 +133,7 @@ const Titles = (props) => {
     };
   };
 
+  // ! If the user is viewing electronic only editions, all titles still appear even if there are no electronic editions of that title.
 
   let titleList = [];
   if (!isNaN(categoryParam)) {
@@ -143,7 +152,7 @@ const Titles = (props) => {
       titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
     } else {
       document.title = "Category Not Found | " + appName + " | " + siteName;
-      console.log("Category not found.");
+      console.error("Category not found.");
       // // Display all active titles
       // titleList = titleListState;
       // // Display all editions
@@ -155,7 +164,7 @@ const Titles = (props) => {
     document.title = "All Titles | " + appName + " | " + siteName;
     // Display all active titles
     titleList = [...titleListState];
-    // titleList = titleListState.filter(title => title.active === true || title.active === 1);
+    // titleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);
   };
 
   if (IsEmpty(admin) === false && admin === true) {
@@ -206,7 +215,8 @@ const Titles = (props) => {
       <Row>
         <Col xs="12">
           <h4 className="text-center mb-4">{IsEmpty(categoryParam) === false && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
-            {IsEmpty(admin) === false && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
+            {/* {IsEmpty(admin) === false && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null} */}
+            {IsEmpty(admin) === false && admin === true ? <EditTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
             <span className="text-muted ml-2 smallText">Sort By&nbsp;
               {titleSortBy !== "publicationDate" ?
                 <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
@@ -265,7 +275,7 @@ const Titles = (props) => {
 
               {/* <CardBody>
                         <Link to={title.titleURL}>
-                        {IsEmpty(title.imageName) === false ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
                     </CardBody>
@@ -285,7 +295,7 @@ const Titles = (props) => {
                 <Row className="no-gutters">
                   <Col className="col-md-4">
                     <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
-                      {IsEmpty(title.imageName) === false ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                      {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                     </Link>
                   </Col>
                   <Col className="col-md-8">
@@ -299,7 +309,8 @@ const Titles = (props) => {
                         {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
                         edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
                       {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-                      {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null}
+                      {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
+                      {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null}
                     </CardBody>
                   </Col>
                 </Row>

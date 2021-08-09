@@ -65,106 +65,106 @@ const titlesSlice = createSlice({
           };
 
           if (titleItem.hasOwnProperty("titleName")) {
-            state.arrayTitles[titleItem.titleItemIndex].titleName = titleItem.titleName;
+            state.arrayTitles[titleItemIndex].titleName = titleItem.titleName;
           };
 
           if (titleItem.hasOwnProperty("titleSort")) {
-            state.arrayTitles[titleItem.titleItemIndex].titleSort = titleItem.titleSort;
+            state.arrayTitles[titleItemIndex].titleSort = titleItem.titleSort;
           };
 
           if (titleItem.hasOwnProperty("titleURL")) {
-            state.arrayTitles[titleItem.titleItemIndex].titleURL = titleItem.titleURL;
+            state.arrayTitles[titleItemIndex].titleURL = titleItem.titleURL;
           };
 
           if (titleItem.hasOwnProperty("authorFirstName")) {
-            state.arrayTitles[titleItem.titleItemIndex].authorFirstName = titleItem.authorFirstName;
+            state.arrayTitles[titleItemIndex].authorFirstName = titleItem.authorFirstName;
           };
 
           if (titleItem.hasOwnProperty("authorLastName")) {
-            state.arrayTitles[titleItem.titleItemIndex].authorLastName = titleItem.authorLastName;
+            state.arrayTitles[titleItemIndex].authorLastName = titleItem.authorLastName;
           };
 
           if (titleItem.hasOwnProperty("publicationDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].publicationDate = titleItem.publicationDate;
+            state.arrayTitles[titleItemIndex].publicationDate = titleItem.publicationDate;
           };
 
           if (titleItem.hasOwnProperty("titlePublicationDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].titlePublicationDate = titleItem.titlePublicationDate;
+            state.arrayTitles[titleItemIndex].titlePublicationDate = titleItem.titlePublicationDate;
           };
 
           if (titleItem.hasOwnProperty("imageName")) {
-            state.arrayTitles[titleItem.titleItemIndex].imageName = titleItem.imageName;
+            state.arrayTitles[titleItemIndex].imageName = titleItem.imageName;
           };
 
           if (titleItem.hasOwnProperty("titleImageName")) {
-            state.arrayTitles[titleItem.titleItemIndex].titleImageName = titleItem.titleImageName;
+            state.arrayTitles[titleItemIndex].titleImageName = titleItem.titleImageName;
           };
 
           if (titleItem.hasOwnProperty("categoryID")) {
-            state.arrayTitles[titleItem.titleItemIndex].categoryID = titleItem.categoryID;
+            state.arrayTitles[titleItemIndex].categoryID = titleItem.categoryID;
           };
 
           if (titleItem.hasOwnProperty("shortDescription")) {
-            state.arrayTitles[titleItem.titleItemIndex].shortDescription = titleItem.shortDescription;
+            state.arrayTitles[titleItemIndex].shortDescription = titleItem.shortDescription;
           };
 
           if (titleItem.hasOwnProperty("urlPKDweb")) {
-            state.arrayTitles[titleItem.titleItemIndex].urlPKDweb = titleItem.urlPKDweb;
+            state.arrayTitles[titleItemIndex].urlPKDweb = titleItem.urlPKDweb;
           };
 
           if (titleItem.hasOwnProperty("active")) {
-            state.arrayTitles[titleItem.titleItemIndex].active = titleItem.active;
+            state.arrayTitles[titleItemIndex].active = titleItem.active;
           };
 
           if (titleItem.hasOwnProperty("titleActive")) {
-            state.arrayTitles[titleItem.titleItemIndex].titleActive = titleItem.titleActive;
+            state.arrayTitles[titleItemIndex].titleActive = titleItem.titleActive;
           };
 
           if (titleItem.hasOwnProperty("createDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].createDate = titleItem.createDate;
+            state.arrayTitles[titleItemIndex].createDate = titleItem.createDate;
           };
 
           if (titleItem.hasOwnProperty("titleCreateDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].titleCreateDate = titleItem.titleCreateDate;
+            state.arrayTitles[titleItemIndex].titleCreateDate = titleItem.titleCreateDate;
           };
 
           if (titleItem.hasOwnProperty("updateDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].updateDate = titleItem.updateDate;
+            state.arrayTitles[titleItemIndex].updateDate = titleItem.updateDate;
           };
 
           if (titleItem.hasOwnProperty("titleUpdatedDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].titleUpdatedDate = titleItem.titleUpdatedDate;
+            state.arrayTitles[titleItemIndex].titleUpdatedDate = titleItem.titleUpdatedDate;
           };
 
           // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
           // if (titleItem.hasOwnProperty("category")) {
 
           //   if (titleItem.category.hasOwnProperty("categoryID")) {
-          //     state.arrayTitles[titleItem.titleItemIndex].category.categoryID = titleItem.category.categoryID;
+          //     state.arrayTitles[titleItemIndex].category.categoryID = titleItem.category.categoryID;
           //   };
 
           if (titleItem.hasOwnProperty("category")) {
-            state.arrayTitles[titleItem.titleItemIndex].category = titleItem.category;
+            state.arrayTitles[titleItemIndex].category = titleItem.category;
           };
 
           if (titleItem.hasOwnProperty("sortID")) {
-            state.arrayTitles[titleItem.titleItemIndex].sortID = titleItem.sortID;
+            state.arrayTitles[titleItemIndex].sortID = titleItem.sortID;
           };
 
           if (titleItem.hasOwnProperty("categorySortID")) {
-            state.arrayTitles[titleItem.titleItemIndex].categorySortID = titleItem.categorySortID;
+            state.arrayTitles[titleItemIndex].categorySortID = titleItem.categorySortID;
           };
 
           if (titleItem.hasOwnProperty("categoryActive")) {
-            state.arrayTitles[titleItem.titleItemIndex].categoryActive = titleItem.categoryActive;
+            state.arrayTitles[titleItemIndex].categoryActive = titleItem.categoryActive;
           };
 
           if (titleItem.hasOwnProperty("categoryCreateDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].categoryCreateDate = titleItem.categoryCreateDate;
+            state.arrayTitles[titleItemIndex].categoryCreateDate = titleItem.categoryCreateDate;
           };
 
           if (titleItem.hasOwnProperty("categoryUpdatedDate")) {
-            state.arrayTitles[titleItem.titleItemIndex].categoryUpdatedDate = titleItem.categoryUpdatedDate;
+            state.arrayTitles[titleItemIndex].categoryUpdatedDate = titleItem.categoryUpdatedDate;
           };
 
           // };

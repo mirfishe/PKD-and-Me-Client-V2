@@ -160,35 +160,35 @@ const Login = (props) => {
             // };
             // };
           })
-          .then(data => {
-            // console.log(componentName, GetDateTime(), "logIn data", data);
+          .then(results => {
+            // console.log(componentName, GetDateTime(), "logIn results", results);
 
-            // if (data !== 500 && data !== 401) {
+            // if (results !== 500 && results !== 401) {
 
-            // setUserResultsFound(data.resultsFound);
-            addMessage(data.message);
+            // setUserResultsFound(results.resultsFound);
+            addMessage(results.message);
 
-            if (data.resultsFound === true) {
-              // setUser(data);
-              // setUserID(data.userID);
-              // setFirstName(data.firstName);
-              // setLastName(data.lastName);
-              // setEmail(data.email);
-              // setUpdatedBy(data.updatedBy);
-              // setAdmin(data.admin);
-              // setActive(data.active);
-              // setSessionToken(data.sessionToken);
+            if (IsEmpty(results) === false && results.resultsFound === true) {
+              // setUser(results);
+              // setUserID(results.userID);
+              // setFirstName(results.firstName);
+              // setLastName(results.lastName);
+              // setEmail(results.email);
+              // setUpdatedBy(results.updatedBy);
+              // setAdmin(results.admin);
+              // setActive(results.active);
+              // setSessionToken(results.sessionToken);
 
-              dispatch(loadUserData(data));
-              dispatch(setSessionToken(data.sessionToken));
-              updateToken(data.sessionToken);
+              dispatch(loadUserData(results));
+              dispatch(setSessionToken(results.sessionToken));
+              updateToken(results.sessionToken);
 
-              getChecklist(data.sessionToken);
+              getChecklist(results.sessionToken);
 
-              setUserResultsFound(data.resultsFound);
+              setUserResultsFound(results.resultsFound);
 
             } else {
-              addErrorMessage(data.error);
+              addErrorMessage(results.error);
             };
             // } else {
             //     // console.log("Login.js error", json);
@@ -197,9 +197,9 @@ const Login = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, GetDateTime(), "logIn error", error);
-            // console.log(componentName, GetDateTime(), "logIn error.name", error.name);
-            // console.log(componentName, GetDateTime(), "logIn error.message", error.message);
+            console.error(componentName, GetDateTime(), "logIn error", error);
+            // console.error(componentName, GetDateTime(), "logIn error.name", error.name);
+            // console.error(componentName, GetDateTime(), "logIn error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -241,26 +241,26 @@ const Login = (props) => {
           // };
           // };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getChecklist data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getChecklist results", results);
 
-          setChecklistResultsFound(data.resultsFound);
-          // setChecklistMessage(data.message);
+          setChecklistResultsFound(results.resultsFound);
+          // setChecklistMessage(results.message);
 
-          if (data.resultsFound === true) {
+          if (IsEmpty(results) === false && results.resultsFound === true) {
 
-            dispatch(loadArrayChecklist(data.records));
+            dispatch(loadArrayChecklist(results.records));
 
           } else {
-            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", data.message);
-            addErrorMessage(data.message);
+            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", results.message);
+            addErrorMessage(results.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getChecklist error", error);
-          // console.log(componentName, GetDateTime(), "getChecklist error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getChecklist error.message", error.message);
+          console.error(componentName, GetDateTime(), "getChecklist error", error);
+          // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 

@@ -37,12 +37,14 @@ const Media = (props) => {
   } else {
     mediaList = [...mediaListState];
     // mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
+    // mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
   };
 
   if (IsEmpty(admin) === false && admin === true) {
     mediaList = [...mediaList];
   } else {
     mediaList = mediaList.filter(media => media.active === true || media.active === 1);
+    // mediaList = mediaList.filter(media => media.mediaActive === true || media.mediaActive === 1);
   };
   // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
@@ -70,6 +72,7 @@ const Media = (props) => {
 
             let activeString = "";
             if (media.active === true || media.active === 1) {
+              // if (media.mediaActive === true || media.mediaActive === 1) {
               // activeString = "Active";
               activeString = "";
             } else {

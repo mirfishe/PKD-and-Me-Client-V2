@@ -42,15 +42,15 @@ function UserReviewRatingList() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getUserReviewRatings data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getUserReviewRatings results", results);
 
-        setUserReviewRatingResultsFound(data.resultsFound);
-        setUserReviewRatingMessage(data.message);
+        setUserReviewRatingResultsFound(results.resultsFound);
+        setUserReviewRatingMessage(results.message);
 
-        if (data.resultsFound === true) {
+        if (IsEmpty(results) === false && results.resultsFound === true) {
 
-          let userReviewsRatings = data.records;
+          let userReviewsRatings = results.records;
 
           for (let i = 0; i < userReviewsRatings.length; i++) {
 
@@ -77,14 +77,14 @@ function UserReviewRatingList() {
           setUserReviewRatingList(userReviewsRatings);
 
         } else {
-          setErrUserReviewRatingMessage(data.message);
+          setErrUserReviewRatingMessage(results.message);
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getUserReviewRatings error", error);
-        // console.log(componentName, GetDateTime(), "getUserReviewRatings error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getUserReviewRatings error.message", error.message);
+        console.error(componentName, GetDateTime(), "getUserReviewRatings error", error);
+        // console.error(componentName, GetDateTime(), "getUserReviewRatings error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getUserReviewRatings error.message", error.message);
         setErrUserReviewRatingMessage(error.name + ": " + error.message);
       });
 

@@ -38,6 +38,7 @@ const Category = (props) => {
         categoryListSort = [...categoryListState];
       } else {
         categoryListSort = categoryListState.filter(category => category.active === true || category.active === 1);
+        // categoryListSort = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
       };
       // console.log(componentName, GetDateTime(), "useEffect categoryListSort", categoryListSort);
 
@@ -72,6 +73,7 @@ const Category = (props) => {
 
             let activeString = "";
             if (category.active === true || category.active === 1) {
+              // if (category.categoryActive === true || category.categoryActive === 1) {
               // activeString = "Active";
               activeString = "";
             } else {

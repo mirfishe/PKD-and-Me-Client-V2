@@ -46,23 +46,23 @@ const TitleList = (props) => {
             return response.json();
           };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getTitle data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getTitle results", results);
 
-          setTitleResultsFound(data.resultsFound);
-          setTitleMessage(data.message);
+          setTitleResultsFound(results.resultsFound);
+          setTitleMessage(results.message);
 
-          if (data.resultsFound === true) {
-            setTitleList(data.records);
+          if (IsEmpty(results) === false && results.resultsFound === true) {
+            setTitleList(results.records);
           } else {
-            setErrTitleMessage(data.message);
+            setErrTitleMessage(results.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getTitle error", error);
-          // console.log(componentName, GetDateTime(), "getTitle error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getTitle error.message", error.message);
+          console.error(componentName, GetDateTime(), "getTitle error", error);
+          // console.error(componentName, GetDateTime(), "getTitle error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getTitle error.message", error.message);
           setErrTitleMessage(error.name + ": " + error.message);
         });
 

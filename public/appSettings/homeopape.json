@@ -1,10 +1,10 @@
 {
-"resultsFound": true, 
-"message": "Offline AppSettings data used.",
-"siteName": "Homeopape",
-"appName": "Philip K. Dick Bibliography",
-"electronicOnly": true,
-"physicalOnly": false,
-"appAllowUserInteractions": true,
-"requireUserLogin": true
+  "resultsFound": true,
+  "message": "Offline AppSettings data used.",
+  "siteName": "Homeopape",
+  "appName": "Philip K. Dick Bibliography",
+  "electronicOnly": true,
+  "physicalOnly": false,
+  "appAllowUserInteractions": false,
+  "requireUserLogin": true
 }

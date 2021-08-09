@@ -41,17 +41,22 @@ const FromTheHomeopape = (props) => {
   const headerText = props.headerText;
   // console.log(componentName, GetDateTime(), "props.headerText", props.headerText);
 
+  // let breakArray = false;
+  let displayItemsCount = 0;
+
 
   const getNews = () => {
     // console.log(componentName, GetDateTime(), "getNews");
 
-    let url = baseURL + "fromthehomeopape";
+    let url = baseURL + "fromthehomeopape/";
+    // TODO: Fix the way that the limit works on the server because it works differently than the local version.
+    // let url = baseURL + "fromthehomeopape/10";
 
     fetch(url, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json"
-      }),
+      })
     })
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
@@ -67,16 +72,18 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+
+          // console.log(componentName, GetDateTime(), "getNews results.records[0]", results.records[0]);
 
           setHomeopapeItems(results.records);
+          // setHomeopapeItems(results.records[0]);
 
         };
 
-
       })
       .catch(error => {
-        // console.log(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, GetDateTime(), "getNews error", error);
         setErrorMessage(error.name + ": " + error.message);
 
       });
@@ -103,10 +110,32 @@ const FromTheHomeopape = (props) => {
 
       {homeopapeItems.map((homeopapeItem, index) => {
 
+        // * One method to only display ten items in the list.
+        // if (index > 10) {
+        //   breakArray = true;
+        // };
+
+        // if (breakArray === true) {
+        //   return;
+        // };
+
+        // * One method to only display ten items in the list.
+        // if (displayItemsCount >= 10) {
+        //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+        //   homeopapeItems.splice(0, index);
+        // };
+
         let show = true;
 
         if (homeopapeItem.display !== 1) {
           show = false;
+        } else if (displayItemsCount >= 10) {
+          // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+          // homeopapeItems.splice(0, index);
+          show = false;
+        } else {
+          displayItemsCount++;
+          // console.log(componentName, GetDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
         };
 
         let itemLink;

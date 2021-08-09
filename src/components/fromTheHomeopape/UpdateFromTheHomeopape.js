@@ -44,6 +44,10 @@ const FromTheHomeopape = (props) => {
   // const [cbxDisplay, setCbxDisplay] = useState(false);
   // const [cbxPosted, setCbxPosted] = useState(false);
 
+  // let breakArray = false;
+  let displayItemsCount = 0;
+  let displayUpdateItemsCount = 0;
+
 
   const toTitleCase = (title) => {
     // console.log(componentName, GetDateTime(), "toTitleCase title", title);
@@ -75,11 +79,17 @@ const FromTheHomeopape = (props) => {
   };
 
 
-  const formatPost = (txtArticleTitle, txtArticleURL) => {
+  const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
     // console.log(componentName, GetDateTime(), "formatPost txtArticleTitle", txtArticleTitle);
     // console.log(componentName, GetDateTime(), "formatPost txtArticleURL", txtArticleURL);
+    // console.log(componentName, GetDateTime(), "formatPost itemContentSnippet", itemContentSnippet);
 
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
+    let itemContentSnippet = "";
+
+    if (IsEmpty(txtItemContentSnippet) === false) {
+      itemContentSnippet = txtItemContentSnippet;
+    };
 
     // if (cbxPhilipKDickFestival === true) {
     //   post = post + " #PhilipKDickFestival ";
@@ -89,27 +99,27 @@ const FromTheHomeopape = (props) => {
     //   post = post + " #Dickian ";
     // };
 
-    if (txtArticleTitle.toLowerCase().includes("blade runner") === true) {
+    if (txtArticleTitle.toLowerCase().includes("blade runner") === true || itemContentSnippet.toLowerCase().includes("blade runner") === true) {
       post = post + " #BladeRunner ";
     };
 
-    if (txtArticleTitle.toLowerCase().includes("blade runner 2049") === true) {
+    if (txtArticleTitle.toLowerCase().includes("blade runner 2049") === true || itemContentSnippet.toLowerCase().includes("blade runner 2049") === true) {
       post = post + " #BladeRunner2049 ";
     };
 
-    if (txtArticleTitle.toLowerCase().includes("total recall") === true) {
+    if (txtArticleTitle.toLowerCase().includes("total recall") === true || itemContentSnippet.toLowerCase().includes("total recall") === true) {
       post = post + " #TotalRecall ";
     };
 
-    if (txtArticleTitle.toLowerCase().includes("electric dreams") === true) {
+    if (txtArticleTitle.toLowerCase().includes("electric dreams") === true || itemContentSnippet.toLowerCase().includes("electric dreams") === true) {
       post = post + " #ElectricDreams ";
     };
 
-    if (txtArticleTitle.toLowerCase().includes("man in the high castle") === true) {
+    if (txtArticleTitle.toLowerCase().includes("man in the high castle") === true || itemContentSnippet.toLowerCase().includes("man in the high castle") === true) {
       post = post + " #TMITHC #HighCastle ";
     };
 
-    if (txtArticleTitle.toLowerCase().includes("minority report") === true) {
+    if (txtArticleTitle.toLowerCase().includes("minority report") === true || itemContentSnippet.toLowerCase().includes("minority report") === true) {
       post = post + " #MinorityReport ";
     };
 
@@ -170,13 +180,15 @@ const FromTheHomeopape = (props) => {
   const getNews = () => {
     // console.log(componentName, GetDateTime(), "getNews");
 
-    let url = baseURL + "fromthehomeopape";
+    let url = baseURL + "fromthehomeopape/";
+    // TODO: Fix the way that the limit works on the server because it works differently than the local version.
+    // let url = baseURL + "fromthehomeopape/10";
 
     fetch(url, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json"
-      }),
+      })
     })
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
@@ -192,16 +204,16 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.resultsFound === true) {
 
           setHomeopapeItems(results.records);
+          // setHomeopapeItems(results.records[0]);
 
         };
 
-
       })
       .catch(error => {
-        // console.log(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, GetDateTime(), "getNews error", error);
         setErrorMessage(error.name + ": " + error.message);
 
       });
@@ -218,7 +230,7 @@ const FromTheHomeopape = (props) => {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json"
-      }),
+      })
     })
       .then(results => {
         // console.log(componentName, GetDateTime(), "fetchNews results", results);
@@ -239,7 +251,7 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchNews error", error);
+        console.error(componentName, GetDateTime(), "fetchNews error", error);
         setErrorMessage(error.name + ": " + error.message);
 
       });
@@ -256,7 +268,7 @@ const FromTheHomeopape = (props) => {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json"
-      }),
+      })
     })
       .then(results => {
         // console.log(componentName, GetDateTime(), "fetchNewsUpdate results", results);
@@ -274,7 +286,7 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchNewsUpdate error", error);
+        console.error(componentName, GetDateTime(), "fetchNewsUpdate error", error);
         setErrorMessage(error.name + ": " + error.message);
 
       });
@@ -348,9 +360,9 @@ const FromTheHomeopape = (props) => {
 
   //         })
   //         .catch(error => {
-  //           console.log(componentName, GetDateTime(), "fetchNews error", error);
-  //           // console.log(componentName, GetDateTime(), "fetchNews error.name", error.name);
-  //           // console.log(componentName, GetDateTime(), "fetchNews error.message", error.message);
+  //           console.error(componentName, GetDateTime(), "fetchNews error", error);
+  //           // console.error(componentName, GetDateTime(), "fetchNews error.name", error.name);
+  //           // console.error(componentName, GetDateTime(), "fetchNews error.message", error.message);
   //           // addErrorMessage(error.name + ": " + error.message);
   //         });
 
@@ -501,7 +513,7 @@ const FromTheHomeopape = (props) => {
 
   //     //     })
   //     //     .catch(error => {
-  //     //       console.log(componentName, GetDateTime(), "fetchNews error", error);
+  //     //       console.error(componentName, GetDateTime(), "fetchNews error", error);
   //     //       setErrorMessage(error.name + ": " + error.message);
 
   //     //     });
@@ -567,9 +579,9 @@ const FromTheHomeopape = (props) => {
 
   //         })
   //         .catch(error => {
-  //           console.log(componentName, GetDateTime(), "fetchNews error", error);
-  //           // console.log(componentName, GetDateTime(), "fetchNews error.name", error.name);
-  //           // console.log(componentName, GetDateTime(), "fetchNews error.message", error.message);
+  //           console.error(componentName, GetDateTime(), "fetchNews error", error);
+  //           // console.error(componentName, GetDateTime(), "fetchNews error.name", error.name);
+  //           // console.error(componentName, GetDateTime(), "fetchNews error.message", error.message);
   //           // addErrorMessage(error.name + ": " + error.message);
   //         });
 
@@ -720,7 +732,7 @@ const FromTheHomeopape = (props) => {
 
   //     //     })
   //     //     .catch(error => {
-  //     //       console.log(componentName, GetDateTime(), "fetchNews error", error);
+  //     //       console.error(componentName, GetDateTime(), "fetchNews error", error);
   //     //       setErrorMessage(error.name + ": " + error.message);
 
   //     //     });
@@ -842,9 +854,9 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "setDisplay error", error);
-          // console.log(componentName, GetDateTime(), "setDisplay error.name", error.name);
-          // console.log(componentName, GetDateTime(), "setDisplay error.message", error.message);
+          console.error(componentName, GetDateTime(), "setDisplay error", error);
+          // console.error(componentName, GetDateTime(), "setDisplay error.name", error.name);
+          // console.error(componentName, GetDateTime(), "setDisplay error.message", error.message);
           addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -913,9 +925,9 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "setPosted error", error);
-          // console.log(componentName, GetDateTime(), "setPosted error.name", error.name);
-          // console.log(componentName, GetDateTime(), "setPosted error.message", error.message);
+          console.error(componentName, GetDateTime(), "setPosted error", error);
+          // console.error(componentName, GetDateTime(), "setPosted error.name", error.name);
+          // console.error(componentName, GetDateTime(), "setPosted error.message", error.message);
           addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -930,196 +942,257 @@ const FromTheHomeopape = (props) => {
       {IsEmpty(message) === false ? <Alert color="info">{message}</Alert> : null}
       {IsEmpty(errorMessage) === false ? <Alert color="danger">{errorMessage}</Alert> : null}
 
-      <h3>All Items</h3>
+      <Row>
+        <Col xs="6">
 
-      {homeopapeItems.map((homeopapeItem, index) => {
+          <h3>All Items</h3>
 
-        let show = true;
+          {homeopapeItems.map((homeopapeItem, index) => {
 
-        if (homeopapeItem.display === 1) {
-          show = false;
-        };
+            // * One method to only display ten items in the list.
+            // if (index > 10) {
+            //   breakArray = true;
+            // };
 
-        // if (homeopapeItem.itemLink.includes("ebay.com")) {
-        if (homeopapeItem.itemLink.includes(".ebay.")) {
-          show = false;
-        };
+            // if (breakArray === true) {
+            //   return;
+            // };
 
-        if (homeopapeItem.itemLink.includes("reddit.")) {
-          show = false;
-        };
+            // * One method to only display ten items in the list.
+            // if (displayUpdateItemsCount >= 10) {
+            //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayUpdateItemsCount, index);
+            //   homeopapeItems.splice(0, index);
+            // };
 
-        if (homeopapeItem.itemLink.includes("pinterest.")) {
-          show = false;
-        };
+            let show = true;
 
-        if (homeopapeItem.itemLink.includes("twitter.")) {
-          show = false;
-        };
+            if (homeopapeItem.display === 1) {
+              show = false;
+            } else if (displayUpdateItemsCount >= 20) {
+              // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayUpdateItemsCount, index);
+              // homeopapeItems.splice(0, index);
+              show = false;
+            } else {
+              displayUpdateItemsCount++;
+              // console.log(componentName, GetDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
+            };
 
-        if (homeopapeItem.itemLink.includes("sites.google.")) {
-          show = false;
-        };
+            // if (homeopapeItem.itemLink.includes("ebay.com")) {
+            if (homeopapeItem.itemLink.includes(".ebay.")) {
+              show = false;
+            };
 
-        if (homeopapeItem.itemLink.includes("books.google.")) {
-          show = false;
-        };
+            if (homeopapeItem.itemLink.includes("reddit.")) {
+              show = false;
+            };
 
-        if (homeopapeItem.itemLink.includes("elasticsearch.columbian.com")) {
-          show = false;
-        };
+            if (homeopapeItem.itemLink.includes("pinterest.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("twitter.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("facebook.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("sites.google.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("books.google.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("elasticsearch.columbian.com")) {
+              show = false;
+            };
 
 
-        let itemLink;
-        let itemID;
-        let param = "";
-        let regExp = "";
+            let itemLink;
+            let itemID;
+            let param = "";
+            let regExp = "";
 
-        if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
-          itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+            if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
+              itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
 
-          // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ
-          // * Google
-          // * Removes everything after the ct=
-          // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537
-          param = "ct";
-          regExp = new RegExp("[?&]" + param + "=.*$");
-          itemLink = itemLink.replace(regExp, "");
-          itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
+              // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ
+              // * Google
+              // * Removes everything after the ct=
+              // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537
+              param = "ct";
+              regExp = new RegExp("[?&]" + param + "=.*$");
+              itemLink = itemLink.replace(regExp, "");
+              itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
-        };
+            };
 
-        // * Remove html tags from string.
-        // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript
-        let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ''), itemLink);
+            // * Remove html tags from string.
+            // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript
+            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ''), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ''));
 
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
 
-        return (
-          <React.Fragment key={itemID}>
-            {show === true ?
-              <Row>
-                <Col xs="1">
-                  {/* <FormGroup className="ml-4">
+            return (
+              <React.Fragment key={itemID}>
+                {show === true ?
+                  <Row className="mb-5">
+                    {/* <Col xs="1"> */}
+                    {/* <FormGroup className="ml-4">
 
-            <Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />
-            <Label for="cbxDisplay">Display</Label>
+            <Label for="cbxDisplay"><Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />Display</Label>
 
           </FormGroup>
 
           <FormGroup className="ml-4">
 
-            <Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />
-            <Label for="cbxPosted">Posted</Label>
+            <Label for="cbxPosted"><Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />Posted</Label>
 
           </FormGroup> */}
 
-                  <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                  <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
-                </Col>
-                <Col xs="11">
-                  <React.Fragment>
-                    <div>
-                      <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
-                      <a href={itemLink} target="_blank">{itemLink}</a><br />
-                      ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
-                    </div>
-                    <FormGroup className="text-center">
-                      <Alert color="info">{formattedPost}</Alert>
-                    </FormGroup>
-                  </React.Fragment>
-                </Col>
-              </Row>
-              : null}
-          </React.Fragment>
-        );
-      })}
+                    {/* <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
+                      <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+                    </Col> */}
+                    <Col xs="12">
+                      <React.Fragment>
+                        <div>
+                          <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
+                          <a href={itemLink} target="_blank">{itemLink}</a><br />
+                          ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
+                        </div>
+                        <FormGroup className="text-center">
+                          <Alert color="info">{formattedPost}</Alert>
+                        </FormGroup>
+                      </React.Fragment>
+                      <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
+                      <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+                    </Col>
+                  </Row>
+                  : null}
+              </React.Fragment>
+            );
+          })}
 
-      <h3>Displayed</h3>
+        </Col>
 
-      {homeopapeItems.map((homeopapeItem, index) => {
+        <Col xs="6">
 
-        let show = true;
+          <h3>Displayed</h3>
 
-        if (homeopapeItem.display !== 1) {
-          show = false;
-        };
+          {homeopapeItems.map((homeopapeItem, index) => {
 
-        let itemLink;
-        let itemID;
-        let param = "";
-        let regExp = "";
+            // * One method to only display ten items in the list.
+            // if (index > 10) {
+            //   breakArray = true;
+            // };
 
-        if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
-          itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+            // if (breakArray === true) {
+            //   return;
+            // };
 
-          // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ
-          // * Google
-          // * Removes everything after the ct=
-          // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537
-          param = "ct";
-          regExp = new RegExp("[?&]" + param + "=.*$");
-          itemLink = itemLink.replace(regExp, "");
-          itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
+            // * One method to only display ten items in the list.
+            // if (displayItemsCount >= 10) {
+            //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+            //   homeopapeItems.splice(0, index);
+            // };
 
-        };
+            let show = true;
 
-        // * Remove html tags from string.
-        // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript
-        let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ''), itemLink);
+            if (homeopapeItem.display !== 1) {
+              show = false;
+            } else if (displayItemsCount >= 10) {
+              // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+              // homeopapeItems.splice(0, index);
+              show = false;
+            } else {
+              displayItemsCount++;
+              // console.log(componentName, GetDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
+            };
 
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
+            let itemLink;
+            let itemID;
+            let param = "";
+            let regExp = "";
 
-        return (
-          <React.Fragment key={itemID}>
-            {show === true ?
-              <Row>
-                <Col xs="1">
-                  {/* <FormGroup className="ml-4">
+            if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
+              itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
 
-              <Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />
-              <Label for="cbxDisplay">Display</Label>
+              // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ
+              // * Google
+              // * Removes everything after the ct=
+              // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537
+              param = "ct";
+              regExp = new RegExp("[?&]" + param + "=.*$");
+              itemLink = itemLink.replace(regExp, "");
+              itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
+
+            };
+
+            // * Remove html tags from string.
+            // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript
+            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ''), itemLink);
+
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
+            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
+
+            return (
+              <React.Fragment key={itemID}>
+                {show === true ?
+                  <Row className="mb-5">
+                    {/* <Col xs="1"> */}
+                    {/* <FormGroup className="ml-4">
+
+              <Label for="cbxDisplay"><Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />Display</Label>
 
             </FormGroup>
 
             <FormGroup className="ml-4">
 
-              <Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />
-              <Label for="cbxPosted">Posted</Label>
+              <Label for="cbxPosted"><Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />Posted</Label>
 
             </FormGroup> */}
 
-                  <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                  <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+                    {/* <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
+                      <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
 
-                  {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
 
-                </Col>
-                <Col xs="11">
-                  <React.Fragment>
-                    <div>
-                      <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
-                      <a href={itemLink} target="_blank">{itemLink}</a><br />
-                      ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
-                    </div>
-                    <FormGroup className="text-center">
-                      <Alert color="info">{formattedPost}</Alert>
-                    </FormGroup>
-                  </React.Fragment>
-                </Col>
-              </Row>
-              : null}
-          </React.Fragment>
-        );
-      })}
+                    </Col> */}
+                    <Col xs="12">
+                      <React.Fragment>
+                        <div>
+                          <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
+                          <a href={itemLink} target="_blank">{itemLink}</a><br />
+                          ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
+                        </div>
+                        <FormGroup className="text-center">
+                          <Alert color="info">{formattedPost}</Alert>
+                        </FormGroup>
+                      </React.Fragment>
+                      <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
+                      <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+
+                      {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+
+                    </Col>
+                  </Row>
+                  : null}
+              </React.Fragment>
+            );
+          })}
+
+        </Col>
+      </Row>
 
     </Container>
   );

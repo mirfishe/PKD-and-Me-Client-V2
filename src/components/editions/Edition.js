@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
+import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
-import AddEdition from "../editions/AddEdition";
+// import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
+import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
 const Edition = (props) => {
 
@@ -14,6 +16,12 @@ const Edition = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // ! Loading the baseURL from the state store here is too slow
+  // ! Always pulling it from environment.js
+  // const baseURL = useSelector(state => state.app.baseURL);
+  const baseURL = AppSettings.baseURL;
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -53,10 +61,10 @@ const Edition = (props) => {
 
   if (electronicOnly === true || userElectronicOnly === true) {
     // editionList = editionList.filter(edition => edition.medium.electronic === true);
-    editionList = editionList.filter(edition => edition.electronic === true);
+    editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
   } else if (physicalOnly === true || userPhysicalOnly === true) {
     // editionList = editionList.filter(edition => edition.medium.electronic === false);
-    editionList = editionList.filter(edition => edition.electronic === false);
+    editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
   } else {
     editionList = [...editionList];
   };
@@ -64,7 +72,7 @@ const Edition = (props) => {
   if (IsEmpty(admin) === false && admin === true) {
     editionList = [...editionList];
   } else {
-    editionList = editionList.filter(edition => edition.active === true || edition.active === 1);
+    editionList = editionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
   };
   // console.log(componentName, GetDateTime(), "editionList", editionList);
 
@@ -93,13 +101,20 @@ const Edition = (props) => {
   }, [editionList]);
 
 
+  // ! This doesn't work. The function needs to stay contained within the img tag.
+  // const onLoadError = () => {
+  //   console.error(componentName, GetDateTime(), "onLoadError");
+  // };
+
+
   return (
     <Container className="my-4">
       {/* {editionList.length > 0 ? */}
       <Row className="my-4">
         <Col xs="12">
           <h5 className="text-center">Find A Copy
-            {IsEmpty(admin) === false && admin === true && IsEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null}
+            {/* {IsEmpty(admin) === false && admin === true && IsEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null} */}
+            {IsEmpty(admin) === false && admin === true && IsEmpty(titleItem) === false ? <EditEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null}
           </h5>
         </Col>
       </Row>
@@ -114,8 +129,22 @@ const Edition = (props) => {
       <Row>
         {editionList.map((edition) => {
 
+          // console.log(componentName, GetDateTime(), "editionList map edition", edition);
+          // console.log(componentName, GetDateTime(), "editionList map edition.active", edition.active);
+          // console.log(componentName, GetDateTime(), "editionList map edition.editionActive", edition.editionActive);
+          // console.log(componentName, GetDateTime(), "editionList map edition.imageLinkLarge", edition.imageLinkLarge);
+          // console.log(componentName, GetDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.error(\"onError\"}; } "));
+          // console.log(componentName, GetDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onload=\"console.log(\"onload\")\" onerror=\"console.error(\"onerror\")\" "));
+          // * let newWindow = window.open("http://localhost:4000/editions/broken"); newWindow.close();
+          // * let newWindow = window.open('http://localhost:4000/editions/broken'); newWindow.close();
+
+          // * fetch('http://localhost:4000/editions/broken', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});
+
+          let brokenURLText = "fetch('" + baseURL + "editions/broken/" + edition.editionID + "', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});";
+          let brokenURLReplaceText = "<img onerror=\"console.error('Edition image not loaded!'); " + brokenURLText + "\" ";
+
           let activeString = "";
-          if (edition.active === true || edition.active === 1) {
+          if (edition.editionActive === true || edition.editionActive === 1) {
             // activeString = "Active";
             activeString = "";
           } else {
@@ -134,7 +163,7 @@ const Edition = (props) => {
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
+                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="editionImage" /> : <Image className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>
@@ -151,17 +180,25 @@ const Edition = (props) => {
                   : null}
                 <Row className="no-gutters">
                   <Col className="col-md-6">
-                    {IsEmpty(edition.imageLinkLarge) === false ?
-                      <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN) }} />
+                    {IsEmpty(edition.imageLinkLarge) === false && (edition.editionActive === true || edition.editionActive === 1) ?
+                      <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} />
                       :
                       <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon" />}
+                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase."} className="editionImage" /> : <Image className="noImageIcon" />}
                       </a>
                     }
                   </Col>
                   <Col className="col-md-6">
                     <CardBody>
                       {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
+                      {IsEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                          <img src={amazonLogo} alt={titleItem.titleName + " is available for purchase at Amazon.com."} className="purchaseImage my-2" /><br />
+                        </a>
+                        :
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                          <p className="my-2">Find Copy</p>
+                        </a>}
                       {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null}
                     </CardBody>
                   </Col>

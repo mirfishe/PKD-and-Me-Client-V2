@@ -263,9 +263,9 @@ const Checklist = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "updateChecklist error", error);
-          // console.log(componentName, GetDateTime(), "updateChecklist error.name", error.name);
-          // console.log(componentName, GetDateTime(), "updateChecklist error.message", error.message);
+          console.error(componentName, GetDateTime(), "updateChecklist error", error);
+          // console.error(componentName, GetDateTime(), "updateChecklist error.name", error.name);
+          // console.error(componentName, GetDateTime(), "updateChecklist error.message", error.message);
           setErrChecklistMessage(error.name + ": " + error.message);
         });
 

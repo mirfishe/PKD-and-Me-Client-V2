@@ -165,23 +165,19 @@ const FormatPost = () => {
               <Col>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxPhilipKDickFestival" checked={cbxPhilipKDickFestival} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxPhilipKDickFestival(!cbxPhilipKDickFestival); }} />
-                  <Label for="cbxPhilipKDickFestival">Philip K Dick Festival</Label>
+                  <Label for="cbxPhilipKDickFestival"><Input type="checkbox" id="cbxPhilipKDickFestival" checked={cbxPhilipKDickFestival} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxPhilipKDickFestival(!cbxPhilipKDickFestival); }} />Philip K. Dick Festival</Label>
                 </FormGroup>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxDickian" checked={cbxDickian} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxDickian(!cbxDickian); }} />
-                  <Label for="cbxDickian">Dickian</Label>
+                  <Label for="cbxDickian"><Input type="checkbox" id="cbxDickian" checked={cbxDickian} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxDickian(!cbxDickian); }} />Dickian</Label>
                 </FormGroup>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxBladeRunner" checked={cbxBladeRunner} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner(!cbxBladeRunner); }} />
-                  <Label for="cbxBladeRunner">Blade Runner</Label>
+                  <Label for="cbxBladeRunner"><Input type="checkbox" id="cbxBladeRunner" checked={cbxBladeRunner} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner(!cbxBladeRunner); }} />Blade Runner</Label>
                 </FormGroup>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxBladeRunner2049" checked={cbxBladeRunner2049} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner2049(!cbxBladeRunner2049); }} />
-                  <Label for="cbxBladeRunner2049">Blade Runner 2049</Label>
+                  <Label for="cbxBladeRunner2049"><Input type="checkbox" id="cbxBladeRunner2049" checked={cbxBladeRunner2049} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner2049(!cbxBladeRunner2049); }} />Blade Runner 2049</Label>
                 </FormGroup>
 
               </Col>
@@ -189,23 +185,19 @@ const FormatPost = () => {
               <Col>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxTotalRecall" checked={cbxTotalRecall} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxTotalRecall(!cbxTotalRecall); }} />
-                  <Label for="cbxTotalRecall">Total Recall</Label>
+                  <Label for="cbxTotalRecall"><Input type="checkbox" id="cbxTotalRecall" checked={cbxTotalRecall} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxTotalRecall(!cbxTotalRecall); }} />Total Recall</Label>
                 </FormGroup>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxElectricDreams" checked={cbxElectricDreams} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxElectricDreams(!cbxElectricDreams); }} />
-                  <Label for="cbxElectricDreams">Electric Dreams</Label>
+                  <Label for="cbxElectricDreams"><Input type="checkbox" id="cbxElectricDreams" checked={cbxElectricDreams} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxElectricDreams(!cbxElectricDreams); }} />Electric Dreams</Label>
                 </FormGroup>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxTMITHC" checked={cbxTMITHC} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxTMITHC(!cbxTMITHC); }} />
-                  <Label for="cbxTMITHC">TMITHC</Label>
+                  <Label for="cbxTMITHC"><Input type="checkbox" id="cbxTMITHC" checked={cbxTMITHC} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxTMITHC(!cbxTMITHC); }} />TMITHC</Label>
                 </FormGroup>
 
                 <FormGroup className="ml-4">
-                  <Input type="checkbox" id="cbxMinorityReport" checked={cbxMinorityReport} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxMinorityReport(!cbxMinorityReport); }} />
-                  <Label for="cbxMinorityReport">Minority Report</Label>
+                  <Label for="cbxMinorityReport"><Input type="checkbox" id="cbxMinorityReport" checked={cbxMinorityReport} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxMinorityReport(!cbxMinorityReport); }} />Minority Report</Label>
                 </FormGroup>
 
               </Col>

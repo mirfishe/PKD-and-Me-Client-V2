@@ -42,23 +42,23 @@ function UserReviewList() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getUserReviews data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getUserReviews results", results);
 
-        setUserReviewResultsFound(data.resultsFound);
-        setUserReviewMessage(data.message);
+        setUserReviewResultsFound(results.resultsFound);
+        setUserReviewMessage(results.message);
 
-        if (data.resultsFound === true) {
-          setUserReviewList(data.records);
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          setUserReviewList(results.records);
         } else {
-          setErrUserReviewMessage(data.message);
+          setErrUserReviewMessage(results.message);
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getUserReviews error", error);
-        // console.log(componentName, GetDateTime(), "getUserReviews error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getUserReviews error.message", error.message);
+        console.error(componentName, GetDateTime(), "getUserReviews error", error);
+        // console.error(componentName, GetDateTime(), "getUserReviews error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getUserReviews error.message", error.message);
         setErrUserReviewMessage(error.name + ": " + error.message);
       });
 

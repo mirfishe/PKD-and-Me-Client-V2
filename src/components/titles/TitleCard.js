@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
+import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL, TruncateText, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
-import AddTitle from "./AddTitle";
-import EditTitle from "./EditTitle";
-import AddEdition from "../editions/AddEdition";
+// import AddTitle from "./AddTitle";
+// import EditTitle from "./EditTitle";
+// import AddEdition from "../editions/AddEdition";
+// import EditEdition from "../editions/EditEdition";
 
 const TitleCard = (props) => {
 
@@ -15,6 +17,12 @@ const TitleCard = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // ! Loading the baseURL from the state store here is too slow
+  // ! Always pulling it from environment.js
+  // const baseURL = useSelector(state => state.app.baseURL);
+  const baseURL = AppSettings.baseURL;
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -55,7 +63,7 @@ const TitleCard = (props) => {
 
   // * Only show title in certain categories or by certain authors
   // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
-  const randomTitleList = titleListState.filter(title => (title.active === true || title.active === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+  const randomTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
 
   if (randomTitle) {
     titleParam = Math.floor(Math.random() * randomTitleList.length);
@@ -66,17 +74,17 @@ const TitleCard = (props) => {
     // * If titleParam is a number, then it's the titleID
     if (randomTitle) {
       // * Active titles were filtered out above
-      titleList = randomTitleList.filter(title => (title.active === true || title.active === 1) && title.titleID === parseInt(titleParam));
+      titleList = randomTitleList.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
       // console.log(componentName, GetDateTime(), "randomTitle titleParam", titleParam);
       // console.log(componentName, GetDateTime(), "randomTitle titleList", titleList);
     } else {
-      titleList = titleListState.filter(title => (title.active === true || title.active === 1) && title.titleID === parseInt(titleParam));
+      titleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
     };
   } else if (IsEmpty(titleParam) === false) {
     // * If titleParam is not a number, then it's the title name
-    titleList = titleListState.filter(title => (title.active === true || title.active === 1) && title.titleURL === titleParam);
+    titleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
   } else {
-    // console.log("Title not found.");
+    // console.error("Title not found.");
     // * Display all active titles
     // titleList = [...titleListState];
   };
@@ -117,7 +125,7 @@ const TitleCard = (props) => {
                   {imageSide === "left" ?
                     <Col className="col-md-4">
                       <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
-                        {IsEmpty(title.imageName) === false ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                       </Link>
                     </Col>
                     : null}
@@ -132,14 +140,14 @@ const TitleCard = (props) => {
                       {showShortDescription && IsEmpty(title.shortDescription) === false ? <p className="my-4 displayParagraphs">{TruncateText(title.shortDescription, 250)}</p> : null}
                       {/* {IsEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
                                 {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-                                {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
+                                {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
                     </CardBody>
                   </Col>
 
                   {imageSide === "right" ?
                     <Col className="col-md-4">
                       <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
-                        {IsEmpty(title.imageName) === false ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
                       </Link>
                     </Col>
                     : null}

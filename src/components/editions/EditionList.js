@@ -46,23 +46,23 @@ const EditionList = (props) => {
             return response.json();
           };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getEdition data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getEdition results", results);
 
-          setEditionResultsFound(data.resultsFound);
-          setEditionMessage(data.message);
+          setEditionResultsFound(results.resultsFound);
+          setEditionMessage(results.message);
 
-          if (data.resultsFound === true) {
-            setEditionList(data.records);
+          if (IsEmpty(results) === false && results.resultsFound === true) {
+            setEditionList(results.records);
           } else {
-            setErrEditionMessage(data.message);
+            setErrEditionMessage(results.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getEdition error", error);
-          // console.log(componentName, GetDateTime(), "getEdition error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getEdition error.message", error.message);
+          console.error(componentName, GetDateTime(), "getEdition error", error);
+          // console.error(componentName, GetDateTime(), "getEdition error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getEdition error.message", error.message);
           setErrEditionMessage(error.name + ": " + error.message);
         });
 

@@ -239,9 +239,9 @@ const Register = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, GetDateTime(), "register error", error);
-            // console.log(componentName, GetDateTime(), "register error.name", error.name);
-            // console.log(componentName, GetDateTime(), "register error.message", error.message);
+            console.error(componentName, GetDateTime(), "register error", error);
+            // console.error(componentName, GetDateTime(), "register error.name", error.name);
+            // console.error(componentName, GetDateTime(), "register error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -283,26 +283,26 @@ const Register = (props) => {
           // };
           // };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getChecklist data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getChecklist results", results);
 
-          setChecklistResultsFound(data.resultsFound);
-          // setChecklistMessage(data.message);
+          setChecklistResultsFound(results.resultsFound);
+          // setChecklistMessage(results.message);
 
-          if (data.resultsFound === true) {
+          if (IsEmpty(results) === false && results.resultsFound === true) {
 
-            dispatch(loadArrayChecklist(data.records));
+            dispatch(loadArrayChecklist(results.records));
 
           } else {
-            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", data.message);
-            addErrorMessage(data.message);
+            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", results.message);
+            addErrorMessage(results.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getChecklist error", error);
-          // console.log(componentName, GetDateTime(), "getChecklist error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getChecklist error.message", error.message);
+          console.error(componentName, GetDateTime(), "getChecklist error", error);
+          // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 

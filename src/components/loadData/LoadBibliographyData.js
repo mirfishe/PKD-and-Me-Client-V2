@@ -148,26 +148,26 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getUserReviewsRatings data", data);
-        // setOverallTitleRatingMessage(data.message);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getUserReviewsRatings results", results);
+        // setOverallTitleRatingMessage(results.message);
 
-        if (data.resultsFound === true) {
-          // loadDataStore(data.records, "userReviewRating");
-          addRatings(titleData, data.records);
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          // loadDataStore(results.records, "userReviewRating");
+          addRatings(titleData, results.records);
 
         } else {
-          console.log(componentName, GetDateTime(), "getUserReviewsRatings resultsFound error", data.message);
-          // setErrOverallTitleRatingMessage(data.message);
+          console.log(componentName, GetDateTime(), "getUserReviewsRatings resultsFound error", results.message);
+          // setErrOverallTitleRatingMessage(results.message);
           dispatch(setUserReviewsRatingsDataOffline(true));
           fetchLocalDataUserReviewsRatings(titleData);
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getUserReviewsRatings error", error);
-        // console.log(componentName, GetDateTime(), "getUserReviewsRatings error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getUserReviewsRatings error.message", error.message);
+        console.error(componentName, GetDateTime(), "getUserReviewsRatings error", error);
+        // console.error(componentName, GetDateTime(), "getUserReviewsRatings error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getUserReviewsRatings error.message", error.message);
         // setErrOverallTitleRatingMessage(error.name + ": " + error.message);
         dispatch(setUserReviewsRatingsDataOffline(true));
         fetchLocalDataUserReviewsRatings(titleData);
@@ -195,27 +195,27 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings results", results);
 
-        if (data.resultsFound === true) {
-          // loadDataStore(data.userReviews, "userReviewRating");
-          addRatings(titleData, data.records);
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          // loadDataStore(results.userReviews, "userReviewRating");
+          addRatings(titleData, results.records);
         } else {
-          console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings resultsFound error", data.message);
-          // setErrUserReviewMessage(data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings resultsFound error", results.message);
+          // setErrUserReviewMessage(results.message);
           dispatch(setUserReviewsRatingsDataOffline(true));
           // loadDataStore(UserReviewData, "userReviewRating");
           // addRatings(titleData, UserReviewRatingData);
-          // * Not going to need to load user review ratings from local data.
+          // * Not going to need to load user review ratings from local results.
           addRatings(titleData, []);
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error", error);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.name", error.name);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.message", error.message);
+        console.error(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error", error);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.name", error.name);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings error.message", error.message);
         // setErrUserReviewMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setUserReviewsRatingsDataOffline(true));
@@ -304,24 +304,24 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getCategories data", data);
-        // setCategoryMessage(data.message);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getCategories results", results);
+        // setCategoryMessage(results.message);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "categories");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "categories");
         } else {
-          console.log(componentName, GetDateTime(), "getCategories resultsFound error", data.message);
-          // setErrCategoryMessage(data.message);
+          console.log(componentName, GetDateTime(), "getCategories resultsFound error", results.message);
+          // setErrCategoryMessage(results.message);
           dispatch(setCategoriesDataOffline(true));
           fetchLocalDataCategories();
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getCategories error", error);
-        // console.log(componentName, GetDateTime(), "getCategories error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getCategories error.message", error.message);
+        console.error(componentName, GetDateTime(), "getCategories error", error);
+        // console.error(componentName, GetDateTime(), "getCategories error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
@@ -353,24 +353,24 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getMedia data", data);
-        // setMediaMessage(data.message);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getMedia results", results);
+        // setMediaMessage(results.message);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "media");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "media");
         } else {
-          console.log(componentName, GetDateTime(), "getMedia resultsFound error", data.message);
-          // setErrMediaMessage(data.message);
+          console.log(componentName, GetDateTime(), "getMedia resultsFound error", results.message);
+          // setErrMediaMessage(results.message);
           dispatch(setMediaDataOffline(true));
           fetchLocalDataMedia();
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getMedia error", error);
-        // console.log(componentName, GetDateTime(), "getMedia error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getMedia error.message", error.message);
+        console.error(componentName, GetDateTime(), "getMedia error", error);
+        // console.error(componentName, GetDateTime(), "getMedia error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getMedia error.message", error.message);
         // setErrMediaMessage(error.name + ": " + error.message);
         dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
@@ -402,24 +402,24 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getTitle data", data);
-        // setTitleMessage(data.message);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getTitle results", results);
+        // setTitleMessage(results.message);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "titles");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "titles");
         } else {
-          console.log(componentName, GetDateTime(), "getTitles resultsFound error", data.message);
-          // setErrTitleMessage(data.message);
+          console.log(componentName, GetDateTime(), "getTitles resultsFound error", results.message);
+          // setErrTitleMessage(results.message);
           dispatch(setTitlesDataOffline(true));
           fetchLocalDataTitles();
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getTitle error", error);
-        // console.log(componentName, GetDateTime(), "getTitle error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getTitle error.message", error.message);
+        console.error(componentName, GetDateTime(), "getTitle error", error);
+        // console.error(componentName, GetDateTime(), "getTitle error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getTitle error.message", error.message);
         // setErrTitleMessage(error.name + ": " + error.message);
         dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
@@ -451,24 +451,24 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getEdition data", data);
-        // setEditionMessage(data.message);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getEdition results", results);
+        // setEditionMessage(results.message);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "editions");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "editions");
         } else {
-          console.log(componentName, GetDateTime(), "getEditions resultsFound error", data.message);
-          // setErrEditionMessage(data.message);
+          console.log(componentName, GetDateTime(), "getEditions resultsFound error", results.message);
+          // setErrEditionMessage(results.message);
           dispatch(setEditionsDataOffline(true));
           fetchLocalDataEditions();
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getEditions error", error);
-        // console.log(componentName, GetDateTime(), "getEdition error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getEdition error.message", error.message);
+        console.error(componentName, GetDateTime(), "getEditions error", error);
+        // console.error(componentName, GetDateTime(), "getEdition error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getEdition error.message", error.message);
         // setErrEditionMessage(error.name + ": " + error.message);
         dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
@@ -497,23 +497,23 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories results", results);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "categories");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "categories");
         } else {
-          console.log(componentName, GetDateTime(), "fetchLocalDataCategories resultsFound error", data.message);
-          // setErrCategoryMessage(data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataCategories resultsFound error", results.message);
+          // setErrCategoryMessage(results.message);
           dispatch(setCategoriesDataOffline(true));
           loadDataStore(CategoryData, "categories");
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchLocalDataCategories error", error);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories error.name", error.name);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataCategories error.message", error.message);
+        console.error(componentName, GetDateTime(), "fetchLocalDataCategories error", error);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataCategories error.name", error.name);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataCategories error.message", error.message);
         // setErrCategoryMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setCategoriesDataOffline(true));
@@ -543,23 +543,23 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia results", results);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "media");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "media");
         } else {
-          console.log(componentName, GetDateTime(), "fetchLocalDataMedia resultsFound error", data.message);
-          // setErrMediaMessage(data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataMedia resultsFound error", results.message);
+          // setErrMediaMessage(results.message);
           dispatch(setMediaDataOffline(true));
           loadDataStore(MediaData, "media");
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchLocalDataMedia error", error);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia error.name", error.name);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataMedia error.message", error.message);
+        console.error(componentName, GetDateTime(), "fetchLocalDataMedia error", error);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataMedia error.name", error.name);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataMedia error.message", error.message);
         // setErrMediaMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setMediaDataOffline(true));
@@ -589,23 +589,23 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles results", results);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "titles");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "titles");
         } else {
-          console.log(componentName, GetDateTime(), "fetchLocalDataTitles resultsFound error", data.message);
-          // setErrTitleMessage(data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataTitles resultsFound error", results.message);
+          // setErrTitleMessage(results.message);
           dispatch(setTitlesDataOffline(true));
           loadDataStore(TitleData, "titles");
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchLocalDataTitles error", error);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles error.name", error.name);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataTitles error.message", error.message);
+        console.error(componentName, GetDateTime(), "fetchLocalDataTitles error", error);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataTitles error.name", error.name);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataTitles error.message", error.message);
         // setErrTitleMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setTitlesDataOffline(true));
@@ -635,23 +635,23 @@ function LoadBibliographyData() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions results", results);
 
-        if (data.resultsFound === true) {
-          loadDataStore(data.records, "editions");
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+          loadDataStore(results.records, "editions");
         } else {
-          console.log(componentName, GetDateTime(), "fetchLocalDataEditions resultsFound error", data.message);
-          // setErrEditionMessage(data.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataEditions resultsFound error", results.message);
+          // setErrEditionMessage(results.message);
           dispatch(setEditionsDataOffline(true));
           loadDataStore(EditionData, "editions");
         };
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "fetchLocalDataEditions error", error);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions error.name", error.name);
-        // console.log(componentName, GetDateTime(), "fetchLocalDataEditions error.message", error.message);
+        console.error(componentName, GetDateTime(), "fetchLocalDataEditions error", error);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataEditions error.name", error.name);
+        // console.error(componentName, GetDateTime(), "fetchLocalDataEditions error.message", error.message);
         // setErrEditionMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell
         dispatch(setEditionsDataOffline(true));

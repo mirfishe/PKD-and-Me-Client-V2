@@ -36,6 +36,7 @@ const AddEdition = (props) => {
   // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
   const mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
+  // const mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
   // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -334,9 +335,9 @@ const AddEdition = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, GetDateTime(), "addEdition error", error);
-            // console.log(componentName, GetDateTime(), "addEdition error.name", error.name);
-            // console.log(componentName, GetDateTime(), "addEdition error.message", error.message);
+            console.error(componentName, GetDateTime(), "addEdition error", error);
+            // console.error(componentName, GetDateTime(), "addEdition error.name", error.name);
+            // console.error(componentName, GetDateTime(), "addEdition error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -371,28 +372,28 @@ const AddEdition = (props) => {
             return response.json();
           };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "checkASIN data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "checkASIN results", results);
 
-          setASINResultsFound(data.resultsFound);
-          setASINMessage(data.message);
+          setASINResultsFound(results.resultsFound);
+          setASINMessage(results.message);
 
-          if (data.resultsFound === true) {
-            setASINMessage(data.message + "That ASIN already exists in the database. " + data.records[0].titleName + " (" + data.records[0].media + ") editionID=" + data.records[0].editionID);
+          if (IsEmpty(results) === false && results.resultsFound === true) {
+            setASINMessage(results.message + "That ASIN already exists in the database. " + results.records[0].titleName + " (" + results.records[0].media + ") editionID=" + results.records[0].editionID);
 
-            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].titleName);
-            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].media);
-            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].editionID);
+            // console.log(componentName, GetDateTime(), "checkASIN", results.records[0].titleName);
+            // console.log(componentName, GetDateTime(), "checkASIN", results.records[0].media);
+            // console.log(componentName, GetDateTime(), "checkASIN", results.records[0].editionID);
 
           } else {
-            setErrASINMessage(data.message + "That ASIN does not exist in the database");
+            setErrASINMessage(results.message + "That ASIN does not exist in the database");
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "checkASIN error", error);
-          // console.log(componentName, GetDateTime(), "checkASIN error.name", error.name);
-          // console.log(componentName, GetDateTime(), "checkASIN error.message", error.message);
+          console.error(componentName, GetDateTime(), "checkASIN error", error);
+          // console.error(componentName, GetDateTime(), "checkASIN error.name", error.name);
+          // console.error(componentName, GetDateTime(), "checkASIN error.message", error.message);
           setErrASINMessage(error.name + ": " + error.message);
         });
 
@@ -500,7 +501,7 @@ const AddEdition = (props) => {
 
               <Label for="txtImageName">Image Name</Label> {IsEmpty(props.titleImageName) === false ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitleImageName}>Copy Image Name</Button> : null}
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
-              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="" /> : <Image size="150" className="noImageIcon" />}
+              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="noImageIcon" />}
 
             </FormGroup>
             <FormGroup>
@@ -520,7 +521,7 @@ const AddEdition = (props) => {
             </FormGroup>
             <FormGroup>
 
-              <Label for="txtTextLinkFull">Text Link Full</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
+              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
               <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
 
             </FormGroup>

@@ -101,145 +101,145 @@ function LoadAppSettings() {
           return response.json();
         };
       })
-      .then(data => {
-        // console.log(componentName, GetDateTime(), "getAppSettings data", data);
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getAppSettings results", results);
 
-        if (data.resultsFound === true) {
+        if (IsEmpty(results) === false && results.resultsFound === true) {
 
           // ! Don't change the profileType even if the AppSettings are loaded from the .json file 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.profileType", data.profileType);
-          // if IsEmpty(data.profileType) === false) {
-          //     // profileType = data.profileType;
-          //     dispatch(setProfileType(data.profileType));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.profileType", results.profileType);
+          // if IsEmpty(results.profileType) === false) {
+          //     // profileType = results.profileType;
+          //     dispatch(setProfileType(results.profileType));
           // };
 
           // ! Loading the API_URL from the state store here is too slow
           // ! Always pulling it from environment.js
-          // console.log(componentName, GetDateTime(), "getAppSettings data.API_URL", data.API_URL);
-          // if (IsEmpty(data.API_URL) === false) {
-          //     // API_URL = data.API_URL;
-          //     dispatch(setAPI_URL(data.API_URL));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.API_URL", results.API_URL);
+          // if (IsEmpty(results.API_URL) === false) {
+          //     // API_URL = results.API_URL;
+          //     dispatch(setAPI_URL(results.API_URL));
           // };
 
           // ! Loading the baseURL from the state store here is too slow
           // ! Always pulling it from environment.js
-          // console.log(componentName, GetDateTime(), "getAppSettings data.baseURL", data.baseURL);
-          // if (IsEmpty(data.baseURL) === false) {
-          //     // baseURL = data.baseURL;
-          //     dispatch(setBaseURL(data.baseURL));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.baseURL", results.baseURL);
+          // if (IsEmpty(results.baseURL) === false) {
+          //     // baseURL = results.baseURL;
+          //     dispatch(setBaseURL(results.baseURL));
           // };
 
           // ! Loading the tagManagerArgs from the state store here is too slow
           // ! Always pulling it from environment.js
-          // console.log(componentName, GetDateTime(), "getAppSettings data.tagManagerArgs", data.tagManagerArgs);
-          // console.log(componentName, GetDateTime(), "getAppSettings data.tagManagerArgs.gtmId", data.tagManagerArgs.gtmId);
-          // if (IsEmpty(data.tagManagerArgs) === false && IsEmpty(data.tagManagerArgs.gtmId) === false) {
-          //     // tagManagerArgsgtmId = data.tagManagerArgs.gtmId;
-          //     dispatch(setTagManagerArgsgtmId(data.tagManagerArgs.gtmId));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.tagManagerArgs", results.tagManagerArgs);
+          // console.log(componentName, GetDateTime(), "getAppSettings results.tagManagerArgs.gtmId", results.tagManagerArgs.gtmId);
+          // if (IsEmpty(results.tagManagerArgs) === false && IsEmpty(results.tagManagerArgs.gtmId) === false) {
+          //     // tagManagerArgsgtmId = results.tagManagerArgs.gtmId;
+          //     dispatch(setTagManagerArgsgtmId(results.tagManagerArgs.gtmId));
           // };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.siteName", data.siteName);
-          if (IsEmpty(data.siteName) === false) {
-            // siteName = data.siteName;
-            dispatch(setSiteName(data.siteName));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.siteName", results.siteName);
+          if (IsEmpty(results.siteName) === false) {
+            // siteName = results.siteName;
+            dispatch(setSiteName(results.siteName));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.appName", data.appName);
-          if (IsEmpty(data.appName) === false) {
-            // appName = data.appName;
-            dispatch(setAppName(data.appName));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.appName", results.appName);
+          if (IsEmpty(results.appName) === false) {
+            // appName = results.appName;
+            dispatch(setAppName(results.appName));
           };
 
           // ! Loading the metaDescription from the state store here is too slow
           // ! Always pulling it from environment.js
-          // console.log(componentName, GetDateTime(), "getAppSettings data.metaDescription", data.metaDescription);
-          // if (IsEmpty(data.metaDescription) === false) {
-          //     // metaDescription = data.metaDescription;
-          //     dispatch(setMetaDescription(data.metaDescription));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.metaDescription", results.metaDescription);
+          // if (IsEmpty(results.metaDescription) === false) {
+          //     // metaDescription = results.metaDescription;
+          //     dispatch(setMetaDescription(results.metaDescription));
           // };
 
           // ! Loading the defaultPageComponent from the state store here is too slow
           // ! Always pulling it from environment.js
-          // console.log(componentName, GetDateTime(), "getAppSettings data.defaultPageComponent", data.defaultPageComponent);
-          // if (IsEmpty(data.defaultPageComponent) === false) {
-          //     // defaultPageComponent = data.defaultPageComponent;
-          //     dispatch(setDefaultPageComponent(data.defaultPageComponent));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.defaultPageComponent", results.defaultPageComponent);
+          // if (IsEmpty(results.defaultPageComponent) === false) {
+          //     // defaultPageComponent = results.defaultPageComponent;
+          //     dispatch(setDefaultPageComponent(results.defaultPageComponent));
           // };
 
           // ! Loading the routerBaseName from the state store here is too slow
           // ! Always pulling it from environment.js
-          // console.log(componentName, GetDateTime(), "getAppSettings data.routerBaseName", data.routerBaseName);
-          // if (IsEmpty(data.routerBaseName) === false) {
-          //     // routerBaseName = data.routerBaseName;
-          //     dispatch(setRouterBaseName(data.routerBaseName));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.routerBaseName", results.routerBaseName);
+          // if (IsEmpty(results.routerBaseName) === false) {
+          //     // routerBaseName = results.routerBaseName;
+          //     dispatch(setRouterBaseName(results.routerBaseName));
           // };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.appOffline", data.appOffline);
-          if (IsEmpty(data.appOffline) === false) {
-            // appOffline = data.appOffline;
-            dispatch(setAppOffline(data.appOffline));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.appOffline", results.appOffline);
+          if (IsEmpty(results.appOffline) === false) {
+            // appOffline = results.appOffline;
+            dispatch(setAppOffline(results.appOffline));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.electronicOnly", data.electronicOnly);
-          if (IsEmpty(data.electronicOnly) === false) {
-            // electronicOnly = data.electronicOnly;
-            dispatch(setElectronicOnly(data.electronicOnly));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.electronicOnly", results.electronicOnly);
+          if (IsEmpty(results.electronicOnly) === false) {
+            // electronicOnly = results.electronicOnly;
+            dispatch(setElectronicOnly(results.electronicOnly));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.electronicOnlyMessage", data.electronicOnlyMessage);
-          if (IsEmpty(data.electronicOnlyMessage) === false) {
-            // electronicOnlyMessage = data.electronicOnlyMessage;
-            dispatch(setElectronicOnlyMessage(data.electronicOnlyMessage));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.electronicOnlyMessage", results.electronicOnlyMessage);
+          if (IsEmpty(results.electronicOnlyMessage) === false) {
+            // electronicOnlyMessage = results.electronicOnlyMessage;
+            dispatch(setElectronicOnlyMessage(results.electronicOnlyMessage));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.physicalOnly", data.physicalOnly);
-          if (IsEmpty(data.physicalOnly) === false) {
-            // physicalOnly = data.physicalOnly;
-            dispatch(setPhysicalOnly(data.physicalOnly));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.physicalOnly", results.physicalOnly);
+          if (IsEmpty(results.physicalOnly) === false) {
+            // physicalOnly = results.physicalOnly;
+            dispatch(setPhysicalOnly(results.physicalOnly));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.physicalOnlyMessage", data.physicalOnlyMessage);
-          if (IsEmpty(data.physicalOnlyMessage) === false) {
-            // physicalOnlyMessage = data.physicalOnlyMessage;
-            dispatch(setPhysicalOnlyMessage(data.physicalOnlyMessage));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.physicalOnlyMessage", results.physicalOnlyMessage);
+          if (IsEmpty(results.physicalOnlyMessage) === false) {
+            // physicalOnlyMessage = results.physicalOnlyMessage;
+            dispatch(setPhysicalOnlyMessage(results.physicalOnlyMessage));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.appAllowUserInteractions", data.appAllowUserInteractions);
-          if (IsEmpty(data.appAllowUserInteractions) === false) {
-            // appAllowUserInteractions = data.appAllowUserInteractions;
-            dispatch(setAppAllowUserInteractions(data.appAllowUserInteractions));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.appAllowUserInteractions", results.appAllowUserInteractions);
+          if (IsEmpty(results.appAllowUserInteractions) === false) {
+            // appAllowUserInteractions = results.appAllowUserInteractions;
+            dispatch(setAppAllowUserInteractions(results.appAllowUserInteractions));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.requireUserLogin", data.requireUserLogin);
-          if (IsEmpty(data.requireUserLogin) === false) {
-            // requireUserLogin = data.requireUserLogin;
-            dispatch(setRequireUserLogin(data.requireUserLogin));
+          // console.log(componentName, GetDateTime(), "getAppSettings results.requireUserLogin", results.requireUserLogin);
+          if (IsEmpty(results.requireUserLogin) === false) {
+            // requireUserLogin = results.requireUserLogin;
+            dispatch(setRequireUserLogin(results.requireUserLogin));
           };
 
           // * In case accidentally set both to true, then electronicOnly overides.
-          if (data.physicalOnly && data.electronicOnly) {
+          if (results.physicalOnly && results.electronicOnly) {
             dispatch(setElectronicOnly(true));
             dispatch(setPhysicalOnly(false));
           };
 
-          // console.log(componentName, GetDateTime(), "getAppSettings data.menuSettings", data.menuSettings);
+          // console.log(componentName, GetDateTime(), "getAppSettings results.menuSettings", results.menuSettings);
 
-          if (IsEmpty(data.menuSettings) === false) {
-            // tagManagerArgsgtmId = data.menuSettings;
-            dispatch(setMenuSettings(data.menuSettings));
+          if (IsEmpty(results.menuSettings) === false) {
+            // tagManagerArgsgtmId = results.menuSettings;
+            dispatch(setMenuSettings(results.menuSettings));
           };
 
         } else {
-          console.log(componentName, GetDateTime(), "getAppSettings resultsFound error", data.message);
+          console.log(componentName, GetDateTime(), "getAppSettings resultsFound error", results.message);
         };
 
         dispatch(setAppSettingsJsonLoaded(true));
 
       })
       .catch(error => {
-        console.log(componentName, GetDateTime(), "getAppSettings error", error);
-        // console.log(componentName, GetDateTime(), "getAppSettings error.name", error.name);
-        // console.log(componentName, GetDateTime(), "getAppSettings error.message", error.message);
+        console.error(componentName, GetDateTime(), "getAppSettings error", error);
+        // console.error(componentName, GetDateTime(), "getAppSettings error.name", error.name);
+        // console.error(componentName, GetDateTime(), "getAppSettings error.message", error.message);
       });
 
   };

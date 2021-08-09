@@ -20,7 +20,8 @@ import Dickian from "./content/Dickian";
 import FormatPost from "./components/socialMedia/FormatPost";
 import AddCategory from "./components/categories/AddCategory";
 import AddMedia from "./components/media/AddMedia";
-import AddTitle from "./components/titles/AddTitle";
+// import AddTitle from "./components/titles/AddTitle";
+import EditTitle from "./components/titles/EditTitle";
 // import CategoryList from "./components/categories/CategoryList";
 // import MediaList from "./components/media/MediaList";
 // import TitleList from "./components/titles/TitleList";
@@ -206,20 +207,20 @@ function App() {
           // };
           // };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getUser data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getUser results", results);
 
-          setUserResultsFound(data.resultsFound);
-          // addMessage(data.message);
+          setUserResultsFound(results.resultsFound);
+          // addMessage(results.message);
 
-          if (data.resultsFound === true) {
+          if (IsEmpty(results) === false && results.resultsFound === true) {
 
-            if (data.active === true || data.active === 1) {
+            if (results.active === true || results.active === 1) {
 
-              dispatch(loadUserData(data));
+              dispatch(loadUserData(results));
 
               // console.log(componentName, GetDateTime(), "getUser checklistLoaded", checklistLoaded);
-              // console.log(componentName, GetDateTime(), "getUser data.sessionToken", data.sessionToken);
+              // console.log(componentName, GetDateTime(), "getUser results.sessionToken", results.sessionToken);
               // console.log(componentName, GetDateTime(), "getUser token", token);
               if (!checklistLoaded) {
                 getChecklist(token);
@@ -231,16 +232,16 @@ function App() {
             };
 
           } else {
-            // console.log(componentName, GetDateTime(), "getUser data.resultsFound !== true", data.message);
-            // addErrorMessage(data.message);
+            // console.log(componentName, GetDateTime(), "getUser results.resultsFound !== true", results.message);
+            // addErrorMessage(results.message);
             logOut();
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getUser error", error);
-          // console.log(componentName, GetDateTime(), "getUser error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getUser error.message", error.message);
+          console.error(componentName, GetDateTime(), "getUser error", error);
+          // console.error(componentName, GetDateTime(), "getUser error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getUser error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -281,26 +282,26 @@ function App() {
           // };
           // };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getChecklist data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getChecklist results", results);
 
-          setChecklistResultsFound(data.resultsFound);
-          // setChecklistMessage(data.message);
+          setChecklistResultsFound(results.resultsFound);
+          // setChecklistMessage(results.message);
 
-          if (data.resultsFound === true) {
+          if (IsEmpty(results) === false && results.resultsFound === true) {
 
-            dispatch(loadArrayChecklist(data.records));
+            dispatch(loadArrayChecklist(results.records));
 
           } else {
-            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", data.message);
-            // addErrorMessage(data.message);
+            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", results.message);
+            // addErrorMessage(results.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getChecklist error", error);
-          // console.log(componentName, GetDateTime(), "getChecklist error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getChecklist error.message", error.message);
+          console.error(componentName, GetDateTime(), "getChecklist error", error);
+          // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
           // addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -533,7 +534,8 @@ function App() {
               : null}
             {showAddTitle && IsEmpty(admin) === false && admin === true ?
               <NavItem className="mx-3">
-                <AddTitle displayButton={true} />
+                {/* <AddTitle displayButton={true} /> */}
+                <EditTitle displayButton={true} />
               </NavItem>
               : null}
           </Nav>

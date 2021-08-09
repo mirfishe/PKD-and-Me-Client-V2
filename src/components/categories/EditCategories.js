@@ -50,6 +50,7 @@ const EditCategories = (props) => {
     categoryList = [...categoryListState];
   } else {
     categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
+    // categoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
   };
   // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 

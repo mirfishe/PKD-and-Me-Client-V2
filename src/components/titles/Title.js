@@ -7,13 +7,13 @@ import { Rating } from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
-import AddTitle from "./AddTitle";
+// import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
 import Edition from "../editions/Edition";
-import AddEdition from "../editions/AddEdition";
+// import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
 import UserReview from "../userReviews/UserReview";
-import AddUserReview from "../userReviews/AddUserReview";
+// import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
@@ -22,6 +22,14 @@ const Title = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // ! Loading the baseURL from the state store here is too slow
+  // ! Always pulling it from environment.js
+  // const baseURL = useSelector(state => state.app.baseURL);
+  const baseURL = AppSettings.baseURL;
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+
+  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
@@ -32,12 +40,6 @@ const Title = (props) => {
   // console.log(componentName, GetDateTime(), "admin", admin);
   const userID = useSelector(state => state.user.userID);
   // console.log(componentName, GetDateTime(), "userID", userID);
-
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   // const electronicOnly = useSelector(state => state.app.electronicOnly);
   // const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
@@ -104,7 +106,7 @@ const Title = (props) => {
 
     } else {
       document.title = "Title Not Found | " + appName + " | " + siteName;
-      console.log("Title not found.");
+      console.error("Title not found.");
       // console.log(componentName, GetDateTime(), "titleParam", titleParam);
       // // Display all active titles
       // titleList = titleListState;
@@ -117,20 +119,20 @@ const Title = (props) => {
     document.title = "All Titles | " + appName + " | " + siteName;
     // * Display all active titles
     // titleList = [...titleListState];
-    titleList = titleListState.filter(title => title.active === true || title.active === 1);
+    titleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);
     // * Display all active editions
     // editionList = [...editionListState];
-    // editionList = editionListState.filter(edition => edition.active === true || edition.active === 1);
+    // editionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
   };
 
   // if (electronicOnly === true || userElectronicOnly === true) {
   // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
   //   // editionList = editionList.filter(edition => edition.medium.electronic === true);
-  //   editionList = editionList.filter(edition => edition.electronic === true);
+  //   editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
   // } else if (physicalOnly === true || userPhysicalOnly === true) {
   // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
   //   // editionList = editionList.filter(edition => edition.medium.electronic === false);
-  //   editionList = editionList.filter(edition => edition.electronic === false);
+  //   editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
   // } else {
   //   editionList = [...editionList];
   // };
@@ -139,8 +141,8 @@ const Title = (props) => {
     titleList = [...titleList];
     // editionList = [...editionList];
   } else {
-    titleList = titleList.filter(title => title.active === true || title.active === 1);
-    // editionList = editionList.filter(edition => edition.active === true || edition.active === 1);
+    titleList = titleList.filter(title => title.titleActive === true || title.titleActive === 1);
+    // editionList = editionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
   };
   // console.log(componentName, GetDateTime(), "titleList", titleList);
 
@@ -235,22 +237,22 @@ const Title = (props) => {
   //                 return response.json();
   //             };
   //         })
-  //         .then(data => {
-  //             // console.log(componentName, GetDateTime(), "getTitleRating data", data);
+  //         .then(results => {
+  //             // console.log(componentName, GetDateTime(), "getTitleRating results", results);
 
-  //             setOverallTitleRatingResultsFound(data.resultsFound);
-  //             setOverallTitleRatingMessage(data.message);
+  //             setOverallTitleRatingResultsFound(results.resultsFound);
+  //             setOverallTitleRatingMessage(results.message);
 
-  //             if (data.resultsFound === true) {
-  //                 // console.log(componentName, GetDateTime(), "getTitleRating data.userReviews[0].userReviewCount", data.userReviews[0].userReviewCount);
-  //                 // console.log(componentName, GetDateTime(), "getTitleRating data.userReviews[0].userReviewSum", data.userReviews[0].userReviewSum);
+  //             if (IsEmpty(results) === false && results.resultsFound === true) {
+  //                 // console.log(componentName, GetDateTime(), "getTitleRating results.userReviews[0].userReviewCount", results.userReviews[0].userReviewCount);
+  //                 // console.log(componentName, GetDateTime(), "getTitleRating results.userReviews[0].userReviewSum", results.userReviews[0].userReviewSum);
 
-  //                 setOverallTitleRatingCount(data.userReviews[0].userReviewCount);
-  //                 let userReviewCount = data.userReviews[0].userReviewCount;
+  //                 setOverallTitleRatingCount(results.userReviews[0].userReviewCount);
+  //                 let userReviewCount = results.userReviews[0].userReviewCount;
 
   //                 if (userReviewCount > 0) {
 
-  //                     let userReviewSum = data.userReviews[0].userReviewSum;
+  //                     let userReviewSum = results.userReviews[0].userReviewSum;
   //                     // Check for division by zero?
   //                     // let userReviewAverage: number = userReviewSum/0;
   //                     let userReviewAverage = userReviewSum/userReviewCount;
@@ -264,15 +266,15 @@ const Title = (props) => {
   //                 };
 
   //             } else {
-  //                 console.log(componentName, GetDateTime(), "getEditions resultsFound error", data.message);
-  //                 setErrOverallTitleRatingMessage(data.message);
+  //                 console.log(componentName, GetDateTime(), "getEditions resultsFound error", results.message);
+  //                 setErrOverallTitleRatingMessage(results.message);
   //             };
 
   //         })
   //         .catch(error => {
-  //             console.log(componentName, GetDateTime(), "getTitleRating error", error);
-  //             // console.log(componentName, GetDateTime(), "getTitleRating error.name", error.name);
-  //             // console.log(componentName, GetDateTime(), "getTitleRating error.message", error.message);
+  //             console.error(componentName, GetDateTime(), "getTitleRating error", error);
+  //             // console.error(componentName, GetDateTime(), "getTitleRating error.name", error.name);
+  //             // console.error(componentName, GetDateTime(), "getTitleRating error.message", error.message);
   //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
   //         });
 
@@ -342,7 +344,7 @@ const Title = (props) => {
       {titleList.map((title) => {
 
         let activeString = "";
-        if (title.active === true || title.active === 1) {
+        if (title.titleActive === true || title.titleActive === 1) {
           // activeString = "Active";
           activeString = "";
         } else {
@@ -360,8 +362,9 @@ const Title = (props) => {
                   {/* {IsEmpty(title.category) === false ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category)}>{title.category}</Link>
                             </span> : null} */}
                   {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
-                  {IsEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
+                  {/* {IsEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null} */}
                   {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                  {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null}
                 </h4>
               </Col>
             </Row>
@@ -374,30 +377,31 @@ const Title = (props) => {
 
             <Row className="mb-4">
               <Col xs="4">
-                {IsEmpty(title.imageName) === false ? <img src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon" />}
+                {IsEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon" />}
               </Col>
               <Col xs="8">
 
-                {IsEmpty(title.userReviewCount) === false && title.userReviewCount > 0 && title.userReviewAverage > 0 ?
+                {appAllowUserInteractions === true && IsEmpty(title.userReviewCount) === false && title.userReviewCount > 0 && title.userReviewAverage > 0 ?
                   <React.Fragment>
                     <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} />
                     <p><small>out of {title.userReviewCount} review(s)</small></p>
                   </React.Fragment>
                   : null}
 
-                {IsEmpty(userReviewItem) === false ?
+                {appAllowUserInteractions === true && IsEmpty(userReviewItem) === false ?
                   <React.Fragment>
                     {IsEmpty(userReviewItem.read) === false && userReviewItem.read === true && (IsEmpty(userReviewItem.dateRead) === true) ? <p>Read</p> : null}
                     {IsEmpty(userReviewItem.dateRead) === false && userReviewItem.dateRead !== "" ? <p>Read on {DisplayDate(userReviewItem.dateRead)}</p> : null}
                   </React.Fragment>
                   : null}
 
-                {IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null}
-                {IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
+                {/* {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
+                {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
                 {IsEmpty(title.shortDescription) === false ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
                 {IsEmpty(title.urlPKDweb) === false ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
-                {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null}
+                {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
+                {/* {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
               </Col>
             </Row>
 
@@ -416,7 +420,7 @@ const Title = (props) => {
             <Row className="my-4">
                 <Col xs="12">
                     <h5 className="text-center">Find A Copy 
-                    {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
+                    {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
                     </h5>
                 </Col>
             </Row>
@@ -425,7 +429,7 @@ const Title = (props) => {
             {editionList.map((edition) => {
 
                 let activeString = "";
-                if (edition.active === true || edition.active === 1) {
+                if (edition.editionActive === true || edition.editionActive === 1) {
                     // activeString = "Active";
                     activeString = "";
                 } else {
@@ -444,7 +448,7 @@ const Title = (props) => {
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
+                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="editionImage" /> : <Image className="noImageIcon"/>}
                         </a>
                     }
                     </CardBody>
@@ -465,7 +469,7 @@ const Title = (props) => {
                             <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
                         :
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt="" className="editionImage" /> : <Image className="noImageIcon"/>}
+                            {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="editionImage" /> : <Image className="noImageIcon"/>}
                             </a>
                         }
                         </Col>
@@ -490,9 +494,12 @@ const Title = (props) => {
         <Edition titleID={titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} />
       </Row>
 
-      <Row>
-        <UserReview titleID={titleID} />
-      </Row>
+      {appAllowUserInteractions === true ?
+        <Row>
+          <UserReview titleID={titleID} />
+        </Row>
+        : null}
+
     </Container>
   );
 

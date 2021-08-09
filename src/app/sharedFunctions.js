@@ -416,6 +416,22 @@ export const DisplayValue = (variableValue) => {
 };
 
 
+export const DisplaySpaceAfterComma = (text) => {
+  // console.log(componentName, GetDateTime(), "DisplaySpaceAfterComma text", text);
+
+  let displayText = "";
+
+  if (IsEmpty(text) === false) {
+    displayText = text.replaceAll(",", ", ");
+  };
+
+  // console.log(componentName, GetDateTime(), "DisplaySpaceAfterComma displayText", displayText);
+
+  return displayText;
+
+};
+
+
 export const TryParseJSON = (jsonString) => {
   // console.log(componentName, GetDateTime(), "TryParseJSON jsonString", jsonString);
 
@@ -446,30 +462,34 @@ export const DisplayObjectData = (ObjectData) => {
 
   let objectDataString = JSON.stringify(ObjectData);
 
-  objectDataString = objectDataString.replaceAll("[{\"", "<p>");
-  objectDataString = objectDataString.replaceAll("\"},{\"", "</p><p>");
-  objectDataString = objectDataString.replaceAll("\"}]", "</p>");
+  if (IsEmpty(objectDataString) === false) {
 
-  objectDataString = objectDataString.replaceAll("{\"", "<p>");
-  objectDataString = objectDataString.replaceAll("\"}", "</p>");
+    objectDataString = objectDataString.replaceAll("[{\"", "<p>");
+    objectDataString = objectDataString.replaceAll("\"},{\"", "</p><p>");
+    objectDataString = objectDataString.replaceAll("\"}]", "</p>");
 
-  objectDataString = objectDataString.replaceAll("\":\"", " = ");
-  objectDataString = objectDataString.replaceAll("\":", " = ");
+    objectDataString = objectDataString.replaceAll("{\"", "<p>");
+    objectDataString = objectDataString.replaceAll("\"}", "</p>");
 
-  objectDataString = objectDataString.replaceAll("\",\"", "</p><p>");
-  objectDataString = objectDataString.replaceAll(",\"", "</p><p>");
+    objectDataString = objectDataString.replaceAll("\":\"", " = ");
+    objectDataString = objectDataString.replaceAll("\":", " = ");
 
-  objectDataString = objectDataString.replaceAll("},", "");
+    objectDataString = objectDataString.replaceAll("\",\"", "</p><p>");
+    objectDataString = objectDataString.replaceAll(",\"", "</p><p>");
 
-  objectDataString = objectDataString.replaceAll("[]", "");
+    objectDataString = objectDataString.replaceAll("},", "");
 
-  objectDataString = objectDataString.replaceAll("[\"", "");
-  objectDataString = objectDataString.replaceAll("\"]", "");
+    objectDataString = objectDataString.replaceAll("[]", "");
 
-  objectDataString = objectDataString.replaceAll("[", "");
-  objectDataString = objectDataString.replaceAll("]", "");
-  objectDataString = objectDataString.replaceAll("{", "");
-  objectDataString = objectDataString.replaceAll("}", "");
+    objectDataString = objectDataString.replaceAll("[\"", "");
+    objectDataString = objectDataString.replaceAll("\"]", "");
+
+    objectDataString = objectDataString.replaceAll("[", "");
+    objectDataString = objectDataString.replaceAll("]", "");
+    objectDataString = objectDataString.replaceAll("{", "");
+    objectDataString = objectDataString.replaceAll("}", "");
+
+  };
 
   return (objectDataString);
 
@@ -483,13 +503,16 @@ export const GetDateTime = () => {
   // console.log("GetDateTime new Date().toLocaleString().slice(0, 19).replace(\"T\", \" \")", new Date().toLocaleString().slice(0, 19).replace("T", " "));
   // console.log("GetDateTime new Date().toLocaleString().slice(0, 19).replace(\"T\", \"\")", new Date().toLocaleString().slice(0, 19).replace("T", ""));
 
-  // ! Time returned does not consider the time zone.
-  // TODO: Fix the time zone issue.
+  // * Time returned does not consider the time zone without adjustments.
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes
 
+  // * https://stackoverflow.com/questions/12413243/javascript-date-format-like-iso-but-local
+  let timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
   // return new Date().toLocaleString();
-  return new Date().toISOString().slice(0, 19).replace("T", " ");
   // return new Date().toLocaleString().slice(0, 19).replace("T", " ");
+  // return new Date().toISOString().slice(0, 19).replace("T", " ");
+  return new Date(new Date() - timezoneOffset).toISOString().slice(0, 19).replace("T", " ");
 
 };
 
@@ -651,81 +674,6 @@ export const TruncateText = (text, limit) => {
 };
 
 
-export const CalculateDate = (days, timeline) => {
-  // console.log(componentName, GetDateTime(), "CalculateDate days", days);
-  // console.log(componentName, GetDateTime(), "CalculateDate timeline", timeline);
-
-  let date = new Date();
-
-  if (timeline === 'past') {
-
-    date.setDate(date.getDate() - days);
-
-  } else if (timeline === 'future') {
-
-    date.setDate(date.getDate() + days);
-
-  };
-
-  return date.toLocaleDateString();
-
-};
-
-
-export const CalculateBirthDate = (birthMonth, birthDay, age) => {
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate birthMonth", birthMonth);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate birthDay", birthDay);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate age", age);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof birthMonth", typeof birthMonth);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof birthDay", typeof birthDay);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof age", typeof age);
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate GetCurrentMonth()", GetCurrentMonth());
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate GetCurrentDay()", GetCurrentDay());
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof GetCurrentMonth()", typeof GetCurrentMonth());
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate typeof GetCurrentDay()", typeof GetCurrentDay());
-
-  let birthdate = 0;
-
-  // if (GetCurrentMonth() <= birthMonth && GetCurrentDay() <= birthDay) {
-  //   birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age);
-  // } else if (GetCurrentMonth() === birthMonth && GetCurrentDay() > birthDay) {
-  //   birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age);
-  // } else if (GetCurrentMonth() > birthMonth && GetCurrentDay() > birthDay) {
-  //   birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age - 1);
-  // } else if (GetCurrentMonth() === birthMonth && GetCurrentDay() <= birthDay) {
-  //   birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age - 1);
-  // };
-
-  if (GetCurrentMonth() < birthMonth) {
-    // * Current month is less than the birth month
-    birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age + 1);
-
-  } else if (GetCurrentMonth() === birthMonth) {
-    // * Current month equals birth month
-
-    if (GetCurrentDay() < birthDay) {
-      // * Current day is less than the birth day
-      birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age + 1);
-    } else if (GetCurrentDay() === birthDay) {
-      // * Current day is equal to birth day
-      birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age);
-    } else {
-      // * Current day is greater than birth day
-      birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age);
-    };
-
-  } else {
-    // * Current month is greater than birth month
-    birthdate = birthMonth + "/" + birthDay + "/" + Math.abs(GetCurrentYear() - age);
-  };
-
-  // console.log(componentName, GetDateTime(), "CalculateBirthDate birthdate", birthdate);
-
-  return birthdate;
-
-};
-
-
 export const ValidateMilitaryTime = (timeEntered) => {
   // console.log(componentName, GetDateTime(), "ValidateMilitaryTime timeEntered", timeEntered);
 
@@ -870,20 +818,19 @@ export const ConvertTemperature = (temperatureScale, temperature) => {
     if (temperatureScale.toLowerCase() === "celsius") {
 
       // * Based on (32°F − 32) × 5/9 = 0°C
-      temperatureConverted = (temperatureFloat - 32) * 5 / 9;
+      temperatureConverted = ((temperatureFloat - 32) * 5 / 9).toFixed(2);
 
       // } else if (temperatureScale.toString().trim().toLowerCase() === "fahrenheit") {
     } else if (temperatureScale.toLowerCase() === "fahrenheit") {
 
       // * Based on (32°F − 32) × 5/9 = 0°C
-      temperatureConverted = temperatureFloat * 9 / 5 + 32;
+      temperatureConverted = (temperatureFloat * 9 / 5 + 32).toFixed(2);
 
     };
 
   } else {
     temperatureConverted = "";
   };
-
 
   // console.log(componentName, GetDateTime(), "ConvertTemperature temperatureConverted", temperatureConverted);
 
@@ -1024,8 +971,8 @@ export const ConvertEnableDisableTrueFalse = (value) => {
 
 
 export const ConvertNullEmptyString = (value) => {
-  // console.log(componentName, GetDateTime(), "convertNullToEmptyString value", value);
-  // console.log(componentName, GetDateTime(), "convertNullToEmptyString typeof value", typeof value);
+  // console.log(componentName, GetDateTime(), "ConvertNullEmptyString value", value);
+  // console.log(componentName, GetDateTime(), "ConvertNullEmptyString typeof value", typeof value);
 
   // if (value === null) {
   //   return "";
@@ -1039,35 +986,30 @@ export const ConvertNullEmptyString = (value) => {
   //   return value;
   // };
 
-  // ! This can't be done in one function like this to handle both conversions because what if the database value is set to an empty string.
   // TODO: Change this function so that it can handle if there are already empty string values in the database.
+  // ! This can't be done in one function like this to handle both conversions because what if the database value is set to an empty string.
   if (value === null) {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString null value", value);
+    // console.log(componentName, GetDateTime(), "ConvertNullEmptyString null value", value);
     return "";
   } else if (value === undefined) {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString undefined value", value);
+    // console.log(componentName, GetDateTime(), "ConvertNullEmptyString undefined value", value);
     return "";
+  } else if (value === "NaN") {
+    // console.log(componentName, GetDateTime(), "ConvertNullEmptyString NaN value", value);
+    return null;
+  } else if (isNaN(value) === true && typeof value === "number") {
+    // console.log(componentName, GetDateTime(), "ConvertNullEmptyString isNaN value", value);
+    return null;
   } else if (isNaN(value) === true && value === "") {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString isNaN \"\" value", value);
+    // console.log(componentName, GetDateTime(), "ConvertNullEmptyString isNaN \"\" value", value);
     return null;
   } else if (value === "") {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString \"\" value", value);
+    // console.log(componentName, GetDateTime(), "ConvertNullEmptyString \"\" value", value);
     return null;
   } else {
-    // console.log(componentName, GetDateTime(), "convertNullToEmptyString else value", value);
+    // console.log(componentName, GetDateTime(), "ConvertNullEmptyString else value", value);
     return value;
   };
-
-};
-
-
-export const RequiredFieldAsterisk = () => {
-  // console.log(componentName, GetDateTime(), "RequiredFieldAsterisk");
-
-  // return (<span className="error"> *</span>);
-
-  // return (<span className="error"> <i className="fas fa-asterisk"></i></span>);
-  return (<span className="error"> * <span className="sr-only">Required</span></span>);
 
 };
 
@@ -1182,6 +1124,31 @@ export const GenerateRandomNumberDigits = (digits) => {
   // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits randomNumber", randomNumber);
 
   return randomNumber;
+
+};
+
+
+export const FormatPhoneNumber = (phoneNumber) => {
+  // console.log(componentName, GetDateTime(), "formatPhoneNumber phoneNumber", phoneNumber);
+  // console.log(componentName, GetDateTime(), "formatPhoneNumber typeof phoneNumber", typeof phoneNumber);
+
+  // * From https://learnersbucket.com/examples/javascript/how-to-format-phone-number-in-javascript/
+
+  let onlyDigits = "";
+
+  if (typeof phoneNumber === "string") {
+    onlyDigits = phoneNumber.replace(/\D/g, "");
+  };
+
+  let validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+  // console.log(componentName, GetDateTime(), "formatPhoneNumber validPhoneNumber", validPhoneNumber);
+
+  if (IsEmpty(validPhoneNumber) === false) {
+    return validPhoneNumber[1] + "-" + validPhoneNumber[2] + "-" + validPhoneNumber[3];
+  } else {
+    return phoneNumber;
+  };
 
 };
 

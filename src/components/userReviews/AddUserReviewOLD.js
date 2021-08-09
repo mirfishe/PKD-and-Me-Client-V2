@@ -303,9 +303,9 @@ const AddUserReview = (props) => {
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "addUserReview error", error);
-          // console.log(componentName, GetDateTime(), "addUserReview error.name", error.name);
-          // console.log(componentName, GetDateTime(), "addUserReview error.message", error.message);
+          console.error(componentName, GetDateTime(), "addUserReview error", error);
+          // console.error(componentName, GetDateTime(), "addUserReview error.name", error.name);
+          // console.error(componentName, GetDateTime(), "addUserReview error.message", error.message);
           addErrorMessage(error.name + ": " + error.message);
         });
 
@@ -364,8 +364,7 @@ const AddUserReview = (props) => {
               <Col>
                 <FormGroup className="ml-4">
 
-                  <Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxRead(!cbxRead); }} />
-                  <Label for="cbxRead">Read</Label>
+                  <Label for="cbxRead"><Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxRead(!cbxRead); }} />Read</Label>
 
                 </FormGroup>
 
@@ -413,8 +412,7 @@ const AddUserReview = (props) => {
               <Col>
                 <FormGroup className="ml-4">
 
-                  <Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxOwned(!cbxOwned); }} />
-                  <Label for="cbxOwned">Owned</Label>
+                  <Label for="cbxOwned"><Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxOwned(!cbxOwned); }} />Owned</Label>
 
                 </FormGroup>
               </Col>

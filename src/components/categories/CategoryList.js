@@ -46,26 +46,26 @@ const CategoryList = (props) => {
             return response.json();
           };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getCategories data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getCategories results", results);
 
-          setCategoryResultsFound(data.resultsFound);
-          setCategoryMessage(data.message);
+          setCategoryResultsFound(results.resultsFound);
+          setCategoryMessage(results.message);
 
-          if (data.resultsFound === true) {
+          if (IsEmpty(results) === false && results.resultsFound === true) {
             // Would like to remove categories that don't have titles associated with them
-            // if (data.categories.titles.length > 0) {
-            setCategoryList(data.records);
+            // if (results.categories.titles.length > 0) {
+            setCategoryList(results.records);
             // };
           } else {
-            setErrCategoryMessage(data.message);
+            setErrCategoryMessage(results.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getCategories error", error);
-          // console.log(componentName, GetDateTime(), "getCategories error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getCategories error.message", error.message);
+          console.error(componentName, GetDateTime(), "getCategories error", error);
+          // console.error(componentName, GetDateTime(), "getCategories error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getCategories error.message", error.message);
           setErrCategoryMessage(error.name + ": " + error.message);
         });
 

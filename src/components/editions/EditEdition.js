@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { Image, PencilSquare } from 'react-bootstrap-icons';
+import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, getASIN, removeOnePixelImage } from "../../app/sharedFunctions";
-import { updateStateEdition, deleteStateEdition } from "../../bibliographyData/editionsSlice";
+import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../bibliographyData/editionsSlice";
 
 const EditEdition = (props) => {
 
@@ -37,6 +37,7 @@ const EditEdition = (props) => {
   // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
   const mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
+  // const mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
   // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -85,6 +86,7 @@ const EditEdition = (props) => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [modal, setModal] = useState(false);
+  const [editionRecordAdded, setEditionRecordAdded] = useState(null);
   const [editionRecordUpdated, setEditionRecordUpdated] = useState(null);
   const [editionRecordDeleted, setEditionRecordDeleted] = useState(null);
 
@@ -176,6 +178,234 @@ const EditEdition = (props) => {
     };
 
   }, [props.editionID, editionListState]);
+
+
+  const addEdition = () => {
+    // console.log(componentName, GetDateTime(), "addEdition");
+    // console.log(componentName, GetDateTime(), "addEdition baseURL", baseURL);
+    // console.log(componentName, GetDateTime(), "addEdition props.titleID", props.titleID);
+
+    clearMessages();
+    setEditionRecordAdded(null);
+    setErrMediaID("");
+
+    setEditionItem(null);
+    setEditionID(null);
+    setTitleID(null);
+    setMediaID(null);
+    setPublicationDate(null);
+    setImageName(null);
+    setASIN(null);
+    setTextLinkShort(null);
+    setTextLinkFull(null);
+    setImageLinkSmall(null);
+    setImageLinkMedium(null);
+    setImageLinkLarge(null);
+    setTextImageLink(null);
+    setActive(null);
+
+    let mediaIDValidated = false;
+    let formValidated = false;
+
+    // ? Check to make sure that props.titleID is a number?
+
+    if (IsEmpty(ddMediaID) === false) {
+      mediaIDValidated = true;
+      setErrMediaID("");
+      // console.log(componentName, GetDateTime(), "addEdition Valid mediaID");
+      // console.log(componentName, GetDateTime(), "addEdition mediaIDValidated true", mediaIDValidated);
+    } else {
+      mediaIDValidated = false;
+      setErrMediaID("Please select a media.");
+      // console.log(componentName, GetDateTime(), "addEdition Invalid mediaID");
+      // console.log(componentName, GetDateTime(), "addEdition mediaIDValidated false", mediaIDValidated);
+    };
+
+    if (mediaIDValidated === true) {
+      formValidated = true;
+      // console.log(componentName, GetDateTime(), "addEdition Valid Form");
+      // console.log(componentName, GetDateTime(), "addEdition formValidated true", formValidated);
+    } else {
+      formValidated = false;
+      // console.log(componentName, GetDateTime(), "addEdition Invalid Form");
+      // console.log(componentName, GetDateTime(), "addEdition formValidated false", formValidated);
+    };
+
+    // console.log(componentName, GetDateTime(), "addEdition titleIDValidated", titleIDValidated);
+    // console.log(componentName, GetDateTime(), "addEdition mediaIDValidated", mediaIDValidated);
+    // console.log(componentName, GetDateTime(), "addEdition formValidated", formValidated);
+
+    if (formValidated === true) {
+
+      // console.log(componentName, GetDateTime(), "addEdition typeof props.titleID", typeof props.titleID);
+      // console.log(componentName, GetDateTime(), "addEdition typeof ddMediaID", typeof ddMediaID);
+
+      // console.log(componentName, GetDateTime(), "addEdition parseInt(props.titleID)", parseInt(props.titleID));
+      // console.log(componentName, GetDateTime(), "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
+
+      let editionObject = {
+        titleID: parseInt(props.titleID),
+        mediaID: parseInt(ddMediaID),
+        // imageName: txtImageName.trim(),
+        // ASIN: txtASIN.trim(),
+        // textLinkShort: txtTextLinkShort.trim(),
+        // textLinkFull: txtTextLinkFull.trim(),
+        // imageLinkSmall: txtImageLinkSmall.trim(),
+        // imageLinkMedium: txtImageLinkMedium.trim(),
+        // imageLinkLarge: txtImageLinkLarge.trim(),
+        // textImageLink: txtTextImageLink.trim()
+      };
+
+      // * If the user doesn't enter a publication date, then it isn't added/updated
+      if (IsEmpty(txtPublicationDate) === false) {
+        if (txtPublicationDate.trim().length !== 0) {
+          Object.assign(editionObject, { publicationDate: txtPublicationDate.trim() });
+        };
+      };
+
+      // * If the user doesn't enter an image name, then it isn't added/updated
+      if (IsEmpty(txtImageName) === false) {
+        if (txtImageName.trim().length !== 0) {
+          Object.assign(editionObject, { imageName: txtImageName.trim() });
+        };
+      };
+
+      // * If the user doesn't enter an ASIN, then it isn't added/updated
+      if (IsEmpty(txtASIN) === false) {
+        if (txtASIN.trim().length !== 0) {
+          Object.assign(editionObject, { ASIN: txtASIN.trim() });
+        };
+      };
+
+      // * If the user doesn't enter a textLinkShort, then it isn't added/updated
+      if (IsEmpty(txtTextLinkShort) === false) {
+        if (txtTextLinkShort.trim().length !== 0) {
+          Object.assign(editionObject, { textLinkShort: txtTextLinkShort.trim() });
+        };
+      };
+
+      // * If the user doesn't enter a textLinkFull, then it isn't added/updated
+      if (IsEmpty(txtTextLinkFull) === false) {
+        if (txtTextLinkFull.trim().length !== 0) {
+          Object.assign(editionObject, { textLinkFull: txtTextLinkFull.trim() });
+        };
+      };
+
+      // * If the user doesn't enter an imageLinkSmall, then it isn't added/updated
+      if (IsEmpty(txtImageLinkSmall) === false) {
+        if (txtImageLinkSmall.trim().length !== 0) {
+          Object.assign(editionObject, { imageLinkSmall: txtImageLinkSmall.trim() });
+        };
+      };
+
+      // * If the user doesn't enter an imageLinkMedium, then it isn't added/updated
+      if (IsEmpty(txtImageLinkMedium) === false) {
+        if (txtImageLinkMedium.trim().length !== 0) {
+          Object.assign(editionObject, { imageLinkMedium: txtImageLinkMedium.trim() });
+        };
+      };
+
+      // * If the user doesn't enter an imageLinkLarge, then it isn't added/updated
+      if (IsEmpty(txtImageLinkLarge) === false) {
+        if (txtImageLinkLarge.trim().length !== 0) {
+          Object.assign(editionObject, { imageLinkLarge: txtImageLinkLarge.trim() });
+        };
+      };
+
+      // * If the user doesn't enter a textImageLink, then it isn't added/updated
+      if (IsEmpty(txtTextImageLink) === false) {
+        if (txtTextImageLink.trim().length !== 0) {
+          Object.assign(editionObject, { textImageLink: txtTextImageLink.trim() });
+        };
+      };
+
+      // console.log(componentName, GetDateTime(), "addEdition editionObject", editionObject);
+
+      let url = baseURL + "editions/";
+      // console.log(componentName, GetDateTime(), "addEdition url", url);
+
+      if (IsEmpty(sessionToken) === false) {
+
+        fetch(url, {
+          method: "POST",
+          headers: new Headers({
+            "Content-Type": "application/json",
+            "Authorization": sessionToken
+          }),
+          body: JSON.stringify({ edition: editionObject })
+        })
+          .then(response => {
+            // console.log(componentName, GetDateTime(), "addEdition response", response);
+            // if (!response.ok) {
+            //     throw Error(response.status + " " + response.statusText + " " + response.url);
+            // } else {
+            // if (response.status === 200) {
+            return response.json();
+            // } else {
+            //     return response.status;
+            // };
+            // };
+          })
+          .then(data => {
+            // console.log(componentName, GetDateTime(), "addEdition data", data);
+
+            setEditionRecordAdded(data.recordAdded);
+            addMessage(data.message);
+
+            if (data.recordAdded === true) {
+
+              setEditionItem(data.records[0]);
+              setEditionID(data.records[0].editionID);
+              setTitleID(data.records[0].titleID);
+              setMediaID(data.records[0].mediaID);
+              setPublicationDate(data.records[0].publicationDate);
+              setImageName(data.records[0].imageName);
+              setASIN(data.records[0].ASIN);
+              setTextLinkShort(data.records[0].textLinkShort);
+              setTextLinkFull(data.records[0].textLinkFull);
+              setImageLinkSmall(data.records[0].imageLinkSmall);
+              setImageLinkMedium(data.records[0].imageLinkMedium);
+              setImageLinkLarge(data.records[0].imageLinkLarge);
+              setTextImageLink(data.records[0].textImageLink);
+              setActive(data.records[0].active);
+
+              let mediaItem = mediaListState.filter(media => media.mediaID === data.records[0].mediaID);
+              // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
+              mediaItem = mediaItem[0];
+
+              // console.log(componentName, GetDateTime(), "addEdition typeof data.records[0].mediaID", typeof data.records[0].mediaID);
+              // console.log(componentName, GetDateTime(), "addEdition mediaItem", mediaItem);
+
+              let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
+              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
+              titleItem = titleItem[0];
+
+              // console.log(componentName, GetDateTime(), "addEdition typeof data.records[0].titleID", typeof data.records[0].titleID);
+              // console.log(componentName, GetDateTime(), "addEdition titleItem", titleItem);
+
+              // ? Would still work if the createDate and updateDate were left out?
+              dispatch(addStateEdition([{ editionID: data.records[0].editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }*/, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, mediaActive: mediaItem.active, mediaCreateDate: mediaItem.createDate, mediaUpdatedDate: mediaItem.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, titlePublicationDate: titleItem.publicationDate, titleImageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate }]));
+
+              // ? Add to local storage also?
+
+            } else {
+              // addErrorMessage(data.error);
+              addErrorMessage(data.errorMessages);
+            };
+
+          })
+          .catch(error => {
+            console.error(componentName, GetDateTime(), "addEdition error", error);
+            // console.error(componentName, GetDateTime(), "addEdition error.name", error.name);
+            // console.error(componentName, GetDateTime(), "addEdition error.message", error.message);
+            addErrorMessage(error.name + ": " + error.message);
+          });
+
+      };
+
+    };
+
+  };
 
 
   const updateEdition = (deleteEdition) => {
@@ -399,9 +629,9 @@ const EditEdition = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, GetDateTime(), "updateEdition error", error);
-            // console.log(componentName, GetDateTime(), "updateEdition error.name", error.name);
-            // console.log(componentName, GetDateTime(), "updateEdition error.message", error.message);
+            console.error(componentName, GetDateTime(), "updateEdition error", error);
+            // console.error(componentName, GetDateTime(), "updateEdition error.name", error.name);
+            // console.error(componentName, GetDateTime(), "updateEdition error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -469,9 +699,9 @@ const EditEdition = (props) => {
 
           })
           .catch(error => {
-            console.log(componentName, GetDateTime(), "deleteEdition error", error);
-            // console.log(componentName, GetDateTime(), "deleteEdition error.name", error.name);
-            // console.log(componentName, GetDateTime(), "deleteEdition error.message", error.message);
+            console.error(componentName, GetDateTime(), "deleteEdition error", error);
+            // console.error(componentName, GetDateTime(), "deleteEdition error.name", error.name);
+            // console.error(componentName, GetDateTime(), "deleteEdition error.message", error.message);
             addErrorMessage(error.name + ": " + error.message);
           });
 
@@ -506,28 +736,28 @@ const EditEdition = (props) => {
             return response.json();
           };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "checkASIN data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "checkASIN results", results);
 
-          setASINResultsFound(data.resultsFound);
-          setASINMessage(data.message);
+          setASINResultsFound(results.resultsFound);
+          setASINMessage(results.message);
 
-          if (data.resultsFound === true) {
-            setASINMessage(data.message + "That ASIN already exists in the database. " + data.records[0].titleName + " (" + data.records[0].media + ") editionID=" + data.records[0].editionID);
+          if (IsEmpty(results) === false && results.resultsFound === true) {
+            setASINMessage(results.message + "That ASIN already exists in the database. " + results.records[0].titleName + " (" + results.records[0].media + ") editionID=" + results.records[0].editionID);
 
-            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].titleName);
-            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].media);
-            // console.log(componentName, GetDateTime(), "checkASIN", data.records[0].editionID);
+            // console.log(componentName, GetDateTime(), "checkASIN", results.records[0].titleName);
+            // console.log(componentName, GetDateTime(), "checkASIN", results.records[0].media);
+            // console.log(componentName, GetDateTime(), "checkASIN", results.records[0].editionID);
 
           } else {
-            setErrASINMessage(data.message + "That ASIN does not exist in the database");
+            setErrASINMessage(results.message + "That ASIN does not exist in the database");
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "checkASIN error", error);
-          // console.log(componentName, GetDateTime(), "checkASIN error.name", error.name);
-          // console.log(componentName, GetDateTime(), "checkASIN error.message", error.message);
+          console.error(componentName, GetDateTime(), "checkASIN error", error);
+          // console.error(componentName, GetDateTime(), "checkASIN error.name", error.name);
+          // console.error(componentName, GetDateTime(), "checkASIN error.message", error.message);
           setErrASINMessage(error.name + ": " + error.message);
         });
 
@@ -558,6 +788,19 @@ const EditEdition = (props) => {
     };
 
   };
+
+
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect editionRecordAdded", editionRecordAdded);
+    if (IsEmpty(editionRecordAdded) === false && editionRecordAdded === true) {
+      clearMessages();
+      setErrMediaID("");
+      setEditionRecordAdded(null);
+      // setModal(false);
+      toggle();
+    };
+
+  }, [editionRecordAdded]);
 
 
   useEffect(() => {
@@ -601,12 +844,16 @@ const EditEdition = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Edition</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Update Edition</Button></span> : null}
+
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Update Edition</ModalHeader>
+        <ModalHeader toggle={toggle}>{IsEmpty(editionItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Edition</ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup className="text-center">
@@ -644,7 +891,7 @@ const EditEdition = (props) => {
 
               <Label for="txtImageName">Image Name</Label> {IsEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
-              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="" /> : <Image size="150" className="noImageIcon" />}
+              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="noImageIcon" />}
 
             </FormGroup>
             <FormGroup>
@@ -664,7 +911,7 @@ const EditEdition = (props) => {
             </FormGroup>
             <FormGroup>
 
-              <Label for="txtTextLinkFull">Text Link Full</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
+              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
               <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
 
             </FormGroup>
@@ -694,14 +941,21 @@ const EditEdition = (props) => {
             </FormGroup>
 
             <ModalFooter>
-              <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Update Edition</Button>
-              {IsEmpty(active) === false && (active === false || active === 0) ?
-                <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Undelete/Restore Edition</Button>
-                : null}
-              {IsEmpty(active) === false && (active === true || active === 1) ?
-                <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(true); }}>Delete Edition</Button>
-                : null}
-              <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ deleteEdition(); }}>Hard Delete Edition</Button>
+
+              {IsEmpty(editionItem) === false ?
+                <Button outline size="lg" color="primary" onClick={addEdition}>Add Edition</Button>
+                :
+                <React.Fragment>
+                  <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Update Edition</Button>
+                  {IsEmpty(active) === false && (active === false || active === 0) ?
+                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Undelete/Restore Edition</Button>
+                    : null}
+                  {IsEmpty(active) === false && (active === true || active === 1) ?
+                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(true); }}>Delete Edition</Button>
+                    : null}
+                  <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ deleteEdition(); }}>Hard Delete Edition</Button>
+                </React.Fragment>
+              }
               <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
           </Form>

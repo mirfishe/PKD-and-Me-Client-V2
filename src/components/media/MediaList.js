@@ -46,23 +46,23 @@ const MediaList = (props) => {
             return response.json();
           };
         })
-        .then(data => {
-          // console.log(componentName, GetDateTime(), "getMedia data", data);
+        .then(results => {
+          // console.log(componentName, GetDateTime(), "getMedia results", results);
 
-          setMediaResultsFound(data.resultsFound);
-          setMediaMessage(data.message);
+          setMediaResultsFound(results.resultsFound);
+          setMediaMessage(results.message);
 
-          if (data.resultsFound === true) {
-            setMediaList(data.records);
+          if (IsEmpty(results) === false && results.resultsFound === true) {
+            setMediaList(results.records);
           } else {
-            setErrMediaMessage(data.message);
+            setErrMediaMessage(results.message);
           };
 
         })
         .catch(error => {
-          console.log(componentName, GetDateTime(), "getMedia error", error);
-          // console.log(componentName, GetDateTime(), "getMedia error.name", error.name);
-          // console.log(componentName, GetDateTime(), "getMedia error.message", error.message);
+          console.error(componentName, GetDateTime(), "getMedia error", error);
+          // console.error(componentName, GetDateTime(), "getMedia error.name", error.name);
+          // console.error(componentName, GetDateTime(), "getMedia error.message", error.message);
           setErrMediaMessage(error.name + ": " + error.message);
         });
 

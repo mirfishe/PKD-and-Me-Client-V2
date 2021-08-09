@@ -196,9 +196,9 @@ const AddComment = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, GetDateTime(), "addComment error", error);
-              // console.log(componentName, GetDateTime(), "addComment error.name", error.name);
-              // console.log(componentName, GetDateTime(), "addComment error.message", error.message);
+              console.error(componentName, GetDateTime(), "addComment error", error);
+              // console.error(componentName, GetDateTime(), "addComment error.name", error.name);
+              // console.error(componentName, GetDateTime(), "addComment error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 

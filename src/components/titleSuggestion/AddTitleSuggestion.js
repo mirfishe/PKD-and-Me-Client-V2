@@ -265,9 +265,9 @@ const AddTitleSuggestion = (props) => {
 
             })
             .catch(error => {
-              console.log(componentName, GetDateTime(), "addTitleSuggestion error", error);
-              // console.log(componentName, GetDateTime(), "addTitleSuggestion error.name", error.name);
-              // console.log(componentName, GetDateTime(), "addTitleSuggestion error.message", error.message);
+              console.error(componentName, GetDateTime(), "addTitleSuggestion error", error);
+              // console.error(componentName, GetDateTime(), "addTitleSuggestion error.name", error.name);
+              // console.error(componentName, GetDateTime(), "addTitleSuggestion error.message", error.message);
               addErrorMessage(error.name + ": " + error.message);
             });
 
