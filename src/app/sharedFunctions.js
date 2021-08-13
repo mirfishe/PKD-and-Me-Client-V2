@@ -1152,3 +1152,22 @@ export const FormatPhoneNumber = (phoneNumber) => {
 
 };
 
+
+export const FormatTitle = (title) => {
+  // console.log(componentName, GetDateTime(), "FormatTitle title", title);
+  // console.log(componentName, GetDateTime(), "FormatTitle typeof title", typeof title);
+
+  // * From https://stackoverflow.com/questions/11427759/how-to-insert-space-before-capitalize-character-in-a-word-using-replace-and-rege
+  // * From https://attacomsian.com/blog/string-capitalize-javascript
+
+  let formattedTitle = "";
+
+  if (IsEmpty(title) === false) {
+    formattedTitle = title.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/\b\w/g, c => c.toUpperCase());
+  };
+
+  // console.log(componentName, GetDateTime(), "FormatTitle formattedTitle", formattedTitle);
+
+  return formattedTitle;
+
+};
