@@ -1,147 +1,169 @@
-import React, {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Link, useHistory} from "react-router-dom";
-import {Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert} from "reactstrap";
-import {Image} from "react-bootstrap-icons";
-import {displayYear, encodeURL, decodeURL, displayParagraphs, truncateText, setLocalPath, setLocalImagePath} from "../../app/sharedFunctions";
-import {setPageURL} from "../../app/urlsSlice";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
+import { Image } from "react-bootstrap-icons";
+import AppSettings from "../../app/environment";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL, TruncateText, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { setPageURL } from "../../app/urlsSlice";
+// import AddTitle from "./AddTitle";
+// import EditTitle from "./EditTitle";
+// import AddEdition from "../editions/AddEdition";
+// import EditEdition from "../editions/EditEdition";
 
 const TitleCard = (props) => {
 
-    const componentName = "TitleCard.js";
+  const componentName = "TitleCard.js";
 
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const [errTitleMessage, setErrTitleMessage] = useState("");
+  // ! Loading the baseURL from the state store here is too slow
+  // ! Always pulling it from environment.js
+  // const baseURL = useSelector(state => state.app.baseURL);
+  const baseURL = AppSettings.baseURL;
+  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-    const titleListState = useSelector(state => state.titles.arrayTitles);
-    // console.log(componentName, "titleListState", titleListState);
+  const sessionToken = useSelector(state => state.user.sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  const admin = useSelector(state => state.user.admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
-    let imageSide = "left";
-    if (props.imageSide !== undefined && props.imageSide !== "") {
-        imageSide = props.imageSide;
-    } else {
-        imageSide = "left";
-    };
-    // console.log(componentName, "props.imageSide", props.imageSide);
-    // console.log(componentName, "imageSide", imageSide);
+  const [errTitleMessage, setErrTitleMessage] = useState("");
 
-    const showShortDescription = props.showShortDescription;
-    // console.log(componentName, "props.showShortDescription", props.showShortDescription);
-    // console.log(componentName, "typeof props.showShortDescription", typeof props.showShortDescription);
+  const titleListState = useSelector(state => state.titles.arrayTitles);
+  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
 
-    const headerText = props.headerText;
-    // console.log(componentName, "props.headerText", props.headerText);
+  let imageSide = "left";
+  if (IsEmpty(props.imageSide) === false) {
+    imageSide = props.imageSide;
+  } else {
+    imageSide = "left";
+  };
+  // console.log(componentName, GetDateTime(), "props.imageSide", props.imageSide);
+  // console.log(componentName, GetDateTime(), "imageSide", imageSide);
 
-    const additionalText = props.additionalText;
-    // console.log(componentName, "props.additionalText", props.additionalText);
+  const showShortDescription = props.showShortDescription;
+  // console.log(componentName, GetDateTime(), "props.showShortDescription", props.showShortDescription);
+  // console.log(componentName, GetDateTime(), "typeof props.showShortDescription", typeof props.showShortDescription);
 
-    let titleParam = props.linkName;
-    // console.log(componentName, "typeof titleParam", typeof titleParam);
-    // console.log(componentName, "titleParam", titleParam);
+  const headerText = props.headerText;
+  // console.log(componentName, GetDateTime(), "props.headerText", props.headerText);
 
-    const randomTitle = props.randomTitle;
-    // console.log(componentName, "props.randomTitle", props.randomTitle);
-    // console.log(componentName, "typeof props.randomTitle", typeof props.randomTitle);
+  const additionalText = props.additionalText;
+  // console.log(componentName, GetDateTime(), "props.additionalText", props.additionalText);
 
-    // Only show title in certain categories or by certain authors
-    // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category.category === "Novels" || title.category.category === "Short Story Collections" || title.category.category === "Non Fiction"));
-    const randomTitleList = titleListState.filter(title => title.active === true && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+  let titleParam = props.linkName;
+  // console.log(componentName, GetDateTime(), "typeof titleParam", typeof titleParam);
+  // console.log(componentName, GetDateTime(), "titleParam", titleParam);
 
+  const randomTitle = props.randomTitle;
+  // console.log(componentName, GetDateTime(), "props.randomTitle", props.randomTitle);
+  // console.log(componentName, GetDateTime(), "typeof props.randomTitle", typeof props.randomTitle);
+
+  // * Only show title in certain categories or by certain authors
+  // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
+  const randomTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+
+  if (randomTitle) {
+    titleParam = Math.floor(Math.random() * randomTitleList.length);
+  };
+
+  let titleList = [];
+  if (!isNaN(titleParam)) {
+    // * If titleParam is a number, then it's the titleID
     if (randomTitle) {
-        titleParam = Math.floor(Math.random() * randomTitleList.length);
-    };
-
-    let titleList = [];
-    if (!isNaN(titleParam)) {
-        // If titleParam is a number, then it's the titleID
-        if (randomTitle) {
-            // Active titles were filtered out above
-            titleList = randomTitleList.filter(title => title.active === true && title.titleID === parseInt(titleParam));
-            // console.log(componentName, "randomTitle titleParam", titleParam);
-            // console.log(componentName, "randomTitle titleList", titleList);
-        } else {
-            titleList = titleListState.filter(title => title.active === true && title.titleID === parseInt(titleParam));
-        };
-    } else if (titleParam !== undefined) {
-        // If titleParam is not a number, then it's the title name
-        titleList = titleListState.filter(title => title.active === true && title.titleURL === titleParam);
+      // * Active titles were filtered out above
+      titleList = randomTitleList.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
+      // console.log(componentName, GetDateTime(), "randomTitle titleParam", titleParam);
+      // console.log(componentName, GetDateTime(), "randomTitle titleList", titleList);
     } else {
-        // console.log("Title not found.");
-        // Display all active titles
-        // titleList = [...titleListState];
+      titleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
     };
+  } else if (IsEmpty(titleParam) === false) {
+    // * If titleParam is not a number, then it's the title name
+    titleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
+  } else {
+    // console.error("Title not found.");
+    // * Display all active titles
+    // titleList = [...titleListState];
+  };
 
-    const redirectPage = (linkName) => {
-        // console.log(componentName, "redirectPage", linkName);
-        dispatch(setPageURL(linkName.replaceAll("/", "")));
-        history.push("/" + linkName);
+
+  const redirectPage = (linkName) => {
+    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    history.push("/" + linkName);
+  };
+
+
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect titleList", titleList);
+    if (titleList.length > 0) {
+      setErrTitleMessage("");
+    } else {
+      // setErrTitleMessage("Title not found.");
     };
+  }, [titleList]);
 
-    useEffect(() => {
-        // console.log(componentName, "useEffect titleList", titleList);
-        if (titleList.length > 0) {
-            setErrTitleMessage("");
-        } else {
-            // setErrTitleMessage("Title not found.");
-        };
-    }, [titleList]);
 
-    return(
-        <Container className="mt-4">
-            <Row className="justify-content-center">
-                <Col xs="12">
-                    {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-                    {headerText !== undefined && headerText !== "" ? <h4 className="text-center">{headerText}</h4> : null}
-                </Col>
-            </Row>
-            <Row className="justify-content-center">
-            {titleList.map((title) => {
-            return (
-                <Col key={title.titleID} xs="8" className="mb-4">
-                    <Card key={title.titleID}>
-                    <Row className="no-gutters">
+  return (
+    <Container className="mt-4">
+      <Row className="justify-content-center">
+        <Col className="text-center" xs="12">
+          {IsEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+          {IsEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        {titleList.map((title) => {
+          return (
+            <Col key={title.titleID} xs="8" className="mb-4">
+              <Card>
+                <Row className="no-gutters">
 
-                    {imageSide === "left" ?
-                        <Col className="col-md-4">
-                            <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>
-                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
-                            </Link>
-                        </Col>
+                  {imageSide === "left" ?
+                    <Col className="col-md-4">
+                      <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
+                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                      </Link>
+                    </Col>
                     : null}
 
-                        <Col className="col-md-8">
-                            <CardBody>
-                                {/* <CardText><Link to={title.category.category.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category.category}</Link></CardText> */}
-                                <CardText><Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>{title.titleName}</Link>
-                                {title.publicationDate !== null ? <span className="ml-1 smallerText">({displayYear(title.publicationDate)})</span> : null}</CardText>
-                                <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
-                                {additionalText !== undefined && additionalText !== "" ? <CardText className="my-4">{additionalText}</CardText> : null}
-                                {showShortDescription && title.shortDescription !== "" && title.shortDescription !== null ? <CardText className="my-4"><div dangerouslySetInnerHTML={{"__html": displayParagraphs(truncateText(title.shortDescription, 250))}} /></CardText> : null}
-                            </CardBody>
-                        </Col>
+                  <Col className="col-md-8">
+                    <CardBody>
+                      {/* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
+                      <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                        {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
+                      <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
+                      {IsEmpty(additionalText) === false ? <CardText className="my-4">{additionalText}</CardText> : null}
+                      {showShortDescription && IsEmpty(title.shortDescription) === false ? <p className="my-4 displayParagraphs">{TruncateText(title.shortDescription, 250)}</p> : null}
+                      {/* {IsEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
+                                {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                                {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
+                    </CardBody>
+                  </Col>
 
-                        {imageSide === "right" ?
-                        <Col className="col-md-4">
-                            <Link to={title.titleURL} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(title.titleURL);}}>
-                            {title.imageName !== null && title.imageName !== undefined && title.imageName !== "" ? <CardImg src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
-                            </Link>
-                        </Col>
+                  {imageSide === "right" ?
+                    <Col className="col-md-4">
+                      <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
+                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                      </Link>
+                    </Col>
                     : null}
 
-                    </Row>
-                    <CardFooter className="cardFooter">
-                        <CardText><Link to={encodeURL(titleList[0].category.category)} onClick={(event) => {event.preventDefault(); /*console.log(event.target.value);*/ redirectPage(encodeURL(titleList[0].category.category));}}>{titleList[0].category.category}</Link></CardText>
-                    </CardFooter>  
-                    </Card>
+                </Row>
+                <CardFooter className="cardFooter">
+                  <CardText><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></CardText>
+                </CardFooter>
+              </Card>
 
-                </Col>
-                )
-            })}
-            </Row>
-        </Container>
-    );
+            </Col>
+          );
+        })}
+      </Row>
+    </Container>
+  );
 
 };
 

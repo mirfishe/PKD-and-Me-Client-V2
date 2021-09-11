@@ -10,6 +10,7 @@
 
 # production
 /build
+/deploy
 
 # misc
 .DS_Store
@@ -21,6 +22,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.vscode/
 
 # Logs
 logs
@@ -91,6 +93,3 @@ node_modules/
 
 # Downloaded Code
 *.zip
-
-# .htaccess file for server
-.htaccess
