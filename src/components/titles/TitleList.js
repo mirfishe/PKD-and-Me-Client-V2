@@ -1,104 +1,100 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Container, Col, Row, Alert } from "reactstrap";
+import React, {useState, useEffect} from "react";
+import {useSelector} from "react-redux";
+import {Container, Col, Row, Alert} from "reactstrap";
 // import Title from "./Title";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const TitleList = (props) => {
+    
+    const componentName = "TitleList.js";
 
-  const componentName = "TitleList.js";
+    // Loading the baseURL from the state store here is too slow
+    // Always pulling it from environment.js
+    // const baseURL = useSelector(state => state.app.baseURL);
+    const baseURL = AppSettings.baseURL;
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+    const siteName = useSelector(state => state.app.siteName);
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Title List | " + appName + " | " + siteName;
 
-  const siteName = useSelector(state => state.app.siteName);
-  const appName = useSelector(state => state.app.appName);
-  document.title = "Title List | " + appName + " | " + siteName;
+    const [titleMessage, setTitleMessage] = useState("");
+    const [errTitleMessage, setErrTitleMessage] = useState("");
+    const [titleResultsFound, setTitleResultsFound] = useState(null);
+    const [titleList, setTitleList] = useState([]);
 
-  const [titleMessage, setTitleMessage] = useState("");
-  const [errTitleMessage, setErrTitleMessage] = useState("");
-  const [titleResultsFound, setTitleResultsFound] = useState(null);
-  const [titleList, setTitleList] = useState([]);
+    const getTitles = () => {
+        // console.log(componentName, "getTitle");
+        // console.log(componentName, "getTitle baseURL", baseURL);
 
+        setTitleMessage("");
+        setErrTitleMessage("");
+        setTitleResultsFound(null);
+        setTitleList([]);
 
-  const getTitles = () => {
-    // console.log(componentName, GetDateTime(), "getTitle");
-    // console.log(componentName, GetDateTime(), "getTitle baseURL", baseURL);
+        if (baseURL !== undefined && baseURL !== "") {
 
-    setTitleMessage("");
-    setErrTitleMessage("");
-    setTitleResultsFound(null);
-    setTitleList([]);
+            let url = baseURL + "title/list";
 
-    if (IsEmpty(baseURL) === false) {
+            fetch(url)
+            .then(response => {
+                // console.log(componentName, "getTitle response", response);
+                if (!response.ok) {
+                    throw Error(response.status + " " + response.statusText + " " + response.url);
+                } else {
+                    return response.json();
+                };
+            })
+            .then(data => {
+                // console.log(componentName, "getTitle data", data);
 
-      let url = baseURL + "titles";
+                setTitleResultsFound(data.resultsFound);
+                setTitleMessage(data.message);
 
-      fetch(url)
-        .then(response => {
-          // console.log(componentName, GetDateTime(), "getTitle response", response);
-          if (!response.ok) {
-            throw Error(response.status + " " + response.statusText + " " + response.url);
-          } else {
-            return response.json();
-          };
-        })
-        .then(results => {
-          // console.log(componentName, GetDateTime(), "getTitle results", results);
+                if (data.resultsFound === true) {
+                    setTitleList(data.titles);
+                } else {
+                    setErrTitleMessage(data.message);
+                };
 
-          setTitleResultsFound(results.resultsFound);
-          setTitleMessage(results.message);
+            })
+            .catch(error => {
+                console.log(componentName, "getTitle error", error);
+                // console.log(componentName, "getTitle error.name", error.name);
+                // console.log(componentName, "getTitle error.message", error.message);
+                setErrTitleMessage(error.name + ": " + error.message);
+            });
 
-          if (IsEmpty(results) === false && results.resultsFound === true) {
-            setTitleList(results.records);
-          } else {
-            setErrTitleMessage(results.message);
-          };
-
-        })
-        .catch(error => {
-          console.error(componentName, GetDateTime(), "getTitle error", error);
-          // console.error(componentName, GetDateTime(), "getTitle error.name", error.name);
-          // console.error(componentName, GetDateTime(), "getTitle error.message", error.message);
-          setErrTitleMessage(error.name + ": " + error.message);
-        });
+        };
 
     };
 
-  };
+    useEffect(() => {
+        getTitles();
+    }, []);
 
-
-  useEffect(() => {
-    getTitles();
-  }, []);
-
-
-  return (
-    <Container className="mt-4">
-      <Row className="text-center">
-        {IsEmpty(titleMessage) === false ? <Alert color="info">{titleMessage}</Alert> : null}
-        {IsEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-      </Row>
-      {titleResultsFound !== null ?
+    return(
+        <Container className="mt-4">
         <Row>
-          {/* <pre>
+            {titleMessage !== "" ? <Alert color="info">{titleMessage}</Alert> : null}
+            {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+        </Row>
+        {titleResultsFound !== null ?
+            <Row>
+                {/* <pre>
                     {JSON.stringify(titleList)}
                 </pre> */}
-          <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline Titles data used.", "records": titleList })}
-          </span>
+                <span>
+                    {JSON.stringify({"resultsFound": true, "message": "Offline Titles data used.", "titles": titleList})}
+                </span>
+            </Row>
+        : null} 
+        
+        <Row>
+            {/* {titleResultsFound !== null ? <Title titleList={titleList} /> : null} */}
+            {/* <Title titleList={titleListState} /> */}
         </Row>
-        : null}
-
-      <Row>
-        {/* {titleResultsFound !== null ? <Title titleList={titleList} /> : null} */}
-        {/* <Title titleList={titleListState} /> */}
-      </Row>
-    </Container>
-  );
+        </Container>
+    );
 };
 
 export default TitleList;

@@ -1,34 +1,26 @@
 {
-    "resultsFound": true,
-    "message": "Offline AppSettings data used.",
-    "siteName": "localhost",
-    "appName": "PKD and Me",
-    "electronicOnly": false,
-    "physicalOnly": false,
-    "appAllowUserInteractions": true,
-    "requireUserLogin": true,
-    "menuSettings": {
-        "showAllMenuItems": false,
-        "showNew": true,
-        "showAbout": true,
-        "showHomeopape": false,
-        "showDickian": false,
-        "showCategoryList": true,
-        "showMediaList": true,
-        "showTitleList": true,
-        "showEditionList": true,
-        "showUserReviewList": true,
-        "showUserReviewRatingList": true,
-        "showURLList": true,
-        "showAddCategory": false,
-        "showAddMedia": false,
-        "showAddTitle": false,
-        "showAddEdition": false,
-        "showAllCategories": false,
-        "showAllMedia": false,
-        "showAllTitles": false,
-        "showAllEditions": false,
-        "showUserPhysicalOnly": false,
-        "showUserElectronicOnly": false
+"resultsFound": true, 
+"message": "Offline AppSettings data used.",
+"siteName": "localhost",
+"appName": "PKD and Me",
+"electronicOnly": false,
+"physicalOnly": false,
+"menuSettings": {
+    "showAllMenuItems": false,
+
+    "showNew": true,
+    "showAbout": true,
+    "showHomeopape": false,
+    "showDickian": false,
+  
+    "showCategoryList": false,
+    "showMediaList": false,
+    "showTitleList": false,
+    "showEditionList": false,
+  
+    "showAllCategories": false,
+    "showAllMedia": false,
+    "showAllTitles": false,
+    "showAllEditions": false
     }
 }

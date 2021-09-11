@@ -4,7 +4,5 @@
 "siteName": "PKD and Me",
 "appName": "Philip K. Dick Bibliography",
 "electronicOnly": false,
-"physicalOnly": false,
-"appAllowUserInteractions": true,
-"requireUserLogin": true
+"physicalOnly": false
 }

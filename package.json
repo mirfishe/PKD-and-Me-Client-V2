@@ -1,40 +1,28 @@
 {
   "name": "pkd-and-me-client",
-  "version": "0.2.0",
-  "description": "Project using React and Redux to allow users to find works by and related to Philip K. Dick. Data for the application is stored in Redux. Used Bootstrap to make the application more visually appealing.",
-  "author": "Michael Fisher",
-  "copyrightYear": "2021",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mirfishe/PKD-and-Me-Client-V2"
-  },
-  "private": true,
   "homepage": ".",
+  "version": "0.2.0",
+  "private": true,
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "bootstrap": "^4.5.3",
+    "react": "^17.0.1",
+    "react-bootstrap-icons": "^1.0.0",
+    "react-dom": "^17.0.1",
+    "react-gtm-module": "^2.0.11",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.0",
+    "reactstrap": "^8.6.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/lab": "^4.0.0-alpha.58",
-    "@reduxjs/toolkit": "^1.6.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^4.6.0",
-    "html-react-parser": "^1.2.8",
-    "react": "^17.0.2",
-    "react-bootstrap-icons": "^1.5.0",
-    "react-dom": "^17.0.2",
-    "react-gtm-module": "^2.0.11",
-    "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.0",
-    "reactstrap": "^8.9.0",
-    "rss-parser": "^3.12.0"
   },
   "eslintConfig": {
     "extends": "react-app"

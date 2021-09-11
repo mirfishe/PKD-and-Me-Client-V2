@@ -1,104 +1,100 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Container, Col, Row, Alert } from "reactstrap";
+import React, {useState, useEffect} from "react";
+import {useSelector} from "react-redux";
+import {Container, Col, Row, Alert} from "reactstrap";
 // import Edition from "./Edition";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
 
 const EditionList = (props) => {
 
-  const componentName = "EditionList.js";
+    const componentName = "EditionList.js";
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+    // Loading the baseURL from the state store here is too slow
+    // Always pulling it from environment.js
+    // const baseURL = useSelector(state => state.app.baseURL);
+    const baseURL = AppSettings.baseURL;
+    
+    const siteName = useSelector(state => state.app.siteName);
+    const appName = useSelector(state => state.app.appName);
+    document.title = "Edition List | " + appName + " | " + siteName;
 
-  const siteName = useSelector(state => state.app.siteName);
-  const appName = useSelector(state => state.app.appName);
-  document.title = "Edition List | " + appName + " | " + siteName;
+    const [editionMessage, setEditionMessage] = useState("");
+    const [errEditionMessage, setErrEditionMessage] = useState("");
+    const [editionResultsFound, setEditionResultsFound] = useState(null);
+    const [editionList, setEditionList] = useState([]);
 
-  const [editionMessage, setEditionMessage] = useState("");
-  const [errEditionMessage, setErrEditionMessage] = useState("");
-  const [editionResultsFound, setEditionResultsFound] = useState(null);
-  const [editionList, setEditionList] = useState([]);
+    const getEditions = () => {
+        // console.log(componentName, "getEdition");
+        // console.log(componentName, "getEdition baseURL", baseURL);
 
+        setEditionMessage("");
+        setErrEditionMessage("");
+        setEditionResultsFound(null);
+        setEditionList([]);
 
-  const getEditions = () => {
-    // console.log(componentName, GetDateTime(), "getEdition");
-    // console.log(componentName, GetDateTime(), "getEdition baseURL", baseURL);
+        if (baseURL !== undefined && baseURL !== "") {
 
-    setEditionMessage("");
-    setErrEditionMessage("");
-    setEditionResultsFound(null);
-    setEditionList([]);
+            let url = baseURL + "edition/list";
 
-    if (IsEmpty(baseURL) === false) {
+            fetch(url)
+            .then(response => {
+                // console.log(componentName, "getEdition response", response);
+                if (!response.ok) {
+                    throw Error(response.status + " " + response.statusText + " " + response.url);
+                } else {
+                    return response.json();
+                };
+            })
+            .then(data => {
+                // console.log(componentName, "getEdition data", data);
 
-      let url = baseURL + "editions";
+                setEditionResultsFound(data.resultsFound);
+                setEditionMessage(data.message);
 
-      fetch(url)
-        .then(response => {
-          // console.log(componentName, GetDateTime(), "getEdition response", response);
-          if (!response.ok) {
-            throw Error(response.status + " " + response.statusText + " " + response.url);
-          } else {
-            return response.json();
-          };
-        })
-        .then(results => {
-          // console.log(componentName, GetDateTime(), "getEdition results", results);
+                if (data.resultsFound === true) {
+                    setEditionList(data.editions);
+                } else {
+                    setErrEditionMessage(data.message);
+                };
 
-          setEditionResultsFound(results.resultsFound);
-          setEditionMessage(results.message);
+            })
+            .catch(error => {
+                console.log(componentName, "getEdition error", error);
+                // console.log(componentName, "getEdition error.name", error.name);
+                // console.log(componentName, "getEdition error.message", error.message);
+                setErrEditionMessage(error.name + ": " + error.message);
+            });
 
-          if (IsEmpty(results) === false && results.resultsFound === true) {
-            setEditionList(results.records);
-          } else {
-            setErrEditionMessage(results.message);
-          };
-
-        })
-        .catch(error => {
-          console.error(componentName, GetDateTime(), "getEdition error", error);
-          // console.error(componentName, GetDateTime(), "getEdition error.name", error.name);
-          // console.error(componentName, GetDateTime(), "getEdition error.message", error.message);
-          setErrEditionMessage(error.name + ": " + error.message);
-        });
+        };
 
     };
 
-  };
+    useEffect(() => {
+        getEditions();
+    }, []);
 
-
-  useEffect(() => {
-    getEditions();
-  }, []);
-
-
-  return (
-    <Container className="mt-4">
-      <Row className="text-center">
-        {IsEmpty(editionMessage) === false ? <Alert color="info">{editionMessage}</Alert> : null}
-        {IsEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
-      </Row>
-      {editionResultsFound !== null ?
+    return(
+        <Container className="mt-4">
         <Row>
-          {/* <pre>
+            {editionMessage !== "" ? <Alert color="info">{editionMessage}</Alert> : null}
+            {errEditionMessage !== "" ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+        </Row>
+        {editionResultsFound !== null ?
+            <Row>
+                {/* <pre>
                     {JSON.stringify(editionList)}
                 </pre> */}
-          <span>
-            {JSON.stringify({ "resultsFound": true, "message": "Offline Editions data used.", "records": editionList })}
-          </span>
-        </Row>
+                <span>
+                    {JSON.stringify({"resultsFound": true, "message": "Offline Editions data used.", "editions": editionList})}
+                </span>
+            </Row>
         : null}
 
-      <Row>
-        {/* {editionResultsFound !== null ? <Edition editionList={editionList} /> : null} */}
-        {/* <Edition editionList={editionListState} /> */}
-      </Row>
-    </Container>
-  );
+        <Row>
+           {/* {editionResultsFound !== null ? <Edition editionList={editionList} /> : null} */}
+           {/* <Edition editionList={editionListState} /> */}
+        </Row>
+          </Container>
+    );
 };
 
 export default EditionList;
