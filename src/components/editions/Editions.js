@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
+import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
@@ -430,7 +431,10 @@ const Editions = (props) => {
                 <Row className="no-gutters">
                   <Col className="col-md-6">
                     {IsEmpty(edition.imageLinkLarge) === false && (edition.editionActive === true || edition.editionActive === 1) ?
-                      <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} />
+                      <React.Fragment>
+                        {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
+                        {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))}
+                      </React.Fragment>
                       :
                       <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
                         {IsEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="editionImage" /> : <Image className="noImageIcon" />}
