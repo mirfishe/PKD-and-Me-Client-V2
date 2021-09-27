@@ -1027,7 +1027,7 @@ const EditTitle = (props) => {
 
             <ModalFooter>
 
-              {IsEmpty(titleItem) === false ?
+              {IsEmpty(titleItem) === true ?
                 <Button outline size="lg" color="primary" onClick={addTitle}>Add Title</Button>
                 :
                 <React.Fragment>
