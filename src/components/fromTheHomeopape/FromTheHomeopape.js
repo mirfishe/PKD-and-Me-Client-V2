@@ -170,7 +170,7 @@ const FromTheHomeopape = (props) => {
               <Row>
                 <Col xs="12">
                   {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
-                  <a href={itemLink} target="_blank">{Parse(homeopapeItem.itemTitle)}</a>
+                  <a href={itemLink} target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
                   ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
                 </Col>
               </Row>

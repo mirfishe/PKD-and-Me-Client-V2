@@ -889,7 +889,7 @@ const EditEdition = (props) => {
 
             <FormGroup>
 
-              <Label for="txtImageName">Image Name</Label> {IsEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
+              <Label for="txtImageName">Image Name</Label> {IsEmpty(props.titleImageName) === false ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
               {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="noImageIcon" />}
 
@@ -942,7 +942,7 @@ const EditEdition = (props) => {
 
             <ModalFooter>
 
-              {IsEmpty(editionItem) === false ?
+              {IsEmpty(editionItem) === true ?
                 <Button outline size="lg" color="primary" onClick={addEdition}>Add Edition</Button>
                 :
                 <React.Fragment>
