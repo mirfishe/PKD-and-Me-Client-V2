@@ -25,6 +25,8 @@ const FormatPost = () => {
   const toTitleCase = (title) => {
     // console.log(componentName, GetDateTime(), "toTitleCase title", title);
 
+    // * Doesn't handle acronyms execpt for the few listed in the code below.
+
     // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
     let i, j, str, lowers, uppers;
     str = title.replace(/([^\W_]+[^\s-]*) */g, function (txt) {

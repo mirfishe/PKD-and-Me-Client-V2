@@ -464,18 +464,122 @@ export const DisplayObjectData = (ObjectData) => {
 
   if (IsEmpty(objectDataString) === false) {
 
-    objectDataString = objectDataString.replaceAll("[{\"", "<p>");
-    objectDataString = objectDataString.replaceAll("\"},{\"", "</p><p>");
+    objectDataString = objectDataString.replaceAll("\\", "");
+
+    objectDataString = objectDataString.replaceAll("[{\"", "<p><strong>");
+    objectDataString = objectDataString.replaceAll("\"},{\"", "</p><p><strong>");
     objectDataString = objectDataString.replaceAll("\"}]", "</p>");
 
-    objectDataString = objectDataString.replaceAll("{\"", "<p>");
+    objectDataString = objectDataString.replaceAll("{\"", "<p><strong>");
     objectDataString = objectDataString.replaceAll("\"}", "</p>");
 
-    objectDataString = objectDataString.replaceAll("\":\"", " = ");
-    objectDataString = objectDataString.replaceAll("\":", " = ");
+    objectDataString = objectDataString.replaceAll("\":\"", "</strong> = ");
+    objectDataString = objectDataString.replaceAll("\":", "</strong> = ");
 
-    objectDataString = objectDataString.replaceAll("\",\"", "</p><p>");
-    objectDataString = objectDataString.replaceAll(",\"", "</p><p>");
+    objectDataString = objectDataString.replaceAll("\",\"", "</p><p><strong>");
+    objectDataString = objectDataString.replaceAll(",\"", "</p><p><strong>");
+
+    objectDataString = objectDataString.replaceAll("},", "");
+
+    objectDataString = objectDataString.replaceAll("[]", "");
+
+    objectDataString = objectDataString.replaceAll("[\"", "");
+    objectDataString = objectDataString.replaceAll("\"]", "");
+
+    objectDataString = objectDataString.replaceAll("[", "");
+    objectDataString = objectDataString.replaceAll("]", "");
+    objectDataString = objectDataString.replaceAll("{", "");
+    objectDataString = objectDataString.replaceAll("}", "");
+
+    objectDataString = objectDataString.replace(/<strong>(.*?)<\/strong>/g, (match) => { return FormatTitle(match); });
+
+  };
+
+  return (objectDataString);
+
+};
+
+
+export const DisplayObjectDataTable = (ObjectData) => {
+  // console.log(componentName, GetDateTime(), "DisplayObjectDataTable ObjectData", ObjectData);
+
+  let objectDataString = JSON.stringify(ObjectData);
+
+  // console.log(componentName, GetDateTime(), "DisplayObjectDataTable objectDataString", objectDataString);
+
+  if (IsEmpty(objectDataString) === false) {
+
+    // console.log(componentName, GetDateTime(), "DisplayObjectDataTable objectDataString", objectDataString);
+
+    objectDataString = objectDataString.replaceAll("\\", "");
+
+    objectDataString = objectDataString.replaceAll("[{\"", "<tr><th>");
+    objectDataString = objectDataString.replaceAll("\"},{\"", "</td><tr><th>");
+    objectDataString = objectDataString.replaceAll("\"}]", "</td></tr>");
+    // objectDataString = objectDataString.replaceAll("[{\\\"", "<tr><th>");
+    // objectDataString = objectDataString.replaceAll("\\\"},{\\\"", "</td><tr><th>");
+    // objectDataString = objectDataString.replaceAll("\\\"}]", "</td></tr>");
+
+    objectDataString = objectDataString.replaceAll("{\"", "<tr><th>");
+    objectDataString = objectDataString.replaceAll("\"}", "</td></tr>");
+    // objectDataString = objectDataString.replaceAll("{\\\"", "<tr><th>");
+    // objectDataString = objectDataString.replaceAll("\\\"}", "</td></tr>");
+
+    objectDataString = objectDataString.replaceAll("\":\"", "</th><td>");
+    objectDataString = objectDataString.replaceAll("\":", "</th><td>");
+    // objectDataString = objectDataString.replaceAll("\\\":\\\"", "</th><td>");
+    // objectDataString = objectDataString.replaceAll("\\\":", "</th><td>");
+
+    objectDataString = objectDataString.replaceAll("\",\"", "</td><tr><th>");
+    objectDataString = objectDataString.replaceAll(",\"", "</td><tr><th>");
+    // objectDataString = objectDataString.replaceAll("\\\",\\\"", "</td><tr><th>");
+    // objectDataString = objectDataString.replaceAll(",\\\"", "</td><tr><th>");
+
+    objectDataString = objectDataString.replaceAll("},", "");
+
+    objectDataString = objectDataString.replaceAll("[]", "");
+
+    objectDataString = objectDataString.replaceAll("[\"", "");
+    objectDataString = objectDataString.replaceAll("\"]", "");
+    // objectDataString = objectDataString.replaceAll("[\\\"", "");
+    // objectDataString = objectDataString.replaceAll("\\\"]", "");
+
+    objectDataString = objectDataString.replaceAll("[", "");
+    objectDataString = objectDataString.replaceAll("]", "");
+    objectDataString = objectDataString.replaceAll("{", "");
+    objectDataString = objectDataString.replaceAll("}", "");
+
+
+    objectDataString = objectDataString.replace(/<th>(.*?)<\/th>/g, (match) => { return FormatTitle(match); });
+
+  };
+
+  return (objectDataString);
+
+};
+
+
+export const DisplayObjectDataXML = (ObjectData) => {
+  // console.log(componentName, GetDateTime(), "DisplayObjectDataXML ObjectData", ObjectData);
+
+  let objectDataString = JSON.stringify(ObjectData);
+
+  if (IsEmpty(objectDataString) === false) {
+
+    objectDataString = objectDataString.replaceAll("\\", "");
+
+    objectDataString = objectDataString.replaceAll("[{\"", "<category>");
+    objectDataString = objectDataString.replaceAll("\"},{\"", "</data><category>");
+    objectDataString = objectDataString.replaceAll("\"}]", "<data>");
+
+    objectDataString = objectDataString.replaceAll("{\"", "<category>");
+    objectDataString = objectDataString.replaceAll("\"}", "<data>");
+
+    objectDataString = objectDataString.replaceAll("\":\"", "</category><data>");
+    objectDataString = objectDataString.replaceAll("\":", "</category><data>");
+
+    objectDataString = objectDataString.replaceAll("\",\"", "</data><category>");
+    objectDataString = objectDataString.replaceAll(",\"", "</data><category>");
 
     objectDataString = objectDataString.replaceAll("},", "");
 
@@ -541,8 +645,9 @@ export const GetCurrentYear = () => {
 };
 
 
-export const DisplayDate = (dateToDisplay) => {
+export const DisplayDate = (dateToDisplay, removeLeadingZeroes) => {
   // console.log(componentName, GetDateTime(), "DisplayDate dateToDisplay", dateToDisplay);
+  // console.log(componentName, GetDateTime(), "DisplayDate removeLeadingZeroes", removeLeadingZeroes);
 
   let newDisplayDate = "";
 
@@ -557,6 +662,12 @@ export const DisplayDate = (dateToDisplay) => {
 
     newDisplayDate = mm + "/" + dd + "/" + yyyy;
 
+    if (IsEmpty(newDisplayDate) === false && removeLeadingZeroes === true) {
+
+      newDisplayDate = newDisplayDate.replace(/\b0/g, "");
+
+    };
+
   };
 
   // console.log(componentName, GetDateTime(), "DisplayDate dateToDisplay", dateToDisplay);
@@ -565,8 +676,9 @@ export const DisplayDate = (dateToDisplay) => {
 };
 
 
-export const DisplayDateAndTime = (dateToDisplay) => {
+export const DisplayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
   // console.log(componentName, GetDateTime(), "DisplayDateAndTime dateToDisplay", dateToDisplay);
+  // console.log(componentName, GetDateTime(), "DisplayDateAndTime removeLeadingZeroes", removeLeadingZeroes);
 
   let newDisplayDateAndTime = "";
 
@@ -588,6 +700,12 @@ export const DisplayDateAndTime = (dateToDisplay) => {
     let time = dateToDisplay.toString().substring(11, 16);
 
     newDisplayDateAndTime = mm + "/" + dd + "/" + yyyy + " " + time;
+
+    if (IsEmpty(newDisplayDateAndTime) === false && removeLeadingZeroes === true) {
+
+      newDisplayDateAndTime = newDisplayDateAndTime.replace(/\b0/g, "");
+
+    };
 
   };
 
@@ -1159,11 +1277,16 @@ export const FormatTitle = (title) => {
 
   // * From https://stackoverflow.com/questions/11427759/how-to-insert-space-before-capitalize-character-in-a-word-using-replace-and-rege
   // * From https://attacomsian.com/blog/string-capitalize-javascript
+  // * From https://www.codeproject.com/Articles/108996/Splitting-Pascal-Camel-Case-with-RegEx-Enhancement
 
   let formattedTitle = "";
 
-  if (IsEmpty(title) === false) {
-    formattedTitle = title.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/\b\w/g, c => c.toUpperCase());
+  if (IsEmpty(title) === false && title !== "iSBARs") {
+    // * iSBARs is the special case that is difficult to make work in regex.
+    // formattedTitle = title.replace(/([a-z])([A-Z])([a-z])/g, "$1 $2$3").replace(/\b\w/g, c => c.toUpperCase());
+    formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, " $1").replace(/\b\w/g, c => c.toUpperCase());
+  } else if (IsEmpty(title) === false && title === "iSBARs") {
+    formattedTitle = "iSBARs";
   };
 
   // console.log(componentName, GetDateTime(), "FormatTitle formattedTitle", formattedTitle);

@@ -901,7 +901,7 @@ const EditUserReview = (props) => {
 
             <ModalFooter>
 
-              {IsEmpty(userReviewItem) === false ?
+              {IsEmpty(userReviewItem) === true ?
                 <Button outline size="lg" color="primary" onClick={addUserReview}>Add Review</Button>
                 :
                 <React.Fragment>

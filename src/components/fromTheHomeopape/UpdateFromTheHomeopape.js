@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
+import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } from "../../app/sharedFunctions";
 
@@ -54,7 +55,10 @@ const FromTheHomeopape = (props) => {
 
     // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
     let i, j, str, lowers, uppers;
-    str = title.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
+
+    str = title.replaceAll("&#39;", "'").replaceAll("&Amp;", "&").replaceAll("&amp;", "&").replaceAll("&Quot;", "\"").replaceAll("&quot;", "\"");
+
+    str = str.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 
@@ -126,7 +130,17 @@ const FromTheHomeopape = (props) => {
 
     let param = "";
     let regExp = "";
-    let newURL = txtArticleURL;
+    // let newURL = decodeURI(txtArticleURL);
+    let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=");
+    // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "=");
+
+    // if (/*newURL.includes("\%3F") === true || newURL.includes("\%3f") === true ||*/ newURL.includes("www.heavymetal.com")) {
+    //   console.log(componentName, GetDateTime(), "formatPost txtArticleURL.replaceAll(\"\%3F\", \"?\")", txtArticleURL.replaceAll("\%3F", "?"));
+    //   console.log(componentName, GetDateTime(), "formatPost txtArticleURLtxtArticleURL.replaceAll(\"\%3F\", \"?\").replaceAll(\"\%3f\", \"?\").replaceAll(\"\%26\", \"&\").replaceAll(\"\%3D\", \"=\").replaceAll(\"\%3d\", \"=\")", txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "="));
+    //   console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
+    //   console.log(componentName, GetDateTime(), "formatPost decodeURI(txtArticleURL)", decodeURI(txtArticleURL));
+    //   console.log(componentName, GetDateTime(), "formatPost decodeURI(newURL)", decodeURI(newURL));
+    // };
 
     // * Remove fbclid=
     // * FaceBook analytics and tracking
@@ -936,6 +950,77 @@ const FromTheHomeopape = (props) => {
   };
 
 
+  const setAlwaysFilter = (itemID, alwaysFilter) => {
+    // console.log(componentName, GetDateTime(), "setAlwaysFilter");
+    // console.log(componentName, GetDateTime(), "setAlwaysFilter itemID", itemID);
+    // console.log(componentName, GetDateTime(), "setAlwaysFilter alwaysFilter", alwaysFilter);
+
+    let alwaysFilterValue;
+
+    if (alwaysFilter === true || alwaysFilter === 1) {
+      alwaysFilterValue = 1;
+    } else {
+      alwaysFilterValue = 0;
+    };
+
+    let url = baseURL + "fromthehomeopape/alwaysFilter/";
+
+    if (IsEmpty(itemID) === false && IsEmpty(sessionToken) === false) {
+
+      url = url + itemID;
+      // console.log(componentName, GetDateTime(), "setAlwaysFilter url", url);
+
+      let recordObject = {
+        alwaysFilter: alwaysFilterValue
+      };
+
+      fetch(url, {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Authorization": sessionToken
+        }),
+        body: JSON.stringify({ recordObject: recordObject })
+      })
+        .then(response => {
+          // console.log(componentName, GetDateTime(), "setAlwaysFilter response", response);
+          // if (!response.ok) {
+          //     throw Error(response.status + " " + response.statusText + " " + response.url);
+          // } else {
+          // if (response.status === 200) {
+          return response.json();
+          // } else {
+          //     return response.status;
+          // };
+          // };
+        })
+        .then(data => {
+          // console.log(componentName, GetDateTime(), "setAlwaysFilter data", data);
+
+          addMessage(data.message);
+
+          if (data.recordUpdated === true) {
+
+            getNews();
+
+          } else {
+            // addErrorMessage(data.error);
+            addErrorMessage(data.errorMessages);
+          };
+
+        })
+        .catch(error => {
+          console.error(componentName, GetDateTime(), "setAlwaysFilter error", error);
+          // console.error(componentName, GetDateTime(), "setAlwaysFilter error.name", error.name);
+          // console.error(componentName, GetDateTime(), "setAlwaysFilter error.message", error.message);
+          addErrorMessage(error.name + ": " + error.message);
+        });
+
+    };
+
+  };
+
+
   return (
     <Container className="mt-4">
 
@@ -968,14 +1053,43 @@ const FromTheHomeopape = (props) => {
 
             if (homeopapeItem.display === 1) {
               show = false;
-            } else if (displayUpdateItemsCount >= 50) {
-              // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayUpdateItemsCount, index);
-              // homeopapeItems.splice(0, index);
-              show = false;
+              // } else if (displayUpdateItemsCount >= 100) {
+              //   // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayUpdateItemsCount, index);
+              //   // homeopapeItems.splice(0, index);
+              //   show = false;
             } else {
               displayUpdateItemsCount++;
               // console.log(componentName, GetDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
             };
+
+            // SELECT * FROM homeopapeRSS
+            // WHERE itemLink like '%.ebay.%'
+            // OR itemLink like '%reddit.%'
+            // OR itemLink like '%craigslist.%'
+            // OR itemLink like '%amazon.%'
+            // OR itemLink like '%pinterest.%'
+            // OR itemLink like '%twitter.%'
+            // OR itemLink like '%facebook.%'
+            // OR itemLink like '%sites.google.%'
+            // OR itemLink like '%books.google.%'
+            // OR itemLink like '%elasticsearch.columbian.com%'
+            // goodreads.com
+
+
+            // UPDATE homeopapeRSS
+            // SET alwaysFilter = 1
+            // WHERE itemLink like '%.ebay.%'
+            // OR itemLink like '%reddit.%'
+            // OR itemLink like '%craigslist.%'
+            // OR itemLink like '%amazon.%'
+            // OR itemLink like '%audible.%'
+            // OR itemLink like '%pinterest.%'
+            // OR itemLink like '%twitter.%'
+            // OR itemLink like '%facebook.%'
+            // OR itemLink like '%sites.google.%'
+            // OR itemLink like '%books.google.%'
+            // OR itemLink like '%elasticsearch.columbian.com%'
+            // goodreads.com
 
             // if (homeopapeItem.itemLink.includes("ebay.com")) {
             if (homeopapeItem.itemLink.includes(".ebay.")) {
@@ -983,6 +1097,18 @@ const FromTheHomeopape = (props) => {
             };
 
             if (homeopapeItem.itemLink.includes("reddit.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("craigslist.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("amazon.")) {
+              show = false;
+            };
+
+            if (homeopapeItem.itemLink.includes("audible.")) {
               show = false;
             };
 
@@ -1063,7 +1189,8 @@ const FromTheHomeopape = (props) => {
                     <Col xs="12">
                       <React.Fragment>
                         <div>
-                          <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
+                          {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
+                          {Parse(homeopapeItem.itemTitle)}<br />
                           <a href={itemLink} target="_blank">{itemLink}</a><br />
                           ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
                         </div>
@@ -1072,7 +1199,12 @@ const FromTheHomeopape = (props) => {
                         </FormGroup>
                       </React.Fragment>
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
+
+                      {homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
+                      {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+
                     </Col>
                   </Row>
                   : null}
@@ -1171,7 +1303,8 @@ const FromTheHomeopape = (props) => {
                     <Col xs="12">
                       <React.Fragment>
                         <div>
-                          <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} />
+                          {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
+                          {Parse(homeopapeItem.itemTitle)}<br />
                           <a href={itemLink} target="_blank">{itemLink}</a><br />
                           ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
                         </div>
@@ -1180,9 +1313,12 @@ const FromTheHomeopape = (props) => {
                         </FormGroup>
                       </React.Fragment>
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
+                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
 
+                      {homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
                       {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+
 
                     </Col>
                   </Row>
