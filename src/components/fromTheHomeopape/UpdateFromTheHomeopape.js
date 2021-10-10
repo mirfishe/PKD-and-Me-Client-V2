@@ -1035,7 +1035,7 @@ const FromTheHomeopape = (props) => {
           {homeopapeItems.map((homeopapeItem, index) => {
 
             // * One method to only display ten items in the list.
-            // if (index > 10) {
+            // if (index > 100) {
             //   breakArray = true;
             // };
 
@@ -1044,7 +1044,7 @@ const FromTheHomeopape = (props) => {
             // };
 
             // * One method to only display ten items in the list.
-            // if (displayUpdateItemsCount >= 10) {
+            // if (displayUpdateItemsCount >= 100) {
             //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayUpdateItemsCount, index);
             //   homeopapeItems.splice(0, index);
             // };
@@ -1221,7 +1221,7 @@ const FromTheHomeopape = (props) => {
           {homeopapeItems.map((homeopapeItem, index) => {
 
             // * One method to only display ten items in the list.
-            // if (index > 10) {
+            // if (index > 20) {
             //   breakArray = true;
             // };
 
@@ -1230,7 +1230,7 @@ const FromTheHomeopape = (props) => {
             // };
 
             // * One method to only display ten items in the list.
-            // if (displayItemsCount >= 10) {
+            // if (displayItemsCount >= 20) {
             //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
             //   homeopapeItems.splice(0, index);
             // };
@@ -1239,7 +1239,7 @@ const FromTheHomeopape = (props) => {
 
             if (homeopapeItem.display !== 1) {
               show = false;
-            } else if (displayItemsCount >= 10) {
+            } else if (displayItemsCount >= 20) {
               // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
               // homeopapeItems.splice(0, index);
               show = false;
