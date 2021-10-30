@@ -47,29 +47,6 @@ export const decodeURL = (titleName) => {
 };
 
 
-// export const displayParagraphs = (text) => {
-//     // Not needed; Use the .displayParagraphs css style
-//     // console.log(componentName, GetDateTime(), "displayParagraphs text", text);
-
-//     let newText = text;
-
-//     if (IsEmpty(newText) === false) {
-
-//         // newText = "<p>" + newText;
-
-//         // Changes the \n to </p><p>
-//         newText = newText.replaceAll("\n", "</p><p>");
-
-//         // newText = newText + "</p>";
-
-//     };
-
-//     // console.log(componentName, GetDateTime(), "displayParagraphs newText", newText);
-
-//     return newText;
-// };
-
-
 export const removeOnePixelImage = (text, ASIN) => {
   // console.log(componentName, GetDateTime(), "removeOnePixelImage text", text);
   // console.log(componentName, GetDateTime(), "removeOnePixelImage ASIN", ASIN);
@@ -738,6 +715,29 @@ export const DisplayYear = (dateToDisplay) => {
   // console.log(componentName, GetDateTime(), "DisplayYear dateToDisplay", dateToDisplay);
 
   return newDisplayDate;
+};
+
+
+export const DaysSince = (dateToCompare) => {
+  // console.log(componentName, GetDateTime(), "DaysSince dateToCompare", dateToCompare);
+
+  // * https://stackoverflow.com/questions/12986068/how-to-calculate-number-of-days-between-today-and-given-date-and-code-for-gettim
+
+  let newDaysSince = 0;
+
+  if (IsEmpty(dateToCompare) === false) {
+
+    let today = new Date();
+    let compareDate = new Date(dateToCompare);
+    let timeInMilliseconds = compareDate.getTime() - today.getTime();
+
+    newDaysSince = Math.abs(Math.ceil(timeInMilliseconds / (1000 * 60 * 60 * 24)));
+
+  };
+
+  // console.log(componentName, GetDateTime(), "DaysSince newDaysSince", newDaysSince);
+
+  return newDaysSince;
 };
 
 
