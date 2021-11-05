@@ -2,7 +2,6 @@ import AppSettings from "./environment";
 
 const componentName = "sharedFunctions.js";
 
-
 export const encodeURL = (titleName) => {
   // console.log(componentName, GetDateTime(), "encodeURL titleName", titleName);
 
