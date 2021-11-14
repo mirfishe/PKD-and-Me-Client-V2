@@ -79,6 +79,10 @@ const titlesSlice = createSlice({
           state.arrayTitles[titleItemIndex].authorLastName = titleItem.authorLastName;
         };
 
+        if (titleItem.hasOwnProperty("submissionDate")) {
+          state.arrayTitles[titleItemIndex].submissionDate = titleItem.submissionDate;
+        };
+
         if (titleItem.hasOwnProperty("publicationDate")) {
           state.arrayTitles[titleItemIndex].publicationDate = titleItem.publicationDate;
         };

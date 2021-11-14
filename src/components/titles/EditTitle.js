@@ -95,6 +95,7 @@ const EditTitle = (props) => {
   const [txtTitleURL, setTxtTitleURL] = useState("");
   const [txtAuthorFirstName, setTxtAuthorFirstName] = useState("");
   const [txtAuthorLastName, setTxtAuthorLastName] = useState("");
+  const [txtSubmissionDate, setTxtSubmissionDate] = useState("");
   const [txtPublicationDate, setTxtPublicationDate] = useState("");
   const [txtImageName, setTxtImageName] = useState("");
   const [ddCategoryID, setDdCategoryID] = useState("");
@@ -112,6 +113,7 @@ const EditTitle = (props) => {
   const [titleURL, setTitleURL] = useState(null);
   const [authorFirstName, setAuthorFirstName] = useState(null);
   const [authorLastName, setAuthorLastName] = useState(null);
+  const [submissionDate, setSubmissionDate] = useState(null);
   const [publicationDate, setPublicationDate] = useState(null);
   const [imageName, setImageName] = useState(null);
   const [categoryID, setCategoryID] = useState(null);
@@ -156,6 +158,7 @@ const EditTitle = (props) => {
         setTitleURL(titleObject.titleURL);
         setAuthorFirstName(titleObject.authorFirstName);
         setAuthorLastName(titleObject.authorLastName);
+        setSubmissionDate(titleObject.submissionDate);
         setPublicationDate(titleObject.publicationDate);
         setImageName(titleObject.imageName);
         setCategoryID(titleObject.categoryID);
@@ -167,7 +170,14 @@ const EditTitle = (props) => {
         setTxtTitleURL(titleObject.titleURL);
         setTxtAuthorFirstName(titleObject.authorFirstName);
         setTxtAuthorLastName(titleObject.authorLastName);
+        setTxtSubmissionDate(titleObject.submissionDate);
         setTxtPublicationDate(titleObject.publicationDate);
+
+        if (IsEmpty(titleObject.submissionDate) === false) {
+          setTxtSubmissionDate(titleObject.submissionDate.toString().substring(0, 10));
+        } else {
+          setTxtSubmissionDate("");
+        };
 
         if (IsEmpty(titleObject.publicationDate) === false) {
           setTxtPublicationDate(titleObject.publicationDate.toString().substring(0, 10));
@@ -203,6 +213,7 @@ const EditTitle = (props) => {
     setTitleURL(null);
     setAuthorFirstName(null);
     setAuthorLastName(null);
+    setSubmissionDate(null);
     setPublicationDate(null);
     setImageName(null);
     setCategoryID(null);
@@ -300,6 +311,13 @@ const EditTitle = (props) => {
           };
         };
 
+        // * If the user doesn't enter a submission date, then it isn't added/updated
+        if (IsEmpty(txtSubmissionDate) === false) {
+          if (txtSubmissionDate.trim().length !== 0) {
+            Object.assign(titleObject, { submissionDate: txtSubmissionDate.trim() });
+          };
+        };
+
         // * If the user doesn't enter a publication date, then it isn't added/updated
         if (IsEmpty(txtPublicationDate) === false) {
           if (txtPublicationDate.trim().length !== 0) {
@@ -364,6 +382,7 @@ const EditTitle = (props) => {
                 setTitleURL(data.records[0].titleURL);
                 setAuthorFirstName(data.records[0].authorFirstName);
                 setAuthorLastName(data.records[0].authorLastName);
+                setSubmissionDate(data.records[0].submissionDate);
                 setPublicationDate(data.records[0].publicationDate);
                 setImageName(data.records[0].imageName);
                 setCategoryID(data.records[0].categoryID);
@@ -379,7 +398,7 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
+                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
                 // ? Add to local storage also?
 
                 dispatch(addStateURL([{ linkName: data.records[0].titleURL, linkType: "title", linkID: data.records[0].titleID }]));
@@ -455,6 +474,7 @@ const EditTitle = (props) => {
     setTitleURL(null);
     setAuthorFirstName(null);
     setAuthorLastName(null);
+    setSubmissionDate(null);
     setPublicationDate(null);
     setImageName(null);
     setCategoryID(null);
@@ -553,13 +573,19 @@ const EditTitle = (props) => {
           };
         };
 
+        // * If the user doesn't enter a submission date, then it isn't added/updated
+        if (IsEmpty(txtSubmissionDate) === false) {
+          if (txtSubmissionDate.trim().length !== 0) {
+            Object.assign(titleObject, { submissionDate: txtSubmissionDate.trim() });
+          };
+        };
+
         // * If the user doesn't enter a publication date, then it isn't added/updated
         if (IsEmpty(txtPublicationDate) === false) {
           if (txtPublicationDate.trim().length !== 0) {
             Object.assign(titleObject, { publicationDate: txtPublicationDate.trim() });
           };
         };
-
 
         // * If the user doesn't enter a short description, then it isn't added/updated
         if (IsEmpty(txtShortDescription) === false) {
@@ -620,6 +646,7 @@ const EditTitle = (props) => {
                 setTitleURL(data.records[0].titleURL);
                 setAuthorFirstName(data.records[0].authorFirstName);
                 setAuthorLastName(data.records[0].authorLastName);
+                setSubmissionDate(data.records[0].submissionDate);
                 setPublicationDate(data.records[0].publicationDate);
                 setImageName(data.records[0].imageName);
                 setCategoryID(data.records[0].categoryID);
@@ -638,7 +665,7 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "updateTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out?
-                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
                 // ? Update local storage also?
 
                 // * Update/Delete related editions also if active is set to false
@@ -976,23 +1003,28 @@ const EditTitle = (props) => {
 
             </FormGroup>
 
+            <FormGroup>
+              {/* {console.log(componentName, GetDateTime(), "ddCategoryID", ddCategoryID)} */}
+              <Label id="lblCategoryID" for="lblCategoryID">Category</Label>
+              <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setDdCategoryID(event.target.value); }}>
+                <option value="">Select a Category</option>
+                {categoryList.map((category) => {
+                  return (
+                    <React.Fragment key={category.categoryID}>
+                      {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
+                      <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
+                    </React.Fragment>
+                  );
+                })}
+              </Input>
+              {IsEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
+            </FormGroup>
+
             <FormGroup row>
               <Col>
 
-                {/* {console.log(componentName, GetDateTime(), "ddCategoryID", ddCategoryID)} */}
-                <Label id="lblCategoryID" for="lblCategoryID">Category</Label>
-                <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setDdCategoryID(event.target.value); }}>
-                  <option value="">Select a Category</option>
-                  {categoryList.map((category) => {
-                    return (
-                      <React.Fragment key={category.categoryID}>
-                        {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
-                        <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
-                      </React.Fragment>
-                    );
-                  })}
-                </Input>
-                {IsEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
+                <Label for="txtSubmissionDate">Manuscript Submission Date</Label>
+                <Input type="date" id="txtSubmissionDate" value={txtSubmissionDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtSubmissionDate(event.target.value); }} />
 
               </Col>
               <Col>
