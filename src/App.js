@@ -639,6 +639,11 @@ function App() {
 
           </Col>
         </Row>
+        <Row>
+          <Col xs="12" className="smallerText text-center">
+            Version: {process.env.REACT_APP_VERSION}
+          </Col>
+        </Row>
       </Container>
 
     </BrowserRouter>

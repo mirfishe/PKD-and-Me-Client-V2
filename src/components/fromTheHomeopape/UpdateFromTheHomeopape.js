@@ -1035,7 +1035,7 @@ const FromTheHomeopape = (props) => {
           {homeopapeItems.map((homeopapeItem, index) => {
 
             // * One method to only display ten items in the list.
-            // if (index > 10) {
+            // if (index > 100) {
             //   breakArray = true;
             // };
 
@@ -1044,14 +1044,14 @@ const FromTheHomeopape = (props) => {
             // };
 
             // * One method to only display ten items in the list.
-            // if (displayUpdateItemsCount >= 10) {
+            // if (displayUpdateItemsCount >= 100) {
             //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayUpdateItemsCount, index);
             //   homeopapeItems.splice(0, index);
             // };
 
             let show = true;
 
-            if (homeopapeItem.display === 1) {
+            if (homeopapeItem.display === true) { // homeopapeItem.display === 1
               show = false;
               // } else if (displayUpdateItemsCount >= 100) {
               //   // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayUpdateItemsCount, index);
@@ -1202,8 +1202,8 @@ const FromTheHomeopape = (props) => {
                       <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
                       <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
 
-                      {homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
-                      {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
+                      {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
 
                     </Col>
                   </Row>
@@ -1221,7 +1221,7 @@ const FromTheHomeopape = (props) => {
           {homeopapeItems.map((homeopapeItem, index) => {
 
             // * One method to only display ten items in the list.
-            // if (index > 10) {
+            // if (index > 20) {
             //   breakArray = true;
             // };
 
@@ -1230,16 +1230,16 @@ const FromTheHomeopape = (props) => {
             // };
 
             // * One method to only display ten items in the list.
-            // if (displayItemsCount >= 10) {
+            // if (displayItemsCount >= 20) {
             //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
             //   homeopapeItems.splice(0, index);
             // };
 
             let show = true;
 
-            if (homeopapeItem.display !== 1) {
+            if (homeopapeItem.display !== true) { // homeopapeItem.display !== 1
               show = false;
-            } else if (displayItemsCount >= 10) {
+            } else if (displayItemsCount >= 20) {
               // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
               // homeopapeItems.splice(0, index);
               show = false;
@@ -1297,7 +1297,7 @@ const FromTheHomeopape = (props) => {
                     {/* <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
                       <Button outline size="sm" color="secondary" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
 
-                      {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {homeopapeItem.posted === true ? <p>Already Posted</p> : null}
 
                     </Col> */}
                     <Col xs="12">
@@ -1316,8 +1316,8 @@ const FromTheHomeopape = (props) => {
                       <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
                       <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
 
-                      {homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
-                      {homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
+                      {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
 
 
                     </Col>

@@ -1,6 +1,6 @@
 {
   "name": "pkd-and-me-client",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "Project using React and Redux to allow users to find works by and related to Philip K. Dick. Data for the application is stored in Redux. Used Bootstrap to make the application more visually appealing.",
   "author": "Michael Fisher",
   "copyrightYear": "2021",
@@ -24,16 +24,16 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^4.6.1",
     "html-react-parser": "^1.4.0",
     "react": "^17.0.2",
-    "react-bootstrap-icons": "^1.5.0",
+    "react-bootstrap-icons": "^1.6.1",
     "react-dom": "^17.0.2",
     "react-gtm-module": "^2.0.11",
-    "react-redux": "^7.2.5",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.0",
-    "reactstrap": "^8.10.0",
+    "reactstrap": "^8.10.1",
     "rss-parser": "^3.12.0"
   },
   "eslintConfig": {

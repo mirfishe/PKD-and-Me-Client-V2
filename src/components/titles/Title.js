@@ -358,8 +358,7 @@ const Title = (props) => {
               <Col xs="12">
                 <h4>{title.titleName}
 
-                  {IsEmpty(title.publicationDate) === false ? <span className="ml-2 smallerText"> ({DisplayYear(title.publicationDate)})</span> : null}
-
+                  {IsEmpty(title.publicationDate) === false ? <span className="ml-2 smallerText"> ({title.publicationDate.includes("-01-01") === true ? <React.Fragment>{DisplayYear(title.publicationDate)}</React.Fragment> : <React.Fragment>{DisplayDate(title.publicationDate)}</React.Fragment>})</span> : null}
                   {/* {IsEmpty(title.category) === false ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category)}>{title.category}</Link>
                             </span> : null} */}
                   {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
@@ -401,6 +400,7 @@ const Title = (props) => {
 
                 {IsEmpty(title.shortDescription) === false ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
                 {IsEmpty(title.urlPKDweb) === false ? <p><a href={title.urlPKDweb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
+                {IsEmpty(title.submissionDate) === false ? <p>Manuscript Submission Date: {DisplayDate(title.submissionDate)}</p> : null}
                 {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
                 {/* {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
               </Col>

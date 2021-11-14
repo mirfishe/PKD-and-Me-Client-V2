@@ -196,6 +196,10 @@ const editionsSlice = createSlice({
           state.arrayEditions[editionItemIndex].authorLastName = editionItem.authorLastName;
         };
 
+        if (editionItem.hasOwnProperty("submissionDate")) {
+          state.arrayEditions[editionItemIndex].submissionDate = editionItem.submissionDate;
+        };
+
         if (editionItem.hasOwnProperty("titlePublicationDate")) {
           state.arrayEditions[editionItemIndex].titlePublicationDate = editionItem.titlePublicationDate;
         };

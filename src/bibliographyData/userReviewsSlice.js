@@ -160,6 +160,10 @@ const userReviewsSlice = createSlice({
           state.arrayUserReviews[userReviewListIndex].authorLastName = userReviewItem.authorLastName;
         };
 
+        if (userReviewItem.hasOwnProperty("submissionDate")) {
+          state.arrayUserReviews[userReviewListIndex].submissionDate = userReviewItem.submissionDate;
+        };
+
         if (userReviewItem.hasOwnProperty("publicationDate")) {
           state.arrayUserReviews[userReviewListIndex].publicationDate = userReviewItem.publicationDate;
         };
