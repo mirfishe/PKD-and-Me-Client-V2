@@ -6,7 +6,7 @@ import { Image } from "react-bootstrap-icons";
 import { Rating } from "@material-ui/lab/";
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -196,11 +196,11 @@ const Title = (props) => {
   // let overallTitleRating = 0;
 
   // if (IsEmpty(userReviewRatingItem) === false) {
-  //     if (userReviewRatingItem.hasOwnProperty("userReviewAverage")) {
+  //     if (HasNonEmptyProperty(userReviewRatingItem, "userReviewAverage")) {
   //         overallTitleRating = userReviewRatingItem.userReviewAverage;
   //     };
 
-  //     if (userReviewRatingItem.hasOwnProperty("userReviewCount")) {
+  //     if (HasNonEmptyProperty(userReviewRatingItem, "userReviewCount")) {
   //         overallTitleRatingCount = userReviewRatingItem.userReviewCount;
   //     };
   // };

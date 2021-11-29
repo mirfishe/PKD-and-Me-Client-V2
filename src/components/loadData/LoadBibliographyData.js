@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, encodeURL } from "../../app/sharedFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import CategoryData from "../../bibliographyData/categories.json";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../bibliographyData/categoriesSlice";
@@ -86,11 +86,11 @@ function LoadBibliographyData() {
 
         // console.log(componentName, GetDateTime(), "addRatings userReviewRatingItem", userReviewRatingItem);
 
-        if (userReviewRatingItem.hasOwnProperty("userReviewCount")) {
+        if (HasNonEmptyProperty(userReviewRatingItem, "userReviewCount")) {
           userReviewCount = userReviewRatingItem.userReviewCount;
         };
 
-        if (userReviewRatingItem.hasOwnProperty("userReviewSum")) {
+        if (HasNonEmptyProperty(userReviewRatingItem, "userReviewSum")) {
           userReviewSum = userReviewRatingItem.userReviewSum;
         };
 

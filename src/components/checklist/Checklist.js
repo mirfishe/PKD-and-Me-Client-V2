@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Container, Col, Row, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import { Drawer } from "@material-ui/core";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear, encodeURL, decodeURL } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -115,7 +115,7 @@ const Checklist = (props) => {
   // console.log(componentName, GetDateTime(), "checklistList", checklistList);
 
   // * Filter by category
-  if (IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkType") === true) {
+  if (IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkType") === true) {
 
     if (linkItem.linkType === "categories") {
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkID);
@@ -324,7 +324,7 @@ const Checklist = (props) => {
 
           {/* <ListGroup flush> */}
 
-          {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkTypeName") === true ?
+          {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkTypeName") === true ?
             <Row className="justify-content-center">
               <Col xs="8">
                 {/* <ListGroupItem> */}

@@ -101,8 +101,10 @@ export const removeOnePixelImage = (text, ASIN) => {
 
 
     if (newText.includes("https://ir-na.amazon-adsystem.com")) {
+
       console.log(componentName, GetDateTime(), "removeOnePixelImage ASIN", ASIN);
       console.log(componentName, GetDateTime(), "removeOnePixelImage newText", newText);
+
     };
 
   };
@@ -170,6 +172,7 @@ export const createImageName = (titleName) => {
   let newImageName = "";
 
   if (IsEmpty(titleName) === false) {
+
     // * Capitalize the first letter of every word -- 03/06/2021 MF
     newImageName = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
     // * I'm sure there's a more elegant way to do this -- 03/06/2021 MF
@@ -216,6 +219,7 @@ export const createTitleURL = (titleName) => {
   let newTitleURL = "";
 
   if (IsEmpty(titleName) === false) {
+
     // * Capitalize the first letter of every word -- 03/06/2021 MF
     newTitleURL = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
     // * I'm sure there's a more elegant way to do this -- 03/06/2021 MF
@@ -347,12 +351,19 @@ export const IsEmpty = (value) => {
   // * https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in -- 03/06/2021 MF
 
   // const isEmpty = (object) => {
+
   //   for (var key in object) {
+
   //     if (object.hasOwnProperty(key)) {
+
   //         return false;
+
   //     };
+
   //   };
+
   //   return true;
+
   // };
 
   // return value === undefined || value === null || (typeof value === "object" && Object.keys(value).length === 0) || (typeof value === "string" && value.toString().trim().length === 0);
@@ -383,17 +394,27 @@ export const DisplayValue = (variableValue) => {
   if (IsEmpty(variableValue) === false) {
 
     if (variableValue === true) {
+
       displayValue = "True";
+
     } else if (variableValue === false) {
+
       displayValue = "False";
+
     } else if (variableValue instanceof Date) {
+
       displayValue = variableValue.toLocaleString();
+
     } else {
+
       displayValue = variableValue;
+
     };
 
   } else {
+
     displayValue = "Value is undefined or null.";
+
   };
 
   return displayValue;
@@ -407,7 +428,9 @@ export const DisplaySpaceAfterComma = (text) => {
   let displayText = "";
 
   if (IsEmpty(text) === false) {
+
     displayText = text.replaceAll(",", ", ");
+
   };
 
   // console.log(componentName, GetDateTime(), "DisplaySpaceAfterComma displayText", displayText);
@@ -422,6 +445,7 @@ export const TryParseJSON = (jsonString) => {
 
   // * https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try -- 03/06/2021 MF
   try {
+
     let jsonData = JSON.parse(jsonString);
 
     // * Handle non-exception-throwing cases: -- 03/05/2021
@@ -429,7 +453,9 @@ export const TryParseJSON = (jsonString) => {
     // * but... JSON.parse(null) returns null, and typeof null === "object",  -- 03/05/2021
     // * so we must check for that, too. Thankfully, null is falsey, so this suffices: -- 03/05/2021
     if (jsonData && typeof jsonData === "object") {
+
       return jsonData;
+
     };
   }
   catch (error) {
@@ -658,6 +684,7 @@ export const DisplayDate = (dateToDisplay, removeLeadingZeroes) => {
   // console.log(componentName, GetDateTime(), "DisplayDate dateToDisplay", dateToDisplay);
 
   return newDisplayDate;
+
 };
 
 
@@ -697,6 +724,7 @@ export const DisplayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
   // console.log(componentName, GetDateTime(), "DisplayDateAndTime newDisplayDateAndTime", newDisplayDateAndTime);
 
   return newDisplayDateAndTime;
+
 };
 
 
@@ -723,6 +751,7 @@ export const DisplayYear = (dateToDisplay) => {
   // console.log(componentName, GetDateTime(), "DisplayYear dateToDisplay", dateToDisplay);
 
   return newDisplayDate;
+
 };
 
 
@@ -746,6 +775,7 @@ export const DaysSince = (dateToCompare) => {
   // console.log(componentName, GetDateTime(), "DaysSince newDaysSince", newDaysSince);
 
   return newDaysSince;
+
 };
 
 
@@ -770,7 +800,88 @@ export const DaysSince = (dateToCompare) => {
 //     // console.log(componentName, GetDateTime(), "displayParagraphs newText", newText);
 
 //     return newText;
+
 // };
+
+
+export const HasNonEmptyProperty = (objectItem, propertyName) => {
+  // console.log(componentName, GetDateTime(), "HasFalseProperty property", property);
+
+  let nonEmptyProperty = false;
+
+  if (typeof objectItem === "object") {
+
+    if (objectItem.hasOwnProperty(propertyName) === true && IsEmpty(objectItem[propertyName]) === false) {
+
+      nonEmptyProperty = true;
+
+    };
+
+  };
+
+  return nonEmptyProperty;
+
+};
+
+
+export const HasEqualsProperty = (objectItem, propertyName, value) => {
+  // console.log(componentName, GetDateTime(), "HasEqualsProperty propertyName", propertyName);
+
+  let equalsProperty = false;
+
+  if (typeof objectItem === "object") {
+
+    if (objectItem.hasOwnProperty(propertyName) === true && IsEmpty(objectItem[propertyName]) === false && objectItem[propertyName] === value) {
+
+      equalsProperty = true;
+
+    };
+
+  };
+
+  return equalsProperty;
+
+};
+
+
+export const HasTrueProperty = (objectItem, propertyName) => {
+  // console.log(componentName, GetDateTime(), "HasTrueProperty property", property);
+
+  let trueProperty = false;
+
+  if (typeof objectItem === "object") {
+
+    if (objectItem.hasOwnProperty(propertyName) === true && objectItem[propertyName] === true) {
+
+      trueProperty = true;
+
+    };
+
+  };
+
+  return trueProperty;
+
+};
+
+
+export const HasFalseProperty = (objectItem, propertyName) => {
+  // console.log(componentName, GetDateTime(), "HasFalseProperty property", property);
+
+  let falseProperty = false;
+
+  if (typeof objectItem === "object") {
+
+    if (objectItem.hasOwnProperty(propertyName) === true && objectItem[propertyName] === false) {
+
+      falseProperty = true;
+
+    };
+
+  };
+
+  return falseProperty;
+
+};
 
 
 export const TruncateText = (text, limit) => {
@@ -783,20 +894,27 @@ export const TruncateText = (text, limit) => {
   if (IsEmpty(text) === false && text.length > limit) {
 
     for (let i = limit; i > 0; i--) {
+
       if (text.charAt(i) === " " && (text.charAt(i - 1) !== "," || text.charAt(i - 1) !== "." || text.charAt(i - 1) !== ";")) {
+
         return text.substring(0, i) + "...";
+
       };
+
     };
 
     return text.substring(0, limit) + "...";
 
   } else {
+
     return text;
+
   };
 
   // console.log(componentName, GetDateTime(), "TruncateText newText", newText);
 
   // return newText;
+
 };
 
 
@@ -831,23 +949,33 @@ export const ValidateMilitaryTime = (timeEntered) => {
     } else {
 
       if (isNaN(parseInt(timeEnteredString.charAt(0))) === true || isNaN(parseInt(timeEnteredString.charAt(1))) === true || isNaN(parseInt(timeEnteredString.charAt(2))) === true || isNaN(parseInt(timeEnteredString.charAt(3))) === true) {
+
         validTimeFormat = false;
+
       };
 
       if (timeEnteredString.charAt(0) !== "0" && timeEnteredString.charAt(0) !== "1" && timeEnteredString.charAt(0) !== "2") {
+
         validTimeFormat = false;
+
       };
 
       if (timeEnteredString.charAt(0) === "2" && timeEnteredString.charAt(1) !== "0" && timeEnteredString.charAt(1) !== "1" && timeEnteredString.charAt(1) !== "2" && timeEnteredString.charAt(1) !== "3" && timeEnteredString.charAt(1) !== "4") {
+
         validTimeFormat = false;
+
       };
 
       if (timeEnteredString.charAt(0) === "2" && timeEnteredString.charAt(1) !== "4" && timeEnteredString.charAt(2) !== "0" && timeEnteredString.charAt(3) !== "0") {
+
         validTimeFormat = false;
+
       };
 
       if (timeEnteredString.charAt(2) !== "0" && timeEnteredString.charAt(2) !== "1" && timeEnteredString.charAt(2) !== "2" && timeEnteredString.charAt(2) !== "3" && timeEnteredString.charAt(2) !== "4" && timeEnteredString.charAt(2) !== "5") {
+
         validTimeFormat = false;
+
       };
 
 
@@ -955,7 +1083,9 @@ export const ConvertTemperature = (temperatureScale, temperature) => {
     };
 
   } else {
+
     temperatureConverted = "";
+
   };
 
   // console.log(componentName, GetDateTime(), "ConvertTemperature temperatureConverted", temperatureConverted);
@@ -974,27 +1104,43 @@ export const ConvertBitTrueFalse = (records) => {
   for (let i = 0; i < records.length; i++) {
 
     if (records[i].active === 1) {
+
       records[i].active = true;
+
     } else if (records[i].active === 0) {
+
       records[i].active = false;
+
     };
 
     if (records[i].electronic === 1) {
+
       records[i].electronic = true;
+
     } else if (records[i].electronic === 0) {
+
       records[i].electronic = false;
+
     };
 
     if (records[i].read === 1) {
+
       records[i].read = true;
+
     } else if (records[i].read === 0) {
+
       records[i].read = false;
+
     };
 
     if (records[i].admin === 1) {
+
       records[i].admin = true;
+
     } else if (records[i].admin === 0) {
+
       records[i].admin = false;
+
     };
 
   };
@@ -1010,27 +1156,47 @@ export const ConvertYesNoTrueFalse = (value) => {
   // console.log(componentName, GetDateTime(), "ConvertYesNoTrueFalse value", value);
 
   // if (isNaN(value) === true && value.toString().trim() === "Yes") {
+
   //   return true;
+
   // } else if (isNaN(value) === true && value.toString().trim() === "No") {
+
   //   return false;
+
   // } else if (value === true) {
+
   //   return "Yes";
+
   // } else if (value === false) {
+
   //   return "No";
+
   // } else {
+
   //   return value;
+
   // };
 
   if (isNaN(value) === true && value === "Yes") {
+
     return true;
+
   } else if (isNaN(value) === true && value === "No") {
+
     return false;
+
   } else if (value === true) {
+
     return "Yes";
+
   } else if (value === false) {
+
     return "No";
+
   } else {
+
     return value;
+
   };
 
 };
@@ -1040,27 +1206,47 @@ export const ConvertNormalAbnormalTrueFalse = (value) => {
   // console.log(componentName, GetDateTime(), "ConvertNormalAbnormalTrueFalse value", value);
 
   // if (isNaN(value) === true && value.toString().trim() === "Normal") {
+
   //   return true;
+
   // } else if (isNaN(value) === true && value.toString().trim() === "Abnormal") {
+
   //   return false;
+
   // } else if (value === true) {
+
   //   return "Normal";
+
   // } else if (value === false) {
+
   //   return "Abnormal";
+
   // } else {
+
   //   return value;
+
   // };
 
   if (isNaN(value) === true && value === "Normal") {
+
     return true;
+
   } else if (isNaN(value) === true && value === "Abnormal") {
+
     return false;
+
   } else if (value === true) {
+
     return "Normal";
+
   } else if (value === false) {
+
     return "Abnormal";
+
   } else {
+
     return value;
+
   };
 
 };
@@ -1070,27 +1256,47 @@ export const ConvertEnableDisableTrueFalse = (value) => {
   // console.log(componentName, GetDateTime(), "ConvertEnableDisableTrueFalse value", value);
 
   // if (isNaN(value) === true && value.toString().trim() === "Enable") {
+
   //   return true;
+
   // } else if (isNaN(value) === true && value.toString().trim() === "Disable") {
+
   //   return false;
+
   // } else if (value === true) {
+
   //   return "Enable";
+
   // } else if (value === false) {
+
   //   return "Disable";
+
   // } else {
+
   //   return value;
+
   // };
 
   if (isNaN(value) === true && value === "Enable") {
+
     return true;
+
   } else if (isNaN(value) === true && value === "Disable") {
+
     return false;
+
   } else if (value === true) {
+
     return "Enable";
+
   } else if (value === false) {
+
     return "Disable";
+
   } else {
+
     return value;
+
   };
 
 };
@@ -1115,26 +1321,40 @@ export const ConvertNullEmptyString = (value) => {
   // TODO: Change this function so that it can handle if there are already empty string values in the database. -- 03/19/2021 MF
   // ! This can't be done in one function like this to handle both conversions because what if the database value is set to an empty string. -- 07/09/2021 MF
   if (value === null) {
+
     // console.log(componentName, GetDateTime(), "ConvertNullEmptyString null value", value);
     return "";
+
   } else if (value === undefined) {
+
     // console.log(componentName, GetDateTime(), "ConvertNullEmptyString undefined value", value);
     return "";
+
   } else if (value === "NaN") {
+
     // console.log(componentName, GetDateTime(), "ConvertNullEmptyString NaN value", value);
     return null;
+
   } else if (isNaN(value) === true && typeof value === "number") {
+
     // console.log(componentName, GetDateTime(), "ConvertNullEmptyString isNaN value", value);
     return null;
+
   } else if (isNaN(value) === true && value === "") {
+
     // console.log(componentName, GetDateTime(), "ConvertNullEmptyString isNaN \"\" value", value);
     return null;
+
   } else if (value === "") {
+
     // console.log(componentName, GetDateTime(), "ConvertNullEmptyString \"\" value", value);
     return null;
+
   } else {
+
     // console.log(componentName, GetDateTime(), "ConvertNullEmptyString else value", value);
     return value;
+
   };
 
 };
@@ -1200,7 +1420,9 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
     let currentDecimalPlaces = 1;
 
     if (Number.isInteger(parseFloat(decimalPlaces)) === true) {
+
       currentDecimalPlaces = decimalPlaces;
+
     };
 
     // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
@@ -1211,8 +1433,10 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
 
     // if (value.toString().trim().indexOf(".") > -1) {
     if (value.toString().trim().includes(".")) {
+
       // * Remove the characters after the decimal point to be counted later if there is a decimal point. -- 06/21/2021 MF
       valueDecimals = value.toString().trim().substring(value.toString().trim().indexOf(".") + 1);
+
     };
 
     // console.log(componentName, GetDateTime(), "HasDecimalPlaces currentDecimalPlaces", currentDecimalPlaces);
@@ -1227,9 +1451,13 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
     // console.log(componentName, GetDateTime(), "HasDecimalPlaces valueDecimals.length > currentDecimalPlaces", valueDecimals.length > currentDecimalPlaces);
 
     if (isNaN(valueToTest) === true || (IsEmpty(currentDecimalPlaces) === false && valueDecimals.length > currentDecimalPlaces)) {
+
       return false;
+
     } else {
+
       return true;
+
     };
 
   };
@@ -1244,7 +1472,9 @@ export const GenerateRandomNumberDigits = (digits) => {
   let randomNumber = Math.floor(Math.random() * 10 ** digits).toString();
 
   while (randomNumber.length < (digits)) {
+
     randomNumber = `0${randomNumber}`;
+
   };
 
   // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits randomNumber", randomNumber);
@@ -1263,7 +1493,9 @@ export const FormatPhoneNumber = (phoneNumber) => {
   let onlyDigits = "";
 
   if (typeof phoneNumber === "string") {
+
     onlyDigits = phoneNumber.replace(/\D/g, "");
+
   };
 
   let validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
@@ -1271,9 +1503,13 @@ export const FormatPhoneNumber = (phoneNumber) => {
   // console.log(componentName, GetDateTime(), "formatPhoneNumber validPhoneNumber", validPhoneNumber);
 
   if (IsEmpty(validPhoneNumber) === false) {
+
     return `${validPhoneNumber[1]}-${validPhoneNumber[2]}-${validPhoneNumber[3]}`;
+
   } else {
+
     return phoneNumber;
+
   };
 
 };
@@ -1284,21 +1520,64 @@ export const FormatTitle = (title) => {
   // console.log(componentName, GetDateTime(), "FormatTitle typeof title", typeof title);
 
   // * From https://stackoverflow.com/questions/11427759/how-to-insert-space-before-capitalize-character-in-a-word-using-replace-and-rege -- 08/10/2021 MF
-  // * From https://attacomsian.com/blog/string-capitalize-javascript
-  // * From https://www.codeproject.com/Articles/108996/Splitting-Pascal-Camel-Case-with-RegEx-Enhancement
+  // * From https://attacomsian.com/blog/string-capitalize-javascript -- 08/10/2021 MF
+  // * From https://www.codeproject.com/Articles/108996/Splitting-Pascal-Camel-Case-with-RegEx-Enhancement -- 08/10/2021 MF
 
   let formattedTitle = "";
 
-  if (IsEmpty(title) === false && title !== "iSBARs") {
+  // if (IsEmpty(title) === false && title.toLowerCase().includes("isbar" === true)) {
+
+  //   console.log(componentName, GetDateTime(), "FormatTitle title", title);
+
+  // };
+
+  if (IsEmpty(title) === false && title !== "iSBAR" && title !== "iSBARs" && title !== "iSBAREnable") {
+
     // * iSBARs is the special case that is difficult to make work in regex. -- 08/16/2021 MF
     // formattedTitle = title.replace(/([a-z])([A-Z])([a-z])/g, "$1 $2$3").replace(/\b\w/g, c => c.toUpperCase());
     formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, " $1").replace(/\b\w/g, c => c.toUpperCase());
+
+  } else if (IsEmpty(title) === false && title === "iSBAR") {
+
+    formattedTitle = "iSBAR";
+
   } else if (IsEmpty(title) === false && title === "iSBARs") {
+
     formattedTitle = "iSBARs";
+
+  } else if (IsEmpty(title) === false && title === "iSBAREnable") {
+
+    formattedTitle = "iSBAR Enable";
+
   };
 
   // console.log(componentName, GetDateTime(), "FormatTitle formattedTitle", formattedTitle);
 
   return formattedTitle;
+
+};
+
+
+export const RandomizeItems = (items, randomize) => {
+  // console.log(componentName, GetDateTime(), "RandomizeItems items", items);
+  // console.log(componentName, GetDateTime(), "RandomizeItems randomize", randomize);
+
+  let itemsRandomized = [];
+
+  if (randomize === true) {
+
+    itemsRandomized = items.map((a) => (
+      { sort: Math.random(), value: a }
+    ))
+      .sort((a, b) => a.sort - b.sort)
+      .map((a) => a.value);
+
+  } else {
+
+    itemsRandomized = items;
+
+  };
+
+  return itemsRandomized;
 
 };

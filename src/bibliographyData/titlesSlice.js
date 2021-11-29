@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../app/sharedFunctions";
 
 const componentName = "titlesSlice.js";
 
@@ -50,7 +50,7 @@ const titlesSlice = createSlice({
 
       if (typeof titleItem === "object") {
 
-        if (titleItem.hasOwnProperty("titleID")) {
+        if (HasNonEmptyProperty(titleItem, "titleID")) {
 
           titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
 
@@ -59,110 +59,110 @@ const titlesSlice = createSlice({
           // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
         };
 
-        if (titleItem.hasOwnProperty("titleName")) {
+        if (HasNonEmptyProperty(titleItem, "titleName")) {
           state.arrayTitles[titleItemIndex].titleName = titleItem.titleName;
         };
 
-        if (titleItem.hasOwnProperty("titleSort")) {
+        if (HasNonEmptyProperty(titleItem, "titleSort")) {
           state.arrayTitles[titleItemIndex].titleSort = titleItem.titleSort;
         };
 
-        if (titleItem.hasOwnProperty("titleURL")) {
+        if (HasNonEmptyProperty(titleItem, "titleURL")) {
           state.arrayTitles[titleItemIndex].titleURL = titleItem.titleURL;
         };
 
-        if (titleItem.hasOwnProperty("authorFirstName")) {
+        if (HasNonEmptyProperty(titleItem, "authorFirstName")) {
           state.arrayTitles[titleItemIndex].authorFirstName = titleItem.authorFirstName;
         };
 
-        if (titleItem.hasOwnProperty("authorLastName")) {
+        if (HasNonEmptyProperty(titleItem, "authorLastName")) {
           state.arrayTitles[titleItemIndex].authorLastName = titleItem.authorLastName;
         };
 
-        if (titleItem.hasOwnProperty("submissionDate")) {
+        if (HasNonEmptyProperty(titleItem, "submissionDate")) {
           state.arrayTitles[titleItemIndex].submissionDate = titleItem.submissionDate;
         };
 
-        if (titleItem.hasOwnProperty("publicationDate")) {
+        if (HasNonEmptyProperty(titleItem, "publicationDate")) {
           state.arrayTitles[titleItemIndex].publicationDate = titleItem.publicationDate;
         };
 
-        if (titleItem.hasOwnProperty("titlePublicationDate")) {
+        if (HasNonEmptyProperty(titleItem, "titlePublicationDate")) {
           state.arrayTitles[titleItemIndex].titlePublicationDate = titleItem.titlePublicationDate;
         };
 
-        if (titleItem.hasOwnProperty("imageName")) {
+        if (HasNonEmptyProperty(titleItem, "imageName")) {
           state.arrayTitles[titleItemIndex].imageName = titleItem.imageName;
         };
 
-        if (titleItem.hasOwnProperty("titleImageName")) {
+        if (HasNonEmptyProperty(titleItem, "titleImageName")) {
           state.arrayTitles[titleItemIndex].titleImageName = titleItem.titleImageName;
         };
 
-        if (titleItem.hasOwnProperty("categoryID")) {
+        if (HasNonEmptyProperty(titleItem, "categoryID")) {
           state.arrayTitles[titleItemIndex].categoryID = titleItem.categoryID;
         };
 
-        if (titleItem.hasOwnProperty("shortDescription")) {
+        if (HasNonEmptyProperty(titleItem, "shortDescription")) {
           state.arrayTitles[titleItemIndex].shortDescription = titleItem.shortDescription;
         };
 
-        if (titleItem.hasOwnProperty("urlPKDweb")) {
+        if (HasNonEmptyProperty(titleItem, "urlPKDweb")) {
           state.arrayTitles[titleItemIndex].urlPKDweb = titleItem.urlPKDweb;
         };
 
-        if (titleItem.hasOwnProperty("active")) {
+        if (HasNonEmptyProperty(titleItem, "active")) {
           state.arrayTitles[titleItemIndex].active = titleItem.active;
         };
 
-        if (titleItem.hasOwnProperty("titleActive")) {
+        if (HasNonEmptyProperty(titleItem, "titleActive")) {
           state.arrayTitles[titleItemIndex].titleActive = titleItem.titleActive;
         };
 
-        if (titleItem.hasOwnProperty("createDate")) {
+        if (HasNonEmptyProperty(titleItem, "createDate")) {
           state.arrayTitles[titleItemIndex].createDate = titleItem.createDate;
         };
 
-        if (titleItem.hasOwnProperty("titleCreateDate")) {
+        if (HasNonEmptyProperty(titleItem, "titleCreateDate")) {
           state.arrayTitles[titleItemIndex].titleCreateDate = titleItem.titleCreateDate;
         };
 
-        if (titleItem.hasOwnProperty("updateDate")) {
+        if (HasNonEmptyProperty(titleItem, "updateDate")) {
           state.arrayTitles[titleItemIndex].updateDate = titleItem.updateDate;
         };
 
-        if (titleItem.hasOwnProperty("titleUpdatedDate")) {
+        if (HasNonEmptyProperty(titleItem, "titleUpdatedDate")) {
           state.arrayTitles[titleItemIndex].titleUpdatedDate = titleItem.titleUpdatedDate;
         };
 
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (titleItem.hasOwnProperty("category")) {
+        // if (HasNonEmptyProperty(titleItem, "category")) {
 
-        //   if (titleItem.category.hasOwnProperty("categoryID")) {
+        //   if (HasNonEmptyProperty(titleItem.category, "categoryID")) {
         //     state.arrayTitles[titleItemIndex].category.categoryID = titleItem.category.categoryID;
         //   };
 
-        if (titleItem.hasOwnProperty("category")) {
+        if (HasNonEmptyProperty(titleItem, "category")) {
           state.arrayTitles[titleItemIndex].category = titleItem.category;
         };
 
-        if (titleItem.hasOwnProperty("sortID")) {
+        if (HasNonEmptyProperty(titleItem, "sortID")) {
           state.arrayTitles[titleItemIndex].sortID = titleItem.sortID;
         };
 
-        if (titleItem.hasOwnProperty("categorySortID")) {
+        if (HasNonEmptyProperty(titleItem, "categorySortID")) {
           state.arrayTitles[titleItemIndex].categorySortID = titleItem.categorySortID;
         };
 
-        if (titleItem.hasOwnProperty("categoryActive")) {
+        if (HasNonEmptyProperty(titleItem, "categoryActive")) {
           state.arrayTitles[titleItemIndex].categoryActive = titleItem.categoryActive;
         };
 
-        if (titleItem.hasOwnProperty("categoryCreateDate")) {
+        if (HasNonEmptyProperty(titleItem, "categoryCreateDate")) {
           state.arrayTitles[titleItemIndex].categoryCreateDate = titleItem.categoryCreateDate;
         };
 
-        if (titleItem.hasOwnProperty("categoryUpdatedDate")) {
+        if (HasNonEmptyProperty(titleItem, "categoryUpdatedDate")) {
           state.arrayTitles[titleItemIndex].categoryUpdatedDate = titleItem.categoryUpdatedDate;
         };
 
@@ -204,7 +204,7 @@ const titlesSlice = createSlice({
 
       if (typeof titleItem === "object") {
 
-        if (titleItem.hasOwnProperty("titleID")) {
+        if (HasNonEmptyProperty(titleItem, "titleID")) {
 
           titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
 
@@ -213,15 +213,15 @@ const titlesSlice = createSlice({
           // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
         };
 
-        if (titleItem.hasOwnProperty("userReviewCount")) {
+        if (HasNonEmptyProperty(titleItem, "userReviewCount")) {
           state.arrayTitles[titleItemIndex].userReviewCount = titleItem.userReviewCount;
         };
 
-        if (titleItem.hasOwnProperty("userReviewSum")) {
+        if (HasNonEmptyProperty(titleItem, "userReviewSum")) {
           state.arrayTitles[titleItemIndex].userReviewSum = titleItem.userReviewSum;
         };
 
-        if (titleItem.hasOwnProperty("userReviewAverage")) {
+        if (HasNonEmptyProperty(titleItem, "userReviewAverage")) {
           state.arrayTitles[titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
         };
 
@@ -229,15 +229,15 @@ const titlesSlice = createSlice({
 
       // if (typeof titleItem === "object") {
 
-      //   if (titleItem.hasOwnProperty("userReviewCount")) {
+      //   if (HasNonEmptyProperty(titleItem, "userReviewCount")) {
       //     state.arrayTitles[titleItem.titleItemIndex].userReviewCount = titleItem.userReviewCount;
       //   };
 
-      //   if (titleItem.hasOwnProperty("userReviewSum")) {
+      //   if (HasNonEmptyProperty(titleItem, "userReviewSum")) {
       //     state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
       //   };
 
-      //   if (titleItem.hasOwnProperty("userReviewAverage")) {
+      //   if (HasNonEmptyProperty(titleItem, "userReviewAverage")) {
       //     state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
       //   };
 
