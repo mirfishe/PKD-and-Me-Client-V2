@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "./sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./sharedFunctions";
 
 const componentName = "urlsSlice.js";
 
@@ -49,7 +49,7 @@ const urlsSlice = createSlice({
 
       if (typeof urlItem === "object") {
 
-        if (urlItem.hasOwnProperty("linkID") && urlItem.hasOwnProperty("linkType")) {
+        if (HasNonEmptyProperty(urlItem, "linkID") && HasNonEmptyProperty(urlItem, "linkType")) {
 
           urlListIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 
@@ -57,23 +57,23 @@ const urlsSlice = createSlice({
 
           if (IsEmpty(urlListIndex) === false) {
 
-            if (urlItem.hasOwnProperty("linkName")) {
+            if (HasNonEmptyProperty(urlItem, "linkName")) {
               state.arrayURLs[urlListIndex].linkName = urlItem.linkName;
             };
 
-            if (urlItem.hasOwnProperty("linkType")) {
+            if (HasNonEmptyProperty(urlItem, "linkType")) {
               state.arrayURLs[urlListIndex].linkType = urlItem.linkType;
             };
 
-            if (urlItem.hasOwnProperty("linkID")) {
+            if (HasNonEmptyProperty(urlItem, "linkID")) {
               state.arrayURLs[urlListIndex].linkID = urlItem.linkID;
             };
 
-            if (urlItem.hasOwnProperty("linkTypeNameID")) {
+            if (HasNonEmptyProperty(urlItem, "linkTypeNameID")) {
               state.arrayURLs[urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
             };
 
-            if (urlItem.hasOwnProperty("linkTypeName")) {
+            if (HasNonEmptyProperty(urlItem, "linkTypeName")) {
               state.arrayURLs[urlListIndex].linkTypeName = urlItem.linkTypeName;
             };
 
@@ -93,7 +93,7 @@ const urlsSlice = createSlice({
 
       if (typeof urlItem === "object") {
 
-        if (urlItem.hasOwnProperty("linkID") && urlItem.hasOwnProperty("linkType")) {
+        if (HasNonEmptyProperty(urlItem, "linkID") && HasNonEmptyProperty(urlItem, "linkType")) {
 
           urlItemIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 

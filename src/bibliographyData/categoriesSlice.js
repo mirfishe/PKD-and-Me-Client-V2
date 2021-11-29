@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../app/sharedFunctions";
 
 const componentName = "categoriesSlice.js";
 
@@ -48,7 +48,7 @@ const categoriesSlice = createSlice({
 
       if (typeof categoryItem === "object") {
 
-        if (categoryItem.hasOwnProperty("categoryID")) {
+        if (HasNonEmptyProperty(categoryItem, "categoryID")) {
 
           categoryItemIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryItem.categoryID);
 
@@ -57,19 +57,19 @@ const categoriesSlice = createSlice({
           // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
         };
 
-        if (categoryItem.hasOwnProperty("category")) {
+        if (HasNonEmptyProperty(categoryItem, "category")) {
           state.arrayCategories[categoryItemIndex].category = categoryItem.category;
         };
 
-        if (categoryItem.hasOwnProperty("sortID")) {
+        if (HasNonEmptyProperty(categoryItem, "sortID")) {
           state.arrayCategories[categoryItemIndex].sortID = categoryItem.sortID;
         };
 
-        if (categoryItem.hasOwnProperty("active")) {
+        if (HasNonEmptyProperty(categoryItem, "active")) {
           state.arrayCategories[categoryItemIndex].active = categoryItem.active;
         };
 
-        if (categoryItem.hasOwnProperty("updateDate")) {
+        if (HasNonEmptyProperty(categoryItem, "updateDate")) {
           state.arrayCategories[categoryItemIndex].updateDate = categoryItem.updateDate;
         };
 

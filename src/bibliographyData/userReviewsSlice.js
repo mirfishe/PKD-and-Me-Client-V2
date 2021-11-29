@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../app/sharedFunctions";
 
 const componentName = "userReviewsSlice.js";
 
@@ -52,7 +52,7 @@ const userReviewsSlice = createSlice({
 
       if (typeof userReviewItem === "object") {
 
-        if (userReviewItem.hasOwnProperty("reviewID")) {
+        if (HasNonEmptyProperty(userReviewItem, "reviewID")) {
 
           userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === userReviewItem.reviewID);
 
@@ -61,199 +61,199 @@ const userReviewsSlice = createSlice({
           // state.arrayUserReviews[userReviewListIndex].reviewID = userReviewItem.reviewID;
         };
 
-        if (userReviewItem.hasOwnProperty("userID")) {
+        if (HasNonEmptyProperty(userReviewItem, "userID")) {
           state.arrayUserReviews[userReviewListIndex].userID = userReviewItem.userID;
         };
 
-        if (userReviewItem.hasOwnProperty("updatedBy")) {
+        if (HasNonEmptyProperty(userReviewItem, "updatedBy")) {
           state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
         };
 
-        if (userReviewItem.hasOwnProperty("userReviewUpdatedBy")) {
+        if (HasNonEmptyProperty(userReviewItem, "userReviewUpdatedBy")) {
           state.arrayUserReviews[userReviewListIndex].userReviewUpdatedBy = userReviewItem.userReviewUpdatedBy;
         };
 
-        if (userReviewItem.hasOwnProperty("titleID")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleID")) {
           state.arrayUserReviews[userReviewListIndex].titleID = userReviewItem.titleID;
         };
 
-        if (userReviewItem.hasOwnProperty("read")) {
+        if (HasNonEmptyProperty(userReviewItem, "read")) {
           state.arrayUserReviews[userReviewListIndex].read = userReviewItem.read;
         };
 
-        if (userReviewItem.hasOwnProperty("dateRead")) {
+        if (HasNonEmptyProperty(userReviewItem, "dateRead")) {
           state.arrayUserReviews[userReviewListIndex].dateRead = userReviewItem.dateRead;
         };
 
-        if (userReviewItem.hasOwnProperty("rating")) {
+        if (HasNonEmptyProperty(userReviewItem, "rating")) {
           state.arrayUserReviews[userReviewListIndex].rating = userReviewItem.rating;
         };
 
-        if (userReviewItem.hasOwnProperty("ranking")) {
+        if (HasNonEmptyProperty(userReviewItem, "ranking")) {
           state.arrayUserReviews[userReviewListIndex].ranking = userReviewItem.ranking;
         };
 
-        if (userReviewItem.hasOwnProperty("shortReview")) {
+        if (HasNonEmptyProperty(userReviewItem, "shortReview")) {
           state.arrayUserReviews[userReviewListIndex].shortReview = userReviewItem.shortReview;
         };
 
-        if (userReviewItem.hasOwnProperty("longReview")) {
+        if (HasNonEmptyProperty(userReviewItem, "longReview")) {
           state.arrayUserReviews[userReviewListIndex].longReview = userReviewItem.longReview;
         };
 
-        if (userReviewItem.hasOwnProperty("owned")) {
+        if (HasNonEmptyProperty(userReviewItem, "owned")) {
           state.arrayUserReviews[userReviewListIndex].owned = userReviewItem.owned;
         };
 
-        if (userReviewItem.hasOwnProperty("datePurchased")) {
+        if (HasNonEmptyProperty(userReviewItem, "datePurchased")) {
           state.arrayUserReviews[userReviewListIndex].datePurchased = userReviewItem.datePurchased;
         };
 
-        if (userReviewItem.hasOwnProperty("active")) {
+        if (HasNonEmptyProperty(userReviewItem, "active")) {
           state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
         };
 
-        if (userReviewItem.hasOwnProperty("userReviewActive")) {
+        if (HasNonEmptyProperty(userReviewItem, "userReviewActive")) {
           state.arrayUserReviews[userReviewListIndex].userReviewActive = userReviewItem.userReviewActive;
         };
 
-        if (userReviewItem.hasOwnProperty("createDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "createDate")) {
           state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
         };
 
-        if (userReviewItem.hasOwnProperty("userReviewCreateDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "userReviewCreateDate")) {
           state.arrayUserReviews[userReviewListIndex].userReviewCreateDate = userReviewItem.userReviewCreateDate;
         };
 
-        if (userReviewItem.hasOwnProperty("updateDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "updateDate")) {
           state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
         };
 
-        if (userReviewItem.hasOwnProperty("userReviewUpdatedDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "userReviewUpdatedDate")) {
           state.arrayUserReviews[userReviewListIndex].userReviewUpdatedDate = userReviewItem.userReviewUpdatedDate;
         };
 
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (userReviewItem.hasOwnProperty("title")) {
+        // if (HasNonEmptyProperty(userReviewItem, "title")) {
 
-        //   if (userReviewItem.title.hasOwnProperty("titleID")) {
+        //   if (HasNonEmptyProperty(userReviewItem.title, "titleID")) {
         //     state.arrayUserReviews[userReviewListIndex].title.titleID = userReviewItem.title.titleID;
         //   };
 
-        if (userReviewItem.hasOwnProperty("titleName")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleName")) {
           state.arrayUserReviews[userReviewListIndex].titleName = userReviewItem.titleName;
         };
 
-        if (userReviewItem.hasOwnProperty("titleSort")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleSort")) {
           state.arrayUserReviews[userReviewListIndex].titleSort = userReviewItem.titleSort;
         };
 
-        if (userReviewItem.hasOwnProperty("titleURL")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleURL")) {
           state.arrayUserReviews[userReviewListIndex].titleURL = userReviewItem.titleURL;
         };
 
-        if (userReviewItem.hasOwnProperty("authorFirstName")) {
+        if (HasNonEmptyProperty(userReviewItem, "authorFirstName")) {
           state.arrayUserReviews[userReviewListIndex].authorFirstName = userReviewItem.authorFirstName;
         };
 
-        if (userReviewItem.hasOwnProperty("authorLastName")) {
+        if (HasNonEmptyProperty(userReviewItem, "authorLastName")) {
           state.arrayUserReviews[userReviewListIndex].authorLastName = userReviewItem.authorLastName;
         };
 
-        if (userReviewItem.hasOwnProperty("submissionDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "submissionDate")) {
           state.arrayUserReviews[userReviewListIndex].submissionDate = userReviewItem.submissionDate;
         };
 
-        if (userReviewItem.hasOwnProperty("publicationDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "publicationDate")) {
           state.arrayUserReviews[userReviewListIndex].publicationDate = userReviewItem.publicationDate;
         };
 
-        if (userReviewItem.hasOwnProperty("titlePublicationDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "titlePublicationDate")) {
           state.arrayUserReviews[userReviewListIndex].titlePublicationDate = userReviewItem.titlePublicationDate;
         };
 
-        if (userReviewItem.hasOwnProperty("imageName")) {
+        if (HasNonEmptyProperty(userReviewItem, "imageName")) {
           state.arrayUserReviews[userReviewListIndex].imageName = userReviewItem.imageName;
         };
 
-        if (userReviewItem.hasOwnProperty("titleImageName")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleImageName")) {
           state.arrayUserReviews[userReviewListIndex].titleImageName = userReviewItem.titleImageName;
         };
 
-        if (userReviewItem.hasOwnProperty("categoryID")) {
+        if (HasNonEmptyProperty(userReviewItem, "categoryID")) {
           state.arrayUserReviews[userReviewListIndex].categoryID = userReviewItem.categoryID;
         };
 
-        if (userReviewItem.hasOwnProperty("shortDescription")) {
+        if (HasNonEmptyProperty(userReviewItem, "shortDescription")) {
           state.arrayUserReviews[userReviewListIndex].shortDescription = userReviewItem.shortDescription;
         };
 
-        if (userReviewItem.hasOwnProperty("urlPKDweb")) {
+        if (HasNonEmptyProperty(userReviewItem, "urlPKDweb")) {
           state.arrayUserReviews[userReviewListIndex].urlPKDweb = userReviewItem.urlPKDweb;
         };
 
-        // if (userReviewItem.hasOwnProperty("active")) {
+        // if (HasNonEmptyProperty(userReviewItem, "active")) {
         //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
         // };
 
-        if (userReviewItem.hasOwnProperty("titleActive")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleActive")) {
           state.arrayUserReviews[userReviewListIndex].titleActive = userReviewItem.titleActive;
         };
 
-        // if (userReviewItem.hasOwnProperty("createDate")) {
+        // if (HasNonEmptyProperty(userReviewItem, "createDate")) {
         //   state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
         // };
 
-        if (userReviewItem.hasOwnProperty("titleCreateDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleCreateDate")) {
           state.arrayUserReviews[userReviewListIndex].titleCreateDate = userReviewItem.titleCreateDate;
         };
 
-        // if (userReviewItem.hasOwnProperty("updateDate")) {
+        // if (HasNonEmptyProperty(userReviewItem, "updateDate")) {
         //   state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
         // };
 
-        if (userReviewItem.hasOwnProperty("titleUpdatedDate")) {
+        if (HasNonEmptyProperty(userReviewItem, "titleUpdatedDate")) {
           state.arrayUserReviews[userReviewListIndex].titleUpdatedDate = userReviewItem.titleUpdatedDate;
         };
 
         // };
 
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (userReviewItem.hasOwnProperty("user")) {
+        // if (HasNonEmptyProperty(userReviewItem, "user")) {
 
-        //   if (userReviewItem.user.hasOwnProperty("userID")) {
+        //   if (HasNonEmptyProperty(userReviewItem.user, "userID")) {
         //     state.arrayUserReviews[userReviewListIndex].user.userID = userReviewItem.user.userID;
         //   };
 
-        if (userReviewItem.hasOwnProperty("firstName")) {
+        if (HasNonEmptyProperty(userReviewItem, "firstName")) {
           state.arrayUserReviews[userReviewListIndex].firstName = userReviewItem.firstName;
         };
 
-        if (userReviewItem.hasOwnProperty("lastName")) {
+        if (HasNonEmptyProperty(userReviewItem, "lastName")) {
           state.arrayUserReviews[userReviewListIndex].lastName = userReviewItem.lastName;
         };
 
-        if (userReviewItem.hasOwnProperty("email")) {
+        if (HasNonEmptyProperty(userReviewItem, "email")) {
           state.arrayUserReviews[userReviewListIndex].email = userReviewItem.email;
         };
 
-        // if (userReviewItem.hasOwnProperty("updatedBy")) {
+        // if (HasNonEmptyProperty(userReviewItem, "updatedBy")) {
         //   state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
         // };
 
-        if (userReviewItem.hasOwnProperty("userUpdatedBy")) {
+        if (HasNonEmptyProperty(userReviewItem, "userUpdatedBy")) {
           state.arrayUserReviews[userReviewListIndex].userUpdatedBy = userReviewItem.userUpdatedBy;
         };
 
-        if (userReviewItem.hasOwnProperty("admin")) {
+        if (HasNonEmptyProperty(userReviewItem, "admin")) {
           state.arrayUserReviews[userReviewListIndex].admin = userReviewItem.admin;
         };
 
-        // if (userReviewItem.hasOwnProperty("active")) {
+        // if (HasNonEmptyProperty(userReviewItem, "active")) {
         //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
         // };
 
-        if (userReviewItem.hasOwnProperty("userActive")) {
+        if (HasNonEmptyProperty(userReviewItem, "userActive")) {
           state.arrayUserReviews[userReviewListIndex].userActive = userReviewItem.userActive;
         };
 

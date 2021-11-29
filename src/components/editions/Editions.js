@@ -5,7 +5,7 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from 'react-bootstrap-icons';
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -51,7 +51,7 @@ const Editions = (props) => {
   // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
 
   let mediaParam;
-  if (IsEmpty(props.linkItem) === false && props.linkItem.hasOwnProperty("linkName")) {
+  if (IsEmpty(props.linkItem) === false && HasNonEmptyProperty(props.linkItem, "linkName")) {
     // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
     mediaParam = props.linkItem.linkName; // props.match.params.media;
     // console.log(componentName, GetDateTime(), "typeof mediaParam", typeof mediaParam);

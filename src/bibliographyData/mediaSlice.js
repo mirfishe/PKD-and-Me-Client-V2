@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../app/sharedFunctions";
 
 const componentName = "mediaSlice.js";
 
@@ -48,7 +48,7 @@ const mediaSlice = createSlice({
 
       if (typeof mediaItem === "object") {
 
-        if (mediaItem.hasOwnProperty("mediaID")) {
+        if (HasNonEmptyProperty(mediaItem, "mediaID")) {
 
           mediaItemIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaItem.mediaID);
 
@@ -57,23 +57,23 @@ const mediaSlice = createSlice({
           // state.arrayMedia[mediaItemIndex].mediaID = mediaItem.mediaID;
         };
 
-        if (mediaItem.hasOwnProperty("media")) {
+        if (HasNonEmptyProperty(mediaItem, "media")) {
           state.arrayMedia[mediaItemIndex].media = mediaItem.media;
         };
 
-        if (mediaItem.hasOwnProperty("electronic")) {
+        if (HasNonEmptyProperty(mediaItem, "electronic")) {
           state.arrayMedia[mediaItemIndex].electronic = mediaItem.electronic;
         };
 
-        if (mediaItem.hasOwnProperty("sortID")) {
+        if (HasNonEmptyProperty(mediaItem, "sortID")) {
           state.arrayMedia[mediaItemIndex].sortID = mediaItem.sortID;
         };
 
-        if (mediaItem.hasOwnProperty("active")) {
+        if (HasNonEmptyProperty(mediaItem, "active")) {
           state.arrayMedia[mediaItemIndex].active = mediaItem.active;
         };
 
-        if (mediaItem.hasOwnProperty("updateDate")) {
+        if (HasNonEmptyProperty(mediaItem, "updateDate")) {
           state.arrayMedia[mediaItemIndex].updateDate = mediaItem.updateDate;
         };
 

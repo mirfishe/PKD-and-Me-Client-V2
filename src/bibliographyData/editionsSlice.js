@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../app/sharedFunctions";
 
 const componentName = "editionsSlice.js";
 
@@ -50,7 +50,7 @@ const editionsSlice = createSlice({
 
       if (typeof editionItem === "object") {
 
-        if (editionItem.hasOwnProperty("editionID")) {
+        if (HasNonEmptyProperty(editionItem, "editionID")) {
 
           editionItemIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionItem.editionID);
 
@@ -59,176 +59,176 @@ const editionsSlice = createSlice({
           // state.arrayEditions[editionItemIndex].editionID = editionItem.editionID;
         };
 
-        if (editionItem.hasOwnProperty("titleID")) {
+        if (HasNonEmptyProperty(editionItem, "titleID")) {
           state.arrayEditions[editionItemIndex].titleID = editionItem.titleID;
         };
 
-        if (editionItem.hasOwnProperty("mediaID")) {
+        if (HasNonEmptyProperty(editionItem, "mediaID")) {
           state.arrayEditions[editionItemIndex].mediaID = editionItem.mediaID;
         };
 
-        if (editionItem.hasOwnProperty("publicationDate")) {
+        if (HasNonEmptyProperty(editionItem, "publicationDate")) {
           state.arrayEditions[editionItemIndex].publicationDate = editionItem.publicationDate;
         };
 
-        if (editionItem.hasOwnProperty("editionPublicationDate")) {
+        if (HasNonEmptyProperty(editionItem, "editionPublicationDate")) {
           state.arrayEditions[editionItemIndex].editionPublicationDate = editionItem.editionPublicationDate;
         };
 
-        if (editionItem.hasOwnProperty("imageName")) {
+        if (HasNonEmptyProperty(editionItem, "imageName")) {
           state.arrayEditions[editionItemIndex].imageName = editionItem.imageName;
         };
 
-        if (editionItem.hasOwnProperty("editionImageName")) {
+        if (HasNonEmptyProperty(editionItem, "editionImageName")) {
           state.arrayEditions[editionItemIndex].editionImageName = editionItem.editionImageName;
         };
 
-        if (editionItem.hasOwnProperty("ASIN")) {
+        if (HasNonEmptyProperty(editionItem, "ASIN")) {
           state.arrayEditions[editionItemIndex].ASIN = editionItem.ASIN;
         };
 
-        if (editionItem.hasOwnProperty("textLinkShort")) {
+        if (HasNonEmptyProperty(editionItem, "textLinkShort")) {
           state.arrayEditions[editionItemIndex].textLinkShort = editionItem.textLinkShort;
         };
 
-        if (editionItem.hasOwnProperty("textLinkFull")) {
+        if (HasNonEmptyProperty(editionItem, "textLinkFull")) {
           state.arrayEditions[editionItemIndex].textLinkFull = editionItem.textLinkFull;
         };
 
-        if (editionItem.hasOwnProperty("imageLinkSmall")) {
+        if (HasNonEmptyProperty(editionItem, "imageLinkSmall")) {
           state.arrayEditions[editionItemIndex].imageLinkSmall = editionItem.imageLinkSmall;
         };
 
-        if (editionItem.hasOwnProperty("imageLinkMedium")) {
+        if (HasNonEmptyProperty(editionItem, "imageLinkMedium")) {
           state.arrayEditions[editionItemIndex].imageLinkMedium = editionItem.imageLinkMedium;
         };
 
-        if (editionItem.hasOwnProperty("imageLinkLarge")) {
+        if (HasNonEmptyProperty(editionItem, "imageLinkLarge")) {
           state.arrayEditions[editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
         };
 
-        if (editionItem.hasOwnProperty("textImageLink")) {
+        if (HasNonEmptyProperty(editionItem, "textImageLink")) {
           state.arrayEditions[editionItemIndex].textImageLink = editionItem.textImageLink;
         };
 
-        if (editionItem.hasOwnProperty("active")) {
+        if (HasNonEmptyProperty(editionItem, "active")) {
           state.arrayEditions[editionItemIndex].active = editionItem.active;
         };
 
-        if (editionItem.hasOwnProperty("editionActive")) {
+        if (HasNonEmptyProperty(editionItem, "editionActive")) {
           state.arrayEditions[editionItemIndex].editionActive = editionItem.editionActive;
         };
 
-        if (editionItem.hasOwnProperty("updateDate")) {
+        if (HasNonEmptyProperty(editionItem, "updateDate")) {
           state.arrayEditions[editionItemIndex].updateDate = editionItem.updateDate;
         };
 
-        if (editionItem.hasOwnProperty("editionUpdatedDate")) {
+        if (HasNonEmptyProperty(editionItem, "editionUpdatedDate")) {
           state.arrayEditions[editionItemIndex].editionUpdatedDate = editionItem.editionUpdatedDate;
         };
 
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (editionItem.hasOwnProperty("medium")) {
+        // if (HasNonEmptyProperty(editionItem, "medium")) {
         // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
 
-        // if (editionItem.medium.hasOwnProperty("mediaID")) {
+        // if (HasNonEmptyProperty(editionItem.medium, "mediaID")) {
         //   state.arrayEditions[editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
         // };
 
-        if (editionItem.hasOwnProperty("media")) {
+        if (HasNonEmptyProperty(editionItem, "media")) {
           state.arrayEditions[editionItemIndex].media = editionItem.media;
         };
 
-        if (editionItem.hasOwnProperty("electronic")) {
+        if (HasNonEmptyProperty(editionItem, "electronic")) {
           state.arrayEditions[editionItemIndex].electronic = editionItem.electronic;
         };
 
-        if (editionItem.hasOwnProperty("sortID")) {
+        if (HasNonEmptyProperty(editionItem, "sortID")) {
           state.arrayEditions[editionItemIndex].sortID = editionItem.sortID;
         };
 
-        if (editionItem.hasOwnProperty("mediaSortID")) {
+        if (HasNonEmptyProperty(editionItem, "mediaSortID")) {
           state.arrayEditions[editionItemIndex].mediaSortID = editionItem.mediaSortID;
         };
 
-        // if (editionItem.hasOwnProperty("active")) {
+        // if (HasNonEmptyProperty(editionItem, "active")) {
         //   state.arrayEditions[editionItemIndex].active = editionItem.active;
         // };
 
-        if (editionItem.hasOwnProperty("mediaActive")) {
+        if (HasNonEmptyProperty(editionItem, "mediaActive")) {
           state.arrayEditions[editionItemIndex].mediaActive = editionItem.mediaActive;
         };
 
-        if (editionItem.hasOwnProperty("mediaCreateDate")) {
+        if (HasNonEmptyProperty(editionItem, "mediaCreateDate")) {
           state.arrayEditions[editionItemIndex].mediaCreateDate = editionItem.mediaCreateDate;
         };
 
-        if (editionItem.hasOwnProperty("mediaUpdatedDate")) {
+        if (HasNonEmptyProperty(editionItem, "mediaUpdatedDate")) {
           state.arrayEditions[editionItemIndex].mediaUpdatedDate = editionItem.mediaUpdatedDate;
         };
 
         // };
 
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (editionItem.hasOwnProperty("title")) {
+        // if (HasNonEmptyProperty(editionItem, "title")) {
 
-        //   if (editionItem.title.hasOwnProperty("titleID")) {
+        //   if (HasNonEmptyProperty(editionItem.title, "titleID")) {
         //     state.arrayEditions[editionItemIndex].title.titleID = editionItem.title.titleID;
         //   };
 
-        if (editionItem.hasOwnProperty("titleName")) {
+        if (HasNonEmptyProperty(editionItem, "titleName")) {
           state.arrayEditions[editionItemIndex].titleName = editionItem.titleName;
         };
 
-        if (editionItem.hasOwnProperty("titleSort")) {
+        if (HasNonEmptyProperty(editionItem, "titleSort")) {
           state.arrayEditions[editionItemIndex].titleSort = editionItem.titleSort;
         };
 
-        if (editionItem.hasOwnProperty("titleURL")) {
+        if (HasNonEmptyProperty(editionItem, "titleURL")) {
           state.arrayEditions[editionItemIndex].titleURL = editionItem.titleURL;
         };
 
-        if (editionItem.hasOwnProperty("authorFirstName")) {
+        if (HasNonEmptyProperty(editionItem, "authorFirstName")) {
           state.arrayEditions[editionItemIndex].authorFirstName = editionItem.authorFirstName;
         };
 
-        if (editionItem.hasOwnProperty("authorLastName")) {
+        if (HasNonEmptyProperty(editionItem, "authorLastName")) {
           state.arrayEditions[editionItemIndex].authorLastName = editionItem.authorLastName;
         };
 
-        if (editionItem.hasOwnProperty("submissionDate")) {
+        if (HasNonEmptyProperty(editionItem, "submissionDate")) {
           state.arrayEditions[editionItemIndex].submissionDate = editionItem.submissionDate;
         };
 
-        if (editionItem.hasOwnProperty("titlePublicationDate")) {
+        if (HasNonEmptyProperty(editionItem, "titlePublicationDate")) {
           state.arrayEditions[editionItemIndex].titlePublicationDate = editionItem.titlePublicationDate;
         };
 
-        if (editionItem.hasOwnProperty("titleImageName")) {
+        if (HasNonEmptyProperty(editionItem, "titleImageName")) {
           state.arrayEditions[editionItemIndex].titleImageName = editionItem.titleImageName;
         };
 
-        if (editionItem.hasOwnProperty("categoryID")) {
+        if (HasNonEmptyProperty(editionItem, "categoryID")) {
           state.arrayEditions[editionItemIndex].categoryID = editionItem.categoryID;
         };
 
-        if (editionItem.hasOwnProperty("shortDescription")) {
+        if (HasNonEmptyProperty(editionItem, "shortDescription")) {
           state.arrayEditions[editionItemIndex].shortDescription = editionItem.shortDescription;
         };
 
-        if (editionItem.hasOwnProperty("urlPKDweb")) {
+        if (HasNonEmptyProperty(editionItem, "urlPKDweb")) {
           state.arrayEditions[editionItemIndex].urlPKDweb = editionItem.urlPKDweb;
         };
 
-        if (editionItem.hasOwnProperty("titleActive")) {
+        if (HasNonEmptyProperty(editionItem, "titleActive")) {
           state.arrayEditions[editionItemIndex].titleActive = editionItem.titleActive;
         };
 
-        if (editionItem.hasOwnProperty("titleCreateDate")) {
+        if (HasNonEmptyProperty(editionItem, "titleCreateDate")) {
           state.arrayEditions[editionItemIndex].titleCreateDate = editionItem.titleCreateDate;
         };
 
-        if (editionItem.hasOwnProperty("titleUpdatedDate")) {
+        if (HasNonEmptyProperty(editionItem, "titleUpdatedDate")) {
           state.arrayEditions[editionItemIndex].titleUpdatedDate = editionItem.titleUpdatedDate;
         };
 

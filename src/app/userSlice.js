@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "./sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./sharedFunctions";
 
 const componentName = "userSlice.js";
 
@@ -29,47 +29,47 @@ const userSlice = createSlice({
       if (typeof action.payload === "object") {
 
 
-        if (action.payload.hasOwnProperty("userID")) {
+        if (HasNonEmptyProperty(action.payload, "userID")) {
           state.userID = action.payload.userID;
         };
 
-        if (action.payload.hasOwnProperty("firstName")) {
+        if (HasNonEmptyProperty(action.payload, "firstName")) {
           state.firstName = action.payload.firstName;
         };
 
-        if (action.payload.hasOwnProperty("lastName")) {
+        if (HasNonEmptyProperty(action.payload, "lastName")) {
           state.lastName = action.payload.lastName;
         };
 
-        if (action.payload.hasOwnProperty("email")) {
+        if (HasNonEmptyProperty(action.payload, "email")) {
           state.email = action.payload.email;
         };
 
-        if (action.payload.hasOwnProperty("updatedBy")) {
+        if (HasNonEmptyProperty(action.payload, "updatedBy")) {
           state.updatedBy = action.payload.updatedBy;
         };
 
-        if (action.payload.hasOwnProperty("admin")) {
+        if (HasNonEmptyProperty(action.payload, "admin")) {
           state.admin = action.payload.admin;
         };
 
-        if (action.payload.hasOwnProperty("active")) {
+        if (HasNonEmptyProperty(action.payload, "active")) {
           state.active = action.payload.active;
         };
 
-        if (action.payload.hasOwnProperty("arrayChecklist")) {
+        if (HasNonEmptyProperty(action.payload, "arrayChecklist")) {
           state.arrayChecklist = action.payload.arrayChecklist;
         };
 
-        if (action.payload.hasOwnProperty("checklistLoaded")) {
+        if (HasNonEmptyProperty(action.payload, "checklistLoaded")) {
           state.checklistLoaded = action.payload.checklistLoaded;
         };
 
-        if (action.payload.hasOwnProperty("lastDatabaseRetrievalChecklist")) {
+        if (HasNonEmptyProperty(action.payload, "lastDatabaseRetrievalChecklist")) {
           state.lastDatabaseRetrievalChecklist = action.payload.lastDatabaseRetrievalChecklist;
         };
 
-        if (action.payload.hasOwnProperty("userLoaded")) {
+        if (HasNonEmptyProperty(action.payload, "userLoaded")) {
           state.userLoaded = action.payload.userLoaded;
         } else {
           state.userLoaded = true;
@@ -142,7 +142,7 @@ const userSlice = createSlice({
 
       if (typeof checklistItem === "object") {
 
-        if (checklistItem.hasOwnProperty("titleID")) {
+        if (HasNonEmptyProperty(checklistItem, "titleID")) {
 
           checklistListIndex = state.arrayChecklist.findIndex(title => title.titleID === checklistItem.titleID);
 
@@ -151,35 +151,35 @@ const userSlice = createSlice({
           // state.arrayChecklist[checklistListIndex].titleID = checklistItem.titleID;
         };
 
-        if (checklistItem.hasOwnProperty("reviewID")) {
+        if (HasNonEmptyProperty(checklistItem, "reviewID")) {
           state.arrayChecklist[checklistListIndex].reviewID = checklistItem.reviewID;
         };
 
-        if (checklistItem.hasOwnProperty("userID")) {
+        if (HasNonEmptyProperty(checklistItem, "userID")) {
           state.arrayChecklist[checklistListIndex].userID = checklistItem.userID;
         };
 
-        if (checklistItem.hasOwnProperty("updatedBy")) {
+        if (HasNonEmptyProperty(checklistItem, "updatedBy")) {
           state.arrayChecklist[checklistListIndex].updatedBy = checklistItem.updatedBy;
         };
 
-        if (checklistItem.hasOwnProperty("read")) {
+        if (HasNonEmptyProperty(checklistItem, "read")) {
           state.arrayChecklist[checklistListIndex].read = checklistItem.read;
         };
 
-        if (checklistItem.hasOwnProperty("dateRead")) {
+        if (HasNonEmptyProperty(checklistItem, "dateRead")) {
           state.arrayChecklist[checklistListIndex].dateRead = checklistItem.dateRead;
         };
 
-        if (checklistItem.hasOwnProperty("userReviewActive")) {
+        if (HasNonEmptyProperty(checklistItem, "userReviewActive")) {
           state.arrayChecklist[checklistListIndex].userReviewActive = checklistItem.userReviewActive;
         };
 
-        if (checklistItem.hasOwnProperty("userReviewCreatedDate")) {
+        if (HasNonEmptyProperty(checklistItem, "userReviewCreatedDate")) {
           state.arrayChecklist[checklistListIndex].userReviewCreatedDate = checklistItem.userReviewCreatedDate;
         };
 
-        if (checklistItem.hasOwnProperty("userReviewUpdateDate")) {
+        if (HasNonEmptyProperty(checklistItem, "userReviewUpdateDate")) {
           state.arrayChecklist[checklistListIndex].userReviewUpdateDate = checklistItem.userReviewUpdateDate;
         };
 

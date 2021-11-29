@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button } from "reactstrap";
 import AppSettings from "./app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "./app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./app/sharedFunctions";
 import { setAppOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/appSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
@@ -572,7 +572,7 @@ function App() {
           <Col xs="10">
 
             <Row className="text-center">
-              {/* {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
+              {/* {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
               {IsEmpty(checklistMessage) === false ? <Alert color="info">{checklistMessage}</Alert> : null}
@@ -627,9 +627,9 @@ function App() {
               {/* <Route exact path="/editions/:media" component={Editions} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. */}
-              {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "categories" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
-              {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "titles" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
-              {IsEmpty(linkItem) === false && linkItem.hasOwnProperty("linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
 
             </Switch>
 

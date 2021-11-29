@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear, encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../app/sharedFunctions";
 import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
 import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -54,7 +54,7 @@ const Titles = (props) => {
   // console.log(componentName, GetDateTime(), "editionListState", editionListState);
 
   let categoryParam;
-  if (IsEmpty(props.linkItem) === false && props.linkItem.hasOwnProperty("linkName")) {
+  if (IsEmpty(props.linkItem) === false && HasNonEmptyProperty(props.linkItem, "linkName")) {
     // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
     // console.log(componentName, GetDateTime(), "props.linkItem.linkName", props.linkItem.linkName);
     categoryParam = props.linkItem.linkName; // props.match.params.category;
