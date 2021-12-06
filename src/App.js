@@ -179,7 +179,6 @@ function App() {
 
 
   const getUser = (token) => {
-    // console.log(componentName, GetDateTime(), "getUser");
     // console.log(componentName, GetDateTime(), "getUser baseURL", baseURL);
 
     clearMessages();
@@ -251,7 +250,6 @@ function App() {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, GetDateTime(), "getChecklist");
     // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "getChecklist token", token);
 
@@ -311,7 +309,6 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect");
 
     if (appAllowUserInteractions === true && IsEmpty(localStorage.getItem("token")) === false) {
 
@@ -349,7 +346,6 @@ function App() {
     // console.log(componentName, GetDateTime(), "useEffect editionsDataOffline", editionsDataOffline);
 
     if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
-      // console.log(componentName, GetDateTime(), "useEffect setAppOffline");
       dispatch(setAppOffline(true));
     };
 

@@ -79,7 +79,6 @@ function LoadUserReviews() {
 
 
   const getUserReviews = () => {
-    // console.log(componentName, GetDateTime(), "getUserReviews");
     // console.log(componentName, GetDateTime(), "getUserReviews baseURL", baseURL);
 
     setUserReviewMessage("");
@@ -127,7 +126,6 @@ function LoadUserReviews() {
 
 
   //   const getUserReviewsRatings = () => {
-  //     // console.log(componentName, GetDateTime(), "getUserReviewsRatings");
   //     // console.log(componentName, GetDateTime(), "getUserReviewsRatings baseURL", baseURL);
 
   //     setOverallTitleRatingMessage("");
@@ -179,7 +177,6 @@ function LoadUserReviews() {
 
 
   const fetchLocalDataUserReviews = () => {
-    // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviews");
 
     let url = "bibliographyData/userReviews.json";
 
@@ -226,7 +223,6 @@ function LoadUserReviews() {
   };
 
   // const fetchLocalDataUserReviewsRatings = () => {
-  //   // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings");
 
   //   let url = "bibliographyData/userReviewsRatings.json";
 
@@ -270,7 +266,6 @@ function LoadUserReviews() {
   // };
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect");
 
     // * Only load the bibliography data once per session unless the data is changed
     if (appOffline) {

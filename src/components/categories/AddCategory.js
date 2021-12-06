@@ -51,7 +51,6 @@ const AddCategory = (props) => {
 
 
   const addCategory = () => {
-    // console.log(componentName, GetDateTime(), "addCategory");
     // console.log(componentName, GetDateTime(), "addCategory baseURL", baseURL);
 
     clearMessages();

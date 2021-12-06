@@ -43,7 +43,6 @@ const EditMedia = (props) => {
 
 
   const submitForm = () => {
-    // console.log(componentName, GetDateTime(), "submitForm");
 
 
 

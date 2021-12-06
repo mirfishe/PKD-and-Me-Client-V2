@@ -47,7 +47,6 @@ const FromTheHomeopape = (props) => {
 
 
   const getNews = () => {
-    // console.log(componentName, GetDateTime(), "getNews");
 
     let url = baseURL + "fromthehomeopape/";
     // TODO: Fix the way that the limit works on the server because it works differently than the local version.
@@ -93,7 +92,6 @@ const FromTheHomeopape = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect");
 
     getNews();
 

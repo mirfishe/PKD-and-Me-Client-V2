@@ -25,7 +25,6 @@ function UserReviewList() {
 
 
   const getUserReviews = () => {
-    // console.log(componentName, GetDateTime(), "getUserReviews");
     // console.log(componentName, GetDateTime(), "getUserReviews baseURL", baseURL);
 
     setUserReviewMessage("");

@@ -113,7 +113,6 @@ const AddTitle = (props) => {
 
 
   const addTitle = () => {
-    // console.log(componentName, GetDateTime(), "addTitle");
     // console.log(componentName, GetDateTime(), "addTitle baseURL", baseURL);
 
     clearMessages();

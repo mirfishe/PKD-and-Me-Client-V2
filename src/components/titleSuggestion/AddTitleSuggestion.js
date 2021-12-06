@@ -80,7 +80,6 @@ const AddTitleSuggestion = (props) => {
 
 
   const addTitleSuggestion = () => {
-    // console.log(componentName, GetDateTime(), "addTitleSuggestion");
     // console.log(componentName, GetDateTime(), "addTitleSuggestion baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "addTitleSuggestion sessionToken", sessionToken);
 

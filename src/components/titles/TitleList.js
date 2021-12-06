@@ -25,7 +25,6 @@ const TitleList = (props) => {
 
 
   const getTitles = () => {
-    // console.log(componentName, GetDateTime(), "getTitle");
     // console.log(componentName, GetDateTime(), "getTitle baseURL", baseURL);
 
     setTitleMessage("");

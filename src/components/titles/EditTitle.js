@@ -198,7 +198,6 @@ const EditTitle = (props) => {
 
 
   const addTitle = () => {
-    // console.log(componentName, GetDateTime(), "addTitle");
     // console.log(componentName, GetDateTime(), "addTitle baseURL", baseURL);
 
     clearMessages();
@@ -456,7 +455,6 @@ const EditTitle = (props) => {
 
 
   const updateTitle = (deleteTitle) => {
-    // console.log(componentName, GetDateTime(), "updateTitle");
     // console.log(componentName, GetDateTime(), "updateTitle deleteTitle", deleteTitle);
     // console.log(componentName, GetDateTime(), "updateTitle baseURL", baseURL);
 
@@ -737,7 +735,6 @@ const EditTitle = (props) => {
 
 
   const deleteTitle = () => {
-    // console.log(componentName, GetDateTime(), "deleteTitle");
     // console.log(componentName, GetDateTime(), "deleteTitle baseURL", baseURL);
 
     clearMessages();
@@ -826,7 +823,6 @@ const EditTitle = (props) => {
 
 
   const deleteEdition = (editionID/*, editionItemIndex*/) => {
-    // console.log(componentName, GetDateTime(), "deleteEdition");
     // console.log(componentName, GetDateTime(), "deleteEdition baseURL", baseURL);
 
     clearMessages();

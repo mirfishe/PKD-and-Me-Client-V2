@@ -25,7 +25,6 @@ const MediaList = (props) => {
 
 
   const getMedia = () => {
-    // console.log(componentName, GetDateTime(), "getMedia");
     // console.log(componentName, GetDateTime(), "getMedia baseURL", baseURL);
 
     setMediaMessage("");

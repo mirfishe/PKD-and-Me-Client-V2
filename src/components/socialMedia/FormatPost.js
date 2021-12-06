@@ -55,7 +55,6 @@ const FormatPost = () => {
 
 
   const formatPost = () => {
-    // console.log(componentName, GetDateTime(), "formatPost");
 
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
 

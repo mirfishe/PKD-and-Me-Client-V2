@@ -43,7 +43,6 @@ const EditCategory = (props) => {
 
 
   const submitForm = () => {
-    // console.log(componentName, GetDateTime(), "submitForm");
 
 
 

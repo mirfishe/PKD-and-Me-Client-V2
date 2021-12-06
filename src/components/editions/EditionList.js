@@ -25,7 +25,6 @@ const EditionList = (props) => {
 
 
   const getEditions = () => {
-    // console.log(componentName, GetDateTime(), "getEdition");
     // console.log(componentName, GetDateTime(), "getEdition baseURL", baseURL);
 
     setEditionMessage("");

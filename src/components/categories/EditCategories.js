@@ -60,7 +60,6 @@ const EditCategories = (props) => {
 
 
   const updateCategories = () => {
-    // console.log(componentName, GetDateTime(), "updateCategories");
 
     // Need to restructure the form for this to work
     // let formElements = event.target.elements;
