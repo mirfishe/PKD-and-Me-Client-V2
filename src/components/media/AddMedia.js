@@ -53,7 +53,6 @@ const AddMedia = (props) => {
 
 
   const addMedia = () => {
-    // console.log(componentName, GetDateTime(), "addMedia");
     // console.log(componentName, GetDateTime(), "addMedia baseURL", baseURL);
 
     clearMessages();

@@ -108,7 +108,6 @@ const AddUserReview = (props) => {
 
 
   const addUserReview = () => {
-    // console.log(componentName, GetDateTime(), "addUserReview");
     // console.log(componentName, GetDateTime(), "addUserReview baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "addUserReview props.titleID", props.titleID);
 

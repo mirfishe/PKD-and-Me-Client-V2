@@ -121,7 +121,6 @@ const AddEdition = (props) => {
 
 
   const addEdition = () => {
-    // console.log(componentName, GetDateTime(), "addEdition");
     // console.log(componentName, GetDateTime(), "addEdition baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "addEdition props.titleID", props.titleID);
 
@@ -349,7 +348,6 @@ const AddEdition = (props) => {
 
 
   const checkASIN = (ASIN) => {
-    // console.log(componentName, GetDateTime(), "checkASIN");
     // console.log(componentName, GetDateTime(), "checkASIN baseURL", baseURL);
 
     setASINMessage("");

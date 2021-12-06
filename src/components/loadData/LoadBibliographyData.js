@@ -57,7 +57,6 @@ function LoadBibliographyData() {
 
 
   const addRatings = (titleData, userReviewsRatingsData) => {
-    // console.log(componentName, GetDateTime(), "addRatings");
     // console.log(componentName, GetDateTime(), "addRatings baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "addRatings userReviewsRatingsData", userReviewsRatingsData);
 
@@ -122,7 +121,6 @@ function LoadBibliographyData() {
 
 
   const getUserReviewsRatings = (titleData) => {
-    // console.log(componentName, GetDateTime(), "getUserReviewsRatings");
     // console.log(componentName, GetDateTime(), "getUserReviewsRatings baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "getUserReviewsRatings titleData", titleData);
 
@@ -177,7 +175,6 @@ function LoadBibliographyData() {
 
 
   const fetchLocalDataUserReviewsRatings = (titleData) => {
-    // console.log(componentName, GetDateTime(), "fetchLocalDataUserReviewsRatings");
 
     let url = "bibliographyData/userReviewsRatings.json";
 
@@ -283,7 +280,6 @@ function LoadBibliographyData() {
 
 
   const getCategories = () => {
-    // console.log(componentName, GetDateTime(), "getCategories");
     // console.log(componentName, GetDateTime(), "getCategories baseURL", baseURL);
 
     setCategoryMessage("");
@@ -331,7 +327,6 @@ function LoadBibliographyData() {
 
 
   const getMedia = () => {
-    // console.log(componentName, GetDateTime(), "getMedia");
     // console.log(componentName, GetDateTime(), "getMedia baseURL", baseURL);
 
     setMediaMessage("");
@@ -380,7 +375,6 @@ function LoadBibliographyData() {
 
 
   const getTitles = () => {
-    // console.log(componentName, GetDateTime(), "getTitle");
     // console.log(componentName, GetDateTime(), "getTitle baseURL", baseURL);
 
     setTitleMessage("");
@@ -429,7 +423,6 @@ function LoadBibliographyData() {
 
 
   const getEditions = () => {
-    // console.log(componentName, GetDateTime(), "getEdition");
     // console.log(componentName, GetDateTime(), "getEdition baseURL", baseURL);
 
     setEditionMessage("");
@@ -478,7 +471,6 @@ function LoadBibliographyData() {
 
 
   const fetchLocalDataCategories = () => {
-    // console.log(componentName, GetDateTime(), "fetchLocalDataCategories");
 
     let url = "bibliographyData/categories.json";
 
@@ -524,7 +516,6 @@ function LoadBibliographyData() {
 
 
   const fetchLocalDataMedia = () => {
-    // console.log(componentName, GetDateTime(), "fetchLocalDataMedia");
 
     let url = "bibliographyData/media.json";
 
@@ -570,7 +561,6 @@ function LoadBibliographyData() {
 
 
   const fetchLocalDataTitles = () => {
-    // console.log(componentName, GetDateTime(), "fetchLocalDataTitles");
 
     let url = "bibliographyData/titles.json";
 
@@ -616,7 +606,6 @@ function LoadBibliographyData() {
 
 
   const fetchLocalDataEditions = () => {
-    // console.log(componentName, GetDateTime(), "fetchLocalDataEditions");
 
     let url = "bibliographyData/editions.json";
 
@@ -662,7 +651,6 @@ function LoadBibliographyData() {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect");
 
     // ! Experiment in adding bibliographical data to local storage that doesn't work
     // let categoriesDataLocalStorage = false;

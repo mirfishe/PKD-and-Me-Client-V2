@@ -15,7 +15,6 @@ function LoadAppSettings() {
 
   // * Loads the settings from environment.js first and then if there are any settings in the AppSettings.json file on the server, those override what was set in environment.js
   const getAppSettings = () => {
-    // console.log(componentName, GetDateTime(), "getAppSettings");
     // console.log(componentName, GetDateTime(), "getAppSettings profileType", profileType);
 
     // * Load settings from environment.js into Redux
@@ -245,7 +244,6 @@ function LoadAppSettings() {
   };
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect");
 
     // * Only load the AppSettings data once per session unless the data is changed
     if (!appSettingsLoaded) {

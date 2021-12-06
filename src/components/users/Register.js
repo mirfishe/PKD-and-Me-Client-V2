@@ -73,7 +73,6 @@ const Register = (props) => {
 
 
   const register = () => {
-    // console.log(componentName, GetDateTime(), "register");
 
     clearMessages();
     setErrFirstName("");
@@ -253,7 +252,6 @@ const Register = (props) => {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, GetDateTime(), "getChecklist");
     // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
 
     setChecklistMessage("");

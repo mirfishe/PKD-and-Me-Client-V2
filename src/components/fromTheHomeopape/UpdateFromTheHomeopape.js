@@ -192,7 +192,6 @@ const FromTheHomeopape = (props) => {
 
 
   const getNews = () => {
-    // console.log(componentName, GetDateTime(), "getNews");
 
     let url = baseURL + "fromthehomeopape/";
     // TODO: Fix the way that the limit works on the server because it works differently than the local version.
@@ -236,7 +235,6 @@ const FromTheHomeopape = (props) => {
 
 
   const fetchNews = () => {
-    // console.log(componentName, GetDateTime(), "fetchNews");
 
     let url = baseURL + "fromthehomeopape/new";
 
@@ -274,7 +272,6 @@ const FromTheHomeopape = (props) => {
 
 
   const fetchNewsUpdate = () => {
-    // console.log(componentName, GetDateTime(), "fetchNewsUpdate");
 
     let url = baseURL + "fromthehomeopape/update";
 
@@ -309,7 +306,6 @@ const FromTheHomeopape = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect");
 
     // fetchNews();
     // fetchNews2();
@@ -323,7 +319,6 @@ const FromTheHomeopape = (props) => {
 
 
   const setDisplay = (itemID, display) => {
-    // console.log(componentName, GetDateTime(), "setDisplay");
     // console.log(componentName, GetDateTime(), "setDisplay itemID", itemID);
     // console.log(componentName, GetDateTime(), "setDisplay display", display);
 
@@ -394,7 +389,6 @@ const FromTheHomeopape = (props) => {
 
 
   const setPosted = (itemID, posted) => {
-    // console.log(componentName, GetDateTime(), "setPosted");
     // console.log(componentName, GetDateTime(), "setPosted itemID", itemID);
     // console.log(componentName, GetDateTime(), "setPosted posted", posted);
 
@@ -465,7 +459,6 @@ const FromTheHomeopape = (props) => {
 
 
   const setAlwaysFilter = (itemID, alwaysFilter) => {
-    // console.log(componentName, GetDateTime(), "setAlwaysFilter");
     // console.log(componentName, GetDateTime(), "setAlwaysFilter itemID", itemID);
     // console.log(componentName, GetDateTime(), "setAlwaysFilter alwaysFilter", alwaysFilter);
 
@@ -533,6 +526,17 @@ const FromTheHomeopape = (props) => {
     };
 
   };
+
+
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+
+    if (admin !== true) {
+      // return <Redirect to="/" />;
+      // setModal(false);
+    };
+
+  }, [admin]);
 
 
   return (

@@ -212,7 +212,6 @@ const Title = (props) => {
   // const [overallTitleRatingCount, setOverallTitleRatingCount] = useState(0);
 
   // const getTitleRating = () => {
-  //     // console.log(componentName, GetDateTime(), "getTitleRating");
   //     // console.log(componentName, GetDateTime(), "getTitleRating baseURL", baseURL);
 
   //     setOverallTitleRatingMessage("");

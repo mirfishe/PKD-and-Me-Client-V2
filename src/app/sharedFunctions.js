@@ -633,7 +633,6 @@ export const GetDateTime = () => {
 
 
 export const GetCurrentDay = () => {
-  // console.log(componentName, GetDateTime(), "GetCurrentDay");
 
   return new Date().getDate();
 
@@ -641,7 +640,6 @@ export const GetCurrentDay = () => {
 
 
 export const GetCurrentMonth = () => {
-  // console.log(componentName, GetDateTime(), "GetCurrentMonth");
 
   return new Date().getMonth() + 1;
 
@@ -649,7 +647,6 @@ export const GetCurrentMonth = () => {
 
 
 export const GetCurrentYear = () => {
-  // console.log(componentName, GetDateTime(), "GetCurrentYear");
 
   return new Date().getFullYear();
 
@@ -1466,7 +1463,6 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
 
 
 export const GenerateRandomNumberDigits = (digits) => {
-  // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits");
   // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits digits", digits);
 
   let randomNumber = Math.floor(Math.random() * 10 ** digits).toString();

@@ -25,7 +25,6 @@ const CategoryList = (props) => {
 
 
   const getCategories = () => {
-    // console.log(componentName, GetDateTime(), "getCategories");
     // console.log(componentName, GetDateTime(), "getCategories baseURL", baseURL);
 
     setCategoryMessage("");

@@ -194,7 +194,6 @@ const EditUserReview = (props) => {
 
 
   const addUserReview = () => {
-    // console.log(componentName, GetDateTime(), "addUserReview");
     // console.log(componentName, GetDateTime(), "addUserReview baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "addUserReview props.titleID", props.titleID);
 
@@ -403,7 +402,6 @@ const EditUserReview = (props) => {
 
 
   const updateUserReview = (deleteUserReview) => {
-    // console.log(componentName, GetDateTime(), "updateUserReview");
     // console.log(componentName, GetDateTime(), "updateUserReview baseURL", baseURL);
 
     clearMessages();
@@ -639,7 +637,6 @@ const EditUserReview = (props) => {
 
 
   const deleteUserReview = () => {
-    // console.log(componentName, GetDateTime(), "deleteUserReview");
     // console.log(componentName, GetDateTime(), "deleteUserReview baseURL", baseURL);
 
     clearMessages();

@@ -69,7 +69,6 @@ const AddComment = (props) => {
 
 
   const addComment = () => {
-    // console.log(componentName, GetDateTime(), "addComment");
     // console.log(componentName, GetDateTime(), "addComment baseURL", baseURL);
 
     clearMessages();

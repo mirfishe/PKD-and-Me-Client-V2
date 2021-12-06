@@ -181,7 +181,6 @@ const EditEdition = (props) => {
 
 
   const addEdition = () => {
-    // console.log(componentName, GetDateTime(), "addEdition");
     // console.log(componentName, GetDateTime(), "addEdition baseURL", baseURL);
     // console.log(componentName, GetDateTime(), "addEdition props.titleID", props.titleID);
 
@@ -409,7 +408,6 @@ const EditEdition = (props) => {
 
 
   const updateEdition = (deleteEdition) => {
-    // console.log(componentName, GetDateTime(), "updateEdition");
     // console.log(componentName, GetDateTime(), "updateEdition deleteEdition", deleteEdition);
     // console.log(componentName, GetDateTime(), "updateEdition baseURL", baseURL);
 
@@ -643,7 +641,6 @@ const EditEdition = (props) => {
 
 
   const deleteEdition = () => {
-    // console.log(componentName, GetDateTime(), "deleteEdition");
     // console.log(componentName, GetDateTime(), "deleteEdition baseURL", baseURL);
 
     clearMessages();
@@ -713,7 +710,6 @@ const EditEdition = (props) => {
 
 
   const checkASIN = (ASIN) => {
-    // console.log(componentName, GetDateTime(), "checkASIN");
     // console.log(componentName, GetDateTime(), "checkASIN baseURL", baseURL);
 
     setASINMessage("");

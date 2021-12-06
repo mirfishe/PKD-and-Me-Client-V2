@@ -67,7 +67,6 @@ const Login = (props) => {
 
 
   const logIn = () => {
-    // console.log(componentName, GetDateTime(), "logIn");
 
     clearMessages();
     setErrEmail("");
@@ -211,7 +210,6 @@ const Login = (props) => {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, GetDateTime(), "getChecklist");
     // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
 
     setChecklistMessage("");

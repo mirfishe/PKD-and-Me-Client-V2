@@ -63,7 +63,6 @@ const EditUser = (props) => {
 
 
   const updateUser = (deleteUser) => {
-    // console.log(componentName, GetDateTime(), "updateUser");
 
     clearMessages();
     setErrFirstName("");

@@ -144,7 +144,6 @@ const Checklist = (props) => {
 
 
   const updateChecklist = (titleID, reviewID, read, owned) => {
-    // console.log(componentName, GetDateTime(), "updateChecklist");
 
     // console.log(componentName, GetDateTime(), "updateChecklist titleID", titleID);
     // console.log(componentName, GetDateTime(), "updateChecklist read", read);
