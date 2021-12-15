@@ -49,7 +49,7 @@ const New = () => {
 
       <Row>
         <Col xs="12" className="mb-4">
-          <TitleCard linkName="The-Man-In-The-High-Castle" imageSide="right" additionalText="Dick’s masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters." />
+          <TitleCard linkName="The-Man-In-The-High-Castle" imageSide="right" additionalText="Dick's masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters." />
         </Col>
       </Row>
 
@@ -61,7 +61,7 @@ const New = () => {
 
       <Row>
         <Col xs="12" className="mb-4">
-          <p className="text-center">If you would like further recommendations, visit <a href={setLocalPath("https://philipdick.com/biography/the-connoisseurs-choice/")} target="_blank" rel="noopener noreferrer">The Connoisseurs’ Choice</a> collated by Umberto Rossi.</p>
+          <p className="text-center">If you would like further recommendations, visit <a href={setLocalPath("https://philipdick.com/biography/the-connoisseurs-choice/")} target="_blank" rel="noopener noreferrer">The Connoisseurs' Choice</a> collated by Umberto Rossi.</p>
         </Col>
       </Row>
 

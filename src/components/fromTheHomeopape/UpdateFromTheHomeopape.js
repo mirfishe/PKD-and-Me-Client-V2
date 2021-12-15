@@ -8,7 +8,7 @@ import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } fr
 
 // * https://www.npmjs.com/package/rss-parser
 // * https://github.com/rbren/rss-parser
-import Parser from "rss-parser";
+// import Parser from "rss-parser";
 
 const FromTheHomeopape = (props) => {
 
@@ -658,6 +658,10 @@ const FromTheHomeopape = (props) => {
               show = false;
             };
 
+            if (homeopapeItem.itemLink.toLowerCase().includes("news.ycombinator.com")) {
+              show = false;
+            };
+
             if (homeopapeItem.itemTitle.toLowerCase().includes("pistorius") || homeopapeItem.itemContentSnippet.toLowerCase().includes("pistorius")) {
               show = false;
             };
@@ -677,6 +681,8 @@ const FromTheHomeopape = (props) => {
               param = "ct";
               regExp = new RegExp("[?&]" + param + "=.*$");
               itemLink = itemLink.replace(regExp, "");
+              itemLink = itemLink.replace("%3F", "?");
+              itemLink = itemLink.replace("%3D", "=");
               itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
             };
@@ -788,6 +794,8 @@ const FromTheHomeopape = (props) => {
               param = "ct";
               regExp = new RegExp("[?&]" + param + "=.*$");
               itemLink = itemLink.replace(regExp, "");
+              itemLink = itemLink.replace("%3F", "?");
+              itemLink = itemLink.replace("%3D", "=");
               itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
             };
