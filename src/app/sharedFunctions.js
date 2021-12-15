@@ -440,6 +440,24 @@ export const DisplaySpaceAfterComma = (text) => {
 };
 
 
+export const RemoveForwardSlashes = (text) => {
+  // console.log(componentName, GetDateTime(), "RemoveForwardSlashes text", text);
+
+  let displayText = text;
+
+  if (IsEmpty(text) === false) {
+
+    displayText = text.toString().replace(/\//g, "");
+
+  };
+
+  // console.log(componentName, GetDateTime(), "RemoveForwardSlashes displayText", displayText);
+
+  return displayText;
+
+};
+
+
 export const TryParseJSON = (jsonString) => {
   // console.log(componentName, GetDateTime(), "TryParseJSON jsonString", jsonString);
 
