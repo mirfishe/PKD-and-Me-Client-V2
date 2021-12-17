@@ -425,7 +425,7 @@ export const DisplayValue = (variableValue) => {
 export const DisplaySpaceAfterComma = (text) => {
   // console.log(componentName, GetDateTime(), "DisplaySpaceAfterComma text", text);
 
-  let displayText = "";
+  let displayText = text;
 
   if (IsEmpty(text) === false) {
 
@@ -1032,20 +1032,26 @@ export const ValidateMilitaryTime = (timeEntered) => {
       //     if (i === 0) {
 
       //       if (timeArray[i] !== "0" && timeArray[i] !== "1" && timeArray[i] !== "2") {
+
       //         validTimeFormat = false;
+
       //       };
 
       //     } else if (i === 1) {
 
       //       // if timeArray[1] =2 then 
       //       if (timeArray[i] !== "0" && timeArray[i] !== "1" && timeArray[i] !== "2" && timeArray[i] !== "3" && timeArray[i] !== "4" && timeArray[i] !== "5") {
+
       //         validTimeFormat = false;
+
       //       };
 
       //     } else if (i === 2) {
 
       //       if (timeArray[i] !== "0" && timeArray[i] !== "1" && timeArray[i] !== "2" && timeArray[i] !== "3" && timeArray[i] !== "4" && timeArray[i] !== "5") {
+
       //         validTimeFormat = false;
+
       //       };
 
       //     };
@@ -1322,15 +1328,24 @@ export const ConvertNullEmptyString = (value) => {
   // console.log(componentName, GetDateTime(), "ConvertNullEmptyString typeof value", typeof value);
 
   // if (value === null) {
+
   //   return "";
   // } else if (value === undefined) {
+
   //   return "";
+
   // } else if (isNaN(value) === true && value.toString().trim() === "") {
+
   //   return null;
+
   // } else if (value === "") {
+
   //   return null;
+
   // } else {
+
   //   return value;
+
   // };
 
   // TODO: Change this function so that it can handle if there are already empty string values in the database. -- 03/19/2021 MF
@@ -1384,16 +1399,24 @@ export const IsWholeNumber = (value) => {
   // console.log(componentName, GetDateTime(), "IsWholeNumber Number.isInteger(parseFloat(value.toString().trim()))", Number.isInteger(parseFloat(value.toString().trim())));
 
   // if (isNaN(parseInt(value.toString().trim())) === true) {
+
   //   return false;
+
   // } else {
+
   //   return true;
+
   // };
 
   // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
   // if (Number.isInteger(parseFloat(value.toString().trim())) === true) {
+
   //   return true;
+
   // } else {
+
   //   return false;
+
   // };
 
   if (isNaN(value.toString().trim()) === true) {
