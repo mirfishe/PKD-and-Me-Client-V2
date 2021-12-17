@@ -42,7 +42,7 @@ import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheH
 import AddComment from "./components/comments/AddComment";
 import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
 
-function App() {
+function App(props) {
 
   const componentName = "App.js";
 
@@ -637,7 +637,7 @@ function App() {
         </Row>
         <Row>
           <Col xs="12" className="smallerText text-center">
-            Version: {process.env.REACT_APP_VERSION}
+            Version: {props.applicationVersion}
           </Col>
         </Row>
       </Container>
