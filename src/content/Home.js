@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../utilities/SharedFunctions";
 import { setPageURL } from "../app/urlsSlice";
 import TitleCard from "../components/titles/TitleCard";
 import FromTheHomeopape from "../components/fromTheHomeopape/FromTheHomeopape";
@@ -16,13 +16,16 @@ const Home = () => {
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
+
   document.title = "Home | " + appName + " | " + siteName;
 
 
   const redirectPage = (linkName) => {
+
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
+
   };
 
 
@@ -30,9 +33,11 @@ const Home = () => {
     <Container className="mt-4">
       <Row>
         <Col xs="12">
+
           <h3 className="text-center">PKD and Me</h3>
 
           <h6 className="text-center">A personal journey into the works of Philip K. Dick.</h6>
+
         </Col>
       </Row>
 
@@ -51,28 +56,38 @@ const Home = () => {
 
         </Col>
         <Col xs="2">
+
           <img src={setLocalImagePath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
+
         </Col>
       </Row>
 
       <Row className="mx-4">
         <Col xs="12">
+
           <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+
         </Col>
       </Row>
 
       <Row className="my-4">
         <Col xs="12">
+
           <FromTheHomeopape headerText="From the Homeopape" />
+
         </Col>
       </Row>
 
       {/* <Row className="my-4">
         <Col xs="8">
+
           <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+
         </Col>
         <Col xs="4">
+
           <FromTheHomeopape headerText="From the Homeopape" />
+          
         </Col>
       </Row> */}
 

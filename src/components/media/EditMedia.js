@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+
+// ! The coding on this component is not finished. -- 03/06/2021 MF
 
 const EditMedia = (props) => {
 
@@ -16,8 +18,8 @@ const EditMedia = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
+  // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
@@ -49,40 +51,38 @@ const EditMedia = (props) => {
   };
 
 
-  const toggle = () => {
-    setModal(!modal);
-  };
-
-
   return (
     <React.Fragment>
-      <Button outline size="sm" color="info" onClick={toggle}>Open</Button>
-      <Modal isOpen={modal} toggle={toggle} size="md">
-        <ModalHeader toggle={toggle}>Form</ModalHeader>
+
+      <Button outline size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Open</Button>
+
+      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
+        <ModalHeader toggle={(event) => { setModal(!modal); }}>Form</ModalHeader>
         <ModalBody>
           <Form>
+
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtEmail">Email Address</Label>
               <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
               {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
-
             </FormGroup>
 
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={submitForm}>Submit</Button>
-              <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
             </ModalFooter>
+
           </Form>
         </ModalBody>
       </Modal>
+
     </React.Fragment>
   );
-
 };
 
 export default EditMedia;

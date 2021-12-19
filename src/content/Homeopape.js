@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../utilities/SharedFunctions";
 import { setPageURL } from "../app/urlsSlice";
 
 const Homeopape = () => {
@@ -14,13 +14,16 @@ const Homeopape = () => {
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
+
   document.title = "Home | " + appName + " | " + siteName;
 
 
   const redirectPage = (linkName) => {
+
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
+
   };
 
 
@@ -28,7 +31,9 @@ const Homeopape = () => {
     <Container className="mt-4">
       <Row>
         <Col xs="12">
+
           <h4 className="text-center">Homeopape</h4>
+
         </Col>
       </Row>
 
@@ -43,15 +48,22 @@ const Homeopape = () => {
           <p>View the <a href={setLocalPath("http://www.philipdick.com/resources/miscellaneous/pkdicktionary/#homeopape")} target="_blank" rel="noopener noreferrer">definition on the Philip K. Dick Fan Site</a>.</p>
 
           <Container>
+
             <blockquote className="blockquote-reverse">
+
               <p>In a corner of the large room a chime sounded and a tinkling mechanical voice called, “I'm your free homeopape machine, a service supplied exclusively by all the fine Rootes hotels throughout Earth and the colonies. Simply dial the classification of news that you wish, and in a matter of seconds I'll speedily provide you with a fresh, up-to-the-minute homeopape tailored to your individual requirements; and, let me repeat, at no cost to you!”</p>
+
               <footer>From <Link to="/Ubik" onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage("Ubik"); }}>Ubik</Link>, by <Link to="/about">Philip K. Dick</Link></footer>
+
             </blockquote>
+
           </Container>
 
         </Col>
         <Col xs="3">
+
           <img src={setLocalImagePath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg")} alt="Philip K. Dick" />
+
         </Col>
       </Row>
 

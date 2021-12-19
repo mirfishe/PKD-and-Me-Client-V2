@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
 
 const componentName = "mediaSlice.js";
 
@@ -19,8 +19,10 @@ const mediaSlice = createSlice({
       // console.log(componentName, GetDateTime(), "loadArrayMedia action.payload.length", action.payload.length);
 
       for (let i = 0; i < action.payload.length; i++) {
+
         // console.log(componentName, GetDateTime(), "loadArrayMedia action.payload[i]", action.payload[i]);
         state.arrayMedia.push(action.payload[i]);
+
       };
 
       state.mediaLoaded = true;
@@ -33,8 +35,10 @@ const mediaSlice = createSlice({
 
       // * Could change this to accept an object and add that object to the store
       for (let i = 0; i < action.payload.length; i++) {
+
         // console.log(componentName, GetDateTime(), "addStateMedia action.payload[i]", action.payload[i]);
         state.arrayMedia.push(action.payload[i]);
+
       };
 
     },
@@ -58,23 +62,33 @@ const mediaSlice = createSlice({
         };
 
         if (HasNonEmptyProperty(mediaItem, "media")) {
+
           state.arrayMedia[mediaItemIndex].media = mediaItem.media;
+
         };
 
         if (HasNonEmptyProperty(mediaItem, "electronic")) {
+
           state.arrayMedia[mediaItemIndex].electronic = mediaItem.electronic;
+
         };
 
         if (HasNonEmptyProperty(mediaItem, "sortID")) {
+
           state.arrayMedia[mediaItemIndex].sortID = mediaItem.sortID;
+
         };
 
         if (HasNonEmptyProperty(mediaItem, "active")) {
+
           state.arrayMedia[mediaItemIndex].active = mediaItem.active;
+
         };
 
         if (HasNonEmptyProperty(mediaItem, "updateDate")) {
+
           state.arrayMedia[mediaItemIndex].updateDate = mediaItem.updateDate;
+
         };
 
       };

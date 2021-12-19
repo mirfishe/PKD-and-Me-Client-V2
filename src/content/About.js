@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../utilities/SharedFunctions";
 import { setPageURL } from "../app/urlsSlice";
 
 const About = () => {
@@ -14,13 +14,16 @@ const About = () => {
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
+
   document.title = "About Philip K. Dick | " + appName + " | " + siteName;
 
 
   const redirectPage = (linkName) => {
+
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
+
   };
 
 
@@ -28,9 +31,11 @@ const About = () => {
     <Container className="mt-4">
       <Row>
         <Col xs="12">
+
           <h4 className="text-center">Philip K. Dick: A Brief Biography</h4>
 
           <h6 className="text-center">by Lord RC</h6>
+
         </Col>
       </Row>
 
@@ -43,12 +48,15 @@ const About = () => {
 
         </Col>
         <Col xs="2">
+
           <img src={setLocalImagePath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
+
         </Col>
       </Row>
 
       <Row>
         <Col xs="12">
+
           <p>In the Spring of 1952 Phil got serious and enlisted the Scott Meredith Literary Agency in his cause. This agency would represent him for the rest of his writing career. He had already sold 15 short stories by this time and considered himself a professional writer. The early 1950s were a busy time for science fiction writers and PKD wrote and published 82 short stories between 1952 and 1958, as well as three novels.</p>
 
           <p>His first published novel was Solar Lottery, written in 1954 and published by Ace Books in 1955 as one half of an Ace Double. He was also at this time writing and failing to sell several 'mainstream' novels. Many of these have seen publication since his death. The earliest (1952) and one of the best of these straight novels is Gather Yourselves Together. It is also the last of his novels to be published (1994 WCS Books).</p>
@@ -67,7 +75,6 @@ const About = () => {
 
         </Col>
       </Row>
-
 
     </Container>
   );

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Container, Col, Row, Alert } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../utilities/SharedFunctions";
+
+// ! The coding on this component is not finished. -- 03/06/2021 MF
 
 const Comments = (props) => {
 
@@ -42,15 +44,20 @@ const Comments = (props) => {
     <Container className="my-4">
       <Row>
         <Col xs="12">
+
           <h5 className="text-center">Comments</h5>
+
         </Col>
       </Row>
       <Row>
         <Col className="text-center" xs="12">
+
           {IsEmpty(errCommentMessage) === false ? <Alert color="danger">{errCommentMessage}</Alert> : null}
+
         </Col>
       </Row>
       <Row>
+
         {comments.map((comment) => {
 
           return (
@@ -58,25 +65,27 @@ const Comments = (props) => {
 
               <Row>
                 <Col xs="12">
+
                   {IsEmpty(comment.comment) === false ? <p className="displayParagraphs">{comment.comment}</p> : null}
+
                 </Col>
               </Row>
 
               <Row>
                 <Col xs="12">
-                  <p>
-                    Submitted by {IsEmpty(comment.firstName) === false ? comment.firstName : null} {IsEmpty(comment.lastName) === false ? comment.lastName : null} {IsEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {IsEmpty(comment.updateDate) === false ? <small>on {DisplayDate(comment.updateDate)}</small> : null}
-                  </p>
+
+                  <p>Submitted by {IsEmpty(comment.firstName) === false ? comment.firstName : null} {IsEmpty(comment.lastName) === false ? comment.lastName : null} {IsEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {IsEmpty(comment.updateDate) === false ? <small>on {DisplayDate(comment.updateDate)}</small> : null}</p>
+
                 </Col>
               </Row>
 
             </Col>
           );
         })}
+
       </Row>
     </Container>
   );
-
 };
 
 export default Comments;

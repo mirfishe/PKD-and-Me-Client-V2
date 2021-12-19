@@ -1,9 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime } from "./sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
 
 const componentName = "appSlice.js";
 
 const initialState = {
+  applicationVersion: "",
+  copyrightYear: "",
+  computerLog: {},
+  locationLogged: false,
   hostname: "",
   profileType: "",
   // API_URL: "",
@@ -26,13 +30,151 @@ const initialState = {
   appSettingsLoaded: false,
   appSettingsJsonLoaded: false,
   menuSettings: {},
-  linkItem: {}
+  linkItem: {},
+  informationMessage: "",
+  informationMessageVisible: false,
+  successMessage: "",
+  successMessageVisible: false,
+  warningMessage: "",
+  warningMessageVisible: false,
+  errorMessage: "",
+  errorMessageVisible: false,
+  showMessages: false
 };
 
 const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    setApplicationVersion(state, action) {
+      // console.log(componentName, GetDateTime(), "setApplicationVersion action.payload", action.payload);
+
+      state.applicationVersion = action.payload;
+
+    },
+    setCopyrightYear(state, action) {
+      // console.log(componentName, GetDateTime(), "setCopyrightYear action.payload", action.payload);
+
+      state.copyrightYear = action.payload;
+
+    },
+    setLocationLogged(state, action) {
+      // console.log(componentName, GetDateTime(), "setLocationLogged action.payload", action.payload);
+
+      state.locationLogged = action.payload;
+
+    },
+    addComputerLog(state, action) {
+      // console.log(componentName, GetDateTime(), "addComputerLog action.payload", action.payload);
+
+      // state.computerLog = action.payload;
+
+      const computerLogItem = action.payload;
+      // console.log(componentName, GetDateTime(), "addComputerLog computerLogItem", computerLogItem);
+
+      if (typeof computerLogItem === "object") {
+
+        // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
+        if (HasNonEmptyProperty(computerLogItem, "country_code") === true) {
+
+          state.computerLog.countryCode = computerLogItem.country_code;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "country_name") === true) {
+
+          state.computerLog.countryName = computerLogItem.country_name;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "city") === true) {
+
+          state.computerLog.city = computerLogItem.city;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "postal") === true) {
+
+          state.computerLog.postal = computerLogItem.postal;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "latitude") === true) {
+
+          state.computerLog.latitude = computerLogItem.latitude;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "longitude") === true) {
+
+          state.computerLog.longitude = computerLogItem.longitude;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "IPv4") === true) {
+
+          state.computerLog.ipAddress = computerLogItem.IPv4;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "state") === true) {
+
+          state.computerLog.state = computerLogItem.state;
+
+        };
+
+        // * From https://api.db-ip.com/v2/free/self -- 09/27/2021 MF
+        if (HasNonEmptyProperty(computerLogItem, "ipAddress") === true) {
+
+          state.computerLog.ipAddress = computerLogItem.ipAddress;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "continentCode") === true) {
+
+          state.computerLog.continentCode = computerLogItem.continentCode;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "continentName") === true) {
+
+          state.computerLog.continentName = computerLogItem.continentName;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "countryCode") === true) {
+
+          state.computerLog.countryCode = computerLogItem.countryCode;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "countryName") === true) {
+
+          state.computerLog.countryName = computerLogItem.countryName;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "stateProvCode") === true) {
+
+          state.computerLog.stateProvCode = computerLogItem.stateProvCode;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "stateProv") === true) {
+
+          state.computerLog.state = computerLogItem.state;
+
+        };
+
+        if (HasNonEmptyProperty(computerLogItem, "city") === true) {
+
+          state.computerLog.city = computerLogItem.city;
+
+        };
+
+      };
+
+    },
     setHostname(state, action) {
       // console.log(componentName, GetDateTime(), "setAPI_URL action.payload", action.payload);
 
@@ -170,10 +312,192 @@ const appSlice = createSlice({
 
       state.linkItem = action.payload;
 
+    },
+    addInformationMessage(state, action) {
+      // console.log(componentName, GetDateTime(), "addInformationMessage action.payload", action.payload);
+      // console.log(componentName, GetDateTime(), "addInformationMessage state.informationMessage", state.informationMessage);
+
+      // console.log(componentName, GetDateTime(), "addInformationMessage state.informationMessage", state.informationMessage);
+
+      if (IsEmpty(action.payload) === false) {
+
+        // * Make sure that the new phrase isn't in the existing information message. -- 09/27/2021 MF
+        // if (state.informationMessage !== action.payload) {
+        if (state.informationMessage.includes(action.payload) === false) {
+
+          if (IsEmpty(state.informationMessage) === false) {
+
+            state.informationMessage = state.informationMessage + " ";
+          };
+
+          state.informationMessage = state.informationMessage + action.payload;
+
+          if (IsEmpty(action.payload) === false) {
+
+            state.informationMessageVisible = true;
+
+          } else {
+
+            state.informationMessageVisible = false;
+
+          };
+
+        };
+
+      } else {
+
+        state.informationMessage = action.payload;
+        state.informationMessageVisible = false;
+
+      };
+
+    },
+    addSuccessMessage(state, action) {
+      // console.log(componentName, GetDateTime(), "addSuccessMessage action.payload", action.payload);
+
+      if (IsEmpty(action.payload) === false) {
+
+
+        // * Make sure that the new phrase isn't in the existing success message. -- 09/27/2021 MF
+        // if (state.successMessage !== action.payload) {
+        if (state.successMessage.includes(action.payload) === false) {
+
+
+          if (IsEmpty(state.successMessage) === false) {
+
+            state.successMessage = state.successMessage + " ";
+
+          };
+
+          state.successMessage = state.successMessage + action.payload;
+
+          if (IsEmpty(action.payload) === false) {
+
+            state.successMessageVisible = true;
+
+          } else {
+
+            state.successMessageVisible = false;
+
+          };
+
+        };
+
+      } else {
+
+        state.successMessage = action.payload;
+        state.successMessageVisible = false;
+
+      };
+
+    },
+    addWarningMessage(state, action) {
+      // console.log(componentName, GetDateTime(), "addWarningMessage action.payload", action.payload);
+      // console.log(componentName, GetDateTime(), "addWarningMessage state.warningMessage", state.warningMessage);
+
+      // console.log(componentName, GetDateTime(), "addWarningMessage state.warningMessage", state.warningMessage);
+
+      if (IsEmpty(action.payload) === false) {
+
+
+        // * Make sure that the new phrase isn't in the existing warning message. -- 09/27/2021 MF
+        // if (state.warningMessage !== action.payload) {
+        if (state.warningMessage.includes(action.payload) === false) {
+
+
+          if (IsEmpty(state.warningMessage) === false) {
+
+            state.warningMessage = state.warningMessage + " ";
+
+          };
+
+          state.warningMessage = state.warningMessage + action.payload;
+
+          if (IsEmpty(action.payload) === false) {
+
+            state.warningMessageVisible = true;
+
+          } else {
+
+            state.warningMessageVisible = false;
+
+          };
+
+        };
+
+      } else {
+
+        state.warningMessage = action.payload;
+        state.warningMessageVisible = false;
+
+      };
+
+    },
+    addErrorMessage(state, action) {
+      // console.log(componentName, GetDateTime(), "addErrorMessage action.payload", action.payload);
+      // console.log(componentName, GetDateTime(), "addErrorMessage state.errorMessage", state.errorMessage);
+
+      // console.log(componentName, GetDateTime(), "addErrorMessage state.errorMessage", state.errorMessage);
+
+      if (IsEmpty(action.payload) === false) {
+
+
+        // * Make sure that the new phrase isn't in the existing error message. -- 09/27/2021 MF
+        // if (state.errorMessage !== action.payload) {
+        if (state.errorMessage.includes(action.payload) === false) {
+
+
+          if (IsEmpty(state.errorMessage) === false) {
+
+            state.errorMessage = state.errorMessage + " ";
+
+          };
+
+          state.errorMessage = state.errorMessage + action.payload;
+
+          if (IsEmpty(action.payload) === false) {
+
+            state.errorMessageVisible = true;
+
+          } else {
+
+            state.errorMessageVisible = false;
+
+          };
+
+        };
+
+      } else {
+
+        state.errorMessage = action.payload;
+        state.errorMessageVisible = false;
+
+      };
+
+    },
+    clearMessages(state, action) {
+      // console.log(componentName, GetDateTime(), "clearMessages action.payload", action.payload);
+
+      state.informationMessage = "";
+      state.successMessage = "";
+      state.warningMessage = "";
+      state.errorMessage = "";
+
+      state.informationMessageVisible = false;
+      state.successMessageVisible = false;
+      state.warningMessageVisible = false;
+      state.errorMessageVisible = false;
+
+    },
+    setShowMessages(state, action) {
+      // console.log(componentName, GetDateTime(), "setShowMessages action.payload", action.payload);
+
+      state.showMessages = action.payload;
+
     }
   }
 });
 
-export const { setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem } = appSlice.actions;
+export const { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = appSlice.actions;
 
 export default appSlice.reducer;

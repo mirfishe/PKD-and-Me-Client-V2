@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
 
 const componentName = "userSlice.js";
 
@@ -28,51 +28,74 @@ const userSlice = createSlice({
 
       if (typeof action.payload === "object") {
 
-
         if (HasNonEmptyProperty(action.payload, "userID")) {
+
           state.userID = action.payload.userID;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "firstName")) {
+
           state.firstName = action.payload.firstName;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "lastName")) {
+
           state.lastName = action.payload.lastName;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "email")) {
+
           state.email = action.payload.email;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "updatedBy")) {
+
           state.updatedBy = action.payload.updatedBy;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "admin")) {
+
           state.admin = action.payload.admin;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "active")) {
+
           state.active = action.payload.active;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "arrayChecklist")) {
+
           state.arrayChecklist = action.payload.arrayChecklist;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "checklistLoaded")) {
+
           state.checklistLoaded = action.payload.checklistLoaded;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "lastDatabaseRetrievalChecklist")) {
+
           state.lastDatabaseRetrievalChecklist = action.payload.lastDatabaseRetrievalChecklist;
+
         };
 
         if (HasNonEmptyProperty(action.payload, "userLoaded")) {
+
           state.userLoaded = action.payload.userLoaded;
+
         } else {
+
           state.userLoaded = true;
+
         };
 
       };
@@ -103,6 +126,7 @@ const userSlice = createSlice({
         // let userReviewUpdateDate = null;
 
         // if (IsEmpty(action.payload[i]) === false) {
+
         //   userReviewID = action.payload[i].reviewID;
         //   userReviewUserID = action.payload[i].userID;
         //   userReviewUpdatedBy = action.payload[i].userReviewUpdatedBy;
@@ -111,9 +135,11 @@ const userSlice = createSlice({
         //   userReviewActive = action.payload[i].userReviewActive;
         //   userReviewCreatedDate = action.payload[i].userReviewCreatedDate;
         //   userReviewUpdateDate = action.payload[i].userReviewUpdateDate;
+
         // };
 
-        // state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].publicationDate, titlePublicationDate: action.payload[i].titlePublicationDate, imageName: action.payload[i].imageName, titleImageName: action.payload[i].titleImageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDweb: action.payload[i].urlPKDweb, active: action.payload[i].active, titleActive: action.payload[i].titleActive, createDate: action.payload[i].createdDate, titleCreatedDate: action.payload[i].titleCreatedDate, updateDate: action.payload[i].updateDate, titleUpdateDate: action.payload[i].titleUpdateDate, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedDate: userReviewCreatedDate, userReviewUpdateDate: userReviewUpdateDate });
+        // state.arrayChecklist.push({ titleID: action.payload[i].titleID, titleName: action.payload[i].titleName, titleSort: action.payload[i].titleSort, titleURL: action.payload[i].titleURL, authorFirstName: action.payload[i].authorFirstName, authorLastName: action.payload[i].authorLastName, publicationDate: action.payload[i].publicationDate, titlePublicationDate: action.payload[i].titlePublicationDate, imageName: action.payload[i].imageName, titleImageName: action.payload[i].titleImageName, categoryID: action.payload[i].categoryID, shortDescription: action.payload[i].shortDescription, urlPKDWeb: action.payload[i].urlPKDWeb, active: action.payload[i].active, titleActive: action.payload[i].titleActive, createDate: action.payload[i].createdDate, titleCreatedDate: action.payload[i].titleCreatedDate, updateDate: action.payload[i].updateDate, titleUpdateDate: action.payload[i].titleUpdateDate, reviewID: userReviewID, userID: userReviewUserID, updatedBy: userReviewUpdatedBy, read: userReviewRead, dateRead: userReviewDateRead, userReviewActive: userReviewActive, userReviewCreatedDate: userReviewCreatedDate, userReviewUpdateDate: userReviewUpdateDate });
+
       };
 
       state.checklistLoaded = true;
@@ -126,8 +152,10 @@ const userSlice = createSlice({
 
     //     // * Could change this to accept an object and add that object to the store
     //     for (let i = 0; i < action.payload.length; i++) {
+
     //       // console.log(componentName, GetDateTime(), "addStateChecklist action.payload[i]", action.payload[i]);
     //       state.arrayChecklist.push(action.payload[i]);
+
     //     };
 
     // },
@@ -138,7 +166,6 @@ const userSlice = createSlice({
       let checklistListIndex;
       // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem", checklistItem);
       // console.log(componentName, GetDateTime(), "updateStateChecklist checklistItem.titleID", checklistItem.titleID);
-
 
       if (typeof checklistItem === "object") {
 
@@ -152,35 +179,51 @@ const userSlice = createSlice({
         };
 
         if (HasNonEmptyProperty(checklistItem, "reviewID")) {
+
           state.arrayChecklist[checklistListIndex].reviewID = checklistItem.reviewID;
+
         };
 
         if (HasNonEmptyProperty(checklistItem, "userID")) {
+
           state.arrayChecklist[checklistListIndex].userID = checklistItem.userID;
+
         };
 
         if (HasNonEmptyProperty(checklistItem, "updatedBy")) {
+
           state.arrayChecklist[checklistListIndex].updatedBy = checklistItem.updatedBy;
+
         };
 
         if (HasNonEmptyProperty(checklistItem, "read")) {
+
           state.arrayChecklist[checklistListIndex].read = checklistItem.read;
+
         };
 
         if (HasNonEmptyProperty(checklistItem, "dateRead")) {
+
           state.arrayChecklist[checklistListIndex].dateRead = checklistItem.dateRead;
+
         };
 
         if (HasNonEmptyProperty(checklistItem, "userReviewActive")) {
+
           state.arrayChecklist[checklistListIndex].userReviewActive = checklistItem.userReviewActive;
+
         };
 
         if (HasNonEmptyProperty(checklistItem, "userReviewCreatedDate")) {
+
           state.arrayChecklist[checklistListIndex].userReviewCreatedDate = checklistItem.userReviewCreatedDate;
+
         };
 
         if (HasNonEmptyProperty(checklistItem, "userReviewUpdateDate")) {
+
           state.arrayChecklist[checklistListIndex].userReviewUpdateDate = checklistItem.userReviewUpdateDate;
+
         };
 
       };

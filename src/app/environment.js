@@ -31,11 +31,6 @@ let menuSettings = {
   "showHomeopape": false,
   "showDickian": false,
 
-  "showCategoryList": false,
-  "showMediaList": false,
-  "showTitleList": false,
-  "showEditionList": false,
-
   "showAllCategories": false,
   "showAllMedia": false,
   "showAllTitles": false,
@@ -195,8 +190,10 @@ switch (profileType) {
 
 // * In case accidentally set both to true, then electronicOnly overides.
 if (physicalOnly && electronicOnly) {
+
   electronicOnly = true;
   physicalOnly = false;
+
 };
 
 Object.assign(AppSettings, { hostname: window.location.hostname });

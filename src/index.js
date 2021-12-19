@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
+import "@fortawesome/fontawesome-free/css/all.css";
 import './index.css';
 import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";

@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+
+// ! The coding on this component is not finished. -- 03/06/2021 MF
 
 const AddTitleSuggestion = (props) => {
 
@@ -13,13 +15,13 @@ const AddTitleSuggestion = (props) => {
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
-  const admin = useSelector(state => state.user.admin);
+  // const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
-  const userID = useSelector(state => state.user.userID);
+  // const userID = useSelector(state => state.user.userID);
   // console.log(componentName, GetDateTime(), "userID", userID);
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
+  // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
@@ -73,7 +75,9 @@ const AddTitleSuggestion = (props) => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((IsEmpty(userState) === false)) {
+
       setTxtEmail(userState.email);
+
     };
 
   }, [userState]);
@@ -106,55 +110,77 @@ const AddTitleSuggestion = (props) => {
     let formValidated = false;
 
     if (IsEmpty(txtTitleName) === false) {
+
       if (txtTitleName.trim().length > 0) {
+
         titleNameValidated = true;
         setErrTitleName("");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion Valid TitleName");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated true", titleNameValidated);
+
       } else {
+
         titleNameValidated = false;
         setErrTitleName("Please enter a title.");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion Invalid TitleName");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated false", titleNameValidated);
+
       };
+
     };
 
     if (IsEmpty(txtShortDescription) === false) {
+
       if (txtShortDescription.trim().length > 0) {
+
         shortDescriptionValidated = true;
         setErrShortDescription("");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion Valid TitleName");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated true", titleNameValidated);
+
       } else {
+
         shortDescriptionValidated = false;
         setErrShortDescription("Please enter a description of why the title should be added.");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion Invalid TitleName");
         // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated false", titleNameValidated);
+
       };
+
     };
 
     if (IsEmpty(txtEmail) === false) {
+
       if (txtEmail.trim().length > 0 || requireUserLogin === false) {
+
         emailValidated = true;
         setErrEmail("");
         // console.log(componentName, GetDateTime(), "addMessage Valid email");
         // console.log(componentName, GetDateTime(), "addMessage emailValidated true", emailValidated);
+
       } else {
+
         emailValidated = false;
         setErrEmail("Please enter an email address.");
         // console.log(componentName, GetDateTime(), "addMessage Invalid email");
         // console.log(componentName, GetDateTime(), "addMessage emailValidated false", emailValidated);
+
       };
+
     };
 
     if (titleNameValidated === true && shortDescriptionValidated === true && emailValidated === true) {
+
       formValidated = true;
       // console.log(componentName, GetDateTime(), "addTitleSuggestion Valid Form");
       // console.log(componentName, GetDateTime(), "addTitleSuggestion formValidated true", formValidated);
+
     } else {
+
       formValidated = false;
       // console.log(componentName, GetDateTime(), "addTitleSuggestion Invalid Form");
       // console.log(componentName, GetDateTime(), "addTitleSuggestion formValidated false", formValidated);
+
     };
 
     // console.log(componentName, GetDateTime(), "addTitleSuggestion titleNameValidated", titleNameValidated);
@@ -175,32 +201,48 @@ const AddTitleSuggestion = (props) => {
           email: txtEmail.trim()
         };
 
-        // * If the user doesn't enter an author first name, then it isn't added/updated
+        // * If the user doesn't enter an author first name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorFirstName) === false) {
+
           if (txtAuthorFirstName.trim().length !== 0) {
+
             Object.assign(titleSuggestionObject, { authorFirstName: txtAuthorFirstName.trim() });
+
           };
+
         };
 
-        // * If the user doesn't enter an author last name, then it isn't added/updated
+        // * If the user doesn't enter an author last name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorLastName) === false) {
+
           if (txtAuthorLastName.trim().length !== 0) {
+
             Object.assign(titleSuggestionObject, { authorLastName: txtAuthorLastName.trim() });
+
           };
+
         };
 
-        // * If the user doesn't enter a publication date, then it isn't added/updated
+        // * If the user doesn't enter a publication date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtPublicationDate) === false) {
+
+
           if (txtPublicationDate.trim().length !== 0) {
             Object.assign(titleSuggestionObject, { publicationDate: txtPublicationDate.trim() });
+
           };
+
         };
 
-        // * If the user doesn't enter a title URL, then it isn't added/updated
+        // * If the user doesn't enter a title URL, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtTitleURL) === false) {
+
           if (txtTitleURL.trim().length !== 0) {
+
             Object.assign(titleSuggestionObject, { titleURL: txtTitleURL.trim() });
+
           };
+
         };
 
         // console.log(componentName, GetDateTime(), "addTitleSuggestion titleSuggestionObject", titleSuggestionObject);
@@ -212,9 +254,11 @@ const AddTitleSuggestion = (props) => {
 
           let headerObject = new Headers({ "Content-Type": "application/json" });
 
-          // * If the user isn't logged in and user login isn't required, then it isn't added to the Authorization header
+          // * If the user isn't logged in and user login isn't required, then it isn't added to the Authorization header. -- 03/06/2021 MF
           if (IsEmpty(sessionToken) === false) {
+
             Object.assign(headerObject, { "Authorization": sessionToken });
+
           };
 
           fetch(url, {
@@ -224,15 +268,25 @@ const AddTitleSuggestion = (props) => {
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addTitleSuggestion response", response);
+
               // if (!response.ok) {
+
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
+
               // } else {
+
               // if (response.status === 200) {
+
               return response.json();
+
               // } else {
+
               //     return response.status;
+
               // };
+
               // };
+
             })
             .then(data => {
               // console.log(componentName, GetDateTime(), "addTitleSuggestion data", data);
@@ -253,13 +307,16 @@ const AddTitleSuggestion = (props) => {
                 setTitleURL(data.records[0].titleURL);
                 setTitleSuggestionEmail(data.records[0].email);
 
-                // ? Would still work if the createDate and updateDate were left out?
-                // dispatch(addStateTitle([{titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDweb: data.records[0].urlPKDweb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
-                // ? Add to local storage also?
+                // ? Would still work if the createDate and updateDate were left out?. -- 03/06/2021 MF
+                // dispatch(addStateTitle([{titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
+
+                // ? Add to local storage also?. -- 03/06/2021 MF
 
               } else {
+
                 // addErrorMessage(data.error);
                 addErrorMessage(data.errorMessages);
+
               };
 
             })
@@ -267,7 +324,9 @@ const AddTitleSuggestion = (props) => {
               console.error(componentName, GetDateTime(), "addTitleSuggestion error", error);
               // console.error(componentName, GetDateTime(), "addTitleSuggestion error.name", error.name);
               // console.error(componentName, GetDateTime(), "addTitleSuggestion error.message", error.message);
+
               addErrorMessage(error.name + ": " + error.message);
+
             });
 
         };
@@ -280,14 +339,17 @@ const AddTitleSuggestion = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect titleSuggestionRecordAdded", titleSuggestionRecordAdded);
+
     if (IsEmpty(titleSuggestionRecordAdded) === false) {
+
       clearMessages();
       setErrTitleName("");
       setErrShortDescription("");
       setErrEmail("");
       setTitleSuggestionRecordAdded(null);
       // setModal(false);
-      toggle();
+      setModal(!modal);
+
     };
 
   }, [titleSuggestionRecordAdded]);
@@ -297,90 +359,81 @@ const AddTitleSuggestion = (props) => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
+
       // return <Redirect to="/" />;
       setModal(false);
+
     };
 
   }, [sessionToken]);
 
 
-  const toggle = () => {
-    setModal(!modal);
-  };
-
-
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Title Suggestion</Button></span> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title Suggestion</Button></span> : null}
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Add Title Suggestion</ModalHeader>
+      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
+        <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Title Suggestion</ModalHeader>
         <ModalBody>
           <Form>
+
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtTitleName">Title</Label>
               <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleName(event.target.value); }} />
               {IsEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
-
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtAuthorFirstName">Author First Name</Label>
               <Input type="text" id="txtAuthorFirstName" value={txtAuthorFirstName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorFirstName(event.target.value); }} />
-
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtAuthorLastName">Author Last Name</Label>
               <Input type="text" id="txtAuthorLastName" value={txtAuthorLastName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorLastName(event.target.value); }} />
-
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtPublicationDate">Publication Date</Label>
               <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPublicationDate(event.target.value); }} />
-
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtShortDescription">Description Of Why The Title Should Be Added</Label>
               <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtShortDescription(event.target.value); }} />
               {IsEmpty(errShortDescription) === false ? <Alert color="danger">{errShortDescription}</Alert> : null}
-
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtTitleURL">Title URL</Label>
               <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(event.target.value); }} />
-
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtEmail">Email Address</Label>
               <Input type="text" id="txtEmail" value={txtEmail} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
               {IsEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
-
             </FormGroup>
 
             <ModalFooter>
-
               <Button outline size="lg" color="primary" onClick={addTitleSuggestion}>Add Title Suggestion</Button>
-              <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
             </ModalFooter>
+
           </Form>
         </ModalBody>
       </Modal>
+
     </React.Fragment>
   );
-
 };
 
 export default AddTitleSuggestion;

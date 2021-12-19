@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
 
 const componentName = "categoriesSlice.js";
 
@@ -19,8 +19,10 @@ const categoriesSlice = createSlice({
       // console.log(componentName, GetDateTime(), "loadArrayCategories action.payload.length", action.payload.length);
 
       for (let i = 0; i < action.payload.length; i++) {
+
         // console.log(componentName, GetDateTime(), "loadArrayCategories action.payload[i]", action.payload[i]);
         state.arrayCategories.push(action.payload[i]);
+
       };
 
       state.categoriesLoaded = true;
@@ -33,8 +35,10 @@ const categoriesSlice = createSlice({
 
       // * Could change this to accept an object and add that object to the store
       for (let i = 0; i < action.payload.length; i++) {
+
         // console.log(componentName, GetDateTime(), "addStateCategory action.payload[i]", action.payload[i]);
         state.arrayCategories.push(action.payload[i]);
+
       };
 
     },
@@ -55,22 +59,31 @@ const categoriesSlice = createSlice({
           // console.log(componentName, GetDateTime(), "updateStateUserReview categoryItemIndex", categoryItemIndex);
 
           // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
+
         };
 
         if (HasNonEmptyProperty(categoryItem, "category")) {
+
           state.arrayCategories[categoryItemIndex].category = categoryItem.category;
+
         };
 
         if (HasNonEmptyProperty(categoryItem, "sortID")) {
+
           state.arrayCategories[categoryItemIndex].sortID = categoryItem.sortID;
+
         };
 
         if (HasNonEmptyProperty(categoryItem, "active")) {
+
           state.arrayCategories[categoryItemIndex].active = categoryItem.active;
+
         };
 
         if (HasNonEmptyProperty(categoryItem, "updateDate")) {
+
           state.arrayCategories[categoryItemIndex].updateDate = categoryItem.updateDate;
+
         };
 
       };

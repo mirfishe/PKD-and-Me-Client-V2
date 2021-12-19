@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
-import { addStateMedia } from "../../bibliographyData/mediaSlice";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
+import { addStateMedia } from "../../app/mediaSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
 const AddMedia = (props) => {
@@ -18,8 +18,8 @@ const AddMedia = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
+  // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
@@ -69,27 +69,37 @@ const AddMedia = (props) => {
     let formValidated = false;
 
     if (IsEmpty(txtMedia) === false) {
+
       if (txtMedia.trim().length > 0) {
+
         mediaValidated = true;
         setErrMedia("");
         // console.log(componentName, GetDateTime(), "addMedia Valid Media");
         // console.log(componentName, GetDateTime(), "addMedia mediaValidated true", mediaValidated);
+
       } else {
+
         mediaValidated = false;
         setErrMedia("Please enter a media.");
         // console.log(componentName, GetDateTime(), "addMedia Invalid Media");
         // console.log(componentName, GetDateTime(), "addMedia mediaValidated false", mediaValidated);
+
       };
+
     };
 
     if (mediaValidated === true) {
+
       formValidated = true;
       // console.log(componentName, GetDateTime(), "addMedia Valid Form");
       // console.log(componentName, GetDateTime(), "addMedia formValidated true", formValidated);
+
     } else {
+
       formValidated = false;
       // console.log(componentName, GetDateTime(), "addMedia Invalid Form");
       // console.log(componentName, GetDateTime(), "addMedia formValidated false", formValidated);
+
     };
 
     // console.log(componentName, GetDateTime(), "addMedia mediaValidated", mediaValidated);
@@ -121,15 +131,25 @@ const AddMedia = (props) => {
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addMedia response", response);
+
               // if (!response.ok) {
+
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
+
               // } else {
+
               // if (response.status === 200) {
+
               return response.json();
+
               // } else {
+
               //     return response.status;
+
               // };
+
               // };
+
             })
             .then(data => {
               // console.log(componentName, GetDateTime(), "addMedia data", data);
@@ -147,15 +167,18 @@ const AddMedia = (props) => {
                 setSortID(data.records[0].sortID);
                 setActive(data.records[0].active);
 
-                // ? Would still work if the createDate and updateDate were left out?
+                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
                 dispatch(addStateMedia([{ mediaID: data.records[0].mediaID, media: data.records[0].media, electronic: data.records[0].electronic, sortID: data.records[0].sortID, active: data.records[0].active, mediaActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
-                // ? Add to local storage also?
+
+                // ? Add to local storage also? -- 03/06/2021 MF
 
                 dispatch(addStateURL([{ linkName: encodeURL(data.records[0].media), linkType: "media", linkID: data.records[0].mediaID }]));
 
               } else {
+
                 // addErrorMessage(data.error);
                 addErrorMessage(data.errorMessages);
+
               };
 
             })
@@ -163,7 +186,9 @@ const AddMedia = (props) => {
               console.error(componentName, GetDateTime(), "addMedia error", error);
               // console.error(componentName, GetDateTime(), "addMedia error.name", error.name);
               // console.error(componentName, GetDateTime(), "addMedia error.message", error.message);
+
               addErrorMessage(error.name + ": " + error.message);
+
             });
 
         };
@@ -177,11 +202,14 @@ const AddMedia = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect mediaRecordAdded", mediaRecordAdded);
+
     if (IsEmpty(mediaRecordAdded) === false && mediaRecordAdded === true) {
+
       clearMessages();
       setMediaRecordAdded(null);
       // setModal(false);
-      toggle();
+      setModal(!modal);
+
     };
 
   }, [mediaRecordAdded]);
@@ -191,56 +219,53 @@ const AddMedia = (props) => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
+
       // return <Redirect to="/" />;
       setModal(false);
+
     };
 
   }, [admin]);
 
 
-  const toggle = () => {
-    setModal(!modal);
-  };
-
-
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Media</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Media</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      <Modal isOpen={modal} toggle={toggle} size="md">
-        <ModalHeader toggle={toggle}>Add Media</ModalHeader>
+      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
+        <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Media</ModalHeader>
         <ModalBody>
           <Form>
+
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtMedia">Media</Label>
               <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtMedia(event.target.value); }} />
               {IsEmpty(errMedia) === false ? <Alert color="danger">{errMedia}</Alert> : null}
-
             </FormGroup>
+
             <FormGroup className="ml-4">
-
               <Label for="cbxElectronic"><Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxElectronic(!cbxElectronic); }} />Electronic</Label>
-
             </FormGroup>
 
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={addMedia}>Add Media</Button>
-              <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
             </ModalFooter>
+
           </Form>
         </ModalBody>
       </Modal>
+
     </React.Fragment>
   );
-
 };
 
 export default AddMedia;
