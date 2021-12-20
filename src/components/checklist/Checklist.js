@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Container, Col, Row, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import { Drawer } from "@material-ui/core";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear, encodeURL, decodeURL } from "../../app/sharedFunctions";
-import { setTitleSortBy } from "../../bibliographyData/titlesSlice";
-import { setEditionSortBy } from "../../bibliographyData/editionsSlice";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear, encodeURL, decodeURL } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
+import { setTitleSortBy } from "../../app/titlesSlice";
+import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
-import { addStateUserReview, updateStateUserReview } from "../../bibliographyData/userReviewsSlice";
+import { addStateUserReview, updateStateUserReview } from "../../app/userReviewsSlice";
 import { updateStateChecklist } from "../../app/userSlice";
 
 const Checklist = (props) => {
@@ -20,25 +21,33 @@ const Checklist = (props) => {
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
-  const admin = useSelector(state => state.user.admin);
+  // const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
+  // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
   const checklistLoaded = useSelector(state => state.user.checklistLoaded);
 
-  const [checklistMessage, setChecklistMessage] = useState("");
-  const [errChecklistMessage, setErrChecklistMessage] = useState("");
   const [checklistRecordUpdated, setChecklistRecordUpdated] = useState(null);
+
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [readOrOwned, setReadOrOwned] = useState("read");
 
@@ -48,7 +57,7 @@ const Checklist = (props) => {
   const titleListState = useSelector(state => state.titles.arrayTitles);
   // console.log(componentName, GetDateTime(), "titleListState", titleListState);
 
-  const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
+  // const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
   // console.log(componentName, GetDateTime(), "userReviewListState", userReviewListState);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
@@ -63,8 +72,11 @@ const Checklist = (props) => {
 
   const sortChecklistList = (sortBy) => {
     // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
+
     if (IsEmpty(checklistList) === false && checklistList.length > 0) {
+
       if (sortBy === "publicationDate") {
+
         // * Sort the checklistList array by title.publicationDate
         // ! // ! Doesn't handle null values well; treats them as "null"
         // checklistList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
@@ -76,11 +88,16 @@ const Checklist = (props) => {
 
         // ! Doesn't sort correctly
         // checklistList.sort(function(a, b) {
+
         //     if (a.publicationDate === b.publicationDate) {
+
         //         // titleSort is only important when publicationDates are the same
         //         return b.titleSort - a.titleSort;
+
         //      };
+
         //     return ((b.publicationDate != null) - (a.publicationDate != null) || a.publicationDate - b.publicationDate);
+
         // });
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
@@ -99,13 +116,19 @@ const Checklist = (props) => {
         checklistList = [...newtitleList];
 
       } else if (sortBy === "titleName") {
+
         // * Sort the checklistList array by title.titleSort
         checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+
       } else {
+
         // * Sort the checklistList array by title.titleSort
         checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+
       };
+
     };
+
   };
 
   const checklistListState = useSelector(state => state.user.arrayChecklist);
@@ -118,21 +141,30 @@ const Checklist = (props) => {
   if (IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkType") === true) {
 
     if (linkItem.linkType === "categories") {
+
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkID);
+
       // } else if (linkItem.linkType === "media") {
+
       //   // ! This won't work; media is not available
       //   // checklistList = checklistList.filter(title => title.mediaID === linkItem.linkID);
 
       //   editionList = editionList.filter(edition => edition.mediaID === linkItem.linkID);
 
       //   checklistList = checklistList.filter((title) => {
+
       //     return editionList.some((edition) => {
+
       //       return edition.titleID === title.titleID;
+
       //     });
+
       //   });
 
     } else if (linkItem.linkType === "titles") {
+
       checklistList = checklistList.filter(title => title.categoryID === linkItem.linkTypeNameID);
+
     };
 
   };
@@ -149,28 +181,31 @@ const Checklist = (props) => {
     // console.log(componentName, GetDateTime(), "updateChecklist read", read);
     // console.log(componentName, GetDateTime(), "updateChecklist reviewID", reviewID);
 
-    setChecklistMessage("");
-    setErrChecklistMessage("");
+    clearMessages();
     setChecklistRecordUpdated(null);
 
     // ? If read is false and there are no other values in the userReviews table, should the record be deleted?
-    let userReviewObject = {
+    let recordObject = {
       titleID: titleID,
       read: read,
       owned: owned,
       active: true // ? always true?
     };
 
-    // console.log(componentName, GetDateTime(), "updateChecklist userReviewObject", userReviewObject);
+    // console.log(componentName, GetDateTime(), "updateChecklist recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
     let updateChecklistMethod = "";
 
     if (IsEmpty(reviewID) === false) {
+
       url = url + reviewID;
       updateChecklistMethod = "PUT";
+
     } else {
+
       updateChecklistMethod = "POST";
+
     };
 
     // console.log(componentName, GetDateTime(), "updateChecklist url", url);
@@ -184,19 +219,29 @@ const Checklist = (props) => {
           "Content-Type": "application/json",
           "Authorization": sessionToken
         }),
-        body: JSON.stringify({ userReview: userReviewObject })
+        body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
           // console.log(componentName, GetDateTime(), "updateChecklist response", response);
+
           // if (!response.ok) {
+
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
+
           // } else {
+
           // if (response.status === 200) {
+
           return response.json();
+
           // } else {
+
           //     return response.status;
+
           // };
+
           // };
+
         })
         .then(data => {
           // console.log(componentName, GetDateTime(), "updateChecklist data", data);
@@ -204,16 +249,22 @@ const Checklist = (props) => {
           let recordChanged = null;
 
           if (updateChecklistMethod === "PUT") {
+
             setChecklistRecordUpdated(data.recordUpdated);
             recordChanged = data.recordUpdated;
+
           } else if (updateChecklistMethod === "POST") {
+
             setChecklistRecordUpdated(data.recordAdded);
             recordChanged = data.recordAdded;
+
           } else {
+
             setChecklistRecordUpdated(null);
+
           };
 
-          setChecklistMessage(data.message);
+          addMessage(data.message);
 
           if (recordChanged === true) {
 
@@ -231,11 +282,15 @@ const Checklist = (props) => {
             // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
+
               dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime()
               }));
+
             } else if (updateChecklistMethod === "POST") {
+
               dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate
               }));
+
             };
 
             // const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
@@ -248,24 +303,30 @@ const Checklist = (props) => {
             } else if (updateChecklistMethod === "POST") {
 
               let titleItem = titleListState.filter(title => title.titleID === titleID);
-              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
+              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
               titleItem = titleItem[0];
 
-              dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDweb: titleItem.urlPKDweb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
+              dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
 
             };
 
           } else {
+
             console.log(componentName, GetDateTime(), "updateChecklist resultsFound error", data.message);
-            setErrChecklistMessage(data.message);
+            addErrorMessage(data.message);
+
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "updateChecklist error", error);
           // console.error(componentName, GetDateTime(), "updateChecklist error.name", error.name);
           // console.error(componentName, GetDateTime(), "updateChecklist error.message", error.message);
-          setErrChecklistMessage(error.name + ": " + error.message);
+
+          addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
         });
 
     };
@@ -275,75 +336,96 @@ const Checklist = (props) => {
 
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
 
-    // toggle();
-  };
+    // setModal(!modal);
 
-
-  // const toggle = () => {
-  //     setModal(!modal);
-  // };
-
-
-  const toggleDrawer = () => {
-    setDrawer(!drawer);
   };
 
 
   return (
     <React.Fragment>
 
-      {/* {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggle}>Checklist</Button> : null}
+      {/* {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Checklist</Button> : null}
 
-        <Modal isOpen={modal} toggle={toggle} size="lg">
-           <ModalHeader toggle={toggle}>Checklist</ModalHeader>
+        <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
+           <ModalHeader toggle={(event) => { setModal(!modal); }}>Checklist</ModalHeader>
            <ModalBody> */}
 
-      {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Checklist</Button> : null}
+      {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null}
 
-      <Drawer anchor="right" open={drawer} onClose={toggleDrawer}>
+      <Drawer anchor="right" open={drawer} onClose={(event) => { setDrawer(!drawer); }}>
 
         <Container className="checklistDrawer mx-3">
           <Row className="mb-2">
             <Col>
-              <Button outline className="my-2" size="sm" color="info" onClick={toggleDrawer}>Close</Button>
+
+              <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Close</Button>
+
+            </Col>
+          </Row>
+
+          <Row className="mb-2">
+            <Col className="text-center">
+
+              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
             </Col>
           </Row>
 
           <Row className="mb-2">
             <Col>
+
               <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("read"); }}>Read</Button>
               <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("owned"); }}>Own</Button>
               {readOrOwned === "read" ? <p>Read</p> : null}
               {readOrOwned === "owned" ? <p>Owned</p> : null}
+
             </Col>
           </Row>
 
           {/* <ListGroup flush> */}
 
           {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkTypeName") === true ?
+
             <Row className="justify-content-center">
               <Col xs="8">
+
                 {/* <ListGroupItem> */}
+
                 <h6 className="text-center mb-2">{linkItem.linkTypeName}
                   <br />
+
                   <span className="text-muted ml-2 smallText">Sort By&nbsp;
+
                     {titleSortBy !== "publicationDate" ?
+
                       <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortChecklistList("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
+
                       : null}
+
                     {titleSortBy !== "titleName" ?
+
                       <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortChecklistList("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
+
                       : null}
+
                   </span>
+
                 </h6>
+
                 {/* </ListGroupItem> */}
+
               </Col>
             </Row>
+
             : null}
 
           {checklistList.map((title) => {
+
             return (
               <Row /*ListGroupItem*/ key={title.titleID}>
                 <Col className="mx-3">
@@ -355,11 +437,15 @@ const Checklist = (props) => {
                   <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
                     {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}
                   </p>
+
                   {/* </ListGroupItem> */}
+
                 </Col>
               </Row>
             );
+
           })}
+
           {/* </ListGroup> */}
 
         </Container>
@@ -368,14 +454,13 @@ const Checklist = (props) => {
 
       {/* <ModalFooter>
     
-        <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+        <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
     </ModalFooter>
     </ModalBody>
     </Modal> */}
 
     </React.Fragment>
   );
-
 };
 
 export default Checklist;

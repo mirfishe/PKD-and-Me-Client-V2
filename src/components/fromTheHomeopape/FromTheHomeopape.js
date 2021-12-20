@@ -4,7 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 
 const FromTheHomeopape = (props) => {
 
@@ -18,8 +19,8 @@ const FromTheHomeopape = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
+  // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
@@ -49,7 +50,7 @@ const FromTheHomeopape = (props) => {
   const getNews = () => {
 
     let url = baseURL + "fromthehomeopape/";
-    // TODO: Fix the way that the limit works on the server because it works differently than the local version.
+    // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
     // let url = baseURL + "fromthehomeopape/top/10/10";
 
     fetch(url, {
@@ -58,14 +59,17 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "getNews response", response);
 
-        if (!results.ok) {
-          // throw Error(results.status + " " + results.statusText + " " + results.url);
+        if (!response.ok) {
+
+          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+
         } else {
-          return results.json();
-          // return results.text();
+
+          return response.json();
+
         };
 
       })
@@ -82,9 +86,12 @@ const FromTheHomeopape = (props) => {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         // console.error(componentName, GetDateTime(), "getNews error", error);
+
         setErrorMessage(error.name + ": " + error.message);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -109,32 +116,44 @@ const FromTheHomeopape = (props) => {
 
       {homeopapeItems.map((homeopapeItem, index) => {
 
-        // * One method to only display ten items in the list.
+        // * One method to only display ten items in the list. -- 06/26/2021 MF
         // if (index > 10) {
+
         //   breakArray = true;
+
         // };
 
         // if (breakArray === true) {
+
         //   return;
+
         // };
 
-        // * One method to only display ten items in the list.
+        // * One method to only display ten items in the list. -- 06/26/2021 MF
         // if (displayItemsCount >= 10) {
+
         //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
         //   homeopapeItems.splice(0, index);
+
         // };
 
         let show = true;
 
         if (homeopapeItem.display !== true) { // homeopapeItem.display !== 1
+
           show = false;
+
         } else if (displayItemsCount >= 10) {
+
           // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
           // homeopapeItems.splice(0, index);
           show = false;
+
         } else {
+
           displayItemsCount++;
           // console.log(componentName, GetDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
+
         };
 
         let itemLink;
@@ -143,12 +162,13 @@ const FromTheHomeopape = (props) => {
         let regExp = "";
 
         if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
+
           itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
 
-          // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ
-          // * Google
-          // * Removes everything after the ct=
-          // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537
+          // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+          // * Google -- 06/26/2021 MF
+          // * Removes everything after the ct= -- 06/26/2021 MF
+          // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
           param = "ct";
           regExp = new RegExp("[?&]" + param + "=.*$");
           itemLink = itemLink.replace(regExp, "");
@@ -163,23 +183,30 @@ const FromTheHomeopape = (props) => {
         // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
 
         return (
-          <React.Fragment key={itemID}>
+          <React.Fragment key={index}>
+
             {show === true ?
+
               <Row>
                 <Col xs="12">
+
                   {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
+
                   <a href={itemLink} target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
+
                   ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
+
                 </Col>
               </Row>
+
               : null}
+
           </React.Fragment>
         );
       })}
 
     </Container>
   );
-
 };
 
 export default FromTheHomeopape;

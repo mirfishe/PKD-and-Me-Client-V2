@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Nav, NavItem, Collapse, Card } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddMedia from "./AddMedia";
 
@@ -31,21 +31,32 @@ const Media = (props) => {
   let mediaList = [];
 
   if (electronicOnly === true || userElectronicOnly === true) {
+
     mediaList = mediaListState.filter(media => media.electronic === true);
+
   } else if (physicalOnly === true || userPhysicalOnly === true) {
+
     mediaList = mediaListState.filter(media => media.electronic === false);
+
   } else {
+
     mediaList = [...mediaListState];
     // mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
     // mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
+
   };
 
   if (IsEmpty(admin) === false && admin === true) {
+
     mediaList = [...mediaList];
+
   } else {
+
     mediaList = mediaList.filter(media => media.active === true || media.active === 1);
     // mediaList = mediaList.filter(media => media.mediaActive === true || media.mediaActive === 1);
+
   };
+
   // console.log(componentName, GetDateTime(), "mediaList", mediaList);
 
   mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -53,52 +64,67 @@ const Media = (props) => {
 
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     history.push("/" + linkName);
-  };
 
-
-  const toggle = () => {
-    setIsOpen(!isOpen);
   };
 
 
   return (
     <React.Fragment>
-      <Card onClick={toggle} color="light" className="mt-2 p-2"><h5>Media</h5></Card>
+
+      <Card onClick={(event) => { setIsOpen(!isOpen); }} color="light" className="mt-2 p-2"><h5>Media</h5></Card>
+
       <Collapse isOpen={isOpen}>
+
         <Nav vertical>
+
           {mediaList.map((media) => {
 
             let activeString = "";
+
             if (media.active === true || media.active === 1) {
               // if (media.mediaActive === true || media.mediaActive === 1) {
+
               // activeString = "Active";
               activeString = "";
+
             } else {
+
               activeString = "Inactive";
+
             };
 
             return (
               <NavItem key={media.mediaID} className="mt-2 pl-3">
+
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(componentName, GetDateTime(), "event.target.value", event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}
+
                 {/* <Link to={`/editions/${media.mediaID}`}>{media.mediaID}</Link>
                 <Link to={`/editions/${media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</Link>
                 <Link to={"/editions/" + media.mediaID}>{media.mediaID}</Link> */}
+
                 {/* <Link to={"/editions/" + encodeURL(media.media)}>{media.media}</Link> */}
+
                 {/* <Link to={encodeURL(media.media)}>{media.media}</Link> */}
+
                 <Link to={encodeURL(media.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(media.media)); }}>{media.media}
                   {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
                 </Link>
+
               </NavItem>
             );
           })}
+
         </Nav>
+
       </Collapse>
+
       {IsEmpty(admin) === false && admin === true ? <AddMedia displayButton={true} /> : null}
+
     </React.Fragment>
   );
-
 };
 
 export default Media;

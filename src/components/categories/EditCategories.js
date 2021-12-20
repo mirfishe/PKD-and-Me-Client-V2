@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { PencilSquare } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+
+// ! The coding on this component is not finished. -- 03/06/2021 MF
 
 const EditCategories = (props) => {
 
@@ -16,8 +18,8 @@ const EditCategories = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
+  // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
@@ -47,11 +49,16 @@ const EditCategories = (props) => {
   let categoryList = [];
 
   if (IsEmpty(admin) === false && admin === true) {
+
     categoryList = [...categoryListState];
+
   } else {
+
     categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
     // categoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
+
   };
+
   // console.log(componentName, GetDateTime(), "categoryList", categoryList);
 
   categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -77,29 +84,27 @@ const EditCategories = (props) => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
+
       // return <Redirect to="/" />;
       setModal(false);
+
     };
 
   }, [admin]);
 
 
-  const toggle = () => {
-    setModal(!modal);
-  };
-
-
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Edit Categories</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Edit Categories</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Update Categories</ModalHeader>
+      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
+        <ModalHeader toggle={(event) => { setModal(!modal); }}>Update Categories</ModalHeader>
         <ModalBody>
           <Form>
+
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
@@ -136,16 +141,17 @@ const EditCategories = (props) => {
 
               );
             })}
+
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={updateCategories}>Update Categories</Button>
-              <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
             </ModalFooter>
+
           </Form>
         </ModalBody>
       </Modal>
     </React.Fragment>
   );
-
 };
 
 export default EditCategories;

@@ -1,32 +1,23 @@
 {
-"resultsFound": true, 
-"message": "Offline AppSettings data used.",
-"siteName": "Philip K. Dick",
-"appName": "PKD and Me",
-"electronicOnly": false,
-"physicalOnly": false,
-"appAllowUserInteractions": true,
-"requireUserLogin": true,
-"menuSettings": {
-    "showAllMenuItems": false,
-
-    "showNew": true,
-    "showAbout": true,
-    "showHomeopape": false,
-    "showDickian": false,
-  
-    "showCategoryList": false,
-    "showMediaList": false,
-    "showTitleList": false,
-    "showEditionList": false,
-    "showURLList": false,
-  
-    "showAllCategories": false,
-    "showAllMedia": false,
-    "showAllTitles": false,
-    "showAllEditions": false,
-
-    "showUserPhysicalOnly": false,
-    "showUserElectronicOnly": false
+    "resultsFound": true,
+    "message": "Offline AppSettings data used.",
+    "siteName": "Philip K. Dick",
+    "appName": "PKD and Me",
+    "electronicOnly": false,
+    "physicalOnly": false,
+    "appAllowUserInteractions": true,
+    "requireUserLogin": true,
+    "menuSettings": {
+        "showAllMenuItems": false,
+        "showNew": true,
+        "showAbout": true,
+        "showHomeopape": false,
+        "showDickian": false,
+        "showAllCategories": false,
+        "showAllMedia": false,
+        "showAllTitles": false,
+        "showAllEditions": false,
+        "showUserPhysicalOnly": false,
+        "showUserElectronicOnly": false
     }
 }

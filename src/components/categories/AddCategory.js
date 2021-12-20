@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../app/sharedFunctions";
-import { addStateCategory } from "../../bibliographyData/categoriesSlice";
+import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
+import { addStateCategory } from "../../app/categoriesSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
 const AddCategory = (props) => {
@@ -18,8 +19,8 @@ const AddCategory = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  // ! Loading the baseURL from the state store here is too slow
-  // ! Always pulling it from environment.js
+  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
+  // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.app.baseURL);
   const baseURL = AppSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
@@ -66,27 +67,37 @@ const AddCategory = (props) => {
     let formValidated = false;
 
     if (IsEmpty(txtCategory) === false) {
+
       if (txtCategory.trim().length > 0) {
+
         categoryValidated = true;
         setErrCategory("");
         // console.log(componentName, GetDateTime(), "addCategory Valid Category");
         // console.log(componentName, GetDateTime(), "addCategory categoryValidated true", categoryValidated);
+
       } else {
+
         categoryValidated = false;
         setErrCategory("Please enter a category.");
         // console.log(componentName, GetDateTime(), "addCategory Invalid Category");
         // console.log(componentName, GetDateTime(), "addCategory categoryValidated false", categoryValidated);
+
       };
+
     };
 
     if (categoryValidated === true) {
+
       formValidated = true;
       // console.log(componentName, GetDateTime(), "addCategory Valid Form");
       // console.log(componentName, GetDateTime(), "addCategory formValidated true", formValidated);
+
     } else {
+
       formValidated = false;
       // console.log(componentName, GetDateTime(), "addCategory Invalid Form");
       // console.log(componentName, GetDateTime(), "addCategory formValidated false", formValidated);
+
     };
 
     // console.log(componentName, GetDateTime(), "addCategory categoryValidated", categoryValidated);
@@ -96,11 +107,11 @@ const AddCategory = (props) => {
 
       if (IsEmpty(txtCategory) === false) {
 
-        let categoryObject = {
+        let recordObject = {
           category: txtCategory.trim()
         };
 
-        // console.log(componentName, GetDateTime(), "addCategory categoryObject", categoryObject);
+        // console.log(componentName, GetDateTime(), "addCategory recordObject", recordObject);
 
         let url = baseURL + "categories/";
         // console.log(componentName, GetDateTime(), "addCategory url", url);
@@ -113,19 +124,29 @@ const AddCategory = (props) => {
               "Content-Type": "application/json",
               "Authorization": sessionToken
             }),
-            body: JSON.stringify({ category: categoryObject })
+            body: JSON.stringify({ category: recordObject })
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addCategory response", response);
+
               // if (!response.ok) {
+
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
+
               // } else {
+
               // if (response.status === 200) {
+
               return response.json();
+
               // } else {
+
               //     return response.status;
+
               // };
+
               // };
+
             })
             .then(data => {
               // console.log(componentName, GetDateTime(), "addCategory data", data);
@@ -142,23 +163,30 @@ const AddCategory = (props) => {
                 setSortID(data.records[0].sortID);
                 setActive(data.records[0].active);
 
-                // ? Would still work if the createDate and updateDate were left out?
+                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
                 dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, categoryActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
-                // ? Add to local storage also?
+
+                // ? Add to local storage also? -- 03/06/2021 MF
 
                 dispatch(addStateURL([{ linkName: encodeURL(data.records[0].category), linkType: "category", linkID: data.records[0].categoryID }]));
 
               } else {
+
                 // addErrorMessage(data.error);
                 addErrorMessage(data.errorMessages);
+
               };
 
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(componentName, GetDateTime(), "addCategory error", error);
               // console.error(componentName, GetDateTime(), "addCategory error.name", error.name);
               // console.error(componentName, GetDateTime(), "addCategory error.message", error.message);
+
               addErrorMessage(error.name + ": " + error.message);
+
+              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
             });
 
         };
@@ -171,11 +199,14 @@ const AddCategory = (props) => {
 
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect categoryRecordAdded", categoryRecordAdded);
+
     if (IsEmpty(categoryRecordAdded) === false && categoryRecordAdded === true) {
+
       clearMessages();
       setCategoryRecordAdded(null);
       // setModal(false);
-      toggle();
+      setModal(!modal);
+
     };
 
   }, [categoryRecordAdded]);
@@ -185,51 +216,49 @@ const AddCategory = (props) => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
+
       // return <Redirect to="/" />;
       setModal(false);
+
     };
 
   }, [admin]);
 
 
-  const toggle = () => {
-    setModal(!modal);
-  };
-
-
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={toggle}>Add Category</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Category</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={toggle} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      <Modal isOpen={modal} toggle={toggle} size="md">
-        <ModalHeader toggle={toggle}>Add Category</ModalHeader>
+      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
+        <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Category</ModalHeader>
         <ModalBody>
           <Form>
+
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
             </FormGroup>
-            <FormGroup>
 
+            <FormGroup>
               <Label for="txtCategory">Category</Label>
               <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtCategory(event.target.value); }} />
               {IsEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null}
-
             </FormGroup>
 
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={addCategory}>Add Category</Button>
-              <Button outline size="lg" color="secondary" onClick={toggle}>Cancel</Button>
+              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
             </ModalFooter>
+
           </Form>
         </ModalBody>
       </Modal>
+
     </React.Fragment>
   );
-
 };
 
 export default AddCategory;

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
 
 const componentName = "urlsSlice.js";
 
@@ -19,8 +19,10 @@ const urlsSlice = createSlice({
       // console.log(componentName, GetDateTime(), "loadArrayURLs action.payload.length", action.payload.length);
 
       for (let i = 0; i < action.payload.length; i++) {
+
         // console.log(componentName, GetDateTime(), "loadArrayURLs action.payload[i]", action.payload[i]);
         state.arrayURLs.push(action.payload[i]);
+
       };
 
       state.urlsLoaded = true;
@@ -32,8 +34,10 @@ const urlsSlice = createSlice({
 
       // Could change this to accept an object and add that object to the store
       for (let i = 0; i < action.payload.length; i++) {
+
         // console.log(componentName, GetDateTime(), "addStateTitle action.payload[i]", action.payload[i]);
         state.arrayURLs.push(action.payload[i]);
+
       };
 
     },
@@ -58,23 +62,33 @@ const urlsSlice = createSlice({
           if (IsEmpty(urlListIndex) === false) {
 
             if (HasNonEmptyProperty(urlItem, "linkName")) {
+
               state.arrayURLs[urlListIndex].linkName = urlItem.linkName;
+
             };
 
             if (HasNonEmptyProperty(urlItem, "linkType")) {
+
               state.arrayURLs[urlListIndex].linkType = urlItem.linkType;
+
             };
 
             if (HasNonEmptyProperty(urlItem, "linkID")) {
+
               state.arrayURLs[urlListIndex].linkID = urlItem.linkID;
+
             };
 
             if (HasNonEmptyProperty(urlItem, "linkTypeNameID")) {
+
               state.arrayURLs[urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
+
             };
 
             if (HasNonEmptyProperty(urlItem, "linkTypeName")) {
+
               state.arrayURLs[urlListIndex].linkTypeName = urlItem.linkTypeName;
+
             };
 
           };

@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../app/sharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
 
 const FormatPost = () => {
 
   const componentName = "FormatPost.js";
+
+  const history = useHistory();
+
+  // const sessionToken = useSelector(state => state.user.sessionToken);
+  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  const admin = useSelector(state => state.user.admin);
+  // console.log(componentName, GetDateTime(), "admin", admin);
 
   const [txtArticleTitle, setTxtArticleTitle] = useState("");
   const [txtArticleURL, setTxtArticleURL] = useState("");
@@ -29,6 +38,7 @@ const FormatPost = () => {
 
     // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
     let i, j, str, lowers, uppers;
+
     str = title.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
@@ -37,6 +47,7 @@ const FormatPost = () => {
     // * they are the first or last words in the string
     lowers = ["A", "An", "The", "And", "But", "Or", "For", "Nor", "As", "At",
       "By", "For", "From", "In", "Into", "Near", "Of", "On", "Onto", "To", "With"];
+
     for (i = 0, j = lowers.length; i < j; i++)
       str = str.replace(new RegExp("\\s" + lowers[i] + "\\s", "g"),
         function (txt) {
@@ -45,6 +56,7 @@ const FormatPost = () => {
 
     // * Certain words such as initialisms or acronyms should be left uppercase
     uppers = ["Id", "Tv", "Pkd"];
+
     for (i = 0, j = uppers.length; i < j; i++)
       str = str.replace(new RegExp("\\b" + uppers[i] + "\\b", "g"),
         uppers[i].toUpperCase());
@@ -59,35 +71,51 @@ const FormatPost = () => {
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
 
     if (cbxPhilipKDickFestival === true) {
+
       post = post + " #PhilipKDickFestival ";
+
     };
 
     if (cbxDickian === true) {
+
       post = post + " #Dickian ";
+
     };
 
     if (cbxBladeRunner === true) {
+
       post = post + " #BladeRunner ";
+
     };
 
     if (cbxBladeRunner2049 === true) {
+
       post = post + " #BladeRunner2049 ";
+
     };
 
     if (cbxTotalRecall === true) {
+
       post = post + " #TotalRecall ";
+
     };
 
     if (cbxElectricDreams === true) {
+
       post = post + " #ElectricDreams ";
+
     };
 
     if (cbxTMITHC === true) {
+
       post = post + " #TMITHC #HighCastle ";
+
     };
 
     if (cbxMinorityReport === true) {
+
       post = post + " #MinorityReport ";
+
     };
 
     let param = "";
@@ -140,11 +168,25 @@ const FormatPost = () => {
   };
 
 
+  useEffect(() => {
+    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+
+    if (admin !== true) {
+
+      history.push("/");
+
+    };
+
+  }, [admin]);
+
+
   return (
     <Container className="mt-4">
       <Row>
         <Col xs="12">
+
           <h4 className="text-center">Format Social Media Post</h4>
+
         </Col>
       </Row>
       <Row>
@@ -162,7 +204,6 @@ const FormatPost = () => {
             </FormGroup>
 
             <FormGroup row>
-
               <Col>
 
                 <FormGroup className="ml-4">
@@ -182,7 +223,6 @@ const FormatPost = () => {
                 </FormGroup>
 
               </Col>
-
               <Col>
 
                 <FormGroup className="ml-4">
@@ -202,7 +242,6 @@ const FormatPost = () => {
                 </FormGroup>
 
               </Col>
-
             </FormGroup>
 
             <Button outline size="lg" color="primary" onClick={formatPost}>Format Post</Button>
@@ -227,7 +266,6 @@ const FormatPost = () => {
       </Row>
     </Container>
   );
-
 };
 
 export default FormatPost;

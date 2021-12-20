@@ -1,22 +1,22 @@
-import {configureStore} from "@reduxjs/toolkit";
-import appReducer from "./appSlice";
-import urlsReducer from "./urlsSlice";
-import categoriesReducer from "../bibliographyData/categoriesSlice";
-import mediaReducer from "../bibliographyData/mediaSlice";
-import titlesReducer from "../bibliographyData/titlesSlice";
-import editionsReducer from "../bibliographyData/editionsSlice";
-import userReducer from "./userSlice";
-import userReviewsReducer from "../bibliographyData/userReviewsSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import appSlice from "./appSlice";
+import urlsSlice from "./urlsSlice";
+import categoriesSlice from "./categoriesSlice";
+import mediaSlice from "./mediaSlice";
+import titlesSlice from "./titlesSlice";
+import editionsSlice from "./editionsSlice";
+import userSlice from "./userSlice";
+import userReviewsSlice from "./userReviewsSlice";
 
 export default configureStore({
   reducer: {
-    app: appReducer,
-    categories: categoriesReducer,
-    editions: editionsReducer,
-    media: mediaReducer,
-    titles: titlesReducer,
-    urls: urlsReducer,
-    user: userReducer,
-    userReviews: userReviewsReducer
+    app: appSlice,
+    categories: categoriesSlice,
+    editions: editionsSlice,
+    media: mediaSlice,
+    titles: titlesSlice,
+    urls: urlsSlice,
+    user: userSlice,
+    userReviews: userReviewsSlice
   }
 });
