@@ -7,6 +7,7 @@ import { Rating } from "@material-ui/lab/";
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -307,12 +308,14 @@ const Title = (props) => {
   //             };
 
   //         })
-  //         .catch(error => {
+  //         .catch((error) => {
   //             console.error(componentName, GetDateTime(), "getTitleRating error", error);
 
   //             // console.error(componentName, GetDateTime(), "getTitleRating error.name", error.name);
   //             // console.error(componentName, GetDateTime(), "getTitleRating error.message", error.message);
   //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
+
+  //            let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //         });
 
@@ -400,9 +403,9 @@ const Title = (props) => {
     let data = "";
     let operationValue = "Update Computer Log";
 
-    let computerLogObject = {};
+    let recordObject = {};
 
-    computerLogObject = {
+    recordObject = {
 
       title: titleList[0].titleName,
       href: href,
@@ -428,19 +431,17 @@ const Title = (props) => {
 
     };
 
-    // console.log(componentName, GetDateTime(), "saveRecord computerLogObject", computerLogObject);
+    // console.log(componentName, GetDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
       }),
-      body: JSON.stringify({ recordObject: computerLogObject })
+      body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "saveRecord results", results);
-
-        response = results;
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -469,10 +470,12 @@ const Title = (props) => {
         // dispatch(setLocationLogged(true));
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), operationValue, "saveRecord error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Inp
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { loadUserData } from "../../app/userSlice";
 
 const EditUser = (props) => {
@@ -204,7 +205,7 @@ const EditUser = (props) => {
 
       if (IsEmpty(txtFirstName) === false && IsEmpty(txtLastName) === false && IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
 
-        let userObject = {
+        let recordObject = {
           firstName: txtFirstName.trim(),
           lastName: txtLastName.trim(),
           email: txtEmail.trim(),
@@ -218,13 +219,13 @@ const EditUser = (props) => {
 
           if (txtPassword.trim().length !== 0) {
 
-            Object.assign(userObject, { password: txtPassword.trim() });
+            Object.assign(recordObject, { password: txtPassword.trim() });
 
           };
 
         };
 
-        // console.log(componentName, GetDateTime(), "updateUser userObject", userObject);
+        // console.log(componentName, GetDateTime(), "updateUser recordObject", recordObject);
 
         let url = baseURL + "users/";
 
@@ -243,7 +244,7 @@ const EditUser = (props) => {
             "Content-Type": "application/json",
             "Authorization": sessionToken
           }),
-          body: JSON.stringify({ user: userObject })
+          body: JSON.stringify({ user: recordObject })
         })
           .then(response => {
             // console.log(componentName, GetDateTime(), "updateUser response", response);
@@ -305,12 +306,14 @@ const EditUser = (props) => {
             // };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "updateUser error", error);
             // console.error(componentName, GetDateTime(), "updateUser error.name", error.name);
             // console.error(componentName, GetDateTime(), "updateUser error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 

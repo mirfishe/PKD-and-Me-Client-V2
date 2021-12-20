@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Inp
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { addStateCategory } from "../../app/categoriesSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -106,11 +107,11 @@ const AddCategory = (props) => {
 
       if (IsEmpty(txtCategory) === false) {
 
-        let categoryObject = {
+        let recordObject = {
           category: txtCategory.trim()
         };
 
-        // console.log(componentName, GetDateTime(), "addCategory categoryObject", categoryObject);
+        // console.log(componentName, GetDateTime(), "addCategory recordObject", recordObject);
 
         let url = baseURL + "categories/";
         // console.log(componentName, GetDateTime(), "addCategory url", url);
@@ -123,7 +124,7 @@ const AddCategory = (props) => {
               "Content-Type": "application/json",
               "Authorization": sessionToken
             }),
-            body: JSON.stringify({ category: categoryObject })
+            body: JSON.stringify({ category: recordObject })
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addCategory response", response);
@@ -177,12 +178,14 @@ const AddCategory = (props) => {
               };
 
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(componentName, GetDateTime(), "addCategory error", error);
               // console.error(componentName, GetDateTime(), "addCategory error.name", error.name);
               // console.error(componentName, GetDateTime(), "addCategory error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
+
+              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 

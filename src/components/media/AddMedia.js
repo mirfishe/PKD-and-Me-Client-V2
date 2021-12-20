@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Inp
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { addStateMedia } from "../../app/mediaSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -109,12 +110,12 @@ const AddMedia = (props) => {
 
       if (IsEmpty(txtMedia) === false) {
 
-        let mediaObject = {
+        let recordObject = {
           media: txtMedia.trim(),
           electronic: cbxElectronic
         };
 
-        // console.log(componentName, GetDateTime(), "addMedia mediaObject", mediaObject);
+        // console.log(componentName, GetDateTime(), "addMedia recordObject", recordObject);
 
         let url = baseURL + "media/";
         // console.log(componentName, GetDateTime(), "addMedia url", url);
@@ -127,7 +128,7 @@ const AddMedia = (props) => {
               "Content-Type": "application/json",
               "Authorization": sessionToken
             }),
-            body: JSON.stringify({ media: mediaObject })
+            body: JSON.stringify({ media: recordObject })
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addMedia response", response);
@@ -182,12 +183,14 @@ const AddMedia = (props) => {
               };
 
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(componentName, GetDateTime(), "addMedia error", error);
               // console.error(componentName, GetDateTime(), "addMedia error.name", error.name);
               // console.error(componentName, GetDateTime(), "addMedia error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
+
+              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 

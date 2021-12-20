@@ -5,6 +5,7 @@ import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "rea
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 
 const FromTheHomeopape = (props) => {
 
@@ -58,17 +59,16 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "getNews response", response);
 
-        if (!results.ok) {
+        if (!response.ok) {
 
-          // throw Error(results.status + " " + results.statusText + " " + results.url);
+          throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
         } else {
 
-          return results.json();
-          // return results.text();
+          return response.json();
 
         };
 
@@ -86,10 +86,12 @@ const FromTheHomeopape = (props) => {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         // console.error(componentName, GetDateTime(), "getNews error", error);
 
         setErrorMessage(error.name + ": " + error.message);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

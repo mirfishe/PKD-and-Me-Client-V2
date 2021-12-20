@@ -5,6 +5,7 @@ import { PencilSquare, Plus } from 'react-bootstrap-icons';
 import { Rating } from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 import { updateStateTitleRating } from "../../app/titlesSlice";
 import { updateStateChecklist } from "../../app/userSlice";
@@ -232,7 +233,7 @@ const EditUserReview = (props) => {
 
     // console.log(componentName, GetDateTime(), "addUserReview parseInt(props.titleID)", parseInt(props.titleID));
 
-    let userReviewObject = {
+    let recordObject = {
       titleID: parseInt(props.titleID),
       read: cbxRead,
       // dateRead: txtDateRead.trim(),
@@ -249,7 +250,7 @@ const EditUserReview = (props) => {
 
       if (txtDateRead.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { dateRead: txtDateRead.trim() });
+        Object.assign(recordObject, { dateRead: txtDateRead.trim() });
 
       };
 
@@ -260,7 +261,7 @@ const EditUserReview = (props) => {
 
       if (txtRanking.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { ranking: txtRanking.trim() });
+        Object.assign(recordObject, { ranking: txtRanking.trim() });
 
       };
 
@@ -271,7 +272,7 @@ const EditUserReview = (props) => {
 
       if (txtShortReview.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { shortReview: txtShortReview.trim() });
+        Object.assign(recordObject, { shortReview: txtShortReview.trim() });
 
       };
 
@@ -282,7 +283,7 @@ const EditUserReview = (props) => {
 
       if (txtLongReview.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { longReview: txtLongReview.trim() });
+        Object.assign(recordObject, { longReview: txtLongReview.trim() });
 
       };
 
@@ -293,13 +294,13 @@ const EditUserReview = (props) => {
 
       if (txtDatePurchased.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { datePurchased: txtDatePurchased.trim() });
+        Object.assign(recordObject, { datePurchased: txtDatePurchased.trim() });
 
       };
 
     };
 
-    // console.log(componentName, GetDateTime(), "addUserReview userReviewObject", userReviewObject);
+    // console.log(componentName, GetDateTime(), "addUserReview recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
     // console.log(componentName, GetDateTime(), "addUserReview url", url);
@@ -312,7 +313,7 @@ const EditUserReview = (props) => {
           "Content-Type": "application/json",
           "Authorization": sessionToken
         }),
-        body: JSON.stringify({ userReview: userReviewObject })
+        body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
           // console.log(componentName, GetDateTime(), "addUserReview response", response);
@@ -447,12 +448,14 @@ const EditUserReview = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "addUserReview error", error);
           // console.error(componentName, GetDateTime(), "addUserReview error.name", error.name);
           // console.error(componentName, GetDateTime(), "addUserReview error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -493,7 +496,7 @@ const EditUserReview = (props) => {
 
     // console.log(componentName, GetDateTime(), "addUserReview parseInt(titleID)", parseInt(titleID));
 
-    let userReviewObject = {
+    let recordObject = {
       read: cbxRead,
       // dateRead: txtDateRead.trim(),
       rating: rdoRating,
@@ -510,7 +513,7 @@ const EditUserReview = (props) => {
 
       if (txtDateRead.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { dateRead: txtDateRead.trim() });
+        Object.assign(recordObject, { dateRead: txtDateRead.trim() });
 
       };
 
@@ -521,7 +524,7 @@ const EditUserReview = (props) => {
 
       if (txtRanking.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { ranking: txtRanking.trim() });
+        Object.assign(recordObject, { ranking: txtRanking.trim() });
 
       };
 
@@ -532,7 +535,7 @@ const EditUserReview = (props) => {
 
       if (txtShortReview.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { shortReview: txtShortReview.trim() });
+        Object.assign(recordObject, { shortReview: txtShortReview.trim() });
 
       };
 
@@ -543,7 +546,7 @@ const EditUserReview = (props) => {
 
       if (txtLongReview.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { longReview: txtLongReview.trim() });
+        Object.assign(recordObject, { longReview: txtLongReview.trim() });
 
       };
 
@@ -554,13 +557,13 @@ const EditUserReview = (props) => {
 
       if (txtDatePurchased.trim().length !== 0) {
 
-        Object.assign(userReviewObject, { datePurchased: txtDatePurchased.trim() });
+        Object.assign(recordObject, { datePurchased: txtDatePurchased.trim() });
 
       };
 
     };
 
-    // console.log(componentName, GetDateTime(), "updateUserReview userReviewObject", userReviewObject);
+    // console.log(componentName, GetDateTime(), "updateUserReview recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
 
@@ -571,7 +574,7 @@ const EditUserReview = (props) => {
 
         url = url + "admin/";
 
-        Object.assign(userReviewObject, { userID: userID });
+        Object.assign(recordObject, { userID: userID });
 
       };
 
@@ -584,7 +587,7 @@ const EditUserReview = (props) => {
           "Content-Type": "application/json",
           "Authorization": sessionToken
         }),
-        body: JSON.stringify({ userReview: userReviewObject })
+        body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
           // console.log(componentName, GetDateTime(), "updateUserReview response", response);
@@ -742,12 +745,14 @@ const EditUserReview = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "updateUserReview error", error);
           // console.error(componentName, GetDateTime(), "updateUserReview error.name", error.name);
           // console.error(componentName, GetDateTime(), "updateUserReview error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -884,12 +889,14 @@ const EditUserReview = (props) => {
             };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "deleteUserReview error", error);
             // console.error(componentName, GetDateTime(), "deleteUserReview error.name", error.name);
             // console.error(componentName, GetDateTime(), "deleteUserReview error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 

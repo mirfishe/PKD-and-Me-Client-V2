@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Login = (props) => {
@@ -152,12 +153,12 @@ const Login = (props) => {
 
       if (IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
 
-        let userObject = {
+        let recordObject = {
           email: txtEmail.trim(),
           password: txtPassword.trim()
         };
 
-        // console.log(componentName, GetDateTime(), "logIn userObject", userObject);
+        // console.log(componentName, GetDateTime(), "logIn recordObject", recordObject);
 
         let url = baseURL + "users/login/";
         // console.log(componentName, GetDateTime(), "logIn url", url);
@@ -167,7 +168,7 @@ const Login = (props) => {
           headers: new Headers({
             "Content-Type": "application/json"
           }),
-          body: JSON.stringify({ user: userObject })
+          body: JSON.stringify({ user: recordObject })
         })
           .then(response => {
             // console.log(componentName, GetDateTime(), "logIn response", response);
@@ -233,12 +234,14 @@ const Login = (props) => {
             // };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "logIn error", error);
             // console.error(componentName, GetDateTime(), "logIn error.name", error.name);
             // console.error(componentName, GetDateTime(), "logIn error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -307,12 +310,14 @@ const Login = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "getChecklist error", error);
           // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
           // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
 
           // addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

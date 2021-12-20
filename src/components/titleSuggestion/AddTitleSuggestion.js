@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Inp
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
 
@@ -191,7 +192,7 @@ const AddTitleSuggestion = (props) => {
 
       if (IsEmpty(txtTitleName) === false && IsEmpty(txtShortDescription) === false && IsEmpty(txtEmail) === false) {
 
-        let titleSuggestionObject = {
+        let recordObject = {
           titleName: txtTitleName.trim(),
           // authorFirstName: txtAuthorFirstName.trim(),
           // authorLastName: txtAuthorLastName.trim(),
@@ -206,7 +207,7 @@ const AddTitleSuggestion = (props) => {
 
           if (txtAuthorFirstName.trim().length !== 0) {
 
-            Object.assign(titleSuggestionObject, { authorFirstName: txtAuthorFirstName.trim() });
+            Object.assign(recordObject, { authorFirstName: txtAuthorFirstName.trim() });
 
           };
 
@@ -217,7 +218,7 @@ const AddTitleSuggestion = (props) => {
 
           if (txtAuthorLastName.trim().length !== 0) {
 
-            Object.assign(titleSuggestionObject, { authorLastName: txtAuthorLastName.trim() });
+            Object.assign(recordObject, { authorLastName: txtAuthorLastName.trim() });
 
           };
 
@@ -228,7 +229,7 @@ const AddTitleSuggestion = (props) => {
 
 
           if (txtPublicationDate.trim().length !== 0) {
-            Object.assign(titleSuggestionObject, { publicationDate: txtPublicationDate.trim() });
+            Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
 
           };
 
@@ -239,13 +240,13 @@ const AddTitleSuggestion = (props) => {
 
           if (txtTitleURL.trim().length !== 0) {
 
-            Object.assign(titleSuggestionObject, { titleURL: txtTitleURL.trim() });
+            Object.assign(recordObject, { titleURL: txtTitleURL.trim() });
 
           };
 
         };
 
-        // console.log(componentName, GetDateTime(), "addTitleSuggestion titleSuggestionObject", titleSuggestionObject);
+        // console.log(componentName, GetDateTime(), "addTitleSuggestion recordObject", recordObject);
 
         let url = baseURL + "titleSuggestions/";
         // console.log(componentName, GetDateTime(), "addTitleSuggestion url", url);
@@ -264,7 +265,7 @@ const AddTitleSuggestion = (props) => {
           fetch(url, {
             method: "POST",
             headers: headerObject,
-            body: JSON.stringify({ titleSuggestion: titleSuggestionObject })
+            body: JSON.stringify({ titleSuggestion: recordObject })
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addTitleSuggestion response", response);
@@ -320,12 +321,14 @@ const AddTitleSuggestion = (props) => {
               };
 
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(componentName, GetDateTime(), "addTitleSuggestion error", error);
               // console.error(componentName, GetDateTime(), "addTitleSuggestion error.name", error.name);
               // console.error(componentName, GetDateTime(), "addTitleSuggestion error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
+
+              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 

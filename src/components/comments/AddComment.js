@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Inp
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
 
@@ -152,14 +153,14 @@ const AddComment = (props) => {
 
       if (IsEmpty(txtComment) === false /*&& IsEmpty(txtEmail) === false*/) {
 
-        let commentObject = {
+        let recordObject = {
           comment: txtComment.trim(),
           userID: userState.userID,
           email: txtEmail.trim()
           // email: userState.email
         };
 
-        // console.log(componentName, GetDateTime(), "addComment commentObject", commentObject);
+        // console.log(componentName, GetDateTime(), "addComment recordObject", recordObject);
 
         let url = baseURL + "comments/";
         // console.log(componentName, GetDateTime(), "addComment url", url);
@@ -178,7 +179,7 @@ const AddComment = (props) => {
           fetch(url, {
             method: "POST",
             headers: headerObject,
-            body: JSON.stringify({ comment: commentObject })
+            body: JSON.stringify({ comment: recordObject })
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addComment response", response);
@@ -229,12 +230,14 @@ const AddComment = (props) => {
               };
 
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(componentName, GetDateTime(), "addComment error", error);
               // console.error(componentName, GetDateTime(), "addComment error.name", error.name);
               // console.error(componentName, GetDateTime(), "addComment error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
+
+              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 

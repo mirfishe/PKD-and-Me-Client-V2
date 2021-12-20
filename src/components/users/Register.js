@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Register = (props) => {
@@ -205,14 +206,14 @@ const Register = (props) => {
 
       if (IsEmpty(txtFirstName) === false && IsEmpty(txtLastName) === false && IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
 
-        let userObject = {
+        let recordObject = {
           firstName: txtFirstName.trim(),
           lastName: txtLastName.trim(),
           email: txtEmail.trim(),
           password: txtPassword.trim()
         };
 
-        // console.log(componentName, GetDateTime(), "register userObject", userObject);
+        // console.log(componentName, GetDateTime(), "register recordObject", recordObject);
 
         let url = baseURL + "users/register/";
         // console.log(componentName, GetDateTime(), "register url", url);
@@ -222,7 +223,7 @@ const Register = (props) => {
           headers: new Headers({
             "Content-Type": "application/json"
           }),
-          body: JSON.stringify({ user: userObject })
+          body: JSON.stringify({ user: recordObject })
         })
           .then(response => {
             // console.log(componentName, GetDateTime(), "register response", response);
@@ -288,12 +289,14 @@ const Register = (props) => {
             // };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "register error", error);
             // console.error(componentName, GetDateTime(), "register error.name", error.name);
             // console.error(componentName, GetDateTime(), "register error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -362,12 +365,14 @@ const Register = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "getChecklist error", error);
           // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
           // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
 
           // addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

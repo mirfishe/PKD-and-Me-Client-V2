@@ -6,6 +6,7 @@ import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button } from "reactstrap";
 import AppSettings from "./app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./utilities/SharedFunctions";
+import { LogError } from "./utilities/AppFunctions";
 import { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, setAppOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/appSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadAppSettings from "./components/loadData/LoadAppSettings";
@@ -202,11 +203,9 @@ function App(props) {
       let url1 = "https://geolocation-db.com/json/";
 
       fetch(url1)
-        .then(results => {
+        .then(response => {
 
-          response = results;
-
-          return results.json();
+          return response.json();
 
         }).then((results) => {
           // console.log(componentName, GetDateTime(), operationValue1, "results", results);
@@ -219,7 +218,8 @@ function App(props) {
 
           setURL1Loaded(true);
 
-        }).catch((error) => {
+        })
+        .catch((error) => {
           // console.error(componentName, GetDateTime(), operationValue1, "error", error);
 
           setURL1Loaded(true);
@@ -231,11 +231,9 @@ function App(props) {
       let url2 = "https://api.db-ip.com/v2/free/self";
 
       fetch(url2)
-        .then(results => {
+        .then(response => {
 
-          response = results;
-
-          return results.json();
+          return response.json();
 
         }).then((results) => {
           // console.log(componentName, GetDateTime(), operationValue2, "results", results);
@@ -265,7 +263,8 @@ function App(props) {
 
           setURL2Loaded(true);
 
-        }).catch((error) => {
+        })
+        .catch((error) => {
           // console.error(componentName, GetDateTime(), operationValue2, "error", error);
 
           setURL2Loaded(true);
@@ -303,9 +302,9 @@ function App(props) {
     let data = "";
     let operationValue = "Update Computer Log";
 
-    let computerLogObject = {};
+    let recordObject = {};
 
-    computerLogObject = {
+    recordObject = {
 
       title: "Homepage",
       href: href,
@@ -331,19 +330,17 @@ function App(props) {
 
     };
 
-    // console.log(componentName, GetDateTime(), "saveRecord computerLogObject", computerLogObject);
+    // console.log(componentName, GetDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
       }),
-      body: JSON.stringify({ recordObject: computerLogObject })
+      body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "saveRecord results", results);
-
-        response = results;
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -372,10 +369,12 @@ function App(props) {
         dispatch(setLocationLogged(true));
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), operationValue, "saveRecord error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -503,12 +502,14 @@ function App(props) {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "getUser error", error);
-
           // console.error(componentName, GetDateTime(), "getUser error.name", error.name);
           // console.error(componentName, GetDateTime(), "getUser error.message", error.message);
+
           // addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -576,12 +577,14 @@ function App(props) {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "getChecklist error", error);
-
           // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
           // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
+
           // addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

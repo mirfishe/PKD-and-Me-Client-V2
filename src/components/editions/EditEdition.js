@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, getASIN, removeOnePixelImage } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
 const EditEdition = (props) => {
@@ -262,7 +263,7 @@ const EditEdition = (props) => {
       // console.log(componentName, GetDateTime(), "addEdition parseInt(props.titleID)", parseInt(props.titleID));
       // console.log(componentName, GetDateTime(), "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
 
-      let editionObject = {
+      let recordObject = {
         titleID: parseInt(props.titleID),
         mediaID: parseInt(ddMediaID),
         // imageName: txtImageName.trim(),
@@ -280,7 +281,7 @@ const EditEdition = (props) => {
 
         if (txtPublicationDate.trim().length !== 0) {
 
-          Object.assign(editionObject, { publicationDate: txtPublicationDate.trim() });
+          Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
 
         };
 
@@ -291,7 +292,7 @@ const EditEdition = (props) => {
 
         if (txtImageName.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageName: txtImageName.trim() });
+          Object.assign(recordObject, { imageName: txtImageName.trim() });
 
         };
 
@@ -302,7 +303,7 @@ const EditEdition = (props) => {
 
         if (txtASIN.trim().length !== 0) {
 
-          Object.assign(editionObject, { ASIN: txtASIN.trim() });
+          Object.assign(recordObject, { ASIN: txtASIN.trim() });
 
         };
 
@@ -313,7 +314,7 @@ const EditEdition = (props) => {
 
         if (txtTextLinkShort.trim().length !== 0) {
 
-          Object.assign(editionObject, { textLinkShort: txtTextLinkShort.trim() });
+          Object.assign(recordObject, { textLinkShort: txtTextLinkShort.trim() });
 
         };
 
@@ -324,7 +325,7 @@ const EditEdition = (props) => {
 
         if (txtTextLinkFull.trim().length !== 0) {
 
-          Object.assign(editionObject, { textLinkFull: txtTextLinkFull.trim() });
+          Object.assign(recordObject, { textLinkFull: txtTextLinkFull.trim() });
 
         };
 
@@ -335,7 +336,7 @@ const EditEdition = (props) => {
 
         if (txtImageLinkSmall.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageLinkSmall: txtImageLinkSmall.trim() });
+          Object.assign(recordObject, { imageLinkSmall: txtImageLinkSmall.trim() });
 
         };
 
@@ -346,7 +347,7 @@ const EditEdition = (props) => {
 
         if (txtImageLinkMedium.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageLinkMedium: txtImageLinkMedium.trim() });
+          Object.assign(recordObject, { imageLinkMedium: txtImageLinkMedium.trim() });
 
         };
 
@@ -357,7 +358,7 @@ const EditEdition = (props) => {
 
         if (txtImageLinkLarge.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageLinkLarge: txtImageLinkLarge.trim() });
+          Object.assign(recordObject, { imageLinkLarge: txtImageLinkLarge.trim() });
 
         };
 
@@ -368,13 +369,13 @@ const EditEdition = (props) => {
 
         if (txtTextImageLink.trim().length !== 0) {
 
-          Object.assign(editionObject, { textImageLink: txtTextImageLink.trim() });
+          Object.assign(recordObject, { textImageLink: txtTextImageLink.trim() });
 
         };
 
       };
 
-      // console.log(componentName, GetDateTime(), "addEdition editionObject", editionObject);
+      // console.log(componentName, GetDateTime(), "addEdition recordObject", recordObject);
 
       let url = baseURL + "editions/";
       // console.log(componentName, GetDateTime(), "addEdition url", url);
@@ -387,7 +388,7 @@ const EditEdition = (props) => {
             "Content-Type": "application/json",
             "Authorization": sessionToken
           }),
-          body: JSON.stringify({ edition: editionObject })
+          body: JSON.stringify({ edition: recordObject })
         })
           .then(response => {
             // console.log(componentName, GetDateTime(), "addEdition response", response);
@@ -461,12 +462,14 @@ const EditEdition = (props) => {
             };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "addEdition error", error);
             // console.error(componentName, GetDateTime(), "addEdition error.name", error.name);
             // console.error(componentName, GetDateTime(), "addEdition error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -549,7 +552,7 @@ const EditEdition = (props) => {
       // console.log(componentName, GetDateTime(), "addEdition parseInt(titleID)", parseInt(titleID));
       // console.log(componentName, GetDateTime(), "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
 
-      let editionObject = {
+      let recordObject = {
         editionID: props.editionID,
         titleID: parseInt(titleID),
         mediaID: parseInt(ddMediaID),
@@ -569,7 +572,7 @@ const EditEdition = (props) => {
 
         if (txtPublicationDate.trim().length !== 0) {
 
-          Object.assign(editionObject, { publicationDate: txtPublicationDate.trim() });
+          Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
 
         };
 
@@ -580,7 +583,7 @@ const EditEdition = (props) => {
 
         if (txtImageName.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageName: txtImageName.trim() });
+          Object.assign(recordObject, { imageName: txtImageName.trim() });
 
         };
 
@@ -591,7 +594,7 @@ const EditEdition = (props) => {
 
         if (txtASIN.trim().length !== 0) {
 
-          Object.assign(editionObject, { ASIN: txtASIN.trim() });
+          Object.assign(recordObject, { ASIN: txtASIN.trim() });
 
         };
 
@@ -602,7 +605,7 @@ const EditEdition = (props) => {
 
         if (txtTextLinkShort.trim().length !== 0) {
 
-          Object.assign(editionObject, { textLinkShort: txtTextLinkShort.trim() });
+          Object.assign(recordObject, { textLinkShort: txtTextLinkShort.trim() });
 
         };
 
@@ -613,7 +616,7 @@ const EditEdition = (props) => {
 
         if (txtTextLinkFull.trim().length !== 0) {
 
-          Object.assign(editionObject, { textLinkFull: txtTextLinkFull.trim() });
+          Object.assign(recordObject, { textLinkFull: txtTextLinkFull.trim() });
 
         };
 
@@ -624,7 +627,7 @@ const EditEdition = (props) => {
 
         if (txtImageLinkSmall.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageLinkSmall: txtImageLinkSmall.trim() });
+          Object.assign(recordObject, { imageLinkSmall: txtImageLinkSmall.trim() });
 
         };
 
@@ -635,7 +638,7 @@ const EditEdition = (props) => {
 
         if (txtImageLinkMedium.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageLinkMedium: txtImageLinkMedium.trim() });
+          Object.assign(recordObject, { imageLinkMedium: txtImageLinkMedium.trim() });
 
         };
 
@@ -646,7 +649,7 @@ const EditEdition = (props) => {
 
         if (txtImageLinkLarge.trim().length !== 0) {
 
-          Object.assign(editionObject, { imageLinkLarge: txtImageLinkLarge.trim() });
+          Object.assign(recordObject, { imageLinkLarge: txtImageLinkLarge.trim() });
 
         };
 
@@ -657,13 +660,13 @@ const EditEdition = (props) => {
 
         if (txtTextImageLink.trim().length !== 0) {
 
-          Object.assign(editionObject, { textImageLink: txtTextImageLink.trim() });
+          Object.assign(recordObject, { textImageLink: txtTextImageLink.trim() });
 
         };
 
       };
 
-      // console.log(componentName, GetDateTime(), "updateEdition editionObject", editionObject);
+      // console.log(componentName, GetDateTime(), "updateEdition recordObject", recordObject);
 
       let url = baseURL + "editions/";
 
@@ -679,7 +682,7 @@ const EditEdition = (props) => {
             "Content-Type": "application/json",
             "Authorization": sessionToken
           }),
-          body: JSON.stringify({ edition: editionObject })
+          body: JSON.stringify({ edition: recordObject })
         })
           .then(response => {
             // console.log(componentName, GetDateTime(), "updateEdition response", response);
@@ -753,12 +756,14 @@ const EditEdition = (props) => {
             };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "updateEdition error", error);
             // console.error(componentName, GetDateTime(), "updateEdition error.name", error.name);
             // console.error(componentName, GetDateTime(), "updateEdition error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -837,12 +842,14 @@ const EditEdition = (props) => {
             };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "deleteEdition error", error);
             // console.error(componentName, GetDateTime(), "deleteEdition error.name", error.name);
             // console.error(componentName, GetDateTime(), "deleteEdition error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -904,12 +911,14 @@ const EditEdition = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "checkASIN error", error);
           // console.error(componentName, GetDateTime(), "checkASIN error.name", error.name);
           // console.error(componentName, GetDateTime(), "checkASIN error.message", error.message);
 
           setErrASINMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

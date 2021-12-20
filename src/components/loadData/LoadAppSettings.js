@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings } from "../../app/appSlice";
 
 function LoadAppSettings() {
@@ -299,10 +300,13 @@ function LoadAppSettings() {
         dispatch(setAppSettingsJsonLoaded(true));
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "getAppSettings error", error);
         // console.error(componentName, GetDateTime(), "getAppSettings error.name", error.name);
         // console.error(componentName, GetDateTime(), "getAppSettings error.message", error.message);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
       });
 
   };

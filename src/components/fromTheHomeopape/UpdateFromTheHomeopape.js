@@ -5,6 +5,7 @@ import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "rea
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 
 // * https://www.npmjs.com/package/rss-parser
 // * https://github.com/rbren/rss-parser
@@ -228,17 +229,16 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "getNews response", response);
 
-        if (!results.ok) {
+        if (!response.ok) {
 
-          // throw Error(results.status + " " + results.statusText + " " + results.url);
+          throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
         } else {
 
-          return results.json();
-          // return results.text();
+          return response.json();
 
         };
 
@@ -254,10 +254,12 @@ const FromTheHomeopape = (props) => {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         // console.error(componentName, GetDateTime(), "getNews error", error);
 
         setErrorMessage(error.name + ": " + error.message);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -274,17 +276,16 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "getNewsReview response", response);
 
-        if (!results.ok) {
+        if (!response.ok) {
 
-          // throw Error(results.status + " " + results.statusText + " " + results.url);
+          throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
         } else {
 
-          return results.json();
-          // return results.text();
+          return response.json();
 
         };
 
@@ -300,10 +301,12 @@ const FromTheHomeopape = (props) => {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         // console.error(componentName, GetDateTime(), "getNews error", error);
 
         setErrorMessage(error.name + ": " + error.message);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -320,19 +323,18 @@ const FromTheHomeopape = (props) => {
   //       "Content-Type": "application/json"
   //     })
   //   })
-  //     .then(results => {
-  //       // console.log(componentName, GetDateTime(), "fetchNews results", results);
+  //   .then(response => {
+  //     // console.log(componentName, GetDateTime(), "fetchNews response", response);
 
-  //       if (!results.ok) {
+  //     if (!response.ok) {
 
-  //         // throw Error(results.status + " " + results.statusText + " " + results.url);
+  //       throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
-  //       } else {
+  //     } else {
 
-  //         return results.json();
-  //         // return results.text();
+  //       return response.json();
 
-  //       };
+  //     };
 
   //     })
   //     .then(results => {
@@ -342,10 +344,12 @@ const FromTheHomeopape = (props) => {
   //       fetchNewsUpdate();
 
   //     })
-  //     .catch(error => {
+  //     .catch((error) => {
   //       console.error(componentName, GetDateTime(), "fetchNews error", error);
 
   //       setErrorMessage(error.name + ": " + error.message);
+
+  //        let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //     });
 
@@ -362,29 +366,30 @@ const FromTheHomeopape = (props) => {
   //       "Content-Type": "application/json"
   //     })
   //   })
-  //     .then(results => {
-  //       // console.log(componentName, GetDateTime(), "fetchNewsUpdate results", results);
+  //   .then(response => {
+  //     // console.log(componentName, GetDateTime(), "fetchNewsUpdate response", response);
 
-  //       if (!results.ok) {
+  //     if (!response.ok) {
 
-  //         // throw Error(results.status + " " + results.statusText + " " + results.url);
+  //       throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
-  //       } else {
+  //     } else {
 
-  //         return results.json();
-  //         // return results.text();
+  //       return response.json();
 
-  //       };
+  //     };
 
   //     })
   //     .then(results => {
   //       console.log(componentName, GetDateTime(), "fetchNewsUpdate results", results);
 
   //     })
-  //     .catch(error => {
+  //     .catch((error) => {
   //       console.error(componentName, GetDateTime(), "fetchNewsUpdate error", error);
 
   //       setErrorMessage(error.name + ": " + error.message);
+
+  //      let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //     });
 
@@ -462,12 +467,14 @@ const FromTheHomeopape = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "markAllViewed error", error);
           // console.error(componentName, GetDateTime(), "markAllViewed error.name", error.name);
           // console.error(componentName, GetDateTime(), "markAllViewed error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -554,11 +561,15 @@ const FromTheHomeopape = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "setDisplay error", error);
           // console.error(componentName, GetDateTime(), "setDisplay error.name", error.name);
           // console.error(componentName, GetDateTime(), "setDisplay error.message", error.message);
+
           addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
         });
 
     };
@@ -644,12 +655,14 @@ const FromTheHomeopape = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "setPosted error", error);
           // console.error(componentName, GetDateTime(), "setPosted error.name", error.name);
           // console.error(componentName, GetDateTime(), "setPosted error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -736,12 +749,14 @@ const FromTheHomeopape = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "setAlwaysFilter error", error);
           // console.error(componentName, GetDateTime(), "setAlwaysFilter error.name", error.name);
           // console.error(componentName, GetDateTime(), "setAlwaysFilter error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

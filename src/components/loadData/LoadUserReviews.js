@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../app/userReviewsSlice";
 
 function LoadUserReviews() {
@@ -86,7 +87,7 @@ function LoadUserReviews() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "getUserReviews error", error);
         // console.error(componentName, GetDateTime(), "getUserReviews error.name", error.name);
         // console.error(componentName, GetDateTime(), "getUserReviews error.message", error.message);
@@ -95,6 +96,8 @@ function LoadUserReviews() {
         // dispatch(setUserReviewsDataOffline(true));
         // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
         // fetchLocalDataUserReviews();
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

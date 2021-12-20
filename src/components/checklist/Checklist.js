@@ -5,6 +5,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row,
 import { Drawer } from "@material-ui/core";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear, encodeURL, decodeURL } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -184,14 +185,14 @@ const Checklist = (props) => {
     setChecklistRecordUpdated(null);
 
     // ? If read is false and there are no other values in the userReviews table, should the record be deleted?
-    let userReviewObject = {
+    let recordObject = {
       titleID: titleID,
       read: read,
       owned: owned,
       active: true // ? always true?
     };
 
-    // console.log(componentName, GetDateTime(), "updateChecklist userReviewObject", userReviewObject);
+    // console.log(componentName, GetDateTime(), "updateChecklist recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
     let updateChecklistMethod = "";
@@ -218,7 +219,7 @@ const Checklist = (props) => {
           "Content-Type": "application/json",
           "Authorization": sessionToken
         }),
-        body: JSON.stringify({ userReview: userReviewObject })
+        body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
           // console.log(componentName, GetDateTime(), "updateChecklist response", response);
@@ -317,12 +318,14 @@ const Checklist = (props) => {
           };
 
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(componentName, GetDateTime(), "updateChecklist error", error);
           // console.error(componentName, GetDateTime(), "updateChecklist error.name", error.name);
           // console.error(componentName, GetDateTime(), "updateChecklist error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

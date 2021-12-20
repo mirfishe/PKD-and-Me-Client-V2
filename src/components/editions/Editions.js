@@ -6,6 +6,7 @@ import { Image } from 'react-bootstrap-icons';
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -475,9 +476,9 @@ const Editions = (props) => {
     let data = "";
     let operationValue = "Update Computer Log";
 
-    let computerLogObject = {};
+    let recordObject = {};
 
-    computerLogObject = {
+    recordObject = {
 
       title: "Editions",
       href: href,
@@ -503,19 +504,17 @@ const Editions = (props) => {
 
     };
 
-    // console.log(componentName, GetDateTime(), "saveRecord computerLogObject", computerLogObject);
+    // console.log(componentName, GetDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json"
       }),
-      body: JSON.stringify({ recordObject: computerLogObject })
+      body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "saveRecord results", results);
-
-        response = results;
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -544,10 +543,12 @@ const Editions = (props) => {
         // dispatch(setLocationLogged(true));
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), operationValue, "saveRecord error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

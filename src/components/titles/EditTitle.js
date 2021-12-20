@@ -5,6 +5,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, createTitleURL, createImageName } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
@@ -303,7 +304,7 @@ const EditTitle = (props) => {
 
         // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
-        let titleObject = {
+        let recordObject = {
           titleName: txtTitleName.trim(),
           // authorFirstName: txtAuthorFirstName.trim(),
           // authorLastName: txtAuthorLastName.trim(),
@@ -318,7 +319,7 @@ const EditTitle = (props) => {
 
           if (txtTitleURL.trim().length !== 0) {
 
-            Object.assign(titleObject, { titleURL: txtTitleURL.trim() });
+            Object.assign(recordObject, { titleURL: txtTitleURL.trim() });
 
           };
 
@@ -329,7 +330,7 @@ const EditTitle = (props) => {
 
           if (txtAuthorFirstName.trim().length !== 0) {
 
-            Object.assign(titleObject, { authorFirstName: txtAuthorFirstName.trim() });
+            Object.assign(recordObject, { authorFirstName: txtAuthorFirstName.trim() });
 
           };
 
@@ -340,7 +341,7 @@ const EditTitle = (props) => {
 
           if (txtAuthorLastName.trim().length !== 0) {
 
-            Object.assign(titleObject, { authorLastName: txtAuthorLastName.trim() });
+            Object.assign(recordObject, { authorLastName: txtAuthorLastName.trim() });
 
           };
 
@@ -351,7 +352,7 @@ const EditTitle = (props) => {
 
           if (txtImageName.trim().length !== 0) {
 
-            Object.assign(titleObject, { imageName: txtImageName.trim() });
+            Object.assign(recordObject, { imageName: txtImageName.trim() });
 
           };
 
@@ -362,7 +363,7 @@ const EditTitle = (props) => {
 
           if (txtSubmissionDate.trim().length !== 0) {
 
-            Object.assign(titleObject, { submissionDate: txtSubmissionDate.trim() });
+            Object.assign(recordObject, { submissionDate: txtSubmissionDate.trim() });
 
           };
 
@@ -373,7 +374,7 @@ const EditTitle = (props) => {
 
           if (txtPublicationDate.trim().length !== 0) {
 
-            Object.assign(titleObject, { publicationDate: txtPublicationDate.trim() });
+            Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
 
           };
 
@@ -385,7 +386,7 @@ const EditTitle = (props) => {
 
           if (txtShortDescription.trim().length !== 0) {
 
-            Object.assign(titleObject, { shortDescription: txtShortDescription.trim() });
+            Object.assign(recordObject, { shortDescription: txtShortDescription.trim() });
 
           };
 
@@ -396,13 +397,13 @@ const EditTitle = (props) => {
 
           if (txtUrlPKDWeb.trim().length !== 0) {
 
-            Object.assign(titleObject, { urlPKDWeb: txtUrlPKDWeb.trim() });
+            Object.assign(recordObject, { urlPKDWeb: txtUrlPKDWeb.trim() });
 
           };
 
         };
 
-        // console.log(componentName, GetDateTime(), "addTitle titleObject", titleObject);
+        // console.log(componentName, GetDateTime(), "addTitle recordObject", recordObject);
 
         let url = baseURL + "titles/";
         // console.log(componentName, GetDateTime(), "addTitle url", url);
@@ -415,7 +416,7 @@ const EditTitle = (props) => {
               "Content-Type": "application/json",
               "Authorization": sessionToken
             }),
-            body: JSON.stringify({ title: titleObject })
+            body: JSON.stringify({ title: recordObject })
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "addTitle response", response);
@@ -484,12 +485,14 @@ const EditTitle = (props) => {
               };
 
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(componentName, GetDateTime(), "addTitle error", error);
               // console.error(componentName, GetDateTime(), "addTitle error.name", error.name);
               // console.error(componentName, GetDateTime(), "addTitle error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
+
+              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -628,7 +631,7 @@ const EditTitle = (props) => {
 
         // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
-        let titleObject = {
+        let recordObject = {
           titleName: txtTitleName.trim(),
           // authorFirstName: txtAuthorFirstName.trim(),
           // authorLastName: txtAuthorLastName.trim(),
@@ -644,7 +647,7 @@ const EditTitle = (props) => {
 
           if (txtTitleURL.trim().length !== 0) {
 
-            Object.assign(titleObject, { titleURL: txtTitleURL.trim() });
+            Object.assign(recordObject, { titleURL: txtTitleURL.trim() });
 
           };
 
@@ -655,7 +658,7 @@ const EditTitle = (props) => {
 
           if (txtAuthorFirstName.trim().length !== 0) {
 
-            Object.assign(titleObject, { authorFirstName: txtAuthorFirstName.trim() });
+            Object.assign(recordObject, { authorFirstName: txtAuthorFirstName.trim() });
 
           };
 
@@ -666,7 +669,7 @@ const EditTitle = (props) => {
 
           if (txtAuthorLastName.trim().length !== 0) {
 
-            Object.assign(titleObject, { authorLastName: txtAuthorLastName.trim() });
+            Object.assign(recordObject, { authorLastName: txtAuthorLastName.trim() });
 
           };
 
@@ -677,7 +680,7 @@ const EditTitle = (props) => {
 
           if (txtImageName.trim().length !== 0) {
 
-            Object.assign(titleObject, { imageName: txtImageName.trim() });
+            Object.assign(recordObject, { imageName: txtImageName.trim() });
 
           };
 
@@ -688,7 +691,7 @@ const EditTitle = (props) => {
 
           if (txtSubmissionDate.trim().length !== 0) {
 
-            Object.assign(titleObject, { submissionDate: txtSubmissionDate.trim() });
+            Object.assign(recordObject, { submissionDate: txtSubmissionDate.trim() });
 
           };
 
@@ -699,7 +702,7 @@ const EditTitle = (props) => {
 
           if (txtPublicationDate.trim().length !== 0) {
 
-            Object.assign(titleObject, { publicationDate: txtPublicationDate.trim() });
+            Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
 
           };
 
@@ -710,7 +713,7 @@ const EditTitle = (props) => {
 
           if (txtShortDescription.trim().length !== 0) {
 
-            Object.assign(titleObject, { shortDescription: txtShortDescription.trim() });
+            Object.assign(recordObject, { shortDescription: txtShortDescription.trim() });
 
           };
 
@@ -721,13 +724,13 @@ const EditTitle = (props) => {
 
           if (txtUrlPKDWeb.trim().length !== 0) {
 
-            Object.assign(titleObject, { urlPKDWeb: txtUrlPKDWeb.trim() });
+            Object.assign(recordObject, { urlPKDWeb: txtUrlPKDWeb.trim() });
 
           };
 
         };
 
-        // console.log(componentName, GetDateTime(), "updateTitle titleObject", titleObject);
+        // console.log(componentName, GetDateTime(), "updateTitle recordObject", recordObject);
 
         let url = baseURL + "titles/";
 
@@ -743,7 +746,7 @@ const EditTitle = (props) => {
               "Content-Type": "application/json",
               "Authorization": sessionToken
             }),
-            body: JSON.stringify({ title: titleObject })
+            body: JSON.stringify({ title: recordObject })
           })
             .then(response => {
               // console.log(componentName, GetDateTime(), "updateTitle response", response);
@@ -865,12 +868,14 @@ const EditTitle = (props) => {
               };
 
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(componentName, GetDateTime(), "updateTitle error", error);
               // console.error(componentName, GetDateTime(), "updateTitle error.name", error.name);
               // console.error(componentName, GetDateTime(), "updateTitle error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
+
+              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -969,12 +974,14 @@ const EditTitle = (props) => {
             };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "deleteTitle error", error);
             // console.error(componentName, GetDateTime(), "deleteTitle error.name", error.name);
             // console.error(componentName, GetDateTime(), "deleteTitle error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -1051,12 +1058,14 @@ const EditTitle = (props) => {
             };
 
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(componentName, GetDateTime(), "deleteEdition error", error);
             // console.error(componentName, GetDateTime(), "deleteEdition error.name", error.name);
             // console.error(componentName, GetDateTime(), "deleteEdition error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
+
+            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 

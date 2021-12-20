@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, encodeURL } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../app/categoriesSlice";
 import { loadArrayEditions, setEditionsDataOffline } from "../../app/editionsSlice";
@@ -179,7 +180,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "getUserReviewsRatings error", error);
         // console.error(componentName, GetDateTime(), "getUserReviewsRatings error.name", error.name);
         // console.error(componentName, GetDateTime(), "getUserReviewsRatings error.message", error.message);
@@ -188,6 +189,8 @@ function LoadBibliographyData() {
         // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
         // dispatch(setUserReviewsRatingsDataOffline(true));
         // fetchLocalDataUserReviewsRatings(titleData);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -309,7 +312,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "getCategories error", error);
         // console.error(componentName, GetDateTime(), "getCategories error.name", error.name);
         // console.error(componentName, GetDateTime(), "getCategories error.message", error.message);
@@ -317,6 +320,8 @@ function LoadBibliographyData() {
         // setErrCategoryMessage(error.name + ": " + error.message);
         dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -370,7 +375,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "getMedia error", error);
         // console.error(componentName, GetDateTime(), "getMedia error.name", error.name);
         // console.error(componentName, GetDateTime(), "getMedia error.message", error.message);
@@ -378,6 +383,8 @@ function LoadBibliographyData() {
         // setErrMediaMessage(error.name + ": " + error.message);
         // dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -431,7 +438,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "getTitle error", error);
         // console.error(componentName, GetDateTime(), "getTitle error.name", error.name);
         // console.error(componentName, GetDateTime(), "getTitle error.message", error.message);
@@ -439,6 +446,8 @@ function LoadBibliographyData() {
         // setErrTitleMessage(error.name + ": " + error.message);
         dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -492,7 +501,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "getEditions error", error);
         // console.error(componentName, GetDateTime(), "getEdition error.name", error.name);
         // console.error(componentName, GetDateTime(), "getEdition error.message", error.message);
@@ -500,6 +509,8 @@ function LoadBibliographyData() {
         // setErrEditionMessage(error.name + ": " + error.message);
         dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -548,7 +559,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "fetchLocalDataCategories error", error);
         // console.error(componentName, GetDateTime(), "fetchLocalDataCategories error.name", error.name);
         // console.error(componentName, GetDateTime(), "fetchLocalDataCategories error.message", error.message);
@@ -557,6 +568,8 @@ function LoadBibliographyData() {
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         dispatch(setCategoriesDataOffline(true));
         // loadDataStore(CategoryData, "categories");
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -605,7 +618,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "fetchLocalDataMedia error", error);
         // console.error(componentName, GetDateTime(), "fetchLocalDataMedia error.name", error.name);
         // console.error(componentName, GetDateTime(), "fetchLocalDataMedia error.message", error.message);
@@ -614,6 +627,8 @@ function LoadBibliographyData() {
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         dispatch(setMediaDataOffline(true));
         // loadDataStore(MediaData, "media");
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -662,7 +677,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "fetchLocalDataTitles error", error);
         // console.error(componentName, GetDateTime(), "fetchLocalDataTitles error.name", error.name);
         // console.error(componentName, GetDateTime(), "fetchLocalDataTitles error.message", error.message);
@@ -671,6 +686,8 @@ function LoadBibliographyData() {
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         dispatch(setTitlesDataOffline(true));
         // loadDataStore(TitleData, "titles");
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -719,7 +736,7 @@ function LoadBibliographyData() {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(componentName, GetDateTime(), "fetchLocalDataEditions error", error);
         // console.error(componentName, GetDateTime(), "fetchLocalDataEditions error.name", error.name);
         // console.error(componentName, GetDateTime(), "fetchLocalDataEditions error.message", error.message);
@@ -728,6 +745,8 @@ function LoadBibliographyData() {
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         dispatch(setEditionsDataOffline(true));
         // loadDataStore(EditionData, "editions");
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

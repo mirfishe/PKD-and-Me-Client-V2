@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { LogError } from "../../utilities/AppFunctions";
 
 const Reports = () => {
 
@@ -33,6 +34,55 @@ const Reports = () => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [computerLogs, setComputerLogs] = useState([]);
+  const [brokenLinks, setBrokenLinks] = useState([]);
+
+
+  const getBrokenLinks = () => {
+
+    clearMessages();
+
+    let url = baseURL + "computerLogs/broken/";
+
+    fetch(url, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      })
+    })
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "getBrokenLinks response", response);
+
+        if (!response.ok) {
+
+          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+
+        } else {
+
+          return response.json();
+
+        };
+
+      })
+      .then(results => {
+        // console.log(componentName, GetDateTime(), "getNews results", results);
+
+        if (IsEmpty(results) === false && results.resultsFound === true) {
+
+          setBrokenLinks(results.records);
+
+        };
+
+      })
+      .catch((error) => {
+        // console.error(componentName, GetDateTime(), "getNews error", error);
+
+        addErrorMessage(error.name + ": " + error.message);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
+      });
+
+  };
 
 
   const getComputerLogs = () => {
@@ -47,17 +97,16 @@ const Reports = () => {
         "Content-Type": "application/json"
       })
     })
-      .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+      .then(response => {
+        // console.log(componentName, GetDateTime(), "getComputerLogs response", response);
 
-        if (!results.ok) {
+        if (!response.ok) {
 
-          // throw Error(results.status + " " + results.statusText + " " + results.url);
+          throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
         } else {
 
-          return results.json();
-          // return results.text();
+          return response.json();
 
         };
 
@@ -72,10 +121,12 @@ const Reports = () => {
         };
 
       })
-      .catch(error => {
+      .catch((error) => {
         // console.error(componentName, GetDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
+
+        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -83,6 +134,8 @@ const Reports = () => {
 
 
   useEffect(() => {
+
+    getBrokenLinks();
 
     getComputerLogs();
 
@@ -106,6 +159,53 @@ const Reports = () => {
 
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
+      <Row>
+        <Col xs="12">
+
+          <h3>Broken Links</h3>
+
+          {IsEmpty(brokenLinks) === false ?
+
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Endpoint</th>
+                  <th>Edition ID</th>
+                  <th>Title ID</th>
+                  <th>Title</th>
+                  <th>Image</th>
+                  <th>Create Date</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {brokenLinks.map((brokenLink, index) => {
+
+                  // console.log(componentName, GetDateTime(), "map brokenLink", brokenLink);
+
+                  return (
+                    <tr key={index}>
+                      <td>{brokenLink.endpoint}</td>
+                      <td>{brokenLink.editionID}</td>
+                      <td>{brokenLink.titleID}</td>
+                      <td>{brokenLink.titleName}</td>
+                      <td>{brokenLink.imageName}</td>
+                      {IsEmpty(brokenLink.createDate) === false ? <td>{brokenLink.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{brokenLink.createDate}</td>}
+                    </tr>
+                  );
+                })}
+
+
+              </tbody>
+
+            </Table>
+
+            : <p>There are no broken links.</p>}
+
+        </Col>
+      </Row>
 
       <Row>
         <Col xs="12">
