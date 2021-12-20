@@ -238,7 +238,7 @@ const EditUserReview = (props) => {
       read: cbxRead,
       // dateRead: txtDateRead.trim(),
       rating: rdoRating,
-      // ranking: req.body.userReview.ranking,
+      // ranking: request.body.userReview.ranking,
       // shortReview: txtShortReview.trim(),
       // longReview: txtLongReview.trim(),
       owned: cbxOwned
@@ -500,7 +500,7 @@ const EditUserReview = (props) => {
       read: cbxRead,
       // dateRead: txtDateRead.trim(),
       rating: rdoRating,
-      // ranking: req.body.userReview.ranking,
+      // ranking: request.body.userReview.ranking,
       // shortReview: txtShortReview.trim(),
       // longReview: txtLongReview.trim(),
       owned: cbxOwned,
