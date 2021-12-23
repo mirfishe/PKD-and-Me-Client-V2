@@ -1,348 +1,5 @@
-import AppSettings from "../app/environment";
 
 const componentName = "SharedFunctions.js";
-
-export const encodeURL = (titleName) => {
-  // console.log(componentName, GetDateTime(), "encodeURL titleName", titleName);
-
-  let newTitleName = titleName;
-
-  if (IsEmpty(titleName) === false) {
-
-    // Changes the - to | -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("-", "|");
-    // Changes the spaces to - -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll(" ", "-");
-    // Changes the rest to be a safe URL -- 02/20/2021 MF
-    newTitleName = encodeURIComponent(newTitleName);
-
-  };
-
-  // console.log(componentName, GetDateTime(), "encodeURL newTitleName", newTitleName);
-
-  return newTitleName;
-
-};
-
-
-export const decodeURL = (titleName) => {
-  // console.log(componentName, GetDateTime(), "decodeURL titleName", titleName);
-
-  let newTitleName = titleName;
-
-  if (IsEmpty(titleName) === false) {
-
-    // Changes it back from a safe URL -- 02/20/2021 MF
-    newTitleName = decodeURIComponent(newTitleName);
-    // Changes the - to space -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("-", " ");
-    // Changes the | to - -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("|", "-");
-
-  };
-
-  // console.log(componentName, GetDateTime(), "decodeURL newTitleName", newTitleName);
-
-  return newTitleName;
-
-};
-
-
-export const removeOnePixelImage = (text, ASIN) => {
-  // console.log(componentName, GetDateTime(), "removeOnePixelImage text", text);
-  // console.log(componentName, GetDateTime(), "removeOnePixelImage ASIN", ASIN);
-
-  // * SELECT * FROM `editions` WHERE imageLinkSmall like '%ir-na.amazon-adsystem.com%' OR imageLinkMedium like '%ir-na.amazon-adsystem.com%' OR imageLinkLarge like '%ir-na.amazon-adsystem.com%'
-
-  let newText = text;
-
-  if (IsEmpty(newText) === false) {
-
-    // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; /> -- 03/06/2021 MF
-    // * This is not working. -- 03/06/2021 MF
-    // newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&", "");
-    // newText = newText.replaceAll(" width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-    // newText = newText.replaceAll("a=" + ASIN, "");
-
-    // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B008ETL5R6 width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; /> -- 03/06/2021 MF
-    // newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-
-    // * The difference between the next ones is the l=li1, l=li2, l=li3 -- 03/06/2021 MF
-    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=0997135603" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-    newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li2&o=1&a=0997135603" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-    newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li2&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=0812699637" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-    newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-
-    // * The difference between the next ones is the l=li1, l=li2, l=li3 -- 06/20/2021 MF
-    // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=B083G6CVZB width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
-    newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-    // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li2&o=1&a=B083G6CVZB width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
-    newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li2&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-    // * Removes the <img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=B083G6CVZB width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
-    newText = newText.replaceAll("<img src=https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li3&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-
-    // * The difference between the next ones is the l=li1, l=li2, l=li3 -- 06/20/2021 MF
-    // * Removes the <img src=//ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li1&o=1&a=B083G6CVZB width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
-    newText = newText.replaceAll("<img src=//ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li1&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-    // * Removes the <img src=//ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li2&o=1&a=B083G6CVZB width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
-    newText = newText.replaceAll("<img src=//ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li2&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-    // * Removes the <img src=//ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=B083G6CVZB width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />
-    newText = newText.replaceAll("<img src=//ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=" + ASIN + " width=1 height=1 border=0 alt= style=border:none !important; margin:0px !important; />", "");
-
-    // * The difference between the next ones is the l=li1, l=li2, l=li3 -- 06/20/2021 MF
-    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&language=en_US&l=li1&o=1&a=B086VXYZNH" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-    newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li1&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li2&o=1&a=B083G6CVZB" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-    newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li2&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-    // * Removes the <img src="https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=B083G6CVZB" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-    newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
-
-
-    if (newText.includes("https://ir-na.amazon-adsystem.com")) {
-
-      console.log(componentName, GetDateTime(), "removeOnePixelImage ASIN", ASIN);
-      console.log(componentName, GetDateTime(), "removeOnePixelImage newText", newText);
-
-    };
-
-  };
-
-  // console.log(componentName, GetDateTime(), "removeOnePixelImage newText", newText);
-
-  return newText;
-
-};
-
-
-export const setLocalImagePath = (text) => {
-  // console.log(componentName, GetDateTime(), "setLocalImagePath text", text);
-  // console.log(componentName, GetDateTime(), "setLocalImagePath AppSettings.profileType", AppSettings.profileType);
-
-  let newText = text;
-
-  if (IsEmpty(newText) === false) {
-
-    // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
-
-      // * Removes the "https://philipdick.com" -- 03/06/2021 MF
-      newText = newText.replaceAll("https://philipdick.com", "");
-
-    };
-
-  };
-
-  // console.log(componentName, GetDateTime(), "setLocalPath newText", newText);
-
-  return newText;
-
-};
-
-
-export const setLocalPath = (text) => {
-  // console.log(componentName, GetDateTime(), "setLocalPath text", text);
-  // console.log(componentName, GetDateTime(), "setLocalPath AppSettings.profileType", AppSettings.profileType);
-
-  let newText = text;
-
-  if (IsEmpty(newText) === false) {
-
-    // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (AppSettings.profileType === "philipdick") {
-
-      // * Removes the "https://philipdick.com" -- 03/06/2021 MF
-      newText = newText.replaceAll("https://philipdick.com", "");
-
-    };
-
-  };
-
-  // console.log(componentName, GetDateTime(), "setLocalPath newText", newText);
-
-  return newText;
-
-};
-
-
-export const createImageName = (titleName) => {
-  // console.log(componentName, GetDateTime(), "createImageName titleName", titleName);
-
-  let newImageName = "";
-
-  if (IsEmpty(titleName) === false) {
-
-    // * Capitalize the first letter of every word -- 03/06/2021 MF
-    newImageName = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
-    // * I'm sure there's a more elegant way to do this -- 03/06/2021 MF
-    // newImageName = newImageName.replaceAll(".", "");
-    // newImageName = newImageName.replaceAll("?", "");
-    // newImageName = newImageName.replaceAll(",", "");
-    // newImageName = newImageName.replaceAll(":", "");
-    // newImageName = newImageName.replaceAll("-", "");
-    //newImageName = newImageName.replace(/[.,\/#\'\?!$%\^&\*;:{}=\-_`~()]/g,"");
-    //newImageName = newImageName.replaceAll(" ", "");
-    // * Remove all spaces - Doesn't work -- 03/06/2021 MF
-    // newImageName = newImageName.replace(/\s{2,}/g," ");
-
-    // * https://www.codefari.com/2019/11/removereplace-special-characters-from.html -- 03/06/2021 MF
-    // SELECT regexp_replace('Remove!@#$ Special &*&characters', '[^\w]+','','g');
-    // regexp_replace("titleName", '[^\w]+')
-    // newImageName = titleName.replace(regExpr, "");
-
-    // select "titleName"
-    // --, replace("titleName", '-', '|')
-    // , regexp_replace("titleName", '[^\w]+','','g')
-    // , regexp_replace("titleName", '[^\w]+',' ','g')
-    // , replace(regexp_replace("titleName", '[^\w]+',' ','g'), ' ', '-')
-    // from titles
-
-    // * https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227
-    newImageName = newImageName.replace(/[^a-zA-Z0-9]/g, "");
-
-
-    newImageName = "https://philipdick.com/images/covers/" + newImageName + ".jpg";
-
-  };
-
-  // console.log(componentName, GetDateTime(), "createImageName newImageName", newImageName);
-
-  return newImageName;
-
-};
-
-
-export const createTitleURL = (titleName) => {
-  // console.log(componentName, GetDateTime(), "createImageName titleName", titleName);
-
-  let newTitleURL = "";
-
-  if (IsEmpty(titleName) === false) {
-
-    // * Capitalize the first letter of every word -- 03/06/2021 MF
-    newTitleURL = titleName.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
-    // * I'm sure there's a more elegant way to do this -- 03/06/2021 MF
-    // newTitleURL = newTitleURL.replaceAll(".", "");
-    // newTitleURL = newTitleURL.replaceAll("?", "");
-    // newTitleURL = newTitleURL.replaceAll(",", "");
-    // newTitleURL = newTitleURL.replaceAll(":", "");
-    // newTitleURL = newTitleURL.replaceAll("-", "");
-    // newTitleURL = newTitleURL.replace(/[.,\/#\'\?!$%\^&\*;:{}=\-_`~()]/g,"");
-    // newTitleURL = newTitleURL.replaceAll(" ", "");
-    // * Remove all spaces - Doesn't work -- 03/06/2021 MF
-    // newTitleURL = newTitleURL.replace(/\s{2,}/g," ");
-
-    // * https://www.codefari.com/2019/11/removereplace-special-characters-from.html -- 03/06/2021 MF
-    // SELECT regexp_replace('Remove!@#$ Special &*&characters', '[^\w]+','','g');
-    // regexp_replace("titleName", '[^\w]+')
-    // newTitleURL = titleName.replace(regExpr, "");
-
-    // select "titleName"
-    // --, replace("titleName", '-', '|')
-    // , regexp_replace("titleName", '[^\w]+','','g')
-    // , regexp_replace("titleName", '[^\w]+',' ','g')
-    // * Use this regular expression to create the titleURL -- 03/06/2021 MF
-    // * Execpt that letters after ' are captitalized also
-    // , replace(regexp_replace(initcap("titleName"), '[^\w]+',' ','g'), ' ', '-')
-    // from titles
-
-    // * https://stackoverflow.com/questions/9705194/replace-special-characters-in-a-string-with-underscore/9705227 -- 03/06/2021 MF
-    newTitleURL = newTitleURL.replace(/[^a-zA-Z0-9]/g, "-");
-    // ? I'm sure there's a more elegant way to do this -- 03/06/2021 MF
-    newTitleURL = newTitleURL.replaceAll("---", "-");
-    newTitleURL = newTitleURL.replaceAll("--", "-");
-
-
-    // newTitleURL = "https://philipdick.com/images/covers/" + newTitleURL + ".jpg";
-
-  };
-
-  // console.log(componentName, GetDateTime(), "createImageName newTitleURL", newTitleURL);
-
-  return newTitleURL;
-
-};
-
-
-export const getASIN = (textLinkFull) => {
-  // console.log(componentName, GetDateTime(), "getASIN textLinkFull", textLinkFull);
-
-  let txtASIN = "";
-
-  // select substring("textLinkFull" from position('/dp/' in "textLinkFull") + 4 for 10) from editions
-
-  if (IsEmpty(textLinkFull) === false) {
-
-    // console.log(componentName, GetDateTime(), "getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
-    // console.log(componentName, GetDateTime(), "getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));
-
-    if (textLinkFull.indexOf("/dp/") !== -1) {
-
-      // console.log(componentName, GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
-      // txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
-
-      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?&linkCode="));
-
-      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?coliid="));
-
-      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?_encoding="));
-
-      if (textLinkFull.indexOf("/ref=") !== -1) {
-
-        txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
-
-      } else if (textLinkFull.indexOf("?&linkCode=") !== -1) {
-
-        txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?&linkCode="));
-
-      } else if (textLinkFull.indexOf("?coliid=") !== -1) {
-
-        txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?coliid="));
-
-      } else if (textLinkFull.indexOf("?_encoding=") !== -1) {
-
-        txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?_encoding="));
-
-      };
-
-    } else if (textLinkFull.indexOf("/product/") !== -1) {
-
-      // console.log(componentName, GetDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
-      // txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
-
-      // txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("?&linkCode="));
-
-      if (textLinkFull.indexOf("/ref=") !== -1) {
-
-        txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
-
-      } else if (textLinkFull.indexOf("?&linkCode=") !== -1) {
-
-        txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("?&linkCode="));
-
-      } else if (textLinkFull.indexOf("?coliid=") !== -1) {
-
-        txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 4, textLinkFull.indexOf("?coliid="));
-
-      } else if (textLinkFull.indexOf("?_encoding=") !== -1) {
-
-        txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 4, textLinkFull.indexOf("?_encoding="));
-
-      };
-
-    };
-
-  } else {
-    // return false;
-    // return null;
-    // return "";
-  };
-
-  return txtASIN;
-
-};
-
 
 export const IsEmpty = (value) => {
   // console.log(componentName, GetDateTime(), "IsEmpty value", value);
@@ -447,7 +104,7 @@ export const RemoveForwardSlashes = (text) => {
 
   if (IsEmpty(text) === false) {
 
-    displayText = text.toString().replace(/\//g, "");
+    displayText = FormatToString(text).replace(/\//g, "");
 
   };
 
@@ -680,11 +337,11 @@ export const DisplayDate = (dateToDisplay, removeLeadingZeroes) => {
   if (IsEmpty(dateToDisplay) === false) {
 
     // * Year
-    let yyyy = dateToDisplay.toString().substring(0, 4);
+    let yyyy = FormatToString(dateToDisplay).substring(0, 4);
     // * Month
-    let mm = dateToDisplay.toString().substring(5, 7);
+    let mm = FormatToString(dateToDisplay).substring(5, 7);
     // * Day
-    let dd = dateToDisplay.toString().substring(8, 10);
+    let dd = FormatToString(dateToDisplay).substring(8, 10);
 
     newDisplayDate = mm + "/" + dd + "/" + yyyy;
 
@@ -712,19 +369,19 @@ export const DisplayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
   if (IsEmpty(dateToDisplay) === false) {
 
     // * Year
-    let yyyy = dateToDisplay.toString().substring(0, 4);
+    let yyyy = FormatToString(dateToDisplay).substring(0, 4);
     // * Month
-    let mm = dateToDisplay.toString().substring(5, 7);
+    let mm = FormatToString(dateToDisplay).substring(5, 7);
     // * Day
-    let dd = dateToDisplay.toString().substring(8, 10);
+    let dd = FormatToString(dateToDisplay).substring(8, 10);
 
     // // * Hour
-    // let hour = dateToDisplay.toString().substring(11, 12);
+    // let hour = FormatToString(dateToDisplay).substring(11, 12);
     // // * Minute
-    // let minute = dateToDisplay.toString().substring(15, 16);
+    // let minute = FormatToString(dateToDisplay).substring(15, 16);
 
     // * Time
-    let time = dateToDisplay.toString().substring(11, 16);
+    let time = FormatToString(dateToDisplay).substring(11, 16);
 
     newDisplayDateAndTime = mm + "/" + dd + "/" + yyyy + " " + time;
 
@@ -751,11 +408,11 @@ export const DisplayYear = (dateToDisplay) => {
   if (IsEmpty(dateToDisplay) === false) {
 
     // * Year
-    let yyyy = dateToDisplay.toString().substring(0, 4);
+    let yyyy = FormatToString(dateToDisplay).substring(0, 4);
     // * Month
-    // let mm = dateToDisplay.toString().substring(5, 7);
+    // let mm = FormatToString(dateToDisplay).substring(5, 7);
     // * Day
-    // let dd = dateToDisplay.toString().substring(8, 10);
+    // let dd = FormatToString(dateToDisplay).substring(8, 10);
 
     // newDisplayDate = mm + "/" + dd + "/" + yyyy;
 
@@ -951,9 +608,9 @@ export const ValidateMilitaryTime = (timeEntered) => {
 
   let timeEnteredString = "";
 
-  if (typeof timeEntered.toString() === "string") {
+  if (typeof FormatToString(timeEntered) === "string") {
 
-    timeEnteredString = timeEntered.toString();
+    timeEnteredString = FormatToString(timeEntered);
 
     timeEnteredString = timeEnteredString.trim();
 
@@ -1083,20 +740,18 @@ export const ConvertTemperature = (temperatureScale, temperature) => {
   // console.log(componentName, GetDateTime(), "ConvertTemperature temperatureScale", temperatureScale);
   // console.log(componentName, GetDateTime(), "ConvertTemperature temperature", temperature);
 
-  // let temperatureFloat = parseFloat(temperature.toString().trim());
+  // let temperatureFloat = parseFloat(FormatTrim(temperature));
   let temperatureFloat = parseFloat(temperature);
   let temperatureConverted = null;
 
   if (isNaN(temperatureFloat) === false && IsEmpty(temperatureFloat) === false) {
 
-    // if (temperatureScale.toString().trim().toLowerCase() === "celsius") {
-    if (temperatureScale.toLowerCase() === "celsius") {
+    if (FormatLowerCase(temperatureScale) === "celsius") {
 
       // * Based on (32°F − 32) × 5/9 = 0°C -- 07/29/2021 MF
       temperatureConverted = ((temperatureFloat - 32) * 5 / 9).toFixed(2);
 
-      // } else if (temperatureScale.toString().trim().toLowerCase() === "fahrenheit") {
-    } else if (temperatureScale.toLowerCase() === "fahrenheit") {
+    } else if (FormatLowerCase(temperatureScale) === "fahrenheit") {
 
       // * Based on (32°F − 32) × 5/9 = 0°C -- 07/29/2021 MF
       temperatureConverted = (temperatureFloat * 9 / 5 + 32).toFixed(2);
@@ -1176,11 +831,11 @@ export const ConvertBitTrueFalse = (records) => {
 export const ConvertYesNoTrueFalse = (value) => {
   // console.log(componentName, GetDateTime(), "ConvertYesNoTrueFalse value", value);
 
-  // if (isNaN(value) === true && value.toString().trim() === "Yes") {
+  // if (isNaN(value) === true && FormatTrim(value) === "Yes") {
 
   //   return true;
 
-  // } else if (isNaN(value) === true && value.toString().trim() === "No") {
+  // } else if (isNaN(value) === true && FormatTrim(value) === "No") {
 
   //   return false;
 
@@ -1226,11 +881,11 @@ export const ConvertYesNoTrueFalse = (value) => {
 export const ConvertNormalAbnormalTrueFalse = (value) => {
   // console.log(componentName, GetDateTime(), "ConvertNormalAbnormalTrueFalse value", value);
 
-  // if (isNaN(value) === true && value.toString().trim() === "Normal") {
+  // if (isNaN(value) === true && FormatTrim(value) === "Normal") {
 
   //   return true;
 
-  // } else if (isNaN(value) === true && value.toString().trim() === "Abnormal") {
+  // } else if (isNaN(value) === true && FormatTrim(value) === "Abnormal") {
 
   //   return false;
 
@@ -1276,11 +931,11 @@ export const ConvertNormalAbnormalTrueFalse = (value) => {
 export const ConvertEnableDisableTrueFalse = (value) => {
   // console.log(componentName, GetDateTime(), "ConvertEnableDisableTrueFalse value", value);
 
-  // if (isNaN(value) === true && value.toString().trim() === "Enable") {
+  // if (isNaN(value) === true && FormatTrim(value) === "Enable") {
 
   //   return true;
 
-  // } else if (isNaN(value) === true && value.toString().trim() === "Disable") {
+  // } else if (isNaN(value) === true && FormatTrim(value) === "Disable") {
 
   //   return false;
 
@@ -1334,7 +989,7 @@ export const ConvertNullEmptyString = (value) => {
 
   //   return "";
 
-  // } else if (isNaN(value) === true && value.toString().trim() === "") {
+  // } else if (isNaN(value) === true && FormatTrim(value) === "") {
 
   //   return null;
 
@@ -1394,11 +1049,11 @@ export const IsWholeNumber = (value) => {
   // console.log(componentName, GetDateTime(), "IsWholeNumber value", value);
 
   // * I think this is always returning true because the decimal is stripped off before the check is done. -- 04/04/2021 MF
-  // console.log(componentName, GetDateTime(), "IsWholeNumber parseInt(value.toString().trim())", parseInt(value.toString().trim()));
-  // console.log(componentName, GetDateTime(), "IsWholeNumber isNaN(parseInt(value.toString().trim()))", isNaN(parseInt(value.toString().trim())));
-  // console.log(componentName, GetDateTime(), "IsWholeNumber Number.isInteger(parseFloat(value.toString().trim()))", Number.isInteger(parseFloat(value.toString().trim())));
+  // console.log(componentName, GetDateTime(), "IsWholeNumber parseInt(FormatTrim(value))", parseInt(FormatTrim(value)));
+  // console.log(componentName, GetDateTime(), "IsWholeNumber isNaN(parseInt(FormatTrim(value)))", isNaN(parseInt(FormatTrim(value))));
+  // console.log(componentName, GetDateTime(), "IsWholeNumber Number.isInteger(parseFloat(FormatTrim(value)))", Number.isInteger(parseFloat(FormatTrim(value))));
 
-  // if (isNaN(parseInt(value.toString().trim())) === true) {
+  // if (isNaN(parseInt(FormatTrim(value))) === true) {
 
   //   return false;
 
@@ -1409,7 +1064,7 @@ export const IsWholeNumber = (value) => {
   // };
 
   // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
-  // if (Number.isInteger(parseFloat(value.toString().trim())) === true) {
+  // if (Number.isInteger(parseFloat(FormatTrim(value))) === true) {
 
   //   return true;
 
@@ -1419,7 +1074,7 @@ export const IsWholeNumber = (value) => {
 
   // };
 
-  if (isNaN(value.toString().trim()) === true) {
+  if (isNaN(FormatTrim(value)) === true) {
 
     return false;
 
@@ -1445,11 +1100,11 @@ export const IsWholeNumber = (value) => {
 export const HasDecimalPlaces = (value, decimalPlaces) => {
   // console.log(componentName, GetDateTime(), "HasDecimalPlaces value", value);
 
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces parseFloat(value.toString().trim())", parseFloat(value.toString().trim()));
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces isNaN(parseFloat(value.toString().trim()))", isNaN(parseFloat(value.toString().trim())));
-  // console.log(componentName, GetDateTime(), "HasDecimalPlaces Number.isInteger(parseFloat(value.toString().trim()) * 10)", Number.isInteger(parseFloat(value.toString().trim()) * 10));
+  // console.log(componentName, GetDateTime(), "HasDecimalPlaces parseFloat(FormatTrim(value))", parseFloat(FormatTrim(value)));
+  // console.log(componentName, GetDateTime(), "HasDecimalPlaces isNaN(parseFloat(FormatTrim(value)))", isNaN(parseFloat(FormatTrim(value))));
+  // console.log(componentName, GetDateTime(), "HasDecimalPlaces Number.isInteger(parseFloat(FormatTrim(value)) * 10)", Number.isInteger(parseFloat(FormatTrim(value)) * 10));
 
-  if (isNaN(value.toString().trim()) === true) {
+  if (isNaN(FormatTrim(value)) === true) {
 
     return false;
 
@@ -1465,23 +1120,23 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
 
     // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
     // * Parse the value to see if it is a float. -- 06/21/2021 MF
-    let valueToTest = parseFloat(value.toString().trim());
+    let valueToTest = parseFloat(FormatTrim(value));
 
     let valueDecimals = 0;
 
-    // if (value.toString().trim().indexOf(".") > -1) {
-    if (value.toString().trim().includes(".")) {
+    // if (FormatTrim(value).indexOf(".") > -1) {
+    if (FormatTrim(value).includes(".")) {
 
       // * Remove the characters after the decimal point to be counted later if there is a decimal point. -- 06/21/2021 MF
-      valueDecimals = value.toString().trim().substring(value.toString().trim().indexOf(".") + 1);
+      valueDecimals = FormatTrim(value).substring(FormatTrim(value).indexOf(".") + 1);
 
     };
 
     // console.log(componentName, GetDateTime(), "HasDecimalPlaces currentDecimalPlaces", currentDecimalPlaces);
 
-    // if (isNaN(parseFloat(value.toString().trim())) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(parseFloat(value.toString().trim()) * 10 ** currentDecimalPlaces) === false)) {
+    // if (isNaN(parseFloat(FormatTrim(value))) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(parseFloat(FormatTrim(value)) * 10 ** currentDecimalPlaces) === false)) {
     // if (isNaN(valueToTest) === true || (IsEmpty(currentDecimalPlaces) === false && Number.isInteger(valueToTest * 10 ** currentDecimalPlaces) === false)) {
-    // if (isNaN(parseFloat(value.toString().trim())) === true || (IsEmpty(currentDecimalPlaces) === false && value.toString().trim().substring(value.toString().trim().indexOf(".") + 1).length > currentDecimalPlaces)) {
+    // if (isNaN(parseFloat(FormatTrim(value))) === true || (IsEmpty(currentDecimalPlaces) === false && FormatTrim(value).substring(FormatTrim(value).indexOf(".") + 1).length > currentDecimalPlaces)) {
 
     // console.log(componentName, GetDateTime(), "HasDecimalPlaces valueToTest", valueToTest);
     // console.log(componentName, GetDateTime(), "HasDecimalPlaces isNaN(valueToTest)", isNaN(valueToTest));
@@ -1506,7 +1161,7 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
 export const GenerateRandomNumberDigits = (digits) => {
   // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits digits", digits);
 
-  let randomNumber = Math.floor(Math.random() * 10 ** digits).toString();
+  let randomNumber = FormatToString(Math.floor(Math.random() * 10 ** digits));
 
   while (randomNumber.length < (digits)) {
 
@@ -1562,7 +1217,7 @@ export const FormatTitle = (title) => {
 
   let formattedTitle = "";
 
-  // if (IsEmpty(title) === false && title.toLowerCase().includes("isbar" === true)) {
+  // if (FormatLowerCase(title).includes("isbar" === true)) {
 
   //   console.log(componentName, GetDateTime(), "FormatTitle title", title);
 
@@ -1616,5 +1271,85 @@ export const RandomizeItems = (items, randomize) => {
   };
 
   return itemsRandomized;
+
+};
+
+
+export const FormatLowerCase = (value) => {
+  // console.log(componentName, GetDateTime(), "FormatLowerCase value", value);
+
+  let lowerCaseValue = value;
+
+  if (IsEmpty(value) === false) {
+
+    lowerCaseValue = FormatToString(value).toLowerCase();
+
+  };
+
+  return lowerCaseValue;
+
+};
+
+
+export const FormatUpperCase = (value) => {
+  // console.log(componentName, GetDateTime(), "FormatUpperCase value", value);
+
+  let upperCaseValue = value;
+
+  if (IsEmpty(value) === false) {
+
+    upperCaseValue = FormatToString(value).toUpperCase();
+
+  };
+
+  return upperCaseValue;
+
+};
+
+
+export const FormatTrim = (value) => {
+  // console.log(componentName, GetDateTime(), "FormatTrim value", value);
+
+  let trimValue = value;
+
+  if (IsEmpty(value) === false) {
+
+    trimValue = FormatToString(value).trim();
+
+  };
+
+  return trimValue;
+
+};
+
+
+export const FormatToString = (value) => {
+  // console.log(componentName, GetDateTime(), "FormatToString value", value);
+
+  let toStringValue = value;
+
+  if (IsEmpty(value) === false) {
+
+    toStringValue = value.toString();
+
+  };
+
+  return toStringValue;
+
+};
+
+
+export const FormatSearchInput = (value) => {
+  // console.log(componentName, GetDateTime(), "FormatSearchInput value", value);
+
+  let formatedSearchInput = value;
+
+  if (IsEmpty(value) === false) {
+
+    formatedSearchInput = FormatTrim(value).toLowerCase();
+
+  };
+
+  return formatedSearchInput;
 
 };

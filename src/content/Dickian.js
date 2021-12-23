@@ -2,7 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, setLocalPath, setLocalImagePath } from "../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../utilities/SharedFunctions";
+import { setLocalPath, setLocalImagePath } from "../utilities/AppFunctions";
 import { setPageURL } from "../app/urlsSlice";
 
 const Dickian = () => {

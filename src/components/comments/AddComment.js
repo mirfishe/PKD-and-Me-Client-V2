@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/AppFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
@@ -93,7 +93,7 @@ const AddComment = (props) => {
 
     if (IsEmpty(txtComment) === false) {
 
-      if (txtComment.trim().length > 0) {
+      if (FormatTrim(txtComment).length > 0) {
 
         commentValidated = true;
         setErrComment("");
@@ -113,7 +113,7 @@ const AddComment = (props) => {
 
     if (IsEmpty(txtEmail) === false) {
 
-      if (txtEmail.trim().length > 0 || requireUserLogin === false) {
+      if (FormatTrim(txtEmail).length > 0 || requireUserLogin === false) {
 
         emailValidated = true;
         setErrEmail("");
@@ -154,9 +154,9 @@ const AddComment = (props) => {
       if (IsEmpty(txtComment) === false /*&& IsEmpty(txtEmail) === false*/) {
 
         let recordObject = {
-          comment: txtComment.trim(),
+          comment: FormatTrim(txtComment),
           userID: userState.userID,
-          email: txtEmail.trim()
+          email: FormatTrim(txtEmail)
           // email: userState.email
         };
 

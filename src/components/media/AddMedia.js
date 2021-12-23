@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
+import { encodeURL, LogError } from "../../utilities/AppFunctions";
 import { addStateMedia } from "../../app/mediaSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -71,7 +71,7 @@ const AddMedia = (props) => {
 
     if (IsEmpty(txtMedia) === false) {
 
-      if (txtMedia.trim().length > 0) {
+      if (FormatTrim(txtMedia).length > 0) {
 
         mediaValidated = true;
         setErrMedia("");
@@ -111,7 +111,7 @@ const AddMedia = (props) => {
       if (IsEmpty(txtMedia) === false) {
 
         let recordObject = {
-          media: txtMedia.trim(),
+          media: FormatTrim(txtMedia),
           electronic: cbxElectronic
         };
 

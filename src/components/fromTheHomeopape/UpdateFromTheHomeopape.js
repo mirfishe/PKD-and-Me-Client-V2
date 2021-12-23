@@ -4,8 +4,8 @@ import { useHistory } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse, FormatLowerCase, FormatUpperCase } from "../../utilities/SharedFunctions";
+import { encodeURL, LogError } from "../../utilities/AppFunctions";
 
 // * https://www.npmjs.com/package/rss-parser
 // * https://github.com/rbren/rss-parser
@@ -62,7 +62,7 @@ const FromTheHomeopape = (props) => {
 
     str = str.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
 
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      return FormatLowerCase(txt.charAt(0)) + FormatLowerCase(txt.substr(1));
 
     });
 
@@ -74,7 +74,7 @@ const FromTheHomeopape = (props) => {
       str = str.replace(new RegExp("\\s" + lowers[i] + "\\s", "g"),
         function (txt) {
 
-          return txt.toLowerCase();
+          return FormatLowerCase(txt);
 
         });
 
@@ -83,7 +83,7 @@ const FromTheHomeopape = (props) => {
 
     for (i = 0, j = uppers.length; i < j; i++)
       str = str.replace(new RegExp("\\b" + uppers[i] + "\\b", "g"),
-        uppers[i].toUpperCase());
+        FormatUpperCase(uppers[i]));
 
     return str;
 
@@ -116,37 +116,37 @@ const FromTheHomeopape = (props) => {
 
     // };
 
-    if (txtArticleTitle.toLowerCase().includes("blade runner") === true || itemContentSnippet.toLowerCase().includes("blade runner") === true) {
+    if (FormatLowerCase(txtArticleTitle).includes("blade runner") === true || FormatLowerCase(itemContentSnippet).includes("blade runner") === true) {
 
       post = post + " #BladeRunner ";
 
     };
 
-    if (txtArticleTitle.toLowerCase().includes("blade runner 2049") === true || itemContentSnippet.toLowerCase().includes("blade runner 2049") === true) {
+    if (FormatLowerCase(txtArticleTitle).includes("blade runner 2049") === true || FormatLowerCase(itemContentSnippet).includes("blade runner 2049") === true) {
 
       post = post + " #BladeRunner2049 ";
 
     };
 
-    if (txtArticleTitle.toLowerCase().includes("total recall") === true || itemContentSnippet.toLowerCase().includes("total recall") === true) {
+    if (FormatLowerCase(txtArticleTitle).includes("total recall") === true || FormatLowerCase(itemContentSnippet).includes("total recall") === true) {
       post = post + " #TotalRecall ";
 
 
     };
 
-    if (txtArticleTitle.toLowerCase().includes("electric dreams") === true || itemContentSnippet.toLowerCase().includes("electric dreams") === true) {
+    if (FormatLowerCase(txtArticleTitle).includes("electric dreams") === true || FormatLowerCase(itemContentSnippet).includes("electric dreams") === true) {
       post = post + " #ElectricDreams ";
 
 
     };
 
-    if (txtArticleTitle.toLowerCase().includes("man in the high castle") === true || itemContentSnippet.toLowerCase().includes("man in the high castle") === true) {
+    if (FormatLowerCase(txtArticleTitle).includes("man in the high castle") === true || FormatLowerCase(itemContentSnippet).includes("man in the high castle") === true) {
 
       post = post + " #TMITHC #HighCastle ";
 
     };
 
-    if (txtArticleTitle.toLowerCase().includes("minority report") === true || itemContentSnippet.toLowerCase().includes("minority report") === true) {
+    if (FormatLowerCase(txtArticleTitle).includes("minority report") === true || FormatLowerCase(itemContentSnippet).includes("minority report") === true) {
 
       post = post + " #MinorityReport ";
 
@@ -860,85 +860,85 @@ const FromTheHomeopape = (props) => {
             // goodreads.com
 
             // if (homeopapeItem.itemLink.includes("ebay.com")) {
-            if (homeopapeItem.itemLink.toLowerCase().includes(".ebay.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("reddit.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("craigslist.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("amazon.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("audible.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("pinterest.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("twitter.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("facebook.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("tiktok.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("sites.google.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("books.google.")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("elasticsearch.columbian.com")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemLink.toLowerCase().includes("news.ycombinator.com")) {
+            if (FormatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
 
               show = false;
 
             };
 
-            if (homeopapeItem.itemTitle.toLowerCase().includes("pistorius") || homeopapeItem.itemContentSnippet.toLowerCase().includes("pistorius")) {
+            if (FormatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || FormatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
 
               show = false;
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/AppFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
@@ -103,7 +103,7 @@ const Register = (props) => {
 
     if (IsEmpty(txtFirstName) === false) {
 
-      if (txtFirstName.trim().length > 0) {
+      if (FormatTrim(txtFirstName).length > 0) {
 
         firstNameValidated = true;
         setErrFirstName("");
@@ -123,7 +123,7 @@ const Register = (props) => {
 
     if (IsEmpty(txtLastName) === false) {
 
-      if (txtLastName.trim().length > 0) {
+      if (FormatTrim(txtLastName).length > 0) {
 
         lastNameValidated = true;
         setErrLastName("");
@@ -143,9 +143,9 @@ const Register = (props) => {
 
     if (IsEmpty(txtEmail) === false) {
 
-      if (txtEmail.trim().match(emailRegExp) && txtEmail.trim().length > 0) {
+      if (FormatTrim(txtEmail).match(emailRegExp) && FormatTrim(txtEmail).length > 0) {
 
-        // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
+        // if (FormatTrim(txtEmail).match(emailFormat) && FormatTrim(txtEmail).length > 0) {
         emailValidated = true;
         setErrEmail("");
         // console.log(componentName, GetDateTime(), "register Valid Email Address");
@@ -164,7 +164,7 @@ const Register = (props) => {
 
     if (IsEmpty(txtPassword) === false) {
 
-      if (txtPassword.trim().length > 4) {
+      if (FormatTrim(txtPassword).length > 4) {
 
         passwordValidated = true;
         setErrPassword("");
@@ -207,10 +207,10 @@ const Register = (props) => {
       if (IsEmpty(txtFirstName) === false && IsEmpty(txtLastName) === false && IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
 
         let recordObject = {
-          firstName: txtFirstName.trim(),
-          lastName: txtLastName.trim(),
-          email: txtEmail.trim(),
-          password: txtPassword.trim()
+          firstName: FormatTrim(txtFirstName),
+          lastName: FormatTrim(txtLastName),
+          email: FormatTrim(txtEmail),
+          password: FormatTrim(txtPassword)
         };
 
         // console.log(componentName, GetDateTime(), "register recordObject", recordObject);

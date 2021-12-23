@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, getASIN, removeOnePixelImage } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim, FormatToString } from "../../utilities/SharedFunctions";
+import { getASIN, removeOnePixelImage, LogError } from "../../utilities/AppFunctions";
 import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
 const EditEdition = (props) => {
@@ -169,7 +169,7 @@ const EditEdition = (props) => {
 
         if (IsEmpty(editionObject.publicationDate) === false) {
 
-          setTxtPublicationDate(editionObject.publicationDate.toString().substring(0, 10));
+          setTxtPublicationDate(FormatToString(editionObject.publicationDate).substring(0, 10));
 
         } else {
 
@@ -266,22 +266,22 @@ const EditEdition = (props) => {
       let recordObject = {
         titleID: parseInt(props.titleID),
         mediaID: parseInt(ddMediaID),
-        // imageName: txtImageName.trim(),
-        // ASIN: txtASIN.trim(),
-        // textLinkShort: txtTextLinkShort.trim(),
-        // textLinkFull: txtTextLinkFull.trim(),
-        // imageLinkSmall: txtImageLinkSmall.trim(),
-        // imageLinkMedium: txtImageLinkMedium.trim(),
-        // imageLinkLarge: txtImageLinkLarge.trim(),
-        // textImageLink: txtTextImageLink.trim()
+        // imageName: FormatTrim(txtImageName),
+        // ASIN: FormatTrim(txtASIN),
+        // textLinkShort: FormatTrim(txtTextLinkShort),
+        // textLinkFull: FormatTrim(txtTextLinkFull),
+        // imageLinkSmall: FormatTrim(txtImageLinkSmall),
+        // imageLinkMedium: FormatTrim(txtImageLinkMedium),
+        // imageLinkLarge: FormatTrim(txtImageLinkLarge),
+        // textImageLink: FormatTrim(txtTextImageLink)
       };
 
       // * If the user doesn't enter a publication date, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtPublicationDate) === false) {
 
-        if (txtPublicationDate.trim().length !== 0) {
+        if (FormatTrim(txtPublicationDate).length !== 0) {
 
-          Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
+          Object.assign(recordObject, { publicationDate: FormatTrim(txtPublicationDate) });
 
         };
 
@@ -290,9 +290,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an image name, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageName) === false) {
 
-        if (txtImageName.trim().length !== 0) {
+        if (FormatTrim(txtImageName).length !== 0) {
 
-          Object.assign(recordObject, { imageName: txtImageName.trim() });
+          Object.assign(recordObject, { imageName: FormatTrim(txtImageName) });
 
         };
 
@@ -301,9 +301,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an ASIN, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtASIN) === false) {
 
-        if (txtASIN.trim().length !== 0) {
+        if (FormatTrim(txtASIN).length !== 0) {
 
-          Object.assign(recordObject, { ASIN: txtASIN.trim() });
+          Object.assign(recordObject, { ASIN: FormatTrim(txtASIN) });
 
         };
 
@@ -312,9 +312,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter a textLinkShort, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtTextLinkShort) === false) {
 
-        if (txtTextLinkShort.trim().length !== 0) {
+        if (FormatTrim(txtTextLinkShort).length !== 0) {
 
-          Object.assign(recordObject, { textLinkShort: txtTextLinkShort.trim() });
+          Object.assign(recordObject, { textLinkShort: FormatTrim(txtTextLinkShort) });
 
         };
 
@@ -323,9 +323,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter a textLinkFull, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtTextLinkFull) === false) {
 
-        if (txtTextLinkFull.trim().length !== 0) {
+        if (FormatTrim(txtTextLinkFull).length !== 0) {
 
-          Object.assign(recordObject, { textLinkFull: txtTextLinkFull.trim() });
+          Object.assign(recordObject, { textLinkFull: FormatTrim(txtTextLinkFull) });
 
         };
 
@@ -334,9 +334,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an imageLinkSmall, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageLinkSmall) === false) {
 
-        if (txtImageLinkSmall.trim().length !== 0) {
+        if (FormatTrim(txtImageLinkSmall).length !== 0) {
 
-          Object.assign(recordObject, { imageLinkSmall: txtImageLinkSmall.trim() });
+          Object.assign(recordObject, { imageLinkSmall: FormatTrim(txtImageLinkSmall) });
 
         };
 
@@ -345,9 +345,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an imageLinkMedium, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageLinkMedium) === false) {
 
-        if (txtImageLinkMedium.trim().length !== 0) {
+        if (FormatTrim(txtImageLinkMedium).length !== 0) {
 
-          Object.assign(recordObject, { imageLinkMedium: txtImageLinkMedium.trim() });
+          Object.assign(recordObject, { imageLinkMedium: FormatTrim(txtImageLinkMedium) });
 
         };
 
@@ -356,9 +356,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an imageLinkLarge, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageLinkLarge) === false) {
 
-        if (txtImageLinkLarge.trim().length !== 0) {
+        if (FormatTrim(txtImageLinkLarge).length !== 0) {
 
-          Object.assign(recordObject, { imageLinkLarge: txtImageLinkLarge.trim() });
+          Object.assign(recordObject, { imageLinkLarge: FormatTrim(txtImageLinkLarge) });
 
         };
 
@@ -367,9 +367,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter a textImageLink, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtTextImageLink) === false) {
 
-        if (txtTextImageLink.trim().length !== 0) {
+        if (FormatTrim(txtTextImageLink).length !== 0) {
 
-          Object.assign(recordObject, { textImageLink: txtTextImageLink.trim() });
+          Object.assign(recordObject, { textImageLink: FormatTrim(txtTextImageLink) });
 
         };
 
@@ -556,23 +556,23 @@ const EditEdition = (props) => {
         editionID: props.editionID,
         titleID: parseInt(titleID),
         mediaID: parseInt(ddMediaID),
-        // imageName: txtImageName.trim(),
-        // ASIN: txtASIN.trim(),
-        // textLinkShort: txtTextLinkShort.trim(),
-        // textLinkFull: txtTextLinkFull.trim(),
-        // imageLinkSmall: txtImageLinkSmall.trim(),
-        // imageLinkMedium: txtImageLinkMedium.trim(),
-        // imageLinkLarge: txtImageLinkLarge.trim(),
-        // textImageLink: txtTextImageLink.trim(),
+        // imageName: FormatTrim(txtImageName),
+        // ASIN: FormatTrim(txtASIN),
+        // textLinkShort: FormatTrim(txtTextLinkShort),
+        // textLinkFull: FormatTrim(txtTextLinkFull),
+        // imageLinkSmall: FormatTrim(txtImageLinkSmall),
+        // imageLinkMedium: FormatTrim(txtImageLinkMedium),
+        // imageLinkLarge: FormatTrim(txtImageLinkLarge),
+        // textImageLink: FormatTrim(txtTextImageLink),
         active: !deleteEdition
       };
 
       // * If the user doesn't enter a publication date, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtPublicationDate) === false) {
 
-        if (txtPublicationDate.trim().length !== 0) {
+        if (FormatTrim(txtPublicationDate).length !== 0) {
 
-          Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
+          Object.assign(recordObject, { publicationDate: FormatTrim(txtPublicationDate) });
 
         };
 
@@ -581,9 +581,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an image name, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageName) === false) {
 
-        if (txtImageName.trim().length !== 0) {
+        if (FormatTrim(txtImageName).length !== 0) {
 
-          Object.assign(recordObject, { imageName: txtImageName.trim() });
+          Object.assign(recordObject, { imageName: FormatTrim(txtImageName) });
 
         };
 
@@ -592,9 +592,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an ASIN, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtASIN) === false) {
 
-        if (txtASIN.trim().length !== 0) {
+        if (FormatTrim(txtASIN).length !== 0) {
 
-          Object.assign(recordObject, { ASIN: txtASIN.trim() });
+          Object.assign(recordObject, { ASIN: FormatTrim(txtASIN) });
 
         };
 
@@ -603,9 +603,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter a textLinkShort, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtTextLinkShort) === false) {
 
-        if (txtTextLinkShort.trim().length !== 0) {
+        if (FormatTrim(txtTextLinkShort).length !== 0) {
 
-          Object.assign(recordObject, { textLinkShort: txtTextLinkShort.trim() });
+          Object.assign(recordObject, { textLinkShort: FormatTrim(txtTextLinkShort) });
 
         };
 
@@ -614,9 +614,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter a textLinkFull, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtTextLinkFull) === false) {
 
-        if (txtTextLinkFull.trim().length !== 0) {
+        if (FormatTrim(txtTextLinkFull).length !== 0) {
 
-          Object.assign(recordObject, { textLinkFull: txtTextLinkFull.trim() });
+          Object.assign(recordObject, { textLinkFull: FormatTrim(txtTextLinkFull) });
 
         };
 
@@ -625,9 +625,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an imageLinkSmall, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageLinkSmall) === false) {
 
-        if (txtImageLinkSmall.trim().length !== 0) {
+        if (FormatTrim(txtImageLinkSmall).length !== 0) {
 
-          Object.assign(recordObject, { imageLinkSmall: txtImageLinkSmall.trim() });
+          Object.assign(recordObject, { imageLinkSmall: FormatTrim(txtImageLinkSmall) });
 
         };
 
@@ -636,9 +636,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an imageLinkMedium, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageLinkMedium) === false) {
 
-        if (txtImageLinkMedium.trim().length !== 0) {
+        if (FormatTrim(txtImageLinkMedium).length !== 0) {
 
-          Object.assign(recordObject, { imageLinkMedium: txtImageLinkMedium.trim() });
+          Object.assign(recordObject, { imageLinkMedium: FormatTrim(txtImageLinkMedium) });
 
         };
 
@@ -647,9 +647,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter an imageLinkLarge, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtImageLinkLarge) === false) {
 
-        if (txtImageLinkLarge.trim().length !== 0) {
+        if (FormatTrim(txtImageLinkLarge).length !== 0) {
 
-          Object.assign(recordObject, { imageLinkLarge: txtImageLinkLarge.trim() });
+          Object.assign(recordObject, { imageLinkLarge: FormatTrim(txtImageLinkLarge) });
 
         };
 
@@ -658,9 +658,9 @@ const EditEdition = (props) => {
       // * If the user doesn't enter a textImageLink, then it isn't added/updated. -- 03/06/2021 MF
       if (IsEmpty(txtTextImageLink) === false) {
 
-        if (txtTextImageLink.trim().length !== 0) {
+        if (FormatTrim(txtTextImageLink).length !== 0) {
 
-          Object.assign(recordObject, { textImageLink: txtTextImageLink.trim() });
+          Object.assign(recordObject, { textImageLink: FormatTrim(txtTextImageLink) });
 
         };
 
@@ -932,7 +932,7 @@ const EditEdition = (props) => {
 
     if (IsEmpty(props.titlePublicationDate) === false) {
 
-      setTxtPublicationDate(props.titlePublicationDate.toString().substring(0, 10));
+      setTxtPublicationDate(FormatToString(props.titlePublicationDate).substring(0, 10));
 
     } else {
 
@@ -948,7 +948,7 @@ const EditEdition = (props) => {
 
     if (IsEmpty(props.titleImageName) === false) {
 
-      setTxtImageName(props.titleImageName.toString());
+      setTxtImageName(FormatToString(props.titleImageName));
 
     } else {
 

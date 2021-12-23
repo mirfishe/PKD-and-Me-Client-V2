@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatLowerCase, FormatUpperCase } from "../../utilities/SharedFunctions";
 
 const FormatPost = () => {
 
@@ -40,7 +40,7 @@ const FormatPost = () => {
     let i, j, str, lowers, uppers;
 
     str = title.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      return FormatUpperCase(txt.charAt(0)) + FormatLowerCase(txt.substr(1));
     });
 
     // * Certain minor words should be left lowercase unless 
@@ -51,7 +51,7 @@ const FormatPost = () => {
     for (i = 0, j = lowers.length; i < j; i++)
       str = str.replace(new RegExp("\\s" + lowers[i] + "\\s", "g"),
         function (txt) {
-          return txt.toLowerCase();
+          return FormatLowerCase(txt);
         });
 
     // * Certain words such as initialisms or acronyms should be left uppercase
@@ -59,7 +59,7 @@ const FormatPost = () => {
 
     for (i = 0, j = uppers.length; i < j; i++)
       str = str.replace(new RegExp("\\b" + uppers[i] + "\\b", "g"),
-        uppers[i].toUpperCase());
+        FormatUpperCase(uppers[i]));
 
     return str;
 

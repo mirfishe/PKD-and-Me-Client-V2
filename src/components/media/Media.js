@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Nav, NavItem, Collapse, Card } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { encodeURL } from "../../utilities/AppFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import AddMedia from "./AddMedia";
 

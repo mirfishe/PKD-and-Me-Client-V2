@@ -5,7 +5,8 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from "react-bootstrap-icons";
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear, encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear } from "../../utilities/SharedFunctions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/AppFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
