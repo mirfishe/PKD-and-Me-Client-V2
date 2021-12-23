@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/AppFunctions";
 import { loadUserData } from "../../app/userSlice";
 
@@ -88,7 +88,7 @@ const EditUser = (props) => {
 
     if (IsEmpty(txtFirstName) === false) {
 
-      if (txtFirstName.trim().length > 0) {
+      if (FormatTrim(txtFirstName).length > 0) {
 
         firstNameValidated = true;
         setErrFirstName("");
@@ -108,7 +108,7 @@ const EditUser = (props) => {
 
     if (IsEmpty(txtLastName) === false) {
 
-      if (txtLastName.trim().length > 0) {
+      if (FormatTrim(txtLastName).length > 0) {
 
         lastNameValidated = true;
         setErrLastName("");
@@ -128,9 +128,9 @@ const EditUser = (props) => {
 
     if (IsEmpty(txtEmail) === false) {
 
-      if (txtEmail.trim().match(emailRegExp) && txtEmail.trim().length > 0) {
+      if (FormatTrim(txtEmail).match(emailRegExp) && FormatTrim(txtEmail).length > 0) {
 
-        // if (txtEmail.trim().match(emailFormat) && txtEmail.trim().length > 0) {
+        // if (FormatTrim(txtEmail).match(emailFormat) && FormatTrim(txtEmail).length > 0) {
         emailValidated = true;
         setErrEmail("");
         // console.log(componentName, GetDateTime(), "updateUser Valid Email Address");
@@ -150,9 +150,9 @@ const EditUser = (props) => {
     // * If the user doesn't enter a password, then it isn't updated
     if (IsEmpty(txtPassword) === false) {
 
-      if (txtPassword.trim().length !== 0) {
+      if (FormatTrim(txtPassword).length !== 0) {
 
-        if (txtPassword.trim().length > 4) {
+        if (FormatTrim(txtPassword).length > 4) {
 
           passwordValidated = true;
           setErrPassword("");
@@ -206,9 +206,9 @@ const EditUser = (props) => {
       if (IsEmpty(txtFirstName) === false && IsEmpty(txtLastName) === false && IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
 
         let recordObject = {
-          firstName: txtFirstName.trim(),
-          lastName: txtLastName.trim(),
-          email: txtEmail.trim(),
+          firstName: FormatTrim(txtFirstName),
+          lastName: FormatTrim(txtLastName),
+          email: FormatTrim(txtEmail),
           updatedBy: userID,
           // active:     active
           active: !deleteUser
@@ -217,9 +217,9 @@ const EditUser = (props) => {
         // * If the user doesn't enter a password, then it isn't updated
         if (IsEmpty(txtPassword) === false) {
 
-          if (txtPassword.trim().length !== 0) {
+          if (FormatTrim(txtPassword).length !== 0) {
 
-            Object.assign(recordObject, { password: txtPassword.trim() });
+            Object.assign(recordObject, { password: FormatTrim(txtPassword) });
 
           };
 

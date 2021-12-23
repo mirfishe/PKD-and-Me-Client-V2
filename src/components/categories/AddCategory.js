@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, encodeURL } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
+import { encodeURL, LogError } from "../../utilities/AppFunctions";
 import { addStateCategory } from "../../app/categoriesSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -68,7 +68,7 @@ const AddCategory = (props) => {
 
     if (IsEmpty(txtCategory) === false) {
 
-      if (txtCategory.trim().length > 0) {
+      if (FormatTrim(txtCategory).length > 0) {
 
         categoryValidated = true;
         setErrCategory("");
@@ -108,7 +108,7 @@ const AddCategory = (props) => {
       if (IsEmpty(txtCategory) === false) {
 
         let recordObject = {
-          category: txtCategory.trim()
+          category: FormatTrim(txtCategory)
         };
 
         // console.log(componentName, GetDateTime(), "addCategory recordObject", recordObject);

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/AppFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
@@ -112,7 +112,7 @@ const AddTitleSuggestion = (props) => {
 
     if (IsEmpty(txtTitleName) === false) {
 
-      if (txtTitleName.trim().length > 0) {
+      if (FormatTrim(txtTitleName).length > 0) {
 
         titleNameValidated = true;
         setErrTitleName("");
@@ -132,7 +132,7 @@ const AddTitleSuggestion = (props) => {
 
     if (IsEmpty(txtShortDescription) === false) {
 
-      if (txtShortDescription.trim().length > 0) {
+      if (FormatTrim(txtShortDescription).length > 0) {
 
         shortDescriptionValidated = true;
         setErrShortDescription("");
@@ -152,7 +152,7 @@ const AddTitleSuggestion = (props) => {
 
     if (IsEmpty(txtEmail) === false) {
 
-      if (txtEmail.trim().length > 0 || requireUserLogin === false) {
+      if (FormatTrim(txtEmail).length > 0 || requireUserLogin === false) {
 
         emailValidated = true;
         setErrEmail("");
@@ -193,21 +193,21 @@ const AddTitleSuggestion = (props) => {
       if (IsEmpty(txtTitleName) === false && IsEmpty(txtShortDescription) === false && IsEmpty(txtEmail) === false) {
 
         let recordObject = {
-          titleName: txtTitleName.trim(),
-          // authorFirstName: txtAuthorFirstName.trim(),
-          // authorLastName: txtAuthorLastName.trim(),
-          shortDescription: txtShortDescription.trim(),
-          // titleURL: txtTitleURL.trim(),
+          titleName: FormatTrim(txtTitleName),
+          // authorFirstName: FormatTrim(txtAuthorFirstName),
+          // authorLastName: FormatTrim(txtAuthorLastName),
+          shortDescription: FormatTrim(txtShortDescription),
+          // titleURL: FormatTrim(txtTitleURL),
           userID: userState.userID,
-          email: txtEmail.trim()
+          email: FormatTrim(txtEmail)
         };
 
         // * If the user doesn't enter an author first name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorFirstName) === false) {
 
-          if (txtAuthorFirstName.trim().length !== 0) {
+          if (FormatTrim(txtAuthorFirstName).length !== 0) {
 
-            Object.assign(recordObject, { authorFirstName: txtAuthorFirstName.trim() });
+            Object.assign(recordObject, { authorFirstName: FormatTrim(txtAuthorFirstName) });
 
           };
 
@@ -216,9 +216,9 @@ const AddTitleSuggestion = (props) => {
         // * If the user doesn't enter an author last name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorLastName) === false) {
 
-          if (txtAuthorLastName.trim().length !== 0) {
+          if (FormatTrim(txtAuthorLastName).length !== 0) {
 
-            Object.assign(recordObject, { authorLastName: txtAuthorLastName.trim() });
+            Object.assign(recordObject, { authorLastName: FormatTrim(txtAuthorLastName) });
 
           };
 
@@ -228,8 +228,8 @@ const AddTitleSuggestion = (props) => {
         if (IsEmpty(txtPublicationDate) === false) {
 
 
-          if (txtPublicationDate.trim().length !== 0) {
-            Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
+          if (FormatTrim(txtPublicationDate).length !== 0) {
+            Object.assign(recordObject, { publicationDate: FormatTrim(txtPublicationDate) });
 
           };
 
@@ -238,9 +238,9 @@ const AddTitleSuggestion = (props) => {
         // * If the user doesn't enter a title URL, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtTitleURL) === false) {
 
-          if (txtTitleURL.trim().length !== 0) {
+          if (FormatTrim(txtTitleURL).length !== 0) {
 
-            Object.assign(recordObject, { titleURL: txtTitleURL.trim() });
+            Object.assign(recordObject, { titleURL: FormatTrim(txtTitleURL) });
 
           };
 

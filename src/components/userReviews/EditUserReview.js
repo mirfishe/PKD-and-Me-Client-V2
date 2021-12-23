@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { PencilSquare, Plus } from 'react-bootstrap-icons';
 import { Rating } from "@material-ui/lab/";
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim, FormatToString } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/AppFunctions";
 import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 import { updateStateTitleRating } from "../../app/titlesSlice";
@@ -123,7 +123,7 @@ const EditUserReview = (props) => {
 
         if (IsEmpty(userReviewObject.dateRead) === false) {
 
-          setTxtDateRead(userReviewObject.dateRead.toString().substring(0, 10));
+          setTxtDateRead(FormatToString(userReviewObject.dateRead).substring(0, 10));
 
         } else {
 
@@ -140,7 +140,7 @@ const EditUserReview = (props) => {
 
         if (IsEmpty(userReviewObject.datePurchased) === false) {
 
-          setTxtDatePurchased(userReviewObject.datePurchased.toString().substring(0, 10));
+          setTxtDatePurchased(FormatToString(userReviewObject.datePurchased).substring(0, 10));
 
         } else {
 
@@ -236,21 +236,21 @@ const EditUserReview = (props) => {
     let recordObject = {
       titleID: parseInt(props.titleID),
       read: cbxRead,
-      // dateRead: txtDateRead.trim(),
+      // dateRead: FormatTrim(txtDateRead),
       rating: rdoRating,
       // ranking: request.body.userReview.ranking,
-      // shortReview: txtShortReview.trim(),
-      // longReview: txtLongReview.trim(),
+      // shortReview: FormatTrim(txtShortReview),
+      // longReview: FormatTrim(txtLongReview),
       owned: cbxOwned
-      // datePurchased: txtDatePurchased.trim()
+      // datePurchased: FormatTrim(txtDatePurchased)
     };
 
     // * If the user doesn't enter a date read, then it isn't added/updated
     if (IsEmpty(txtDateRead) === false) {
 
-      if (txtDateRead.trim().length !== 0) {
+      if (FormatTrim(txtDateRead).length !== 0) {
 
-        Object.assign(recordObject, { dateRead: txtDateRead.trim() });
+        Object.assign(recordObject, { dateRead: FormatTrim(txtDateRead) });
 
       };
 
@@ -259,9 +259,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a ranking, then it isn't added/updated
     if (IsEmpty(txtRanking) === false) {
 
-      if (txtRanking.trim().length !== 0) {
+      if (FormatTrim(txtRanking).length !== 0) {
 
-        Object.assign(recordObject, { ranking: txtRanking.trim() });
+        Object.assign(recordObject, { ranking: FormatTrim(txtRanking) });
 
       };
 
@@ -270,9 +270,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a short review, then it isn't added/updated
     if (IsEmpty(txtShortReview) === false) {
 
-      if (txtShortReview.trim().length !== 0) {
+      if (FormatTrim(txtShortReview).length !== 0) {
 
-        Object.assign(recordObject, { shortReview: txtShortReview.trim() });
+        Object.assign(recordObject, { shortReview: FormatTrim(txtShortReview) });
 
       };
 
@@ -281,9 +281,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a long review, then it isn't added/updated
     if (IsEmpty(txtLongReview) === false) {
 
-      if (txtLongReview.trim().length !== 0) {
+      if (FormatTrim(txtLongReview).length !== 0) {
 
-        Object.assign(recordObject, { longReview: txtLongReview.trim() });
+        Object.assign(recordObject, { longReview: FormatTrim(txtLongReview) });
 
       };
 
@@ -292,9 +292,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a date purchased, then it isn't added/updated
     if (IsEmpty(txtDatePurchased) === false) {
 
-      if (txtDatePurchased.trim().length !== 0) {
+      if (FormatTrim(txtDatePurchased).length !== 0) {
 
-        Object.assign(recordObject, { datePurchased: txtDatePurchased.trim() });
+        Object.assign(recordObject, { datePurchased: FormatTrim(txtDatePurchased) });
 
       };
 
@@ -498,22 +498,22 @@ const EditUserReview = (props) => {
 
     let recordObject = {
       read: cbxRead,
-      // dateRead: txtDateRead.trim(),
+      // dateRead: FormatTrim(txtDateRead),
       rating: rdoRating,
       // ranking: request.body.userReview.ranking,
-      // shortReview: txtShortReview.trim(),
-      // longReview: txtLongReview.trim(),
+      // shortReview: FormatTrim(txtShortReview),
+      // longReview: FormatTrim(txtLongReview),
       owned: cbxOwned,
-      // datePurchased: txtDatePurchased.trim()
+      // datePurchased: FormatTrim(txtDatePurchased)
       active: !deleteUserReview
     };
 
     // * If the user doesn't enter a date read, then it isn't added/updated
     if (IsEmpty(txtDateRead) === false) {
 
-      if (txtDateRead.trim().length !== 0) {
+      if (FormatTrim(txtDateRead).length !== 0) {
 
-        Object.assign(recordObject, { dateRead: txtDateRead.trim() });
+        Object.assign(recordObject, { dateRead: FormatTrim(txtDateRead) });
 
       };
 
@@ -522,9 +522,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a ranking, then it isn't added/updated
     if (IsEmpty(txtRanking) === false) {
 
-      if (txtRanking.trim().length !== 0) {
+      if (FormatTrim(txtRanking).length !== 0) {
 
-        Object.assign(recordObject, { ranking: txtRanking.trim() });
+        Object.assign(recordObject, { ranking: FormatTrim(txtRanking) });
 
       };
 
@@ -533,9 +533,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a short review, then it isn't added/updated
     if (IsEmpty(txtShortReview) === false) {
 
-      if (txtShortReview.trim().length !== 0) {
+      if (FormatTrim(txtShortReview).length !== 0) {
 
-        Object.assign(recordObject, { shortReview: txtShortReview.trim() });
+        Object.assign(recordObject, { shortReview: FormatTrim(txtShortReview) });
 
       };
 
@@ -544,9 +544,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a long review, then it isn't added/updated
     if (IsEmpty(txtLongReview) === false) {
 
-      if (txtLongReview.trim().length !== 0) {
+      if (FormatTrim(txtLongReview).length !== 0) {
 
-        Object.assign(recordObject, { longReview: txtLongReview.trim() });
+        Object.assign(recordObject, { longReview: FormatTrim(txtLongReview) });
 
       };
 
@@ -555,9 +555,9 @@ const EditUserReview = (props) => {
     // * If the user doesn't enter a date purchased, then it isn't added/updated
     if (IsEmpty(txtDatePurchased) === false) {
 
-      if (txtDatePurchased.trim().length !== 0) {
+      if (FormatTrim(txtDatePurchased).length !== 0) {
 
-        Object.assign(recordObject, { datePurchased: txtDatePurchased.trim() });
+        Object.assign(recordObject, { datePurchased: FormatTrim(txtDatePurchased) });
 
       };
 

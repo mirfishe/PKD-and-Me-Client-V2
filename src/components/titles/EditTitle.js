@@ -4,8 +4,8 @@ import { useHistory } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import AppSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, createTitleURL, createImageName } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { IsEmpty, DisplayValue, GetDateTime, FormatTrim, FormatToString } from "../../utilities/SharedFunctions";
+import { createTitleURL, createImageName, LogError } from "../../utilities/AppFunctions";
 import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
@@ -185,7 +185,7 @@ const EditTitle = (props) => {
 
         if (IsEmpty(titleObject.submissionDate) === false) {
 
-          setTxtSubmissionDate(titleObject.submissionDate.toString().substring(0, 10));
+          setTxtSubmissionDate(FormatToString(titleObject.submissionDate).substring(0, 10));
 
         } else {
 
@@ -195,7 +195,7 @@ const EditTitle = (props) => {
 
         if (IsEmpty(titleObject.publicationDate) === false) {
 
-          setTxtPublicationDate(titleObject.publicationDate.toString().substring(0, 10));
+          setTxtPublicationDate(FormatToString(titleObject.publicationDate).substring(0, 10));
 
         } else {
 
@@ -244,7 +244,7 @@ const EditTitle = (props) => {
 
     if (IsEmpty(txtTitleName) === false) {
 
-      if (txtTitleName.trim().length > 0) {
+      if (FormatTrim(txtTitleName).length > 0) {
 
         titleNameValidated = true;
         setErrTitleName("");
@@ -305,21 +305,21 @@ const EditTitle = (props) => {
         // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
         let recordObject = {
-          titleName: txtTitleName.trim(),
-          // authorFirstName: txtAuthorFirstName.trim(),
-          // authorLastName: txtAuthorLastName.trim(),
-          // imageName: txtImageName.trim(),
+          titleName: FormatTrim(txtTitleName),
+          // authorFirstName: FormatTrim(txtAuthorFirstName),
+          // authorLastName: FormatTrim(txtAuthorLastName),
+          // imageName: FormatTrim(txtImageName),
           categoryID: parseInt(ddCategoryID)
-          // shortDescription: txtShortDescription.trim(),
-          // urlPKDWeb: txtUrlPKDWeb.trim()
+          // shortDescription: FormatTrim(txtShortDescription),
+          // urlPKDWeb: FormatTrim(txtUrlPKDWeb)
         };
 
         // * If the user doesn't enter a title URL, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtTitleURL) === false) {
 
-          if (txtTitleURL.trim().length !== 0) {
+          if (FormatTrim(txtTitleURL).length !== 0) {
 
-            Object.assign(recordObject, { titleURL: txtTitleURL.trim() });
+            Object.assign(recordObject, { titleURL: FormatTrim(txtTitleURL) });
 
           };
 
@@ -328,9 +328,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter an author first name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorFirstName) === false) {
 
-          if (txtAuthorFirstName.trim().length !== 0) {
+          if (FormatTrim(txtAuthorFirstName).length !== 0) {
 
-            Object.assign(recordObject, { authorFirstName: txtAuthorFirstName.trim() });
+            Object.assign(recordObject, { authorFirstName: FormatTrim(txtAuthorFirstName) });
 
           };
 
@@ -339,9 +339,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter an author last name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorLastName) === false) {
 
-          if (txtAuthorLastName.trim().length !== 0) {
+          if (FormatTrim(txtAuthorLastName).length !== 0) {
 
-            Object.assign(recordObject, { authorLastName: txtAuthorLastName.trim() });
+            Object.assign(recordObject, { authorLastName: FormatTrim(txtAuthorLastName) });
 
           };
 
@@ -350,9 +350,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter an image name then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtImageName) === false) {
 
-          if (txtImageName.trim().length !== 0) {
+          if (FormatTrim(txtImageName).length !== 0) {
 
-            Object.assign(recordObject, { imageName: txtImageName.trim() });
+            Object.assign(recordObject, { imageName: FormatTrim(txtImageName) });
 
           };
 
@@ -361,9 +361,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtSubmissionDate) === false) {
 
-          if (txtSubmissionDate.trim().length !== 0) {
+          if (FormatTrim(txtSubmissionDate).length !== 0) {
 
-            Object.assign(recordObject, { submissionDate: txtSubmissionDate.trim() });
+            Object.assign(recordObject, { submissionDate: FormatTrim(txtSubmissionDate) });
 
           };
 
@@ -372,9 +372,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a publication date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtPublicationDate) === false) {
 
-          if (txtPublicationDate.trim().length !== 0) {
+          if (FormatTrim(txtPublicationDate).length !== 0) {
 
-            Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
+            Object.assign(recordObject, { publicationDate: FormatTrim(txtPublicationDate) });
 
           };
 
@@ -384,9 +384,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a short description, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtShortDescription) === false) {
 
-          if (txtShortDescription.trim().length !== 0) {
+          if (FormatTrim(txtShortDescription).length !== 0) {
 
-            Object.assign(recordObject, { shortDescription: txtShortDescription.trim() });
+            Object.assign(recordObject, { shortDescription: FormatTrim(txtShortDescription) });
 
           };
 
@@ -395,9 +395,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a url for PKDWeb, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtUrlPKDWeb) === false) {
 
-          if (txtUrlPKDWeb.trim().length !== 0) {
+          if (FormatTrim(txtUrlPKDWeb).length !== 0) {
 
-            Object.assign(recordObject, { urlPKDWeb: txtUrlPKDWeb.trim() });
+            Object.assign(recordObject, { urlPKDWeb: FormatTrim(txtUrlPKDWeb) });
 
           };
 
@@ -571,7 +571,7 @@ const EditTitle = (props) => {
 
     if (IsEmpty(txtTitleName) === false) {
 
-      if (txtTitleName.trim().length > 0) {
+      if (FormatTrim(txtTitleName).length > 0) {
 
         titleNameValidated = true;
         setErrTitleName("");
@@ -632,22 +632,22 @@ const EditTitle = (props) => {
         // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
         let recordObject = {
-          titleName: txtTitleName.trim(),
-          // authorFirstName: txtAuthorFirstName.trim(),
-          // authorLastName: txtAuthorLastName.trim(),
-          // imageName: txtImageName.trim(),
+          titleName: FormatTrim(txtTitleName),
+          // authorFirstName: FormatTrim(txtAuthorFirstName),
+          // authorLastName: FormatTrim(txtAuthorLastName),
+          // imageName: FormatTrim(txtImageName),
           categoryID: parseInt(ddCategoryID),
-          // shortDescription: txtShortDescription.trim(),
-          // urlPKDWeb: txtUrlPKDWeb.trim(),
+          // shortDescription: FormatTrim(txtShortDescription),
+          // urlPKDWeb: FormatTrim(txtUrlPKDWeb),
           active: !deleteTitle
         };
 
         // * If the user doesn't enter a title URL, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtTitleURL) === false) {
 
-          if (txtTitleURL.trim().length !== 0) {
+          if (FormatTrim(txtTitleURL).length !== 0) {
 
-            Object.assign(recordObject, { titleURL: txtTitleURL.trim() });
+            Object.assign(recordObject, { titleURL: FormatTrim(txtTitleURL) });
 
           };
 
@@ -656,9 +656,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter an author first name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorFirstName) === false) {
 
-          if (txtAuthorFirstName.trim().length !== 0) {
+          if (FormatTrim(txtAuthorFirstName).length !== 0) {
 
-            Object.assign(recordObject, { authorFirstName: txtAuthorFirstName.trim() });
+            Object.assign(recordObject, { authorFirstName: FormatTrim(txtAuthorFirstName) });
 
           };
 
@@ -667,9 +667,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter an author last name, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtAuthorLastName) === false) {
 
-          if (txtAuthorLastName.trim().length !== 0) {
+          if (FormatTrim(txtAuthorLastName).length !== 0) {
 
-            Object.assign(recordObject, { authorLastName: txtAuthorLastName.trim() });
+            Object.assign(recordObject, { authorLastName: FormatTrim(txtAuthorLastName) });
 
           };
 
@@ -678,9 +678,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter an image name then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtImageName) === false) {
 
-          if (txtImageName.trim().length !== 0) {
+          if (FormatTrim(txtImageName).length !== 0) {
 
-            Object.assign(recordObject, { imageName: txtImageName.trim() });
+            Object.assign(recordObject, { imageName: FormatTrim(txtImageName) });
 
           };
 
@@ -689,9 +689,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtSubmissionDate) === false) {
 
-          if (txtSubmissionDate.trim().length !== 0) {
+          if (FormatTrim(txtSubmissionDate).length !== 0) {
 
-            Object.assign(recordObject, { submissionDate: txtSubmissionDate.trim() });
+            Object.assign(recordObject, { submissionDate: FormatTrim(txtSubmissionDate) });
 
           };
 
@@ -700,9 +700,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a publication date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtPublicationDate) === false) {
 
-          if (txtPublicationDate.trim().length !== 0) {
+          if (FormatTrim(txtPublicationDate).length !== 0) {
 
-            Object.assign(recordObject, { publicationDate: txtPublicationDate.trim() });
+            Object.assign(recordObject, { publicationDate: FormatTrim(txtPublicationDate) });
 
           };
 
@@ -711,9 +711,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a short description, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtShortDescription) === false) {
 
-          if (txtShortDescription.trim().length !== 0) {
+          if (FormatTrim(txtShortDescription).length !== 0) {
 
-            Object.assign(recordObject, { shortDescription: txtShortDescription.trim() });
+            Object.assign(recordObject, { shortDescription: FormatTrim(txtShortDescription) });
 
           };
 
@@ -722,9 +722,9 @@ const EditTitle = (props) => {
         // * If the user doesn't enter a url for PKDWeb, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtUrlPKDWeb) === false) {
 
-          if (txtUrlPKDWeb.trim().length !== 0) {
+          if (FormatTrim(txtUrlPKDWeb).length !== 0) {
 
-            Object.assign(recordObject, { urlPKDWeb: txtUrlPKDWeb.trim() });
+            Object.assign(recordObject, { urlPKDWeb: FormatTrim(txtUrlPKDWeb) });
 
           };
 
