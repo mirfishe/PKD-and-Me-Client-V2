@@ -5,7 +5,7 @@ import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "rea
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse, FormatLowerCase, FormatUpperCase } from "../../utilities/SharedFunctions";
-import { encodeURL, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, ToTitleCase, LogError } from "../../utilities/AppFunctions";
 
 // * https://www.npmjs.com/package/rss-parser
 // * https://github.com/rbren/rss-parser
@@ -52,56 +52,18 @@ const FromTheHomeopape = (props) => {
   let displayUpdateItemsCount = 0;
 
 
-  const toTitleCase = (title) => {
-    // console.log(componentName, GetDateTime(), "toTitleCase title", title);
-
-    // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript -- 06/26/2021 MF
-    let i, j, str, lowers, uppers;
-
-    str = title.replaceAll("&#39;", "'").replaceAll("&Amp;", "&").replaceAll("&amp;", "&").replaceAll("&Quot;", "\"").replaceAll("&quot;", "\"");
-
-    str = str.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
-
-      return FormatLowerCase(txt.charAt(0)) + FormatLowerCase(txt.substr(1));
-
-    });
-
-    // * Certain minor words should be left lowercase unless they are the first or last words in the string. -- 06/26/2021 MF
-    lowers = ["A", "An", "The", "And", "But", "Or", "For", "Nor", "As", "At",
-      "By", "For", "From", "In", "Into", "Near", "Of", "On", "Onto", "To", "With"];
-
-    for (i = 0, j = lowers.length; i < j; i++)
-      str = str.replace(new RegExp("\\s" + lowers[i] + "\\s", "g"),
-        function (txt) {
-
-          return FormatLowerCase(txt);
-
-        });
-
-    // * Certain words such as initialisms or acronyms should be left uppercase. -- 06/26/2021 MF
-    uppers = ["Id", "Tv", "Pkd"];
-
-    for (i = 0, j = uppers.length; i < j; i++)
-      str = str.replace(new RegExp("\\b" + uppers[i] + "\\b", "g"),
-        FormatUpperCase(uppers[i]));
-
-    return str;
-
-  };
-
-
   const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
     // console.log(componentName, GetDateTime(), "formatPost txtArticleTitle", txtArticleTitle);
     // console.log(componentName, GetDateTime(), "formatPost txtArticleURL", txtArticleURL);
     // console.log(componentName, GetDateTime(), "formatPost itemContentSnippet", itemContentSnippet);
 
-    let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
+    let post = ToTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
     let itemContentSnippet = "";
 
     if (IsEmpty(txtItemContentSnippet) === false) {
 
-
       itemContentSnippet = txtItemContentSnippet;
+
     };
 
     // if (cbxPhilipKDickFestival === true) {

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime, FormatLowerCase, FormatUpperCase } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { encodeURL, ToTitleCase, LogError } from "../../utilities/AppFunctions";
 
 const FormatPost = () => {
 
@@ -31,44 +32,9 @@ const FormatPost = () => {
   const [formattedPosts, setFormattedPosts] = useState([]);
 
 
-  const toTitleCase = (title) => {
-    // console.log(componentName, GetDateTime(), "toTitleCase title", title);
-
-    // * Doesn't handle acronyms execpt for the few listed in the code below.
-
-    // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
-    let i, j, str, lowers, uppers;
-
-    str = title.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
-      return FormatUpperCase(txt.charAt(0)) + FormatLowerCase(txt.substr(1));
-    });
-
-    // * Certain minor words should be left lowercase unless 
-    // * they are the first or last words in the string
-    lowers = ["A", "An", "The", "And", "But", "Or", "For", "Nor", "As", "At",
-      "By", "For", "From", "In", "Into", "Near", "Of", "On", "Onto", "To", "With"];
-
-    for (i = 0, j = lowers.length; i < j; i++)
-      str = str.replace(new RegExp("\\s" + lowers[i] + "\\s", "g"),
-        function (txt) {
-          return FormatLowerCase(txt);
-        });
-
-    // * Certain words such as initialisms or acronyms should be left uppercase
-    uppers = ["Id", "Tv", "Pkd"];
-
-    for (i = 0, j = uppers.length; i < j; i++)
-      str = str.replace(new RegExp("\\b" + uppers[i] + "\\b", "g"),
-        FormatUpperCase(uppers[i]));
-
-    return str;
-
-  };
-
-
   const formatPost = () => {
 
-    let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
+    let post = ToTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
 
     if (cbxPhilipKDickFestival === true) {
 
