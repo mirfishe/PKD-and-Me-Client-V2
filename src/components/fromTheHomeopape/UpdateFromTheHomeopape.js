@@ -821,90 +821,90 @@ const FromTheHomeopape = (props) => {
             // OR itemLink like '%elasticsearch.columbian.com%'
             // goodreads.com
 
-            // if (homeopapeItem.itemLink.includes("ebay.com")) {
-            if (FormatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
+            // // if (homeopapeItem.itemLink.includes("ebay.com")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || FormatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
+            // if (FormatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || FormatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
             let itemLink;
             let itemID;
@@ -981,11 +981,11 @@ const FromTheHomeopape = (props) => {
                       </React.Fragment>
 
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
-                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
+                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
 
-                      {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
-                      {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {/* {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null} */}
+                      {/* {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null} */}
 
                     </Col>
 
@@ -1123,11 +1123,11 @@ const FromTheHomeopape = (props) => {
                       </React.Fragment>
 
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
-                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
+                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
 
-                      {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
-                      {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {/* {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null} */}
+                      {/* {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null} */}
 
                     </Col>
 
