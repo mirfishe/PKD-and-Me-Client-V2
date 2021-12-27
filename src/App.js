@@ -35,7 +35,10 @@ import Checklist from "./components/checklist/Checklist";
 import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
 import AddComment from "./components/comments/AddComment";
 import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
-import Reports from "./components/reports/Reports";
+import BrokenLinks from "./components/reports/BrokenLinks";
+import ComputerLogs from "./components/reports/ComputerLogs";
+import Logs from "./components/reports/Logs";
+import Errors from "./components/reports/Errors";
 
 function App(props) {
 
@@ -709,30 +712,6 @@ function App(props) {
 
             : null}
 
-          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
-
-            <NavItem className="mx-3">
-              <Link to="/fromTheHomeopape"><NavbarText>From The Homeopape</NavbarText></Link>
-            </NavItem>
-
-            : null}
-
-          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
-
-            <NavItem className="mx-3">
-              <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
-            </NavItem>
-
-            : null}
-
-          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
-
-            <NavItem className="mx-3">
-              <Link to="/reports"><NavbarText>Reports</NavbarText></Link>
-            </NavItem>
-
-            : null}
-
           {appAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
 
             <NavItem className="mx-3">
@@ -797,6 +776,50 @@ function App(props) {
 
         </Nav>
       </Navbar>
+
+      {IsEmpty(admin) === false && admin === true ?
+
+        <Navbar>
+          <Nav>
+
+            <NavItem className="mx-3">
+              <Link to="/fromTheHomeopape"><NavbarText>From The Homeopape</NavbarText></Link>
+            </NavItem>
+
+            <NavItem className="mx-3">
+              <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
+            </NavItem>
+
+          </Nav>
+        </Navbar>
+
+        : null}
+
+      {IsEmpty(admin) === false && admin === true ?
+
+        <Navbar>
+          <Nav>
+
+            <NavItem className="mx-3">
+              <Link to="/brokenLinks"><NavbarText>Broken Links</NavbarText></Link>
+            </NavItem>
+
+            <NavItem className="mx-3">
+              <Link to="/computerLogs"><NavbarText>Computer Logs</NavbarText></Link>
+            </NavItem>
+
+            <NavItem className="mx-3">
+              <Link to="/logs"><NavbarText>Logs</NavbarText></Link>
+            </NavItem>
+
+            <NavItem className="mx-3">
+              <Link to="/errors"><NavbarText>Errors</NavbarText></Link>
+            </NavItem>
+
+          </Nav>
+        </Navbar>
+
+        : null}
 
       {showAllCategories || showAllMedia || showAllTitles || showAllEditions || showAllMenuItems ?
 
@@ -959,7 +982,13 @@ function App(props) {
 
               <Route exact path="/fromTheHomeopape" component={UpdateFromTheHomeopape} />
 
-              <Route exact path="/reports" component={Reports} />
+              <Route exact path="/brokenLinks" component={BrokenLinks} />
+
+              <Route exact path="/computerLogs" component={ComputerLogs} />
+
+              <Route exact path="/logs" component={Logs} />
+
+              <Route exact path="/errors" component={Errors} />
 
               {/* </React.Fragment>
 
