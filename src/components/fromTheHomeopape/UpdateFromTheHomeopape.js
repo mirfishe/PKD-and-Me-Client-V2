@@ -90,6 +90,12 @@ const FromTheHomeopape = (props) => {
 
     };
 
+    // if (FormatLowerCase(txtArticleTitle).includes("black lotus") === true || FormatLowerCase(itemContentSnippet).includes("black lotus") === true) {
+
+    //   post = post + " #BladeRunner #BladeRunner2049 ";
+
+    // };
+
     if (FormatLowerCase(txtArticleTitle).includes("total recall") === true || FormatLowerCase(itemContentSnippet).includes("total recall") === true) {
       post = post + " #TotalRecall ";
 

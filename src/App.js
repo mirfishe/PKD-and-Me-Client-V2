@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { HouseFill } from "react-bootstrap-icons";
+// import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import AppSettings from "./app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./utilities/SharedFunctions";
@@ -41,7 +41,7 @@ import ComputerLogs from "./components/reports/ComputerLogs";
 import Logs from "./components/reports/Logs";
 import Errors from "./components/reports/Errors";
 
-function App(props) {
+function App() {
 
   const componentName = "App.js";
 
@@ -312,7 +312,8 @@ function App(props) {
 
       title: "Homepage",
       href: href,
-      applicationVersion: props.applicationVersion,
+      // applicationVersion: props.applicationVersion,
+      applicationVersion: process.env.REACT_APP_VERSION,
 
       lastAccessed: GetDateTime(),
 
@@ -747,7 +748,7 @@ function App(props) {
           </NavItem>
 
           <NavItem className="mx-3 my-2">
-            <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
+            <a href="https://philipdick.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
 
           {/* {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true && IsEmpty(firstName) === false && IsEmpty(lastName) === false ?
@@ -1044,13 +1045,15 @@ function App(props) {
 
           </Col>
         </Row>
-        {/* <Row>
+        <Row>
           <Col xs="12" className="smaller-text text-center">
 
-            &copy; {props.copyrightYear} All rights reserved. Version: {props.applicationVersion}
+            {/* &copy; {props.copyrightYear} All rights reserved. Version: {props.applicationVersion} */}
+
+            &copy; 2022 All rights reserved. Version: {process.env.REACT_APP_VERSION}
 
           </Col>
-        </Row> */}
+        </Row>
       </Container>
 
     </BrowserRouter>

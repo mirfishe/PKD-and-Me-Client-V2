@@ -29,7 +29,7 @@ const Editions = (props) => {
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
-  const applicationVersion = useSelector(state => state.app.applicationVersion);
+  // const applicationVersion = useSelector(state => state.app.applicationVersion);
   const computerLog = useSelector(state => state.app.computerLog);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
@@ -482,7 +482,8 @@ const Editions = (props) => {
 
       title: "Editions",
       href: href,
-      applicationVersion: applicationVersion,
+      // applicationVersion: props.applicationVersion,
+      applicationVersion: process.env.REACT_APP_VERSION,
 
       lastAccessed: GetDateTime(),
 

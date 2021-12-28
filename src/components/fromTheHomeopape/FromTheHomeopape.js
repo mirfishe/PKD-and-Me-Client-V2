@@ -187,12 +187,12 @@ const FromTheHomeopape = (props) => {
 
             {show === true ?
 
-              <Row>
+              <Row className="mt-3">
                 <Col xs="12">
 
                   {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
 
-                  <a href={itemLink} className="mt-2" target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
+                  <a href={itemLink} target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
 
                   ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
 

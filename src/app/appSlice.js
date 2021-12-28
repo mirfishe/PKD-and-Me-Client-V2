@@ -4,8 +4,8 @@ import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../util
 const componentName = "appSlice.js";
 
 const initialState = {
-  applicationVersion: "",
-  copyrightYear: "",
+  // applicationVersion: "",
+  // copyrightYear: "",
   computerLog: {},
   locationLogged: false,
   hostname: "",
@@ -46,18 +46,18 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setApplicationVersion(state, action) {
-      // console.log(componentName, GetDateTime(), "setApplicationVersion action.payload", action.payload);
+    // setApplicationVersion(state, action) {
+    //   // console.log(componentName, GetDateTime(), "setApplicationVersion action.payload", action.payload);
 
-      state.applicationVersion = action.payload;
+    //   state.applicationVersion = action.payload;
 
-    },
-    setCopyrightYear(state, action) {
-      // console.log(componentName, GetDateTime(), "setCopyrightYear action.payload", action.payload);
+    // },
+    // setCopyrightYear(state, action) {
+    //   // console.log(componentName, GetDateTime(), "setCopyrightYear action.payload", action.payload);
 
-      state.copyrightYear = action.payload;
+    //   state.copyrightYear = action.payload;
 
-    },
+    // },
     setLocationLogged(state, action) {
       // console.log(componentName, GetDateTime(), "setLocationLogged action.payload", action.payload);
 
@@ -498,6 +498,6 @@ const appSlice = createSlice({
   }
 });
 
-export const { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = appSlice.actions;
+export const { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = appSlice.actions;
 
 export default appSlice.reducer;

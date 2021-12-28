@@ -15,10 +15,10 @@ import { Provider } from 'react-redux';
 // * https://stackoverflow.com/questions/66384368/how-is-it-possible-to-access-homepage-from-package-json-in-a-react-app -- 12/17/2021 MF
 // import { version, copyrightYear } from '../package.json';
 // * https://stackoverflow.com/questions/64993118/error-should-not-import-the-named-export-version-imported-as-version -- 12/27/2021 MF
-// ! Now imports the entire package.json file. -- 12/27/2021 MF
+// ! Now imports the entire package.json file because of changes needed to be made due to updates with webpack 5. -- 12/27/2021 MF
 // import packageJSON from '../package.json';
 
-const componentName = "index.js";
+// const componentName = "index.js";
 
 // console.log(componentName, "packageJSON.version", packageJSON.version);
 // console.log(componentName, "packageJSON.copyrightYear", packageJSON.copyrightYear);
