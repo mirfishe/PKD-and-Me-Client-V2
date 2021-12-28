@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem, NavLink } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
@@ -19,7 +19,7 @@ const Titles = (props) => {
   const componentName = "Titles.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -227,7 +227,7 @@ const Titles = (props) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -396,17 +396,17 @@ const Titles = (props) => {
 
             {IsEmpty(admin) === false && admin === true ? <EditTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
 
-            <span className="text-muted ml-2 smallText">Sort By&nbsp;
+            <span className="text-muted ms-2 small-text">Sort By&nbsp;
 
               {titleSortBy !== "publicationDate" ?
 
-                <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
+                <a href="#" onClick={(event) => { event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
 
                 : null}
 
               {titleSortBy !== "titleName" ?
 
-                <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortTitles("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
+                <a href="#" onClick={(event) => { event.preventDefault(); sortTitles("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
 
                 : null}
 
@@ -474,7 +474,7 @@ const Titles = (props) => {
               {/* <CardBody>
 
                         <Link to={title.titleURL}>
-                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
 
@@ -492,7 +492,7 @@ const Titles = (props) => {
 
                 {IsEmpty(activeString) === false ?
 
-                  <CardHeader className="cardHeader inactiveItem">
+                  <CardHeader className="card-header inactive-item">
                     ({activeString})
                   </CardHeader>
 
@@ -503,7 +503,7 @@ const Titles = (props) => {
 
                     <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
 
-                      {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                      {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
 
                     </Link>
 
@@ -515,11 +515,11 @@ const Titles = (props) => {
 
                       <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
 
-                        {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
+                        {IsEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
 
-                      <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
+                      <CardText className="smaller-text">{title.authorFirstName} {title.authorLastName}</CardText>
 
-                      <CardText className="smallerText">{editionsAvailable}<span> </span>
+                      <CardText className="smaller-text">{editionsAvailable}<span> </span>
 
                         {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
 
@@ -539,7 +539,7 @@ const Titles = (props) => {
 
                 {IsEmpty(categoryParam) === false ?
 
-                  <CardFooter className="cardFooter">
+                  <CardFooter className="card-footer">
 
                     <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
 

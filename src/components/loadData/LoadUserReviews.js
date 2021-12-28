@@ -57,7 +57,7 @@ function LoadUserReviews() {
           // * Load offline data. -- 03/06/2021 MF
           // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           // dispatch(setUserReviewsDataOffline(true));
-          return { resultsFound: false, message: "Offline User Reviews data fetch used." };
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews data fetch used." };
 
         } else {
 
@@ -72,13 +72,13 @@ function LoadUserReviews() {
 
         // setUserReviewMessage(results.message);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "userReview");
 
           // } else {
 
-          //   console.log(componentName, GetDateTime(), "getUserReviews resultsFound error", results.message);
+          //   console.log(componentName, GetDateTime(), "getUserReviews error", results.message);
           //   // setErrUserReviewMessage(results.message);
           //   dispatch(setUserReviewsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF

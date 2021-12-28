@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
@@ -16,7 +16,7 @@ const FromTheHomeopape = (props) => {
   const componentName = "FromTheHomeopape.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -208,7 +208,7 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
@@ -255,7 +255,7 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           setHomeopapeItemsReview(results.records);
           // setHomeopapeItemsReview(results.records[0]);
@@ -417,9 +417,10 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
-            getNewsReview();
+            // getNewsReview();
+            setHomeopapeItemsReview([]);
 
           } else {
 
@@ -509,7 +510,7 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
             getNews();
 
@@ -603,7 +604,7 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
             getNews();
 
@@ -697,7 +698,7 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
             getNews();
 
@@ -732,7 +733,7 @@ const FromTheHomeopape = (props) => {
 
     if (admin !== true) {
 
-      history.push("/");
+      navigate("/");
 
     };
 
@@ -748,7 +749,7 @@ const FromTheHomeopape = (props) => {
       <Row>
         <Col xs="6">
 
-          <h3>All Items <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+          <h3>All Items <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
 
           {homeopapeItemsReview.map((homeopapeItem, index) => {
 
@@ -947,13 +948,13 @@ const FromTheHomeopape = (props) => {
 
                     {/* <Col xs="1"> */}
 
-                    {/* <FormGroup className="ml-4">
+                    {/* <FormGroup className="ms-4">
 
             <Label for="cbxDisplay"><Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />Display</Label>
 
           </FormGroup>
 
-          <FormGroup className="ml-4">
+          <FormGroup className="ms-4">
 
             <Label for="cbxPosted"><Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />Posted</Label>
 
@@ -981,8 +982,8 @@ const FromTheHomeopape = (props) => {
                       </React.Fragment>
 
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
-                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
+                      <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
 
                       {/* {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null} */}
                       {/* {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null} */}
@@ -1086,13 +1087,13 @@ const FromTheHomeopape = (props) => {
                   <Row className="mb-5">
 
                     {/* <Col xs="1"> */}
-                    {/* <FormGroup className="ml-4">
+                    {/* <FormGroup className="ms-4">
 
               <Label for="cbxDisplay"><Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />Display</Label>
 
             </FormGroup>
 
-            <FormGroup className="ml-4">
+            <FormGroup className="ms-4">
 
               <Label for="cbxPosted"><Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />Posted</Label>
 
@@ -1123,8 +1124,8 @@ const FromTheHomeopape = (props) => {
                       </React.Fragment>
 
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
-                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
+                      <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
 
                       {/* {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null} */}
                       {/* {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null} */}

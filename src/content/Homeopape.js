@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime } from "../utilities/SharedFunctions";
 import { setLocalPath, setLocalImagePath } from "../utilities/AppFunctions";
@@ -11,7 +11,7 @@ const Homeopape = () => {
   const componentName = "Homeopape.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
@@ -23,7 +23,7 @@ const Homeopape = () => {
 
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -46,7 +46,7 @@ const Homeopape = () => {
           <p>*Homeopape<br />
             A newspaper that filters the news so it only shows what you are interested in- these are beginning to exist now in the form of web robots. Along with many SF predictions, there are anachronisms in the way the thing operates. The homeopape asks you what you want to read about. (the forefront of our technology), and then prints it on paper. It's obvious that this was written before PCs were common.</p>
 
-          <p>View the <a href={setLocalPath("http://www.philipdick.com/resources/miscellaneous/pkdicktionary/#homeopape")} target="_blank" rel="noopener noreferrer">definition on the Philip K. Dick Fan Site</a>.</p>
+          <p>View the <a href={setLocalPath("http://www.philipdick.com/resources/miscellaneous/pkdicktionary/#homeopape")} target="_blank" rel="noopener noreferrer">definition on the Philip K. Dick Site</a>.</p>
 
           <Container>
 

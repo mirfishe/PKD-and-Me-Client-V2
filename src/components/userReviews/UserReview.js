@@ -164,7 +164,7 @@ const UserReview = (props) => {
 
                   {IsEmpty(activeString) === false ?
 
-                    <Row className="cardHeader inactiveItem">
+                    <Row className="card-header inactive-item">
                       <Col xs="12">
 
                         ({activeString})
@@ -191,7 +191,7 @@ const UserReview = (props) => {
                   <Row>
                     <Col xs="12">
 
-                      {IsEmpty(userReview.longReview) === false ? <p className="displayParagraphs">{userReview.longReview}</p> : null}
+                      {IsEmpty(userReview.longReview) === false ? <p className="display-paragraphs">{userReview.longReview}</p> : null}
 
                     </Col>
                   </Row>

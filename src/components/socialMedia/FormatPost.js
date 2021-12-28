@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
 import { encodeURL, ToTitleCase, LogError } from "../../utilities/AppFunctions";
@@ -9,7 +9,7 @@ const FormatPost = () => {
 
   const componentName = "FormatPost.js";
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -139,7 +139,7 @@ const FormatPost = () => {
 
     if (admin !== true) {
 
-      history.push("/");
+      navigate("/");
 
     };
 
@@ -172,38 +172,38 @@ const FormatPost = () => {
             <FormGroup row>
               <Col>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxPhilipKDickFestival"><Input type="checkbox" id="cbxPhilipKDickFestival" checked={cbxPhilipKDickFestival} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxPhilipKDickFestival(!cbxPhilipKDickFestival); }} />Philip K. Dick Festival</Label>
                 </FormGroup>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxDickian"><Input type="checkbox" id="cbxDickian" checked={cbxDickian} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxDickian(!cbxDickian); }} />Dickian</Label>
                 </FormGroup>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxBladeRunner"><Input type="checkbox" id="cbxBladeRunner" checked={cbxBladeRunner} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner(!cbxBladeRunner); }} />Blade Runner</Label>
                 </FormGroup>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxBladeRunner2049"><Input type="checkbox" id="cbxBladeRunner2049" checked={cbxBladeRunner2049} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner2049(!cbxBladeRunner2049); }} />Blade Runner 2049</Label>
                 </FormGroup>
 
               </Col>
               <Col>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxTotalRecall"><Input type="checkbox" id="cbxTotalRecall" checked={cbxTotalRecall} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxTotalRecall(!cbxTotalRecall); }} />Total Recall</Label>
                 </FormGroup>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxElectricDreams"><Input type="checkbox" id="cbxElectricDreams" checked={cbxElectricDreams} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxElectricDreams(!cbxElectricDreams); }} />Electric Dreams</Label>
                 </FormGroup>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxTMITHC"><Input type="checkbox" id="cbxTMITHC" checked={cbxTMITHC} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxTMITHC(!cbxTMITHC); }} />TMITHC</Label>
                 </FormGroup>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxMinorityReport"><Input type="checkbox" id="cbxMinorityReport" checked={cbxMinorityReport} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxMinorityReport(!cbxMinorityReport); }} />Minority Report</Label>
                 </FormGroup>
 

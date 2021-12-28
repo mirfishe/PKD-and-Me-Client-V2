@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Label, Input, Alert, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
@@ -252,10 +252,10 @@ const Register = (props) => {
 
             // if (data !== 500 && data !== 401) {
 
-            // setUserRecordAdded(data.recordAdded);
+            // setUserRecordAdded(data.transactionSuccess);
             addMessage(data.message);
 
-            if (data.recordAdded === true) {
+            if (data.transactionSuccess === true) {
 
               // setUser(data);
               // setUserID(data.userID);
@@ -273,7 +273,7 @@ const Register = (props) => {
 
               getChecklist(data.sessionToken);
 
-              setUserRecordAdded(data.recordAdded);
+              setUserRecordAdded(data.transactionSuccess);
 
             } else {
 
@@ -350,16 +350,16 @@ const Register = (props) => {
         .then(results => {
           // console.log(componentName, GetDateTime(), "getChecklist results", results);
 
-          setChecklistResultsFound(results.resultsFound);
+          setChecklistResultsFound(results.transactionSuccess);
           // setChecklistMessage(results.message);
 
-          if (IsEmpty(results) === false && results.resultsFound === true) {
+          if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
             dispatch(loadArrayChecklist(results.records));
 
           } else {
 
-            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", results.message);
+            console.log(componentName, GetDateTime(), "getChecklist error", results.message);
             addErrorMessage(results.message);
 
           };
@@ -392,7 +392,6 @@ const Register = (props) => {
       setErrEmail("");
       setErrPassword("");
       setUserRecordAdded(null);
-      // setModal(false);
       setModal(!modal);
 
     };
@@ -435,7 +434,7 @@ const Register = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Register</Button> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Register</Button></span> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Register</ModalHeader>
@@ -469,10 +468,8 @@ const Register = (props) => {
               <Label for="txtPassword">Password</Label>
               <InputGroup>
                 <Input type={showPassword} /*type="password"*/ id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
-                  {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
-                </InputGroupAddon>
+                <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
+                {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
               </InputGroup>
               {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
             </FormGroup>

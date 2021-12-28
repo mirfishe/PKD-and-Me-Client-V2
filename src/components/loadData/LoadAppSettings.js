@@ -102,7 +102,7 @@ function LoadAppSettings() {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
-          // return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Categories data used.", categories: CategoryData};
 
         } else {
 
@@ -114,7 +114,7 @@ function LoadAppSettings() {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getAppSettings results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           // ! Don't change the profileType even if the AppSettings are loaded from the .json file. -- 03/06/2021 MF
           // console.log(componentName, GetDateTime(), "getAppSettings results.profileType", results.profileType);
@@ -293,7 +293,7 @@ function LoadAppSettings() {
 
         } else {
 
-          console.log(componentName, GetDateTime(), "getAppSettings resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "getAppSettings error", results.message);
 
         };
 

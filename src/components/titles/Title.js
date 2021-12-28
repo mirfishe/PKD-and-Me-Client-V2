@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import { Rating } from "@material-ui/lab/";
@@ -23,7 +23,7 @@ const Title = (props) => {
   const componentName = "Title.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -266,7 +266,7 @@ const Title = (props) => {
   //             // console.log(componentName, GetDateTime(), "getTitleRating response", response);
   //             if (!response.ok) {
   //                 // throw Error(response.status + " " + response.statusText + " " + response.url);
-  //                 return {resultsFound: false, message: "Offline User Reviews Rating data fetch used."};
+  //                 return {transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews Rating data fetch used."};
   //             } else {
   //                 return response.json();
   //             };
@@ -274,10 +274,10 @@ const Title = (props) => {
   //         .then(results => {
   //             // console.log(componentName, GetDateTime(), "getTitleRating results", results);
 
-  //             setOverallTitleRatingResultsFound(results.resultsFound);
+  //             setOverallTitleRatingResultsFound(results.transactionSuccess);
   //             setOverallTitleRatingMessage(results.message);
 
-  //             if (IsEmpty(results) === false && results.resultsFound === true) {
+  //             if (IsEmpty(results) === false && results.transactionSuccess === true) {
   //                 // console.log(componentName, GetDateTime(), "getTitleRating results.userReviews[0].userReviewCount", results.userReviews[0].userReviewCount);
   //                 // console.log(componentName, GetDateTime(), "getTitleRating results.userReviews[0].userReviewSum", results.userReviews[0].userReviewSum);
 
@@ -301,7 +301,7 @@ const Title = (props) => {
   //                 };
 
   //             } else {
-  //                 console.log(componentName, GetDateTime(), "getEditions resultsFound error", results.message);
+  //                 console.log(componentName, GetDateTime(), "getEditions error", results.message);
 
   //                 setErrOverallTitleRatingMessage(results.message);
 
@@ -328,7 +328,7 @@ const Title = (props) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -546,12 +546,12 @@ const Title = (props) => {
               <Col xs="12">
                 <h4>{title.titleName}
 
-                  {IsEmpty(title.publicationDate) === false ? <span className="ml-2 smallerText"> ({title.publicationDate.includes("-01-01") === true ? <React.Fragment>{DisplayYear(title.publicationDate)}</React.Fragment> : <React.Fragment>{DisplayDate(title.publicationDate)}</React.Fragment>})</span> : null}
+                  {IsEmpty(title.publicationDate) === false ? <span className="ms-2 smaller-text"> ({title.publicationDate.includes("-01-01") === true ? <React.Fragment>{DisplayYear(title.publicationDate)}</React.Fragment> : <React.Fragment>{DisplayDate(title.publicationDate)}</React.Fragment>})</span> : null}
 
-                  {/* {IsEmpty(title.category) === false ? <span className="ml-4 smallerText"><Link to={encodeURL(title.category)}>{title.category}</Link>
+                  {/* {IsEmpty(title.category) === false ? <span className="ms-4 smaller-text"><Link to={encodeURL(title.category)}>{title.category}</Link>
                             </span> : null} */}
 
-                  {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
+                  {IsEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
 
                   {/* {IsEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null} */}
 
@@ -574,7 +574,7 @@ const Title = (props) => {
             <Row className="mb-4">
               <Col xs="4">
 
-                {IsEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} className="coverDisplay" /> : <Image className="noImageIcon" />}
+                {IsEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} className="cover-display" /> : <Image className="no-image-icon" />}
 
               </Col>
               <Col xs="8">
@@ -605,7 +605,7 @@ const Title = (props) => {
 
                 {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
-                {IsEmpty(title.shortDescription) === false ? <p className="displayParagraphs">{title.shortDescription}</p> : null}
+                {IsEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
 
                 {IsEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
 
@@ -683,7 +683,7 @@ const Title = (props) => {
                     :
 
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="editionImage" /> : <Image className="noImageIcon"/>}
+                        {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
                         </a>
 
                     }
@@ -700,7 +700,7 @@ const Title = (props) => {
 
                     {IsEmpty(activeString) === false ?
                     
-                        <CardHeader className="cardHeader inactiveItem">
+                        <CardHeader className="card-header inactive-item">
                             ({activeString})
                         </CardHeader>
 
@@ -716,7 +716,7 @@ const Title = (props) => {
                         :
 
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="editionImage" /> : <Image className="noImageIcon"/>}
+                            {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
                             </a>
 
                         }
@@ -725,13 +725,13 @@ const Title = (props) => {
                         <Col className="col-md-6">
                             <CardBody>
 
-                                {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
+                                {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
                                 {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
 
                             </CardBody>
                         </Col>
                     </Row>
-                    <CardFooter className="cardFooter">
+                    <CardFooter className="card-footer">
 
                         <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => {event.preventDefault(); redirectPage(encodeURL(edition.medium.media));}}>{edition.medium.media}</Link></CardText>
 

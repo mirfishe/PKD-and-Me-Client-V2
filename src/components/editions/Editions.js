@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
 import Parse from "html-react-parser";
@@ -19,7 +19,7 @@ const Editions = (props) => {
   const componentName = "Editions.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -429,7 +429,7 @@ const Editions = (props) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -593,23 +593,23 @@ const Editions = (props) => {
         <Col xs="12">
 
           <h4 className="text-center mb-4">{IsEmpty(mediaParam) === false && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
-            <span className="text-muted ml-2 smallText">Sort By
+            <span className="text-muted ms-2 small-text">Sort By
 
               {editionSortBy !== "releaseDate" ?
 
-                <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSortBy("releaseDate")); }}>Release Date</a>
+                <a href="#" className="ms-2" onClick={(event) => { event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSortBy("releaseDate")); }}>Release Date</a>
 
                 : null}
 
               {editionSortBy !== "publicationDate" ?
 
-                <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("publicationDate"); dispatch(setEditionSortBy("publicationDate")); dispatch(setTitleSortBy("publicationDate")); }}>Publication Date</a>
+                <a href="#" className="ms-2" onClick={(event) => { event.preventDefault(); sortEditions("publicationDate"); dispatch(setEditionSortBy("publicationDate")); dispatch(setTitleSortBy("publicationDate")); }}>Publication Date</a>
 
                 : null}
 
               {editionSortBy !== "titleName" ?
 
-                <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSortBy("titleName")); dispatch(setTitleSortBy("titleName")); }}>Title</a>
+                <a href="#" className="ms-2" onClick={(event) => { event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSortBy("titleName")); dispatch(setTitleSortBy("titleName")); }}>Title</a>
 
                 : null}
 
@@ -670,7 +670,7 @@ const Editions = (props) => {
 
                     : null}
 
-                    <CardBody className="editionImage">
+                    <CardBody className="edition-image">
 
                     {IsEmpty(edition.imageLinkLarge) === false ? 
                     
@@ -679,7 +679,7 @@ const Editions = (props) => {
                     :
 
                     <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                    {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
                     </a>
 
                     }
@@ -699,7 +699,7 @@ const Editions = (props) => {
 
                 {IsEmpty(activeString) === false ?
 
-                  <CardHeader className="cardHeader inactiveItem">
+                  <CardHeader className="card-header inactive-item">
                     ({activeString})
                   </CardHeader>
 
@@ -720,7 +720,7 @@ const Editions = (props) => {
                       :
 
                       <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {IsEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="editionImage" /> : <Image className="noImageIcon" />}
+                        {IsEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                       </a>
 
                     }
@@ -730,15 +730,15 @@ const Editions = (props) => {
                     <CardBody>
 
                       <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
-                        {IsEmpty(edition.editionPublicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(edition.editionPublicationDate)})</span> : null}
+                        {IsEmpty(edition.editionPublicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(edition.editionPublicationDate)})</span> : null}
                       </CardText>
 
-                      {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
+                      {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
 
                       {IsEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                          <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchaseImage my-2" /><br />
+                          <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                         </a>
 
                         :
@@ -761,7 +761,7 @@ const Editions = (props) => {
 
                 {IsEmpty(mediaParam) === false ?
 
-                  <CardFooter className="cardFooter">
+                  <CardFooter className="card-footer">
 
                     <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
 

@@ -273,10 +273,10 @@ const EditUser = (props) => {
 
             // if (results !== 500 && results !== 401) {
 
-            setUserRecordUpdated(results.recordUpdated);
+            setUserRecordUpdated(results.transactionSuccess);
             addMessage(results.message);
 
-            if (IsEmpty(results) === false && results.resultsFound === true) {
+            if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
               // setUser(results);
               // setUserID(results.userID);
@@ -335,7 +335,12 @@ const EditUser = (props) => {
       setErrEmail("");
       setErrPassword("");
       setUserRecordUpdated(null);
-      // setModal(false);
+
+      setTxtFirstName("");
+      setTxtLastName("");
+      setTxtEmail("");
+      setTxtPassword("");
+
       setModal(!modal);
 
     };
@@ -351,6 +356,12 @@ const EditUser = (props) => {
       clearMessages();
       setErrEmail("");
       setErrPassword("");
+
+      setTxtFirstName("");
+      setTxtLastName("");
+      setTxtEmail("");
+      setTxtPassword("");
+
       setModal(false);
 
     };

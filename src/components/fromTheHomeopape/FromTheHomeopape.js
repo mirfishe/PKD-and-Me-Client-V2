@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import AppSettings from "../../app/environment";
@@ -12,7 +12,7 @@ const FromTheHomeopape = (props) => {
   const componentName = "FromTheHomeopape.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -76,7 +76,7 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           // console.log(componentName, GetDateTime(), "getNews results.records[0]", results.records[0]);
 
@@ -192,7 +192,7 @@ const FromTheHomeopape = (props) => {
 
                   {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
 
-                  <a href={itemLink} target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
+                  <a href={itemLink} className="mt-2" target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
 
                   ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
 

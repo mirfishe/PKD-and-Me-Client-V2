@@ -71,18 +71,18 @@ const EditUserReview = (props) => {
 
   // const [userReviewItemIndex, setUserReviewItemIndex] = useState(null);
   const [userReviewItem, setUserReviewItem] = useState(null);
-  const [reviewID, setReviewID] = useState(null);
+  // const [reviewID, setReviewID] = useState(null);
   const [userID, setUserID] = useState(null);
-  const [updatedBy, setUpdatedBy] = useState(null);
+  // const [updatedBy, setUpdatedBy] = useState(null);
   const [titleID, setTitleID] = useState(null);
-  const [read, setRead] = useState(null);
-  const [dateRead, setDateRead] = useState(null);
+  // const [read, setRead] = useState(null);
+  // const [dateRead, setDateRead] = useState(null);
   const [rating, setRating] = useState(null);
-  const [ranking, setRanking] = useState(null);
-  const [shortReview, setShortReview] = useState(null);
-  const [longReview, setLongReview] = useState(null);
-  const [owned, setOwned] = useState(null);
-  const [datePurchased, setDatePurchased] = useState(null);
+  // const [ranking, setRanking] = useState(null);
+  // const [shortReview, setShortReview] = useState(null);
+  // const [longReview, setLongReview] = useState(null);
+  // const [owned, setOwned] = useState(null);
+  // const [datePurchased, setDatePurchased] = useState(null);
   const [active, setActive] = useState(null);
 
   // const [titleItemIndex, setTitleItemIndex] = useState(null);
@@ -105,18 +105,18 @@ const EditUserReview = (props) => {
 
         setUserReviewItem(userReviewObject);
 
-        setReviewID(userReviewObject.reviewID);
+        // setReviewID(userReviewObject.reviewID);
         setUserID(userReviewObject.userID);
-        setUpdatedBy(userReviewObject.updatedBy);
+        // setUpdatedBy(userReviewObject.updatedBy);
         setTitleID(userReviewObject.titleID);
-        setRead(userReviewObject.read);
-        setDateRead(userReviewObject.dateRead);
+        // setRead(userReviewObject.read);
+        // setDateRead(userReviewObject.dateRead);
         setRating(userReviewObject.rating);
-        setRanking(userReviewObject.ranking);
-        setShortReview(userReviewObject.shortReview);
-        setLongReview(userReviewObject.longReview);
-        setOwned(userReviewObject.owned);
-        setDatePurchased(userReviewObject.datePurchased);
+        // setRanking(userReviewObject.ranking);
+        // setShortReview(userReviewObject.shortReview);
+        // setLongReview(userReviewObject.longReview);
+        // setOwned(userReviewObject.owned);
+        // setDatePurchased(userReviewObject.datePurchased);
         setActive(userReviewObject.active);
 
         setCbxRead(userReviewObject.read);
@@ -210,18 +210,18 @@ const EditUserReview = (props) => {
     setUserReviewRecordAdded(null);
 
     setUserReviewItem(null);
-    setReviewID(null);
+    // setReviewID(null);
     setUserID(null);
-    setUpdatedBy(null);
+    // setUpdatedBy(null);
     setTitleID(null);
-    setRead(null);
-    setDateRead(null);
+    // setRead(null);
+    // setDateRead(null);
     setRating(null);
-    setRanking(null);
-    setShortReview(null);
-    setLongReview(null);
-    setOwned(null);
-    setDatePurchased(null);
+    // setRanking(null);
+    // setShortReview(null);
+    // setLongReview(null);
+    // setOwned(null);
+    // setDatePurchased(null);
     setActive(null);
 
     // ? Check to make sure that txtDateRead) is a date?
@@ -340,24 +340,24 @@ const EditUserReview = (props) => {
         .then(data => {
           // console.log(componentName, GetDateTime(), "addUserReview data", data);
 
-          setUserReviewRecordAdded(data.recordAdded);
+          setUserReviewRecordAdded(data.transactionSuccess);
           addMessage(data.message);
 
-          if (data.recordAdded === true) {
+          if (data.transactionSuccess === true) {
 
             setUserReviewItem(data.records[0]);
-            setReviewID(data.records[0].reviewID);
+            // setReviewID(data.records[0].reviewID);
             setUserID(data.records[0].userID);
-            setUpdatedBy(data.records[0].updatedBy);
+            // setUpdatedBy(data.records[0].updatedBy);
             setTitleID(data.records[0].titleID);
-            setRead(data.records[0].read);
-            setDateRead(data.records[0].dateRead);
+            // setRead(data.records[0].read);
+            // setDateRead(data.records[0].dateRead);
             setRating(data.records[0].rating);
-            setRanking(data.records[0].ranking);
-            setShortReview(data.records[0].shortReview);
-            setLongReview(data.records[0].longReview);
-            setOwned(data.records[0].owned);
-            setDatePurchased(data.records[0].datePurchased);
+            // setRanking(data.records[0].ranking);
+            // setShortReview(data.records[0].shortReview);
+            // setLongReview(data.records[0].longReview);
+            // setOwned(data.records[0].owned);
+            // setDatePurchased(data.records[0].datePurchased);
             setActive(data.records[0].active);
 
             let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
@@ -473,18 +473,18 @@ const EditUserReview = (props) => {
     setUserReviewRecordUpdated(null);
 
     setUserReviewItem(null);
-    setReviewID(null);
+    // setReviewID(null);
     // setUserID(null);
-    setUpdatedBy(null);
+    // setUpdatedBy(null);
     // setTitleID(null);
-    setRead(null);
-    setDateRead(null);
+    // setRead(null);
+    // setDateRead(null);
     setRating(null);
-    setRanking(null);
-    setShortReview(null);
-    setLongReview(null);
-    setOwned(null);
-    setDatePurchased(null);
+    // setRanking(null);
+    // setShortReview(null);
+    // setLongReview(null);
+    // setOwned(null);
+    // setDatePurchased(null);
     setActive(null);
 
     // ? Check to make sure that txtDateRead) is a date? -- 03/06/2021 MF
@@ -614,22 +614,22 @@ const EditUserReview = (props) => {
         .then(data => {
           // console.log(componentName, GetDateTime(), "updateUserReview data", data);
 
-          setUserReviewRecordUpdated(data.recordUpdated);
+          setUserReviewRecordUpdated(data.transactionSuccess);
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
             setUserReviewItem(data.records[0]);
             // setReviewID(data.records[0].reviewID);
             setUserID(data.records[0].userID);
-            setUpdatedBy(data.records[0].updatedBy);
+            // setUpdatedBy(data.records[0].updatedBy);
             // setTitleID(data.records[0].titleID);
-            setRead(data.records[0].read);
-            setDateRead(data.records[0].dateRead);
+            // setRead(data.records[0].read);
+            // setDateRead(data.records[0].dateRead);
             setRating(data.records[0].rating);
-            setRanking(data.records[0].ranking);
-            setShortReview(data.records[0].shortReview);
-            setLongReview(data.records[0].longReview);
+            // setRanking(data.records[0].ranking);
+            // setShortReview(data.records[0].shortReview);
+            // setLongReview(data.records[0].longReview);
             setActive(data.records[0].active);
 
             let titleItem = titleListState.filter(title => title.titleID === /*data.records[0].*/titleID);
@@ -811,11 +811,11 @@ const EditUserReview = (props) => {
           .then(data => {
             // console.log(componentName, GetDateTime(), "deleteUserReview data", data);
 
-            setUserReviewRecordDeleted(data.recordDeleted);
+            setUserReviewRecordDeleted(data.transactionSuccess);
 
             addMessage(data.message); // * Never seen by the user if the delete was successful. -- 03/06/2021 MF
 
-            if (data.recordDeleted === true) {
+            if (data.transactionSuccess === true) {
 
               // dispatch(deleteStateUserReview(userReviewItemIndex));
               dispatch(deleteStateUserReview(data.reviewID));
@@ -914,7 +914,16 @@ const EditUserReview = (props) => {
 
       clearMessages();
       setUserReviewRecordAdded(null);
-      // setModal(false);
+
+      setCbxRead("");
+      setTxtDateRead("");
+      setRdoRating("");
+      setTxtRanking("");
+      setTxtShortReview("");
+      setTxtLongReview("");
+      setCbxOwned("");
+      setTxtDatePurchased("");
+
       setModal(!modal);
 
     };
@@ -930,7 +939,16 @@ const EditUserReview = (props) => {
 
       clearMessages();
       setUserReviewRecordUpdated(null);
-      // setModal(false);
+
+      setCbxRead("");
+      setTxtDateRead("");
+      setRdoRating("");
+      setTxtRanking("");
+      setTxtShortReview("");
+      setTxtLongReview("");
+      setCbxOwned("");
+      setTxtDatePurchased("");
+
       setModal(!modal);
 
     };
@@ -939,7 +957,16 @@ const EditUserReview = (props) => {
 
       clearMessages();
       setUserReviewRecordDeleted(null);
-      // setModal(false);
+
+      setCbxRead("");
+      setTxtDateRead("");
+      setRdoRating("");
+      setTxtRanking("");
+      setTxtShortReview("");
+      setTxtLongReview("");
+      setCbxOwned("");
+      setTxtDatePurchased("");
+
       setModal(!modal);
 
     };
@@ -965,13 +992,13 @@ const EditUserReview = (props) => {
 
       {/* {console.log(componentName, GetDateTime(), "return userReviewItem", userReviewItem)} */}
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Review</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Review</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>{IsEmpty(userReviewItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Review</ModalHeader>
@@ -987,12 +1014,12 @@ const EditUserReview = (props) => {
 
               <Col>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxRead"><Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxRead(!cbxRead); }} />Read</Label>
                 </FormGroup>
 
                 <FormGroup>
-                  <Label for="rdoRating" className="mr-4">Rating</Label>
+                  <Label for="rdoRating" className="me-4">Rating</Label>
                   <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setRdoRating(newValue); }} />
                   {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
                     
@@ -1037,7 +1064,7 @@ const EditUserReview = (props) => {
 
               <Col>
 
-                <FormGroup className="ml-4">
+                <FormGroup className="ms-4">
                   <Label for="cbxOwned"><Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setCbxOwned(!cbxOwned); }} />Owned</Label>
                 </FormGroup>
 

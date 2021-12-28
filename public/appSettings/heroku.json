@@ -1,10 +1,11 @@
 {
-"resultsFound": true, 
-"message": "Offline AppSettings data used.",
-"siteName": "PKD and Me",
-"appName": "Philip K. Dick Bibliography",
-"electronicOnly": false,
-"physicalOnly": false,
-"appAllowUserInteractions": true,
-"requireUserLogin": true
+  "transactionSuccess": true,
+  "errorOccurred": false,
+  "message": "Offline AppSettings data used.",
+  "siteName": "PKD and Me",
+  "appName": "Philip K. Dick Bibliography",
+  "electronicOnly": false,
+  "physicalOnly": false,
+  "appAllowUserInteractions": true,
+  "requireUserLogin": true
 }

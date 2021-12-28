@@ -1,5 +1,6 @@
 {
-    "resultsFound": true,
+    "transactionSuccess": true,
+    "errorOccurred": false,
     "message": "Offline AppSettings data used.",
     "siteName": "Philip K. Dick",
     "appName": "PKD and Me",

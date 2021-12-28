@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import AppSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
@@ -10,7 +10,7 @@ const Errors = () => {
 
   const componentName = "Errors.js";
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -66,7 +66,7 @@ const Errors = () => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           setErrors(results.records);
 
@@ -97,7 +97,7 @@ const Errors = () => {
 
     if (admin !== true) {
 
-      history.push("/");
+      navigate("/");
 
     };
 
@@ -113,7 +113,7 @@ const Errors = () => {
       <Row>
         <Col xs="12">
 
-          <h3>Errors</h3>
+          <h5 className="text-center">Errors</h5>
 
           {IsEmpty(errors) === false ?
 

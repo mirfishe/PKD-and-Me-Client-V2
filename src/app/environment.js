@@ -75,9 +75,9 @@ switch (window.location.hostname) {
 
 switch (profileType) {
   case "localhost":
-    // API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
+    API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
     // API_URL = "https://pkd-and-me-server.herokuapp.com";
-    API_URL = "https://api.philipdick.com";
+    // API_URL = "https://api.philipdick.com";
     siteName = "localhost";
     appName = "PKD and Me";
     metaDescription = "";

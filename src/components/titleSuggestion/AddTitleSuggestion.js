@@ -60,16 +60,16 @@ const AddTitleSuggestion = (props) => {
   const [errShortDescription, setErrShortDescription] = useState("");
   const [errEmail, setErrEmail] = useState("");
 
-  const [titleSuggestionItem, setTitleSuggestionItem] = useState(null);
-  const [titleSuggestionID, setTitleSuggestionID] = useState(null);
-  const [titleSuggestionUserID, setTitleSuggestionUserID] = useState(null);
-  const [titleName, setTitleName] = useState(null);
-  const [authorFirstName, setAuthorFirstName] = useState(null);
-  const [authorLastName, setAuthorLastName] = useState(null);
-  const [publicationDate, setPublicationDate] = useState(null);
-  const [shortDescription, setShortDescription] = useState(null);
-  const [titleURL, setTitleURL] = useState(null);
-  const [titleSuggestionEmail, setTitleSuggestionEmail] = useState(null);
+  // const [titleSuggestionItem, setTitleSuggestionItem] = useState(null);
+  // const [titleSuggestionID, setTitleSuggestionID] = useState(null);
+  // const [titleSuggestionUserID, setTitleSuggestionUserID] = useState(null);
+  // const [titleName, setTitleName] = useState(null);
+  // const [authorFirstName, setAuthorFirstName] = useState(null);
+  // const [authorLastName, setAuthorLastName] = useState(null);
+  // const [publicationDate, setPublicationDate] = useState(null);
+  // const [shortDescription, setShortDescription] = useState(null);
+  // const [titleURL, setTitleURL] = useState(null);
+  // const [titleSuggestionEmail, setTitleSuggestionEmail] = useState(null);
 
 
   useEffect(() => {
@@ -94,16 +94,16 @@ const AddTitleSuggestion = (props) => {
     setErrShortDescription("");
     setErrEmail("");
 
-    setTitleSuggestionItem(null);
-    setTitleSuggestionID(null);
-    setTitleSuggestionUserID(null);
-    setTitleName(null);
-    setAuthorFirstName(null);
-    setAuthorLastName(null);
-    setPublicationDate(null);
-    setShortDescription(null);
-    setTitleURL(null);
-    setTitleSuggestionEmail(null);
+    // setTitleSuggestionItem(null);
+    // setTitleSuggestionID(null);
+    // setTitleSuggestionUserID(null);
+    // setTitleName(null);
+    // setAuthorFirstName(null);
+    // setAuthorLastName(null);
+    // setPublicationDate(null);
+    // setShortDescription(null);
+    // setTitleURL(null);
+    // setTitleSuggestionEmail(null);
 
     let titleNameValidated = false;
     let shortDescriptionValidated = false;
@@ -292,21 +292,21 @@ const AddTitleSuggestion = (props) => {
             .then(data => {
               // console.log(componentName, GetDateTime(), "addTitleSuggestion data", data);
 
-              setTitleSuggestionRecordAdded(data.recordAdded);
+              setTitleSuggestionRecordAdded(data.transactionSuccess);
               addMessage(data.message);
 
-              if (data.recordAdded === true) {
+              if (data.transactionSuccess === true) {
 
-                setTitleSuggestionItem(data.records[0]);
-                setTitleSuggestionID(data.records[0].titleSuggestionID);
-                setTitleSuggestionUserID(data.records[0].userID);
-                setTitleName(data.records[0].titleName);
-                setAuthorFirstName(data.records[0].authorFirstName);
-                setAuthorLastName(data.records[0].authorLastName);
-                setPublicationDate(data.records[0].publicationDate);
-                setShortDescription(data.records[0].shortDescription);
-                setTitleURL(data.records[0].titleURL);
-                setTitleSuggestionEmail(data.records[0].email);
+                // setTitleSuggestionItem(data.records[0]);
+                // setTitleSuggestionID(data.records[0].titleSuggestionID);
+                // setTitleSuggestionUserID(data.records[0].userID);
+                // setTitleName(data.records[0].titleName);
+                // setAuthorFirstName(data.records[0].authorFirstName);
+                // setAuthorLastName(data.records[0].authorLastName);
+                // setPublicationDate(data.records[0].publicationDate);
+                // setShortDescription(data.records[0].shortDescription);
+                // setTitleURL(data.records[0].titleURL);
+                // setTitleSuggestionEmail(data.records[0].email);
 
                 // ? Would still work if the createDate and updateDate were left out?. -- 03/06/2021 MF
                 // dispatch(addStateTitle([{titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
@@ -350,7 +350,15 @@ const AddTitleSuggestion = (props) => {
       setErrShortDescription("");
       setErrEmail("");
       setTitleSuggestionRecordAdded(null);
-      // setModal(false);
+
+      setTxtTitleName("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtPublicationDate("");
+      setTxtShortDescription("");
+      setTxtTitleURL("");
+      setTxtEmail("");
+
       setModal(!modal);
 
     };
@@ -374,9 +382,9 @@ const AddTitleSuggestion = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title Suggestion</Button></span> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title Suggestion</Button></span> : null}
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Title Suggestion</ModalHeader>

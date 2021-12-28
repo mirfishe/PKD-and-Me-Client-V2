@@ -1,1 +1,5 @@
-{"resultsFound":false,"message":"No user ratings found."}
+{
+  "transactionSuccess": false,
+  "errorOccurred": false,
+  "message": "No user ratings found."
+}

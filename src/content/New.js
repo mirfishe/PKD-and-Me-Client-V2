@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime } from "../utilities/SharedFunctions";
 import { setLocalPath, setLocalImagePath } from "../utilities/AppFunctions";
@@ -12,7 +12,7 @@ const New = () => {
   const componentName = "New.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const siteName = useSelector(state => state.app.siteName);
   const appName = useSelector(state => state.app.appName);
@@ -24,7 +24,7 @@ const New = () => {
 
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 

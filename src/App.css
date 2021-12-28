@@ -31,16 +31,20 @@ body {
   background-color: var(--philipdick-site-background);
 }
 
-.bodyContainer {
+.body-container {
   max-width: 100%;
 }
 
-.noImageIcon {
+a {
+  text-decoration: none;
+}
+
+.no-image-icon {
   color: black;
   font-size: 125px;
 }
 
-.coverThumbnail {
+.cover-thumbnail {
   /* Testing to see if card images are automatically centered
   margin-left: auto;
   margin-right: auto; */
@@ -50,12 +54,12 @@ body {
   height: auto;
 }
 
-.coverDisplay {
+.cover-display {
   max-width: 100%;
   height: auto;
 }
 
-.editionImage {
+.edition-image {
   /* margin-left: auto;
   margin-right: auto; */
 
@@ -71,7 +75,7 @@ body {
   height: auto;
 }
 
-.purchaseImage {
+.purchase-image {
   /* margin-left: auto;
   margin-right: auto; */
 
@@ -87,11 +91,11 @@ body {
   height: auto;
 }
 
-.smallText {
+.small-text {
   font-size: small;
 }
 
-.smallerText {
+.smaller-text {
   font-size: smaller;
 }
 
@@ -102,35 +106,35 @@ body {
   padding: 0;
 }
 
-.cardFooter {
+.card-footer {
   text-align: right;
   font-size: smaller;
   margin: 0;
   padding: .25em;
 }
 
-.addEditIcon {
+.add-edit-icon {
   color: black;
   margin-left: 5px;
 }
 
-.inactiveItem {
+.inactive-item {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
 
-.cardHeader {
+.card-header {
   text-align: center;
   font-size: smaller;
   margin: 0;
   padding: .25em;
 }
 
-.displayParagraphs {
+.display-paragraphs {
   white-space: pre-line;
 }
 
-.checklistDrawer {
+.checklist-drawer {
   width: 350px;
 }

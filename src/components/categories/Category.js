@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Nav, NavItem, Collapse, Card } from "reactstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
 import { encodeURL } from "../../utilities/AppFunctions";
 import { setPageURL } from "../../app/urlsSlice";
-import AddCategory from "./AddCategory";
+import EditCategory from "./EditCategory";
 import EditCategories from "./EditCategories";
 
 const Category = (props) => {
@@ -13,7 +13,7 @@ const Category = (props) => {
   const componentName = "Category.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -61,7 +61,7 @@ const Category = (props) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -92,19 +92,19 @@ const Category = (props) => {
             };
 
             return (
-              <NavItem key={category.categoryID} className="mt-2 pl-3">
+              <NavItem key={category.categoryID}>
 
                 {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(componentName, GetDateTime(), "event.target.value", event.target.value); props.getTitles(category.categoryID)}}>{category.category}</a> */}
 
-                {/* <Link to={`/titles/${category.categoryID}`}>{category.categoryID}</Link>
-                <Link to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</Link>
-                <Link to={"/titles/" + category.categoryID}>{category.categoryID}</Link> */}
+                {/* <NavLink tag={Link} to={`/titles/${category.categoryID}`}>{category.categoryID}</NavLink>
+                <NavLink tag={Link} to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</NavLink>
+                <NavLink tag={Link} to={"/titles/" + category.categoryID}>{category.categoryID}</NavLink> */}
 
-                {/* <Link to={"/titles/" + encodeURL(category.category)}>{category.category}</Link> */}
+                {/* <NavLink tag={Link} to={"/titles/" + encodeURL(category.category)}>{category.category}</NavLink> */}
 
-                <Link to={encodeURL(category.category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(category.category)); }}>{category.category}
-                  {IsEmpty(activeString) === false ? <span className="ml-2 inactiveItem">({activeString})</span> : null}
-                </Link>
+                <NavLink tag={Link} to={encodeURL(category.category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(category.category)); }}>{category.category}
+                  {IsEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
+                </NavLink>
 
               </NavItem>
             );
@@ -114,7 +114,7 @@ const Category = (props) => {
 
       </Collapse>
 
-      {IsEmpty(admin) === false && admin === true ? <AddCategory displayButton={true} /> : null}
+      {IsEmpty(admin) === false && admin === true ? <EditCategory displayButton={true} /> : null}
       {IsEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null}
 
     </React.Fragment>

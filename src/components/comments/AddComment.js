@@ -54,11 +54,11 @@ const AddComment = (props) => {
   const [errComment, setErrComment] = useState("");
   const [errEmail, setErrEmail] = useState("");
 
-  const [commentItem, setCommentItem] = useState(null);
-  const [commentID, setCommentID] = useState(null);
-  const [commentUserID, setCommentUserID] = useState(null);
-  const [comment, setComment] = useState(null);
-  const [commentEmail, setCommentEmail] = useState(null);
+  // const [commentItem, setCommentItem] = useState(null);
+  // const [commentID, setCommentID] = useState(null);
+  // const [commentUserID, setCommentUserID] = useState(null);
+  // const [comment, setComment] = useState(null);
+  // const [commentEmail, setCommentEmail] = useState(null);
 
 
   useEffect(() => {
@@ -81,11 +81,11 @@ const AddComment = (props) => {
     setErrComment("");
     setErrEmail("");
 
-    setCommentItem(null);
-    setCommentID(null);
-    setCommentUserID(null);
-    setComment(null);
-    setCommentEmail(null);
+    // setCommentItem(null);
+    // setCommentID(null);
+    // setCommentUserID(null);
+    // setComment(null);
+    // setCommentEmail(null);
 
     let commentValidated = false;
     let emailValidated = false;
@@ -206,16 +206,16 @@ const AddComment = (props) => {
             .then(data => {
               // console.log(componentName, GetDateTime(), "addComment data", data);
 
-              setCommentRecordAdded(data.recordAdded);
+              setCommentRecordAdded(data.transactionSuccess);
               addMessage(data.message);
 
-              if (data.recordAdded === true) {
+              if (data.transactionSuccess === true) {
 
-                setCommentItem(data.records[0]);
-                setCommentID(data.records[0].CommentID);
-                setCommentUserID(data.records[0].userID);
-                setComment(data.records[0].Comment);
-                setCommentEmail(data.records[0].email);
+                // setCommentItem(data.records[0]);
+                // setCommentID(data.records[0].CommentID);
+                // setCommentUserID(data.records[0].userID);
+                // setComment(data.records[0].Comment);
+                // setCommentEmail(data.records[0].email);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
                 // dispatch(addStateTitle([{titleID: data.records[0].titleID, email: data.records[0].Email, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, Comment: data.records[0].Comment, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
@@ -258,7 +258,10 @@ const AddComment = (props) => {
       setErrComment("");
       setErrEmail("");
       setCommentRecordAdded(null);
-      // setModal(false);
+
+      setTxtComment("");
+      setTxtEmail("");
+
       setModal(!modal);
 
     };
@@ -270,8 +273,10 @@ const AddComment = (props) => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
+
       // return <Redirect to="/" />;
       setModal(false);
+
     };
 
   }, [sessionToken]);
@@ -280,9 +285,9 @@ const AddComment = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Comment</ModalHeader>

@@ -114,18 +114,18 @@ const EditEdition = (props) => {
 
   // const [editionItemIndex, setEditionItemIndex] = useState(null);
   const [editionItem, setEditionItem] = useState(null);
-  const [editionID, setEditionID] = useState(null);
+  // const [editionID, setEditionID] = useState(null);
   const [titleID, setTitleID] = useState(null);
-  const [mediaID, setMediaID] = useState(null);
-  const [publicationDate, setPublicationDate] = useState(null);
-  const [imageName, setImageName] = useState(null);
-  const [ASIN, setASIN] = useState(null);
-  const [textLinkShort, setTextLinkShort] = useState(null);
-  const [textLinkFull, setTextLinkFull] = useState(null);
-  const [imageLinkSmall, setImageLinkSmall,] = useState(null);
-  const [imageLinkMedium, setImageLinkMedium] = useState(null);
-  const [imageLinkLarge, setImageLinkLarge] = useState(null);
-  const [textImageLink, setTextImageLink] = useState(null);
+  // const [mediaID, setMediaID] = useState(null);
+  // const [publicationDate, setPublicationDate] = useState(null);
+  // const [imageName, setImageName] = useState(null);
+  // const [ASIN, setASIN] = useState(null);
+  // const [textLinkShort, setTextLinkShort] = useState(null);
+  // const [textLinkFull, setTextLinkFull] = useState(null);
+  // const [imageLinkSmall, setImageLinkSmall,] = useState(null);
+  // const [imageLinkMedium, setImageLinkMedium] = useState(null);
+  // const [imageLinkLarge, setImageLinkLarge] = useState(null);
+  // const [textImageLink, setTextImageLink] = useState(null);
   const [active, setActive] = useState(null);
 
   const [ASINMessage, setASINMessage] = useState("");
@@ -151,18 +151,18 @@ const EditEdition = (props) => {
       if (IsEmpty(editionObject) === false) {
 
         setEditionItem(editionObject);
-        setEditionID(editionObject.editionID);
+        // setEditionID(editionObject.editionID);
         setTitleID(editionObject.titleID);
-        setMediaID(editionObject.mediaID);
-        setPublicationDate(editionObject.publicationDate);
-        setImageName(editionObject.imageName);
-        setASIN(editionObject.ASIN);
-        setTextLinkShort(editionObject.textLinkShort);
-        setTextLinkFull(editionObject.textLinkFull);
-        setImageLinkSmall(editionObject.imageLinkSmall);
-        setImageLinkMedium(editionObject.imageLinkMedium);
-        setImageLinkLarge(editionObject.imageLinkLarge);
-        setTextImageLink(editionObject.textImageLink);
+        // setMediaID(editionObject.mediaID);
+        // setPublicationDate(editionObject.publicationDate);
+        // setImageName(editionObject.imageName);
+        // setASIN(editionObject.ASIN);
+        // setTextLinkShort(editionObject.textLinkShort);
+        // setTextLinkFull(editionObject.textLinkFull);
+        // setImageLinkSmall(editionObject.imageLinkSmall);
+        // setImageLinkMedium(editionObject.imageLinkMedium);
+        // setImageLinkLarge(editionObject.imageLinkLarge);
+        // setTextImageLink(editionObject.textImageLink);
         setActive(editionObject.active);
 
         setDdMediaID(editionObject.mediaID);
@@ -202,18 +202,18 @@ const EditEdition = (props) => {
     setErrMediaID("");
 
     setEditionItem(null);
-    setEditionID(null);
+    // setEditionID(null);
     setTitleID(null);
-    setMediaID(null);
-    setPublicationDate(null);
-    setImageName(null);
-    setASIN(null);
-    setTextLinkShort(null);
-    setTextLinkFull(null);
-    setImageLinkSmall(null);
-    setImageLinkMedium(null);
-    setImageLinkLarge(null);
-    setTextImageLink(null);
+    // setMediaID(null);
+    // setPublicationDate(null);
+    // setImageName(null);
+    // setASIN(null);
+    // setTextLinkShort(null);
+    // setTextLinkFull(null);
+    // setImageLinkSmall(null);
+    // setImageLinkMedium(null);
+    // setImageLinkLarge(null);
+    // setTextImageLink(null);
     setActive(null);
 
     let mediaIDValidated = false;
@@ -415,24 +415,24 @@ const EditEdition = (props) => {
           .then(data => {
             // console.log(componentName, GetDateTime(), "addEdition data", data);
 
-            setEditionRecordAdded(data.recordAdded);
+            setEditionRecordAdded(data.transactionSuccess);
             addMessage(data.message);
 
-            if (data.recordAdded === true) {
+            if (data.transactionSuccess === true) {
 
               setEditionItem(data.records[0]);
-              setEditionID(data.records[0].editionID);
+              // setEditionID(data.records[0].editionID);
               setTitleID(data.records[0].titleID);
-              setMediaID(data.records[0].mediaID);
-              setPublicationDate(data.records[0].publicationDate);
-              setImageName(data.records[0].imageName);
-              setASIN(data.records[0].ASIN);
-              setTextLinkShort(data.records[0].textLinkShort);
-              setTextLinkFull(data.records[0].textLinkFull);
-              setImageLinkSmall(data.records[0].imageLinkSmall);
-              setImageLinkMedium(data.records[0].imageLinkMedium);
-              setImageLinkLarge(data.records[0].imageLinkLarge);
-              setTextImageLink(data.records[0].textImageLink);
+              // setMediaID(data.records[0].mediaID);
+              // setPublicationDate(data.records[0].publicationDate);
+              // setImageName(data.records[0].imageName);
+              // setASIN(data.records[0].ASIN);
+              // setTextLinkShort(data.records[0].textLinkShort);
+              // setTextLinkFull(data.records[0].textLinkFull);
+              // setImageLinkSmall(data.records[0].imageLinkSmall);
+              // setImageLinkMedium(data.records[0].imageLinkMedium);
+              // setImageLinkLarge(data.records[0].imageLinkLarge);
+              // setTextImageLink(data.records[0].textImageLink);
               setActive(data.records[0].active);
 
               let mediaItem = mediaListState.filter(media => media.mediaID === data.records[0].mediaID);
@@ -491,18 +491,18 @@ const EditEdition = (props) => {
     setErrMediaID("");
 
     setEditionItem(null);
-    setEditionID(null);
-    // setTitleID(null);
-    setMediaID(null);
-    setPublicationDate(null);
-    setImageName(null);
-    setASIN(null);
-    setTextLinkShort(null);
-    setTextLinkFull(null);
-    setImageLinkSmall(null);
-    setImageLinkMedium(null);
-    setImageLinkLarge(null);
-    setTextImageLink(null);
+    // setEditionID(null);
+    setTitleID(null);
+    // setMediaID(null);
+    // setPublicationDate(null);
+    // setImageName(null);
+    // setASIN(null);
+    // setTextLinkShort(null);
+    // setTextLinkFull(null);
+    // setImageLinkSmall(null);
+    // setImageLinkMedium(null);
+    // setImageLinkLarge(null);
+    // setTextImageLink(null);
     setActive(null);
 
     let mediaIDValidated = false;
@@ -709,24 +709,24 @@ const EditEdition = (props) => {
           .then(data => {
             // console.log(componentName, GetDateTime(), "updateEdition data", data);
 
-            setEditionRecordUpdated(data.recordAdded);
+            setEditionRecordUpdated(data.transactionSuccess);
             addMessage(data.message);
 
-            if (data.recordUpdated === true) {
+            if (data.transactionSuccess === true) {
 
               setEditionItem(data.records[0]);
               // setEditionID(data.records[0].editionID);
               setTitleID(data.records[0].titleID);
-              setMediaID(data.records[0].mediaID);
-              setPublicationDate(data.records[0].publicationDate);
-              setImageName(data.records[0].imageName);
-              setASIN(data.records[0].ASIN);
-              setTextLinkShort(data.records[0].textLinkShort);
-              setTextLinkFull(data.records[0].textLinkFull);
-              setImageLinkSmall(data.records[0].imageLinkSmall);
-              setImageLinkMedium(data.records[0].imageLinkMedium);
-              setImageLinkLarge(data.records[0].imageLinkLarge);
-              setTextImageLink(data.records[0].textImageLink);
+              // setMediaID(data.records[0].mediaID);
+              // setPublicationDate(data.records[0].publicationDate);
+              // setImageName(data.records[0].imageName);
+              // setASIN(data.records[0].ASIN);
+              // setTextLinkShort(data.records[0].textLinkShort);
+              // setTextLinkFull(data.records[0].textLinkFull);
+              // setImageLinkSmall(data.records[0].imageLinkSmall);
+              // setImageLinkMedium(data.records[0].imageLinkMedium);
+              // setImageLinkLarge(data.records[0].imageLinkLarge);
+              // setTextImageLink(data.records[0].textImageLink);
               setActive(data.records[0].active);
 
               let mediaItem = mediaListState.filter(media => media.mediaID === data.records[0].mediaID);
@@ -823,11 +823,11 @@ const EditEdition = (props) => {
           .then(data => {
             // console.log(componentName, GetDateTime(), "deleteEdition data", data);
 
-            setEditionRecordDeleted(data.recordDeleted);
+            setEditionRecordDeleted(data.transactionSuccess);
 
             addMessage(data.message); // * Never seen by the user if the delete was successful. -- 03/06/2021 MF
 
-            if (data.recordDeleted === true) {
+            if (data.transactionSuccess === true) {
 
               // dispatch(deleteStateEdition(props.editionID));
               // dispatch(deleteStateEdition(editionItemIndex));
@@ -893,10 +893,10 @@ const EditEdition = (props) => {
         .then(results => {
           // console.log(componentName, GetDateTime(), "checkASIN results", results);
 
-          setASINResultsFound(results.resultsFound);
+          setASINResultsFound(results.transactionSuccess);
           setASINMessage(results.message);
 
-          if (IsEmpty(results) === false && results.resultsFound === true) {
+          if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
             setASINMessage(results.message + "That ASIN already exists in the database. " + results.records[0].titleName + " (" + results.records[0].media + ") editionID=" + results.records[0].editionID);
 
@@ -967,7 +967,18 @@ const EditEdition = (props) => {
       clearMessages();
       setErrMediaID("");
       setEditionRecordAdded(null);
-      // setModal(false);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
       setModal(!modal);
 
     };
@@ -984,7 +995,18 @@ const EditEdition = (props) => {
       clearMessages();
       setErrMediaID("");
       setEditionRecordUpdated(null);
-      // setModal(false);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
       setModal(!modal);
 
     };
@@ -994,7 +1016,18 @@ const EditEdition = (props) => {
       clearMessages();
       setErrMediaID("");
       setEditionRecordDeleted(null);
-      // setModal(false);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
       setModal(!modal);
 
     };
@@ -1018,13 +1051,13 @@ const EditEdition = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null}
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {appAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>{IsEmpty(editionItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Edition</ModalHeader>
@@ -1055,7 +1088,7 @@ const EditEdition = (props) => {
               </Col>
               <Col>
 
-                <Label for="txtPublicationDate">Publication Date</Label> {IsEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
+                <Label for="txtPublicationDate">Publication Date</Label> {IsEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
                 <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPublicationDate(event.target.value); }} />
 
               </Col>
@@ -1063,16 +1096,16 @@ const EditEdition = (props) => {
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageName">Image Name</Label> {IsEmpty(props.titleImageName) === false ? <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
+              <Label for="txtImageName">Image Name</Label> {IsEmpty(props.titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
-              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="noImageIcon" />}
+              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
             </FormGroup>
 
             <FormGroup>
               {IsEmpty(txtTextLinkFull) === false ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
               {IsEmpty(ASINMessage) === false ? <Alert color="info">{ASINMessage}</Alert> : null}
               {IsEmpty(errASINMessage) === false ? <Alert color="danger">{errASINMessage}</Alert> : null}
-              <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ checkASIN(txtASIN); }}>Check for ASIN</Button>
+              <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ checkASIN(txtASIN); }}>Check for ASIN</Button>
               <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(event.target.value); }} />
             </FormGroup>
 
@@ -1082,22 +1115,22 @@ const EditEdition = (props) => {
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
+              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
               <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
+              <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
               <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
+              <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
               <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkMedium(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
+              <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
               <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkLarge(event.target.value); }} />
             </FormGroup>
 
@@ -1117,12 +1150,19 @@ const EditEdition = (props) => {
                 <React.Fragment>
 
                   <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Update Edition</Button>
+
                   {IsEmpty(active) === false && (active === false || active === 0) ?
+
                     <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Undelete/Restore Edition</Button>
+
                     : null}
+
                   {IsEmpty(active) === false && (active === true || active === 1) ?
+
                     <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateEdition(true); }}>Delete Edition</Button>
+
                     : null}
+
                   <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ deleteEdition(); }}>Hard Delete Edition</Button>
                 </React.Fragment>
 
