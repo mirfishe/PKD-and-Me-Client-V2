@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
-import { encodeURL } from "../../utilities/AppFunctions";
+import { encodeURL } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import EditMedia from "./EditMedia";
 
@@ -19,10 +19,10 @@ const Media = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  const electronicOnly = useSelector(state => state.app.electronicOnly);
-  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  const physicalOnly = useSelector(state => state.app.physicalOnly);
-  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
+  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
   // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);

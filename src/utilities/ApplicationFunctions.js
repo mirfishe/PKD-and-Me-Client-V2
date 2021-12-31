@@ -1,7 +1,7 @@
-import AppSettings from "../app/environment";
+import applicationSettings from "../app/environment";
 import { IsEmpty, GetDateTime, FormatLowerCase, FormatUpperCase } from "./SharedFunctions";
 
-const componentName = "AppFunctions.js";
+const componentName = "ApplicationFunctions.js";
 
 export const encodeURL = (titleName) => {
   // console.log(componentName, GetDateTime(), "encodeURL titleName", titleName);
@@ -119,14 +119,14 @@ export const removeOnePixelImage = (text, ASIN) => {
 
 export const setLocalImagePath = (text) => {
   // console.log(componentName, GetDateTime(), "setLocalImagePath text", text);
-  // console.log(componentName, GetDateTime(), "setLocalImagePath AppSettings.profileType", AppSettings.profileType);
+  // console.log(componentName, GetDateTime(), "setLocalImagePath applicationSettings.profileType", applicationSettings.profileType);
 
   let newText = text;
 
   if (IsEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (AppSettings.profileType === "philipdick" || AppSettings.profileType === "homeopape") {
+    if (applicationSettings.profileType === "philipdick" || applicationSettings.profileType === "homeopape") {
 
       // * Removes the "https://philipdick.com" -- 03/06/2021 MF
       newText = newText.replaceAll("https://philipdick.com", "");
@@ -144,14 +144,14 @@ export const setLocalImagePath = (text) => {
 
 export const setLocalPath = (text) => {
   // console.log(componentName, GetDateTime(), "setLocalPath text", text);
-  // console.log(componentName, GetDateTime(), "setLocalPath AppSettings.profileType", AppSettings.profileType);
+  // console.log(componentName, GetDateTime(), "setLocalPath applicationSettings.profileType", applicationSettings.profileType);
 
   let newText = text;
 
   if (IsEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (AppSettings.profileType === "philipdick") {
+    if (applicationSettings.profileType === "philipdick") {
 
       // * Removes the "https://philipdick.com" -- 03/06/2021 MF
       newText = newText.replaceAll("https://philipdick.com", "");

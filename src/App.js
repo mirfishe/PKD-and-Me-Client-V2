@@ -4,12 +4,12 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 // import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
-import AppSettings from "./app/environment";
+import applicationSettings from "./app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./utilities/SharedFunctions";
-import { LogError } from "./utilities/AppFunctions";
-import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setAppOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/appSlice";
+import { LogError } from "./utilities/ApplicationFunctions";
+import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
-import LoadAppSettings from "./components/loadData/LoadAppSettings";
+import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
 import LoadUserReviews from "./components/loadData/LoadUserReviews";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "./app/userSlice";
@@ -54,13 +54,13 @@ function App() {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
-  const computerLog = useSelector(state => state.app.computerLog);
-  const locationLogged = useSelector(state => state.app.locationLogged);
+  const computerLog = useSelector(state => state.applicationSettings.computerLog);
+  const locationLogged = useSelector(state => state.applicationSettings.locationLogged);
 
-  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const firstName = useSelector(state => state.user.firstName);
   // console.log(componentName, GetDateTime(), "firstName", firstName);
@@ -73,17 +73,17 @@ function App() {
   const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
   const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
 
-  const electronicOnly = useSelector(state => state.app.electronicOnly);
-  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  const physicalOnly = useSelector(state => state.app.physicalOnly);
-  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
+  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
 
   const userLoaded = useSelector(state => state.user.userLoaded);
   const checklistLoaded = useSelector(state => state.user.checklistLoaded);
 
-  let showAllMenuItems = useSelector(state => state.app.menuSettings.showAllMenuItems);
+  let showAllMenuItems = useSelector(state => state.applicationSettings.menuSettings.showAllMenuItems);
 
-  let showNew = useSelector(state => state.app.menuSettings.showNew);
+  let showNew = useSelector(state => state.applicationSettings.menuSettings.showNew);
   // console.log(componentName, GetDateTime(), "showNew", showNew);
 
   // * show New page unless set specifically to false. -- 03/06/2021 MF
@@ -93,7 +93,7 @@ function App() {
 
   };
 
-  let showAbout = useSelector(state => state.app.menuSettings.showAbout);
+  let showAbout = useSelector(state => state.applicationSettings.menuSettings.showAbout);
   // console.log(componentName, GetDateTime(), "showAbout", showAbout);
 
   // * show About page unless set specifically to false. -- 03/06/2021 MF
@@ -103,28 +103,28 @@ function App() {
 
   };
 
-  let showHomeopape = useSelector(state => state.app.menuSettings.showHomeopape);
+  let showHomeopape = useSelector(state => state.applicationSettings.menuSettings.showHomeopape);
   // console.log(componentName, GetDateTime(), "showHomeopape", showHomeopape);
-  let showDickian = useSelector(state => state.app.menuSettings.showDickian);
+  let showDickian = useSelector(state => state.applicationSettings.menuSettings.showDickian);
   // console.log(componentName, GetDateTime(), "showDickian", showDickian);
 
-  let showEditCategory = useSelector(state => state.app.menuSettings.showEditCategory);
+  let showEditCategory = useSelector(state => state.applicationSettings.menuSettings.showEditCategory);
   // console.log(componentName, GetDateTime(), "showEditCategory", showEditCategory);
-  let showEditMedia = useSelector(state => state.app.menuSettings.showEditMedia);
-  let showEditTitle = useSelector(state => state.app.menuSettings.showEditTitle);
-  let showEditEdition = useSelector(state => state.app.menuSettings.showEditEdition);
+  let showEditMedia = useSelector(state => state.applicationSettings.menuSettings.showEditMedia);
+  let showEditTitle = useSelector(state => state.applicationSettings.menuSettings.showEditTitle);
+  let showEditEdition = useSelector(state => state.applicationSettings.menuSettings.showEditEdition);
 
-  let showAllCategories = useSelector(state => state.app.menuSettings.showAllCategories);
-  let showAllMedia = useSelector(state => state.app.menuSettings.showAllMedia);
-
-  // ! This route no longer works. -- 03/06/2021 MF
-  let showAllTitles = useSelector(state => state.app.menuSettings.showAllTitles);
+  let showAllCategories = useSelector(state => state.applicationSettings.menuSettings.showAllCategories);
+  let showAllMedia = useSelector(state => state.applicationSettings.menuSettings.showAllMedia);
 
   // ! This route no longer works. -- 03/06/2021 MF
-  let showAllEditions = useSelector(state => state.app.menuSettings.showAllEditions);
+  let showAllTitles = useSelector(state => state.applicationSettings.menuSettings.showAllTitles);
 
-  let showUserPhysicalOnly = useSelector(state => state.app.menuSettings.showUserPhysicalOnly);
-  let showUserElectronicOnly = useSelector(state => state.app.menuSettings.showUserElectronicOnly);
+  // ! This route no longer works. -- 03/06/2021 MF
+  let showAllEditions = useSelector(state => state.applicationSettings.menuSettings.showAllEditions);
+
+  let showUserPhysicalOnly = useSelector(state => state.applicationSettings.menuSettings.showUserPhysicalOnly);
+  let showUserElectronicOnly = useSelector(state => state.applicationSettings.menuSettings.showUserElectronicOnly);
 
   const urlLookup = useSelector(state => state.urls.arrayURLs);
   const pageURL = useSelector(state => state.urls.pageURL);
@@ -134,13 +134,13 @@ function App() {
 
   // ! Loading the routerBaseName from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const routerBaseName = useSelector(state => state.app.routerBaseName);
-  const routerBaseName = AppSettings.routerBaseName;
+  // const routerBaseName = useSelector(state => state.applicationSettings.routerBaseName);
+  const routerBaseName = applicationSettings.routerBaseName;
 
   // ! Loading the defaultPageComponent from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const defaultPageComponent = useSelector(state => state.app.defaultPageComponent);
-  const defaultPageComponent = AppSettings.defaultPageComponent;
+  // const defaultPageComponent = useSelector(state => state.applicationSettings.defaultPageComponent);
+  const defaultPageComponent = applicationSettings.defaultPageComponent;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -600,7 +600,7 @@ function App() {
 
   useEffect(() => {
 
-    if (appAllowUserInteractions === true && IsEmpty(localStorage.getItem("token")) === false) {
+    if (applicationAllowUserInteractions === true && IsEmpty(localStorage.getItem("token")) === false) {
 
       dispatch(setSessionToken(localStorage.getItem("token")));
       // console.log(componentName, GetDateTime(), "componentDidMount localStorage token", localStorage.getItem("token"));
@@ -642,7 +642,7 @@ function App() {
 
     if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
 
-      dispatch(setAppOffline(true));
+      dispatch(setApplicationOffline(true));
 
     };
 
@@ -719,7 +719,7 @@ function App() {
 
             : null}
 
-          {appAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
+          {applicationAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
 
             <NavItem>
               <Login />
@@ -727,7 +727,7 @@ function App() {
 
             : null}
 
-          {appAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
+          {applicationAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
 
             <NavItem>
               <Register />
@@ -735,7 +735,7 @@ function App() {
 
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
+          {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
 
             <NavItem>
               <EditUser />
@@ -751,13 +751,13 @@ function App() {
             <a href="https://philipdick.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
 
-          {/* {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true && IsEmpty(firstName) === false && IsEmpty(lastName) === false ?
+          {/* {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true && IsEmpty(firstName) === false && IsEmpty(lastName) === false ?
 
             <NavItem><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
 
             : null} */}
 
-          {appAllowUserInteractions === true && IsEmpty(checklistLoaded) === false && checklistLoaded === true ?
+          {applicationAllowUserInteractions === true && IsEmpty(checklistLoaded) === false && checklistLoaded === true ?
 
             <NavItem>
               <Checklist displayButton={true} />
@@ -765,7 +765,7 @@ function App() {
 
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddTitleSuggestion displayButton={true} />
@@ -773,7 +773,7 @@ function App() {
 
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddComment displayButton={true} />
@@ -781,7 +781,7 @@ function App() {
 
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
 
             <NavItem>
               <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span>
@@ -792,7 +792,7 @@ function App() {
         </Nav>
       </Navbar>
 
-      {appAllowUserInteractions === true && IsEmpty(admin) === false && admin === true ?
+      {applicationAllowUserInteractions === true && IsEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
@@ -966,7 +966,7 @@ function App() {
               {IsEmpty(checklistMessage) === false ? <Alert color="info">{checklistMessage}</Alert> : null}
               {IsEmpty(errChecklistMessage) === false ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
 
-              <LoadAppSettings />
+              <LoadApplicationSettings />
               <LoadBibliographyData />
               <LoadUserReviews />
 

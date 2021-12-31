@@ -1,11 +1,11 @@
 {
   "transactionSuccess": true,
   "errorOccurred": false,
-  "message": "Offline AppSettings data used.",
+  "message": "Offline Application Settings data used.",
   "siteName": "PKD and Me",
-  "appName": "Philip K. Dick Bibliography",
+  "applicationName": "Philip K. Dick Bibliography",
   "electronicOnly": false,
   "physicalOnly": false,
-  "appAllowUserInteractions": true,
+  "applicationAllowUserInteractions": true,
   "requireUserLogin": true
 }

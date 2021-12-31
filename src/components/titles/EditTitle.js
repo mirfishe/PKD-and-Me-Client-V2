@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim, FormatToString } from "../../utilities/SharedFunctions";
-import { createTitleURL, createImageName, LogError } from "../../utilities/AppFunctions";
+import { createTitleURL, createImageName, LogError } from "../../utilities/ApplicationFunctions";
 import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
@@ -24,11 +24,11 @@ const EditTitle = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const [categoryMessage, setCategoryMessage] = useState("");
   const [errCategoryMessage, setErrCategoryMessage] = useState("");
@@ -1186,13 +1186,13 @@ const EditTitle = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>{IsEmpty(titleItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Title</ModalHeader>

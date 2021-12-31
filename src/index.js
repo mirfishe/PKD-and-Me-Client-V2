@@ -6,7 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import './index.css';
 import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";
-import AppSettings from "./app//environment";
+import applicationSettings from "./app/environment";
 import App from './App';
 import store from './app/store';
 import { Provider } from 'react-redux';
@@ -24,15 +24,15 @@ import { Provider } from 'react-redux';
 // console.log(componentName, "packageJSON.copyrightYear", packageJSON.copyrightYear);
 
 // * Google Tag Manager -- 03/06/2021 MF
-if (AppSettings.tagManagerArgs.gtmId !== "") {
+if (applicationSettings.tagManagerArgs.gtmId !== "") {
 
-  TagManager.initialize(AppSettings.tagManagerArgs);
+  TagManager.initialize(applicationSettings.tagManagerArgs);
 
 };
 
-// const metaDescription = useSelector(state => state.app.metaDescription);
+// const metaDescription = useSelector(state => state.applicationSettings.metaDescription);
 // document.getElementsByTagName("META")[3].content = metaDescription;
-document.getElementsByTagName("META")[3].content = AppSettings.metaDescription;
+document.getElementsByTagName("META")[3].content = applicationSettings.metaDescription;
 
 ReactDOM.render(
   <React.StrictMode>

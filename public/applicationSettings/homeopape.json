@@ -1,11 +1,11 @@
 {
   "transactionSuccess": true,
   "errorOccurred": false,
-  "message": "Offline AppSettings data used.",
+  "message": "Offline Application Settings data used.",
   "siteName": "Homeopape",
-  "appName": "Philip K. Dick Bibliography",
+  "applicationName": "Philip K. Dick Bibliography",
   "electronicOnly": true,
   "physicalOnly": false,
-  "appAllowUserInteractions": false,
+  "applicationAllowUserInteractions": false,
   "requireUserLogin": true
 }

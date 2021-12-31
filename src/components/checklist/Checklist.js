@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import { Drawer } from "@material-ui/core";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, decodeURL, LogError } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -26,8 +26,8 @@ const Checklist = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);

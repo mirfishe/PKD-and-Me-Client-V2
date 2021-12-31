@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
-import { encodeURL } from "../../utilities/AppFunctions";
+import { encodeURL } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import EditCategory from "./EditCategory";
 import EditCategories from "./EditCategories";

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem, NavLink } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -23,14 +23,14 @@ const Titles = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const siteName = useSelector(state => state.app.siteName);
-  const appName = useSelector(state => state.app.appName);
-  // const applicationVersion = useSelector(state => state.app.applicationVersion);
-  const computerLog = useSelector(state => state.app.computerLog);
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+  // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
+  const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -39,12 +39,12 @@ const Titles = (props) => {
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
-  const electronicOnly = useSelector(state => state.app.electronicOnly);
-  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  // const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
-  const physicalOnly = useSelector(state => state.app.physicalOnly);
-  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
-  // const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
+  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  // const electronicOnlyMessage = useSelector(state => state.applicationSettings.electronicOnlyMessage);
+  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
+  // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
   // const [errCategoryMessage, setErrCategoryMessage] = useState("");
   const [errTitleMessage, setErrTitleMessage] = useState("");
@@ -170,7 +170,7 @@ const Titles = (props) => {
 
     // ! This code no longer works with the current URL setup
     // * If categoryParam is a number, then it's the categoryID
-    document.title = titleList[0].category + " | " + appName + " | " + siteName;
+    document.title = titleList[0].category + " | " + applicationName + " | " + siteName;
     titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
 
   } else if (IsEmpty(categoryParam) === false) {
@@ -182,12 +182,12 @@ const Titles = (props) => {
 
     if (IsEmpty(category) === false) {
 
-      document.title = category.category + " | " + appName + " | " + siteName;
+      document.title = category.category + " | " + applicationName + " | " + siteName;
       titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
 
     } else {
 
-      document.title = "Category Not Found | " + appName + " | " + siteName;
+      document.title = "Category Not Found | " + applicationName + " | " + siteName;
       console.error("Category not found.");
       // // Display all active titles
       // titleList = titleListState;
@@ -199,7 +199,7 @@ const Titles = (props) => {
 
   } else {
 
-    document.title = "All Titles | " + appName + " | " + siteName;
+    document.title = "All Titles | " + applicationName + " | " + siteName;
     // Display all active titles
     titleList = [...titleListState];
     // titleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);

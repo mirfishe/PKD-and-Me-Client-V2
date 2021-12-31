@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
 
-const componentName = "appSlice.js";
+const componentName = "applicationSettingsSlice.js";
 
 const initialState = {
   // applicationVersion: "",
@@ -14,21 +14,21 @@ const initialState = {
   // baseURL: "",
   tagManagerArgsgtmId: "",
   siteName: "",
-  appName: "",
+  applicationName: "",
   metaDescription: "",
   defaultPageComponent: "",
   routerBaseName: "",
-  appOffline: false,
+  applicationOffline: false,
   electronicOnly: false,
   userElectronicOnly: false,
   electronicOnlyMessage: "",
   physicalOnly: false,
   userPhysicalOnly: false,
   physicalOnlyMessage: "",
-  appAllowUserInteractions: true,
+  applicationAllowUserInteractions: true,
   requireUserLogin: true,
-  appSettingsLoaded: false,
-  appSettingsJsonLoaded: false,
+  applicationSettingsLoaded: false,
+  applicationSettingsJsonLoaded: false,
   menuSettings: {},
   linkItem: {},
   informationMessage: "",
@@ -42,8 +42,8 @@ const initialState = {
   showMessages: false
 };
 
-const appSlice = createSlice({
-  name: "app",
+const applicationSettingsSlice = createSlice({
+  name: "applicationSettings",
   initialState,
   reducers: {
     // setApplicationVersion(state, action) {
@@ -211,10 +211,10 @@ const appSlice = createSlice({
       state.siteName = action.payload;
 
     },
-    setAppName(state, action) {
-      // console.log(componentName, GetDateTime(), "setAppName action.payload", action.payload);
+    setApplicationName(state, action) {
+      // console.log(componentName, GetDateTime(), "setApplicationName action.payload", action.payload);
 
-      state.appName = action.payload;
+      state.applicationName = action.payload;
 
     },
     setMetaDescription(state, action) {
@@ -235,10 +235,10 @@ const appSlice = createSlice({
       state.routerBaseName = action.payload;
 
     },
-    setAppOffline(state, action) {
-      // console.log(componentName, GetDateTime(), "setAppOffline action.payload", action.payload);
+    setApplicationOffline(state, action) {
+      // console.log(componentName, GetDateTime(), "setApplicationOffline action.payload", action.payload);
 
-      state.appOffline = action.payload;
+      state.applicationOffline = action.payload;
 
     },
     setElectronicOnly(state, action) {
@@ -277,10 +277,10 @@ const appSlice = createSlice({
       state.physicalOnlyMessage = action.payload;
 
     },
-    setAppAllowUserInteractions(state, action) {
-      // console.log(componentName, GetDateTime(), "setAppAllowUserInteractions action.payload", action.payload);
+    setApplicationAllowUserInteractions(state, action) {
+      // console.log(componentName, GetDateTime(), "setApplicationAllowUserInteractions action.payload", action.payload);
 
-      state.appAllowUserInteractions = action.payload;
+      state.applicationAllowUserInteractions = action.payload;
 
     },
     setRequireUserLogin(state, action) {
@@ -289,16 +289,16 @@ const appSlice = createSlice({
       state.requireUserLogin = action.payload;
 
     },
-    setAppSettingsLoaded(state, action) {
-      // console.log(componentName, GetDateTime(), "setAppSettingsLoaded action.payload", action.payload);
+    setApplicationSettingsLoaded(state, action) {
+      // console.log(componentName, GetDateTime(), "setApplicationSettingsLoaded action.payload", action.payload);
 
-      state.appSettingsLoaded = action.payload;
+      state.applicationSettingsLoaded = action.payload;
 
     },
-    setAppSettingsJsonLoaded(state, action) {
-      // console.log(componentName, GetDateTime(), "setAppSettingsJsonLoaded action.payload", action.payload);
+    setApplicationSettingsJsonLoaded(state, action) {
+      // console.log(componentName, GetDateTime(), "setApplicationSettingsJsonLoaded action.payload", action.payload);
 
-      state.appSettingsJsonLoaded = action.payload;
+      state.applicationSettingsJsonLoaded = action.payload;
 
     },
     setMenuSettings(state, action) {
@@ -498,6 +498,6 @@ const appSlice = createSlice({
   }
 });
 
-export const { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setAppName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setAppOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setAppAllowUserInteractions, setRequireUserLogin, setAppSettingsLoaded, setAppSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = appSlice.actions;
+export const { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
 
-export default appSlice.reducer;
+export default applicationSettingsSlice.reducer;

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse, FormatLowerCase, FormatUpperCase } from "../../utilities/SharedFunctions";
-import { encodeURL, ToTitleCase, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, ToTitleCase, LogError } from "../../utilities/ApplicationFunctions";
 
 // * https://www.npmjs.com/package/rss-parser
 // * https://github.com/rbren/rss-parser
@@ -25,8 +25,8 @@ const FromTheHomeopape = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../../utilities/SharedFunctions";
-import { encodeURL, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, LogError } from "../../utilities/ApplicationFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../app/categoriesSlice";
 import { loadArrayEditions, setEditionsDataOffline } from "../../app/editionsSlice";
@@ -19,15 +19,15 @@ function LoadBibliographyData() {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  // ! Loading the appOffline from the state store here is too slow
+  // ! Loading the applicationOffline from the state store here is too slow
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const appOffline = useSelector(state => state.app.appOffline);
-  const appOffline = AppSettings.appOffline;
-  // console.log(componentName, GetDateTime(), "appOffline", appOffline);
+  // const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
+  const applicationOffline = applicationSettings.applicationOffline;
+  // console.log(componentName, GetDateTime(), "applicationOffline", applicationOffline);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const categoriesLoaded = useSelector(state => state.categories.categoriesLoaded);
@@ -867,7 +867,7 @@ function LoadBibliographyData() {
     // };
 
     // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
-    if (appOffline) {
+    if (applicationOffline) {
 
       if (!categoriesLoaded /*&& !categoriesDataLocalStorage*/) {
 

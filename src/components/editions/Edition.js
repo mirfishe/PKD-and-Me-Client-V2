@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import Parse from "html-react-parser";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, DisplayDate, DisplayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/AppFunctions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
@@ -21,8 +21,8 @@ const Edition = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
@@ -30,12 +30,12 @@ const Edition = (props) => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, GetDateTime(), "admin", admin);
 
-  const electronicOnly = useSelector(state => state.app.electronicOnly);
-  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
-  const physicalOnly = useSelector(state => state.app.physicalOnly);
-  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
-  const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
+  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  const electronicOnlyMessage = useSelector(state => state.applicationSettings.electronicOnlyMessage);
+  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
+  const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
   // const [editionMessage, setEditionMessage] = useState("");
   const [errEditionMessage, setErrEditionMessage] = useState("");

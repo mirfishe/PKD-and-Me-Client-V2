@@ -5,9 +5,9 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from "react-bootstrap-icons";
 import { Rating } from "@material-ui/lab/";
 import Parse from "html-react-parser";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayDate, DisplayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -27,16 +27,16 @@ const Title = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
-  const siteName = useSelector(state => state.app.siteName);
-  const appName = useSelector(state => state.app.appName);
-  // const applicationVersion = useSelector(state => state.app.applicationVersion);
-  const computerLog = useSelector(state => state.app.computerLog);
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+  // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
+  const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -45,12 +45,12 @@ const Title = (props) => {
   const userID = useSelector(state => state.user.userID);
   // console.log(componentName, GetDateTime(), "userID", userID);
 
-  // const electronicOnly = useSelector(state => state.app.electronicOnly);
-  // const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  // const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
-  // const physicalOnly = useSelector(state => state.app.physicalOnly);
-  // const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
-  // const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
+  // const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  // const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  // const electronicOnlyMessage = useSelector(state => state.applicationSettings.electronicOnlyMessage);
+  // const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  // const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
+  // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
   const [errTitleMessage, setErrTitleMessage] = useState("");
   // const [errEditionMessage, setErrEditionMessage] = useState("");
@@ -80,7 +80,7 @@ const Title = (props) => {
 
     // ! This code no longer works with the current URL setup
     // * If titleParam is a number, then it's the titleID
-    document.title = titleList[0].titleName + " | " + appName + " | " + siteName;
+    document.title = titleList[0].titleName + " | " + applicationName + " | " + siteName;
     titleNameBreadCrumb = titleList[0].titleName;
     titleID = titleList[0].titleID;
     titlePublicationDate = titleList[0].publicationDate;
@@ -102,7 +102,7 @@ const Title = (props) => {
 
     if (IsEmpty(title) === false) {
 
-      document.title = title.titleName + " | " + appName + " | " + siteName;
+      document.title = title.titleName + " | " + applicationName + " | " + siteName;
       titleNameBreadCrumb = title.titleName;
       titleID = title.titleID;
       titlePublicationDate = title.publicationDate;
@@ -114,7 +114,7 @@ const Title = (props) => {
 
     } else {
 
-      document.title = "Title Not Found | " + appName + " | " + siteName;
+      document.title = "Title Not Found | " + applicationName + " | " + siteName;
       console.error("Title not found.");
       // console.log(componentName, GetDateTime(), "titleParam", titleParam);
       // // Display all active titles
@@ -127,7 +127,7 @@ const Title = (props) => {
 
   } else {
 
-    document.title = "All Titles | " + appName + " | " + siteName;
+    document.title = "All Titles | " + applicationName + " | " + siteName;
     // * Display all active titles
     // titleList = [...titleListState];
     titleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);
@@ -580,7 +580,7 @@ const Title = (props) => {
               </Col>
               <Col xs="8">
 
-                {appAllowUserInteractions === true && IsEmpty(title.userReviewCount) === false && title.userReviewCount > 0 && title.userReviewAverage > 0 ?
+                {applicationAllowUserInteractions === true && IsEmpty(title.userReviewCount) === false && title.userReviewCount > 0 && title.userReviewAverage > 0 ?
 
                   <React.Fragment>
 
@@ -591,7 +591,7 @@ const Title = (props) => {
 
                   : null}
 
-                {appAllowUserInteractions === true && IsEmpty(userReviewItem) === false ?
+                {applicationAllowUserInteractions === true && IsEmpty(userReviewItem) === false ?
 
                   <React.Fragment>
 
@@ -602,9 +602,9 @@ const Title = (props) => {
 
                   : null}
 
-                {/* {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
+                {/* {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
 
-                {appAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
+                {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userID) === false && IsEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
                 {IsEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
 
@@ -750,7 +750,7 @@ const Title = (props) => {
 
       </Row>
 
-      {appAllowUserInteractions === true ?
+      {applicationAllowUserInteractions === true ?
 
         <Row>
 
