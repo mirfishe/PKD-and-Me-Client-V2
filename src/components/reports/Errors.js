@@ -120,11 +120,11 @@ const Errors = () => {
             <Table responsive>
               <thead>
                 <tr>
+                  <th>Create Date</th>
                   <th>Operation</th>
                   <th>Component Name</th>
                   <th>Transaction Data</th>
                   <th>Error Data</th>
-                  <th>Create Date</th>
                 </tr>
               </thead>
 
@@ -136,11 +136,11 @@ const Errors = () => {
 
                   return (
                     <tr key={index}>
+                      {IsEmpty(error.createDate) === false ? <td>{error.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{error.createDate}</td>}
                       <td>{error.operation}</td>
                       <td>{error.componentName}</td>
                       <td>{error.transactionData}</td>
                       <td>{error.errorData}</td>
-                      {IsEmpty(error.createDate) === false ? <td>{error.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{error.createDate}</td>}
                     </tr>
                   );
                 })}

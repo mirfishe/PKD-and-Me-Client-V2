@@ -120,10 +120,10 @@ const Logs = () => {
             <Table responsive>
               <thead>
                 <tr>
+                  <th>Create Date</th>
                   <th>Operation</th>
                   <th>Component Name</th>
                   <th>Transaction Data</th>
-                  <th>Create Date</th>
                 </tr>
               </thead>
 
@@ -135,10 +135,10 @@ const Logs = () => {
 
                   return (
                     <tr key={index}>
+                      {IsEmpty(log.createDate) === false ? <td>{log.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{log.createDate}</td>}
                       <td>{log.operation}</td>
                       <td>{log.componentName}</td>
                       <td>{log.transactionData}</td>
-                      {IsEmpty(log.createDate) === false ? <td>{log.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{log.createDate}</td>}
                     </tr>
                   );
                 })}

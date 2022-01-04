@@ -120,12 +120,12 @@ const BrokenLinks = () => {
             <Table responsive>
               <thead>
                 <tr>
+                  <th>Create Date</th>
                   <th>Endpoint</th>
                   <th>Edition ID</th>
                   <th>Title ID</th>
                   <th>Title</th>
                   <th>Image</th>
-                  <th>Create Date</th>
                 </tr>
               </thead>
 
@@ -137,12 +137,12 @@ const BrokenLinks = () => {
 
                   return (
                     <tr key={index}>
+                      {IsEmpty(brokenLink.createDate) === false ? <td>{brokenLink.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{brokenLink.createDate}</td>}
                       <td>{brokenLink.endpoint}</td>
                       <td>{brokenLink.editionID}</td>
                       <td>{brokenLink.titleID}</td>
                       <td>{brokenLink.titleName}</td>
                       <td>{brokenLink.imageName}</td>
-                      {IsEmpty(brokenLink.createDate) === false ? <td>{brokenLink.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{brokenLink.createDate}</td>}
                     </tr>
                   );
                 })}

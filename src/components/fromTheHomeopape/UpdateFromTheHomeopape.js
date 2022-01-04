@@ -734,6 +734,100 @@ const FromTheHomeopape = (props) => {
   };
 
 
+  const setViewed = (itemID, viewed) => {
+    // console.log(componentName, GetDateTime(), "setViewed itemID", itemID);
+    // console.log(componentName, GetDateTime(), "setViewed viewed", viewed);
+
+    clearMessages();
+
+    let viewedValue;
+
+    if (viewed === true || viewed === 1) {
+
+      viewedValue = 1;
+
+    } else {
+
+      viewedValue = 0;
+
+    };
+
+    let url = baseURL + "fromthehomeopape/viewed/";
+
+    if (IsEmpty(itemID) === false && IsEmpty(sessionToken) === false) {
+
+      url = url + itemID;
+      // console.log(componentName, GetDateTime(), "setViewed url", url);
+
+      let recordObject = {
+        viewed: viewedValue
+      };
+
+      fetch(url, {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Authorization": sessionToken
+        }),
+        body: JSON.stringify({ recordObject: recordObject })
+      })
+        .then(response => {
+          // console.log(componentName, GetDateTime(), "setViewed response", response);
+
+          // if (!response.ok) {
+
+          //     throw Error(response.status + " " + response.statusText + " " + response.url);
+
+          // } else {
+
+          // if (response.status === 200) {
+
+          return response.json();
+
+          // } else {
+
+          //     return response.status;
+
+          // };
+
+          // };
+
+        })
+        .then(data => {
+          // console.log(componentName, GetDateTime(), "setViewed data", data);
+
+          addMessage(data.message);
+
+          if (data.transactionSuccess === true) {
+
+            getNews();
+
+            getNewsReview();
+
+          } else {
+
+            // addErrorMessage(data.error);
+            addErrorMessage(data.errorMessages);
+
+          };
+
+        })
+        .catch((error) => {
+          console.error(componentName, GetDateTime(), "setViewed error", error);
+          // console.error(componentName, GetDateTime(), "setViewed error.name", error.name);
+          // console.error(componentName, GetDateTime(), "setViewed error.message", error.message);
+
+          addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
+        });
+
+    };
+
+  };
+
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
@@ -1132,6 +1226,7 @@ const FromTheHomeopape = (props) => {
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
                       <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
                       <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                       {/* {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null} */}
                       {/* {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null} */}

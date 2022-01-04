@@ -120,6 +120,7 @@ const ComputerLogs = () => {
             <Table responsive>
               <thead>
                 <tr>
+                  <th>Last Accessed</th>
                   <th>Title</th>
                   <th>href</th>
                   <th>IP Address</th>
@@ -128,7 +129,6 @@ const ComputerLogs = () => {
                   <th>Postal Code</th>
                   <th>Country</th>
                   <th>Continent</th>
-                  <th>Last Accessed</th>
                 </tr>
               </thead>
 
@@ -140,6 +140,7 @@ const ComputerLogs = () => {
 
                   return (
                     <tr key={index}>
+                      {IsEmpty(computerLog.lastAccessed) === false ? <td>{computerLog.lastAccessed.slice(0, 19).replace("T", " ")}</td> : <td>{computerLog.lastAccessed}</td>}
                       <td>{computerLog.title}</td>
                       <td>{computerLog.href}</td>
                       <td>{computerLog.ipAddress}</td>
@@ -148,7 +149,6 @@ const ComputerLogs = () => {
                       <td>{computerLog.postal}</td>
                       <td>{computerLog.countryName}</td>
                       <td>{computerLog.continentName}</td>
-                      {IsEmpty(computerLog.lastAccessed) === false ? <td>{computerLog.lastAccessed.slice(0, 19).replace("T", " ")}</td> : <td>{computerLog.lastAccessed}</td>}
                     </tr>
                   );
                 })}
