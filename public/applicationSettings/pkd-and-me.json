@@ -1,11 +1,12 @@
 {
-    "resultsFound": true,
-    "message": "Offline AppSettings data used.",
+    "transactionSuccess": true,
+    "errorOccurred": false,
+    "message": "Offline Application Settings data used.",
     "siteName": "Philip K. Dick",
-    "appName": "PKD and Me",
+    "applicationName": "PKD and Me",
     "electronicOnly": false,
     "physicalOnly": false,
-    "appAllowUserInteractions": false,
+    "applicationAllowUserInteractions": true,
     "requireUserLogin": true,
     "menuSettings": {
         "showAllMenuItems": false,

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim, FormatToString } from "../../utilities/SharedFunctions";
-import { createTitleURL, createImageName, LogError } from "../../utilities/AppFunctions";
+import { createTitleURL, createImageName, LogError } from "../../utilities/ApplicationFunctions";
 import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
@@ -15,7 +15,7 @@ const EditTitle = (props) => {
   const componentName = "EditTitle.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -24,11 +24,11 @@ const EditTitle = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const [categoryMessage, setCategoryMessage] = useState("");
   const [errCategoryMessage, setErrCategoryMessage] = useState("");
@@ -104,6 +104,8 @@ const EditTitle = (props) => {
   const [txtTitleURL, setTxtTitleURL] = useState("");
   const [txtAuthorFirstName, setTxtAuthorFirstName] = useState("");
   const [txtAuthorLastName, setTxtAuthorLastName] = useState("");
+  const [txtManuscriptTitle, setTxtManuscriptTitle] = useState("");
+  const [txtWrittenDate, setTxtWrittenDate] = useState("");
   const [txtSubmissionDate, setTxtSubmissionDate] = useState("");
   const [txtPublicationDate, setTxtPublicationDate] = useState("");
   const [txtImageName, setTxtImageName] = useState("");
@@ -114,20 +116,22 @@ const EditTitle = (props) => {
   const [errTitleName, setErrTitleName] = useState("");
   const [errCategoryID, setErrCategoryID] = useState("");
 
-  const [titleItemIndex, setTitleItemIndex] = useState(null);
+  // const [titleItemIndex, setTitleItemIndex] = useState(null);
   const [titleItem, setTitleItem] = useState(null);
-  const [titleID, setTitleID] = useState(null);
-  const [titleName, setTitleName] = useState(null);
-  const [titleSort, setTitleSort] = useState(null);
-  const [titleURL, setTitleURL] = useState(null);
-  const [authorFirstName, setAuthorFirstName] = useState(null);
-  const [authorLastName, setAuthorLastName] = useState(null);
-  const [submissionDate, setSubmissionDate] = useState(null);
-  const [publicationDate, setPublicationDate] = useState(null);
-  const [imageName, setImageName] = useState(null);
-  const [categoryID, setCategoryID] = useState(null);
-  const [shortDescription, setShortDescription] = useState(null);
-  const [urlPKDWeb, setUrlPKDWeb] = useState(null);
+  // const [titleID, setTitleID] = useState(null);
+  // const [titleName, setTitleName] = useState(null);
+  // const [titleSort, setTitleSort] = useState(null);
+  // const [titleURL, setTitleURL] = useState(null);
+  // const [authorFirstName, setAuthorFirstName] = useState(null);
+  // const [authorLastName, setAuthorLastName] = useState(null);
+  // const [manuscriptTitle, setManuscriptTitle] = useState(null);
+  // const [writtenDate, setWrittenDate] = useState(null);
+  // const [submissionDate, setSubmissionDate] = useState(null);
+  // const [publicationDate, setPublicationDate] = useState(null);
+  // const [imageName, setImageName] = useState(null);
+  // const [categoryID, setCategoryID] = useState(null);
+  // const [shortDescription, setShortDescription] = useState(null);
+  // const [urlPKDWeb, setUrlPKDWeb] = useState(null);
   const [active, setActive] = useState(null);
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
@@ -162,26 +166,40 @@ const EditTitle = (props) => {
 
         setTitleItem(titleObject);
 
-        setTitleID(titleObject.titleID);
-        setTitleName(titleObject.titleName);
-        setTitleSort(titleObject.titleSort);
-        setTitleURL(titleObject.titleURL);
-        setAuthorFirstName(titleObject.authorFirstName);
-        setAuthorLastName(titleObject.authorLastName);
-        setSubmissionDate(titleObject.submissionDate);
-        setPublicationDate(titleObject.publicationDate);
-        setImageName(titleObject.imageName);
-        setCategoryID(titleObject.categoryID);
-        setShortDescription(titleObject.shortDescription);
-        setUrlPKDWeb(titleObject.urlPKDWeb);
+        // setTitleID(titleObject.titleID);
+        // setTitleName(titleObject.titleName);
+        // setTitleSort(titleObject.titleSort);
+        // setTitleURL(titleObject.titleURL);
+        // setAuthorFirstName(titleObject.authorFirstName);
+        // setAuthorLastName(titleObject.authorLastName);
+        // setManuscriptTitle(titleObject.manuscriptTitle);
+        // setWrittenDate(titleObject.writtenDate);
+        // setSubmissionDate(titleObject.submissionDate);
+        // setPublicationDate(titleObject.publicationDate);
+        // setImageName(titleObject.imageName);
+        // setCategoryID(titleObject.categoryID);
+        // setShortDescription(titleObject.shortDescription);
+        // setUrlPKDWeb(titleObject.urlPKDWeb);
         setActive(titleObject.active);
 
         setTxtTitleName(titleObject.titleName);
         setTxtTitleURL(titleObject.titleURL);
         setTxtAuthorFirstName(titleObject.authorFirstName);
         setTxtAuthorLastName(titleObject.authorLastName);
+        setTxtManuscriptTitle(titleObject.manuscriptTitle);
+        setTxtWrittenDate(titleObject.writtenDate);
         setTxtSubmissionDate(titleObject.submissionDate);
         setTxtPublicationDate(titleObject.publicationDate);
+
+        if (IsEmpty(titleObject.writtenDate) === false) {
+
+          setTxtWrittenDate(FormatToString(titleObject.writtenDate).substring(0, 10));
+
+        } else {
+
+          setTxtWrittenDate("");
+
+        };
 
         if (IsEmpty(titleObject.submissionDate) === false) {
 
@@ -224,18 +242,20 @@ const EditTitle = (props) => {
     setErrCategoryID("");
 
     setTitleItem(null);
-    setTitleID(null);
-    setTitleName(null);
-    setTitleSort(null);
-    setTitleURL(null);
-    setAuthorFirstName(null);
-    setAuthorLastName(null);
-    setSubmissionDate(null);
-    setPublicationDate(null);
-    setImageName(null);
-    setCategoryID(null);
-    setShortDescription(null);
-    setUrlPKDWeb(null);
+    // setTitleID(null);
+    // setTitleName(null);
+    // setTitleSort(null);
+    // setTitleURL(null);
+    // setAuthorFirstName(null);
+    // setAuthorLastName(null);
+    // setManuscriptTitle(null);
+    // setWrittenDate(null);
+    // setSubmissionDate(null);
+    // setPublicationDate(null);
+    // setImageName(null);
+    // setCategoryID(null);
+    // setShortDescription(null);
+    // setUrlPKDWeb(null);
     setActive(null);
 
     let titleNameValidated = false;
@@ -358,6 +378,28 @@ const EditTitle = (props) => {
 
         };
 
+        // * If the user doesn't enter a manuscript title, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtManuscriptTitle) === false) {
+
+          if (FormatTrim(txtManuscriptTitle).length !== 0) {
+
+            Object.assign(recordObject, { manuscriptTitle: FormatTrim(txtManuscriptTitle) });
+
+          };
+
+        };
+
+        // * If the user doesn't enter a written date, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtWrittenDate) === false) {
+
+          if (FormatTrim(txtWrittenDate).length !== 0) {
+
+            Object.assign(recordObject, { writtenDate: FormatTrim(txtWrittenDate) });
+
+          };
+
+        };
+
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtSubmissionDate) === false) {
 
@@ -443,24 +485,26 @@ const EditTitle = (props) => {
             .then(data => {
               // console.log(componentName, GetDateTime(), "addTitle data", data);
 
-              setTitleRecordAdded(data.recordAdded);
+              setTitleRecordAdded(data.transactionSuccess);
               addMessage(data.message);
 
-              if (data.recordAdded === true) {
+              if (data.transactionSuccess === true) {
 
                 setTitleItem(data.records[0]);
-                setTitleID(data.records[0].titleID);
-                setTitleName(data.records[0].titleName);
-                setTitleSort(data.records[0].titleSort);
-                setTitleURL(data.records[0].titleURL);
-                setAuthorFirstName(data.records[0].authorFirstName);
-                setAuthorLastName(data.records[0].authorLastName);
-                setSubmissionDate(data.records[0].submissionDate);
-                setPublicationDate(data.records[0].publicationDate);
-                setImageName(data.records[0].imageName);
-                setCategoryID(data.records[0].categoryID);
-                setShortDescription(data.records[0].shortDescription);
-                setUrlPKDWeb(data.records[0].urlPKDWeb);
+                // setTitleID(data.records[0].titleID);
+                // setTitleName(data.records[0].titleName);
+                // setTitleSort(data.records[0].titleSort);
+                // setTitleURL(data.records[0].titleURL);
+                // setAuthorFirstName(data.records[0].authorFirstName);
+                // setAuthorLastName(data.records[0].authorLastName);
+                // setManuscriptTitle(data.records[0].manuscriptTitle);
+                // setWrittenDate(data.records[0].writtenDate);
+                // setSubmissionDate(data.records[0].submissionDate);
+                // setPublicationDate(data.records[0].publicationDate);
+                // setImageName(data.records[0].imageName);
+                // setCategoryID(data.records[0].categoryID);
+                // setShortDescription(data.records[0].shortDescription);
+                // setUrlPKDWeb(data.records[0].urlPKDWeb);
                 setActive(data.records[0].active);
 
                 let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
@@ -471,7 +515,7 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
+                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
 
                 // ? Add to local storage also? -- 03/06/2021 MF
 
@@ -551,18 +595,20 @@ const EditTitle = (props) => {
     setErrCategoryID("");
 
     setTitleItem(null);
-    setTitleID(null);
-    setTitleName(null);
-    setTitleSort(null);
-    setTitleURL(null);
-    setAuthorFirstName(null);
-    setAuthorLastName(null);
-    setSubmissionDate(null);
-    setPublicationDate(null);
-    setImageName(null);
-    setCategoryID(null);
-    setShortDescription(null);
-    setUrlPKDWeb(null);
+    // setTitleID(null);
+    // setTitleName(null);
+    // setTitleSort(null);
+    // setTitleURL(null);
+    // setAuthorFirstName(null);
+    // setAuthorLastName(null);
+    // setManuscriptTitle(null);
+    // setWrittenDate(null);
+    // setSubmissionDate(null);
+    // setPublicationDate(null);
+    // setImageName(null);
+    // setCategoryID(null);
+    // setShortDescription(null);
+    // setUrlPKDWeb(null);
     setActive(null);
 
     let titleNameValidated = false;
@@ -686,6 +732,28 @@ const EditTitle = (props) => {
 
         };
 
+        // * If the user doesn't enter a manuscript title, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtManuscriptTitle) === false) {
+
+          if (FormatTrim(txtManuscriptTitle).length !== 0) {
+
+            Object.assign(recordObject, { manuscriptTitle: FormatTrim(txtManuscriptTitle) });
+
+          };
+
+        };
+
+        // * If the user doesn't enter a written date, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtWrittenDate) === false) {
+
+          if (FormatTrim(txtWrittenDate).length !== 0) {
+
+            Object.assign(recordObject, { writtenDate: FormatTrim(txtWrittenDate) });
+
+          };
+
+        };
+
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtSubmissionDate) === false) {
 
@@ -773,24 +841,26 @@ const EditTitle = (props) => {
             .then(data => {
               // console.log(componentName, GetDateTime(), "updateTitle data", data);
 
-              setTitleRecordUpdated(data.recordUpdated);
+              setTitleRecordUpdated(data.transactionSuccess);
               addMessage(data.message);
 
-              if (data.recordUpdated === true) {
+              if (data.transactionSuccess === true) {
 
                 setTitleItem(data.records[0]);
-                // setTitleID(data.records[0].titleID);
-                setTitleName(data.records[0].titleName);
-                setTitleSort(data.records[0].titleSort);
-                setTitleURL(data.records[0].titleURL);
-                setAuthorFirstName(data.records[0].authorFirstName);
-                setAuthorLastName(data.records[0].authorLastName);
-                setSubmissionDate(data.records[0].submissionDate);
-                setPublicationDate(data.records[0].publicationDate);
-                setImageName(data.records[0].imageName);
-                setCategoryID(data.records[0].categoryID);
-                setShortDescription(data.records[0].shortDescription);
-                setUrlPKDWeb(data.records[0].urlPKDWeb);
+                // // setTitleID(data.records[0].titleID);
+                // setTitleName(data.records[0].titleName);
+                // setTitleSort(data.records[0].titleSort);
+                // setTitleURL(data.records[0].titleURL);
+                // setAuthorFirstName(data.records[0].authorFirstName);
+                // setAuthorLastName(data.records[0].authorLastName);
+                // setManuscriptTitle(data.records[0].manuscriptTitle);
+                // setWrittenDate(data.records[0].writtenDate);
+                // setSubmissionDate(data.records[0].submissionDate);
+                // setPublicationDate(data.records[0].publicationDate);
+                // setImageName(data.records[0].imageName);
+                // setCategoryID(data.records[0].categoryID);
+                // setShortDescription(data.records[0].shortDescription);
+                // setUrlPKDWeb(data.records[0].urlPKDWeb);
                 setActive(data.records[0].active);
 
                 // console.log(componentName, GetDateTime(), "updateTitle categoryList", categoryList);
@@ -804,7 +874,7 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "updateTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
 
                 // ? Update local storage also? -- 03/06/2021 MF
 
@@ -938,11 +1008,11 @@ const EditTitle = (props) => {
           .then(data => {
             // console.log(componentName, GetDateTime(), "deleteTitle data", data);
 
-            setTitleRecordDeleted(data.recordDeleted);
+            setTitleRecordDeleted(data.transactionSuccess);
 
             addMessage(data.message); // * Never seen by the user if the delete was successful. -- 03/06/2021 MF
 
-            if (data.recordDeleted === true) {
+            if (data.transactionSuccess === true) {
 
               dispatch(deleteStateTitle(props.titleID));
               // dispatch(deleteStateTitle(titleItemIndex));
@@ -1040,11 +1110,11 @@ const EditTitle = (props) => {
           .then(data => {
             // console.log(componentName, GetDateTime(), "deleteEdition data", data);
 
-            setEditionRecordDeleted(data.recordDeleted);
+            setEditionRecordDeleted(data.transactionSuccess);
 
             addMessage(data.message); // Never seen by the user if the delete was successful
 
-            if (data.recordDeleted === true) {
+            if (data.transactionSuccess === true) {
 
               dispatch(deleteStateEdition(props.editionID));
               // dispatch(deleteStateEdition(editionItemIndex));
@@ -1085,7 +1155,20 @@ const EditTitle = (props) => {
       setErrTitleName("");
       setErrCategoryID("");
       setTitleRecordAdded(null);
-      // setModal(false);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
       setModal(!modal);
 
     };
@@ -1103,7 +1186,20 @@ const EditTitle = (props) => {
       setErrTitleName("");
       setErrCategoryID("");
       setTitleRecordUpdated(null);
-      // setModal(false);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
       setModal(!modal);
 
     };
@@ -1114,7 +1210,20 @@ const EditTitle = (props) => {
       setErrTitleName("");
       setErrCategoryID("");
       setTitleRecordDeleted(null);
-      // setModal(false);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
       setModal(!modal);
 
     };
@@ -1126,7 +1235,7 @@ const EditTitle = (props) => {
 
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -1147,13 +1256,13 @@ const EditTitle = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null}
 
-      {appAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>{IsEmpty(titleItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Title</ModalHeader>
@@ -1175,7 +1284,7 @@ const EditTitle = (props) => {
 
             <FormGroup>
               <Label for="txtTitleURL">Title URL</Label>
-              <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(createTitleURL(txtTitleName)); }}>Create Title URL</Button>
+              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(createTitleURL(txtTitleName)); }}>Create Title URL</Button>
               <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(event.target.value); }} />
             </FormGroup>
 
@@ -1206,6 +1315,16 @@ const EditTitle = (props) => {
               {IsEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
             </FormGroup>
 
+            <FormGroup>
+              <Label for="txtManuscriptTitle">Manuscript Title</Label>
+              <Input type="text" id="txtManuscriptTitle" value={txtManuscriptTitle} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtManuscriptTitle(event.target.value); }} />
+            </FormGroup>
+
+            <FormGroup>
+              <Label for="txtWrittenDate">Manuscript Written Date</Label>
+              <Input type="date" id="txtWrittenDate" value={txtWrittenDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtWrittenDate(event.target.value); }} />
+            </FormGroup>
+
             <FormGroup row>
               <Col>
 
@@ -1224,9 +1343,9 @@ const EditTitle = (props) => {
 
             <FormGroup>
               <Label for="txtImageName">Image Name</Label>
-              <Button outline size="small" color="secondary" className="ml-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ /*createImageName(txtTitleName);*/ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
+              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ /*createImageName(txtTitleName);*/ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
-              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt={txtTitleName} className="coverThumbnail" /> : <Image size="150" className="noImageIcon" />}
+              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt={txtTitleName} className="cover-thumbnail" /> : <Image size="150" className="no-image-icon" />}
             </FormGroup>
 
             <FormGroup>
@@ -1250,12 +1369,19 @@ const EditTitle = (props) => {
                 <React.Fragment>
 
                   <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Update Title</Button>
+
                   {IsEmpty(active) === false && (active === false || active === 0) ?
+
                     <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Undelete/Restore Title</Button>
+
                     : null}
+
                   {IsEmpty(active) === false && (active === true || active === 1) ?
+
                     <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(true); }}>Delete Title</Button>
+
                     : null}
+
                   <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ deleteTitle(); }}>Hard Delete Title</Button>
 
                 </React.Fragment>

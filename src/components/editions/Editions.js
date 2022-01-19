@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
 import Parse from "html-react-parser";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayDate, DisplayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -19,18 +19,18 @@ const Editions = (props) => {
   const componentName = "Editions.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const siteName = useSelector(state => state.app.siteName);
-  const appName = useSelector(state => state.app.appName);
-  const applicationVersion = useSelector(state => state.app.applicationVersion);
-  const computerLog = useSelector(state => state.app.computerLog);
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+  // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
+  const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -39,12 +39,12 @@ const Editions = (props) => {
 
   const editionSortBy = useSelector(state => state.editions.editionSortBy);
 
-  const electronicOnly = useSelector(state => state.app.electronicOnly);
-  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
-  const physicalOnly = useSelector(state => state.app.physicalOnly);
-  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
-  const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
+  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  const electronicOnlyMessage = useSelector(state => state.applicationSettings.electronicOnlyMessage);
+  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
+  const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
   const [errEditionMessage, setErrEditionMessage] = useState("");
 
@@ -359,7 +359,7 @@ const Editions = (props) => {
 
     // ! This code no longer works with the current URL setup
     // * If mediaParam is a number, then it's the mediaID
-    document.title = editionList[0].medium.media + " | " + appName + " | " + siteName;
+    document.title = editionList[0].medium.media + " | " + applicationName + " | " + siteName;
     editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
 
   } else if (IsEmpty(mediaParam) === false) {
@@ -371,12 +371,12 @@ const Editions = (props) => {
 
     if (IsEmpty(media) === false) {
 
-      document.title = media.media + " | " + appName + " | " + siteName;
+      document.title = media.media + " | " + applicationName + " | " + siteName;
       editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
 
     } else {
 
-      document.title = "Media Not Found | " + appName + " | " + siteName;
+      document.title = "Media Not Found | " + applicationName + " | " + siteName;
       console.error("Media not found.");
       // * Display all active editions
       // editionList = editionListState;
@@ -386,7 +386,7 @@ const Editions = (props) => {
 
   } else {
 
-    document.title = "All Editions | " + appName + " | " + siteName;
+    document.title = "All Editions | " + applicationName + " | " + siteName;
     // * Display all active editions
     editionList = [...editionListState];
     // editionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
@@ -429,7 +429,7 @@ const Editions = (props) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -482,7 +482,8 @@ const Editions = (props) => {
 
       title: "Editions",
       href: href,
-      applicationVersion: applicationVersion,
+      // applicationVersion: props.applicationVersion,
+      applicationVersion: process.env.REACT_APP_VERSION,
 
       lastAccessed: GetDateTime(),
 
@@ -593,23 +594,23 @@ const Editions = (props) => {
         <Col xs="12">
 
           <h4 className="text-center mb-4">{IsEmpty(mediaParam) === false && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
-            <span className="text-muted ml-2 smallText">Sort By
+            <span className="text-muted ms-2 small-text">Sort By
 
               {editionSortBy !== "releaseDate" ?
 
-                <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSortBy("releaseDate")); }}>Release Date</a>
+                <a href="#" className="ms-2" onClick={(event) => { event.preventDefault(); sortEditions("releaseDate"); dispatch(setEditionSortBy("releaseDate")); }}>Release Date</a>
 
                 : null}
 
               {editionSortBy !== "publicationDate" ?
 
-                <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("publicationDate"); dispatch(setEditionSortBy("publicationDate")); dispatch(setTitleSortBy("publicationDate")); }}>Publication Date</a>
+                <a href="#" className="ms-2" onClick={(event) => { event.preventDefault(); sortEditions("publicationDate"); dispatch(setEditionSortBy("publicationDate")); dispatch(setTitleSortBy("publicationDate")); }}>Publication Date</a>
 
                 : null}
 
               {editionSortBy !== "titleName" ?
 
-                <a href="#" className="text-decoration-none ml-2" onClick={(event) => { event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSortBy("titleName")); dispatch(setTitleSortBy("titleName")); }}>Title</a>
+                <a href="#" className="ms-2" onClick={(event) => { event.preventDefault(); sortEditions("titleName"); dispatch(setEditionSortBy("titleName")); dispatch(setTitleSortBy("titleName")); }}>Title</a>
 
                 : null}
 
@@ -670,7 +671,7 @@ const Editions = (props) => {
 
                     : null}
 
-                    <CardBody className="editionImage">
+                    <CardBody className="edition-image">
 
                     {IsEmpty(edition.imageLinkLarge) === false ? 
                     
@@ -679,7 +680,7 @@ const Editions = (props) => {
                     :
 
                     <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="coverDisplay" /> : <Image className="noImageIcon"/>}
+                    {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
                     </a>
 
                     }
@@ -699,7 +700,7 @@ const Editions = (props) => {
 
                 {IsEmpty(activeString) === false ?
 
-                  <CardHeader className="cardHeader inactiveItem">
+                  <CardHeader className="card-header inactive-item">
                     ({activeString})
                   </CardHeader>
 
@@ -720,7 +721,7 @@ const Editions = (props) => {
                       :
 
                       <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {IsEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="editionImage" /> : <Image className="noImageIcon" />}
+                        {IsEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                       </a>
 
                     }
@@ -730,15 +731,15 @@ const Editions = (props) => {
                     <CardBody>
 
                       <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
-                        {IsEmpty(edition.editionPublicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(edition.editionPublicationDate)})</span> : null}
+                        {IsEmpty(edition.editionPublicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(edition.editionPublicationDate)})</span> : null}
                       </CardText>
 
-                      {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smallerText">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
+                      {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
 
                       {IsEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                          <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchaseImage my-2" /><br />
+                          <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                         </a>
 
                         :
@@ -753,7 +754,7 @@ const Editions = (props) => {
 
                       {/* {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
-                      {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null}
+                      {/* {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
                     </CardBody>
                   </Col>
@@ -761,7 +762,7 @@ const Editions = (props) => {
 
                 {IsEmpty(mediaParam) === false ?
 
-                  <CardFooter className="cardFooter">
+                  <CardFooter className="card-footer">
 
                     <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
 

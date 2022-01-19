@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem, NavLink } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -19,18 +19,18 @@ const Titles = (props) => {
   const componentName = "Titles.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const siteName = useSelector(state => state.app.siteName);
-  const appName = useSelector(state => state.app.appName);
-  const applicationVersion = useSelector(state => state.app.applicationVersion);
-  const computerLog = useSelector(state => state.app.computerLog);
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+  // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
+  const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -39,12 +39,12 @@ const Titles = (props) => {
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
-  const electronicOnly = useSelector(state => state.app.electronicOnly);
-  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  // const electronicOnlyMessage = useSelector(state => state.app.electronicOnlyMessage);
-  const physicalOnly = useSelector(state => state.app.physicalOnly);
-  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
-  // const physicalOnlyMessage = useSelector(state => state.app.physicalOnlyMessage);
+  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  // const electronicOnlyMessage = useSelector(state => state.applicationSettings.electronicOnlyMessage);
+  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
+  // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
   // const [errCategoryMessage, setErrCategoryMessage] = useState("");
   const [errTitleMessage, setErrTitleMessage] = useState("");
@@ -170,7 +170,7 @@ const Titles = (props) => {
 
     // ! This code no longer works with the current URL setup
     // * If categoryParam is a number, then it's the categoryID
-    document.title = titleList[0].category + " | " + appName + " | " + siteName;
+    document.title = titleList[0].category + " | " + applicationName + " | " + siteName;
     titleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
 
   } else if (IsEmpty(categoryParam) === false) {
@@ -182,12 +182,12 @@ const Titles = (props) => {
 
     if (IsEmpty(category) === false) {
 
-      document.title = category.category + " | " + appName + " | " + siteName;
+      document.title = category.category + " | " + applicationName + " | " + siteName;
       titleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
 
     } else {
 
-      document.title = "Category Not Found | " + appName + " | " + siteName;
+      document.title = "Category Not Found | " + applicationName + " | " + siteName;
       console.error("Category not found.");
       // // Display all active titles
       // titleList = titleListState;
@@ -199,7 +199,7 @@ const Titles = (props) => {
 
   } else {
 
-    document.title = "All Titles | " + appName + " | " + siteName;
+    document.title = "All Titles | " + applicationName + " | " + siteName;
     // Display all active titles
     titleList = [...titleListState];
     // titleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);
@@ -227,7 +227,7 @@ const Titles = (props) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
   };
 
@@ -280,7 +280,8 @@ const Titles = (props) => {
 
       title: "Titles",
       href: href,
-      applicationVersion: applicationVersion,
+      // applicationVersion: props.applicationVersion,
+      applicationVersion: process.env.REACT_APP_VERSION,
 
       lastAccessed: GetDateTime(),
 
@@ -396,17 +397,17 @@ const Titles = (props) => {
 
             {IsEmpty(admin) === false && admin === true ? <EditTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
 
-            <span className="text-muted ml-2 smallText">Sort By&nbsp;
+            <span className="text-muted ms-2 small-text">Sort By&nbsp;
 
               {titleSortBy !== "publicationDate" ?
 
-                <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
+                <a href="#" onClick={(event) => { event.preventDefault(); sortTitles("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
 
                 : null}
 
               {titleSortBy !== "titleName" ?
 
-                <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortTitles("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
+                <a href="#" onClick={(event) => { event.preventDefault(); sortTitles("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
 
                 : null}
 
@@ -474,7 +475,7 @@ const Titles = (props) => {
               {/* <CardBody>
 
                         <Link to={title.titleURL}>
-                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
                         </Link>
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
 
@@ -492,7 +493,7 @@ const Titles = (props) => {
 
                 {IsEmpty(activeString) === false ?
 
-                  <CardHeader className="cardHeader inactiveItem">
+                  <CardHeader className="card-header inactive-item">
                     ({activeString})
                   </CardHeader>
 
@@ -503,7 +504,7 @@ const Titles = (props) => {
 
                     <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
 
-                      {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="noImageIcon" />}
+                      {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
 
                     </Link>
 
@@ -515,11 +516,11 @@ const Titles = (props) => {
 
                       <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
 
-                        {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
+                        {IsEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
 
-                      <CardText className="smallerText">{title.authorFirstName} {title.authorLastName}</CardText>
+                      <CardText className="smaller-text">{title.authorFirstName} {title.authorLastName}</CardText>
 
-                      <CardText className="smallerText">{editionsAvailable}<span> </span>
+                      <CardText className="smaller-text">{editionsAvailable}<span> </span>
 
                         {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
 
@@ -527,7 +528,7 @@ const Titles = (props) => {
 
                         edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
 
-                      {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                      {/* {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null} */}
 
                       {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
@@ -539,7 +540,7 @@ const Titles = (props) => {
 
                 {IsEmpty(categoryParam) === false ?
 
-                  <CardFooter className="cardFooter">
+                  <CardFooter className="card-footer">
 
                     <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
 

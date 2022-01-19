@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-import { HouseFill } from "react-bootstrap-icons";
-import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavbarText, Alert, Button } from "reactstrap";
-import AppSettings from "./app/environment";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+// import { HouseFill } from "react-bootstrap-icons";
+import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
+import applicationSettings from "./app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./utilities/SharedFunctions";
-import { LogError } from "./utilities/AppFunctions";
-import { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, setAppOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/appSlice";
+import { LogError } from "./utilities/ApplicationFunctions";
+import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
-import LoadAppSettings from "./components/loadData/LoadAppSettings";
+import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
 import LoadUserReviews from "./components/loadData/LoadUserReviews";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "./app/userSlice";
@@ -19,9 +19,8 @@ import About from "./content/About";
 import Homeopape from "./content/Homeopape";
 import Dickian from "./content/Dickian";
 import FormatPost from "./components/socialMedia/FormatPost";
-import AddCategory from "./components/categories/AddCategory";
-import AddMedia from "./components/media/AddMedia";
-// import AddTitle from "./components/titles/AddTitle";
+import EditCategory from "./components/categories/EditCategory";
+import EditMedia from "./components/media/EditMedia";
 import EditTitle from "./components/titles/EditTitle";
 import Category from "./components/categories/Category";
 import Media from "./components/media/Media";
@@ -34,10 +33,16 @@ import EditUser from "./components/users/EditUser";
 import Checklist from "./components/checklist/Checklist";
 import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
 import AddComment from "./components/comments/AddComment";
+import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
+import Comments from "./components/comments/Comments";
 import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
-import Reports from "./components/reports/Reports";
+import Terms from "./components/terms/Terms";
+import BrokenLinks from "./components/reports/BrokenLinks";
+import ComputerLogs from "./components/reports/ComputerLogs";
+import Logs from "./components/reports/Logs";
+import Errors from "./components/reports/Errors";
 
-function App(props) {
+function App() {
 
   const componentName = "App.js";
 
@@ -50,13 +55,13 @@ function App(props) {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
-  const computerLog = useSelector(state => state.app.computerLog);
-  const locationLogged = useSelector(state => state.app.locationLogged);
+  const computerLog = useSelector(state => state.applicationSettings.computerLog);
+  const locationLogged = useSelector(state => state.applicationSettings.locationLogged);
 
-  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const firstName = useSelector(state => state.user.firstName);
   // console.log(componentName, GetDateTime(), "firstName", firstName);
@@ -69,17 +74,17 @@ function App(props) {
   const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
   const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
 
-  const electronicOnly = useSelector(state => state.app.electronicOnly);
-  const userElectronicOnly = useSelector(state => state.app.userElectronicOnly);
-  const physicalOnly = useSelector(state => state.app.physicalOnly);
-  const userPhysicalOnly = useSelector(state => state.app.userPhysicalOnly);
+  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
 
   const userLoaded = useSelector(state => state.user.userLoaded);
   const checklistLoaded = useSelector(state => state.user.checklistLoaded);
 
-  let showAllMenuItems = useSelector(state => state.app.menuSettings.showAllMenuItems);
+  let showAllMenuItems = useSelector(state => state.applicationSettings.menuSettings.showAllMenuItems);
 
-  let showNew = useSelector(state => state.app.menuSettings.showNew);
+  let showNew = useSelector(state => state.applicationSettings.menuSettings.showNew);
   // console.log(componentName, GetDateTime(), "showNew", showNew);
 
   // * show New page unless set specifically to false. -- 03/06/2021 MF
@@ -89,7 +94,7 @@ function App(props) {
 
   };
 
-  let showAbout = useSelector(state => state.app.menuSettings.showAbout);
+  let showAbout = useSelector(state => state.applicationSettings.menuSettings.showAbout);
   // console.log(componentName, GetDateTime(), "showAbout", showAbout);
 
   // * show About page unless set specifically to false. -- 03/06/2021 MF
@@ -99,28 +104,28 @@ function App(props) {
 
   };
 
-  let showHomeopape = useSelector(state => state.app.menuSettings.showHomeopape);
+  let showHomeopape = useSelector(state => state.applicationSettings.menuSettings.showHomeopape);
   // console.log(componentName, GetDateTime(), "showHomeopape", showHomeopape);
-  let showDickian = useSelector(state => state.app.menuSettings.showDickian);
+  let showDickian = useSelector(state => state.applicationSettings.menuSettings.showDickian);
   // console.log(componentName, GetDateTime(), "showDickian", showDickian);
 
-  let showAddCategory = useSelector(state => state.app.menuSettings.showAddCategory);
-  // console.log(componentName, GetDateTime(), "showAddCategory", showAddCategory);
-  let showAddMedia = useSelector(state => state.app.menuSettings.showAddMedia);
-  let showAddTitle = useSelector(state => state.app.menuSettings.showAddTitle);
-  let showAddEdition = useSelector(state => state.app.menuSettings.showAddEdition);
+  let showEditCategory = useSelector(state => state.applicationSettings.menuSettings.showEditCategory);
+  // console.log(componentName, GetDateTime(), "showEditCategory", showEditCategory);
+  let showEditMedia = useSelector(state => state.applicationSettings.menuSettings.showEditMedia);
+  let showEditTitle = useSelector(state => state.applicationSettings.menuSettings.showEditTitle);
+  let showEditEdition = useSelector(state => state.applicationSettings.menuSettings.showEditEdition);
 
-  let showAllCategories = useSelector(state => state.app.menuSettings.showAllCategories);
-  let showAllMedia = useSelector(state => state.app.menuSettings.showAllMedia);
-
-  // ! This route no longer works. -- 03/06/2021 MF
-  let showAllTitles = useSelector(state => state.app.menuSettings.showAllTitles);
+  let showAllCategories = useSelector(state => state.applicationSettings.menuSettings.showAllCategories);
+  let showAllMedia = useSelector(state => state.applicationSettings.menuSettings.showAllMedia);
 
   // ! This route no longer works. -- 03/06/2021 MF
-  let showAllEditions = useSelector(state => state.app.menuSettings.showAllEditions);
+  let showAllTitles = useSelector(state => state.applicationSettings.menuSettings.showAllTitles);
 
-  let showUserPhysicalOnly = useSelector(state => state.app.menuSettings.showUserPhysicalOnly);
-  let showUserElectronicOnly = useSelector(state => state.app.menuSettings.showUserElectronicOnly);
+  // ! This route no longer works. -- 03/06/2021 MF
+  let showAllEditions = useSelector(state => state.applicationSettings.menuSettings.showAllEditions);
+
+  let showUserPhysicalOnly = useSelector(state => state.applicationSettings.menuSettings.showUserPhysicalOnly);
+  let showUserElectronicOnly = useSelector(state => state.applicationSettings.menuSettings.showUserElectronicOnly);
 
   const urlLookup = useSelector(state => state.urls.arrayURLs);
   const pageURL = useSelector(state => state.urls.pageURL);
@@ -130,13 +135,13 @@ function App(props) {
 
   // ! Loading the routerBaseName from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const routerBaseName = useSelector(state => state.app.routerBaseName);
-  const routerBaseName = AppSettings.routerBaseName;
+  // const routerBaseName = useSelector(state => state.applicationSettings.routerBaseName);
+  const routerBaseName = applicationSettings.routerBaseName;
 
   // ! Loading the defaultPageComponent from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const defaultPageComponent = useSelector(state => state.app.defaultPageComponent);
-  const defaultPageComponent = AppSettings.defaultPageComponent;
+  // const defaultPageComponent = useSelector(state => state.applicationSettings.defaultPageComponent);
+  const defaultPageComponent = applicationSettings.defaultPageComponent;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -158,28 +163,28 @@ function App(props) {
   const [url2Loaded, setURL2Loaded] = useState(false);
 
 
-  useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect props.applicationVersion", props.applicationVersion);
+  // useEffect(() => {
+  //   // console.log(componentName, GetDateTime(), "useEffect props.applicationVersion", props.applicationVersion);
 
-    if (IsEmpty(props.applicationVersion) === false) {
+  //   if (IsEmpty(props.applicationVersion) === false) {
 
-      dispatch(setApplicationVersion(props.applicationVersion));
+  //     dispatch(setApplicationVersion(props.applicationVersion));
 
-    };
+  //   };
 
-  }, [props.applicationVersion]);
+  // }, [props.applicationVersion]);
 
 
-  useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect props.copyrightYear", props.copyrightYear);
+  // useEffect(() => {
+  //   // console.log(componentName, GetDateTime(), "useEffect props.copyrightYear", props.copyrightYear);
 
-    if (IsEmpty(props.copyrightYear) === false) {
+  //   if (IsEmpty(props.copyrightYear) === false) {
 
-      dispatch(setCopyrightYear(props.copyrightYear));
+  //     dispatch(setCopyrightYear(props.copyrightYear));
 
-    };
+  //   };
 
-  }, [props.copyrightYear]);
+  // }, [props.copyrightYear]);
 
 
   useEffect(() => {
@@ -308,7 +313,8 @@ function App(props) {
 
       title: "Homepage",
       href: href,
-      applicationVersion: props.applicationVersion,
+      // applicationVersion: props.applicationVersion,
+      applicationVersion: process.env.REACT_APP_VERSION,
 
       lastAccessed: GetDateTime(),
 
@@ -467,10 +473,10 @@ function App(props) {
         .then(results => {
           // console.log(componentName, GetDateTime(), "getUser results", results);
 
-          setUserResultsFound(results.resultsFound);
+          setUserResultsFound(results.transactionSuccess);
           // addMessage(results.message);
 
-          if (IsEmpty(results) === false && results.resultsFound === true) {
+          if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
             if (results.active === true || results.active === 1) {
 
@@ -494,7 +500,7 @@ function App(props) {
             };
 
           } else {
-            // console.log(componentName, GetDateTime(), "getUser results.resultsFound !== true", results.message);
+            // console.log(componentName, GetDateTime(), "getUser results.transactionSuccess !== true", results.message);
 
             // addErrorMessage(results.message);
             logOut();
@@ -562,15 +568,15 @@ function App(props) {
         .then(results => {
           // console.log(componentName, GetDateTime(), "getChecklist results", results);
 
-          setChecklistResultsFound(results.resultsFound);
+          setChecklistResultsFound(results.transactionSuccess);
           // setChecklistMessage(results.message);
 
-          if (IsEmpty(results) === false && results.resultsFound === true) {
+          if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
             dispatch(loadArrayChecklist(results.records));
 
           } else {
-            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", results.message);
+            console.log(componentName, GetDateTime(), "getChecklist error", results.message);
 
             // addErrorMessage(results.message);
 
@@ -595,7 +601,7 @@ function App(props) {
 
   useEffect(() => {
 
-    if (appAllowUserInteractions === true && IsEmpty(localStorage.getItem("token")) === false) {
+    if (applicationAllowUserInteractions === true && IsEmpty(localStorage.getItem("token")) === false) {
 
       dispatch(setSessionToken(localStorage.getItem("token")));
       // console.log(componentName, GetDateTime(), "componentDidMount localStorage token", localStorage.getItem("token"));
@@ -637,7 +643,7 @@ function App(props) {
 
     if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
 
-      dispatch(setAppOffline(true));
+      dispatch(setApplicationOffline(true));
 
     };
 
@@ -673,164 +679,207 @@ function App(props) {
     <BrowserRouter basename={routerBaseName}>
       <Navbar color="light" light>
         <Nav>
-          <NavbarBrand href="/" className="mx-3">
+
+          {/* <NavbarBrand href="/">
             <HouseFill color="black" />
-          </NavbarBrand>
+          </NavbarBrand> */}
 
-          {showHomeopape || showAllMenuItems ?
+          <NavItem>
+            <NavLink tag={Link} to="/"><NavbarText>Home</NavbarText></NavLink>
+          </NavItem>
 
-            <NavItem className="mx-3">
-              <Link to="/homeopape"><NavbarText>Homeopape</NavbarText></Link>
+          {process.env.NODE_ENV === "development" ?
+
+            <NavItem>
+              <NavLink tag={Link} to="/terms"><NavbarText>Terms</NavbarText></NavLink>
             </NavItem>
 
             : null}
 
-          {showDickian || showAllMenuItems ?
+          {showHomeopape === true || showAllMenuItems === true ?
 
-            <NavItem className="mx-3">
-              <Link to="/dickian"><NavbarText>Dickian</NavbarText></Link>
+            <NavItem>
+              <NavLink tag={Link} to="/homeopape"><NavbarText>Homeopape</NavbarText></NavLink>
             </NavItem>
 
             : null}
 
-          {showNew || showAllMenuItems ?
+          {showDickian === true || showAllMenuItems === true ?
 
-            <NavItem className="mx-3">
-              <Link to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></Link>
+            <NavItem>
+              <NavLink tag={Link} to="/dickian"><NavbarText>Dickian</NavbarText></NavLink>
             </NavItem>
 
             : null}
 
-          {showAbout || showAllMenuItems ?
+          {showNew === true || showAllMenuItems === true ?
 
-            <NavItem className="mx-3">
-              <Link to="/about"><NavbarText>About Philip K. Dick</NavbarText></Link>
+            <NavItem>
+              <NavLink tag={Link} to="/new"><NavbarText>New To Philip K. Dick?</NavbarText></NavLink>
             </NavItem>
 
             : null}
 
-          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
+          {showAbout === true || showAllMenuItems === true ?
 
-            <NavItem className="mx-3">
-              <Link to="/fromTheHomeopape"><NavbarText>From The Homeopape</NavbarText></Link>
+            <NavItem>
+              <NavLink tag={Link} to="/about"><NavbarText>About Philip K. Dick</NavbarText></NavLink>
             </NavItem>
 
             : null}
 
-          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
+          {applicationAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
 
-            <NavItem className="mx-3">
-              <Link to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></Link>
-            </NavItem>
-
-            : null}
-
-          {/*showAllMenuItems &&*/ IsEmpty(admin) === false && admin === true ?
-
-            <NavItem className="mx-3">
-              <Link to="/reports"><NavbarText>Reports</NavbarText></Link>
-            </NavItem>
-
-            : null}
-
-          {appAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
-
-            <NavItem className="mx-3">
+            <NavItem>
               <Login />
             </NavItem>
 
             : null}
 
-          {appAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
+          {applicationAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
 
-            <NavItem className="mx-3">
+            <NavItem>
               <Register />
             </NavItem>
 
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
+          {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
 
-            <NavItem className="mx-3">
+            <NavItem>
               <EditUser />
             </NavItem>
 
             : null}
 
-          <NavItem className="mx-3">
+          <NavItem className="mx-3 my-2">
             <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
           </NavItem>
-          <NavItem className="mx-3">
-            <a href="https://philipdick.com"><NavbarText>Philip K. Dick Site</NavbarText></a>
+
+          <NavItem className="mx-3 my-2">
+            <a href="https://philipdick.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
 
-          {appAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true && IsEmpty(firstName) === false && IsEmpty(lastName) === false ?
+          {/* {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true && IsEmpty(firstName) === false && IsEmpty(lastName) === false ?
 
-            <NavItem className="mx-3"><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
+            <NavItem><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
 
-            : null}
+            : null} */}
 
-          {appAllowUserInteractions === true && IsEmpty(checklistLoaded) === false && checklistLoaded === true ?
+          {applicationAllowUserInteractions === true && IsEmpty(checklistLoaded) === false && checklistLoaded === true ?
 
-            <NavItem className="mx-3">
+            <NavItem>
               <Checklist displayButton={true} />
             </NavItem>
 
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
 
-            <NavItem className="mx-3"><AddTitleSuggestion displayButton={true} />
+            <NavItem>
+              <AddTitleSuggestion displayButton={true} />
             </NavItem>
+
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
 
-            <NavItem className="mx-3"><AddComment displayButton={true} />
+            <NavItem>
+              <AddComment displayButton={true} />
             </NavItem>
+
             : null}
 
-          {appAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
 
-            <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></NavItem>
+            <NavItem>
+              <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span>
+            </NavItem>
+
             : null}
 
         </Nav>
       </Navbar>
 
-      {showAllCategories || showAllMedia || showAllTitles || showAllEditions || showAllMenuItems ?
+      {applicationAllowUserInteractions === true && IsEmpty(admin) === false && admin === true ?
 
-        <Navbar color="light" light>
+        <Navbar>
           <Nav>
 
-            {showAllCategories || showAllMenuItems ?
+            <NavItem>
+              <NavLink tag={Link} to="/fromTheHomeopape"><NavbarText>From The Homeopape</NavbarText></NavLink>
+            </NavItem>
 
-              <NavItem className="mx-3">
-                <Link to="/categories"><NavbarText>All Categories</NavbarText></Link>
+            <NavItem>
+              <NavLink tag={Link} to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/terms"><NavbarText>Terms</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/brokenLinks"><NavbarText>Broken Links</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/computerLogs"><NavbarText>Computer Logs</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/logs"><NavbarText>Logs</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/errors"><NavbarText>Errors</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/titleSuggestions"><NavbarText>Title Suggestions</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/comments"><NavbarText>Comments</NavbarText></NavLink>
+            </NavItem>
+
+          </Nav>
+        </Navbar>
+
+        : null}
+
+      {showAllCategories === true || showAllMedia === true || showAllTitles === true || showAllEditions === true || showAllMenuItems === true ?
+
+        <Navbar>
+          <Nav>
+
+            {showAllCategories === true || showAllMenuItems === true ?
+
+              <NavItem>
+                <NavLink tag={Link} to="/categories"><NavbarText>All Categories</NavbarText></NavLink>
               </NavItem>
 
               : null}
 
-            {showAllMedia || showAllMenuItems ?
+            {showAllMedia === true || showAllMenuItems === true ?
 
-              <NavItem className="mx-3">
-                <Link to="/media"><NavbarText>All Media</NavbarText></Link>
+              <NavItem>
+                <NavLink tag={Link} to="/media"><NavbarText>All Media</NavbarText></NavLink>
               </NavItem>
 
               : null}
 
-            {showAllTitles || showAllMenuItems ?
+            {showAllTitles === true || showAllMenuItems === true ?
 
-              <NavItem className="mx-3">
-                <Link to="/titles"><NavbarText>All Titles</NavbarText></Link>
+              <NavItem>
+                <NavLink tag={Link} to="/titles"><NavbarText>All Titles</NavbarText></NavLink>
               </NavItem>
 
               : null}
 
-            {showAllEditions || showAllMenuItems ?
+            {showAllEditions === true || showAllMenuItems === true ?
 
-              <NavItem className="mx-3">
-                <Link to="/editions"><NavbarText>All Editions</NavbarText></Link>
+              <NavItem>
+                <NavLink tag={Link} to="/editions"><NavbarText>All Editions</NavbarText></NavLink>
               </NavItem>
 
               : null}
@@ -840,30 +889,30 @@ function App(props) {
 
         : null}
 
-      {showAddCategory || showAddMedia || showAddTitle || showAddEdition || showAllMenuItems ?
+      {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && IsEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
 
-            {showAddCategory && IsEmpty(admin) === false && admin === true ?
+            {showEditCategory && IsEmpty(admin) === false && admin === true ?
 
-              <NavItem className="mx-3">
-                <AddCategory displayButton={true} />
+              <NavItem>
+                <EditCategory displayButton={true} />
               </NavItem>
 
               : null}
 
-            {showAddMedia && IsEmpty(admin) === false && admin === true ?
+            {showEditMedia && IsEmpty(admin) === false && admin === true ?
 
-              <NavItem className="mx-3">
-                <AddMedia displayButton={true} />
+              <NavItem>
+                <EditMedia displayButton={true} />
               </NavItem>
 
               : null}
 
-            {showAddTitle && IsEmpty(admin) === false && admin === true ?
+            {showEditTitle && IsEmpty(admin) === false && admin === true ?
 
-              <NavItem className="mx-3">
+              <NavItem>
                 {/* <AddTitle displayButton={true} /> */}
                 <EditTitle displayButton={true} />
               </NavItem>
@@ -875,26 +924,32 @@ function App(props) {
 
         : null}
 
-      {showUserPhysicalOnly || showUserElectronicOnly || showAllMenuItems ?
+      {(showUserPhysicalOnly === true || showUserElectronicOnly === true || showAllMenuItems === true) && IsEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
 
             {(showUserPhysicalOnly === true || showUserElectronicOnly === true) && (userPhysicalOnly === true || userElectronicOnly === true) ?
 
-              <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(false)); }}>All Editions</Button></NavItem>
+              <NavItem>
+                <Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(false)); }}>All Editions</Button>
+              </NavItem>
 
               : null}
 
             {showUserPhysicalOnly === true && IsEmpty(userPhysicalOnly) === false && userPhysicalOnly === false ?
 
-              <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(true)); dispatch(setUserElectronicOnly(false)); }}>Only Physical Editions</Button></NavItem>
+              <NavItem>
+                <Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(true)); dispatch(setUserElectronicOnly(false)); }}>Only Physical Editions</Button>
+              </NavItem>
 
               : null}
 
             {showUserElectronicOnly === true && IsEmpty(userElectronicOnly) === false && userElectronicOnly === false ?
 
-              <NavItem className="mx-3"><Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(true)); }}>Only Electronic Editions</Button></NavItem>
+              <NavItem>
+                <Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(true)); }}>Only Electronic Editions</Button>
+              </NavItem>
 
               : null}
 
@@ -903,7 +958,7 @@ function App(props) {
 
         : null}
 
-      <Container className="bodyContainer mb-5">
+      <Container className="body-container mb-5">
         <Row>
           <Col xs="2">
 
@@ -924,79 +979,93 @@ function App(props) {
               {IsEmpty(checklistMessage) === false ? <Alert color="info">{checklistMessage}</Alert> : null}
               {IsEmpty(errChecklistMessage) === false ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
 
-              <LoadAppSettings />
+              <LoadApplicationSettings />
               <LoadBibliographyData />
               <LoadUserReviews />
 
             </Row>
 
-            <Switch>
+            <Routes>
 
               {/* // * Set the default page from the defaultPageComponent from environment. -- 03/06/2021 MF */}
-              {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
-              {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
-              {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
-              {defaultPageComponent === "Dickian" ? <Route exact path="/" component={Dickian} /> : null}
-              {/* <Route exact path="/">
-        {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
-        {defaultPageComponent === "Home" ? <Route exact path="/" component={Home} /> : null}
-        {defaultPageComponent === "About" ? <Route exact path="/" component={About} /> : null}
-        {defaultPageComponent === "Homeopape" ? <Route exact path="/" component={Homeopape} /> : null}
-      </Route> */}
+              {defaultPageComponent === "Home" ? <Route path="/" element={<Home />} /> : null}
+              {defaultPageComponent === "About" ? <Route path="/" element={<About />} /> : null}
+              {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape />} /> : null}
+              {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian />} /> : null}
 
+              {/* <Route path="/">
+                {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
+                {defaultPageComponent === "Home" ? <Route path="/" element={<Home />}  /> : null}
+                {defaultPageComponent === "About" ? <Route path="/" element={<About />}  /> : null}
+                {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape />}  /> : null}
+              </Route> */}
 
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/new" component={New} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/homeopape" component={Homeopape} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/new" element={<New />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/homeopape" element={<Homeopape />} />
 
               {/* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}
               {/* {IsEmpty(admin) === false && admin === true ?
 
                 <React.Fragment> */}
 
-              <Route exact path="/socialMedia" component={FormatPost} />
+              <Route path="/socialMedia" element={<FormatPost />} />
 
-              <Route exact path="/fromTheHomeopape" component={UpdateFromTheHomeopape} />
+              <Route path="/fromTheHomeopape" element={<UpdateFromTheHomeopape />} />
 
-              <Route exact path="/reports" component={Reports} />
+              <Route path="/brokenLinks" element={<BrokenLinks />} />
+
+              <Route path="/computerLogs" element={<ComputerLogs />} />
+
+              <Route path="/logs" element={<Logs />} />
+
+              <Route path="/errors" element={<Errors />} />
+
+              <Route path="/comments" element={<Comments />} />
+
+              <Route path="/titleSuggestions" element={<TitleSuggestions />} />
+
+              <Route path="/terms" element={<Terms />} />
 
               {/* </React.Fragment>
 
                 : null} */}
 
-              <Route exact path="/dickian" component={Dickian} />
+              <Route path="/dickian" element={<Dickian />} />
 
-              <Route exact path="/categories" component={Category} />
-              <Route exact path="/media" component={Media} />
-
-              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route exact path="/titles" component={Titles} />
-              {/* <Route exact path="/titles/:category" component={Titles} />
-      <Route exact path="/title/:title" component={Title} /> */}
+              <Route path="/categories" element={<Category />} />
+              <Route path="/media" element={<Media />} />
 
               {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route exact path="/editions" component={Editions} />
-              {/* <Route exact path="/editions/:title" component={Editions} /> */}
-              {/* <Route exact path="/editions/:media" component={Editions} /> */}
+              <Route path="/titles" element={<Titles />} />
+              {/* <Route path="/titles/:category" element={<Titles />} />
+              <Route path="/title/:title" element={<Title />} /> */}
+
+              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
+              <Route path="/editions" element={<Editions />} />
+              {/* <Route path="/editions/:title" element={<Editions />} />
+               <Route path="/editions/:media" element={<Editions />} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
-              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route exact path="/:linkName" render={() => <Titles linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles linkItem={linkItem} />} /> : null}
 
-              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route exact path="/:linkName" render={() => <Title linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title linkItem={linkItem} />} /> : null}
 
-              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route exact path="/:linkName" render={() => <Editions linkItem={linkItem} />} /> : null}
+              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions linkItem={linkItem} />} /> : null}
 
-            </Switch>
+            </Routes>
 
             {/* {process.env.NODE_ENV === "development" ? <FromTheHomeopape /> : null} */}
 
           </Col>
         </Row>
         <Row>
-          <Col xs="12" className="smallerText text-center">
+          <Col xs="12" className="smaller-text text-center">
 
-            &copy; {props.copyrightYear} All rights reserved. Version: {props.applicationVersion}
+            {/* &copy; {props.copyrightYear} All rights reserved. Version: {props.applicationVersion} */}
+
+            &copy; 2022 All rights reserved. Version: {process.env.REACT_APP_VERSION}
 
           </Col>
         </Row>

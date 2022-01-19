@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { LogError } from "../../utilities/ApplicationFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
 
@@ -23,14 +23,14 @@ const AddComment = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const requireUserLogin = useSelector(state => state.app.requireUserLogin);
+  const requireUserLogin = useSelector(state => state.applicationSettings.requireUserLogin);
   // console.log(componentName, GetDateTime(), "requireUserLogin", requireUserLogin);
 
-  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
   // console.log(componentName, GetDateTime(), "userState", userState);
@@ -54,11 +54,11 @@ const AddComment = (props) => {
   const [errComment, setErrComment] = useState("");
   const [errEmail, setErrEmail] = useState("");
 
-  const [commentItem, setCommentItem] = useState(null);
-  const [commentID, setCommentID] = useState(null);
-  const [commentUserID, setCommentUserID] = useState(null);
-  const [comment, setComment] = useState(null);
-  const [commentEmail, setCommentEmail] = useState(null);
+  // const [commentItem, setCommentItem] = useState(null);
+  // const [commentID, setCommentID] = useState(null);
+  // const [commentUserID, setCommentUserID] = useState(null);
+  // const [comment, setComment] = useState(null);
+  // const [commentEmail, setCommentEmail] = useState(null);
 
 
   useEffect(() => {
@@ -81,11 +81,11 @@ const AddComment = (props) => {
     setErrComment("");
     setErrEmail("");
 
-    setCommentItem(null);
-    setCommentID(null);
-    setCommentUserID(null);
-    setComment(null);
-    setCommentEmail(null);
+    // setCommentItem(null);
+    // setCommentID(null);
+    // setCommentUserID(null);
+    // setComment(null);
+    // setCommentEmail(null);
 
     let commentValidated = false;
     let emailValidated = false;
@@ -206,16 +206,16 @@ const AddComment = (props) => {
             .then(data => {
               // console.log(componentName, GetDateTime(), "addComment data", data);
 
-              setCommentRecordAdded(data.recordAdded);
+              setCommentRecordAdded(data.transactionSuccess);
               addMessage(data.message);
 
-              if (data.recordAdded === true) {
+              if (data.transactionSuccess === true) {
 
-                setCommentItem(data.records[0]);
-                setCommentID(data.records[0].CommentID);
-                setCommentUserID(data.records[0].userID);
-                setComment(data.records[0].Comment);
-                setCommentEmail(data.records[0].email);
+                // setCommentItem(data.records[0]);
+                // setCommentID(data.records[0].CommentID);
+                // setCommentUserID(data.records[0].userID);
+                // setComment(data.records[0].Comment);
+                // setCommentEmail(data.records[0].email);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
                 // dispatch(addStateTitle([{titleID: data.records[0].titleID, email: data.records[0].Email, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, Comment: data.records[0].Comment, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate}]));
@@ -258,7 +258,10 @@ const AddComment = (props) => {
       setErrComment("");
       setErrEmail("");
       setCommentRecordAdded(null);
-      // setModal(false);
+
+      setTxtComment("");
+      setTxtEmail("");
+
       setModal(!modal);
 
     };
@@ -270,8 +273,10 @@ const AddComment = (props) => {
     // console.log(componentName, GetDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((IsEmpty(sessionToken) === false) || requireUserLogin === false) {
+
       // return <Redirect to="/" />;
       setModal(false);
+
     };
 
   }, [sessionToken]);
@@ -280,9 +285,9 @@ const AddComment = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="pl-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
+      {applicationAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
 
-      {appAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="addEditIcon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Comment</ModalHeader>

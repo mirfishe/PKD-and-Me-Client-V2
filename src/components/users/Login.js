@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Label, Input, Alert, Button } from "reactstrap";
-import AppSettings from "../../app/environment";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button } from "reactstrap";
+import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { LogError } from "../../utilities/ApplicationFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Login = (props) => {
@@ -17,11 +17,11 @@ const Login = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  const appAllowUserInteractions = useSelector(state => state.app.appAllowUserInteractions);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   // const [user, setUser] = useState({});
   // const [userID, setUserID] = useState(null);
@@ -107,6 +107,7 @@ const Login = (props) => {
         setErrEmail("Please enter a valid email address.");
         // console.log(componentName, GetDateTime(), "logIn Invalid Email Address");
         // console.log(componentName, GetDateTime(), "logIn emailValidated false", emailValidated);
+
       };
 
     };
@@ -197,10 +198,10 @@ const Login = (props) => {
 
             // if (results !== 500 && results !== 401) {
 
-            // setUserResultsFound(results.resultsFound);
+            // setUserResultsFound(results.transactionSuccess);
             addMessage(results.message);
 
-            if (IsEmpty(results) === false && results.resultsFound === true) {
+            if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
               // setUser(results);
               // setUserID(results.userID);
@@ -218,7 +219,7 @@ const Login = (props) => {
 
               getChecklist(results.sessionToken);
 
-              setUserResultsFound(results.resultsFound);
+              setUserResultsFound(results.transactionSuccess);
 
             } else {
 
@@ -295,16 +296,16 @@ const Login = (props) => {
         .then(results => {
           // console.log(componentName, GetDateTime(), "getChecklist results", results);
 
-          setChecklistResultsFound(results.resultsFound);
+          setChecklistResultsFound(results.transactionSuccess);
           // setChecklistMessage(results.message);
 
-          if (IsEmpty(results) === false && results.resultsFound === true) {
+          if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
             dispatch(loadArrayChecklist(results.records));
 
           } else {
 
-            console.log(componentName, GetDateTime(), "getChecklist resultsFound error", results.message);
+            console.log(componentName, GetDateTime(), "getChecklist error", results.message);
             addErrorMessage(results.message);
 
           };
@@ -335,7 +336,6 @@ const Login = (props) => {
       setErrEmail("");
       setErrPassword("");
       setUserResultsFound(null);
-      // setModal(false);
       setModal(!modal);
 
     };
@@ -351,7 +351,6 @@ const Login = (props) => {
       clearMessages();
       setErrEmail("");
       setErrPassword("");
-      // setModal(false);
       setModal(!modal);
 
     };
@@ -375,7 +374,7 @@ const Login = (props) => {
   return (
     <React.Fragment>
 
-      {appAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Login</Button> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Login</Button></span> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Login</ModalHeader>
@@ -399,10 +398,8 @@ const Login = (props) => {
               <Label for="txtPassword">Password</Label>
               <InputGroup>
                 <Input type={showPassword} /*type="password"*/ id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
-                  {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
-                </InputGroupAddon>
+                <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
+                {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
               </InputGroup>
               {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
             </FormGroup>

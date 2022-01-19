@@ -3,14 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/ApplicationFunctions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
+const ComputerLogs = () => {
 
-const Comments = () => {
-
-  const componentName = "Comments.js";
+  const componentName = "ComputerLogs.js";
 
   const navigate = useNavigate();
 
@@ -35,14 +33,14 @@ const Comments = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [comments, setComments] = useState([]);
+  const [computerLogs, setComputerLogs] = useState([]);
 
 
-  const getComments = () => {
+  const getComputerLogs = () => {
 
     clearMessages();
 
-    let url = baseURL + "comments/";
+    let url = baseURL + "computerLogs/";
 
     fetch(url, {
       method: "GET",
@@ -52,7 +50,7 @@ const Comments = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getComments response", response);
+        // console.log(componentName, GetDateTime(), "getComputerLogs response", response);
 
         if (!response.ok) {
 
@@ -70,7 +68,7 @@ const Comments = () => {
 
         if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
-          setComments(results.records);
+          setComputerLogs(results.records);
 
         };
 
@@ -89,7 +87,7 @@ const Comments = () => {
 
   useEffect(() => {
 
-    getComments();
+    getComputerLogs();
 
   }, []);
 
@@ -107,7 +105,7 @@ const Comments = () => {
 
 
   return (
-    <Container className="my-4">
+    <Container className="mt-4">
 
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
@@ -115,40 +113,58 @@ const Comments = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Comments</h5>
+          <h5 className="text-center">Computer Logs</h5>
+
+          {IsEmpty(computerLogs) === false ?
+
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Last Accessed</th>
+                  <th>Title</th>
+                  <th>href</th>
+                  <th>IP Address</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Postal Code</th>
+                  <th>Country</th>
+                  <th>Continent</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {computerLogs.map((computerLog, index) => {
+
+                  // console.log(componentName, GetDateTime(), "map computerLog", computerLog);
+
+                  return (
+                    <tr key={index}>
+                      {IsEmpty(computerLog.lastAccessed) === false ? <td>{computerLog.lastAccessed.slice(0, 19).replace("T", " ")}</td> : <td>{computerLog.lastAccessed}</td>}
+                      <td>{computerLog.title}</td>
+                      <td>{computerLog.href}</td>
+                      <td>{computerLog.ipAddress}</td>
+                      <td>{computerLog.city}</td>
+                      <td>{computerLog.state}</td>
+                      <td>{computerLog.postal}</td>
+                      <td>{computerLog.countryName}</td>
+                      <td>{computerLog.continentName}</td>
+                    </tr>
+                  );
+                })}
+
+
+              </tbody>
+
+            </Table>
+
+            : <p>There are no computer logs.</p>}
 
         </Col>
       </Row>
-      <Row>
 
-        {comments.map((comment) => {
-
-          return (
-            <Col className="my-4" xs="12" key={comment.commentID}>
-
-              <Row>
-                <Col xs="12">
-
-                  {IsEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
-
-                </Col>
-              </Row>
-
-              <Row>
-                <Col xs="12">
-
-                  <p>Submitted by {IsEmpty(comment.firstName) === false ? comment.firstName : null} {IsEmpty(comment.lastName) === false ? comment.lastName : null} {IsEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {IsEmpty(comment.updateDate) === false ? <small>on {DisplayDate(comment.updateDate)}</small> : null}</p>
-
-                </Col>
-              </Row>
-
-            </Col>
-          );
-        })}
-
-      </Row>
     </Container>
   );
 };
 
-export default Comments;
+export default ComputerLogs;

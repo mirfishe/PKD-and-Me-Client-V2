@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
 import { Drawer } from "@material-ui/core";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, decodeURL, LogError } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -17,7 +17,7 @@ const Checklist = (props) => {
   const componentName = "Checklist.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -26,8 +26,8 @@ const Checklist = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
@@ -250,13 +250,13 @@ const Checklist = (props) => {
 
           if (updateChecklistMethod === "PUT") {
 
-            setChecklistRecordUpdated(data.recordUpdated);
-            recordChanged = data.recordUpdated;
+            setChecklistRecordUpdated(data.transactionSuccess);
+            recordChanged = data.transactionSuccess;
 
           } else if (updateChecklistMethod === "POST") {
 
-            setChecklistRecordUpdated(data.recordAdded);
-            recordChanged = data.recordAdded;
+            setChecklistRecordUpdated(data.transactionSuccess);
+            recordChanged = data.transactionSuccess;
 
           } else {
 
@@ -312,7 +312,7 @@ const Checklist = (props) => {
 
           } else {
 
-            console.log(componentName, GetDateTime(), "updateChecklist resultsFound error", data.message);
+            console.log(componentName, GetDateTime(), "updateChecklist transactionSuccess error", data.message);
             addErrorMessage(data.message);
 
           };
@@ -338,7 +338,7 @@ const Checklist = (props) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
-    history.push("/" + linkName);
+    navigate("/" + linkName);
 
     // setModal(!modal);
 
@@ -358,7 +358,7 @@ const Checklist = (props) => {
 
       <Drawer anchor="right" open={drawer} onClose={(event) => { setDrawer(!drawer); }}>
 
-        <Container className="checklistDrawer mx-3">
+        <Container className="checklist-drawer mx-3">
           <Row className="mb-2">
             <Col>
 
@@ -399,17 +399,17 @@ const Checklist = (props) => {
                 <h6 className="text-center mb-2">{linkItem.linkTypeName}
                   <br />
 
-                  <span className="text-muted ml-2 smallText">Sort By&nbsp;
+                  <span className="text-muted ms-2 small-text">Sort By&nbsp;
 
                     {titleSortBy !== "publicationDate" ?
 
-                      <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortChecklistList("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
+                      <a href="#" onClick={(event) => { event.preventDefault(); sortChecklistList("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
 
                       : null}
 
                     {titleSortBy !== "titleName" ?
 
-                      <a href="#" className="text-decoration-none" onClick={(event) => { event.preventDefault(); sortChecklistList("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
+                      <a href="#" onClick={(event) => { event.preventDefault(); sortChecklistList("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
 
                       : null}
 
@@ -435,7 +435,7 @@ const Checklist = (props) => {
                   {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
 
                   <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                    {IsEmpty(title.publicationDate) === false ? <span className="ml-1 smallerText">({DisplayYear(title.publicationDate)})</span> : null}
+                    {IsEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(title.publicationDate)})</span> : null}
                   </p>
 
                   {/* </ListGroupItem> */}

@@ -451,31 +451,6 @@ export const DaysSince = (dateToCompare) => {
 };
 
 
-// export const displayParagraphs = (text) => {
-//     // * Not needed; Use the .displayParagraphs css style
-
-//     // console.log(componentName, GetDateTime(), "displayParagraphs text", text);
-
-//     let newText = text;
-
-//     if (IsEmpty(newText) === false) {
-
-//         // newText = "<p>" + newText;
-
-//         // * Changes the \n to </p><p>
-//         newText = newText.replaceAll("\n", "</p><p>");
-
-//         // newText = newText + "</p>";
-
-//     };
-
-//     // console.log(componentName, GetDateTime(), "displayParagraphs newText", newText);
-
-//     return newText;
-
-// };
-
-
 export const HasNonEmptyProperty = (objectItem, propertyName) => {
   // console.log(componentName, GetDateTime(), "HasFalseProperty property", property);
 
@@ -1154,6 +1129,21 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
     };
 
   };
+
+};
+
+
+export const GenerateRandomNumber = (minimumValue, maximumValue) => {
+  // console.log(componentName, GetDateTime(), "GenerateRandomNumber minimumValue", minimumValue);
+  // console.log(componentName, GetDateTime(), "GenerateRandomNumber maximumValue", maximumValue);
+
+  // * https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript -- 01/14/2022 MF
+
+  let randomNumber = Math.floor(Math.random() * (maximumValue - minimumValue + 1)) + minimumValue;
+
+  // console.log(componentName, GetDateTime(), "GenerateRandomNumber randomNumber", randomNumber);
+
+  return randomNumber;
 
 };
 

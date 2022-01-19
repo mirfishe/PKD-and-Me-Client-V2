@@ -6,35 +6,39 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import './index.css';
 import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";
-import AppSettings from "./app//environment";
+import applicationSettings from "./app/environment";
 import App from './App';
 import store from './app/store';
 import { Provider } from 'react-redux';
 // import * as serviceWorker from "./serviceWorker";
 // import reportWebVitals from './reportWebVitals';
 // * https://stackoverflow.com/questions/66384368/how-is-it-possible-to-access-homepage-from-package-json-in-a-react-app -- 12/17/2021 MF
-import { version, copyrightYear } from '../package.json';
+// import { version, copyrightYear } from '../package.json';
+// * https://stackoverflow.com/questions/64993118/error-should-not-import-the-named-export-version-imported-as-version -- 12/27/2021 MF
+// ! Now imports the entire package.json file because of changes needed to be made due to updates with webpack 5. -- 12/27/2021 MF
+// import packageJSON from '../package.json';
 
 // const componentName = "index.js";
 
-// console.log(componentName, "version", version);
-// console.log(componentName, "copyrightYear", copyrightYear);
+// console.log(componentName, "packageJSON.version", packageJSON.version);
+// console.log(componentName, "packageJSON.copyrightYear", packageJSON.copyrightYear);
 
 // * Google Tag Manager -- 03/06/2021 MF
-if (AppSettings.tagManagerArgs.gtmId !== "") {
+if (applicationSettings.tagManagerArgs.gtmId !== "") {
 
-  TagManager.initialize(AppSettings.tagManagerArgs);
+  TagManager.initialize(applicationSettings.tagManagerArgs);
 
 };
 
-// const metaDescription = useSelector(state => state.app.metaDescription);
+// const metaDescription = useSelector(state => state.applicationSettings.metaDescription);
 // document.getElementsByTagName("META")[3].content = metaDescription;
-document.getElementsByTagName("META")[3].content = AppSettings.metaDescription;
+document.getElementsByTagName("META")[3].content = applicationSettings.metaDescription;
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App applicationVersion={version} copyrightYear={copyrightYear} />
+      {/* <App applicationVersion={packageJSON.version} copyrightYear={packageJSON.copyrightYear} /> */}
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

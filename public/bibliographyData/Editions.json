@@ -1,5 +1,6 @@
 {
-  "resultsFound": true,
+  "transactionSuccess": true,
+  "errorOccurred": false,
   "message": "Successfully retrieved editions.",
   "records": [
     {

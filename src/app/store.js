@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import appSlice from "./appSlice";
+import applicationSettingsSlice from "./applicationSettingsSlice";
 import urlsSlice from "./urlsSlice";
 import categoriesSlice from "./categoriesSlice";
 import mediaSlice from "./mediaSlice";
@@ -10,7 +10,7 @@ import userReviewsSlice from "./userReviewsSlice";
 
 export default configureStore({
   reducer: {
-    app: appSlice,
+    applicationSettings: applicationSettingsSlice,
     categories: categoriesSlice,
     editions: editionsSlice,
     media: mediaSlice,

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../../utilities/SharedFunctions";
-import { encodeURL, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, LogError } from "../../utilities/ApplicationFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../app/categoriesSlice";
 import { loadArrayEditions, setEditionsDataOffline } from "../../app/editionsSlice";
@@ -19,15 +19,15 @@ function LoadBibliographyData() {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
-  // ! Loading the appOffline from the state store here is too slow
+  // ! Loading the applicationOffline from the state store here is too slow
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const appOffline = useSelector(state => state.app.appOffline);
-  const appOffline = AppSettings.appOffline;
-  // console.log(componentName, GetDateTime(), "appOffline", appOffline);
+  // const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
+  const applicationOffline = applicationSettings.applicationOffline;
+  // console.log(componentName, GetDateTime(), "applicationOffline", applicationOffline);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const categoriesLoaded = useSelector(state => state.categories.categoriesLoaded);
@@ -149,7 +149,7 @@ function LoadBibliographyData() {
           // * Load offline data. -- 03/06/2021 MF
           // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           // dispatch(setUserReviewsRatingsDataOffline(true));
-          return { resultsFound: false, message: "Offline User Reviews Ratings data fetch used." };
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews Ratings data fetch used." };
 
         } else {
 
@@ -164,14 +164,14 @@ function LoadBibliographyData() {
         // console.log(componentName, GetDateTime(), "getUserReviewsRatings results", results);
         // setOverallTitleRatingMessage(results.message);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           // loadDataStore(results.records, "userReviewRating");
           addRatings(titleData, results.records);
 
           // } else {
 
-          //   console.log(componentName, GetDateTime(), "getUserReviewsRatings resultsFound error", results.message);
+          //   console.log(componentName, GetDateTime(), "getUserReviewsRatings error", results.message);
           //   // setErrOverallTitleRatingMessage(results.message);
           //   // dispatch(setUserReviewsRatingsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
@@ -283,7 +283,7 @@ function LoadBibliographyData() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setCategoriesDataOffline(true));
-          return { resultsFound: false, message: "Offline Categories data fetch used." };
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Categories data fetch used." };
 
         } else {
 
@@ -298,13 +298,13 @@ function LoadBibliographyData() {
 
         // setCategoryMessage(results.message);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "categories");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "getCategories resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "getCategories error", results.message);
           // setErrCategoryMessage(results.message);
           dispatch(setCategoriesDataOffline(true));
           fetchLocalDataCategories();
@@ -345,8 +345,8 @@ function LoadBibliographyData() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setMediaDataOffline(true));
-          // return {resultsFound: true, message: "Offline Media data used.", media: MediaData};
-          return { resultsFound: false, message: "Offline Media data fetch used." };
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Media data used.", media: MediaData};
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Media data fetch used." };
 
         } else {
 
@@ -361,13 +361,13 @@ function LoadBibliographyData() {
 
         // setMediaMessage(results.message);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "media");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "getMedia resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "getMedia error", results.message);
           // setErrMediaMessage(results.message);
           // dispatch(setMediaDataOffline(true));
           fetchLocalDataMedia();
@@ -408,8 +408,8 @@ function LoadBibliographyData() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setTitlesDataOffline(true));
-          // return {resultsFound: true, message: "Offline Titles data used.", titles: TitleData};
-          return { resultsFound: false, message: "Offline Titles data fetch used." };
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Titles data used.", titles: TitleData};
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Titles data fetch used." };
 
         } else {
 
@@ -424,13 +424,13 @@ function LoadBibliographyData() {
 
         // setTitleMessage(results.message);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "titles");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "getTitles resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "getTitles error", results.message);
           // setErrTitleMessage(results.message);
           dispatch(setTitlesDataOffline(true));
           fetchLocalDataTitles();
@@ -471,8 +471,8 @@ function LoadBibliographyData() {
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setEditionsDataOffline(true));
-          // return {resultsFound: true, message: "Offline Editions data used.", editions: EditionData};
-          return { resultsFound: false, message: "Offline Editions data fetch used." };
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Editions data used.", editions: EditionData};
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Editions data fetch used." };
 
         } else {
 
@@ -487,13 +487,13 @@ function LoadBibliographyData() {
 
         // setEditionMessage(results.message);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "editions");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "getEditions resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "getEditions error", results.message);
           // setErrEditionMessage(results.message);
           dispatch(setEditionsDataOffline(true));
           fetchLocalDataEditions();
@@ -531,8 +531,8 @@ function LoadBibliographyData() {
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setCategoriesDataOffline(true));
-          // return {resultsFound: true, message: "Offline Categories data used.", categories: CategoryData};
-          return { resultsFound: false, message: "Offline Categories data fetch failed." };
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Categories data used.", categories: CategoryData};
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Categories data fetch failed." };
 
         } else {
 
@@ -545,13 +545,13 @@ function LoadBibliographyData() {
       .then(results => {
         // console.log(componentName, GetDateTime(), "fetchLocalDataCategories results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "categories");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "fetchLocalDataCategories resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataCategories error", results.message);
           // setErrCategoryMessage(results.message);
           dispatch(setCategoriesDataOffline(true));
           // loadDataStore(CategoryData, "categories");
@@ -590,8 +590,8 @@ function LoadBibliographyData() {
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setMediaDataOffline(true));
-          // return {resultsFound: true, message: "Offline Media data used.", media: MediaData};
-          return { resultsFound: false, message: "Offline Media data fetch failed." };
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Media data used.", media: MediaData};
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Media data fetch failed." };
 
         } else {
 
@@ -604,13 +604,13 @@ function LoadBibliographyData() {
       .then(results => {
         // console.log(componentName, GetDateTime(), "fetchLocalDataMedia results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "media");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "fetchLocalDataMedia resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataMedia error", results.message);
           // setErrMediaMessage(results.message);
           dispatch(setMediaDataOffline(true));
           // loadDataStore(MediaData, "media");
@@ -649,8 +649,8 @@ function LoadBibliographyData() {
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setTitlesDataOffline(true));
-          // return {resultsFound: true, message: "Offline Titles data used.", titles: TitleData};
-          return { resultsFound: false, message: "Offline Titles data fetch failed." };
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Titles data used.", titles: TitleData};
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Titles data fetch failed." };
 
         } else {
 
@@ -663,13 +663,13 @@ function LoadBibliographyData() {
       .then(results => {
         // console.log(componentName, GetDateTime(), "fetchLocalDataTitles results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "titles");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "fetchLocalDataTitles resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataTitles error", results.message);
           // setErrTitleMessage(results.message);
           dispatch(setTitlesDataOffline(true));
           // loadDataStore(TitleData, "titles");
@@ -708,8 +708,8 @@ function LoadBibliographyData() {
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           dispatch(setEditionsDataOffline(true));
-          // return {resultsFound: true, message: "Offline Editions data used.", editions: EditionData};
-          return { resultsFound: false, message: "Offline Editions data fetch failed." };
+          // return {transactionSuccess: true, errorOccurred: false, message: "Offline Editions data used.", editions: EditionData};
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline Editions data fetch failed." };
 
         } else {
 
@@ -722,13 +722,13 @@ function LoadBibliographyData() {
       .then(results => {
         // console.log(componentName, GetDateTime(), "fetchLocalDataEditions results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "editions");
 
         } else {
 
-          console.log(componentName, GetDateTime(), "fetchLocalDataEditions resultsFound error", results.message);
+          console.log(componentName, GetDateTime(), "fetchLocalDataEditions error", results.message);
           // setErrEditionMessage(results.message);
           dispatch(setEditionsDataOffline(true));
           // loadDataStore(EditionData, "editions");
@@ -867,7 +867,7 @@ function LoadBibliographyData() {
     // };
 
     // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
-    if (appOffline) {
+    if (applicationOffline) {
 
       if (!categoriesLoaded /*&& !categoriesDataLocalStorage*/) {
 

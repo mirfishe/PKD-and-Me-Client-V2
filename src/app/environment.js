@@ -1,5 +1,5 @@
 
-let AppSettings = {};
+let applicationSettings = {};
 
 let profileType = "";
 
@@ -7,16 +7,16 @@ let profileType = "";
 let API_URL = "";
 let baseURL = "/";
 let siteName = "";
-let appName = "";
+let applicationName = "";
 let metaDescription = "";
 let defaultPageComponent = "";
 let routerBaseName = "";
-let appOffline = false;
+let applicationOffline = false;
 let electronicOnly = false;
 let electronicOnlyMessage = "You are viewing only electronic editions.";
 let physicalOnly = false;
 let physicalOnlyMessage = "You are viewing only physical editions.";
-let appAllowUserInteractions = true;
+let applicationAllowUserInteractions = true;
 let requireUserLogin = true;
 
 let tagManagerArgs = {
@@ -79,28 +79,28 @@ switch (profileType) {
     // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "localhost";
-    appName = "PKD and Me";
+    applicationName = "PKD and Me";
     metaDescription = "";
     defaultPageComponent = "Home";
     routerBaseName = "";
-    appOffline = false;
+    applicationOffline = false;
     electronicOnly = false;
     physicalOnly = false;
-    appAllowUserInteractions = true;
+    applicationAllowUserInteractions = true;
     requireUserLogin = true;
     tagManagerArgs.gtmId = "";
     break;
   // case "heroku":
   //   API_URL = "https://pkd-and-me-server.herokuapp.com";
   //   siteName = "PKD and Me";
-  //   appName = "Philip K. Dick Bibliography";
+  //   applicationName = "Philip K. Dick Bibliography";
   //   metaDescription = "Purchase versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
   //   defaultPageComponent = "Home";
   //   routerBaseName = "";
-  //   appOffline = false;
+  //   applicationOffline = false;
   //   electronicOnly = false;
   //   physicalOnly = false;
-  //   appAllowUserInteractions = true;
+  //   applicationAllowUserInteractions = true;
   //   requireUserLogin = true;
   //   tagManagerArgs.gtmId = "";
   //   break;
@@ -108,28 +108,28 @@ switch (profileType) {
     // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "Philip K. Dick";
-    appName = "PKD and Me";
+    applicationName = "PKD and Me";
     metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";
     defaultPageComponent = "Home";
     routerBaseName = "/pkd-and-me";
-    appOffline = true;
+    applicationOffline = true;
     electronicOnly = false;
     physicalOnly = false;
-    appAllowUserInteractions = true;
+    applicationAllowUserInteractions = true;
     requireUserLogin = true;
     tagManagerArgs.gtmId = "GTM-NW2GPF2";
     break;
   case "pkd-and-me":
     API_URL = "https://api.philipdick.com";
     siteName = "Philip K. Dick";
-    appName = "PKD and Me";
+    applicationName = "PKD and Me";
     metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";
     defaultPageComponent = "Home";
     routerBaseName = "";
-    appOffline = false;
+    applicationOffline = false;
     electronicOnly = false;
     physicalOnly = false;
-    appAllowUserInteractions = true;
+    applicationAllowUserInteractions = true;
     requireUserLogin = true;
     tagManagerArgs.gtmId = "GTM-NW2GPF2";
     break;
@@ -137,14 +137,14 @@ switch (profileType) {
     // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "Homeopape";
-    appName = "Philip K. Dick Bibliography";
+    applicationName = "Philip K. Dick Bibliography";
     metaDescription = "Purchase digital (i.e. not analog) versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
     defaultPageComponent = "Homeopape";
     routerBaseName = "";
-    appOffline = true;
+    applicationOffline = true;
     electronicOnly = true;
     physicalOnly = false;
-    appAllowUserInteractions = false;
+    applicationAllowUserInteractions = false;
     requireUserLogin = true;
     tagManagerArgs.gtmId = "GTM-NXQJTGL";
     break;
@@ -153,21 +153,21 @@ switch (profileType) {
     // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "PKD and Me";
-    appName = "Philip K. Dick Bibliography";
+    applicationName = "Philip K. Dick Bibliography";
     metaDescription = "An online community for followers of Philip K. Dick, old and new, along with the promotion of his work and the sharing of information, text, audio or visual that pertains to his life, his work and his legacy. Includes news, articles, criticism, interviews, biography, synopses of major works, reviews, links, and much more.";
     defaultPageComponent = "Home";
     routerBaseName = "";
-    appOffline = false;
+    applicationOffline = false;
     electronicOnly = false;
     physicalOnly = false;
-    appAllowUserInteractions = true;
+    applicationAllowUserInteractions = true;
     requireUserLogin = true;
     tagManagerArgs.gtmId = "";
 };
 
-// * Override the appOffline setting
-// appOffline = true;
-// appOffline = false;
+// * Override the applicationOffline setting
+// applicationOffline = true;
+// applicationOffline = false;
 
 // * Override the electronicOnly setting
 // electronicOnly = true;
@@ -177,16 +177,16 @@ switch (profileType) {
 // physicalOnly = true;
 // physicalOnly = false;
 
-// * Override the profileType setting to test the appSetting files
+// * Override the profileType setting to test the applicationSetting files
 // profileType = "localhost";
 // profileType = "heroku";
 // profileType = "philipdick";
 // profileType = "homeopape";
 // profileType = "";
 
-// * Override the appAllowUserInteractions setting
-// appAllowUserInteractions = true;
-// appAllowUserInteractions = false;
+// * Override the applicationAllowUserInteractions setting
+// applicationAllowUserInteractions = true;
+// applicationAllowUserInteractions = false;
 
 // * In case accidentally set both to true, then electronicOnly overides.
 if (physicalOnly && electronicOnly) {
@@ -196,23 +196,23 @@ if (physicalOnly && electronicOnly) {
 
 };
 
-Object.assign(AppSettings, { hostname: window.location.hostname });
-Object.assign(AppSettings, { profileType: profileType });
-Object.assign(AppSettings, { API_URL: API_URL });
-Object.assign(AppSettings, { baseURL: API_URL + baseURL });
-Object.assign(AppSettings, { siteName: siteName });
-Object.assign(AppSettings, { appName: appName });
-Object.assign(AppSettings, { metaDescription: metaDescription });
-Object.assign(AppSettings, { defaultPageComponent: defaultPageComponent });
-Object.assign(AppSettings, { routerBaseName: routerBaseName });
-Object.assign(AppSettings, { appOffline: appOffline });
-Object.assign(AppSettings, { electronicOnly: electronicOnly });
-Object.assign(AppSettings, { electronicOnlyMessage: electronicOnlyMessage });
-Object.assign(AppSettings, { physicalOnly: physicalOnly });
-Object.assign(AppSettings, { physicalOnlyMessage: physicalOnlyMessage });
-Object.assign(AppSettings, { appAllowUserInteractions: appAllowUserInteractions });
-Object.assign(AppSettings, { requireUserLogin: requireUserLogin });
-Object.assign(AppSettings, { tagManagerArgs: tagManagerArgs });
-Object.assign(AppSettings, { menuSettings: menuSettings });
+Object.assign(applicationSettings, { hostname: window.location.hostname });
+Object.assign(applicationSettings, { profileType: profileType });
+Object.assign(applicationSettings, { API_URL: API_URL });
+Object.assign(applicationSettings, { baseURL: API_URL + baseURL });
+Object.assign(applicationSettings, { siteName: siteName });
+Object.assign(applicationSettings, { applicationName: applicationName });
+Object.assign(applicationSettings, { metaDescription: metaDescription });
+Object.assign(applicationSettings, { defaultPageComponent: defaultPageComponent });
+Object.assign(applicationSettings, { routerBaseName: routerBaseName });
+Object.assign(applicationSettings, { applicationOffline: applicationOffline });
+Object.assign(applicationSettings, { electronicOnly: electronicOnly });
+Object.assign(applicationSettings, { electronicOnlyMessage: electronicOnlyMessage });
+Object.assign(applicationSettings, { physicalOnly: physicalOnly });
+Object.assign(applicationSettings, { physicalOnlyMessage: physicalOnlyMessage });
+Object.assign(applicationSettings, { applicationAllowUserInteractions: applicationAllowUserInteractions });
+Object.assign(applicationSettings, { requireUserLogin: requireUserLogin });
+Object.assign(applicationSettings, { tagManagerArgs: tagManagerArgs });
+Object.assign(applicationSettings, { menuSettings: menuSettings });
 
-export default AppSettings;
+export default applicationSettings;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/AppFunctions";
+import { LogError } from "../../utilities/ApplicationFunctions";
 import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../app/userReviewsSlice";
 
 function LoadUserReviews() {
@@ -14,8 +14,8 @@ function LoadUserReviews() {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
@@ -57,7 +57,7 @@ function LoadUserReviews() {
           // * Load offline data. -- 03/06/2021 MF
           // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           // dispatch(setUserReviewsDataOffline(true));
-          return { resultsFound: false, message: "Offline User Reviews data fetch used." };
+          return { transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews data fetch used." };
 
         } else {
 
@@ -72,13 +72,13 @@ function LoadUserReviews() {
 
         // setUserReviewMessage(results.message);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "userReview");
 
           // } else {
 
-          //   console.log(componentName, GetDateTime(), "getUserReviews resultsFound error", results.message);
+          //   console.log(componentName, GetDateTime(), "getUserReviews error", results.message);
           //   // setErrUserReviewMessage(results.message);
           //   dispatch(setUserReviewsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF

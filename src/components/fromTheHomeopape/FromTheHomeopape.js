@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
-import { encodeURL, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, LogError } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {
 
   const componentName = "FromTheHomeopape.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -21,8 +21,8 @@ const FromTheHomeopape = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
@@ -76,7 +76,7 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           // console.log(componentName, GetDateTime(), "getNews results.records[0]", results.records[0]);
 
@@ -187,7 +187,7 @@ const FromTheHomeopape = (props) => {
 
             {show === true ?
 
-              <Row>
+              <Row className="mt-3">
                 <Col xs="12">
 
                   {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}

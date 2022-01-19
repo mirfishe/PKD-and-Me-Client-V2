@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
-import AppSettings from "../../app/environment";
+import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse, FormatLowerCase, FormatUpperCase } from "../../utilities/SharedFunctions";
-import { encodeURL, ToTitleCase, LogError } from "../../utilities/AppFunctions";
+import { encodeURL, ToTitleCase, LogError } from "../../utilities/ApplicationFunctions";
 
 // * https://www.npmjs.com/package/rss-parser
 // * https://github.com/rbren/rss-parser
@@ -16,7 +16,7 @@ const FromTheHomeopape = (props) => {
   const componentName = "FromTheHomeopape.js";
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
@@ -25,8 +25,8 @@ const FromTheHomeopape = (props) => {
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.app.baseURL);
-  const baseURL = AppSettings.baseURL;
+  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const baseURL = applicationSettings.baseURL;
   // console.log(componentName, GetDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
@@ -89,6 +89,12 @@ const FromTheHomeopape = (props) => {
       post = post + " #BladeRunner2049 ";
 
     };
+
+    // if (FormatLowerCase(txtArticleTitle).includes("black lotus") === true || FormatLowerCase(itemContentSnippet).includes("black lotus") === true) {
+
+    //   post = post + " #BladeRunner #BladeRunner2049 ";
+
+    // };
 
     if (FormatLowerCase(txtArticleTitle).includes("total recall") === true || FormatLowerCase(itemContentSnippet).includes("total recall") === true) {
       post = post + " #TotalRecall ";
@@ -208,7 +214,7 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
@@ -255,7 +261,7 @@ const FromTheHomeopape = (props) => {
       .then(results => {
         // console.log(componentName, GetDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.resultsFound === true) {
+        if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
           setHomeopapeItemsReview(results.records);
           // setHomeopapeItemsReview(results.records[0]);
@@ -417,9 +423,10 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
-            getNewsReview();
+            // getNewsReview();
+            setHomeopapeItemsReview([]);
 
           } else {
 
@@ -509,7 +516,7 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
             getNews();
 
@@ -603,7 +610,7 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
             getNews();
 
@@ -697,7 +704,7 @@ const FromTheHomeopape = (props) => {
 
           addMessage(data.message);
 
-          if (data.recordUpdated === true) {
+          if (data.transactionSuccess === true) {
 
             getNews();
 
@@ -727,12 +734,106 @@ const FromTheHomeopape = (props) => {
   };
 
 
+  const setViewed = (itemID, viewed) => {
+    // console.log(componentName, GetDateTime(), "setViewed itemID", itemID);
+    // console.log(componentName, GetDateTime(), "setViewed viewed", viewed);
+
+    clearMessages();
+
+    let viewedValue;
+
+    if (viewed === true || viewed === 1) {
+
+      viewedValue = 1;
+
+    } else {
+
+      viewedValue = 0;
+
+    };
+
+    let url = baseURL + "fromthehomeopape/viewed/";
+
+    if (IsEmpty(itemID) === false && IsEmpty(sessionToken) === false) {
+
+      url = url + itemID;
+      // console.log(componentName, GetDateTime(), "setViewed url", url);
+
+      let recordObject = {
+        viewed: viewedValue
+      };
+
+      fetch(url, {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json",
+          "Authorization": sessionToken
+        }),
+        body: JSON.stringify({ recordObject: recordObject })
+      })
+        .then(response => {
+          // console.log(componentName, GetDateTime(), "setViewed response", response);
+
+          // if (!response.ok) {
+
+          //     throw Error(response.status + " " + response.statusText + " " + response.url);
+
+          // } else {
+
+          // if (response.status === 200) {
+
+          return response.json();
+
+          // } else {
+
+          //     return response.status;
+
+          // };
+
+          // };
+
+        })
+        .then(data => {
+          // console.log(componentName, GetDateTime(), "setViewed data", data);
+
+          addMessage(data.message);
+
+          if (data.transactionSuccess === true) {
+
+            getNews();
+
+            getNewsReview();
+
+          } else {
+
+            // addErrorMessage(data.error);
+            addErrorMessage(data.errorMessages);
+
+          };
+
+        })
+        .catch((error) => {
+          console.error(componentName, GetDateTime(), "setViewed error", error);
+          // console.error(componentName, GetDateTime(), "setViewed error.name", error.name);
+          // console.error(componentName, GetDateTime(), "setViewed error.message", error.message);
+
+          addErrorMessage(error.name + ": " + error.message);
+
+          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
+        });
+
+    };
+
+  };
+
+
   useEffect(() => {
     // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
-      history.push("/");
+      navigate("/");
 
     };
 
@@ -748,7 +849,7 @@ const FromTheHomeopape = (props) => {
       <Row>
         <Col xs="6">
 
-          <h3>All Items <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+          <h3>All Items <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
 
           {homeopapeItemsReview.map((homeopapeItem, index) => {
 
@@ -821,90 +922,90 @@ const FromTheHomeopape = (props) => {
             // OR itemLink like '%elasticsearch.columbian.com%'
             // goodreads.com
 
-            // if (homeopapeItem.itemLink.includes("ebay.com")) {
-            if (FormatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
+            // // if (homeopapeItem.itemLink.includes("ebay.com")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
+            // if (FormatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
-            if (FormatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || FormatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
+            // if (FormatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || FormatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
 
-              show = false;
+            //   show = false;
 
-            };
+            // };
 
             let itemLink;
             let itemID;
@@ -947,13 +1048,13 @@ const FromTheHomeopape = (props) => {
 
                     {/* <Col xs="1"> */}
 
-                    {/* <FormGroup className="ml-4">
+                    {/* <FormGroup className="ms-4">
 
             <Label for="cbxDisplay"><Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />Display</Label>
 
           </FormGroup>
 
-          <FormGroup className="ml-4">
+          <FormGroup className="ms-4">
 
             <Label for="cbxPosted"><Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />Posted</Label>
 
@@ -981,11 +1082,12 @@ const FromTheHomeopape = (props) => {
                       </React.Fragment>
 
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
-                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
+                      <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
-                      {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
-                      {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {/* {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null} */}
+                      {/* {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null} */}
 
                     </Col>
 
@@ -1086,13 +1188,13 @@ const FromTheHomeopape = (props) => {
                   <Row className="mb-5">
 
                     {/* <Col xs="1"> */}
-                    {/* <FormGroup className="ml-4">
+                    {/* <FormGroup className="ms-4">
 
               <Label for="cbxDisplay"><Input type="checkbox" id="cbxDisplay" checked={cbxDisplay} onChange={(event) => { setCbxDisplay(!cbxDisplay); }} />Display</Label>
 
             </FormGroup>
 
-            <FormGroup className="ml-4">
+            <FormGroup className="ms-4">
 
               <Label for="cbxPosted"><Input type="checkbox" id="cbxPosted" checked={cbxPosted} onChange={(event) => { setCbxPosted(!cbxPosted); }} />Posted</Label>
 
@@ -1123,11 +1225,12 @@ const FromTheHomeopape = (props) => {
                       </React.Fragment>
 
                       <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); }} >Display</Button>
-                      <Button outline size="sm" color="secondary" className="ml-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >Posted</Button>
-                      <Button outline size="sm" color="danger" className="ml-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>Always Filter</Button>
+                      <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Posted</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
+                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
-                      {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null}
-                      {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null}
+                      {/* {homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <p>Already Always Filter</p> : null} */}
+                      {/* {homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <p>Already Posted</p> : null} */}
 
                     </Col>
 

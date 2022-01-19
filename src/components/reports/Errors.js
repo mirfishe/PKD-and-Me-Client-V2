@@ -3,14 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../utilities/SharedFunctions";
+import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/ApplicationFunctions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
+const Errors = () => {
 
-const Comments = () => {
-
-  const componentName = "Comments.js";
+  const componentName = "Errors.js";
 
   const navigate = useNavigate();
 
@@ -35,14 +33,14 @@ const Comments = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [comments, setComments] = useState([]);
+  const [errors, setErrors] = useState([]);
 
 
-  const getComments = () => {
+  const getErrors = () => {
 
     clearMessages();
 
-    let url = baseURL + "comments/";
+    let url = baseURL + "errors/";
 
     fetch(url, {
       method: "GET",
@@ -52,7 +50,7 @@ const Comments = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getComments response", response);
+        // console.log(componentName, GetDateTime(), "getErrors response", response);
 
         if (!response.ok) {
 
@@ -70,7 +68,7 @@ const Comments = () => {
 
         if (IsEmpty(results) === false && results.transactionSuccess === true) {
 
-          setComments(results.records);
+          setErrors(results.records);
 
         };
 
@@ -89,7 +87,7 @@ const Comments = () => {
 
   useEffect(() => {
 
-    getComments();
+    getErrors();
 
   }, []);
 
@@ -107,7 +105,7 @@ const Comments = () => {
 
 
   return (
-    <Container className="my-4">
+    <Container className="mt-4">
 
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
@@ -115,40 +113,50 @@ const Comments = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Comments</h5>
+          <h5 className="text-center">Errors</h5>
+
+          {IsEmpty(errors) === false ?
+
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Create Date</th>
+                  <th>Operation</th>
+                  <th>Component Name</th>
+                  <th>Transaction Data</th>
+                  <th>Error Data</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {errors.map((error, index) => {
+
+                  // console.log(componentName, GetDateTime(), "map error", error);
+
+                  return (
+                    <tr key={index}>
+                      {IsEmpty(error.createDate) === false ? <td>{error.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{error.createDate}</td>}
+                      <td>{error.operation}</td>
+                      <td>{error.componentName}</td>
+                      <td>{error.transactionData}</td>
+                      <td>{error.errorData}</td>
+                    </tr>
+                  );
+                })}
+
+
+              </tbody>
+
+            </Table>
+
+            : <p>There are no errors.</p>}
 
         </Col>
       </Row>
-      <Row>
 
-        {comments.map((comment) => {
-
-          return (
-            <Col className="my-4" xs="12" key={comment.commentID}>
-
-              <Row>
-                <Col xs="12">
-
-                  {IsEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
-
-                </Col>
-              </Row>
-
-              <Row>
-                <Col xs="12">
-
-                  <p>Submitted by {IsEmpty(comment.firstName) === false ? comment.firstName : null} {IsEmpty(comment.lastName) === false ? comment.lastName : null} {IsEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {IsEmpty(comment.updateDate) === false ? <small>on {DisplayDate(comment.updateDate)}</small> : null}</p>
-
-                </Col>
-              </Row>
-
-            </Col>
-          );
-        })}
-
-      </Row>
     </Container>
   );
 };
 
-export default Comments;
+export default Errors;
