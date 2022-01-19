@@ -528,7 +528,7 @@ const Titles = (props) => {
 
                         edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
 
-                      {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                      {/* {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null} */}
 
                       {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 

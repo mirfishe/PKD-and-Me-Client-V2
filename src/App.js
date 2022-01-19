@@ -36,6 +36,7 @@ import AddComment from "./components/comments/AddComment";
 import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
 import Comments from "./components/comments/Comments";
 import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
+import Terms from "./components/terms/Terms";
 import BrokenLinks from "./components/reports/BrokenLinks";
 import ComputerLogs from "./components/reports/ComputerLogs";
 import Logs from "./components/reports/Logs";
@@ -687,6 +688,14 @@ function App() {
             <NavLink tag={Link} to="/"><NavbarText>Home</NavbarText></NavLink>
           </NavItem>
 
+          {process.env.NODE_ENV === "development" ?
+
+            <NavItem>
+              <NavLink tag={Link} to="/terms"><NavbarText>Terms</NavbarText></NavLink>
+            </NavItem>
+
+            : null}
+
           {showHomeopape === true || showAllMenuItems === true ?
 
             <NavItem>
@@ -803,6 +812,10 @@ function App() {
 
             <NavItem>
               <NavLink tag={Link} to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink tag={Link} to="/terms"><NavbarText>Terms</NavbarText></NavLink>
             </NavItem>
 
             <NavItem>
@@ -1012,6 +1025,8 @@ function App() {
               <Route path="/comments" element={<Comments />} />
 
               <Route path="/titleSuggestions" element={<TitleSuggestions />} />
+
+              <Route path="/terms" element={<Terms />} />
 
               {/* </React.Fragment>
 

@@ -610,7 +610,11 @@ const Title = (props) => {
 
                 {IsEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
 
+                {IsEmpty(title.writtenDate) === false ? <p>Manuscript Written Date: {DisplayDate(title.writtenDate)}</p> : null}
+
                 {IsEmpty(title.submissionDate) === false ? <p>Manuscript Submission Date: {DisplayDate(title.submissionDate)}</p> : null}
+
+                {IsEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {DisplayDate(title.manuscriptTitle)}</p> : null}
 
                 {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 

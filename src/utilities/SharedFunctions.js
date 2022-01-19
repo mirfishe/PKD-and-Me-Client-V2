@@ -1133,6 +1133,21 @@ export const HasDecimalPlaces = (value, decimalPlaces) => {
 };
 
 
+export const GenerateRandomNumber = (minimumValue, maximumValue) => {
+  // console.log(componentName, GetDateTime(), "GenerateRandomNumber minimumValue", minimumValue);
+  // console.log(componentName, GetDateTime(), "GenerateRandomNumber maximumValue", maximumValue);
+
+  // * https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript -- 01/14/2022 MF
+
+  let randomNumber = Math.floor(Math.random() * (maximumValue - minimumValue + 1)) + minimumValue;
+
+  // console.log(componentName, GetDateTime(), "GenerateRandomNumber randomNumber", randomNumber);
+
+  return randomNumber;
+
+};
+
+
 export const GenerateRandomNumberDigits = (digits) => {
   // console.log(componentName, GetDateTime(), "GenerateRandomNumberDigits digits", digits);
 

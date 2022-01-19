@@ -104,6 +104,8 @@ const EditTitle = (props) => {
   const [txtTitleURL, setTxtTitleURL] = useState("");
   const [txtAuthorFirstName, setTxtAuthorFirstName] = useState("");
   const [txtAuthorLastName, setTxtAuthorLastName] = useState("");
+  const [txtManuscriptTitle, setTxtManuscriptTitle] = useState("");
+  const [txtWrittenDate, setTxtWrittenDate] = useState("");
   const [txtSubmissionDate, setTxtSubmissionDate] = useState("");
   const [txtPublicationDate, setTxtPublicationDate] = useState("");
   const [txtImageName, setTxtImageName] = useState("");
@@ -122,6 +124,8 @@ const EditTitle = (props) => {
   // const [titleURL, setTitleURL] = useState(null);
   // const [authorFirstName, setAuthorFirstName] = useState(null);
   // const [authorLastName, setAuthorLastName] = useState(null);
+  // const [manuscriptTitle, setManuscriptTitle] = useState(null);
+  // const [writtenDate, setWrittenDate] = useState(null);
   // const [submissionDate, setSubmissionDate] = useState(null);
   // const [publicationDate, setPublicationDate] = useState(null);
   // const [imageName, setImageName] = useState(null);
@@ -168,6 +172,8 @@ const EditTitle = (props) => {
         // setTitleURL(titleObject.titleURL);
         // setAuthorFirstName(titleObject.authorFirstName);
         // setAuthorLastName(titleObject.authorLastName);
+        // setManuscriptTitle(titleObject.manuscriptTitle);
+        // setWrittenDate(titleObject.writtenDate);
         // setSubmissionDate(titleObject.submissionDate);
         // setPublicationDate(titleObject.publicationDate);
         // setImageName(titleObject.imageName);
@@ -180,8 +186,20 @@ const EditTitle = (props) => {
         setTxtTitleURL(titleObject.titleURL);
         setTxtAuthorFirstName(titleObject.authorFirstName);
         setTxtAuthorLastName(titleObject.authorLastName);
+        setTxtManuscriptTitle(titleObject.manuscriptTitle);
+        setTxtWrittenDate(titleObject.writtenDate);
         setTxtSubmissionDate(titleObject.submissionDate);
         setTxtPublicationDate(titleObject.publicationDate);
+
+        if (IsEmpty(titleObject.writtenDate) === false) {
+
+          setTxtWrittenDate(FormatToString(titleObject.writtenDate).substring(0, 10));
+
+        } else {
+
+          setTxtWrittenDate("");
+
+        };
 
         if (IsEmpty(titleObject.submissionDate) === false) {
 
@@ -230,6 +248,8 @@ const EditTitle = (props) => {
     // setTitleURL(null);
     // setAuthorFirstName(null);
     // setAuthorLastName(null);
+    // setManuscriptTitle(null);
+    // setWrittenDate(null);
     // setSubmissionDate(null);
     // setPublicationDate(null);
     // setImageName(null);
@@ -358,6 +378,28 @@ const EditTitle = (props) => {
 
         };
 
+        // * If the user doesn't enter a manuscript title, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtManuscriptTitle) === false) {
+
+          if (FormatTrim(txtManuscriptTitle).length !== 0) {
+
+            Object.assign(recordObject, { manuscriptTitle: FormatTrim(txtManuscriptTitle) });
+
+          };
+
+        };
+
+        // * If the user doesn't enter a written date, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtWrittenDate) === false) {
+
+          if (FormatTrim(txtWrittenDate).length !== 0) {
+
+            Object.assign(recordObject, { writtenDate: FormatTrim(txtWrittenDate) });
+
+          };
+
+        };
+
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtSubmissionDate) === false) {
 
@@ -455,6 +497,8 @@ const EditTitle = (props) => {
                 // setTitleURL(data.records[0].titleURL);
                 // setAuthorFirstName(data.records[0].authorFirstName);
                 // setAuthorLastName(data.records[0].authorLastName);
+                // setManuscriptTitle(data.records[0].manuscriptTitle);
+                // setWrittenDate(data.records[0].writtenDate);
                 // setSubmissionDate(data.records[0].submissionDate);
                 // setPublicationDate(data.records[0].publicationDate);
                 // setImageName(data.records[0].imageName);
@@ -471,7 +515,7 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
+                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
 
                 // ? Add to local storage also? -- 03/06/2021 MF
 
@@ -557,6 +601,8 @@ const EditTitle = (props) => {
     // setTitleURL(null);
     // setAuthorFirstName(null);
     // setAuthorLastName(null);
+    // setManuscriptTitle(null);
+    // setWrittenDate(null);
     // setSubmissionDate(null);
     // setPublicationDate(null);
     // setImageName(null);
@@ -686,6 +732,28 @@ const EditTitle = (props) => {
 
         };
 
+        // * If the user doesn't enter a manuscript title, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtManuscriptTitle) === false) {
+
+          if (FormatTrim(txtManuscriptTitle).length !== 0) {
+
+            Object.assign(recordObject, { manuscriptTitle: FormatTrim(txtManuscriptTitle) });
+
+          };
+
+        };
+
+        // * If the user doesn't enter a written date, then it isn't added/updated. -- 03/06/2021 MF
+        if (IsEmpty(txtWrittenDate) === false) {
+
+          if (FormatTrim(txtWrittenDate).length !== 0) {
+
+            Object.assign(recordObject, { writtenDate: FormatTrim(txtWrittenDate) });
+
+          };
+
+        };
+
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
         if (IsEmpty(txtSubmissionDate) === false) {
 
@@ -785,6 +853,8 @@ const EditTitle = (props) => {
                 // setTitleURL(data.records[0].titleURL);
                 // setAuthorFirstName(data.records[0].authorFirstName);
                 // setAuthorLastName(data.records[0].authorLastName);
+                // setManuscriptTitle(data.records[0].manuscriptTitle);
+                // setWrittenDate(data.records[0].writtenDate);
                 // setSubmissionDate(data.records[0].submissionDate);
                 // setPublicationDate(data.records[0].publicationDate);
                 // setImageName(data.records[0].imageName);
@@ -804,7 +874,7 @@ const EditTitle = (props) => {
                 // console.log(componentName, GetDateTime(), "updateTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
 
                 // ? Update local storage also? -- 03/06/2021 MF
 
@@ -1090,8 +1160,8 @@ const EditTitle = (props) => {
       setTxtTitleURL("");
       setTxtAuthorFirstName("");
       setTxtAuthorLastName("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
       setTxtSubmissionDate("");
       setTxtPublicationDate("");
       setTxtImageName("");
@@ -1121,8 +1191,8 @@ const EditTitle = (props) => {
       setTxtTitleURL("");
       setTxtAuthorFirstName("");
       setTxtAuthorLastName("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
       setTxtSubmissionDate("");
       setTxtPublicationDate("");
       setTxtImageName("");
@@ -1145,8 +1215,8 @@ const EditTitle = (props) => {
       setTxtTitleURL("");
       setTxtAuthorFirstName("");
       setTxtAuthorLastName("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
       setTxtSubmissionDate("");
       setTxtPublicationDate("");
       setTxtImageName("");
@@ -1243,6 +1313,16 @@ const EditTitle = (props) => {
                 })}
               </Input>
               {IsEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
+            </FormGroup>
+
+            <FormGroup>
+              <Label for="txtManuscriptTitle">Manuscript Title</Label>
+              <Input type="text" id="txtManuscriptTitle" value={txtManuscriptTitle} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtManuscriptTitle(event.target.value); }} />
+            </FormGroup>
+
+            <FormGroup>
+              <Label for="txtWrittenDate">Manuscript Written Date</Label>
+              <Input type="date" id="txtWrittenDate" value={txtWrittenDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtWrittenDate(event.target.value); }} />
             </FormGroup>
 
             <FormGroup row>
