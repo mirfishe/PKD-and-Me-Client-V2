@@ -12,7 +12,7 @@ import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
 // import AddEdition from "../editions/AddEdition";
-import EditEdition from "../editions/EditEdition";
+// import EditEdition from "../editions/EditEdition";
 
 const Titles = (props) => {
 
@@ -162,7 +162,6 @@ const Titles = (props) => {
 
   };
 
-  // ! If the user is viewing electronic only editions, all titles still appear even if there are no electronic editions of that title.
 
   let titleList = [];
 
@@ -218,6 +217,10 @@ const Titles = (props) => {
 
   };
 
+
+
+  // ! If the user is viewing electronic only editions, all titles still appear even if there are no electronic editions of that title. -- 08/09/2021 MF
+
   sortTitles(titleSortBy);
   // console.log(componentName, GetDateTime(), "titleSortBy", titleSortBy);
   // console.log(componentName, GetDateTime(), "titleList", titleList);
@@ -225,6 +228,9 @@ const Titles = (props) => {
 
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
 
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     navigate("/" + linkName);
@@ -532,7 +538,7 @@ const Titles = (props) => {
 
                       {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
-                      {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null}
+                      {/* {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
                     </CardBody>
                   </Col>

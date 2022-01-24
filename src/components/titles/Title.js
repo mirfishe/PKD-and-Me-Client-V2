@@ -327,6 +327,9 @@ const Title = (props) => {
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     navigate("/" + linkName);
 
@@ -614,7 +617,7 @@ const Title = (props) => {
 
                 {IsEmpty(title.submissionDate) === false ? <p>Manuscript Submission Date: {DisplayDate(title.submissionDate)}</p> : null}
 
-                {IsEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {DisplayDate(title.manuscriptTitle)}</p> : null}
+                {IsEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {title.manuscriptTitle}</p> : null}
 
                 {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 

@@ -66,6 +66,9 @@ const Media = (props) => {
   const redirectPage = (linkName) => {
     // console.log(componentName, GetDateTime(), "redirectPage", linkName);
 
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     navigate("/" + linkName);
 
