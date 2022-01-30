@@ -992,13 +992,25 @@ const EditUserReview = (props) => {
 
       {/* {console.log(componentName, GetDateTime(), "return userReviewItem", userReviewItem)} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null}
+      {/* {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {/* {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Review</Button></span> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === true ?
 
-      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+        <a href="#" onClick={(event) => { setModal(!modal); }}>Add Review</a>
+
+        : null}
+
+      {/* {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Review</Button></span> : null} */}
+
+      {/* {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+
+      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false && IsEmpty(userReviewItem) === false && ((IsEmpty(userState.userID) === false && IsEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (IsEmpty(admin) === false && admin === true)) ?
+
+        <a href="#" onClick={(event) => { setModal(!modal); }}>Update Review</a>
+
+        : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>{IsEmpty(userReviewItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Review</ModalHeader>

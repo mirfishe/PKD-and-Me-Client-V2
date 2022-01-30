@@ -5,8 +5,8 @@ import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
 import { encodeURL } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
-import EditCategory from "./EditCategory";
-import EditCategories from "./EditCategories";
+// import EditCategory from "./EditCategory";
+// import EditCategories from "./EditCategories";
 
 const Category = (props) => {
 
@@ -117,8 +117,8 @@ const Category = (props) => {
 
       </Collapse>
 
-      {IsEmpty(admin) === false && admin === true ? <EditCategory displayButton={true} /> : null}
-      {IsEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null}
+      {/* {IsEmpty(admin) === false && admin === true ? <EditCategory displayButton={true} /> : null} */}
+      {/* {IsEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null} */}
 
     </React.Fragment>
   );

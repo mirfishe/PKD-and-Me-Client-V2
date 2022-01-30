@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
@@ -374,7 +374,19 @@ const Login = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Login</Button></span> : null}
+      {/* {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Login</Button></span> : null} */}
+
+      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === true ?
+
+        <React.Fragment>
+          {/* <NavItem> */}
+          {/* <NavItem className="mx-3 my-2">
+            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Login</NavbarText></a> */}
+          <NavLink onClick={(event) => { setModal(!modal); }}><NavbarText>Login</NavbarText></NavLink>
+          {/* </NavItem> */}
+        </React.Fragment>
+
+        : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Login</ModalHeader>
