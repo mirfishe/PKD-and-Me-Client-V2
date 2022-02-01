@@ -90,11 +90,11 @@ const FromTheHomeopape = (props) => {
 
     };
 
-    // if (FormatLowerCase(txtArticleTitle).includes("black lotus") === true || FormatLowerCase(itemContentSnippet).includes("black lotus") === true) {
+    if (FormatLowerCase(txtArticleTitle).includes("black lotus") === true || FormatLowerCase(itemContentSnippet).includes("black lotus") === true) {
 
-    //   post = post + " #BladeRunner #BladeRunner2049 ";
+      post = post + " #BladeRunner2049 ";
 
-    // };
+    };
 
     if (FormatLowerCase(txtArticleTitle).includes("total recall") === true || FormatLowerCase(itemContentSnippet).includes("total recall") === true) {
       post = post + " #TotalRecall ";
@@ -1031,7 +1031,7 @@ const FromTheHomeopape = (props) => {
 
             // * Remove html tags from string. -- 06/26/2021 MF
             // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ''), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ''));
+            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
             // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
             // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
@@ -1172,7 +1172,7 @@ const FromTheHomeopape = (props) => {
 
             // * Remove html tags from string. -- 06/26/2021 MF
             // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ''), itemLink);
+            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
             // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
             // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);

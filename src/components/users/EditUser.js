@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
@@ -372,7 +372,19 @@ const EditUser = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null}
+      {/* {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null} */}
+
+      {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
+
+        <React.Fragment>
+          {/* <NavItem> */}
+          {/* <NavItem className="mx-3 my-2">
+            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></a> */}
+          <NavLink onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></NavLink>
+          {/* </NavItem> */}
+        </React.Fragment>
+
+        : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Update User</ModalHeader>

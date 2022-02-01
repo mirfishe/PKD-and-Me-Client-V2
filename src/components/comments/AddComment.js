@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
@@ -285,9 +285,21 @@ const AddComment = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
+      {/* {applicationAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+
+      {applicationAllowUserInteractions === true && ((IsEmpty(sessionToken) === false) || requireUserLogin === false) ?
+
+        <React.Fragment>
+          {/* <NavItem> */}
+          {/* <NavItem className="mx-3 my-2">
+          <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></a> */}
+          <NavLink onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></NavLink>
+          {/* </NavItem> */}
+        </React.Fragment>
+
+        : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Comment</ModalHeader>

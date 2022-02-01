@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input, NavItem, NavbarText } from "reactstrap";
 import { Drawer } from "@material-ui/core";
 import applicationSettings from "../../app/environment";
 import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
@@ -357,7 +357,19 @@ const Checklist = (props) => {
            <ModalHeader toggle={(event) => { setModal(!modal); }}>Checklist</ModalHeader>
            <ModalBody> */}
 
-      {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null}
+      {/* {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null} */}
+
+      {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ?
+
+        <React.Fragment>
+          {/* <NavItem> */}
+          {/* <NavItem className="mx-3 my-2">
+            <a href="#" onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></a> */}
+          <NavLink onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></NavLink>
+          {/* </NavItem> */}
+        </React.Fragment>
+
+        : null}
 
       <Drawer anchor="right" open={drawer} onClose={(event) => { setDrawer(!drawer); }}>
 

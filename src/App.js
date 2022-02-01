@@ -19,7 +19,7 @@ import About from "./content/About";
 import Homeopape from "./content/Homeopape";
 import Dickian from "./content/Dickian";
 import FormatPost from "./components/socialMedia/FormatPost";
-import EditCategory from "./components/categories/EditCategory";
+// import EditCategory from "./components/categories/EditCategory";
 import EditMedia from "./components/media/EditMedia";
 import EditTitle from "./components/titles/EditTitle";
 import Category from "./components/categories/Category";
@@ -793,7 +793,8 @@ function App() {
           {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
 
             <NavItem>
-              <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span>
+              {/* <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span> */}
+              <a href="#" onClick={() => logOut()}><NavbarText>Log Out</NavbarText></a>
             </NavItem>
 
             : null}
@@ -889,7 +890,7 @@ function App() {
 
         : null}
 
-      {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && IsEmpty(admin) === false && admin === true ?
+      {/* {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && IsEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
@@ -913,7 +914,6 @@ function App() {
             {showEditTitle && IsEmpty(admin) === false && admin === true ?
 
               <NavItem>
-                {/* <AddTitle displayButton={true} /> */}
                 <EditTitle displayButton={true} />
               </NavItem>
 
@@ -922,7 +922,7 @@ function App() {
           </Nav>
         </Navbar>
 
-        : null}
+        : null} */}
 
       {(showUserPhysicalOnly === true || showUserElectronicOnly === true || showAllMenuItems === true) && IsEmpty(admin) === false && admin === true ?
 

@@ -1051,13 +1051,26 @@ const EditEdition = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null}
+      {/* {applicationAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {/* {applicationAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null}
+      {applicationAllowUserInteractions === true && IsEmpty(editionItem) === true && IsEmpty(admin) === false && admin === true ?
 
-      {applicationAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+        <a href="#" onClick={(event) => { setModal(!modal); }}>Add Edition</a>
+
+        : null}
+
+      {/* {applicationAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null} */}
+
+      {/* {applicationAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+
+      {applicationAllowUserInteractions === true && IsEmpty(editionItem) === false && IsEmpty(admin) === false && admin === true ?
+
+        <a href="#" onClick={(event) => { setModal(!modal); }}>Update Edition</a>
+
+        : null}
+
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>{IsEmpty(editionItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Edition</ModalHeader>

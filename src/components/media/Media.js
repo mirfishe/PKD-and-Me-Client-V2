@@ -5,7 +5,7 @@ import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
 import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
 import { encodeURL } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
-import EditMedia from "./EditMedia";
+// import EditMedia from "./EditMedia";
 
 const Media = (props) => {
 
@@ -125,7 +125,7 @@ const Media = (props) => {
 
       </Collapse>
 
-      {IsEmpty(admin) === false && admin === true ? <EditMedia displayButton={true} /> : null}
+      {/* {IsEmpty(admin) === false && admin === true ? <EditMedia displayButton={true} /> : null} */}
 
     </React.Fragment>
   );
