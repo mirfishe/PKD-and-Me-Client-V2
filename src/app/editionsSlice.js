@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "../utilities/SharedFunctions";
 
 const componentName = "editionsSlice.js";
 
@@ -16,210 +16,210 @@ const editionsSlice = createSlice({
   initialState,
   reducers: {
     loadArrayEditions(state, action) {
-      // console.log(componentName, GetDateTime(), "loadArrayEditions action.payload", action.payload);
-      // console.log(componentName, GetDateTime(), "loadArrayEditions action.payload.length", action.payload.length);
+      // console.log(componentName, getDateTime(), "loadArrayEditions action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "loadArrayEditions action.payload.length", action.payload.length);
 
       for (let i = 0; i < action.payload.length; i++) {
 
-        // console.log(componentName, GetDateTime(), "loadArrayEditions action.payload[i]", action.payload[i]);
+        // console.log(componentName, getDateTime(), "loadArrayEditions action.payload[i]", action.payload[i]);
         state.arrayEditions.push(action.payload[i]);
 
       };
 
       state.editionsLoaded = true;
-      state.lastDatabaseRetrievalEditions = GetDateTime();
+      state.lastDatabaseRetrievalEditions = getDateTime();
 
     },
     addStateEdition(state, action) {
-      // console.log(componentName, GetDateTime(), "addStateEdition action.payload", action.payload);
-      // console.log(componentName, GetDateTime(), "addStateEdition action.payload.length", action.payload.length);
+      // console.log(componentName, getDateTime(), "addStateEdition action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "addStateEdition action.payload.length", action.payload.length);
 
       // * Could change this to accept an object and add that object to the store
       for (let i = 0; i < action.payload.length; i++) {
 
-        // console.log(componentName, GetDateTime(), "addStateEdition action.payload[i]", action.payload[i]);
+        // console.log(componentName, getDateTime(), "addStateEdition action.payload[i]", action.payload[i]);
         state.arrayEditions.push(action.payload[i]);
 
       };
 
     },
     updateStateEdition(state, action) {
-      // console.log(componentName, GetDateTime(), "updateStateEdition action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "updateStateEdition action.payload", action.payload);
 
       const editionItem = action.payload;
       let editionItemIndex;
-      // console.log(componentName, GetDateTime(), "updateStateEdition editionItem", editionItem);
-      // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.editionID", editionItem.editionID);
-      // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
+      // console.log(componentName, getDateTime(), "updateStateEdition editionItem", editionItem);
+      // console.log(componentName, getDateTime(), "updateStateEdition editionItem.editionID", editionItem.editionID);
+      // console.log(componentName, getDateTime(), "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
 
       if (typeof editionItem === "object") {
 
-        if (HasNonEmptyProperty(editionItem, "editionID")) {
+        if (hasNonEmptyProperty(editionItem, "editionID")) {
 
           editionItemIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionItem.editionID);
 
-          // console.log(componentName, GetDateTime(), "updateStateUserReview editionItemIndex", editionItemIndex);
+          // console.log(componentName, getDateTime(), "updateStateUserReview editionItemIndex", editionItemIndex);
 
           // state.arrayEditions[editionItemIndex].editionID = editionItem.editionID;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titleID")) {
+        if (hasNonEmptyProperty(editionItem, "titleID")) {
 
           state.arrayEditions[editionItemIndex].titleID = editionItem.titleID;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "mediaID")) {
+        if (hasNonEmptyProperty(editionItem, "mediaID")) {
 
           state.arrayEditions[editionItemIndex].mediaID = editionItem.mediaID;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "publicationDate")) {
+        if (hasNonEmptyProperty(editionItem, "publicationDate")) {
 
           state.arrayEditions[editionItemIndex].publicationDate = editionItem.publicationDate;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "editionPublicationDate")) {
+        if (hasNonEmptyProperty(editionItem, "editionPublicationDate")) {
 
           state.arrayEditions[editionItemIndex].editionPublicationDate = editionItem.editionPublicationDate;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "imageName")) {
+        if (hasNonEmptyProperty(editionItem, "imageName")) {
 
           state.arrayEditions[editionItemIndex].imageName = editionItem.imageName;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "editionImageName")) {
+        if (hasNonEmptyProperty(editionItem, "editionImageName")) {
 
           state.arrayEditions[editionItemIndex].editionImageName = editionItem.editionImageName;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "ASIN")) {
+        if (hasNonEmptyProperty(editionItem, "ASIN")) {
 
           state.arrayEditions[editionItemIndex].ASIN = editionItem.ASIN;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "textLinkShort")) {
+        if (hasNonEmptyProperty(editionItem, "textLinkShort")) {
 
           state.arrayEditions[editionItemIndex].textLinkShort = editionItem.textLinkShort;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "textLinkFull")) {
+        if (hasNonEmptyProperty(editionItem, "textLinkFull")) {
 
           state.arrayEditions[editionItemIndex].textLinkFull = editionItem.textLinkFull;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "imageLinkSmall")) {
+        if (hasNonEmptyProperty(editionItem, "imageLinkSmall")) {
 
           state.arrayEditions[editionItemIndex].imageLinkSmall = editionItem.imageLinkSmall;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "imageLinkMedium")) {
+        if (hasNonEmptyProperty(editionItem, "imageLinkMedium")) {
 
           state.arrayEditions[editionItemIndex].imageLinkMedium = editionItem.imageLinkMedium;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "imageLinkLarge")) {
+        if (hasNonEmptyProperty(editionItem, "imageLinkLarge")) {
 
           state.arrayEditions[editionItemIndex].imageLinkLarge = editionItem.imageLinkLarge;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "textImageLink")) {
+        if (hasNonEmptyProperty(editionItem, "textImageLink")) {
 
           state.arrayEditions[editionItemIndex].textImageLink = editionItem.textImageLink;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "active")) {
+        if (hasNonEmptyProperty(editionItem, "active")) {
 
           state.arrayEditions[editionItemIndex].active = editionItem.active;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "editionActive")) {
+        if (hasNonEmptyProperty(editionItem, "editionActive")) {
 
           state.arrayEditions[editionItemIndex].editionActive = editionItem.editionActive;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "updateDate")) {
+        if (hasNonEmptyProperty(editionItem, "updateDate")) {
 
           state.arrayEditions[editionItemIndex].updateDate = editionItem.updateDate;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "editionUpdatedDate")) {
+        if (hasNonEmptyProperty(editionItem, "editionUpdatedDate")) {
 
           state.arrayEditions[editionItemIndex].editionUpdatedDate = editionItem.editionUpdatedDate;
 
         };
 
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (HasNonEmptyProperty(editionItem, "medium")) {
+        // if (hasNonEmptyProperty(editionItem, "medium")) {
 
-        // console.log(componentName, GetDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
+        // console.log(componentName, getDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
 
-        // if (HasNonEmptyProperty(editionItem.medium, "mediaID")) {
+        // if (hasNonEmptyProperty(editionItem.medium, "mediaID")) {
 
         //   state.arrayEditions[editionItemIndex].medium.mediaID = editionItem.medium.mediaID;
 
         // };
 
-        if (HasNonEmptyProperty(editionItem, "media")) {
+        if (hasNonEmptyProperty(editionItem, "media")) {
 
           state.arrayEditions[editionItemIndex].media = editionItem.media;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "electronic")) {
+        if (hasNonEmptyProperty(editionItem, "electronic")) {
 
           state.arrayEditions[editionItemIndex].electronic = editionItem.electronic;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "sortID")) {
+        if (hasNonEmptyProperty(editionItem, "sortID")) {
 
           state.arrayEditions[editionItemIndex].sortID = editionItem.sortID;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "mediaSortID")) {
+        if (hasNonEmptyProperty(editionItem, "mediaSortID")) {
 
           state.arrayEditions[editionItemIndex].mediaSortID = editionItem.mediaSortID;
 
         };
 
-        // if (HasNonEmptyProperty(editionItem, "active")) {
+        // if (hasNonEmptyProperty(editionItem, "active")) {
 
         //   state.arrayEditions[editionItemIndex].active = editionItem.active;
 
         // };
 
-        if (HasNonEmptyProperty(editionItem, "mediaActive")) {
+        if (hasNonEmptyProperty(editionItem, "mediaActive")) {
 
           state.arrayEditions[editionItemIndex].mediaActive = editionItem.mediaActive;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "mediaCreateDate")) {
+        if (hasNonEmptyProperty(editionItem, "mediaCreateDate")) {
 
           state.arrayEditions[editionItemIndex].mediaCreateDate = editionItem.mediaCreateDate;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "mediaUpdatedDate")) {
+        if (hasNonEmptyProperty(editionItem, "mediaUpdatedDate")) {
 
           state.arrayEditions[editionItemIndex].mediaUpdatedDate = editionItem.mediaUpdatedDate;
 
@@ -228,93 +228,93 @@ const editionsSlice = createSlice({
         // };
 
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (HasNonEmptyProperty(editionItem, "title")) {
+        // if (hasNonEmptyProperty(editionItem, "title")) {
 
-        //   if (HasNonEmptyProperty(editionItem.title, "titleID")) {
+        //   if (hasNonEmptyProperty(editionItem.title, "titleID")) {
 
         //     state.arrayEditions[editionItemIndex].title.titleID = editionItem.title.titleID;
 
         //   };
 
-        if (HasNonEmptyProperty(editionItem, "titleName")) {
+        if (hasNonEmptyProperty(editionItem, "titleName")) {
 
           state.arrayEditions[editionItemIndex].titleName = editionItem.titleName;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titleSort")) {
+        if (hasNonEmptyProperty(editionItem, "titleSort")) {
 
           state.arrayEditions[editionItemIndex].titleSort = editionItem.titleSort;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titleURL")) {
+        if (hasNonEmptyProperty(editionItem, "titleURL")) {
 
           state.arrayEditions[editionItemIndex].titleURL = editionItem.titleURL;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "authorFirstName")) {
+        if (hasNonEmptyProperty(editionItem, "authorFirstName")) {
 
           state.arrayEditions[editionItemIndex].authorFirstName = editionItem.authorFirstName;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "authorLastName")) {
+        if (hasNonEmptyProperty(editionItem, "authorLastName")) {
 
           state.arrayEditions[editionItemIndex].authorLastName = editionItem.authorLastName;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "submissionDate")) {
+        if (hasNonEmptyProperty(editionItem, "submissionDate")) {
 
           state.arrayEditions[editionItemIndex].submissionDate = editionItem.submissionDate;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titlePublicationDate")) {
+        if (hasNonEmptyProperty(editionItem, "titlePublicationDate")) {
 
           state.arrayEditions[editionItemIndex].titlePublicationDate = editionItem.titlePublicationDate;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titleImageName")) {
+        if (hasNonEmptyProperty(editionItem, "titleImageName")) {
 
           state.arrayEditions[editionItemIndex].titleImageName = editionItem.titleImageName;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "categoryID")) {
+        if (hasNonEmptyProperty(editionItem, "categoryID")) {
 
           state.arrayEditions[editionItemIndex].categoryID = editionItem.categoryID;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "shortDescription")) {
+        if (hasNonEmptyProperty(editionItem, "shortDescription")) {
 
           state.arrayEditions[editionItemIndex].shortDescription = editionItem.shortDescription;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "urlPKDWeb")) {
+        if (hasNonEmptyProperty(editionItem, "urlPKDWeb")) {
 
           state.arrayEditions[editionItemIndex].urlPKDWeb = editionItem.urlPKDWeb;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titleActive")) {
+        if (hasNonEmptyProperty(editionItem, "titleActive")) {
 
           state.arrayEditions[editionItemIndex].titleActive = editionItem.titleActive;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titleCreateDate")) {
+        if (hasNonEmptyProperty(editionItem, "titleCreateDate")) {
 
           state.arrayEditions[editionItemIndex].titleCreateDate = editionItem.titleCreateDate;
 
         };
 
-        if (HasNonEmptyProperty(editionItem, "titleUpdatedDate")) {
+        if (hasNonEmptyProperty(editionItem, "titleUpdatedDate")) {
 
           state.arrayEditions[editionItemIndex].titleUpdatedDate = editionItem.titleUpdatedDate;
 
@@ -326,7 +326,7 @@ const editionsSlice = createSlice({
 
     },
     deleteStateEdition(state, action) {
-      // console.log(componentName, GetDateTime(), "deleteStateEdition action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "deleteStateEdition action.payload", action.payload);
 
       // const editionItemIndex = action.payload;
       let editionListIndex;
@@ -335,13 +335,13 @@ const editionsSlice = createSlice({
       // ? This doesn't work because state.arrayEditions isn't stored as an array of objects?
       // ? Need to copy the array?
       // const existingEditionIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
-      // console.log(componentName, GetDateTime(), "deleteStateEdition existingEditionIndex", existingEditionIndex);
+      // console.log(componentName, getDateTime(), "deleteStateEdition existingEditionIndex", existingEditionIndex);
 
-      if (IsEmpty(editionID) === false) {
+      if (isEmpty(editionID) === false) {
 
         editionListIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
 
-        // console.log(componentName, GetDateTime(), "deleteStateEdition editionListIndex", editionListIndex);
+        // console.log(componentName, getDateTime(), "deleteStateEdition editionListIndex", editionListIndex);
 
         state.arrayEditions.splice(editionListIndex, 1);
 
@@ -349,13 +349,13 @@ const editionsSlice = createSlice({
 
     },
     setEditionsDataOffline(state, action) {
-      // console.log(componentName, GetDateTime(), "setEditionsDataOffline action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "setEditionsDataOffline action.payload", action.payload);
 
       state.editionsDataOffline = action.payload;
 
     },
     setEditionSortBy(state, action) {
-      // console.log(componentName, GetDateTime(), "setEditionSortBy action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "setEditionSortBy action.payload", action.payload);
 
       state.editionSortBy = action.payload;
 

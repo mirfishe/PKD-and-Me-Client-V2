@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input, NavItem, NavbarText } from "reactstrap";
 import { Drawer } from "@material-ui/core";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayYear } from "../../utilities/SharedFunctions";
 import { encodeURL, decodeURL, LogError } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
@@ -20,15 +20,15 @@ const Checklist = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   // const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
@@ -52,28 +52,28 @@ const Checklist = (props) => {
   const [readOrOwned, setReadOrOwned] = useState("read");
 
   const linkItem = useSelector(state => state.urls.linkItem);
-  // console.log(componentName, GetDateTime(), "linkItem", linkItem);
+  // console.log(componentName, getDateTime(), "linkItem", linkItem);
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
+  // console.log(componentName, getDateTime(), "titleListState", titleListState);
 
   // const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, GetDateTime(), "userReviewListState", userReviewListState);
+  // console.log(componentName, getDateTime(), "userReviewListState", userReviewListState);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, GetDateTime(), "userState", userState);
+  // console.log(componentName, getDateTime(), "userState", userState);
 
   // const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
+  // console.log(componentName, getDateTime(), "editionListState", editionListState);
 
   // let editionList = [...editionListState];
-  // console.log(componentName, GetDateTime(), "editionList", editionList);
+  // console.log(componentName, getDateTime(), "editionList", editionList);
 
 
   const sortChecklistList = (sortBy) => {
-    // console.log(componentName, GetDateTime(), "sortTitles sortBy", sortBy);
+    // console.log(componentName, getDateTime(), "sortTitles sortBy", sortBy);
 
-    if (IsEmpty(checklistList) === false && checklistList.length > 0) {
+    if (isEmpty(checklistList) === false && checklistList.length > 0) {
 
       if (sortBy === "publicationDate") {
 
@@ -103,15 +103,15 @@ const Checklist = (props) => {
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
         let titleListPublicationDate = checklistList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
         titleListPublicationDate.sort((a, b) => (a.titlePublicationDate > b.titlePublicationDate) ? 1 : -1);
-        // console.log(componentName, GetDateTime(), "titleListPublicationDate", titleListPublicationDate);
+        // console.log(componentName, getDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
         let titleListNoPublicationDate = checklistList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
         titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-        // console.log(componentName, GetDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
+        // console.log(componentName, getDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
 
         let newtitleList = [...titleListPublicationDate];
         newtitleList.push(...titleListNoPublicationDate);
-        // console.log(componentName, GetDateTime(), "newtitleList", newtitleList);
+        // console.log(componentName, getDateTime(), "newtitleList", newtitleList);
 
         checklistList = [...newtitleList];
 
@@ -132,13 +132,13 @@ const Checklist = (props) => {
   };
 
   const checklistListState = useSelector(state => state.user.arrayChecklist);
-  // console.log(componentName, GetDateTime(), "checklistListState", checklistListState);
+  // console.log(componentName, getDateTime(), "checklistListState", checklistListState);
 
   let checklistList = [...checklistListState];
-  // console.log(componentName, GetDateTime(), "checklistList", checklistList);
+  // console.log(componentName, getDateTime(), "checklistList", checklistList);
 
   // * Filter by category
-  if (IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkType") === true) {
+  if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkType") === true) {
 
     if (linkItem.linkType === "categories") {
 
@@ -171,15 +171,15 @@ const Checklist = (props) => {
 
   // checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
   sortChecklistList(titleSortBy);
-  // console.log(componentName, GetDateTime(), "titleSortBy", titleSortBy);
-  // console.log(componentName, GetDateTime(), "titleList", titleList);
+  // console.log(componentName, getDateTime(), "titleSortBy", titleSortBy);
+  // console.log(componentName, getDateTime(), "titleList", titleList);
 
 
   const updateChecklist = (titleID, reviewID, read, owned) => {
 
-    // console.log(componentName, GetDateTime(), "updateChecklist titleID", titleID);
-    // console.log(componentName, GetDateTime(), "updateChecklist read", read);
-    // console.log(componentName, GetDateTime(), "updateChecklist reviewID", reviewID);
+    // console.log(componentName, getDateTime(), "updateChecklist titleID", titleID);
+    // console.log(componentName, getDateTime(), "updateChecklist read", read);
+    // console.log(componentName, getDateTime(), "updateChecklist reviewID", reviewID);
 
     clearMessages();
     setChecklistRecordUpdated(null);
@@ -192,12 +192,12 @@ const Checklist = (props) => {
       active: true // ? always true?
     };
 
-    // console.log(componentName, GetDateTime(), "updateChecklist recordObject", recordObject);
+    // console.log(componentName, getDateTime(), "updateChecklist recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
     let updateChecklistMethod = "";
 
-    if (IsEmpty(reviewID) === false) {
+    if (isEmpty(reviewID) === false) {
 
       url = url + reviewID;
       updateChecklistMethod = "PUT";
@@ -208,10 +208,10 @@ const Checklist = (props) => {
 
     };
 
-    // console.log(componentName, GetDateTime(), "updateChecklist url", url);
-    // console.log(componentName, GetDateTime(), "updateChecklist updateChecklistMethod", updateChecklistMethod);
+    // console.log(componentName, getDateTime(), "updateChecklist url", url);
+    // console.log(componentName, getDateTime(), "updateChecklist updateChecklistMethod", updateChecklistMethod);
 
-    if (IsEmpty(sessionToken) === false) {
+    if (isEmpty(sessionToken) === false) {
 
       fetch(url, {
         method: updateChecklistMethod,
@@ -222,7 +222,7 @@ const Checklist = (props) => {
         body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "updateChecklist response", response);
+          // console.log(componentName, getDateTime(), "updateChecklist response", response);
 
           // if (!response.ok) {
 
@@ -244,7 +244,7 @@ const Checklist = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, GetDateTime(), "updateChecklist data", data);
+          // console.log(componentName, getDateTime(), "updateChecklist data", data);
 
           let recordChanged = null;
 
@@ -276,14 +276,14 @@ const Checklist = (props) => {
             // this.props.userReviewUpdated();
 
             // const checklistListItem = checklistList.find(title => title.titleID === titleID);
-            // console.log(componentName, GetDateTime(), "updateChecklist checklistListItem", checklistListItem);
+            // console.log(componentName, getDateTime(), "updateChecklist checklistListItem", checklistListItem);
 
             // const checklistListIndex = checklistList.findIndex(title => title.titleID === titleID);
-            // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
+            // console.log(componentName, getDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
 
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: GetDateTime()
+              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime()
               }));
 
             } else if (updateChecklistMethod === "POST") {
@@ -294,7 +294,7 @@ const Checklist = (props) => {
             };
 
             // const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
-            // console.log(componentName, GetDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
+            // console.log(componentName, getDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
 
@@ -312,16 +312,16 @@ const Checklist = (props) => {
 
           } else {
 
-            console.log(componentName, GetDateTime(), "updateChecklist transactionSuccess error", data.message);
+            console.log(componentName, getDateTime(), "updateChecklist transactionSuccess error", data.message);
             addErrorMessage(data.message);
 
           };
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "updateChecklist error", error);
-          // console.error(componentName, GetDateTime(), "updateChecklist error.name", error.name);
-          // console.error(componentName, GetDateTime(), "updateChecklist error.message", error.message);
+          console.error(componentName, getDateTime(), "updateChecklist error", error);
+          // console.error(componentName, getDateTime(), "updateChecklist error.name", error.name);
+          // console.error(componentName, getDateTime(), "updateChecklist error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
@@ -335,7 +335,7 @@ const Checklist = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -351,15 +351,15 @@ const Checklist = (props) => {
   return (
     <React.Fragment>
 
-      {/* {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Checklist</Button> : null}
+      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Checklist</Button> : null}
 
         <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
            <ModalHeader toggle={(event) => { setModal(!modal); }}>Checklist</ModalHeader>
            <ModalBody> */}
 
-      {/* {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null} */}
+      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null} */}
 
-      {IsEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ?
+      {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ?
 
         <React.Fragment>
           {/* <NavItem> */}
@@ -404,7 +404,7 @@ const Checklist = (props) => {
 
           {/* <ListGroup flush> */}
 
-          {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkTypeName") === true ?
+          {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkTypeName") === true ?
 
             <Row className="justify-content-center">
               <Col xs="8">
@@ -445,12 +445,12 @@ const Checklist = (props) => {
               <Row /*ListGroupItem*/ key={title.titleID}>
                 <Col className="mx-3">
 
-                  {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
+                  {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
 
-                  {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
+                  {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
 
-                  <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                    {IsEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(title.publicationDate)})</span> : null}
+                  <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                    {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}
                   </p>
 
                   {/* </ListGroupItem> */}

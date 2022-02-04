@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 // import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "./utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "./utilities/SharedFunctions";
 import { LogError } from "./utilities/ApplicationFunctions";
 import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
@@ -49,24 +49,24 @@ function App() {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
   const locationLogged = useSelector(state => state.applicationSettings.locationLogged);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const firstName = useSelector(state => state.user.firstName);
-  // console.log(componentName, GetDateTime(), "firstName", firstName);
+  // console.log(componentName, getDateTime(), "firstName", firstName);
   const lastName = useSelector(state => state.user.lastName);
-  // console.log(componentName, GetDateTime(), "lastName", lastName);
+  // console.log(componentName, getDateTime(), "lastName", lastName);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
@@ -85,7 +85,7 @@ function App() {
   let showAllMenuItems = useSelector(state => state.applicationSettings.menuSettings.showAllMenuItems);
 
   let showNew = useSelector(state => state.applicationSettings.menuSettings.showNew);
-  // console.log(componentName, GetDateTime(), "showNew", showNew);
+  // console.log(componentName, getDateTime(), "showNew", showNew);
 
   // * show New page unless set specifically to false. -- 03/06/2021 MF
   if (showNew !== false) {
@@ -95,7 +95,7 @@ function App() {
   };
 
   let showAbout = useSelector(state => state.applicationSettings.menuSettings.showAbout);
-  // console.log(componentName, GetDateTime(), "showAbout", showAbout);
+  // console.log(componentName, getDateTime(), "showAbout", showAbout);
 
   // * show About page unless set specifically to false. -- 03/06/2021 MF
   if (showAbout !== false) {
@@ -105,12 +105,12 @@ function App() {
   };
 
   let showHomeopape = useSelector(state => state.applicationSettings.menuSettings.showHomeopape);
-  // console.log(componentName, GetDateTime(), "showHomeopape", showHomeopape);
+  // console.log(componentName, getDateTime(), "showHomeopape", showHomeopape);
   let showDickian = useSelector(state => state.applicationSettings.menuSettings.showDickian);
-  // console.log(componentName, GetDateTime(), "showDickian", showDickian);
+  // console.log(componentName, getDateTime(), "showDickian", showDickian);
 
   let showEditCategory = useSelector(state => state.applicationSettings.menuSettings.showEditCategory);
-  // console.log(componentName, GetDateTime(), "showEditCategory", showEditCategory);
+  // console.log(componentName, getDateTime(), "showEditCategory", showEditCategory);
   let showEditMedia = useSelector(state => state.applicationSettings.menuSettings.showEditMedia);
   let showEditTitle = useSelector(state => state.applicationSettings.menuSettings.showEditTitle);
   let showEditEdition = useSelector(state => state.applicationSettings.menuSettings.showEditEdition);
@@ -164,9 +164,9 @@ function App() {
 
 
   // useEffect(() => {
-  //   // console.log(componentName, GetDateTime(), "useEffect props.applicationVersion", props.applicationVersion);
+  //   // console.log(componentName, getDateTime(), "useEffect props.applicationVersion", props.applicationVersion);
 
-  //   if (IsEmpty(props.applicationVersion) === false) {
+  //   if (isEmpty(props.applicationVersion) === false) {
 
   //     dispatch(setApplicationVersion(props.applicationVersion));
 
@@ -176,9 +176,9 @@ function App() {
 
 
   // useEffect(() => {
-  //   // console.log(componentName, GetDateTime(), "useEffect props.copyrightYear", props.copyrightYear);
+  //   // console.log(componentName, getDateTime(), "useEffect props.copyrightYear", props.copyrightYear);
 
-  //   if (IsEmpty(props.copyrightYear) === false) {
+  //   if (isEmpty(props.copyrightYear) === false) {
 
   //     dispatch(setCopyrightYear(props.copyrightYear));
 
@@ -188,11 +188,11 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect window", window);
-    // console.log(componentName, GetDateTime(), "useEffect navigator", navigator);
+    // console.log(componentName, getDateTime(), "useEffect window", window);
+    // console.log(componentName, getDateTime(), "useEffect navigator", navigator);
 
-    // console.log(componentName, GetDateTime(), "useEffect window.location", window.location);
-    // console.log(componentName, GetDateTime(), "useEffect window.clientinformation", window.clientinformation);
+    // console.log(componentName, getDateTime(), "useEffect window.location", window.location);
+    // console.log(componentName, getDateTime(), "useEffect window.clientinformation", window.clientinformation);
 
     if (locationLogged === false) {
 
@@ -213,7 +213,7 @@ function App() {
           return response.json();
 
         }).then((results) => {
-          // console.log(componentName, GetDateTime(), operationValue1, "results", results);
+          // console.log(componentName, getDateTime(), operationValue1, "results", results);
 
           data = results;
 
@@ -225,7 +225,7 @@ function App() {
 
         })
         .catch((error) => {
-          // console.error(componentName, GetDateTime(), operationValue1, "error", error);
+          // console.error(componentName, getDateTime(), operationValue1, "error", error);
 
           setURL1Loaded(true);
 
@@ -241,7 +241,7 @@ function App() {
           return response.json();
 
         }).then((results) => {
-          // console.log(componentName, GetDateTime(), operationValue2, "results", results);
+          // console.log(componentName, getDateTime(), operationValue2, "results", results);
 
           data = results;
 
@@ -256,13 +256,13 @@ function App() {
           //     "city": "Carmel"
           // }
 
-          if (IsEmpty(data.error) === true) {
+          if (isEmpty(data.error) === true) {
 
             dispatch(addComputerLog(results));
 
           } else {
-            // console.error(componentName, GetDateTime(), operationValue2, "data.error", data.error);
-            // console.error(componentName, GetDateTime(), operationValue2, "data.errorCode", data.errorCode);
+            // console.error(componentName, getDateTime(), operationValue2, "data.error", data.error);
+            // console.error(componentName, getDateTime(), operationValue2, "data.errorCode", data.errorCode);
 
           };
 
@@ -270,7 +270,7 @@ function App() {
 
         })
         .catch((error) => {
-          // console.error(componentName, GetDateTime(), operationValue2, "error", error);
+          // console.error(componentName, getDateTime(), operationValue2, "error", error);
 
           setURL2Loaded(true);
 
@@ -282,25 +282,25 @@ function App() {
 
 
   const saveRecord = () => {
-    // console.log(componentName, GetDateTime(), "saveRecord computerLog", computerLog);
-    // console.log(componentName, GetDateTime(), "saveRecord title", title);
-    // console.log(componentName, GetDateTime(), "saveRecord window.location.href", window.location.href);
+    // console.log(componentName, getDateTime(), "saveRecord computerLog", computerLog);
+    // console.log(componentName, getDateTime(), "saveRecord title", title);
+    // console.log(componentName, getDateTime(), "saveRecord window.location.href", window.location.href);
 
-    let ipAddress = IsEmpty(computerLog) === false && IsEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
-    let city = IsEmpty(computerLog) === false && IsEmpty(computerLog.city) === false ? computerLog.city : "";
-    // let state = IsEmpty(computerLog) === false && IsEmpty(computerLog.stateProv) === false ? computerLog.stateProv : "";
-    let state = IsEmpty(computerLog) === false && IsEmpty(computerLog.state) === false ? computerLog.state : "";
-    let countryCode = IsEmpty(computerLog) === false && IsEmpty(computerLog.countryCode) === false ? computerLog.countryCode : "";
-    let countryName = IsEmpty(computerLog) === false && IsEmpty(computerLog.countryName) === false ? computerLog.countryName : "";
-    let continentCode = IsEmpty(computerLog) === false && IsEmpty(computerLog.continentCode) === false ? computerLog.continentCode : "";
-    let continentName = IsEmpty(computerLog) === false && IsEmpty(computerLog.continentName) === false ? computerLog.continentName : "";
-    let stateProvCode = IsEmpty(computerLog) === false && IsEmpty(computerLog.stateProvCode) === false ? computerLog.stateProvCode : "";
+    let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
+    let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
+    // let state = isEmpty(computerLog) === false && isEmpty(computerLog.stateProv) === false ? computerLog.stateProv : "";
+    let state = isEmpty(computerLog) === false && isEmpty(computerLog.state) === false ? computerLog.state : "";
+    let countryCode = isEmpty(computerLog) === false && isEmpty(computerLog.countryCode) === false ? computerLog.countryCode : "";
+    let countryName = isEmpty(computerLog) === false && isEmpty(computerLog.countryName) === false ? computerLog.countryName : "";
+    let continentCode = isEmpty(computerLog) === false && isEmpty(computerLog.continentCode) === false ? computerLog.continentCode : "";
+    let continentName = isEmpty(computerLog) === false && isEmpty(computerLog.continentName) === false ? computerLog.continentName : "";
+    let stateProvCode = isEmpty(computerLog) === false && isEmpty(computerLog.stateProvCode) === false ? computerLog.stateProvCode : "";
 
-    let latitude = IsEmpty(computerLog) === false && IsEmpty(computerLog.latitude) === false ? computerLog.latitude : "";
-    let longitude = IsEmpty(computerLog) === false && IsEmpty(computerLog.longitude) === false ? computerLog.longitude : "";
-    let postal = IsEmpty(computerLog) === false && IsEmpty(computerLog.postal) === false ? computerLog.postal : "";
+    let latitude = isEmpty(computerLog) === false && isEmpty(computerLog.latitude) === false ? computerLog.latitude : "";
+    let longitude = isEmpty(computerLog) === false && isEmpty(computerLog.longitude) === false ? computerLog.longitude : "";
+    let postal = isEmpty(computerLog) === false && isEmpty(computerLog.postal) === false ? computerLog.postal : "";
 
-    let href = IsEmpty(window.location.href) === false ? window.location.href : "";
+    let href = isEmpty(window.location.href) === false ? window.location.href : "";
 
     let url = baseURL + "computerLogs/";
     let response = "";
@@ -316,7 +316,7 @@ function App() {
       // applicationVersion: props.applicationVersion,
       applicationVersion: process.env.REACT_APP_VERSION,
 
-      lastAccessed: GetDateTime(),
+      lastAccessed: getDateTime(),
 
       // * For https://api.db-ip.com/v2/free/self -- 07/29/2021 MF
       ipAddress: ipAddress,
@@ -336,7 +336,7 @@ function App() {
 
     };
 
-    // console.log(componentName, GetDateTime(), "saveRecord recordObject", recordObject);
+    // console.log(componentName, getDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
@@ -346,7 +346,7 @@ function App() {
       body: JSON.stringify({ recordObject: recordObject })
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "saveRecord response", response);
+        // console.log(componentName, getDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -368,7 +368,7 @@ function App() {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "saveRecord results", results);
+        // console.log(componentName, getDateTime(), "saveRecord results", results);
 
         data = results;
 
@@ -376,7 +376,7 @@ function App() {
 
       })
       .catch((error) => {
-        console.error(componentName, GetDateTime(), operationValue, "saveRecord error", error);
+        console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
@@ -388,10 +388,10 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect computerLog", computerLog);
-    // console.log(componentName, GetDateTime(), "useEffect latitude", latitude);
-    // console.log(componentName, GetDateTime(), "useEffect longitude", longitude);
-    // console.log(componentName, GetDateTime(), "useEffect postalCode", postalCode);
+    // console.log(componentName, getDateTime(), "useEffect computerLog", computerLog);
+    // console.log(componentName, getDateTime(), "useEffect latitude", latitude);
+    // console.log(componentName, getDateTime(), "useEffect longitude", longitude);
+    // console.log(componentName, getDateTime(), "useEffect postalCode", postalCode);
 
     if (url1Loaded === true && url2Loaded === true) {
 
@@ -413,9 +413,9 @@ function App() {
 
     localStorage.clear();
     // setSessionToken("");
-    // console.log(componentName, GetDateTime(), "clearToken localStorage token", localStorage.getItem("token"));
-    // console.log(componentName, GetDateTime(), "sessionToken", sessionToken); // Never shows the current value of sessionToken
-    // console.log(componentName, GetDateTime(), "clearToken User logged out.");
+    // console.log(componentName, getDateTime(), "clearToken localStorage token", localStorage.getItem("token"));
+    // console.log(componentName, getDateTime(), "sessionToken", sessionToken); // Never shows the current value of sessionToken
+    // console.log(componentName, getDateTime(), "clearToken User logged out.");
 
   };
 
@@ -433,13 +433,13 @@ function App() {
 
 
   const getUser = (token) => {
-    // console.log(componentName, GetDateTime(), "getUser baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "getUser baseURL", baseURL);
 
     clearMessages();
 
     let url = baseURL + "users/";
 
-    if (IsEmpty(token) === false) {
+    if (isEmpty(token) === false) {
 
       fetch(url, {
         method: "GET",
@@ -449,7 +449,7 @@ function App() {
         }),
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "getUser response", response);
+          // console.log(componentName, getDateTime(), "getUser response", response);
 
           // if (!response.ok) {
 
@@ -471,20 +471,20 @@ function App() {
 
         })
         .then(results => {
-          // console.log(componentName, GetDateTime(), "getUser results", results);
+          // console.log(componentName, getDateTime(), "getUser results", results);
 
           setUserResultsFound(results.transactionSuccess);
           // addMessage(results.message);
 
-          if (IsEmpty(results) === false && results.transactionSuccess === true) {
+          if (isEmpty(results) === false && results.transactionSuccess === true) {
 
             if (results.active === true || results.active === 1) {
 
               dispatch(loadUserData(results));
 
-              // console.log(componentName, GetDateTime(), "getUser checklistLoaded", checklistLoaded);
-              // console.log(componentName, GetDateTime(), "getUser results.sessionToken", results.sessionToken);
-              // console.log(componentName, GetDateTime(), "getUser token", token);
+              // console.log(componentName, getDateTime(), "getUser checklistLoaded", checklistLoaded);
+              // console.log(componentName, getDateTime(), "getUser results.sessionToken", results.sessionToken);
+              // console.log(componentName, getDateTime(), "getUser token", token);
 
               if (!checklistLoaded) {
 
@@ -500,7 +500,7 @@ function App() {
             };
 
           } else {
-            // console.log(componentName, GetDateTime(), "getUser results.transactionSuccess !== true", results.message);
+            // console.log(componentName, getDateTime(), "getUser results.transactionSuccess !== true", results.message);
 
             // addErrorMessage(results.message);
             logOut();
@@ -509,9 +509,9 @@ function App() {
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "getUser error", error);
-          // console.error(componentName, GetDateTime(), "getUser error.name", error.name);
-          // console.error(componentName, GetDateTime(), "getUser error.message", error.message);
+          console.error(componentName, getDateTime(), "getUser error", error);
+          // console.error(componentName, getDateTime(), "getUser error.name", error.name);
+          // console.error(componentName, getDateTime(), "getUser error.message", error.message);
 
           // addErrorMessage(error.name + ": " + error.message);
 
@@ -525,8 +525,8 @@ function App() {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
-    // console.log(componentName, GetDateTime(), "getChecklist token", token);
+    // console.log(componentName, getDateTime(), "getChecklist baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "getChecklist token", token);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
@@ -534,7 +534,7 @@ function App() {
 
     let url = baseURL + "titles/checklist";
 
-    if (IsEmpty(token) === false) {
+    if (isEmpty(token) === false) {
 
       fetch(url, {
         method: "GET",
@@ -544,7 +544,7 @@ function App() {
         }),
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "getChecklist response", response);
+          // console.log(componentName, getDateTime(), "getChecklist response", response);
 
           // if (!response.ok) {
 
@@ -566,17 +566,17 @@ function App() {
 
         })
         .then(results => {
-          // console.log(componentName, GetDateTime(), "getChecklist results", results);
+          // console.log(componentName, getDateTime(), "getChecklist results", results);
 
           setChecklistResultsFound(results.transactionSuccess);
           // setChecklistMessage(results.message);
 
-          if (IsEmpty(results) === false && results.transactionSuccess === true) {
+          if (isEmpty(results) === false && results.transactionSuccess === true) {
 
             dispatch(loadArrayChecklist(results.records));
 
           } else {
-            console.log(componentName, GetDateTime(), "getChecklist error", results.message);
+            console.log(componentName, getDateTime(), "getChecklist error", results.message);
 
             // addErrorMessage(results.message);
 
@@ -584,9 +584,9 @@ function App() {
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "getChecklist error", error);
-          // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
-          // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
+          console.error(componentName, getDateTime(), "getChecklist error", error);
+          // console.error(componentName, getDateTime(), "getChecklist error.name", error.name);
+          // console.error(componentName, getDateTime(), "getChecklist error.message", error.message);
 
           // addErrorMessage(error.name + ": " + error.message);
 
@@ -601,11 +601,11 @@ function App() {
 
   useEffect(() => {
 
-    if (applicationAllowUserInteractions === true && IsEmpty(localStorage.getItem("token")) === false) {
+    if (applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
 
       dispatch(setSessionToken(localStorage.getItem("token")));
-      // console.log(componentName, GetDateTime(), "componentDidMount localStorage token", localStorage.getItem("token"));
-      // console.log(componentName, GetDateTime(), "componentDidMount state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
+      // console.log(componentName, getDateTime(), "componentDidMount localStorage token", localStorage.getItem("token"));
+      // console.log(componentName, getDateTime(), "componentDidMount state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
 
       // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
       // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
@@ -636,10 +636,10 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect categoriesDataOffline", categoriesDataOffline);
-    // console.log(componentName, GetDateTime(), "useEffect mediaDataOffline", mediaDataOffline);
-    // console.log(componentName, GetDateTime(), "useEffect titlesDataOffline", titlesDataOffline);
-    // console.log(componentName, GetDateTime(), "useEffect editionsDataOffline", editionsDataOffline);
+    // console.log(componentName, getDateTime(), "useEffect categoriesDataOffline", categoriesDataOffline);
+    // console.log(componentName, getDateTime(), "useEffect mediaDataOffline", mediaDataOffline);
+    // console.log(componentName, getDateTime(), "useEffect titlesDataOffline", titlesDataOffline);
+    // console.log(componentName, getDateTime(), "useEffect editionsDataOffline", editionsDataOffline);
 
     if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
 
@@ -651,23 +651,23 @@ function App() {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect pageURL", pageURL);
-    // console.log(componentName, GetDateTime(), "useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
+    // console.log(componentName, getDateTime(), "useEffect pageURL", pageURL);
+    // console.log(componentName, getDateTime(), "useEffect pageURL.replaceAll(\"/\", \"\")", pageURL.replaceAll("/", ""));
 
-    if (IsEmpty(pageURL) === false) {
+    if (isEmpty(pageURL) === false) {
 
       let linkArrayItem = {};
 
       for (let i = 0; i < urlLookup.length; i++) {
 
         linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
-        // console.log(componentName, GetDateTime(), "useEffect linkArrayItem", linkArrayItem);
+        // console.log(componentName, getDateTime(), "useEffect linkArrayItem", linkArrayItem);
         // setLinkItem(linkArrayItem);
 
       };
 
-      // console.log(componentName, GetDateTime(), "useEffect linkArrayItem", linkArrayItem);
-      // console.log(componentName, GetDateTime(), "useEffect typeof linkArrayItem", typeof linkArrayItem);
+      // console.log(componentName, getDateTime(), "useEffect linkArrayItem", linkArrayItem);
+      // console.log(componentName, getDateTime(), "useEffect typeof linkArrayItem", typeof linkArrayItem);
       dispatch(setLinkItem(linkArrayItem));
 
     };
@@ -728,7 +728,7 @@ function App() {
 
             : null}
 
-          {applicationAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
+          {applicationAllowUserInteractions === true && (isEmpty(sessionToken) === true) ?
 
             <NavItem>
               <Login />
@@ -736,7 +736,7 @@ function App() {
 
             : null}
 
-          {applicationAllowUserInteractions === true && (IsEmpty(sessionToken) === true) ?
+          {applicationAllowUserInteractions === true && (isEmpty(sessionToken) === true) ?
 
             <NavItem>
               <Register />
@@ -744,7 +744,7 @@ function App() {
 
             : null}
 
-          {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
+          {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
 
             <NavItem>
               <EditUser />
@@ -760,13 +760,13 @@ function App() {
             <a href="https://philipdick.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
 
-          {/* {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true && IsEmpty(firstName) === false && IsEmpty(lastName) === false ?
+          {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true && isEmpty(firstName) === false && isEmpty(lastName) === false ?
 
             <NavItem><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
 
             : null} */}
 
-          {applicationAllowUserInteractions === true && IsEmpty(checklistLoaded) === false && checklistLoaded === true ?
+          {applicationAllowUserInteractions === true && isEmpty(checklistLoaded) === false && checklistLoaded === true ?
 
             <NavItem>
               <Checklist displayButton={true} />
@@ -774,7 +774,7 @@ function App() {
 
             : null}
 
-          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddTitleSuggestion displayButton={true} />
@@ -782,7 +782,7 @@ function App() {
 
             : null}
 
-          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddComment displayButton={true} />
@@ -790,7 +790,7 @@ function App() {
 
             : null}
 
-          {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === false ?
+          {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem>
               {/* <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span> */}
@@ -802,7 +802,7 @@ function App() {
         </Nav>
       </Navbar>
 
-      {applicationAllowUserInteractions === true && IsEmpty(admin) === false && admin === true ?
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
@@ -890,12 +890,12 @@ function App() {
 
         : null}
 
-      {/* {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && IsEmpty(admin) === false && admin === true ?
+      {/* {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && isEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
 
-            {showEditCategory && IsEmpty(admin) === false && admin === true ?
+            {showEditCategory && isEmpty(admin) === false && admin === true ?
 
               <NavItem>
                 <EditCategory displayButton={true} />
@@ -903,7 +903,7 @@ function App() {
 
               : null}
 
-            {showEditMedia && IsEmpty(admin) === false && admin === true ?
+            {showEditMedia && isEmpty(admin) === false && admin === true ?
 
               <NavItem>
                 <EditMedia displayButton={true} />
@@ -911,7 +911,7 @@ function App() {
 
               : null}
 
-            {showEditTitle && IsEmpty(admin) === false && admin === true ?
+            {showEditTitle && isEmpty(admin) === false && admin === true ?
 
               <NavItem>
                 <EditTitle displayButton={true} />
@@ -924,7 +924,7 @@ function App() {
 
         : null} */}
 
-      {(showUserPhysicalOnly === true || showUserElectronicOnly === true || showAllMenuItems === true) && IsEmpty(admin) === false && admin === true ?
+      {(showUserPhysicalOnly === true || showUserElectronicOnly === true || showAllMenuItems === true) && isEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
@@ -937,7 +937,7 @@ function App() {
 
               : null}
 
-            {showUserPhysicalOnly === true && IsEmpty(userPhysicalOnly) === false && userPhysicalOnly === false ?
+            {showUserPhysicalOnly === true && isEmpty(userPhysicalOnly) === false && userPhysicalOnly === false ?
 
               <NavItem>
                 <Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(true)); dispatch(setUserElectronicOnly(false)); }}>Only Physical Editions</Button>
@@ -945,7 +945,7 @@ function App() {
 
               : null}
 
-            {showUserElectronicOnly === true && IsEmpty(userElectronicOnly) === false && userElectronicOnly === false ?
+            {showUserElectronicOnly === true && isEmpty(userElectronicOnly) === false && userElectronicOnly === false ?
 
               <NavItem>
                 <Button outline className="my-2" size="sm" color="info" onClick={() => { dispatch(setUserPhysicalOnly(false)); dispatch(setUserElectronicOnly(true)); }}>Only Electronic Editions</Button>
@@ -962,7 +962,7 @@ function App() {
         <Row>
           <Col xs="2">
 
-            {IsEmpty(categoryListState) === false ? <Category /> : null}
+            {isEmpty(categoryListState) === false ? <Category /> : null}
 
             <Media />
 
@@ -971,13 +971,13 @@ function App() {
 
             <Row className="text-center">
 
-              {/* {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
+              {/* {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
 
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
-              {IsEmpty(checklistMessage) === false ? <Alert color="info">{checklistMessage}</Alert> : null}
-              {IsEmpty(errChecklistMessage) === false ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
+              {isEmpty(checklistMessage) === false ? <Alert color="info">{checklistMessage}</Alert> : null}
+              {isEmpty(errChecklistMessage) === false ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
 
               <LoadApplicationSettings />
               <LoadBibliographyData />
@@ -1006,7 +1006,7 @@ function App() {
               <Route path="/homeopape" element={<Homeopape />} />
 
               {/* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}
-              {/* {IsEmpty(admin) === false && admin === true ?
+              {/* {isEmpty(admin) === false && admin === true ?
 
                 <React.Fragment> */}
 
@@ -1048,11 +1048,11 @@ function App() {
                <Route path="/editions/:media" element={<Editions />} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
-              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles linkItem={linkItem} />} /> : null}
 
-              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title linkItem={linkItem} />} /> : null}
 
-              {IsEmpty(linkItem) === false && HasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions linkItem={linkItem} />} /> : null}
 
             </Routes>
 

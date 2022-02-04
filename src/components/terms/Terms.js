@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem, NavLink } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayYear } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayYear } from "../../utilities/SharedFunctions";
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import TitleCard from "../titles/TitleCard";
@@ -17,15 +17,15 @@ const Terms = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -59,7 +59,7 @@ const Terms = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getTerms response", response);
+        // console.log(componentName, getDateTime(), "getTerms response", response);
 
         if (!response.ok) {
 
@@ -73,11 +73,11 @@ const Terms = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getTerms results", results);
+        // console.log(componentName, getDateTime(), "getTerms results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          // console.log(componentName, GetDateTime(), "getTerms results.records[0]", results.records[0]);
+          // console.log(componentName, getDateTime(), "getTerms results.records[0]", results.records[0]);
 
           setTerms(results.records);
           // setTerms(results.records[0]);
@@ -86,7 +86,7 @@ const Terms = (props) => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getTerms error", error);
+        // console.error(componentName, getDateTime(), "getTerms error", error);
 
         setErrorMessage(error.name + ": " + error.message);
 
@@ -108,7 +108,7 @@ const Terms = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getTerm response", response);
+        // console.log(componentName, getDateTime(), "getTerm response", response);
 
         if (!response.ok) {
 
@@ -122,11 +122,11 @@ const Terms = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getTerm results", results);
+        // console.log(componentName, getDateTime(), "getTerm results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          // console.log(componentName, GetDateTime(), "getTerm results.records[0]", results.records[0]);
+          // console.log(componentName, getDateTime(), "getTerm results.records[0]", results.records[0]);
 
           // setTerm(results.records);
           setTerm(results.records[0]);
@@ -142,7 +142,7 @@ const Terms = (props) => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getTerm error", error);
+        // console.error(componentName, getDateTime(), "getTerm error", error);
 
         setErrorMessage(error.name + ": " + error.message);
 
@@ -161,7 +161,7 @@ const Terms = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -173,7 +173,7 @@ const Terms = (props) => {
 
 
   // useEffect(() => {
-  //   // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+  //   // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
   //   if (admin !== true) {
 
@@ -215,7 +215,7 @@ const Terms = (props) => {
         </Col>
       </Row>
 
-      {IsEmpty(term) === false ?
+      {isEmpty(term) === false ?
 
         <React.Fragment>
 
@@ -225,7 +225,7 @@ const Terms = (props) => {
               <h4>{term.term}</h4>
               <p>({term.partOfSpeech}) {term.definition}</p>
 
-              {IsEmpty(term.parentTermID) === false ?
+              {isEmpty(term.parentTermID) === false ?
 
                 <p>Parent Term: <a href="#" onClick={(event) => { event.preventDefault(); getTerm(term.parentTermID); }}>{term.termParent}</a></p>
 
@@ -244,7 +244,7 @@ const Terms = (props) => {
                   return (
                     <React.Fragment key={index}>
 
-                      {IsEmpty(termCategory.termCategory) === false && newCategory === true ?
+                      {isEmpty(termCategory.termCategory) === false && newCategory === true ?
 
                         <React.Fragment>
 
@@ -279,7 +279,7 @@ const Terms = (props) => {
                   return (
                     <React.Fragment key={index}>
 
-                      {IsEmpty(alternateForm.alternateFormID) === false && newAlternateForm === true ?
+                      {isEmpty(alternateForm.alternateFormID) === false && newAlternateForm === true ?
 
                         <React.Fragment>
 
@@ -313,7 +313,7 @@ const Terms = (props) => {
                   return (
                     <React.Fragment key={index}>
 
-                      {IsEmpty(termSynonym.synonymID) === false && newSynonym === true ?
+                      {isEmpty(termSynonym.synonymID) === false && newSynonym === true ?
 
                         <React.Fragment>
 
@@ -351,11 +351,11 @@ const Terms = (props) => {
 
                     <Link to={termTitle.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(termTitle.titleURL); }}>{termTitle.titleName}</Link>
 
-                    {IsEmpty(termTitle.publicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(termTitle.publicationDate)})</span> : null}
+                    {isEmpty(termTitle.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(termTitle.publicationDate)})</span> : null}
 
                     <Link to={termTitle.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(termTitle.titleURL); }}>
 
-                      {IsEmpty(termTitle.imageName) === false ? <Image onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + termTitle.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(termTitle.imageName)} alt={termTitle.titleName} /> : <Image className="no-image-icon" />}
+                      {isEmpty(termTitle.imageName) === false ? <Image onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + termTitle.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(termTitle.imageName)} alt={termTitle.titleName} /> : <Image className="no-image-icon" />}
 
                     </Link>
 

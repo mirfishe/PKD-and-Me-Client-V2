@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty } from "../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "../utilities/SharedFunctions";
 
 const componentName = "categoriesSlice.js";
 
@@ -15,72 +15,72 @@ const categoriesSlice = createSlice({
   initialState,
   reducers: {
     loadArrayCategories(state, action) {
-      // console.log(componentName, GetDateTime(), "loadArrayCategories action.payload", action.payload);
-      // console.log(componentName, GetDateTime(), "loadArrayCategories action.payload.length", action.payload.length);
+      // console.log(componentName, getDateTime(), "loadArrayCategories action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "loadArrayCategories action.payload.length", action.payload.length);
 
       for (let i = 0; i < action.payload.length; i++) {
 
-        // console.log(componentName, GetDateTime(), "loadArrayCategories action.payload[i]", action.payload[i]);
+        // console.log(componentName, getDateTime(), "loadArrayCategories action.payload[i]", action.payload[i]);
         state.arrayCategories.push(action.payload[i]);
 
       };
 
       state.categoriesLoaded = true;
-      state.lastDatabaseRetrievalCategories = GetDateTime();
+      state.lastDatabaseRetrievalCategories = getDateTime();
 
     },
     addStateCategory(state, action) {
-      // console.log(componentName, GetDateTime(), "addStateCategory action.payload", action.payload);
-      // console.log(componentName, GetDateTime(), "addStateCategory action.payload.length", action.payload.length);
+      // console.log(componentName, getDateTime(), "addStateCategory action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "addStateCategory action.payload.length", action.payload.length);
 
       // * Could change this to accept an object and add that object to the store
       for (let i = 0; i < action.payload.length; i++) {
 
-        // console.log(componentName, GetDateTime(), "addStateCategory action.payload[i]", action.payload[i]);
+        // console.log(componentName, getDateTime(), "addStateCategory action.payload[i]", action.payload[i]);
         state.arrayCategories.push(action.payload[i]);
 
       };
 
     },
     updateStateCategory(state, action) {
-      // console.log(componentName, GetDateTime(), "updateStateCategory action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "updateStateCategory action.payload", action.payload);
 
       const categoryItem = action.payload;
       let categoryItemIndex;
-      // console.log(componentName, GetDateTime(), "updateStateTitle categoryItem", categoryItem);
-      // console.log(componentName, GetDateTime(), "updateStateTitle categoryItem.categoryID", categoryItem.categoryID);
+      // console.log(componentName, getDateTime(), "updateStateTitle categoryItem", categoryItem);
+      // console.log(componentName, getDateTime(), "updateStateTitle categoryItem.categoryID", categoryItem.categoryID);
 
       if (typeof categoryItem === "object") {
 
-        if (HasNonEmptyProperty(categoryItem, "categoryID")) {
+        if (hasNonEmptyProperty(categoryItem, "categoryID")) {
 
           categoryItemIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryItem.categoryID);
 
-          // console.log(componentName, GetDateTime(), "updateStateUserReview categoryItemIndex", categoryItemIndex);
+          // console.log(componentName, getDateTime(), "updateStateUserReview categoryItemIndex", categoryItemIndex);
 
           // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
 
         };
 
-        if (HasNonEmptyProperty(categoryItem, "category")) {
+        if (hasNonEmptyProperty(categoryItem, "category")) {
 
           state.arrayCategories[categoryItemIndex].category = categoryItem.category;
 
         };
 
-        if (HasNonEmptyProperty(categoryItem, "sortID")) {
+        if (hasNonEmptyProperty(categoryItem, "sortID")) {
 
           state.arrayCategories[categoryItemIndex].sortID = categoryItem.sortID;
 
         };
 
-        if (HasNonEmptyProperty(categoryItem, "active")) {
+        if (hasNonEmptyProperty(categoryItem, "active")) {
 
           state.arrayCategories[categoryItemIndex].active = categoryItem.active;
 
         };
 
-        if (HasNonEmptyProperty(categoryItem, "updateDate")) {
+        if (hasNonEmptyProperty(categoryItem, "updateDate")) {
 
           state.arrayCategories[categoryItemIndex].updateDate = categoryItem.updateDate;
 
@@ -90,7 +90,7 @@ const categoriesSlice = createSlice({
 
     },
     deleteStateCategory(state, action) {
-      // console.log(componentName, GetDateTime(), "deleteStateCategory action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "deleteStateCategory action.payload", action.payload);
 
       // const categoryItemIndex = action.payload;
       let categoryListIndex;
@@ -99,13 +99,13 @@ const categoriesSlice = createSlice({
       // ? This doesn't work because state.arrayCategories isn't stored as an array of objects?
       // ? Need to copy the array?
       // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
-      // console.log(componentName, GetDateTime(), "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
+      // console.log(componentName, getDateTime(), "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
 
-      if (IsEmpty(categoryID) === false) {
+      if (isEmpty(categoryID) === false) {
 
         categoryListIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
 
-        // console.log(componentName, GetDateTime(), "updateStateUserReview categoryListIndex", categoryListIndex);
+        // console.log(componentName, getDateTime(), "updateStateUserReview categoryListIndex", categoryListIndex);
 
         state.arrayCategories.splice(categoryListIndex, 1);
 
@@ -113,7 +113,7 @@ const categoriesSlice = createSlice({
 
     },
     setCategoriesDataOffline(state, action) {
-      // console.log(componentName, GetDateTime(), "setCategoriesDataOffline action.payload", action.payload);
+      // console.log(componentName, getDateTime(), "setCategoriesDataOffline action.payload", action.payload);
 
       state.categoriesDataOffline = action.payload;
 

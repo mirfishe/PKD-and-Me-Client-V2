@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayYear, TruncateText } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, displayYear, truncateText } from "../../utilities/SharedFunctions";
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
@@ -23,21 +23,21 @@ const TitleCard = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   // const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   const [errTitleMessage, setErrTitleMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
+  // console.log(componentName, getDateTime(), "titleListState", titleListState);
 
   let imageSide = "left";
 
-  if (IsEmpty(props.imageSide) === false) {
+  if (isEmpty(props.imageSide) === false) {
 
     imageSide = props.imageSide;
 
@@ -47,26 +47,26 @@ const TitleCard = (props) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "props.imageSide", props.imageSide);
-  // console.log(componentName, GetDateTime(), "imageSide", imageSide);
+  // console.log(componentName, getDateTime(), "props.imageSide", props.imageSide);
+  // console.log(componentName, getDateTime(), "imageSide", imageSide);
 
   const showShortDescription = props.showShortDescription;
-  // console.log(componentName, GetDateTime(), "props.showShortDescription", props.showShortDescription);
-  // console.log(componentName, GetDateTime(), "typeof props.showShortDescription", typeof props.showShortDescription);
+  // console.log(componentName, getDateTime(), "props.showShortDescription", props.showShortDescription);
+  // console.log(componentName, getDateTime(), "typeof props.showShortDescription", typeof props.showShortDescription);
 
   const headerText = props.headerText;
-  // console.log(componentName, GetDateTime(), "props.headerText", props.headerText);
+  // console.log(componentName, getDateTime(), "props.headerText", props.headerText);
 
   const additionalText = props.additionalText;
-  // console.log(componentName, GetDateTime(), "props.additionalText", props.additionalText);
+  // console.log(componentName, getDateTime(), "props.additionalText", props.additionalText);
 
   let titleParam = props.linkName;
-  // console.log(componentName, GetDateTime(), "typeof titleParam", typeof titleParam);
-  // console.log(componentName, GetDateTime(), "titleParam", titleParam);
+  // console.log(componentName, getDateTime(), "typeof titleParam", typeof titleParam);
+  // console.log(componentName, getDateTime(), "titleParam", titleParam);
 
   const randomTitle = props.randomTitle;
-  // console.log(componentName, GetDateTime(), "props.randomTitle", props.randomTitle);
-  // console.log(componentName, GetDateTime(), "typeof props.randomTitle", typeof props.randomTitle);
+  // console.log(componentName, getDateTime(), "props.randomTitle", props.randomTitle);
+  // console.log(componentName, getDateTime(), "typeof props.randomTitle", typeof props.randomTitle);
 
   // * Only show title in certain categories or by certain authors
   // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
@@ -88,8 +88,8 @@ const TitleCard = (props) => {
 
       // * Active titles were filtered out above
       titleList = randomTitleList.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
-      // console.log(componentName, GetDateTime(), "randomTitle titleParam", titleParam);
-      // console.log(componentName, GetDateTime(), "randomTitle titleList", titleList);
+      // console.log(componentName, getDateTime(), "randomTitle titleParam", titleParam);
+      // console.log(componentName, getDateTime(), "randomTitle titleList", titleList);
 
     } else {
 
@@ -97,7 +97,7 @@ const TitleCard = (props) => {
 
     };
 
-  } else if (IsEmpty(titleParam) === false) {
+  } else if (isEmpty(titleParam) === false) {
 
     // * If titleParam is not a number, then it's the title name
     titleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
@@ -112,7 +112,7 @@ const TitleCard = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -124,7 +124,7 @@ const TitleCard = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect titleList", titleList);
+    // console.log(componentName, getDateTime(), "useEffect titleList", titleList);
 
     if (titleList.length > 0) {
 
@@ -144,8 +144,8 @@ const TitleCard = (props) => {
       <Row className="justify-content-center">
         <Col className="text-center" xs="12">
 
-          {IsEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-          {IsEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
+          {isEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+          {isEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
 
         </Col>
       </Row>
@@ -162,8 +162,8 @@ const TitleCard = (props) => {
 
                     <Col className="col-md-4">
 
-                      <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
-                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
+                      <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
+                        {isEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
                       </Link>
 
                     </Col>
@@ -175,19 +175,19 @@ const TitleCard = (props) => {
 
                       {/* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
 
-                      <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                      <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
 
-                        {IsEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(title.publicationDate)})</span> : null}</CardText>
+                        {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}</CardText>
 
                       <CardText className="smaller-text">{title.authorFirstName} {title.authorLastName}</CardText>
 
-                      {IsEmpty(additionalText) === false ? <CardText className="my-4">{additionalText}</CardText> : null}
+                      {isEmpty(additionalText) === false ? <CardText className="my-4">{additionalText}</CardText> : null}
 
-                      {showShortDescription && IsEmpty(title.shortDescription) === false ? <p className="my-4 display-paragraphs">{TruncateText(title.shortDescription, 250)}</p> : null}
+                      {showShortDescription && isEmpty(title.shortDescription) === false ? <p className="my-4 display-paragraphs">{truncateText(title.shortDescription, 250)}</p> : null}
 
-                      {/* {IsEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
-                                {IsEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-                                {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
+                      {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
+                                {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                                {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
                     </CardBody>
                   </Col>
@@ -196,8 +196,8 @@ const TitleCard = (props) => {
 
                     <Col className="col-md-4">
 
-                      <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
-                        {IsEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
+                      <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
+                        {isEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
                       </Link>
 
                     </Col>
@@ -207,7 +207,7 @@ const TitleCard = (props) => {
                 </Row>
                 <CardFooter className="card-footer">
 
-                  <CardText><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></CardText>
+                  <CardText><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></CardText>
 
                 </CardFooter>
               </Card>

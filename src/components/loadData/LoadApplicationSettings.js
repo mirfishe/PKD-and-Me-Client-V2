@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/ApplicationFunctions";
 import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings } from "../../app/applicationSettingsSlice";
 
@@ -16,7 +16,7 @@ function LoadApplicationSettings() {
 
   // * Loads the settings from environment.js first and then if there are any settings in the applicationSettings.json file on the server, those override what was set in environment.js. -- 03/06/2021 MF
   const getApplicationSettings = () => {
-    // console.log(componentName, GetDateTime(), "getApplicationSettings profileType", profileType);
+    // console.log(componentName, getDateTime(), "getApplicationSettings profileType", profileType);
 
     // * Load settings from environment.js into Redux. -- 03/06/2021 MF
     // const hostname = applicationSettings.hostname;
@@ -24,7 +24,7 @@ function LoadApplicationSettings() {
 
     let profileType = applicationSettings.profileType;
 
-    if (IsEmpty(profileType) === true) {
+    if (isEmpty(profileType) === true) {
 
       profileType = "localhost";
 
@@ -92,11 +92,11 @@ function LoadApplicationSettings() {
 
     let url = "applicationSettings/" + profileType + ".json";
 
-    // console.log(componentName, GetDateTime(), "getApplicationSettings url", url);
+    // console.log(componentName, getDateTime(), "getApplicationSettings url", url);
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getApplicationSettings response", response);
+        // console.log(componentName, getDateTime(), "getApplicationSettings response", response);
 
         if (!response.ok) {
 
@@ -112,14 +112,14 @@ function LoadApplicationSettings() {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getApplicationSettings results", results);
+        // console.log(componentName, getDateTime(), "getApplicationSettings results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           // ! Don't change the profileType even if the applicationSettings are loaded from the .json file. -- 03/06/2021 MF
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.profileType", results.profileType);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.profileType", results.profileType);
 
-          // if IsEmpty(results.profileType) === false) {
+          // if isEmpty(results.profileType) === false) {
 
           //     // profileType = results.profileType;
           //     dispatch(setProfileType(results.profileType));
@@ -128,9 +128,9 @@ function LoadApplicationSettings() {
 
           // ! Loading the API_URL from the state store here is too slow. -- 03/06/2021 MF
           // ! Always pulling it from environment.js. -- 03/06/2021 MF
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.API_URL", results.API_URL);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.API_URL", results.API_URL);
 
-          // if (IsEmpty(results.API_URL) === false) {
+          // if (isEmpty(results.API_URL) === false) {
 
           //     // API_URL = results.API_URL;
           //     dispatch(setAPI_URL(results.API_URL));
@@ -139,9 +139,9 @@ function LoadApplicationSettings() {
 
           // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
           // ! Always pulling it from environment.js. -- 03/06/2021 MF
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.baseURL", results.baseURL);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.baseURL", results.baseURL);
 
-          // if (IsEmpty(results.baseURL) === false) {
+          // if (isEmpty(results.baseURL) === false) {
 
           //     // baseURL = results.baseURL;
           //     dispatch(setBaseURL(results.baseURL));
@@ -150,28 +150,28 @@ function LoadApplicationSettings() {
 
           // ! Loading the tagManagerArgs from the state store here is too slow. -- 03/06/2021 MF
           // ! Always pulling it from environment.js. -- 03/06/2021 MF
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.tagManagerArgs", results.tagManagerArgs);
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.tagManagerArgs.gtmId", results.tagManagerArgs.gtmId);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.tagManagerArgs", results.tagManagerArgs);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.tagManagerArgs.gtmId", results.tagManagerArgs.gtmId);
 
-          // if (IsEmpty(results.tagManagerArgs) === false && IsEmpty(results.tagManagerArgs.gtmId) === false) {
+          // if (isEmpty(results.tagManagerArgs) === false && isEmpty(results.tagManagerArgs.gtmId) === false) {
 
           //     // tagManagerArgsgtmId = results.tagManagerArgs.gtmId;
           //     dispatch(setTagManagerArgsgtmId(results.tagManagerArgs.gtmId));
 
           // };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.siteName", results.siteName);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.siteName", results.siteName);
 
-          if (IsEmpty(results.siteName) === false) {
+          if (isEmpty(results.siteName) === false) {
 
             // siteName = results.siteName;
             dispatch(setSiteName(results.siteName));
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.applicationName", results.applicationName);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.applicationName", results.applicationName);
 
-          if (IsEmpty(results.applicationName) === false) {
+          if (isEmpty(results.applicationName) === false) {
 
             // applicationName = results.applicationName;
             dispatch(setApplicationName(results.applicationName));
@@ -180,9 +180,9 @@ function LoadApplicationSettings() {
 
           // ! Loading the metaDescription from the state store here is too slow. -- 03/06/2021 MF
           // ! Always pulling it from environment.js. -- 03/06/2021 MF
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.metaDescription", results.metaDescription);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.metaDescription", results.metaDescription);
 
-          // if (IsEmpty(results.metaDescription) === false) {
+          // if (isEmpty(results.metaDescription) === false) {
 
           //     // metaDescription = results.metaDescription;
           //     dispatch(setMetaDescription(results.metaDescription));
@@ -191,9 +191,9 @@ function LoadApplicationSettings() {
 
           // ! Loading the defaultPageComponent from the state store here is too slow. -- 03/06/2021 MF
           // ! Always pulling it from environment.js. -- 03/06/2021 MF
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.defaultPageComponent", results.defaultPageComponent);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.defaultPageComponent", results.defaultPageComponent);
 
-          // if (IsEmpty(results.defaultPageComponent) === false) {
+          // if (isEmpty(results.defaultPageComponent) === false) {
 
           //     // defaultPageComponent = results.defaultPageComponent;
           //     dispatch(setDefaultPageComponent(results.defaultPageComponent));
@@ -202,72 +202,72 @@ function LoadApplicationSettings() {
 
           // ! Loading the routerBaseName from the state store here is too slow. -- 03/06/2021 MF
           // ! Always pulling it from environment.js. -- 03/06/2021 MF
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.routerBaseName", results.routerBaseName);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.routerBaseName", results.routerBaseName);
 
-          // if (IsEmpty(results.routerBaseName) === false) {
+          // if (isEmpty(results.routerBaseName) === false) {
 
           //     // routerBaseName = results.routerBaseName;
           //     dispatch(setRouterBaseName(results.routerBaseName));
 
           // };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.applicationOffline", results.applicationOffline);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.applicationOffline", results.applicationOffline);
 
-          if (IsEmpty(results.applicationOffline) === false) {
+          if (isEmpty(results.applicationOffline) === false) {
 
             // applicationOffline = results.applicationOffline;
             dispatch(setApplicationOffline(results.applicationOffline));
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.electronicOnly", results.electronicOnly);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.electronicOnly", results.electronicOnly);
 
-          if (IsEmpty(results.electronicOnly) === false) {
+          if (isEmpty(results.electronicOnly) === false) {
 
             // electronicOnly = results.electronicOnly;
             dispatch(setElectronicOnly(results.electronicOnly));
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.electronicOnlyMessage", results.electronicOnlyMessage);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.electronicOnlyMessage", results.electronicOnlyMessage);
 
-          if (IsEmpty(results.electronicOnlyMessage) === false) {
+          if (isEmpty(results.electronicOnlyMessage) === false) {
 
             // electronicOnlyMessage = results.electronicOnlyMessage;
             dispatch(setElectronicOnlyMessage(results.electronicOnlyMessage));
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.physicalOnly", results.physicalOnly);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.physicalOnly", results.physicalOnly);
 
-          if (IsEmpty(results.physicalOnly) === false) {
+          if (isEmpty(results.physicalOnly) === false) {
 
             // physicalOnly = results.physicalOnly;
             dispatch(setPhysicalOnly(results.physicalOnly));
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.physicalOnlyMessage", results.physicalOnlyMessage);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.physicalOnlyMessage", results.physicalOnlyMessage);
 
-          if (IsEmpty(results.physicalOnlyMessage) === false) {
+          if (isEmpty(results.physicalOnlyMessage) === false) {
 
             // physicalOnlyMessage = results.physicalOnlyMessage;
             dispatch(setPhysicalOnlyMessage(results.physicalOnlyMessage));
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.applicationAllowUserInteractions", results.applicationAllowUserInteractions);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.applicationAllowUserInteractions", results.applicationAllowUserInteractions);
 
-          if (IsEmpty(results.applicationAllowUserInteractions) === false) {
+          if (isEmpty(results.applicationAllowUserInteractions) === false) {
 
             // applicationAllowUserInteractions = results.applicationAllowUserInteractions;
             dispatch(setApplicationAllowUserInteractions(results.applicationAllowUserInteractions));
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.requireUserLogin", results.requireUserLogin);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.requireUserLogin", results.requireUserLogin);
 
-          if (IsEmpty(results.requireUserLogin) === false) {
+          if (isEmpty(results.requireUserLogin) === false) {
 
             // requireUserLogin = results.requireUserLogin;
             dispatch(setRequireUserLogin(results.requireUserLogin));
@@ -282,9 +282,9 @@ function LoadApplicationSettings() {
 
           };
 
-          // console.log(componentName, GetDateTime(), "getApplicationSettings results.menuSettings", results.menuSettings);
+          // console.log(componentName, getDateTime(), "getApplicationSettings results.menuSettings", results.menuSettings);
 
-          if (IsEmpty(results.menuSettings) === false) {
+          if (isEmpty(results.menuSettings) === false) {
 
             // tagManagerArgsgtmId = results.menuSettings;
             dispatch(setMenuSettings(results.menuSettings));
@@ -293,7 +293,7 @@ function LoadApplicationSettings() {
 
         } else {
 
-          console.log(componentName, GetDateTime(), "getApplicationSettings error", results.message);
+          console.log(componentName, getDateTime(), "getApplicationSettings error", results.message);
 
         };
 
@@ -301,9 +301,9 @@ function LoadApplicationSettings() {
 
       })
       .catch((error) => {
-        console.error(componentName, GetDateTime(), "getApplicationSettings error", error);
-        // console.error(componentName, GetDateTime(), "getApplicationSettings error.name", error.name);
-        // console.error(componentName, GetDateTime(), "getApplicationSettings error.message", error.message);
+        console.error(componentName, getDateTime(), "getApplicationSettings error", error);
+        // console.error(componentName, getDateTime(), "getApplicationSettings error.name", error.name);
+        // console.error(componentName, getDateTime(), "getApplicationSettings error.message", error.message);
 
         // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 

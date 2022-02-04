@@ -5,7 +5,7 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from 'react-bootstrap-icons';
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, HasNonEmptyProperty, DisplayDate, DisplayYear } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayDate, displayYear } from "../../utilities/SharedFunctions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
@@ -25,7 +25,7 @@ const Editions = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
@@ -33,9 +33,9 @@ const Editions = (props) => {
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   const editionSortBy = useSelector(state => state.editions.editionSortBy);
 
@@ -49,18 +49,18 @@ const Editions = (props) => {
   const [errEditionMessage, setErrEditionMessage] = useState("");
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
+  // console.log(componentName, getDateTime(), "editionListState", editionListState);
   const mediaListState = useSelector(state => state.media.arrayMedia);
-  // console.log(componentName, GetDateTime(), "mediaListState", mediaListState);
+  // console.log(componentName, getDateTime(), "mediaListState", mediaListState);
 
   let mediaParam;
 
-  if (IsEmpty(props.linkItem) === false && HasNonEmptyProperty(props.linkItem, "linkName")) {
+  if (isEmpty(props.linkItem) === false && hasNonEmptyProperty(props.linkItem, "linkName")) {
 
-    // console.log(componentName, GetDateTime(), "props.match.params", props.match.params);
+    // console.log(componentName, getDateTime(), "props.match.params", props.match.params);
     mediaParam = props.linkItem.linkName; // props.match.params.media;
-    // console.log(componentName, GetDateTime(), "typeof mediaParam", typeof mediaParam);
-    // console.log(componentName, GetDateTime(), "mediaParam", mediaParam);
+    // console.log(componentName, getDateTime(), "typeof mediaParam", typeof mediaParam);
+    // console.log(componentName, getDateTime(), "mediaParam", mediaParam);
 
   };
 
@@ -68,7 +68,7 @@ const Editions = (props) => {
   const sortEditions = (sortBy) => {
     // console.log("componentName, sortTitles sortBy", sortBy);
 
-    if (IsEmpty(editionList) === false && editionList.length > 0) {
+    if (isEmpty(editionList) === false && editionList.length > 0) {
 
       if (sortBy === "releaseDate") {
 
@@ -129,7 +129,7 @@ const Editions = (props) => {
             return a.editionPublicationDate > b.editionPublicationDate ? 1 : -1;
 
           });
-        // console.log(componentName, GetDateTime(), "editionListReleaseDate", editionListReleaseDate);
+        // console.log(componentName, getDateTime(), "editionListReleaseDate", editionListReleaseDate);
 
         let editionListNoReleaseDate = editionList.filter(edition => edition.editionPublicationDate === undefined || edition.editionPublicationDate === null);
 
@@ -144,11 +144,11 @@ const Editions = (props) => {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
 
-              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
 
               // };
 
@@ -162,11 +162,11 @@ const Editions = (props) => {
 
           });
 
-        // console.log(componentName, GetDateTime(), "editionListNoReleaseDate", editionListNoReleaseDate);
+        // console.log(componentName, getDateTime(), "editionListNoReleaseDate", editionListNoReleaseDate);
 
         let newEditionList = [...editionListReleaseDate];
         newEditionList.push(...editionListNoReleaseDate);
-        // console.log(componentName, GetDateTime(), "newEditionList", newEditionList);
+        // console.log(componentName, getDateTime(), "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -233,7 +233,7 @@ const Editions = (props) => {
 
           });
 
-        // console.log(componentName, GetDateTime(), "editionListPublicationDate", editionListPublicationDate);
+        // console.log(componentName, getDateTime(), "editionListPublicationDate", editionListPublicationDate);
 
         let editionListNoPublicationDate = editionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
 
@@ -248,11 +248,11 @@ const Editions = (props) => {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
 
-              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
 
               // };
 
@@ -266,11 +266,11 @@ const Editions = (props) => {
 
           });
 
-        // console.log(componentName, GetDateTime(), "editionListNoPublicationDate", editionListNoPublicationDate);
+        // console.log(componentName, getDateTime(), "editionListNoPublicationDate", editionListNoPublicationDate);
 
         let newEditionList = [...editionListPublicationDate];
         newEditionList.push(...editionListNoPublicationDate);
-        // console.log(componentName, GetDateTime(), "newEditionList", newEditionList);
+        // console.log(componentName, getDateTime(), "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -293,11 +293,11 @@ const Editions = (props) => {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
 
-              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
 
               // return a.medium.sortID - b.medium.sortID;
@@ -329,11 +329,11 @@ const Editions = (props) => {
               // * Media is only important when title.titleSort are the same
               // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
 
-              //     console.log(componentName, GetDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, GetDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
+              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
               // };
 
               // return a.medium.sortID - b.medium.sortID;
@@ -362,14 +362,14 @@ const Editions = (props) => {
     document.title = editionList[0].medium.media + " | " + applicationName + " | " + siteName;
     editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
 
-  } else if (IsEmpty(mediaParam) === false) {
+  } else if (isEmpty(mediaParam) === false) {
 
     // * If mediaParam is not a number, then it's the media name
     const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
-    // console.log(componentName, GetDateTime(), "typeof media", typeof media);
-    // console.log(componentName, GetDateTime(), "media", media);
+    // console.log(componentName, getDateTime(), "typeof media", typeof media);
+    // console.log(componentName, getDateTime(), "media", media);
 
-    if (IsEmpty(media) === false) {
+    if (isEmpty(media) === false) {
 
       document.title = media.media + " | " + applicationName + " | " + siteName;
       editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
@@ -409,7 +409,7 @@ const Editions = (props) => {
 
   };
 
-  if (IsEmpty(admin) === false && admin === true) {
+  if (isEmpty(admin) === false && admin === true) {
 
     editionList = [...editionList];
 
@@ -422,11 +422,11 @@ const Editions = (props) => {
   };
 
   sortEditions(editionSortBy);
-  // console.log(componentName, GetDateTime(), "editionList", editionList);
+  // console.log(componentName, getDateTime(), "editionList", editionList);
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -438,7 +438,7 @@ const Editions = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect editionList", editionList);
+    // console.log(componentName, getDateTime(), "useEffect editionList", editionList);
 
     if (editionList.length > 0) {
 
@@ -454,25 +454,25 @@ const Editions = (props) => {
 
 
   const saveRecord = () => {
-    // console.log(componentName, GetDateTime(), "saveRecord computerLog", computerLog);
-    // console.log(componentName, GetDateTime(), "saveRecord title", title);
-    // console.log(componentName, GetDateTime(), "saveRecord window.location.href", window.location.href);
+    // console.log(componentName, getDateTime(), "saveRecord computerLog", computerLog);
+    // console.log(componentName, getDateTime(), "saveRecord title", title);
+    // console.log(componentName, getDateTime(), "saveRecord window.location.href", window.location.href);
 
-    let ipAddress = IsEmpty(computerLog) === false && IsEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
-    let city = IsEmpty(computerLog) === false && IsEmpty(computerLog.city) === false ? computerLog.city : "";
-    // let state = IsEmpty(computerLog) === false && IsEmpty(computerLog.stateProv) === false ? computerLog.stateProv : "";
-    let state = IsEmpty(computerLog) === false && IsEmpty(computerLog.state) === false ? computerLog.state : "";
-    let countryCode = IsEmpty(computerLog) === false && IsEmpty(computerLog.countryCode) === false ? computerLog.countryCode : "";
-    let countryName = IsEmpty(computerLog) === false && IsEmpty(computerLog.countryName) === false ? computerLog.countryName : "";
-    let continentCode = IsEmpty(computerLog) === false && IsEmpty(computerLog.continentCode) === false ? computerLog.continentCode : "";
-    let continentName = IsEmpty(computerLog) === false && IsEmpty(computerLog.continentName) === false ? computerLog.continentName : "";
-    let stateProvCode = IsEmpty(computerLog) === false && IsEmpty(computerLog.stateProvCode) === false ? computerLog.stateProvCode : "";
+    let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
+    let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
+    // let state = isEmpty(computerLog) === false && isEmpty(computerLog.stateProv) === false ? computerLog.stateProv : "";
+    let state = isEmpty(computerLog) === false && isEmpty(computerLog.state) === false ? computerLog.state : "";
+    let countryCode = isEmpty(computerLog) === false && isEmpty(computerLog.countryCode) === false ? computerLog.countryCode : "";
+    let countryName = isEmpty(computerLog) === false && isEmpty(computerLog.countryName) === false ? computerLog.countryName : "";
+    let continentCode = isEmpty(computerLog) === false && isEmpty(computerLog.continentCode) === false ? computerLog.continentCode : "";
+    let continentName = isEmpty(computerLog) === false && isEmpty(computerLog.continentName) === false ? computerLog.continentName : "";
+    let stateProvCode = isEmpty(computerLog) === false && isEmpty(computerLog.stateProvCode) === false ? computerLog.stateProvCode : "";
 
-    let latitude = IsEmpty(computerLog) === false && IsEmpty(computerLog.latitude) === false ? computerLog.latitude : "";
-    let longitude = IsEmpty(computerLog) === false && IsEmpty(computerLog.longitude) === false ? computerLog.longitude : "";
-    let postal = IsEmpty(computerLog) === false && IsEmpty(computerLog.postal) === false ? computerLog.postal : "";
+    let latitude = isEmpty(computerLog) === false && isEmpty(computerLog.latitude) === false ? computerLog.latitude : "";
+    let longitude = isEmpty(computerLog) === false && isEmpty(computerLog.longitude) === false ? computerLog.longitude : "";
+    let postal = isEmpty(computerLog) === false && isEmpty(computerLog.postal) === false ? computerLog.postal : "";
 
-    let href = IsEmpty(window.location.href) === false ? window.location.href : "";
+    let href = isEmpty(window.location.href) === false ? window.location.href : "";
 
     let url = baseURL + "computerLogs/";
     let response = "";
@@ -488,7 +488,7 @@ const Editions = (props) => {
       // applicationVersion: props.applicationVersion,
       applicationVersion: process.env.REACT_APP_VERSION,
 
-      lastAccessed: GetDateTime(),
+      lastAccessed: getDateTime(),
 
       // * For https://api.db-ip.com/v2/free/self -- 07/29/2021 MF
       ipAddress: ipAddress,
@@ -508,7 +508,7 @@ const Editions = (props) => {
 
     };
 
-    // console.log(componentName, GetDateTime(), "saveRecord recordObject", recordObject);
+    // console.log(componentName, getDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
@@ -518,7 +518,7 @@ const Editions = (props) => {
       body: JSON.stringify({ recordObject: recordObject })
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "saveRecord response", response);
+        // console.log(componentName, getDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -540,7 +540,7 @@ const Editions = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "saveRecord results", results);
+        // console.log(componentName, getDateTime(), "saveRecord results", results);
 
         data = results;
 
@@ -548,7 +548,7 @@ const Editions = (props) => {
 
       })
       .catch((error) => {
-        console.error(componentName, GetDateTime(), operationValue, "saveRecord error", error);
+        console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
@@ -560,7 +560,7 @@ const Editions = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect computerLog", computerLog);
+    // console.log(componentName, getDateTime(), "useEffect computerLog", computerLog);
 
     if (editionList.length > 0) {
 
@@ -579,13 +579,13 @@ const Editions = (props) => {
           <Breadcrumb className="breadcrumb mb-2">
             <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
 
-            {IsEmpty(mediaParam) === false && isNaN(mediaParam) ?
+            {isEmpty(mediaParam) === false && isNaN(mediaParam) ?
 
-              <BreadcrumbItem active><Link to={mediaParam} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(mediaParam); }}>{decodeURL(mediaParam)}</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={mediaParam} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(mediaParam); }}>{decodeURL(mediaParam)}</Link></BreadcrumbItem>
 
               :
 
-              <BreadcrumbItem active><Link to={"/editions/"} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage("/editions/"); }}>All Editions</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={"/editions/"} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage("/editions/"); }}>All Editions</Link></BreadcrumbItem>
 
             }
 
@@ -596,7 +596,7 @@ const Editions = (props) => {
       <Row>
         <Col xs="12">
 
-          <h4 className="text-center mb-4">{IsEmpty(mediaParam) === false && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
+          <h4 className="text-center mb-4">{isEmpty(mediaParam) === false && isNaN(mediaParam) ? decodeURL(mediaParam) : "All Editions"}
             <span className="text-muted ms-2 small-text">Sort By
 
               {editionSortBy !== "releaseDate" ?
@@ -624,7 +624,7 @@ const Editions = (props) => {
       <Row>
         <Col className="text-center" xs="12">
 
-          {IsEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+          {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
           {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
           {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
 
@@ -634,12 +634,12 @@ const Editions = (props) => {
 
         {editionList.map((edition) => {
 
-          // console.log(componentName, GetDateTime(), "editionList map edition", edition);
-          // console.log(componentName, GetDateTime(), "editionList map edition.active", edition.active);
-          // console.log(componentName, GetDateTime(), "editionList map edition.editionActive", edition.editionActive);
-          // console.log(componentName, GetDateTime(), "editionList map edition.imageLinkLarge", edition.imageLinkLarge);
-          // console.log(componentName, GetDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.error(\"onError\"}; } "));
-          // console.log(componentName, GetDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onload=\"console.log(\"onload\")\" onError=\"console.error(\"onError\")\" "));
+          // console.log(componentName, getDateTime(), "editionList map edition", edition);
+          // console.log(componentName, getDateTime(), "editionList map edition.active", edition.active);
+          // console.log(componentName, getDateTime(), "editionList map edition.editionActive", edition.editionActive);
+          // console.log(componentName, getDateTime(), "editionList map edition.imageLinkLarge", edition.imageLinkLarge);
+          // console.log(componentName, getDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.error(\"onError\"}; } "));
+          // console.log(componentName, getDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onload=\"console.log(\"onload\")\" onError=\"console.error(\"onError\")\" "));
           // * let newWindow = window.open("http://localhost:4000/editions/broken"); newWindow.close();
           // * let newWindow = window.open('http://localhost:4000/editions/broken'); newWindow.close();
 
@@ -666,7 +666,7 @@ const Editions = (props) => {
 
               {/* <Card key={edition.editionID}>
 
-                    {IsEmpty(mediaParam) === false ?
+                    {isEmpty(mediaParam) === false ?
                     
                     <CardHeader>
                         <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
@@ -676,32 +676,32 @@ const Editions = (props) => {
 
                     <CardBody className="edition-image">
 
-                    {IsEmpty(edition.imageLinkLarge) === false ? 
+                    {isEmpty(edition.imageLinkLarge) === false ? 
                     
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
 
                     :
 
                     <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {IsEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
+                    {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
                     </a>
 
                     }
 
-                    {IsEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {DisplayDate(editionPublicationDate)}</CardText> : null}
+                    {isEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {displayDate(editionPublicationDate)}</CardText> : null}
 
                     </CardBody>
                     <CardFooter>
 
                         <Link to={edition.title.titleURL}>{edition.title.titleName}</Link>
-                        {IsEmpty(edition.editionPublicationDate) === false ? <span> <small>({DisplayYear(edition.title.publicationDate)})</small></span> : null}
+                        {isEmpty(edition.editionPublicationDate) === false ? <span> <small>({displayYear(edition.title.publicationDate)})</small></span> : null}
 
                     </CardFooter>
                     </Card> */}
 
               <Card key={edition.editionID}>
 
-                {IsEmpty(activeString) === false ?
+                {isEmpty(activeString) === false ?
 
                   <CardHeader className="card-header inactive-item">
                     ({activeString})
@@ -712,7 +712,7 @@ const Editions = (props) => {
                 <Row className="no-gutters">
                   <Col className="col-md-6">
 
-                    {IsEmpty(edition.imageLinkLarge) === false && (edition.editionActive === true || edition.editionActive === 1) ?
+                    {isEmpty(edition.imageLinkLarge) === false && (edition.editionActive === true || edition.editionActive === 1) ?
 
                       <React.Fragment>
 
@@ -724,7 +724,7 @@ const Editions = (props) => {
                       :
 
                       <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {IsEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
+                        {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                       </a>
 
                     }
@@ -733,13 +733,13 @@ const Editions = (props) => {
                   <Col className="col-md-6">
                     <CardBody>
 
-                      <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
-                        {IsEmpty(edition.editionPublicationDate) === false ? <span className="ms-1 smaller-text">({DisplayYear(edition.editionPublicationDate)})</span> : null}
+                      <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
+                        {isEmpty(edition.editionPublicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(edition.editionPublicationDate)})</span> : null}
                       </CardText>
 
-                      {IsEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {DisplayDate(edition.editionPublicationDate)}</CardText> : null}
+                      {isEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {displayDate(edition.editionPublicationDate)}</CardText> : null}
 
-                      {IsEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
+                      {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
                           <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
@@ -753,21 +753,21 @@ const Editions = (props) => {
 
                       }
 
-                      {/* {IsEmpty(admin) === false && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
+                      {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
-                      {/* {IsEmpty(admin) === false && admin === true ? <EditEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
+                      {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
-                      {/* {IsEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
+                      {/* {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
                     </CardBody>
                   </Col>
                 </Row>
 
-                {IsEmpty(mediaParam) === false ?
+                {isEmpty(mediaParam) === false ?
 
                   <CardFooter className="card-footer">
 
-                    <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
+                    <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
 
                   </CardFooter>
 

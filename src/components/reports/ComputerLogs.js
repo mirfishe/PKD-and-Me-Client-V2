@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/ApplicationFunctions";
 
 const ComputerLogs = () => {
@@ -13,15 +13,15 @@ const ComputerLogs = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +50,7 @@ const ComputerLogs = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getComputerLogs response", response);
+        // console.log(componentName, getDateTime(), "getComputerLogs response", response);
 
         if (!response.ok) {
 
@@ -64,9 +64,9 @@ const ComputerLogs = () => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setComputerLogs(results.records);
 
@@ -74,7 +74,7 @@ const ComputerLogs = () => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
@@ -93,7 +93,7 @@ const ComputerLogs = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -115,7 +115,7 @@ const ComputerLogs = () => {
 
           <h5 className="text-center">Computer Logs</h5>
 
-          {IsEmpty(computerLogs) === false ?
+          {isEmpty(computerLogs) === false ?
 
             <Table responsive>
               <thead>
@@ -136,11 +136,11 @@ const ComputerLogs = () => {
 
                 {computerLogs.map((computerLog, index) => {
 
-                  // console.log(componentName, GetDateTime(), "map computerLog", computerLog);
+                  // console.log(componentName, getDateTime(), "map computerLog", computerLog);
 
                   return (
                     <tr key={index}>
-                      {IsEmpty(computerLog.lastAccessed) === false ? <td>{computerLog.lastAccessed.slice(0, 19).replace("T", " ")}</td> : <td>{computerLog.lastAccessed}</td>}
+                      {isEmpty(computerLog.lastAccessed) === false ? <td>{computerLog.lastAccessed.slice(0, 19).replace("T", " ")}</td> : <td>{computerLog.lastAccessed}</td>}
                       <td>{computerLog.title}</td>
                       <td>{computerLog.href}</td>
                       <td>{computerLog.ipAddress}</td>

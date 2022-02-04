@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse, FormatLowerCase, FormatUpperCase } from "../../utilities/SharedFunctions";
-import { encodeURL, ToTitleCase, LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase } from "../../utilities/SharedFunctions";
+import { encodeURL, convertBitTrueFalse, toTitleCase, LogError } from "../../utilities/ApplicationFunctions";
 
 // * https://www.npmjs.com/package/rss-parser
 // * https://github.com/rbren/rss-parser
@@ -19,15 +19,15 @@ const FromTheHomeopape = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,14 +53,14 @@ const FromTheHomeopape = (props) => {
 
 
   const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
-    // console.log(componentName, GetDateTime(), "formatPost txtArticleTitle", txtArticleTitle);
-    // console.log(componentName, GetDateTime(), "formatPost txtArticleURL", txtArticleURL);
-    // console.log(componentName, GetDateTime(), "formatPost itemContentSnippet", itemContentSnippet);
+    // console.log(componentName, getDateTime(), "formatPost txtArticleTitle", txtArticleTitle);
+    // console.log(componentName, getDateTime(), "formatPost txtArticleURL", txtArticleURL);
+    // console.log(componentName, getDateTime(), "formatPost itemContentSnippet", itemContentSnippet);
 
-    let post = ToTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
+    let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
     let itemContentSnippet = "";
 
-    if (IsEmpty(txtItemContentSnippet) === false) {
+    if (isEmpty(txtItemContentSnippet) === false) {
 
       itemContentSnippet = txtItemContentSnippet;
 
@@ -78,43 +78,43 @@ const FromTheHomeopape = (props) => {
 
     // };
 
-    if (FormatLowerCase(txtArticleTitle).includes("blade runner") === true || FormatLowerCase(itemContentSnippet).includes("blade runner") === true) {
+    if (formatLowerCase(txtArticleTitle).includes("blade runner") === true || formatLowerCase(itemContentSnippet).includes("blade runner") === true) {
 
       post = post + " #BladeRunner ";
 
     };
 
-    if (FormatLowerCase(txtArticleTitle).includes("blade runner 2049") === true || FormatLowerCase(itemContentSnippet).includes("blade runner 2049") === true) {
+    if (formatLowerCase(txtArticleTitle).includes("blade runner 2049") === true || formatLowerCase(itemContentSnippet).includes("blade runner 2049") === true) {
 
       post = post + " #BladeRunner2049 ";
 
     };
 
-    if (FormatLowerCase(txtArticleTitle).includes("black lotus") === true || FormatLowerCase(itemContentSnippet).includes("black lotus") === true) {
+    if (formatLowerCase(txtArticleTitle).includes("black lotus") === true || formatLowerCase(itemContentSnippet).includes("black lotus") === true) {
 
       post = post + " #BladeRunner2049 ";
 
     };
 
-    if (FormatLowerCase(txtArticleTitle).includes("total recall") === true || FormatLowerCase(itemContentSnippet).includes("total recall") === true) {
+    if (formatLowerCase(txtArticleTitle).includes("total recall") === true || formatLowerCase(itemContentSnippet).includes("total recall") === true) {
       post = post + " #TotalRecall ";
 
 
     };
 
-    if (FormatLowerCase(txtArticleTitle).includes("electric dreams") === true || FormatLowerCase(itemContentSnippet).includes("electric dreams") === true) {
+    if (formatLowerCase(txtArticleTitle).includes("electric dreams") === true || formatLowerCase(itemContentSnippet).includes("electric dreams") === true) {
       post = post + " #ElectricDreams ";
 
 
     };
 
-    if (FormatLowerCase(txtArticleTitle).includes("man in the high castle") === true || FormatLowerCase(itemContentSnippet).includes("man in the high castle") === true) {
+    if (formatLowerCase(txtArticleTitle).includes("man in the high castle") === true || formatLowerCase(itemContentSnippet).includes("man in the high castle") === true) {
 
       post = post + " #TMITHC #HighCastle ";
 
     };
 
-    if (FormatLowerCase(txtArticleTitle).includes("minority report") === true || FormatLowerCase(itemContentSnippet).includes("minority report") === true) {
+    if (formatLowerCase(txtArticleTitle).includes("minority report") === true || formatLowerCase(itemContentSnippet).includes("minority report") === true) {
 
       post = post + " #MinorityReport ";
 
@@ -129,11 +129,11 @@ const FromTheHomeopape = (props) => {
 
     // if (/*newURL.includes("\%3F") === true || newURL.includes("\%3f") === true ||*/ newURL.includes("www.heavymetal.com")) {
 
-    //   console.log(componentName, GetDateTime(), "formatPost txtArticleURL.replaceAll(\"\%3F\", \"?\")", txtArticleURL.replaceAll("\%3F", "?"));
-    //   console.log(componentName, GetDateTime(), "formatPost txtArticleURLtxtArticleURL.replaceAll(\"\%3F\", \"?\").replaceAll(\"\%3f\", \"?\").replaceAll(\"\%26\", \"&\").replaceAll(\"\%3D\", \"=\").replaceAll(\"\%3d\", \"=\")", txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "="));
-    //   console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
-    //   console.log(componentName, GetDateTime(), "formatPost decodeURI(txtArticleURL)", decodeURI(txtArticleURL));
-    //   console.log(componentName, GetDateTime(), "formatPost decodeURI(newURL)", decodeURI(newURL));
+    //   console.log(componentName, getDateTime(), "formatPost txtArticleURL.replaceAll(\"\%3F\", \"?\")", txtArticleURL.replaceAll("\%3F", "?"));
+    //   console.log(componentName, getDateTime(), "formatPost txtArticleURLtxtArticleURL.replaceAll(\"\%3F\", \"?\").replaceAll(\"\%3f\", \"?\").replaceAll(\"\%26\", \"&\").replaceAll(\"\%3D\", \"=\").replaceAll(\"\%3d\", \"=\")", txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "="));
+    //   console.log(componentName, getDateTime(), "formatPost newURL", newURL);
+    //   console.log(componentName, getDateTime(), "formatPost decodeURI(txtArticleURL)", decodeURI(txtArticleURL));
+    //   console.log(componentName, getDateTime(), "formatPost decodeURI(newURL)", decodeURI(newURL));
     // };
 
     // * Remove fbclid= -- 06/26/2021 MF
@@ -143,7 +143,7 @@ const FromTheHomeopape = (props) => {
     param = "fbclid";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
+    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_medium= -- 06/26/2021 MF
     // * Google Analytics and tracking -- 06/26/2021 MF
@@ -151,7 +151,7 @@ const FromTheHomeopape = (props) => {
     param = "utm_medium";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
+    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_campaign= -- 06/26/2021 MF
     // * Google Analytics and tracking -- 06/26/2021 MF
@@ -159,7 +159,7 @@ const FromTheHomeopape = (props) => {
     param = "utm_campaign";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
+    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_source= -- 06/26/2021 MF
     // * Google Analytics and tracking -- 06/26/2021 MF
@@ -167,7 +167,7 @@ const FromTheHomeopape = (props) => {
     param = "utm_source";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, GetDateTime(), "formatPost newURL", newURL);
+    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
 
     post = post + newURL;
@@ -198,7 +198,7 @@ const FromTheHomeopape = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getNews response", response);
+        // console.log(componentName, getDateTime(), "getNews response", response);
 
         if (!response.ok) {
 
@@ -212,9 +212,9 @@ const FromTheHomeopape = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
@@ -223,7 +223,7 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         setErrorMessage(error.name + ": " + error.message);
 
@@ -245,7 +245,7 @@ const FromTheHomeopape = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getNewsReview response", response);
+        // console.log(componentName, getDateTime(), "getNewsReview response", response);
 
         if (!response.ok) {
 
@@ -259,9 +259,9 @@ const FromTheHomeopape = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setHomeopapeItemsReview(results.records);
           // setHomeopapeItemsReview(results.records[0]);
@@ -270,7 +270,7 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         setErrorMessage(error.name + ": " + error.message);
 
@@ -292,7 +292,7 @@ const FromTheHomeopape = (props) => {
   //     })
   //   })
   //   .then(response => {
-  //     // console.log(componentName, GetDateTime(), "fetchNews response", response);
+  //     // console.log(componentName, getDateTime(), "fetchNews response", response);
 
   //     if (!response.ok) {
 
@@ -306,14 +306,14 @@ const FromTheHomeopape = (props) => {
 
   //     })
   //     .then(results => {
-  //       console.log(componentName, GetDateTime(), "fetchNews results", results);
+  //       console.log(componentName, getDateTime(), "fetchNews results", results);
 
   //       // ! This happens too fast before the records have been written to the table.
   //       fetchNewsUpdate();
 
   //     })
   //     .catch((error) => {
-  //       console.error(componentName, GetDateTime(), "fetchNews error", error);
+  //       console.error(componentName, getDateTime(), "fetchNews error", error);
 
   //       setErrorMessage(error.name + ": " + error.message);
 
@@ -335,7 +335,7 @@ const FromTheHomeopape = (props) => {
   //     })
   //   })
   //   .then(response => {
-  //     // console.log(componentName, GetDateTime(), "fetchNewsUpdate response", response);
+  //     // console.log(componentName, getDateTime(), "fetchNewsUpdate response", response);
 
   //     if (!response.ok) {
 
@@ -349,11 +349,11 @@ const FromTheHomeopape = (props) => {
 
   //     })
   //     .then(results => {
-  //       console.log(componentName, GetDateTime(), "fetchNewsUpdate results", results);
+  //       console.log(componentName, getDateTime(), "fetchNewsUpdate results", results);
 
   //     })
   //     .catch((error) => {
-  //       console.error(componentName, GetDateTime(), "fetchNewsUpdate error", error);
+  //       console.error(componentName, getDateTime(), "fetchNewsUpdate error", error);
 
   //       setErrorMessage(error.name + ": " + error.message);
 
@@ -385,9 +385,9 @@ const FromTheHomeopape = (props) => {
 
     let url = baseURL + "fromthehomeopape/markviewed/";
 
-    if (IsEmpty(sessionToken) === false) {
+    if (isEmpty(sessionToken) === false) {
 
-      // console.log(componentName, GetDateTime(), "markAllViewed url", url);
+      // console.log(componentName, getDateTime(), "markAllViewed url", url);
 
       fetch(url, {
         method: "GET",
@@ -397,7 +397,7 @@ const FromTheHomeopape = (props) => {
         })
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "markAllViewed response", response);
+          // console.log(componentName, getDateTime(), "markAllViewed response", response);
 
           // if (!response.ok) {
 
@@ -419,7 +419,7 @@ const FromTheHomeopape = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, GetDateTime(), "markAllViewed data", data);
+          // console.log(componentName, getDateTime(), "markAllViewed data", data);
 
           addMessage(data.message);
 
@@ -437,9 +437,9 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "markAllViewed error", error);
-          // console.error(componentName, GetDateTime(), "markAllViewed error.name", error.name);
-          // console.error(componentName, GetDateTime(), "markAllViewed error.message", error.message);
+          console.error(componentName, getDateTime(), "markAllViewed error", error);
+          // console.error(componentName, getDateTime(), "markAllViewed error.name", error.name);
+          // console.error(componentName, getDateTime(), "markAllViewed error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
@@ -453,8 +453,8 @@ const FromTheHomeopape = (props) => {
 
 
   const setDisplay = (itemID, display) => {
-    // console.log(componentName, GetDateTime(), "setDisplay itemID", itemID);
-    // console.log(componentName, GetDateTime(), "setDisplay display", display);
+    // console.log(componentName, getDateTime(), "setDisplay itemID", itemID);
+    // console.log(componentName, getDateTime(), "setDisplay display", display);
 
     clearMessages();
 
@@ -472,10 +472,10 @@ const FromTheHomeopape = (props) => {
 
     let url = baseURL + "fromthehomeopape/display/";
 
-    if (IsEmpty(itemID) === false && IsEmpty(sessionToken) === false) {
+    if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, GetDateTime(), "setDisplay url", url);
+      // console.log(componentName, getDateTime(), "setDisplay url", url);
 
       let recordObject = {
         display: displayValue
@@ -490,7 +490,7 @@ const FromTheHomeopape = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "setDisplay response", response);
+          // console.log(componentName, getDateTime(), "setDisplay response", response);
 
           // if (!response.ok) {
 
@@ -512,7 +512,7 @@ const FromTheHomeopape = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, GetDateTime(), "setDisplay data", data);
+          // console.log(componentName, getDateTime(), "setDisplay data", data);
 
           addMessage(data.message);
 
@@ -531,9 +531,9 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "setDisplay error", error);
-          // console.error(componentName, GetDateTime(), "setDisplay error.name", error.name);
-          // console.error(componentName, GetDateTime(), "setDisplay error.message", error.message);
+          console.error(componentName, getDateTime(), "setDisplay error", error);
+          // console.error(componentName, getDateTime(), "setDisplay error.name", error.name);
+          // console.error(componentName, getDateTime(), "setDisplay error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
@@ -547,8 +547,8 @@ const FromTheHomeopape = (props) => {
 
 
   const setPosted = (itemID, posted) => {
-    // console.log(componentName, GetDateTime(), "setPosted itemID", itemID);
-    // console.log(componentName, GetDateTime(), "setPosted posted", posted);
+    // console.log(componentName, getDateTime(), "setPosted itemID", itemID);
+    // console.log(componentName, getDateTime(), "setPosted posted", posted);
 
     clearMessages();
 
@@ -566,10 +566,10 @@ const FromTheHomeopape = (props) => {
 
     let url = baseURL + "fromthehomeopape/posted/";
 
-    if (IsEmpty(itemID) === false && IsEmpty(sessionToken) === false) {
+    if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, GetDateTime(), "setPosted url", url);
+      // console.log(componentName, getDateTime(), "setPosted url", url);
 
       let recordObject = {
         posted: postedValue
@@ -584,7 +584,7 @@ const FromTheHomeopape = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "setPosted response", response);
+          // console.log(componentName, getDateTime(), "setPosted response", response);
 
           // if (!response.ok) {
 
@@ -606,7 +606,7 @@ const FromTheHomeopape = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, GetDateTime(), "setPosted data", data);
+          // console.log(componentName, getDateTime(), "setPosted data", data);
 
           addMessage(data.message);
 
@@ -625,9 +625,9 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "setPosted error", error);
-          // console.error(componentName, GetDateTime(), "setPosted error.name", error.name);
-          // console.error(componentName, GetDateTime(), "setPosted error.message", error.message);
+          console.error(componentName, getDateTime(), "setPosted error", error);
+          // console.error(componentName, getDateTime(), "setPosted error.name", error.name);
+          // console.error(componentName, getDateTime(), "setPosted error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
@@ -641,8 +641,8 @@ const FromTheHomeopape = (props) => {
 
 
   const setAlwaysFilter = (itemID, alwaysFilter) => {
-    // console.log(componentName, GetDateTime(), "setAlwaysFilter itemID", itemID);
-    // console.log(componentName, GetDateTime(), "setAlwaysFilter alwaysFilter", alwaysFilter);
+    // console.log(componentName, getDateTime(), "setAlwaysFilter itemID", itemID);
+    // console.log(componentName, getDateTime(), "setAlwaysFilter alwaysFilter", alwaysFilter);
 
     clearMessages();
 
@@ -660,10 +660,10 @@ const FromTheHomeopape = (props) => {
 
     let url = baseURL + "fromthehomeopape/alwaysFilter/";
 
-    if (IsEmpty(itemID) === false && IsEmpty(sessionToken) === false) {
+    if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, GetDateTime(), "setAlwaysFilter url", url);
+      // console.log(componentName, getDateTime(), "setAlwaysFilter url", url);
 
       let recordObject = {
         alwaysFilter: alwaysFilterValue
@@ -678,7 +678,7 @@ const FromTheHomeopape = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "setAlwaysFilter response", response);
+          // console.log(componentName, getDateTime(), "setAlwaysFilter response", response);
 
           // if (!response.ok) {
 
@@ -700,7 +700,7 @@ const FromTheHomeopape = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, GetDateTime(), "setAlwaysFilter data", data);
+          // console.log(componentName, getDateTime(), "setAlwaysFilter data", data);
 
           addMessage(data.message);
 
@@ -719,9 +719,9 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "setAlwaysFilter error", error);
-          // console.error(componentName, GetDateTime(), "setAlwaysFilter error.name", error.name);
-          // console.error(componentName, GetDateTime(), "setAlwaysFilter error.message", error.message);
+          console.error(componentName, getDateTime(), "setAlwaysFilter error", error);
+          // console.error(componentName, getDateTime(), "setAlwaysFilter error.name", error.name);
+          // console.error(componentName, getDateTime(), "setAlwaysFilter error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
@@ -735,8 +735,8 @@ const FromTheHomeopape = (props) => {
 
 
   const setViewed = (itemID, viewed) => {
-    // console.log(componentName, GetDateTime(), "setViewed itemID", itemID);
-    // console.log(componentName, GetDateTime(), "setViewed viewed", viewed);
+    // console.log(componentName, getDateTime(), "setViewed itemID", itemID);
+    // console.log(componentName, getDateTime(), "setViewed viewed", viewed);
 
     clearMessages();
 
@@ -754,10 +754,10 @@ const FromTheHomeopape = (props) => {
 
     let url = baseURL + "fromthehomeopape/viewed/";
 
-    if (IsEmpty(itemID) === false && IsEmpty(sessionToken) === false) {
+    if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, GetDateTime(), "setViewed url", url);
+      // console.log(componentName, getDateTime(), "setViewed url", url);
 
       let recordObject = {
         viewed: viewedValue
@@ -772,7 +772,7 @@ const FromTheHomeopape = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "setViewed response", response);
+          // console.log(componentName, getDateTime(), "setViewed response", response);
 
           // if (!response.ok) {
 
@@ -794,7 +794,7 @@ const FromTheHomeopape = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, GetDateTime(), "setViewed data", data);
+          // console.log(componentName, getDateTime(), "setViewed data", data);
 
           addMessage(data.message);
 
@@ -813,9 +813,9 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "setViewed error", error);
-          // console.error(componentName, GetDateTime(), "setViewed error.name", error.name);
-          // console.error(componentName, GetDateTime(), "setViewed error.message", error.message);
+          console.error(componentName, getDateTime(), "setViewed error", error);
+          // console.error(componentName, getDateTime(), "setViewed error.name", error.name);
+          // console.error(componentName, getDateTime(), "setViewed error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
@@ -829,7 +829,7 @@ const FromTheHomeopape = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -869,7 +869,7 @@ const FromTheHomeopape = (props) => {
             // * One method to only display ten items in the list. -- 06/26/2021 MF
             // if (displayUpdateItemsCount >= 100) {
 
-            //   console.log(componentName, GetDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
+            //   console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
             //   homeopapeItemsReview.splice(0, index);
 
             // };
@@ -882,14 +882,14 @@ const FromTheHomeopape = (props) => {
 
               // } else if (displayUpdateItemsCount >= 100) {
 
-              //   // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
+              //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
               //   // homeopapeItemsReview.splice(0, index);
               //   show = false;
 
             } else {
 
               displayUpdateItemsCount++;
-              // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
+              // console.log(componentName, getDateTime(), "homeopapeItemsReview.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
 
             };
 
@@ -923,85 +923,85 @@ const FromTheHomeopape = (props) => {
             // goodreads.com
 
             // // if (homeopapeItem.itemLink.includes("ebay.com")) {
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
+            // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
 
             //   show = false;
 
             // };
 
-            // if (FormatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || FormatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
+            // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
 
             //   show = false;
 
@@ -1012,7 +1012,7 @@ const FromTheHomeopape = (props) => {
             let param = "";
             let regExp = "";
 
-            if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
+            if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
 
               itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
 
@@ -1033,11 +1033,11 @@ const FromTheHomeopape = (props) => {
             // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
             let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
-            // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
-            // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
-            // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-            // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map homeopapeItem.display", homeopapeItem.display);
-            // console.log(componentName, GetDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
+            // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
+            // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
+            // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
+            // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.display", homeopapeItem.display);
+            // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
 
             return (
               <React.Fragment key={itemID}>
@@ -1124,7 +1124,7 @@ const FromTheHomeopape = (props) => {
             // * One method to only display ten items in the list. -- 06/26/2021 MF
             // if (displayItemsCount >= 20) {
 
-            //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+            //   console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
             //   homeopapeItems.splice(0, index);
 
             // };
@@ -1137,14 +1137,14 @@ const FromTheHomeopape = (props) => {
 
             } else if (displayItemsCount >= 20) {
 
-              // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+              // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
               // homeopapeItems.splice(0, index);
               show = false;
 
             } else {
 
               displayItemsCount++;
-              // console.log(componentName, GetDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
+              // console.log(componentName, getDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
 
             };
 
@@ -1153,7 +1153,7 @@ const FromTheHomeopape = (props) => {
             let param = "";
             let regExp = "";
 
-            if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
+            if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
 
               itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
 
@@ -1174,11 +1174,11 @@ const FromTheHomeopape = (props) => {
             // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
             let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
-            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
-            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
-            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
-            // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
 
             return (
               <React.Fragment key={itemID}>

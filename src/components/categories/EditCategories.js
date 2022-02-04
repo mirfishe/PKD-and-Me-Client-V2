@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { PencilSquare } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
 
@@ -14,15 +14,15 @@ const EditCategories = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -44,11 +44,11 @@ const EditCategories = (props) => {
   const [errSortID, setErrSortID] = useState("");
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
+  // console.log(componentName, getDateTime(), "categoryListState", categoryListState);
 
   let categoryList = [];
 
-  if (IsEmpty(admin) === false && admin === true) {
+  if (isEmpty(admin) === false && admin === true) {
 
     categoryList = [...categoryListState];
 
@@ -59,7 +59,7 @@ const EditCategories = (props) => {
 
   };
 
-  // console.log(componentName, GetDateTime(), "categoryList", categoryList);
+  // console.log(componentName, getDateTime(), "categoryList", categoryList);
 
   categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
@@ -70,7 +70,7 @@ const EditCategories = (props) => {
 
     // Need to restructure the form for this to work
     // let formElements = event.target.elements;
-    // console.log(componentName, GetDateTime(), "updateCategories formElements", formElements);
+    // console.log(componentName, getDateTime(), "updateCategories formElements", formElements);
 
     // for (let i = 0; i < .length; i++) {
 
@@ -81,7 +81,7 @@ const EditCategories = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -96,9 +96,9 @@ const EditCategories = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Edit Categories</Button></span> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Edit Categories</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Update Categories</ModalHeader>
@@ -128,13 +128,13 @@ const EditCategories = (props) => {
                 <FormGroup row key={category.categoryID}>
 
                   <Col xs="10">
-                    <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(componentName, GetDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
-                    {/* {IsEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
+                    <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
+                    {/* {isEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
                   </Col>
 
                   <Col xs="2">
-                    <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(componentName, GetDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
-                    {/* {IsEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
+                    <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
+                    {/* {isEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
                   </Col>
 
                 </FormGroup>

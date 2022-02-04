@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/ApplicationFunctions";
 
 const Errors = () => {
@@ -13,15 +13,15 @@ const Errors = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +50,7 @@ const Errors = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getErrors response", response);
+        // console.log(componentName, getDateTime(), "getErrors response", response);
 
         if (!response.ok) {
 
@@ -64,9 +64,9 @@ const Errors = () => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setErrors(results.records);
 
@@ -74,7 +74,7 @@ const Errors = () => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
@@ -93,7 +93,7 @@ const Errors = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -115,7 +115,7 @@ const Errors = () => {
 
           <h5 className="text-center">Errors</h5>
 
-          {IsEmpty(errors) === false ?
+          {isEmpty(errors) === false ?
 
             <Table responsive>
               <thead>
@@ -132,11 +132,11 @@ const Errors = () => {
 
                 {errors.map((error, index) => {
 
-                  // console.log(componentName, GetDateTime(), "map error", error);
+                  // console.log(componentName, getDateTime(), "map error", error);
 
                   return (
                     <tr key={index}>
-                      {IsEmpty(error.createDate) === false ? <td>{error.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{error.createDate}</td>}
+                      {isEmpty(error.createDate) === false ? <td>{error.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{error.createDate}</td>}
                       <td>{error.operation}</td>
                       <td>{error.componentName}</td>
                       <td>{error.transactionData}</td>

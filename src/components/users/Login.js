@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
-import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, formatTrim } from "../../utilities/SharedFunctions";
 import { LogError } from "../../utilities/ApplicationFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
@@ -19,7 +19,7 @@ const Login = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -60,12 +60,12 @@ const Login = (props) => {
 
   const updateToken = (newToken) => {
 
-    if (IsEmpty(newToken) === false) {
+    if (isEmpty(newToken) === false) {
 
       localStorage.setItem("token", newToken);
-      // console.log(componentName, GetDateTime(), "updateToken newToken", newToken);
-      // console.log(componentName, GetDateTime(), "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
-      // console.log(componentName, GetDateTime(), "updateToken User token changed.");
+      // console.log(componentName, getDateTime(), "updateToken newToken", newToken);
+      // console.log(componentName, getDateTime(), "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
+      // console.log(componentName, getDateTime(), "updateToken User token changed.");
 
     };
 
@@ -91,42 +91,42 @@ const Login = (props) => {
     let passwordValidated = false;
     let formValidated = false;
 
-    if (IsEmpty(txtEmail) === false) {
+    if (isEmpty(txtEmail) === false) {
 
-      if (FormatTrim(txtEmail).match(emailRegExp) && FormatTrim(txtEmail).length > 0) {
+      if (formatTrim(txtEmail).match(emailRegExp) && formatTrim(txtEmail).length > 0) {
 
-        // if (FormatTrim(txtEmail).match(emailFormat) && FormatTrim(txtEmail).length > 0) {
+        // if (formatTrim(txtEmail).match(emailFormat) && formatTrim(txtEmail).length > 0) {
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, GetDateTime(), "logIn Valid Email Address");
-        // console.log(componentName, GetDateTime(), "logIn emailValidated true", emailValidated);
+        // console.log(componentName, getDateTime(), "logIn Valid Email Address");
+        // console.log(componentName, getDateTime(), "logIn emailValidated true", emailValidated);
 
       } else {
 
         emailValidated = false;
         setErrEmail("Please enter a valid email address.");
-        // console.log(componentName, GetDateTime(), "logIn Invalid Email Address");
-        // console.log(componentName, GetDateTime(), "logIn emailValidated false", emailValidated);
+        // console.log(componentName, getDateTime(), "logIn Invalid Email Address");
+        // console.log(componentName, getDateTime(), "logIn emailValidated false", emailValidated);
 
       };
 
     };
 
-    if (IsEmpty(txtPassword) === false) {
+    if (isEmpty(txtPassword) === false) {
 
-      if (FormatTrim(txtPassword).length > 4) {
+      if (formatTrim(txtPassword).length > 4) {
 
         passwordValidated = true;
         setErrPassword("");
-        // console.log(componentName, GetDateTime(), "logIn Valid Password");
-        // console.log(componentName, GetDateTime(), "logIn passwordValidated true", passwordValidated);
+        // console.log(componentName, getDateTime(), "logIn Valid Password");
+        // console.log(componentName, getDateTime(), "logIn passwordValidated true", passwordValidated);
 
       } else {
 
         passwordValidated = false;
         setErrPassword("Password must be at least 5 characters.");
-        // console.log(componentName, GetDateTime(), "logIn Invalid Password");
-        // console.log(componentName, GetDateTime(), "logIn passwordValidated false", passwordValidated);
+        // console.log(componentName, getDateTime(), "logIn Invalid Password");
+        // console.log(componentName, getDateTime(), "logIn passwordValidated false", passwordValidated);
 
       };
 
@@ -135,34 +135,34 @@ const Login = (props) => {
     if (emailValidated === true && passwordValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, GetDateTime(), "logIn Valid Form");
-      // console.log(componentName, GetDateTime(), "logIn formValidated true", formValidated);
+      // console.log(componentName, getDateTime(), "logIn Valid Form");
+      // console.log(componentName, getDateTime(), "logIn formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, GetDateTime(), "logIn Invalid Form");
-      // console.log(componentName, GetDateTime(), "logIn formValidated false", formValidated);
+      // console.log(componentName, getDateTime(), "logIn Invalid Form");
+      // console.log(componentName, getDateTime(), "logIn formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, GetDateTime(), "logIn emailValidated", emailValidated);
-    // console.log(componentName, GetDateTime(), "logIn passwordValidated", passwordValidated);
-    // console.log(componentName, GetDateTime(), "logIn formValidated", formValidated);
+    // console.log(componentName, getDateTime(), "logIn emailValidated", emailValidated);
+    // console.log(componentName, getDateTime(), "logIn passwordValidated", passwordValidated);
+    // console.log(componentName, getDateTime(), "logIn formValidated", formValidated);
 
     if (formValidated === true) {
 
-      if (IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
+      if (isEmpty(txtEmail) === false && isEmpty(txtPassword) === false) {
 
         let recordObject = {
-          email: FormatTrim(txtEmail),
-          password: FormatTrim(txtPassword)
+          email: formatTrim(txtEmail),
+          password: formatTrim(txtPassword)
         };
 
-        // console.log(componentName, GetDateTime(), "logIn recordObject", recordObject);
+        // console.log(componentName, getDateTime(), "logIn recordObject", recordObject);
 
         let url = baseURL + "users/login/";
-        // console.log(componentName, GetDateTime(), "logIn url", url);
+        // console.log(componentName, getDateTime(), "logIn url", url);
 
         fetch(url, {
           method: "POST",
@@ -172,7 +172,7 @@ const Login = (props) => {
           body: JSON.stringify({ user: recordObject })
         })
           .then(response => {
-            // console.log(componentName, GetDateTime(), "logIn response", response);
+            // console.log(componentName, getDateTime(), "logIn response", response);
 
             // if (!response.ok) {
 
@@ -194,14 +194,14 @@ const Login = (props) => {
 
           })
           .then(results => {
-            // console.log(componentName, GetDateTime(), "logIn results", results);
+            // console.log(componentName, getDateTime(), "logIn results", results);
 
             // if (results !== 500 && results !== 401) {
 
             // setUserResultsFound(results.transactionSuccess);
             addMessage(results.message);
 
-            if (IsEmpty(results) === false && results.transactionSuccess === true) {
+            if (isEmpty(results) === false && results.transactionSuccess === true) {
 
               // setUser(results);
               // setUserID(results.userID);
@@ -236,9 +236,9 @@ const Login = (props) => {
 
           })
           .catch((error) => {
-            console.error(componentName, GetDateTime(), "logIn error", error);
-            // console.error(componentName, GetDateTime(), "logIn error.name", error.name);
-            // console.error(componentName, GetDateTime(), "logIn error.message", error.message);
+            console.error(componentName, getDateTime(), "logIn error", error);
+            // console.error(componentName, getDateTime(), "logIn error.name", error.name);
+            // console.error(componentName, getDateTime(), "logIn error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
 
@@ -254,7 +254,7 @@ const Login = (props) => {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, GetDateTime(), "getChecklist baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "getChecklist baseURL", baseURL);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
@@ -262,7 +262,7 @@ const Login = (props) => {
 
     let url = baseURL + "titles/checklist";
 
-    if (IsEmpty(token) === false) {
+    if (isEmpty(token) === false) {
 
       fetch(url, {
         method: "GET",
@@ -272,7 +272,7 @@ const Login = (props) => {
         }),
       })
         .then(response => {
-          // console.log(componentName, GetDateTime(), "getChecklist response", response);
+          // console.log(componentName, getDateTime(), "getChecklist response", response);
 
           // if (!response.ok) {
 
@@ -294,27 +294,27 @@ const Login = (props) => {
 
         })
         .then(results => {
-          // console.log(componentName, GetDateTime(), "getChecklist results", results);
+          // console.log(componentName, getDateTime(), "getChecklist results", results);
 
           setChecklistResultsFound(results.transactionSuccess);
           // setChecklistMessage(results.message);
 
-          if (IsEmpty(results) === false && results.transactionSuccess === true) {
+          if (isEmpty(results) === false && results.transactionSuccess === true) {
 
             dispatch(loadArrayChecklist(results.records));
 
           } else {
 
-            console.log(componentName, GetDateTime(), "getChecklist error", results.message);
+            console.log(componentName, getDateTime(), "getChecklist error", results.message);
             addErrorMessage(results.message);
 
           };
 
         })
         .catch((error) => {
-          console.error(componentName, GetDateTime(), "getChecklist error", error);
-          // console.error(componentName, GetDateTime(), "getChecklist error.name", error.name);
-          // console.error(componentName, GetDateTime(), "getChecklist error.message", error.message);
+          console.error(componentName, getDateTime(), "getChecklist error", error);
+          // console.error(componentName, getDateTime(), "getChecklist error.name", error.name);
+          // console.error(componentName, getDateTime(), "getChecklist error.message", error.message);
 
           // addErrorMessage(error.name + ": " + error.message);
 
@@ -328,9 +328,9 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect userResultsFound", userResultsFound);
+    // console.log(componentName, getDateTime(), "useEffect userResultsFound", userResultsFound);
 
-    if (IsEmpty(userResultsFound) === false) {
+    if (isEmpty(userResultsFound) === false) {
 
       clearMessages();
       setErrEmail("");
@@ -344,9 +344,9 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
+    // console.log(componentName, getDateTime(), "useEffect sessionToken", sessionToken);
 
-    if (IsEmpty(sessionToken) === false) {
+    if (isEmpty(sessionToken) === false) {
 
       clearMessages();
       setErrEmail("");
@@ -359,7 +359,7 @@ const Login = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
+    // console.log(componentName, getDateTime(), "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
 
     if (process.env.NODE_ENV === "development") {
 
@@ -374,9 +374,9 @@ const Login = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Login</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Login</Button></span> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(sessionToken) === true ?
+      {applicationAllowUserInteractions === true && isEmpty(sessionToken) === true ?
 
         <React.Fragment>
           {/* <NavItem> */}
@@ -402,14 +402,14 @@ const Login = (props) => {
 
             <FormGroup>
               <Label for="txtEmail">Email Address</Label>
-              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
+              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
               {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtPassword">Password</Label>
               <InputGroup>
-                <Input type={showPassword} /*type="password"*/ id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
+                <Input type={showPassword} /*type="password"*/ id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
                 <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
                 {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
               </InputGroup>

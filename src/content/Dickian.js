@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { IsEmpty, DisplayValue, GetDateTime } from "../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "../utilities/SharedFunctions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
 import { setPageURL } from "../app/urlsSlice";
 
@@ -20,7 +20,7 @@ const Dickian = () => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
