@@ -5,7 +5,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "../../utilities/SharedFunctions";
-import { createTitleURL, createImageName, LogError } from "../../utilities/ApplicationFunctions";
+import { createTitleURL, createImageName, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
@@ -536,7 +536,7 @@ const EditTitle = (props) => {
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -945,7 +945,7 @@ const EditTitle = (props) => {
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -1051,7 +1051,7 @@ const EditTitle = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -1135,7 +1135,7 @@ const EditTitle = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 

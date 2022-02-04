@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const Logs = () => {
 
@@ -78,7 +78,7 @@ const Logs = () => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

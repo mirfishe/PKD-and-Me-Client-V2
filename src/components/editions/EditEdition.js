@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "../../utilities/SharedFunctions";
-import { getASIN, removeOnePixelImage, LogError } from "../../utilities/ApplicationFunctions";
+import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
 const EditEdition = (props) => {
@@ -469,7 +469,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -763,7 +763,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -849,7 +849,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -918,7 +918,7 @@ const EditEdition = (props) => {
 
           setErrASINMessage(error.name + ": " + error.message);
 
-          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

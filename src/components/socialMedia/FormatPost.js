@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
-import { encodeURL, toTitleCase, LogError } from "../../utilities/ApplicationFunctions";
+import { encodeURL, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const FormatPost = () => {
 

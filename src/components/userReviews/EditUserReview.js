@@ -5,7 +5,7 @@ import { PencilSquare, Plus } from 'react-bootstrap-icons';
 import { Rating } from "@material-ui/lab/";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 import { updateStateTitleRating } from "../../app/titlesSlice";
 import { updateStateChecklist } from "../../app/userSlice";
@@ -455,7 +455,7 @@ const EditUserReview = (props) => {
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -752,7 +752,7 @@ const EditUserReview = (props) => {
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -896,7 +896,7 @@ const EditUserReview = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 

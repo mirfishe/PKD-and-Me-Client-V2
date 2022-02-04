@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "../../utilities/SharedFunctions";
-import { encodeURL, LogError } from "../../utilities/ApplicationFunctions";
+import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../app/categoriesSlice";
 import { loadArrayEditions, setEditionsDataOffline } from "../../app/editionsSlice";
@@ -190,7 +190,7 @@ function LoadBibliographyData() {
         // dispatch(setUserReviewsRatingsDataOffline(true));
         // fetchLocalDataUserReviewsRatings(titleData);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -321,7 +321,7 @@ function LoadBibliographyData() {
         dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -384,7 +384,7 @@ function LoadBibliographyData() {
         // dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -447,7 +447,7 @@ function LoadBibliographyData() {
         dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -510,7 +510,7 @@ function LoadBibliographyData() {
         dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -569,7 +569,7 @@ function LoadBibliographyData() {
         dispatch(setCategoriesDataOffline(true));
         // loadDataStore(CategoryData, "categories");
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -628,7 +628,7 @@ function LoadBibliographyData() {
         dispatch(setMediaDataOffline(true));
         // loadDataStore(MediaData, "media");
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -687,7 +687,7 @@ function LoadBibliographyData() {
         dispatch(setTitlesDataOffline(true));
         // loadDataStore(TitleData, "titles");
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -746,7 +746,7 @@ function LoadBibliographyData() {
         dispatch(setEditionsDataOffline(true));
         // loadDataStore(EditionData, "editions");
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

@@ -5,7 +5,7 @@ import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "rea
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
-import { encodeURL, convertBitTrueFalse, LogError } from "../../utilities/ApplicationFunctions";
+import { encodeURL, convertBitTrueFalse, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {
 
@@ -91,7 +91,7 @@ const FromTheHomeopape = (props) => {
 
         setErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

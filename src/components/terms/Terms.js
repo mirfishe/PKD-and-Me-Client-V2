@@ -5,7 +5,7 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
+import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import TitleCard from "../titles/TitleCard";
 
@@ -90,7 +90,7 @@ const Terms = (props) => {
 
         setErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -146,7 +146,7 @@ const Terms = (props) => {
 
         setErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

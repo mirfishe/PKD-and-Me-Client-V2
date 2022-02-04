@@ -442,8 +442,8 @@ export const convertBitTrueFalse = (records) => {
 };
 
 
-export const Log = (baseURL, logObject) => {
-  // console.log(componentName, getDateTime(), "Log logObject", logObject);
+export const addLog = (baseURL, logObject) => {
+  // console.log(componentName, getDateTime(), "addLog logObject", logObject);
 
   // const dispatch = useDispatch();
 
@@ -463,7 +463,7 @@ export const Log = (baseURL, logObject) => {
     body: JSON.stringify({ recordObject: logObject })
   })
     .then(response => {
-      // console.log(componentName, getDateTime(), "Log response", response);
+      // console.log(componentName, getDateTime(), "addLog response", response);
 
       if (!response.ok) {
 
@@ -477,19 +477,19 @@ export const Log = (baseURL, logObject) => {
 
     })
     .then(results => {
-      // console.log(componentName, getDateTime(), "Log results", results);
+      // console.log(componentName, getDateTime(), "addLog results", results);
 
       data = results;
 
     })
     .catch((error) => {
-      // console.error(componentName, getDateTime(), "Log error", error);
-      // console.error(componentName, getDateTime(), "Log error.name", error.name);
-      // console.error(componentName, getDateTime(), "Log error.message", error.message);
-      // console.error(componentName, getDateTime(), "Log error.stack", error.stack);
+      // console.error(componentName, getDateTime(), "addLog error", error);
+      // console.error(componentName, getDateTime(), "addLog error.name", error.name);
+      // console.error(componentName, getDateTime(), "addLog error.message", error.message);
+      // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
       // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
 
-      let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, logObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+      addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, logObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
     });
 
@@ -498,8 +498,8 @@ export const Log = (baseURL, logObject) => {
 };
 
 
-export const LogError = (baseURL, operation, componentName, dataObject, errorObject) => {
-  // console.log(componentName, getDateTime(), "LogError errorObject", errorObject);
+export const addErrorLog = (baseURL, operation, componentName, dataObject, errorObject) => {
+  // console.log(componentName, getDateTime(), "addErrorLog errorObject", errorObject);
 
   // const dispatch = useDispatch();
 
@@ -522,7 +522,7 @@ export const LogError = (baseURL, operation, componentName, dataObject, errorObj
     body: JSON.stringify({ recordObject: recordObject })
   })
     .then(response => {
-      // console.log(componentName, getDateTime(), "LogError response", response);
+      // console.log(componentName, getDateTime(), "addErrorLog response", response);
 
       if (!response.ok) {
 
@@ -544,13 +544,13 @@ export const LogError = (baseURL, operation, componentName, dataObject, errorObj
 
     })
     .then(results => {
-      // console.log(componentName, getDateTime(), "LogError results", results);
+      // console.log(componentName, getDateTime(), "addErrorLog results", results);
 
     })
     .catch((error) => {
-      // console.error(componentName, getDateTime(), "LogError error", error);
-      // console.error(componentName, getDateTime(), "LogError error.name", error.name);
-      // console.error(componentName, getDateTime(), "LogError error.message", error.message);
+      // console.error(componentName, getDateTime(), "addErrorLog error", error);
+      // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
+      // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
       // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
     });
 

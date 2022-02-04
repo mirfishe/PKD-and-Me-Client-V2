@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Inp
 import { Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, formatTrim } from "../../utilities/SharedFunctions";
-import { encodeURL, LogError } from "../../utilities/ApplicationFunctions";
+import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateMedia } from "../../app/mediaSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
@@ -192,7 +192,7 @@ const EditMedia = (props) => {
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 

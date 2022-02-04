@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings } from "../../app/applicationSettingsSlice";
 
 function LoadApplicationSettings() {
@@ -305,7 +305,7 @@ function LoadApplicationSettings() {
         // console.error(componentName, getDateTime(), "getApplicationSettings error.name", error.name);
         // console.error(componentName, getDateTime(), "getApplicationSettings error.message", error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "./utilities/SharedFunctions";
-import { LogError } from "./utilities/ApplicationFunctions";
+import { addErrorLog } from "./utilities/ApplicationFunctions";
 import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
@@ -380,7 +380,7 @@ function App() {
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -515,7 +515,7 @@ function App() {
 
           // addErrorMessage(error.name + ": " + error.message);
 
-          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -590,7 +590,7 @@ function App() {
 
           // addErrorMessage(error.name + ": " + error.message);
 
-          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

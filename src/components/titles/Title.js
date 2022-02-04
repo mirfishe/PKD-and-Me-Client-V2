@@ -7,7 +7,7 @@ import { Rating } from "@material-ui/lab/";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayDate, displayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, LogError } from "../../utilities/ApplicationFunctions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
 import EditTitle from "./EditTitle";
@@ -315,7 +315,7 @@ const Title = (props) => {
   //             // console.error(componentName, getDateTime(), "getTitleRating error.message", error.message);
   //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
 
-  //            let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+  //            addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //         });
 
@@ -479,7 +479,7 @@ const Title = (props) => {
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

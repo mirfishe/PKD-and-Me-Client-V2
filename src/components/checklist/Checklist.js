@@ -5,7 +5,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row,
 import { Drawer } from "@material-ui/core";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayYear } from "../../utilities/SharedFunctions";
-import { encodeURL, decodeURL, LogError } from "../../utilities/ApplicationFunctions";
+import { encodeURL, decodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
@@ -325,7 +325,7 @@ const Checklist = (props) => {
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

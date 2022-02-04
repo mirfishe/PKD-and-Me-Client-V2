@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../app/userReviewsSlice";
 
 function LoadUserReviews() {
@@ -97,7 +97,7 @@ function LoadUserReviews() {
         // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
         // fetchLocalDataUserReviews();
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

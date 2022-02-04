@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup
 import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
 import { isEmpty, displayValue, getDateTime, formatTrim } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Login = (props) => {
@@ -242,7 +242,7 @@ const Login = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -318,7 +318,7 @@ const Login = (props) => {
 
           // addErrorMessage(error.name + ": " + error.message);
 
-          // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
