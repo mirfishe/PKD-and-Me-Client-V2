@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../app/userReviewsSlice";
 
 function LoadUserReviews() {
@@ -16,7 +16,7 @@ function LoadUserReviews() {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const userReviewsLoaded = useSelector(state => state.userReviews.userReviewsLoaded);
@@ -28,11 +28,11 @@ function LoadUserReviews() {
   const loadDataStore = (data, source) => {
 
     if (source === "userReview") {
-      // console.log(componentName, GetDateTime(), "loadDataStore data", data);
+      // console.log(componentName, getDateTime(), "loadDataStore data", data);
 
       dispatch(loadArrayUserReviews(data));
       // localStorage.setItem("arrayUserReviews", data);
-      // localStorage.setItem("lastDatabaseRetrievalUserReviews", GetDateTime());
+      // localStorage.setItem("lastDatabaseRetrievalUserReviews", getDateTime());
 
     };
 
@@ -40,7 +40,7 @@ function LoadUserReviews() {
 
 
   const getUserReviews = () => {
-    // console.log(componentName, GetDateTime(), "getUserReviews baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "getUserReviews baseURL", baseURL);
 
     setUserReviewMessage("");
     setErrUserReviewMessage("");
@@ -49,7 +49,7 @@ function LoadUserReviews() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getUserReviews response", response);
+        // console.log(componentName, getDateTime(), "getUserReviews response", response);
 
         if (!response.ok) {
 
@@ -68,17 +68,17 @@ function LoadUserReviews() {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getUserReviews results", results);
+        // console.log(componentName, getDateTime(), "getUserReviews results", results);
 
         // setUserReviewMessage(results.message);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           loadDataStore(results.records, "userReview");
 
           // } else {
 
-          //   console.log(componentName, GetDateTime(), "getUserReviews error", results.message);
+          //   console.log(componentName, getDateTime(), "getUserReviews error", results.message);
           //   // setErrUserReviewMessage(results.message);
           //   dispatch(setUserReviewsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
@@ -88,16 +88,16 @@ function LoadUserReviews() {
 
       })
       .catch((error) => {
-        console.error(componentName, GetDateTime(), "getUserReviews error", error);
-        // console.error(componentName, GetDateTime(), "getUserReviews error.name", error.name);
-        // console.error(componentName, GetDateTime(), "getUserReviews error.message", error.message);
+        console.error(componentName, getDateTime(), "getUserReviews error", error);
+        // console.error(componentName, getDateTime(), "getUserReviews error.name", error.name);
+        // console.error(componentName, getDateTime(), "getUserReviews error.message", error.message);
 
         // setErrUserReviewMessage(error.name + ": " + error.message);
         // dispatch(setUserReviewsDataOffline(true));
         // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
         // fetchLocalDataUserReviews();
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -120,8 +120,8 @@ function LoadUserReviews() {
   return (
     <Row className="text-center">
 
-      {IsEmpty(userReviewMessage) === false ? <Alert color="info">{userReviewMessage}</Alert> : null}
-      {IsEmpty(errUserReviewMessage) === false ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
+      {isEmpty(userReviewMessage) === false ? <Alert color="info">{userReviewMessage}</Alert> : null}
+      {isEmpty(errUserReviewMessage) === false ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
 
     </Row>
   );

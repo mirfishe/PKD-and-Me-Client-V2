@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, FormatTrim, FormatToString } from "../../utilities/SharedFunctions";
-import { createTitleURL, createImageName, LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "../../utilities/SharedFunctions";
+import { createTitleURL, createImageName, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
@@ -18,15 +18,15 @@ const EditTitle = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -35,11 +35,11 @@ const EditTitle = (props) => {
   const [categoryResultsFound, setCategoryResultsFound] = useState(null);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, GetDateTime(), "categoryListState", categoryListState);
+  // console.log(componentName, getDateTime(), "categoryListState", categoryListState);
 
   const categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
   // const categoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
-  // console.log(componentName, GetDateTime(), "categoryList", categoryList);
+  // console.log(componentName, getDateTime(), "categoryList", categoryList);
 
   // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
   // * Sort the list alphabetically instead of by sortID
@@ -48,13 +48,13 @@ const EditTitle = (props) => {
   // ! This code is causing React to have too many re-renders in this location
   // if (categoryList.length < 1) {
 
-  //     console.log(componentName, GetDateTime(), "categoryList is empty", categoryList.length);
+  //     console.log(componentName, getDateTime(), "categoryList is empty", categoryList.length);
   //     setErrCategoryMessage("categoryList is empty", categoryList.length);
   //     setCategoryResultsFound(false);
 
   // } else {
 
-  //     console.log(componentName, GetDateTime(), "categoryList.length", categoryList.length);
+  //     console.log(componentName, getDateTime(), "categoryList.length", categoryList.length);
   //     setCategoryMessage("categoryList.length", categoryList.length);
   //     setCategoryResultsFound(true);
 
@@ -62,17 +62,17 @@ const EditTitle = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect categoryList", categoryList);
+    // console.log(componentName, getDateTime(), "useEffect categoryList", categoryList);
 
     if (categoryList.length < 1) {
 
-      console.log(componentName, GetDateTime(), "categoryList is empty", categoryList.length);
+      console.log(componentName, getDateTime(), "categoryList is empty", categoryList.length);
       setErrCategoryMessage("categoryList is empty", categoryList.length);
       setCategoryResultsFound(false);
 
     } else {
 
-      // console.log(componentName, GetDateTime(), "useEffect categoryList.length", categoryList.length);
+      // console.log(componentName, getDateTime(), "useEffect categoryList.length", categoryList.length);
       // setCategoryMessage("categoryList.length", categoryList.length);
       setCategoryResultsFound(true);
 
@@ -135,34 +135,34 @@ const EditTitle = (props) => {
   const [active, setActive] = useState(null);
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, GetDateTime(), "editionListState", editionListState);
+  // console.log(componentName, getDateTime(), "editionListState", editionListState);
 
   let editionList = [];
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, GetDateTime(), "titleListState", titleListState);
+  // console.log(componentName, getDateTime(), "titleListState", titleListState);
 
   // const urlLookup = useSelector(state => state.urls.arrayURLs);
 
   const linkItem = useSelector(state => state.urls.linkItem);
-  // console.log(componentName, GetDateTime(), "linkItem", linkItem);
+  // console.log(componentName, getDateTime(), "linkItem", linkItem);
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect titleListState", titleListState);
+    // console.log(componentName, getDateTime(), "useEffect titleListState", titleListState);
 
-    if (IsEmpty(props.titleID) === false) {
+    if (isEmpty(props.titleID) === false) {
 
       let titleObject = titleListState.find(title => title.titleID === props.titleID);
-      // console.log(componentName, GetDateTime(), "useEffect titleObject", titleObject);
-      // console.log(componentName, GetDateTime(), "useEffect typeof titleObject", typeof titleObject);
+      // console.log(componentName, getDateTime(), "useEffect titleObject", titleObject);
+      // console.log(componentName, getDateTime(), "useEffect typeof titleObject", typeof titleObject);
 
       // setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
-      // console.log(componentName, GetDateTime(), "useEffect titleItemIndex", titleItemIndex);
+      // console.log(componentName, getDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
       editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
 
-      if (IsEmpty(titleObject) === false) {
+      if (isEmpty(titleObject) === false) {
 
         setTitleItem(titleObject);
 
@@ -191,9 +191,9 @@ const EditTitle = (props) => {
         setTxtSubmissionDate(titleObject.submissionDate);
         setTxtPublicationDate(titleObject.publicationDate);
 
-        if (IsEmpty(titleObject.writtenDate) === false) {
+        if (isEmpty(titleObject.writtenDate) === false) {
 
-          setTxtWrittenDate(FormatToString(titleObject.writtenDate).substring(0, 10));
+          setTxtWrittenDate(formatToString(titleObject.writtenDate).substring(0, 10));
 
         } else {
 
@@ -201,9 +201,9 @@ const EditTitle = (props) => {
 
         };
 
-        if (IsEmpty(titleObject.submissionDate) === false) {
+        if (isEmpty(titleObject.submissionDate) === false) {
 
-          setTxtSubmissionDate(FormatToString(titleObject.submissionDate).substring(0, 10));
+          setTxtSubmissionDate(formatToString(titleObject.submissionDate).substring(0, 10));
 
         } else {
 
@@ -211,9 +211,9 @@ const EditTitle = (props) => {
 
         };
 
-        if (IsEmpty(titleObject.publicationDate) === false) {
+        if (isEmpty(titleObject.publicationDate) === false) {
 
-          setTxtPublicationDate(FormatToString(titleObject.publicationDate).substring(0, 10));
+          setTxtPublicationDate(formatToString(titleObject.publicationDate).substring(0, 10));
 
         } else {
 
@@ -234,7 +234,7 @@ const EditTitle = (props) => {
 
 
   const addTitle = () => {
-    // console.log(componentName, GetDateTime(), "addTitle baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "addTitle baseURL", baseURL);
 
     clearMessages();
     setTitleRecordAdded(null);
@@ -262,161 +262,161 @@ const EditTitle = (props) => {
     let categoryIDValidated = false;
     let formValidated = false;
 
-    if (IsEmpty(txtTitleName) === false) {
+    if (isEmpty(txtTitleName) === false) {
 
-      if (FormatTrim(txtTitleName).length > 0) {
+      if (formatTrim(txtTitleName).length > 0) {
 
         titleNameValidated = true;
         setErrTitleName("");
-        // console.log(componentName, GetDateTime(), "addTitle Valid TitleName");
-        // console.log(componentName, GetDateTime(), "addTitle titleNameValidated true", titleNameValidated);
+        // console.log(componentName, getDateTime(), "addTitle Valid TitleName");
+        // console.log(componentName, getDateTime(), "addTitle titleNameValidated true", titleNameValidated);
 
       } else {
 
         titleNameValidated = false;
         setErrTitleName("Please enter a title.");
-        // console.log(componentName, GetDateTime(), "addTitle Invalid TitleName");
-        // console.log(componentName, GetDateTime(), "addTitle titleNameValidated false", titleNameValidated);
+        // console.log(componentName, getDateTime(), "addTitle Invalid TitleName");
+        // console.log(componentName, getDateTime(), "addTitle titleNameValidated false", titleNameValidated);
 
       };
 
     };
 
-    if (IsEmpty(ddCategoryID) === false) {
+    if (isEmpty(ddCategoryID) === false) {
 
       categoryIDValidated = true;
       setErrCategoryID("");
-      // console.log(componentName, GetDateTime(), "addTitle Valid CategoryID");
-      // console.log(componentName, GetDateTime(), "addTitle categoryIDValidated true", categoryIDValidated);
+      // console.log(componentName, getDateTime(), "addTitle Valid CategoryID");
+      // console.log(componentName, getDateTime(), "addTitle categoryIDValidated true", categoryIDValidated);
 
     } else {
 
       categoryIDValidated = false;
       setErrCategoryID("Please select a category.");
-      // console.log(componentName, GetDateTime(), "addTitle Invalid CategoryID");
-      // console.log(componentName, GetDateTime(), "addTitle categoryIDValidated false", categoryIDValidated);
+      // console.log(componentName, getDateTime(), "addTitle Invalid CategoryID");
+      // console.log(componentName, getDateTime(), "addTitle categoryIDValidated false", categoryIDValidated);
 
     };
 
     if (titleNameValidated === true && categoryIDValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, GetDateTime(), "addTitle Valid Form");
-      // console.log(componentName, GetDateTime(), "addTitle formValidated true", formValidated);
+      // console.log(componentName, getDateTime(), "addTitle Valid Form");
+      // console.log(componentName, getDateTime(), "addTitle formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, GetDateTime(), "addTitle Invalid Form");
-      // console.log(componentName, GetDateTime(), "addTitle formValidated false", formValidated);
+      // console.log(componentName, getDateTime(), "addTitle Invalid Form");
+      // console.log(componentName, getDateTime(), "addTitle formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, GetDateTime(), "addTitle titleNameValidated", titleNameValidated);
-    // console.log(componentName, GetDateTime(), "addTitle categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, GetDateTime(), "addTitle formValidated", formValidated);
+    // console.log(componentName, getDateTime(), "addTitle titleNameValidated", titleNameValidated);
+    // console.log(componentName, getDateTime(), "addTitle categoryIDValidated", categoryIDValidated);
+    // console.log(componentName, getDateTime(), "addTitle formValidated", formValidated);
 
     if (formValidated === true) {
 
-      if (IsEmpty(txtTitleName) === false) {
+      if (isEmpty(txtTitleName) === false) {
 
-        // console.log(componentName, GetDateTime(), "addEdition typeof ddCategoryID", typeof ddCategoryID);
+        // console.log(componentName, getDateTime(), "addEdition typeof ddCategoryID", typeof ddCategoryID);
 
-        // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
+        // console.log(componentName, getDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
         let recordObject = {
-          titleName: FormatTrim(txtTitleName),
-          // authorFirstName: FormatTrim(txtAuthorFirstName),
-          // authorLastName: FormatTrim(txtAuthorLastName),
-          // imageName: FormatTrim(txtImageName),
+          titleName: formatTrim(txtTitleName),
+          // authorFirstName: formatTrim(txtAuthorFirstName),
+          // authorLastName: formatTrim(txtAuthorLastName),
+          // imageName: formatTrim(txtImageName),
           categoryID: parseInt(ddCategoryID)
-          // shortDescription: FormatTrim(txtShortDescription),
-          // urlPKDWeb: FormatTrim(txtUrlPKDWeb)
+          // shortDescription: formatTrim(txtShortDescription),
+          // urlPKDWeb: formatTrim(txtUrlPKDWeb)
         };
 
         // * If the user doesn't enter a title URL, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtTitleURL) === false) {
+        if (isEmpty(txtTitleURL) === false) {
 
-          if (FormatTrim(txtTitleURL).length !== 0) {
+          if (formatTrim(txtTitleURL).length !== 0) {
 
-            Object.assign(recordObject, { titleURL: FormatTrim(txtTitleURL) });
+            Object.assign(recordObject, { titleURL: formatTrim(txtTitleURL) });
 
           };
 
         };
 
         // * If the user doesn't enter an author first name, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtAuthorFirstName) === false) {
+        if (isEmpty(txtAuthorFirstName) === false) {
 
-          if (FormatTrim(txtAuthorFirstName).length !== 0) {
+          if (formatTrim(txtAuthorFirstName).length !== 0) {
 
-            Object.assign(recordObject, { authorFirstName: FormatTrim(txtAuthorFirstName) });
+            Object.assign(recordObject, { authorFirstName: formatTrim(txtAuthorFirstName) });
 
           };
 
         };
 
         // * If the user doesn't enter an author last name, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtAuthorLastName) === false) {
+        if (isEmpty(txtAuthorLastName) === false) {
 
-          if (FormatTrim(txtAuthorLastName).length !== 0) {
+          if (formatTrim(txtAuthorLastName).length !== 0) {
 
-            Object.assign(recordObject, { authorLastName: FormatTrim(txtAuthorLastName) });
+            Object.assign(recordObject, { authorLastName: formatTrim(txtAuthorLastName) });
 
           };
 
         };
 
         // * If the user doesn't enter an image name then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtImageName) === false) {
+        if (isEmpty(txtImageName) === false) {
 
-          if (FormatTrim(txtImageName).length !== 0) {
+          if (formatTrim(txtImageName).length !== 0) {
 
-            Object.assign(recordObject, { imageName: FormatTrim(txtImageName) });
+            Object.assign(recordObject, { imageName: formatTrim(txtImageName) });
 
           };
 
         };
 
         // * If the user doesn't enter a manuscript title, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtManuscriptTitle) === false) {
+        if (isEmpty(txtManuscriptTitle) === false) {
 
-          if (FormatTrim(txtManuscriptTitle).length !== 0) {
+          if (formatTrim(txtManuscriptTitle).length !== 0) {
 
-            Object.assign(recordObject, { manuscriptTitle: FormatTrim(txtManuscriptTitle) });
+            Object.assign(recordObject, { manuscriptTitle: formatTrim(txtManuscriptTitle) });
 
           };
 
         };
 
         // * If the user doesn't enter a written date, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtWrittenDate) === false) {
+        if (isEmpty(txtWrittenDate) === false) {
 
-          if (FormatTrim(txtWrittenDate).length !== 0) {
+          if (formatTrim(txtWrittenDate).length !== 0) {
 
-            Object.assign(recordObject, { writtenDate: FormatTrim(txtWrittenDate) });
+            Object.assign(recordObject, { writtenDate: formatTrim(txtWrittenDate) });
 
           };
 
         };
 
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtSubmissionDate) === false) {
+        if (isEmpty(txtSubmissionDate) === false) {
 
-          if (FormatTrim(txtSubmissionDate).length !== 0) {
+          if (formatTrim(txtSubmissionDate).length !== 0) {
 
-            Object.assign(recordObject, { submissionDate: FormatTrim(txtSubmissionDate) });
+            Object.assign(recordObject, { submissionDate: formatTrim(txtSubmissionDate) });
 
           };
 
         };
 
         // * If the user doesn't enter a publication date, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtPublicationDate) === false) {
+        if (isEmpty(txtPublicationDate) === false) {
 
-          if (FormatTrim(txtPublicationDate).length !== 0) {
+          if (formatTrim(txtPublicationDate).length !== 0) {
 
-            Object.assign(recordObject, { publicationDate: FormatTrim(txtPublicationDate) });
+            Object.assign(recordObject, { publicationDate: formatTrim(txtPublicationDate) });
 
           };
 
@@ -424,33 +424,33 @@ const EditTitle = (props) => {
 
 
         // * If the user doesn't enter a short description, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtShortDescription) === false) {
+        if (isEmpty(txtShortDescription) === false) {
 
-          if (FormatTrim(txtShortDescription).length !== 0) {
+          if (formatTrim(txtShortDescription).length !== 0) {
 
-            Object.assign(recordObject, { shortDescription: FormatTrim(txtShortDescription) });
+            Object.assign(recordObject, { shortDescription: formatTrim(txtShortDescription) });
 
           };
 
         };
 
         // * If the user doesn't enter a url for PKDWeb, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtUrlPKDWeb) === false) {
+        if (isEmpty(txtUrlPKDWeb) === false) {
 
-          if (FormatTrim(txtUrlPKDWeb).length !== 0) {
+          if (formatTrim(txtUrlPKDWeb).length !== 0) {
 
-            Object.assign(recordObject, { urlPKDWeb: FormatTrim(txtUrlPKDWeb) });
+            Object.assign(recordObject, { urlPKDWeb: formatTrim(txtUrlPKDWeb) });
 
           };
 
         };
 
-        // console.log(componentName, GetDateTime(), "addTitle recordObject", recordObject);
+        // console.log(componentName, getDateTime(), "addTitle recordObject", recordObject);
 
         let url = baseURL + "titles/";
-        // console.log(componentName, GetDateTime(), "addTitle url", url);
+        // console.log(componentName, getDateTime(), "addTitle url", url);
 
-        if (IsEmpty(sessionToken) === false) {
+        if (isEmpty(sessionToken) === false) {
 
           fetch(url, {
             method: "POST",
@@ -461,7 +461,7 @@ const EditTitle = (props) => {
             body: JSON.stringify({ title: recordObject })
           })
             .then(response => {
-              // console.log(componentName, GetDateTime(), "addTitle response", response);
+              // console.log(componentName, getDateTime(), "addTitle response", response);
 
               // if (!response.ok) {
 
@@ -483,7 +483,7 @@ const EditTitle = (props) => {
 
             })
             .then(data => {
-              // console.log(componentName, GetDateTime(), "addTitle data", data);
+              // console.log(componentName, getDateTime(), "addTitle data", data);
 
               setTitleRecordAdded(data.transactionSuccess);
               addMessage(data.message);
@@ -511,8 +511,8 @@ const EditTitle = (props) => {
                 // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
                 categoryItem = categoryItem[0];
 
-                // console.log(componentName, GetDateTime(), "addTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
-                // console.log(componentName, GetDateTime(), "addTitle categoryItem", categoryItem);
+                // console.log(componentName, getDateTime(), "addTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
+                // console.log(componentName, getDateTime(), "addTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
                 dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
@@ -530,13 +530,13 @@ const EditTitle = (props) => {
 
             })
             .catch((error) => {
-              console.error(componentName, GetDateTime(), "addTitle error", error);
-              // console.error(componentName, GetDateTime(), "addTitle error.name", error.name);
-              // console.error(componentName, GetDateTime(), "addTitle error.message", error.message);
+              console.error(componentName, getDateTime(), "addTitle error", error);
+              // console.error(componentName, getDateTime(), "addTitle error.name", error.name);
+              // console.error(componentName, getDateTime(), "addTitle error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -550,17 +550,17 @@ const EditTitle = (props) => {
 
   // ! This code is causing React to have too many re-renders in this location. -- 03/06/2021 MF
   // const getCategoryIDFromCategoryName = (categoryName) => {
-  //   // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryName", categoryName);
+  //   // console.log(componentName, getDateTime(), "getCategoryIDFromCategoryName categoryName", categoryName);
 
-  //   if (IsEmpty(categoryName) === false) {
-  //     // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryName", categoryName);
+  //   if (isEmpty(categoryName) === false) {
+  //     // console.log(componentName, getDateTime(), "getCategoryIDFromCategoryName categoryName", categoryName);
 
   //     // * Could use a find here also. -- 03/06/2021 MF
   //     const categoryProps = categoryList.filter(category => category.category === categoryName);
-  //     // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryProps", categoryProps);
+  //     // console.log(componentName, getDateTime(), "getCategoryIDFromCategoryName categoryProps", categoryProps);
 
   //     if (!isNaN(categoryProps[0].categoryID)) {
-  //       // console.log(componentName, GetDateTime(), "getCategoryIDFromCategoryName categoryProps[0].categoryID", categoryProps[0].categoryID);
+  //       // console.log(componentName, getDateTime(), "getCategoryIDFromCategoryName categoryProps[0].categoryID", categoryProps[0].categoryID);
 
   //       // setDdCategoryID(categoryProps[0].categoryID);
 
@@ -584,10 +584,10 @@ const EditTitle = (props) => {
 
 
   const updateTitle = (deleteTitle) => {
-    // console.log(componentName, GetDateTime(), "updateTitle deleteTitle", deleteTitle);
-    // console.log(componentName, GetDateTime(), "updateTitle baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "updateTitle deleteTitle", deleteTitle);
+    // console.log(componentName, getDateTime(), "updateTitle baseURL", baseURL);
 
-    // console.log(componentName, GetDateTime(), "titleItemIndex", titleItemIndex);
+    // console.log(componentName, getDateTime(), "titleItemIndex", titleItemIndex);
 
     clearMessages();
     setTitleRecordDeleted(null);
@@ -615,198 +615,198 @@ const EditTitle = (props) => {
     let categoryIDValidated = false;
     let formValidated = false;
 
-    if (IsEmpty(txtTitleName) === false) {
+    if (isEmpty(txtTitleName) === false) {
 
-      if (FormatTrim(txtTitleName).length > 0) {
+      if (formatTrim(txtTitleName).length > 0) {
 
         titleNameValidated = true;
         setErrTitleName("");
-        // console.log(componentName, GetDateTime(), "updateTitle Valid TitleName");
-        // console.log(componentName, GetDateTime(), "updateTitle titleNameValidated true", titleNameValidated);
+        // console.log(componentName, getDateTime(), "updateTitle Valid TitleName");
+        // console.log(componentName, getDateTime(), "updateTitle titleNameValidated true", titleNameValidated);
 
       } else {
 
         titleNameValidated = false;
         setErrTitleName("Please enter a title.");
-        // console.log(componentName, GetDateTime(), "updateTitle Invalid TitleName");
-        // console.log(componentName, GetDateTime(), "updateTitle titleNameValidated false", titleNameValidated);
+        // console.log(componentName, getDateTime(), "updateTitle Invalid TitleName");
+        // console.log(componentName, getDateTime(), "updateTitle titleNameValidated false", titleNameValidated);
 
       };
 
     };
 
-    if (IsEmpty(ddCategoryID) === false) {
+    if (isEmpty(ddCategoryID) === false) {
 
       categoryIDValidated = true;
       setErrCategoryID("");
-      // console.log(componentName, GetDateTime(), "updateTitle Valid CategoryID");
-      // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated true", categoryIDValidated);
+      // console.log(componentName, getDateTime(), "updateTitle Valid CategoryID");
+      // console.log(componentName, getDateTime(), "updateTitle categoryIDValidated true", categoryIDValidated);
 
     } else {
 
       categoryIDValidated = false;
       setErrCategoryID("Please select a category.");
-      // console.log(componentName, GetDateTime(), "updateTitle Invalid CategoryID");
-      // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated false", categoryIDValidated);
+      // console.log(componentName, getDateTime(), "updateTitle Invalid CategoryID");
+      // console.log(componentName, getDateTime(), "updateTitle categoryIDValidated false", categoryIDValidated);
 
     };
 
     if (titleNameValidated === true && categoryIDValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, GetDateTime(), "updateTitle Valid Form");
-      // console.log(componentName, GetDateTime(), "updateTitle formValidated true", formValidated);
+      // console.log(componentName, getDateTime(), "updateTitle Valid Form");
+      // console.log(componentName, getDateTime(), "updateTitle formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, GetDateTime(), "updateTitle Invalid Form");
-      // console.log(componentName, GetDateTime(), "updateTitle formValidated false", formValidated);
+      // console.log(componentName, getDateTime(), "updateTitle Invalid Form");
+      // console.log(componentName, getDateTime(), "updateTitle formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, GetDateTime(), "updateTitle titleNameValidated", titleNameValidated);
-    // console.log(componentName, GetDateTime(), "updateTitle categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, GetDateTime(), "updateTitle formValidated", formValidated);
+    // console.log(componentName, getDateTime(), "updateTitle titleNameValidated", titleNameValidated);
+    // console.log(componentName, getDateTime(), "updateTitle categoryIDValidated", categoryIDValidated);
+    // console.log(componentName, getDateTime(), "updateTitle formValidated", formValidated);
 
     if (formValidated === true) {
 
-      if (IsEmpty(txtTitleName) === false) {
+      if (isEmpty(txtTitleName) === false) {
 
-        // console.log(componentName, GetDateTime(), "addEdition typeof ddCategoryID", typeof ddCategoryID);
+        // console.log(componentName, getDateTime(), "addEdition typeof ddCategoryID", typeof ddCategoryID);
 
-        // console.log(componentName, GetDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
+        // console.log(componentName, getDateTime(), "addEdition parseInt(ddCategoryID)", parseInt(ddCategoryID));
 
         let recordObject = {
-          titleName: FormatTrim(txtTitleName),
-          // authorFirstName: FormatTrim(txtAuthorFirstName),
-          // authorLastName: FormatTrim(txtAuthorLastName),
-          // imageName: FormatTrim(txtImageName),
+          titleName: formatTrim(txtTitleName),
+          // authorFirstName: formatTrim(txtAuthorFirstName),
+          // authorLastName: formatTrim(txtAuthorLastName),
+          // imageName: formatTrim(txtImageName),
           categoryID: parseInt(ddCategoryID),
-          // shortDescription: FormatTrim(txtShortDescription),
-          // urlPKDWeb: FormatTrim(txtUrlPKDWeb),
+          // shortDescription: formatTrim(txtShortDescription),
+          // urlPKDWeb: formatTrim(txtUrlPKDWeb),
           active: !deleteTitle
         };
 
         // * If the user doesn't enter a title URL, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtTitleURL) === false) {
+        if (isEmpty(txtTitleURL) === false) {
 
-          if (FormatTrim(txtTitleURL).length !== 0) {
+          if (formatTrim(txtTitleURL).length !== 0) {
 
-            Object.assign(recordObject, { titleURL: FormatTrim(txtTitleURL) });
+            Object.assign(recordObject, { titleURL: formatTrim(txtTitleURL) });
 
           };
 
         };
 
         // * If the user doesn't enter an author first name, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtAuthorFirstName) === false) {
+        if (isEmpty(txtAuthorFirstName) === false) {
 
-          if (FormatTrim(txtAuthorFirstName).length !== 0) {
+          if (formatTrim(txtAuthorFirstName).length !== 0) {
 
-            Object.assign(recordObject, { authorFirstName: FormatTrim(txtAuthorFirstName) });
+            Object.assign(recordObject, { authorFirstName: formatTrim(txtAuthorFirstName) });
 
           };
 
         };
 
         // * If the user doesn't enter an author last name, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtAuthorLastName) === false) {
+        if (isEmpty(txtAuthorLastName) === false) {
 
-          if (FormatTrim(txtAuthorLastName).length !== 0) {
+          if (formatTrim(txtAuthorLastName).length !== 0) {
 
-            Object.assign(recordObject, { authorLastName: FormatTrim(txtAuthorLastName) });
+            Object.assign(recordObject, { authorLastName: formatTrim(txtAuthorLastName) });
 
           };
 
         };
 
         // * If the user doesn't enter an image name then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtImageName) === false) {
+        if (isEmpty(txtImageName) === false) {
 
-          if (FormatTrim(txtImageName).length !== 0) {
+          if (formatTrim(txtImageName).length !== 0) {
 
-            Object.assign(recordObject, { imageName: FormatTrim(txtImageName) });
+            Object.assign(recordObject, { imageName: formatTrim(txtImageName) });
 
           };
 
         };
 
         // * If the user doesn't enter a manuscript title, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtManuscriptTitle) === false) {
+        if (isEmpty(txtManuscriptTitle) === false) {
 
-          if (FormatTrim(txtManuscriptTitle).length !== 0) {
+          if (formatTrim(txtManuscriptTitle).length !== 0) {
 
-            Object.assign(recordObject, { manuscriptTitle: FormatTrim(txtManuscriptTitle) });
+            Object.assign(recordObject, { manuscriptTitle: formatTrim(txtManuscriptTitle) });
 
           };
 
         };
 
         // * If the user doesn't enter a written date, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtWrittenDate) === false) {
+        if (isEmpty(txtWrittenDate) === false) {
 
-          if (FormatTrim(txtWrittenDate).length !== 0) {
+          if (formatTrim(txtWrittenDate).length !== 0) {
 
-            Object.assign(recordObject, { writtenDate: FormatTrim(txtWrittenDate) });
+            Object.assign(recordObject, { writtenDate: formatTrim(txtWrittenDate) });
 
           };
 
         };
 
         // * If the user doesn't enter a submission date, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtSubmissionDate) === false) {
+        if (isEmpty(txtSubmissionDate) === false) {
 
-          if (FormatTrim(txtSubmissionDate).length !== 0) {
+          if (formatTrim(txtSubmissionDate).length !== 0) {
 
-            Object.assign(recordObject, { submissionDate: FormatTrim(txtSubmissionDate) });
+            Object.assign(recordObject, { submissionDate: formatTrim(txtSubmissionDate) });
 
           };
 
         };
 
         // * If the user doesn't enter a publication date, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtPublicationDate) === false) {
+        if (isEmpty(txtPublicationDate) === false) {
 
-          if (FormatTrim(txtPublicationDate).length !== 0) {
+          if (formatTrim(txtPublicationDate).length !== 0) {
 
-            Object.assign(recordObject, { publicationDate: FormatTrim(txtPublicationDate) });
+            Object.assign(recordObject, { publicationDate: formatTrim(txtPublicationDate) });
 
           };
 
         };
 
         // * If the user doesn't enter a short description, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtShortDescription) === false) {
+        if (isEmpty(txtShortDescription) === false) {
 
-          if (FormatTrim(txtShortDescription).length !== 0) {
+          if (formatTrim(txtShortDescription).length !== 0) {
 
-            Object.assign(recordObject, { shortDescription: FormatTrim(txtShortDescription) });
+            Object.assign(recordObject, { shortDescription: formatTrim(txtShortDescription) });
 
           };
 
         };
 
         // * If the user doesn't enter a url for PKDWeb, then it isn't added/updated. -- 03/06/2021 MF
-        if (IsEmpty(txtUrlPKDWeb) === false) {
+        if (isEmpty(txtUrlPKDWeb) === false) {
 
-          if (FormatTrim(txtUrlPKDWeb).length !== 0) {
+          if (formatTrim(txtUrlPKDWeb).length !== 0) {
 
-            Object.assign(recordObject, { urlPKDWeb: FormatTrim(txtUrlPKDWeb) });
+            Object.assign(recordObject, { urlPKDWeb: formatTrim(txtUrlPKDWeb) });
 
           };
 
         };
 
-        // console.log(componentName, GetDateTime(), "updateTitle recordObject", recordObject);
+        // console.log(componentName, getDateTime(), "updateTitle recordObject", recordObject);
 
         let url = baseURL + "titles/";
 
-        if (IsEmpty(props.titleID) === false && IsEmpty(sessionToken) === false) {
+        if (isEmpty(props.titleID) === false && isEmpty(sessionToken) === false) {
 
           url = url + props.titleID;
 
-          // console.log(componentName, GetDateTime(), "updateTitle url", url);
+          // console.log(componentName, getDateTime(), "updateTitle url", url);
 
           fetch(url, {
             method: "PUT",
@@ -817,7 +817,7 @@ const EditTitle = (props) => {
             body: JSON.stringify({ title: recordObject })
           })
             .then(response => {
-              // console.log(componentName, GetDateTime(), "updateTitle response", response);
+              // console.log(componentName, getDateTime(), "updateTitle response", response);
 
               // if (!response.ok) {
 
@@ -839,7 +839,7 @@ const EditTitle = (props) => {
 
             })
             .then(data => {
-              // console.log(componentName, GetDateTime(), "updateTitle data", data);
+              // console.log(componentName, getDateTime(), "updateTitle data", data);
 
               setTitleRecordUpdated(data.transactionSuccess);
               addMessage(data.message);
@@ -863,18 +863,18 @@ const EditTitle = (props) => {
                 // setUrlPKDWeb(data.records[0].urlPKDWeb);
                 setActive(data.records[0].active);
 
-                // console.log(componentName, GetDateTime(), "updateTitle categoryList", categoryList);
+                // console.log(componentName, getDateTime(), "updateTitle categoryList", categoryList);
 
                 let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
                 // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
                 categoryItem = categoryItem[0];
 
-                // console.log(componentName, GetDateTime(), "updateTitle data.records[0].categoryID", data.records[0].categoryID);
-                // console.log(componentName, GetDateTime(), "updateTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
-                // console.log(componentName, GetDateTime(), "updateTitle categoryItem", categoryItem);
+                // console.log(componentName, getDateTime(), "updateTitle data.records[0].categoryID", data.records[0].categoryID);
+                // console.log(componentName, getDateTime(), "updateTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
+                // console.log(componentName, getDateTime(), "updateTitle categoryItem", categoryItem);
 
                 // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: GetDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
 
                 // ? Update local storage also? -- 03/06/2021 MF
 
@@ -893,7 +893,7 @@ const EditTitle = (props) => {
                 };
 
                 // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
-                // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
+                // console.log(componentName, getDateTime(), "updateTitle urlListIndex", urlListIndex);
 
                 // * Update/Delete related urls in arrayURLs also. -- 03/06/2021 MF
                 if (data.records[0].active === false || data.records[0].active === 0) {
@@ -903,16 +903,16 @@ const EditTitle = (props) => {
 
                 } else {
 
-                  // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
-                  // console.log(componentName, GetDateTime(), "updateTitle data.records[0].titleURL", data.records[0].titleURL);
-                  // console.log(componentName, GetDateTime(), "updateTitle props.titleID", props.titleID);
-                  // console.log(componentName, GetDateTime(), "updateTitle data.records[0].categoryID", data.records[0].categoryID);
+                  // console.log(componentName, getDateTime(), "updateTitle urlListIndex", urlListIndex);
+                  // console.log(componentName, getDateTime(), "updateTitle data.records[0].titleURL", data.records[0].titleURL);
+                  // console.log(componentName, getDateTime(), "updateTitle props.titleID", props.titleID);
+                  // console.log(componentName, getDateTime(), "updateTitle data.records[0].categoryID", data.records[0].categoryID);
 
                   let categoryName = categoryList.find(category => category.categoryID === data.records[0].categoryID);
-                  // console.log(componentName, GetDateTime(), "updateTitle categoryName", categoryName);
-                  // console.log(componentName, GetDateTime(), "updateTitle categoryName.category", categoryName.category);
+                  // console.log(componentName, getDateTime(), "updateTitle categoryName", categoryName);
+                  // console.log(componentName, getDateTime(), "updateTitle categoryName.category", categoryName.category);
 
-                  // console.log(componentName, GetDateTime(), "updateTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
+                  // console.log(componentName, getDateTime(), "updateTitle typeof data.records[0].categoryID", typeof data.records[0].categoryID);
 
                   // ? Doesn't seem to be updating the state for some reason? -- 03/06/2021 MF
                   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
@@ -939,13 +939,13 @@ const EditTitle = (props) => {
 
             })
             .catch((error) => {
-              console.error(componentName, GetDateTime(), "updateTitle error", error);
-              // console.error(componentName, GetDateTime(), "updateTitle error.name", error.name);
-              // console.error(componentName, GetDateTime(), "updateTitle error.message", error.message);
+              console.error(componentName, getDateTime(), "updateTitle error", error);
+              // console.error(componentName, getDateTime(), "updateTitle error.name", error.name);
+              // console.error(componentName, getDateTime(), "updateTitle error.message", error.message);
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -959,7 +959,7 @@ const EditTitle = (props) => {
 
 
   const deleteTitle = () => {
-    // console.log(componentName, GetDateTime(), "deleteTitle baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "deleteTitle baseURL", baseURL);
 
     clearMessages();
     setTitleRecordDeleted(null);
@@ -968,13 +968,13 @@ const EditTitle = (props) => {
 
     let url = baseURL + "titles/";
 
-    if (IsEmpty(props.titleID) === false) {
+    if (isEmpty(props.titleID) === false) {
 
       url = url + props.titleID;
 
-      // console.log(componentName, GetDateTime(), "deleteTitle url", url);
+      // console.log(componentName, getDateTime(), "deleteTitle url", url);
 
-      if (IsEmpty(sessionToken) === false) {
+      if (isEmpty(sessionToken) === false) {
 
         fetch(url, {
           method: "DELETE",
@@ -984,7 +984,7 @@ const EditTitle = (props) => {
           })
         })
           .then(response => {
-            // console.log(componentName, GetDateTime(), "deleteTitle response", response);
+            // console.log(componentName, getDateTime(), "deleteTitle response", response);
 
             // if (!response.ok) {
 
@@ -1006,7 +1006,7 @@ const EditTitle = (props) => {
 
           })
           .then(data => {
-            // console.log(componentName, GetDateTime(), "deleteTitle data", data);
+            // console.log(componentName, getDateTime(), "deleteTitle data", data);
 
             setTitleRecordDeleted(data.transactionSuccess);
 
@@ -1028,7 +1028,7 @@ const EditTitle = (props) => {
               };
 
               // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
-              // console.log(componentName, GetDateTime(), "updateTitle urlListIndex", urlListIndex);
+              // console.log(componentName, getDateTime(), "updateTitle urlListIndex", urlListIndex);
 
               // Update/Delete related urls in arrayURLs also
               // dispatch(deleteStateURL(urlListIndex));
@@ -1045,13 +1045,13 @@ const EditTitle = (props) => {
 
           })
           .catch((error) => {
-            console.error(componentName, GetDateTime(), "deleteTitle error", error);
-            // console.error(componentName, GetDateTime(), "deleteTitle error.name", error.name);
-            // console.error(componentName, GetDateTime(), "deleteTitle error.message", error.message);
+            console.error(componentName, getDateTime(), "deleteTitle error", error);
+            // console.error(componentName, getDateTime(), "deleteTitle error.name", error.name);
+            // console.error(componentName, getDateTime(), "deleteTitle error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -1063,20 +1063,20 @@ const EditTitle = (props) => {
 
 
   const deleteEdition = (editionID/*, editionItemIndex*/) => {
-    // console.log(componentName, GetDateTime(), "deleteEdition baseURL", baseURL);
+    // console.log(componentName, getDateTime(), "deleteEdition baseURL", baseURL);
 
     clearMessages();
     setEditionRecordDeleted(null);
 
     let url = baseURL + "editions/";
 
-    if (IsEmpty(editionID) === false) {
+    if (isEmpty(editionID) === false) {
 
       url = url + editionID;
 
-      // console.log(componentName, GetDateTime(), "deleteEdition url", url);
+      // console.log(componentName, getDateTime(), "deleteEdition url", url);
 
-      if (IsEmpty(sessionToken) === false) {
+      if (isEmpty(sessionToken) === false) {
 
         fetch(url, {
           method: "DELETE",
@@ -1086,7 +1086,7 @@ const EditTitle = (props) => {
           })
         })
           .then(response => {
-            // console.log(componentName, GetDateTime(), "deleteEdition response", response);
+            // console.log(componentName, getDateTime(), "deleteEdition response", response);
 
             // if (!response.ok) {
 
@@ -1108,7 +1108,7 @@ const EditTitle = (props) => {
 
           })
           .then(data => {
-            // console.log(componentName, GetDateTime(), "deleteEdition data", data);
+            // console.log(componentName, getDateTime(), "deleteEdition data", data);
 
             setEditionRecordDeleted(data.transactionSuccess);
 
@@ -1129,13 +1129,13 @@ const EditTitle = (props) => {
 
           })
           .catch((error) => {
-            console.error(componentName, GetDateTime(), "deleteEdition error", error);
-            // console.error(componentName, GetDateTime(), "deleteEdition error.name", error.name);
-            // console.error(componentName, GetDateTime(), "deleteEdition error.message", error.message);
+            console.error(componentName, getDateTime(), "deleteEdition error", error);
+            // console.error(componentName, getDateTime(), "deleteEdition error.name", error.name);
+            // console.error(componentName, getDateTime(), "deleteEdition error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -1147,9 +1147,9 @@ const EditTitle = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect titleRecordAdded", titleRecordAdded);
+    // console.log(componentName, getDateTime(), "useEffect titleRecordAdded", titleRecordAdded);
 
-    if (IsEmpty(titleRecordAdded) === false && titleRecordAdded === true) {
+    if (isEmpty(titleRecordAdded) === false && titleRecordAdded === true) {
 
       clearMessages();
       setErrTitleName("");
@@ -1177,10 +1177,10 @@ const EditTitle = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect titleRecordUpdated", titleRecordUpdated);
-    // console.log(componentName, GetDateTime(), "useEffect titleRecordDeleted", titleRecordDeleted);
+    // console.log(componentName, getDateTime(), "useEffect titleRecordUpdated", titleRecordUpdated);
+    // console.log(componentName, getDateTime(), "useEffect titleRecordDeleted", titleRecordDeleted);
 
-    if (IsEmpty(titleRecordUpdated) === false && titleRecordUpdated === true) {
+    if (isEmpty(titleRecordUpdated) === false && titleRecordUpdated === true) {
 
       clearMessages();
       setErrTitleName("");
@@ -1204,7 +1204,7 @@ const EditTitle = (props) => {
 
     };
 
-    if (IsEmpty(titleRecordDeleted) === false && titleRecordDeleted === true) {
+    if (isEmpty(titleRecordDeleted) === false && titleRecordDeleted === true) {
 
       clearMessages();
       setErrTitleName("");
@@ -1236,7 +1236,7 @@ const EditTitle = (props) => {
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
 
-    // console.log(componentName, GetDateTime(), "redirectPage", linkName);
+    // console.log(componentName, getDateTime(), "redirectPage", linkName);
     dispatch(setPageURL(linkName.replaceAll("/", "")));
     navigate("/" + linkName);
 
@@ -1244,7 +1244,7 @@ const EditTitle = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -1259,64 +1259,64 @@ const EditTitle = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === true && IsEmpty(admin) === false && admin === true ?
+      {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true ?
 
         <a href="#" onClick={(event) => { setModal(!modal); }}>Add Title</a>
 
         : null}
 
-      {/* {applicationAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(titleItem) === false && IsEmpty(admin) === false && admin === true ?
+      {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true ?
 
         <a href="#" onClick={(event) => { setModal(!modal); }}>Update Title</a>
 
         : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
-        <ModalHeader toggle={(event) => { setModal(!modal); }}>{IsEmpty(titleItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Title</ModalHeader>
+        <ModalHeader toggle={(event) => { setModal(!modal); }}>{isEmpty(titleItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Title</ModalHeader>
         <ModalBody>
           <Form>
 
             <FormGroup className="text-center">
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-              {IsEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
-              {IsEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+              {isEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
+              {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtTitleName">Title</Label>
-              <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleName(event.target.value); }} />
-              {IsEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
+              <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTitleName(event.target.value); }} />
+              {isEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtTitleURL">Title URL</Label>
-              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(createTitleURL(txtTitleName)); }}>Create Title URL</Button>
-              <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(event.target.value); }} />
+              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(createTitleURL(txtTitleName)); }}>Create Title URL</Button>
+              <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtAuthorFirstName">Author First Name</Label>
-              <Input type="text" id="txtAuthorFirstName" value={txtAuthorFirstName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorFirstName(event.target.value); }} />
+              <Input type="text" id="txtAuthorFirstName" value={txtAuthorFirstName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorFirstName(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtAuthorLastName">Author Last Name</Label>
-              <Input type="text" id="txtAuthorLastName" value={txtAuthorLastName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorLastName(event.target.value); }} />
+              <Input type="text" id="txtAuthorLastName" value={txtAuthorLastName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorLastName(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
-              {/* {console.log(componentName, GetDateTime(), "ddCategoryID", ddCategoryID)} */}
+              {/* {console.log(componentName, getDateTime(), "ddCategoryID", ddCategoryID)} */}
               <Label id="lblCategoryID" for="lblCategoryID">Category</Label>
-              <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setDdCategoryID(event.target.value); }}>
+              <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setDdCategoryID(event.target.value); }}>
                 <option value="">Select a Category</option>
                 {categoryList.map((category) => {
                   return (
@@ -1327,30 +1327,30 @@ const EditTitle = (props) => {
                   );
                 })}
               </Input>
-              {IsEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
+              {isEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtManuscriptTitle">Manuscript Title</Label>
-              <Input type="text" id="txtManuscriptTitle" value={txtManuscriptTitle} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtManuscriptTitle(event.target.value); }} />
+              <Input type="text" id="txtManuscriptTitle" value={txtManuscriptTitle} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtManuscriptTitle(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtWrittenDate">Manuscript Written Date</Label>
-              <Input type="date" id="txtWrittenDate" value={txtWrittenDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtWrittenDate(event.target.value); }} />
+              <Input type="date" id="txtWrittenDate" value={txtWrittenDate} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtWrittenDate(event.target.value); }} />
             </FormGroup>
 
             <FormGroup row>
               <Col>
 
                 <Label for="txtSubmissionDate">Manuscript Submission Date</Label>
-                <Input type="date" id="txtSubmissionDate" value={txtSubmissionDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtSubmissionDate(event.target.value); }} />
+                <Input type="date" id="txtSubmissionDate" value={txtSubmissionDate} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtSubmissionDate(event.target.value); }} />
 
               </Col>
               <Col>
 
                 <Label for="txtPublicationDate">Publication Date</Label>
-                <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPublicationDate(event.target.value); }} />
+                <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtPublicationDate(event.target.value); }} />
 
               </Col>
 
@@ -1358,24 +1358,24 @@ const EditTitle = (props) => {
 
             <FormGroup>
               <Label for="txtImageName">Image Name</Label>
-              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ /*createImageName(txtTitleName);*/ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
-              <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
-              {IsEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt={txtTitleName} className="cover-thumbnail" /> : <Image size="150" className="no-image-icon" />}
+              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ /*createImageName(txtTitleName);*/ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
+              <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
+              {isEmpty(txtImageName) === false && txtImageName !== "" ? <img src={txtImageName} alt={txtTitleName} className="cover-thumbnail" /> : <Image size="150" className="no-image-icon" />}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtShortDescription">Short Description</Label>
-              <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtShortDescription(event.target.value); }} />
+              <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtShortDescription(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtUrlPKDWeb">url PKDWeb</Label>
-              <Input type="text" id="txtUrlPKDWeb" value={txtUrlPKDWeb} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtUrlPKDWeb(event.target.value); }} />
+              <Input type="text" id="txtUrlPKDWeb" value={txtUrlPKDWeb} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtUrlPKDWeb(event.target.value); }} />
             </FormGroup>
 
             <ModalFooter>
 
-              {IsEmpty(titleItem) === true ?
+              {isEmpty(titleItem) === true ?
 
                 <Button outline size="lg" color="primary" onClick={addTitle}>Add Title</Button>
 
@@ -1383,21 +1383,21 @@ const EditTitle = (props) => {
 
                 <React.Fragment>
 
-                  <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Update Title</Button>
+                  <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Update Title</Button>
 
-                  {IsEmpty(active) === false && (active === false || active === 0) ?
+                  {isEmpty(active) === false && (active === false || active === 0) ?
 
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Undelete/Restore Title</Button>
-
-                    : null}
-
-                  {IsEmpty(active) === false && (active === true || active === 1) ?
-
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateTitle(true); }}>Delete Title</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateTitle(false); }}>Undelete/Restore Title</Button>
 
                     : null}
 
-                  <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ deleteTitle(); }}>Hard Delete Title</Button>
+                  {isEmpty(active) === false && (active === true || active === 1) ?
+
+                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateTitle(true); }}>Delete Title</Button>
+
+                    : null}
+
+                  <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ deleteTitle(); }}>Hard Delete Title</Button>
 
                 </React.Fragment>
               }

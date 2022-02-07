@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const Logs = () => {
 
@@ -13,15 +13,15 @@ const Logs = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +50,7 @@ const Logs = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getLogs response", response);
+        // console.log(componentName, getDateTime(), "getLogs response", response);
 
         if (!response.ok) {
 
@@ -64,9 +64,9 @@ const Logs = () => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setLogs(results.records);
 
@@ -74,11 +74,11 @@ const Logs = () => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -93,7 +93,7 @@ const Logs = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -115,7 +115,7 @@ const Logs = () => {
 
           <h5 className="text-center">Logs</h5>
 
-          {IsEmpty(logs) === false ?
+          {isEmpty(logs) === false ?
 
             <Table responsive>
               <thead>
@@ -131,11 +131,11 @@ const Logs = () => {
 
                 {logs.map((log, index) => {
 
-                  // console.log(componentName, GetDateTime(), "map log", log);
+                  // console.log(componentName, getDateTime(), "map log", log);
 
                   return (
                     <tr key={index}>
-                      {IsEmpty(log.createDate) === false ? <td>{log.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{log.createDate}</td>}
+                      {isEmpty(log.createDate) === false ? <td>{log.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{log.createDate}</td>}
                       <td>{log.operation}</td>
                       <td>{log.componentName}</td>
                       <td>{log.transactionData}</td>

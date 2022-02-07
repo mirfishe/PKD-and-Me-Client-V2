@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime, displayDate } from "../../utilities/SharedFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
 
@@ -15,15 +15,15 @@ const TitleSuggestions = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -52,7 +52,7 @@ const TitleSuggestions = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getTitleSuggestions response", response);
+        // console.log(componentName, getDateTime(), "getTitleSuggestions response", response);
 
         if (!response.ok) {
 
@@ -66,9 +66,9 @@ const TitleSuggestions = () => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setTitleSuggestions(results.records);
 
@@ -76,11 +76,11 @@ const TitleSuggestions = () => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -95,7 +95,7 @@ const TitleSuggestions = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -130,7 +130,7 @@ const TitleSuggestions = () => {
                 <Col xs="12">
 
                   <h6>{titleSuggestion.titleName}
-                    {IsEmpty(titleSuggestion.publicationDate) === false ? <span className="ms-2 smaller-text"> ({DisplayDate(titleSuggestion.publicationDate)})</span> : null}
+                    {isEmpty(titleSuggestion.publicationDate) === false ? <span className="ms-2 smaller-text"> ({displayDate(titleSuggestion.publicationDate)})</span> : null}
                   </h6>
 
                 </Col>
@@ -147,7 +147,7 @@ const TitleSuggestions = () => {
               <Row>
                 <Col xs="12">
 
-                  {IsEmpty(titleSuggestion.shortDescription) === false ? <p className="display-paragraphs">{titleSuggestion.shortDescription}</p> : null}
+                  {isEmpty(titleSuggestion.shortDescription) === false ? <p className="display-paragraphs">{titleSuggestion.shortDescription}</p> : null}
 
                 </Col>
               </Row>
@@ -155,7 +155,7 @@ const TitleSuggestions = () => {
               <Row>
                 <Col xs="12">
 
-                  {IsEmpty(titleSuggestion.titleURL) === false ? <p>{titleSuggestion.titleURL}</p> : null}
+                  {isEmpty(titleSuggestion.titleURL) === false ? <p>{titleSuggestion.titleURL}</p> : null}
 
                 </Col>
               </Row>
@@ -163,7 +163,7 @@ const TitleSuggestions = () => {
               <Row>
                 <Col xs="12">
 
-                  <p>Suggested by {IsEmpty(titleSuggestion.firstName) === false ? titleSuggestion.firstName : null} {IsEmpty(titleSuggestion.lastName) === false ? titleSuggestion.lastName : null} {IsEmpty(titleSuggestion.emailAddress) === false ? titleSuggestion.emailAddress : null} {IsEmpty(titleSuggestion.updateDate) === false ? <small>on {DisplayDate(titleSuggestion.updateDate)}</small> : null}</p>
+                  <p>Suggested by {isEmpty(titleSuggestion.firstName) === false ? titleSuggestion.firstName : null} {isEmpty(titleSuggestion.lastName) === false ? titleSuggestion.lastName : null} {isEmpty(titleSuggestion.emailAddress) === false ? titleSuggestion.emailAddress : null} {isEmpty(titleSuggestion.updateDate) === false ? <small>on {displayDate(titleSuggestion.updateDate)}</small> : null}</p>
 
                 </Col>
               </Row>

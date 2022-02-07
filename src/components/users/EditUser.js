@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
-import { IsEmpty, DisplayValue, GetDateTime, FormatTrim } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime, formatTrim } from "../../utilities/SharedFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadUserData } from "../../app/userSlice";
 
 const EditUser = (props) => {
@@ -20,7 +20,7 @@ const EditUser = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -86,85 +86,85 @@ const EditUser = (props) => {
     let passwordValidated = false;
     let formValidated = false;
 
-    if (IsEmpty(txtFirstName) === false) {
+    if (isEmpty(txtFirstName) === false) {
 
-      if (FormatTrim(txtFirstName).length > 0) {
+      if (formatTrim(txtFirstName).length > 0) {
 
         firstNameValidated = true;
         setErrFirstName("");
-        // console.log(componentName, GetDateTime(), "updateUser Valid First Name");
-        // console.log(componentName, GetDateTime(), "updateUser firstNameValidated true", firstNameValidated);
+        // console.log(componentName, getDateTime(), "updateUser Valid First Name");
+        // console.log(componentName, getDateTime(), "updateUser firstNameValidated true", firstNameValidated);
 
       } else {
 
         firstNameValidated = false;
         setErrFirstName("Please enter a first name.");
-        // console.log(componentName, GetDateTime(), "updateUser Invalid First Name");
-        // console.log(componentName, GetDateTime(), "updateUser firstNameValidated false", firstNameValidated);
+        // console.log(componentName, getDateTime(), "updateUser Invalid First Name");
+        // console.log(componentName, getDateTime(), "updateUser firstNameValidated false", firstNameValidated);
 
       };
 
     };
 
-    if (IsEmpty(txtLastName) === false) {
+    if (isEmpty(txtLastName) === false) {
 
-      if (FormatTrim(txtLastName).length > 0) {
+      if (formatTrim(txtLastName).length > 0) {
 
         lastNameValidated = true;
         setErrLastName("");
-        // console.log(componentName, GetDateTime(), "updateUser Valid Last Name");
-        // console.log(componentName, GetDateTime(), "updateUser lastNameValidated true", lastNameValidated);
+        // console.log(componentName, getDateTime(), "updateUser Valid Last Name");
+        // console.log(componentName, getDateTime(), "updateUser lastNameValidated true", lastNameValidated);
 
       } else {
 
         lastNameValidated = false;
         setErrLastName("Please enter a last name.");
-        // console.log(componentName, GetDateTime(), "updateUser Invalid Last Name");
-        // console.log(componentName, GetDateTime(), "updateUser lastNameValidated false", lastNameValidated);
+        // console.log(componentName, getDateTime(), "updateUser Invalid Last Name");
+        // console.log(componentName, getDateTime(), "updateUser lastNameValidated false", lastNameValidated);
 
       };
 
     };
 
-    if (IsEmpty(txtEmail) === false) {
+    if (isEmpty(txtEmail) === false) {
 
-      if (FormatTrim(txtEmail).match(emailRegExp) && FormatTrim(txtEmail).length > 0) {
+      if (formatTrim(txtEmail).match(emailRegExp) && formatTrim(txtEmail).length > 0) {
 
-        // if (FormatTrim(txtEmail).match(emailFormat) && FormatTrim(txtEmail).length > 0) {
+        // if (formatTrim(txtEmail).match(emailFormat) && formatTrim(txtEmail).length > 0) {
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, GetDateTime(), "updateUser Valid Email Address");
-        // console.log(componentName, GetDateTime(), "updateUser emailValidated true", emailValidated);
+        // console.log(componentName, getDateTime(), "updateUser Valid Email Address");
+        // console.log(componentName, getDateTime(), "updateUser emailValidated true", emailValidated);
 
       } else {
 
         emailValidated = false;
         setErrEmail("Please enter a valid email address.");
-        // console.log(componentName, GetDateTime(), "updateUser Invalid Email Address");
-        // console.log(componentName, GetDateTime(), "updateUser emailValidated false", emailValidated);
+        // console.log(componentName, getDateTime(), "updateUser Invalid Email Address");
+        // console.log(componentName, getDateTime(), "updateUser emailValidated false", emailValidated);
 
       };
 
     };
 
     // * If the user doesn't enter a password, then it isn't updated
-    if (IsEmpty(txtPassword) === false) {
+    if (isEmpty(txtPassword) === false) {
 
-      if (FormatTrim(txtPassword).length !== 0) {
+      if (formatTrim(txtPassword).length !== 0) {
 
-        if (FormatTrim(txtPassword).length > 4) {
+        if (formatTrim(txtPassword).length > 4) {
 
           passwordValidated = true;
           setErrPassword("");
-          // console.log(componentName, GetDateTime(), "updateUser Valid Password");
-          // console.log(componentName, GetDateTime(), "updateUser passwordValidated true", passwordValidated);
+          // console.log(componentName, getDateTime(), "updateUser Valid Password");
+          // console.log(componentName, getDateTime(), "updateUser passwordValidated true", passwordValidated);
 
         } else {
 
           passwordValidated = false;
           setErrPassword("Password must be at least 5 characters.");
-          // console.log(componentName, GetDateTime(), "updateUser Invalid Password");
-          // console.log(componentName, GetDateTime(), "updateUser passwordValidated false", passwordValidated);
+          // console.log(componentName, getDateTime(), "updateUser Invalid Password");
+          // console.log(componentName, getDateTime(), "updateUser passwordValidated false", passwordValidated);
 
         };
 
@@ -184,48 +184,48 @@ const EditUser = (props) => {
     if (firstNameValidated === true && lastNameValidated === true && emailValidated === true && passwordValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, GetDateTime(), "updateUser Valid Form");
-      // console.log(componentName, GetDateTime(), "updateUser formValidated true", formValidated);
+      // console.log(componentName, getDateTime(), "updateUser Valid Form");
+      // console.log(componentName, getDateTime(), "updateUser formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, GetDateTime(), "updateUser Invalid Form");
-      // console.log(componentName, GetDateTime(), "updateUser formValidated false", formValidated);
+      // console.log(componentName, getDateTime(), "updateUser Invalid Form");
+      // console.log(componentName, getDateTime(), "updateUser formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, GetDateTime(), "updateUser firstNameValidated", firstNameValidated);
-    // console.log(componentName, GetDateTime(), "updateUser lastNameValidated", lastNameValidated);
-    // console.log(componentName, GetDateTime(), "updateUser emailValidated", emailValidated);
-    // console.log(componentName, GetDateTime(), "updateUser passwordValidated", passwordValidated);
-    // console.log(componentName, GetDateTime(), "updateUser formValidated", formValidated);
+    // console.log(componentName, getDateTime(), "updateUser firstNameValidated", firstNameValidated);
+    // console.log(componentName, getDateTime(), "updateUser lastNameValidated", lastNameValidated);
+    // console.log(componentName, getDateTime(), "updateUser emailValidated", emailValidated);
+    // console.log(componentName, getDateTime(), "updateUser passwordValidated", passwordValidated);
+    // console.log(componentName, getDateTime(), "updateUser formValidated", formValidated);
 
     if (formValidated === true) {
 
-      if (IsEmpty(txtFirstName) === false && IsEmpty(txtLastName) === false && IsEmpty(txtEmail) === false && IsEmpty(txtPassword) === false) {
+      if (isEmpty(txtFirstName) === false && isEmpty(txtLastName) === false && isEmpty(txtEmail) === false && isEmpty(txtPassword) === false) {
 
         let recordObject = {
-          firstName: FormatTrim(txtFirstName),
-          lastName: FormatTrim(txtLastName),
-          email: FormatTrim(txtEmail),
+          firstName: formatTrim(txtFirstName),
+          lastName: formatTrim(txtLastName),
+          email: formatTrim(txtEmail),
           updatedBy: userID,
           // active:     active
           active: !deleteUser
         };
 
         // * If the user doesn't enter a password, then it isn't updated
-        if (IsEmpty(txtPassword) === false) {
+        if (isEmpty(txtPassword) === false) {
 
-          if (FormatTrim(txtPassword).length !== 0) {
+          if (formatTrim(txtPassword).length !== 0) {
 
-            Object.assign(recordObject, { password: FormatTrim(txtPassword) });
+            Object.assign(recordObject, { password: formatTrim(txtPassword) });
 
           };
 
         };
 
-        // console.log(componentName, GetDateTime(), "updateUser recordObject", recordObject);
+        // console.log(componentName, getDateTime(), "updateUser recordObject", recordObject);
 
         let url = baseURL + "users/";
 
@@ -236,7 +236,7 @@ const EditUser = (props) => {
 
         };
 
-        // console.log(componentName, GetDateTime(), "updateUser url", url);
+        // console.log(componentName, getDateTime(), "updateUser url", url);
 
         fetch(url, {
           method: "PUT",
@@ -247,7 +247,7 @@ const EditUser = (props) => {
           body: JSON.stringify({ user: recordObject })
         })
           .then(response => {
-            // console.log(componentName, GetDateTime(), "updateUser response", response);
+            // console.log(componentName, getDateTime(), "updateUser response", response);
 
             // if (!response.ok) {
 
@@ -269,14 +269,14 @@ const EditUser = (props) => {
 
           })
           .then(results => {
-            // console.log(componentName, GetDateTime(), "updateUser results", results);
+            // console.log(componentName, getDateTime(), "updateUser results", results);
 
             // if (results !== 500 && results !== 401) {
 
             setUserRecordUpdated(results.transactionSuccess);
             addMessage(results.message);
 
-            if (IsEmpty(results) === false && results.transactionSuccess === true) {
+            if (isEmpty(results) === false && results.transactionSuccess === true) {
 
               // setUser(results);
               // setUserID(results.userID);
@@ -307,13 +307,13 @@ const EditUser = (props) => {
 
           })
           .catch((error) => {
-            console.error(componentName, GetDateTime(), "updateUser error", error);
-            // console.error(componentName, GetDateTime(), "updateUser error.name", error.name);
-            // console.error(componentName, GetDateTime(), "updateUser error.message", error.message);
+            console.error(componentName, getDateTime(), "updateUser error", error);
+            // console.error(componentName, getDateTime(), "updateUser error.name", error.name);
+            // console.error(componentName, getDateTime(), "updateUser error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -325,9 +325,9 @@ const EditUser = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect userRecordUpdated", userRecordUpdated);
+    // console.log(componentName, getDateTime(), "useEffect userRecordUpdated", userRecordUpdated);
 
-    if (IsEmpty(userRecordUpdated) === false) {
+    if (isEmpty(userRecordUpdated) === false) {
 
       clearMessages();
       setErrFirstName("");
@@ -349,9 +349,9 @@ const EditUser = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect sessionToken", sessionToken);
+    // console.log(componentName, getDateTime(), "useEffect sessionToken", sessionToken);
 
-    if (IsEmpty(userLoaded) === false && userLoaded === false) {
+    if (isEmpty(userLoaded) === false && userLoaded === false) {
 
       clearMessages();
       setErrEmail("");
@@ -372,9 +372,9 @@ const EditUser = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null} */}
 
-      {applicationAllowUserInteractions === true && IsEmpty(userLoaded) === false && userLoaded === true ?
+      {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
 
         <React.Fragment>
           {/* <NavItem> */}
@@ -398,31 +398,31 @@ const EditUser = (props) => {
 
             <FormGroup>
               <Label for="txtFirstName">First Name</Label>
-              <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtFirstName(event.target.value); }} />
+              <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtFirstName(event.target.value); }} />
               {errFirstName !== "" ? <Alert color="danger">{errFirstName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtLastName">Last Name</Label>
-              <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtLastName(event.target.value); }} />
+              <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtLastName(event.target.value); }} />
               {errLastName !== "" ? <Alert color="danger">{errLastName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtEmail">Email Address</Label>
-              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
+              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
               {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtPassword">Password</Label>
-              <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
+              <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
               {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
             </FormGroup>
 
             <ModalFooter>
-              <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateUser(false); }}>Update</Button>
-              <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, GetDateTime(), "event.target.value", event.target.value);*/ updateUser(true); }}>Delete</Button>
+              <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateUser(false); }}>Update</Button>
+              <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateUser(true); }}>Delete</Button>
               <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
             </ModalFooter>
 

@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, ConvertBitTrueFalse } from "../../utilities/SharedFunctions";
-import { encodeURL, LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { encodeURL, convertBitTrueFalse, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {
 
@@ -15,15 +15,15 @@ const FromTheHomeopape = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,7 +41,7 @@ const FromTheHomeopape = (props) => {
   // const [cbxPosted, setCbxPosted] = useState(false);
 
   const headerText = props.headerText;
-  // console.log(componentName, GetDateTime(), "props.headerText", props.headerText);
+  // console.log(componentName, getDateTime(), "props.headerText", props.headerText);
 
   // let breakArray = false;
   let displayItemsCount = 0;
@@ -60,7 +60,7 @@ const FromTheHomeopape = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getNews response", response);
+        // console.log(componentName, getDateTime(), "getNews response", response);
 
         if (!response.ok) {
 
@@ -74,11 +74,11 @@ const FromTheHomeopape = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          // console.log(componentName, GetDateTime(), "getNews results.records[0]", results.records[0]);
+          // console.log(componentName, getDateTime(), "getNews results.records[0]", results.records[0]);
 
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
@@ -87,11 +87,11 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         setErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -109,8 +109,8 @@ const FromTheHomeopape = (props) => {
     <Container className="mt-4">
       <Row className="justify-content-center">
         <Col className="text-center" xs="12">
-          {IsEmpty(errorMessage) === false ? <Alert color="danger">{errorMessage}</Alert> : null}
-          {IsEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
+          {isEmpty(errorMessage) === false ? <Alert color="danger">{errorMessage}</Alert> : null}
+          {isEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
         </Col>
       </Row>
 
@@ -132,7 +132,7 @@ const FromTheHomeopape = (props) => {
         // * One method to only display ten items in the list. -- 06/26/2021 MF
         // if (displayItemsCount >= 10) {
 
-        //   console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+        //   console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
         //   homeopapeItems.splice(0, index);
 
         // };
@@ -145,14 +145,14 @@ const FromTheHomeopape = (props) => {
 
         } else if (displayItemsCount >= 10) {
 
-          // console.log(componentName, GetDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+          // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
           // homeopapeItems.splice(0, index);
           show = false;
 
         } else {
 
           displayItemsCount++;
-          // console.log(componentName, GetDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
+          // console.log(componentName, getDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
 
         };
 
@@ -161,7 +161,7 @@ const FromTheHomeopape = (props) => {
         let param = "";
         let regExp = "";
 
-        if (IsEmpty(homeopapeItem) === false && IsEmpty(homeopapeItem.itemLink) === false) {
+        if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
 
           itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
 
@@ -176,11 +176,11 @@ const FromTheHomeopape = (props) => {
 
         };
 
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
-        // console.log(componentName, GetDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
+        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
+        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
+        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
+        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
+        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
 
         return (
           <React.Fragment key={index}>

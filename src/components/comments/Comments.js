@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime, DisplayDate } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime, displayDate } from "../../utilities/SharedFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
 
@@ -15,15 +15,15 @@ const Comments = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -52,7 +52,7 @@ const Comments = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getComments response", response);
+        // console.log(componentName, getDateTime(), "getComments response", response);
 
         if (!response.ok) {
 
@@ -66,9 +66,9 @@ const Comments = () => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setComments(results.records);
 
@@ -76,11 +76,11 @@ const Comments = () => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -95,7 +95,7 @@ const Comments = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -129,7 +129,7 @@ const Comments = () => {
               <Row>
                 <Col xs="12">
 
-                  {IsEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
+                  {isEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
 
                 </Col>
               </Row>
@@ -137,7 +137,7 @@ const Comments = () => {
               <Row>
                 <Col xs="12">
 
-                  <p>Submitted by {IsEmpty(comment.firstName) === false ? comment.firstName : null} {IsEmpty(comment.lastName) === false ? comment.lastName : null} {IsEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {IsEmpty(comment.updateDate) === false ? <small>on {DisplayDate(comment.updateDate)}</small> : null}</p>
+                  <p>Submitted by {isEmpty(comment.firstName) === false ? comment.firstName : null} {isEmpty(comment.lastName) === false ? comment.lastName : null} {isEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {isEmpty(comment.updateDate) === false ? <small>on {displayDate(comment.updateDate)}</small> : null}</p>
 
                 </Col>
               </Row>

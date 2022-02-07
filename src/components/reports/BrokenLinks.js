@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { IsEmpty, DisplayValue, GetDateTime } from "../../utilities/SharedFunctions";
-import { LogError } from "../../utilities/ApplicationFunctions";
+import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const BrokenLinks = () => {
 
@@ -13,15 +13,15 @@ const BrokenLinks = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, GetDateTime(), "sessionToken", sessionToken);
+  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, GetDateTime(), "admin", admin);
+  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, GetDateTime(), "baseURL", baseURL);
+  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +50,7 @@ const BrokenLinks = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, GetDateTime(), "getBrokenLinks response", response);
+        // console.log(componentName, getDateTime(), "getBrokenLinks response", response);
 
         if (!response.ok) {
 
@@ -64,9 +64,9 @@ const BrokenLinks = () => {
 
       })
       .then(results => {
-        // console.log(componentName, GetDateTime(), "getNews results", results);
+        // console.log(componentName, getDateTime(), "getNews results", results);
 
-        if (IsEmpty(results) === false && results.transactionSuccess === true) {
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
 
           setBrokenLinks(results.records);
 
@@ -74,11 +74,11 @@ const BrokenLinks = () => {
 
       })
       .catch((error) => {
-        // console.error(componentName, GetDateTime(), "getNews error", error);
+        // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // let logErrorResult = LogError(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -93,7 +93,7 @@ const BrokenLinks = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, GetDateTime(), "useEffect check for admin", admin);
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -115,7 +115,7 @@ const BrokenLinks = () => {
 
           <h5 className="text-center">Broken Links</h5>
 
-          {IsEmpty(brokenLinks) === false ?
+          {isEmpty(brokenLinks) === false ?
 
             <Table responsive>
               <thead>
@@ -133,11 +133,11 @@ const BrokenLinks = () => {
 
                 {brokenLinks.map((brokenLink, index) => {
 
-                  // console.log(componentName, GetDateTime(), "map brokenLink", brokenLink);
+                  // console.log(componentName, getDateTime(), "map brokenLink", brokenLink);
 
                   return (
                     <tr key={index}>
-                      {IsEmpty(brokenLink.createDate) === false ? <td>{brokenLink.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{brokenLink.createDate}</td>}
+                      {isEmpty(brokenLink.createDate) === false ? <td>{brokenLink.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{brokenLink.createDate}</td>}
                       <td>{brokenLink.endpoint}</td>
                       <td>{brokenLink.editionID}</td>
                       <td>{brokenLink.titleID}</td>
