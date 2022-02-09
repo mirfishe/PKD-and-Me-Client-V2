@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase, removeHTML } from "../../utilities/SharedFunctions";
 import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 // * https://www.npmjs.com/package/rss-parser
@@ -81,45 +81,45 @@ const FromTheHomeopape = (props) => {
 
     // };
 
-    if (formatLowerCase(txtArticleTitle).includes("blade runner") === true || formatLowerCase(itemContentSnippet).includes("blade runner") === true) {
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("blade runner") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("blade runner") === true) {
 
       post = post + " #BladeRunner ";
 
     };
 
-    if (formatLowerCase(txtArticleTitle).includes("blade runner 2049") === true || formatLowerCase(itemContentSnippet).includes("blade runner 2049") === true) {
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("blade runner 2049") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("blade runner 2049") === true) {
 
       post = post + " #BladeRunner2049 ";
 
     };
 
-    if (formatLowerCase(txtArticleTitle).includes("black lotus") === true || formatLowerCase(itemContentSnippet).includes("black lotus") === true) {
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("black lotus") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("black lotus") === true) {
 
       post = post + " #BladeRunner2049 ";
 
     };
 
-    if (formatLowerCase(txtArticleTitle).includes("total recall") === true || formatLowerCase(itemContentSnippet).includes("total recall") === true) {
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("total recall") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("total recall") === true) {
 
       post = post + " #TotalRecall ";
 
 
     };
 
-    if (formatLowerCase(txtArticleTitle).includes("electric dreams") === true || formatLowerCase(itemContentSnippet).includes("electric dreams") === true) {
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("electric dreams") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("electric dreams") === true) {
 
       post = post + " #ElectricDreams ";
 
 
     };
 
-    if (formatLowerCase(txtArticleTitle).includes("man in the high castle") === true || formatLowerCase(itemContentSnippet).includes("man in the high castle") === true) {
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("man in the high castle") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("man in the high castle") === true) {
 
       post = post + " #TMITHC #HighCastle ";
 
     };
 
-    if (formatLowerCase(txtArticleTitle).includes("minority report") === true || formatLowerCase(itemContentSnippet).includes("minority report") === true) {
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("minority report") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("minority report") === true) {
 
       post = post + " #MinorityReport ";
 
@@ -205,122 +205,146 @@ const FromTheHomeopape = (props) => {
       let inTitle = false;
       let inText = false;
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("philip k. dick") === true) {
+      // * These checks don't account for HTML that might be between the words. -- 02/08/2022 MF
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k. dick") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("philip k. dick") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip k. dick") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("philip k dick") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k dick") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("philip k dick") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip k dick") === true) {
 
         inText = true;
 
       };
 
-
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("philip dick") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip dick") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("philip dick") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip dick") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("blade runner") === true) {
+      // if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip") === true && formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick") === true) {
+
+      //   inTitle = true;
+
+      // };
+
+      // if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip") === true && formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick") === true) {
+
+      //   inText = true;
+
+      // };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip kindred dick") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("blade runner") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip kindred dick") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("blade runner 2049") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("blade runner") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("blade runner 2049") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("blade runner") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("black lotus") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("blade runner 2049") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("black lotus") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("blade runner 2049") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("total recall") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("black lotus") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("total recall") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("black lotus") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("electric dreams") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("total recall") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("electric dreams") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("total recall") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("man in the high castle") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("electric dreams") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("man in the high castle") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("electric dreams") === true) {
 
         inText = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemTitle).includes("minority report") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("man in the high castle") === true) {
 
         inTitle = true;
 
       };
 
-      if (formatLowerCase(homeopapeItemsReview[i].itemContentSnippet).includes("minority report") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("man in the high castle") === true) {
+
+        inText = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("minority report") === true) {
+
+        inTitle = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("minority report") === true) {
 
         inText = true;
 

@@ -1286,3 +1286,24 @@ export const formatSearchInput = (value) => {
   return formatedSearchInput;
 
 };
+
+
+export const removeHTML = (text) => {
+  // console.log(componentName, getDateTime(), "removeHTML text", text);
+
+  // * https://www.geeksforgeeks.org/how-to-strip-out-html-tags-from-a-string-using-javascript/ -- 02/08/2022 MF
+
+  let displayText = text;
+
+  if (isEmpty(text) === false) {
+
+    displayText = text.replace(/(<([^>]+)>)/ig, "");
+
+  };
+
+  // console.log(componentName, getDateTime(), "removeHTML displayText", displayText);
+
+  return displayText;
+
+};
+
