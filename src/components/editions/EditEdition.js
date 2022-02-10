@@ -9,7 +9,7 @@ import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../a
 
 const EditEdition = (props) => {
 
-  const componentName = "EditEdition.js";
+  const componentName = "EditEdition";
 
   const dispatch = useDispatch();
 

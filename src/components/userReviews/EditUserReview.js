@@ -12,7 +12,7 @@ import { updateStateChecklist } from "../../app/userSlice";
 
 const EditUserReview = (props) => {
 
-  const componentName = "EditUserReview.js";
+  const componentName = "EditUserReview";
 
   const dispatch = useDispatch();
 

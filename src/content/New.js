@@ -9,7 +9,7 @@ import TitleCard from "../components/titles/TitleCard";
 
 const New = () => {
 
-  const componentName = "New.js";
+  const componentName = "New";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

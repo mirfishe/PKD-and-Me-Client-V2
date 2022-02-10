@@ -14,7 +14,7 @@ import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png"
 
 const Edition = (props) => {
 
-  const componentName = "Edition.js";
+  const componentName = "Edition";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

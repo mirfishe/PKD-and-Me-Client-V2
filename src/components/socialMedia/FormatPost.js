@@ -7,7 +7,7 @@ import { encodeURL, toTitleCase, addErrorLog } from "../../utilities/Application
 
 const FormatPost = () => {
 
-  const componentName = "FormatPost.js";
+  const componentName = "FormatPost";
 
   const navigate = useNavigate();
 

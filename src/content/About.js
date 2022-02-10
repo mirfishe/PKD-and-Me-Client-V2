@@ -8,7 +8,7 @@ import { setPageURL } from "../app/urlsSlice";
 
 const About = () => {
 
-  const componentName = "About.js";
+  const componentName = "About";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

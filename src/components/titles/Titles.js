@@ -16,7 +16,7 @@ import EditTitle from "./EditTitle";
 
 const Titles = (props) => {
 
-  const componentName = "Titles.js";
+  const componentName = "Titles";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

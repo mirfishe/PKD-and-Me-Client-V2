@@ -8,7 +8,7 @@ import EditUserReview from "../userReviews/EditUserReview";
 
 const UserReview = (props) => {
 
-  const componentName = "UserReview.js";
+  const componentName = "UserReview";
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // console.log(componentName, getDateTime(), "sessionToken", sessionToken);

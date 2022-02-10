@@ -12,7 +12,7 @@ import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../a
 
 const EditTitle = (props) => {
 
-  const componentName = "EditTitle.js";
+  const componentName = "EditTitle";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import { setPageURL } from "../app/urlsSlice";
 
 const Dickian = () => {
 
-  const componentName = "Dickian.js";
+  const componentName = "Dickian";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

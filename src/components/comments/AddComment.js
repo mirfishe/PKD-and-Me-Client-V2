@@ -10,7 +10,7 @@ import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const AddComment = (props) => {
 
-  const componentName = "AddComment.js";
+  const componentName = "AddComment";
 
   const dispatch = useDispatch();
 

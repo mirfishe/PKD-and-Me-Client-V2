@@ -8,7 +8,7 @@ import { setPageURL } from "../app/urlsSlice";
 
 const Homeopape = () => {
 
-  const componentName = "Homeopape.js";
+  const componentName = "Homeopape";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -10,7 +10,7 @@ import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const Comments = () => {
 
-  const componentName = "Comments.js";
+  const componentName = "Comments";
 
   const navigate = useNavigate();
 

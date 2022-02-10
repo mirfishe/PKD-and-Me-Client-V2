@@ -1,5 +1,5 @@
 
-const componentName = "SharedFunctions.js";
+const componentName = "SharedFunctions";
 
 export const isEmpty = (value) => {
   // console.log(componentName, getDateTime(), "isEmpty value", value);
@@ -1272,6 +1272,46 @@ export const formatToString = (value) => {
 };
 
 
+export const formatInt = (value) => {
+  // console.log(componentName, getDateTime(), "formatInt value", value);
+
+  let formatedInt = value;
+
+  if (isEmpty(value) === false) {
+
+    formatedInt = parseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
+
+  } else {
+
+    formatedInt = "";
+
+  };
+
+  return formatedInt;
+
+};
+
+
+export const formatFloat = (value) => {
+  // console.log(componentName, getDateTime(), "formatFloat value", value);
+
+  let formatedFloat = value;
+
+  if (isEmpty(value) === false) {
+
+    formatedFloat = parseFloat(formatTrim(value.replaceAll(",", ""))).toLocaleString();
+
+  } else {
+
+    formatedFloat = "";
+
+  };
+
+  return formatedFloat;
+
+};
+
+
 export const formatSearchInput = (value) => {
   // console.log(componentName, getDateTime(), "formatSearchInput value", value);
 
@@ -1286,3 +1326,24 @@ export const formatSearchInput = (value) => {
   return formatedSearchInput;
 
 };
+
+
+export const removeHTML = (text) => {
+  // console.log(componentName, getDateTime(), "removeHTML text", text);
+
+  // * https://www.geeksforgeeks.org/how-to-strip-out-html-tags-from-a-string-using-javascript/ -- 02/08/2022 MF
+
+  let displayText = text;
+
+  if (isEmpty(text) === false) {
+
+    displayText = text.replace(/(<([^>]+)>)/ig, "");
+
+  };
+
+  // console.log(componentName, getDateTime(), "removeHTML displayText", displayText);
+
+  return displayText;
+
+};
+

@@ -10,7 +10,7 @@ import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const TitleSuggestions = () => {
 
-  const componentName = "TitleSuggestions.js";
+  const componentName = "TitleSuggestions";
 
   const navigate = useNavigate();
 

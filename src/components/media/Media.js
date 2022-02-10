@@ -9,7 +9,7 @@ import { setPageURL } from "../../app/urlsSlice";
 
 const Media = (props) => {
 
-  const componentName = "Media.js";
+  const componentName = "Media";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

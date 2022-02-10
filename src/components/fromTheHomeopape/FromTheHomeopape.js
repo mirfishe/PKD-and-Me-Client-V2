@@ -9,7 +9,7 @@ import { encodeURL, convertBitTrueFalse, addErrorLog } from "../../utilities/App
 
 const FromTheHomeopape = (props) => {
 
-  const componentName = "FromTheHomeopape.js";
+  const componentName = "FromTheHomeopape";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -20,7 +20,7 @@ import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
 
-  const componentName = "Title.js";
+  const componentName = "Title";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

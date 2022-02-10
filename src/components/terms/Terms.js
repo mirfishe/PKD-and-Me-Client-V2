@@ -11,7 +11,7 @@ import TitleCard from "../titles/TitleCard";
 
 const Terms = (props) => {
 
-  const componentName = "Terms.js";
+  const componentName = "Terms";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
