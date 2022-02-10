@@ -471,6 +471,10 @@ const FromTheHomeopape = (props) => {
           // setHomeopapeItemsReview(results.records);
           // setHomeopapeItemsReview(results.records[0]);
 
+        } else {
+
+          setHomeopapeItemsReview([]);
+
         };
 
       })

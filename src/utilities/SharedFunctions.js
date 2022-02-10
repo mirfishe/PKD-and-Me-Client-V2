@@ -1272,6 +1272,46 @@ export const formatToString = (value) => {
 };
 
 
+export const formatInt = (value) => {
+  // console.log(componentName, getDateTime(), "formatInt value", value);
+
+  let formatedInt = value;
+
+  if (isEmpty(value) === false) {
+
+    formatedInt = parseInt(formatTrim(value.replaceAll(",", ""))).toLocaleString();
+
+  } else {
+
+    formatedInt = "";
+
+  };
+
+  return formatedInt;
+
+};
+
+
+export const formatFloat = (value) => {
+  // console.log(componentName, getDateTime(), "formatFloat value", value);
+
+  let formatedFloat = value;
+
+  if (isEmpty(value) === false) {
+
+    formatedFloat = parseFloat(formatTrim(value.replaceAll(",", ""))).toLocaleString();
+
+  } else {
+
+    formatedFloat = "";
+
+  };
+
+  return formatedFloat;
+
+};
+
+
 export const formatSearchInput = (value) => {
   // console.log(componentName, getDateTime(), "formatSearchInput value", value);
 
