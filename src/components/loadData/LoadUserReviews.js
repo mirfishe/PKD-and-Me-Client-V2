@@ -8,7 +8,7 @@ import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../app/userR
 
 function LoadUserReviews() {
 
-  const componentName = "LoadUserReviews.js";
+  const componentName = "LoadUserReviews";
 
   const dispatch = useDispatch();
 

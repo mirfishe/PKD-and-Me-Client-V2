@@ -12,7 +12,7 @@ import { addStateURL } from "../../app/urlsSlice";
 
 const EditCategory = (props) => {
 
-  const componentName = "EditCategory.js";
+  const componentName = "EditCategory";
 
   const dispatch = useDispatch();
 

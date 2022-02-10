@@ -14,7 +14,7 @@ import { updateStateChecklist } from "../../app/userSlice";
 
 const Checklist = (props) => {
 
-  const componentName = "Checklist.js";
+  const componentName = "Checklist";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -13,7 +13,7 @@ import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../
 
 const FromTheHomeopape = (props) => {
 
-  const componentName = "FromTheHomeopape.js";
+  const componentName = "FromTheHomeopape";
 
   // const dispatch = useDispatch();
   const navigate = useNavigate();

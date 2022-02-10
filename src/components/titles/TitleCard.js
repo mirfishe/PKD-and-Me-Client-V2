@@ -14,7 +14,7 @@ import { setPageURL } from "../../app/urlsSlice";
 
 const TitleCard = (props) => {
 
-  const componentName = "TitleCard.js";
+  const componentName = "TitleCard";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

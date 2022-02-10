@@ -1,7 +1,7 @@
 import applicationSettings from "../app/environment";
 import { isEmpty, getDateTime, formatLowerCase, formatUpperCase } from "./SharedFunctions";
 
-const componentName = "ApplicationFunctions.js";
+const componentName = "ApplicationFunctions";
 
 export const encodeURL = (titleName) => {
   // console.log(componentName, getDateTime(), "encodeURL titleName", titleName);

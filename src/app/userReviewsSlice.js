@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "../utilities/SharedFunctions";
 
-const componentName = "userReviewsSlice.js";
+const componentName = "userReviewsSlice";
 
 const initialState = {
   arrayUserReviews: [],

@@ -10,7 +10,7 @@ import { addStateURL } from "../../app/urlsSlice";
 
 const EditMedia = (props) => {
 
-  const componentName = "EditMedia.js";
+  const componentName = "EditMedia";
 
   const dispatch = useDispatch();
 

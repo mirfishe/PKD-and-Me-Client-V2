@@ -12,7 +12,7 @@ const Register = (props) => {
   // ? What if the user has deleted their account and wants to reupdateUser? -- 03/06/2021 MF
   // * The database won't allow duplicate email addresses to be entered. -- 03/06/2021 MF
 
-  const componentName = "Register.js";
+  const componentName = "Register";
 
   const dispatch = useDispatch();
 

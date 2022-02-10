@@ -1,5 +1,5 @@
 
-const componentName = "SharedFunctions.js";
+const componentName = "SharedFunctions";
 
 export const isEmpty = (value) => {
   // console.log(componentName, getDateTime(), "isEmpty value", value);

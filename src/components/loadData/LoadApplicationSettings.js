@@ -7,7 +7,7 @@ import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setAp
 
 function LoadApplicationSettings() {
 
-  const componentName = "LoadApplicationSettings.js";
+  const componentName = "LoadApplicationSettings";
 
   const dispatch = useDispatch();
 

@@ -9,7 +9,7 @@ import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/use
 
 const Login = (props) => {
 
-  const componentName = "Login.js";
+  const componentName = "Login";
 
   const dispatch = useDispatch();
 

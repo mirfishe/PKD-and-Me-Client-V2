@@ -10,7 +10,7 @@ import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const AddTitleSuggestion = (props) => {
 
-  const componentName = "AddTitleSuggestion.js";
+  const componentName = "AddTitleSuggestion";
 
   const dispatch = useDispatch();
 

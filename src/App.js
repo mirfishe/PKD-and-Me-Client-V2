@@ -44,7 +44,7 @@ import Errors from "./components/reports/Errors";
 
 function App() {
 
-  const componentName = "App.js";
+  const componentName = "App";
 
   const dispatch = useDispatch();
 

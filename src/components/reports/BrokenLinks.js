@@ -8,7 +8,7 @@ import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const BrokenLinks = () => {
 
-  const componentName = "BrokenLinks.js";
+  const componentName = "BrokenLinks";
 
   const navigate = useNavigate();
 

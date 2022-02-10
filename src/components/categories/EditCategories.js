@@ -9,7 +9,7 @@ import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFuncti
 
 const EditCategories = (props) => {
 
-  const componentName = "EditCategories.js";
+  const componentName = "EditCategories";
 
   const dispatch = useDispatch();
 

@@ -13,7 +13,7 @@ import { setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings
 
 function LoadBibliographyData() {
 
-  const componentName = "LoadBibliographyData.js";
+  const componentName = "LoadBibliographyData";
 
   const dispatch = useDispatch();
 

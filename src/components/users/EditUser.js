@@ -12,7 +12,7 @@ const EditUser = (props) => {
   // ? What if the user has deleted their account and wants to reupdateUser?
   // * The database won't allow duplicate email addresses to be entered.
 
-  const componentName = "EditUser.js";
+  const componentName = "EditUser";
 
   const dispatch = useDispatch();
 

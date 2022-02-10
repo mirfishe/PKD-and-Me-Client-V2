@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "../utilities/SharedFunctions";
 
-const componentName = "userSlice.js";
+const componentName = "userSlice";
 
 const initialState = {
   userID: null,

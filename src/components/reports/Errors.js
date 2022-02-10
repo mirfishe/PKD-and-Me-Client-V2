@@ -8,7 +8,7 @@ import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const Errors = () => {
 
-  const componentName = "Errors.js";
+  const componentName = "Errors";
 
   const navigate = useNavigate();
 

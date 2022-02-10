@@ -18,7 +18,7 @@ import { Provider } from 'react-redux';
 // ! Now imports the entire package.json file because of changes needed to be made due to updates with webpack 5. -- 12/27/2021 MF
 // import packageJSON from '../package.json';
 
-// const componentName = "index.js";
+// const componentName = "index";
 
 // console.log(componentName, "packageJSON.version", packageJSON.version);
 // console.log(componentName, "packageJSON.copyrightYear", packageJSON.copyrightYear);

@@ -10,7 +10,7 @@ import { setPageURL } from "../../app/urlsSlice";
 
 const Category = (props) => {
 
-  const componentName = "Category.js";
+  const componentName = "Category";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

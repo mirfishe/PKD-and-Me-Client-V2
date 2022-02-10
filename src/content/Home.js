@@ -10,7 +10,7 @@ import FromTheHomeopape from "../components/fromTheHomeopape/FromTheHomeopape";
 
 const Home = () => {
 
-  const componentName = "Home.js";
+  const componentName = "Home";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
