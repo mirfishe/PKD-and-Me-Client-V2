@@ -143,7 +143,7 @@ const FromTheHomeopape = (props) => {
 
           show = false;
 
-        } else if (displayItemsCount >= 10) {
+        } else if (displayItemsCount >= 20) {
 
           // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
           // homeopapeItems.splice(0, index);

@@ -5,6 +5,8 @@ import { Container, Col, Row } from "reactstrap";
 import { isEmpty, displayValue, getDateTime } from "../utilities/SharedFunctions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
 import { setPageURL } from "../app/urlsSlice";
+import TitleCard from "../components/titles/TitleCard";
+import FromTheHomeopape from "../components/fromTheHomeopape/FromTheHomeopape";
 
 const Homeopape = () => {
 
@@ -67,6 +69,22 @@ const Homeopape = () => {
         <Col xs="3">
 
           <img src={setLocalImagePath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg")} alt="Philip K. Dick" />
+
+        </Col>
+      </Row>
+
+      <Row className="mx-4">
+        <Col xs="12">
+
+          <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+
+        </Col>
+      </Row>
+
+      <Row className="my-4">
+        <Col xs="12">
+
+          <FromTheHomeopape headerText="From the Homeopape" />
 
         </Col>
       </Row>

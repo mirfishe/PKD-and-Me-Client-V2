@@ -205,7 +205,7 @@ const FromTheHomeopape = (props) => {
       let inTitle = false;
       let inText = false;
 
-      // * These checks don't account for HTML that might be between the words. -- 02/08/2022 MF
+      // ? Remove the punctuation in the checks? -- 02/13/2022 MF
       if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k. dick") === true) {
 
         inTitle = true;
@@ -225,6 +225,30 @@ const FromTheHomeopape = (props) => {
       };
 
       if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip k dick") === true) {
+
+        inText = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick philip k") === true) {
+
+        inTitle = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick philip k") === true) {
+
+        inText = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick, philip k") === true) {
+
+        inTitle = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick, philip k") === true) {
 
         inText = true;
 
@@ -423,6 +447,10 @@ const FromTheHomeopape = (props) => {
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
 
+        } else {
+
+          setHomeopapeItems([]);
+
         };
 
       })
@@ -473,7 +501,8 @@ const FromTheHomeopape = (props) => {
 
         } else {
 
-          setHomeopapeItemsReview([]);
+          filterNewsReview([]);
+          // setHomeopapeItemsReview([]);
 
         };
 
@@ -488,89 +517,6 @@ const FromTheHomeopape = (props) => {
       });
 
   };
-
-
-  // const fetchNews = () => {
-
-  //   let url = baseURL + "fromthehomeopape/new";
-
-  //   fetch(url, {
-  //     method: "GET",
-  //     headers: new Headers({
-  //       "Content-Type": "application/json"
-  //     })
-  //   })
-  //   .then(response => {
-  //     // console.log(componentName, getDateTime(), "fetchNews response", response);
-
-  //     if (!response.ok) {
-
-  //       throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-  //     } else {
-
-  //       return response.json();
-
-  //     };
-
-  //     })
-  //     .then(results => {
-  //       console.log(componentName, getDateTime(), "fetchNews results", results);
-
-  //       // ! This happens too fast before the records have been written to the table.
-  //       fetchNewsUpdate();
-
-  //     })
-  //     .catch((error) => {
-  //       console.error(componentName, getDateTime(), "fetchNews error", error);
-
-  //       setErrorMessage(error.name + ": " + error.message);
-
-  //        addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-  //     });
-
-  // };
-
-
-  // const fetchNewsUpdate = () => {
-
-  //   let url = baseURL + "fromthehomeopape/update";
-
-  //   fetch(url, {
-  //     method: "GET",
-  //     headers: new Headers({
-  //       "Content-Type": "application/json"
-  //     })
-  //   })
-  //   .then(response => {
-  //     // console.log(componentName, getDateTime(), "fetchNewsUpdate response", response);
-
-  //     if (!response.ok) {
-
-  //       throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-  //     } else {
-
-  //       return response.json();
-
-  //     };
-
-  //     })
-  //     .then(results => {
-  //       console.log(componentName, getDateTime(), "fetchNewsUpdate results", results);
-
-  //     })
-  //     .catch((error) => {
-  //       console.error(componentName, getDateTime(), "fetchNewsUpdate error", error);
-
-  //       setErrorMessage(error.name + ": " + error.message);
-
-  //      addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-  //     });
-
-  // };
 
 
   useEffect(() => {
@@ -1182,7 +1128,7 @@ const FromTheHomeopape = (props) => {
 
             <React.Fragment>
 
-              <h3>In Title <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+              <h3>In Title <span className="text-muted ms-2 small-text">{homeopapeItemsReviewTitle.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
 
               {homeopapeItemsReviewTitle.map((homeopapeItem, index) => {
 
@@ -1423,7 +1369,7 @@ const FromTheHomeopape = (props) => {
 
             <React.Fragment>
 
-              <h3>In Text <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+              <h3>In Text <span className="text-muted ms-2 small-text">{homeopapeItemsReviewText.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
 
               {homeopapeItemsReviewText.map((homeopapeItem, index) => {
 
@@ -1664,7 +1610,7 @@ const FromTheHomeopape = (props) => {
 
             <React.Fragment>
 
-              <h3>Neither <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+              <h3>Neither <span className="text-muted ms-2 small-text">{homeopapeItemsReviewNeither.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
 
               {homeopapeItemsReviewNeither.map((homeopapeItem, index) => {
 
@@ -1905,7 +1851,7 @@ const FromTheHomeopape = (props) => {
 
             <React.Fragment>
 
-              <h3>All Items <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+              <h3>All Items <span className="text-muted ms-2 small-text">{homeopapeItemsReview.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
 
               {homeopapeItemsReview.map((homeopapeItem, index) => {
 
