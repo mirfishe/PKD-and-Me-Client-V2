@@ -723,12 +723,12 @@ export const convertTemperature = (temperatureScale, temperature) => {
 
     if (formatLowerCase(temperatureScale) === "celsius") {
 
-      // * Based on (32°F − 32) × 5/9 = 0°C -- 07/29/2021 MF
+      // * Based on (32°F - 32) x 5/9 = 0°C -- 07/29/2021 MF
       temperatureConverted = ((temperatureFloat - 32) * 5 / 9).toFixed(2);
 
     } else if (formatLowerCase(temperatureScale) === "fahrenheit") {
 
-      // * Based on (32°F − 32) × 5/9 = 0°C -- 07/29/2021 MF
+      // * Based on (32°F - 32) x 5/9 = 0°C -- 07/29/2021 MF
       temperatureConverted = (temperatureFloat * 9 / 5 + 32).toFixed(2);
 
     };
