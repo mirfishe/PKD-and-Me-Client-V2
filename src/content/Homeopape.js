@@ -5,6 +5,8 @@ import { Container, Col, Row } from "reactstrap";
 import { isEmpty, displayValue, getDateTime } from "../utilities/SharedFunctions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
 import { setPageURL } from "../app/urlsSlice";
+import TitleCard from "../components/titles/TitleCard";
+import FromTheHomeopape from "../components/fromTheHomeopape/FromTheHomeopape";
 
 const Homeopape = () => {
 
@@ -55,7 +57,7 @@ const Homeopape = () => {
 
             <blockquote className="blockquote-reverse">
 
-              <p>In a corner of the large room a chime sounded and a tinkling mechanical voice called, “I'm your free homeopape machine, a service supplied exclusively by all the fine Rootes hotels throughout Earth and the colonies. Simply dial the classification of news that you wish, and in a matter of seconds I'll speedily provide you with a fresh, up-to-the-minute homeopape tailored to your individual requirements; and, let me repeat, at no cost to you!”</p>
+              <p>In a corner of the large room a chime sounded and a tinkling mechanical voice called, "I'm your free homeopape machine, a service supplied exclusively by all the fine Rootes hotels throughout Earth and the colonies. Simply dial the classification of news that you wish, and in a matter of seconds I'll speedily provide you with a fresh, up-to-the-minute homeopape tailored to your individual requirements; and, let me repeat, at no cost to you!"</p>
 
               <footer>From <Link to="/Ubik" onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage("Ubik"); }}>Ubik</Link>, by <Link to="/about">Philip K. Dick</Link></footer>
 
@@ -67,6 +69,22 @@ const Homeopape = () => {
         <Col xs="3">
 
           <img src={setLocalImagePath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg")} alt="Philip K. Dick" />
+
+        </Col>
+      </Row>
+
+      <Row className="mx-4">
+        <Col xs="12">
+
+          <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+
+        </Col>
+      </Row>
+
+      <Row className="my-4">
+        <Col xs="12">
+
+          <FromTheHomeopape headerText="From the Homeopape" />
 
         </Col>
       </Row>
