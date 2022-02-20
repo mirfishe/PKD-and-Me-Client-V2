@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
@@ -46,6 +46,7 @@ const FromTheHomeopape = (props) => {
   const [homeopapeItemsReviewTitle, setHomeopapeItemsReviewTitle] = useState([]);
   const [homeopapeItemsReviewText, setHomeopapeItemsReviewText] = useState([]);
   const [homeopapeItemsReviewNeither, setHomeopapeItemsReviewNeither] = useState([]);
+  const [homeopapeItemsReviewIncorrectContext, setHomeopapeItemsReviewIncorrectContext] = useState([]);
 
   // const [cbxDisplay, setCbxDisplay] = useState(false);
   // const [cbxPosted, setCbxPosted] = useState(false);
@@ -197,6 +198,7 @@ const FromTheHomeopape = (props) => {
     let newHomeopapeItemsReviewTitle = [];
     let newHomeopapeItemsReviewText = [];
     let newHomeopapeItemsReviewNeither = [];
+    let newHomeopapeItemsReviewIncorrectContext = [];
 
     for (let i = 0; i < homeopapeItemsReview.length; i++) {
 
@@ -204,6 +206,7 @@ const FromTheHomeopape = (props) => {
 
       let inTitle = false;
       let inText = false;
+      let incorrectContext = false;
 
       // ? Remove the punctuation in the checks? -- 02/13/2022 MF
       if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k. dick") === true) {
@@ -374,27 +377,77 @@ const FromTheHomeopape = (props) => {
 
       };
 
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("wrestling") === true) {
+
+        incorrectContext = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("running") === true) {
+
+        incorrectContext = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("marathon") === true) {
+
+        incorrectContext = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputation") === true) {
+
+        incorrectContext = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputee") === true) {
+
+        incorrectContext = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("sprinter") === true) {
+
+        incorrectContext = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prostheses") === true) {
+
+        incorrectContext = true;
+
+      };
+
       if (homeopapeItemsReview[i].display === false) {
 
         newHomeopapeItemsReview.push(homeopapeItemsReview[i]);
 
       };
 
-      if (inTitle === true && homeopapeItemsReview[i].display === false) {
+      if (incorrectContext !== true && homeopapeItemsReview[i].display === false) {
 
-        newHomeopapeItemsReviewTitle.push(homeopapeItemsReview[i]);
+        if (inTitle === true) {
 
-      };
+          newHomeopapeItemsReviewTitle.push(homeopapeItemsReview[i]);
 
-      if (inText === true && inTitle !== true && homeopapeItemsReview[i].display === false) {
+        };
 
-        newHomeopapeItemsReviewText.push(homeopapeItemsReview[i]);
+        if (inText === true && inTitle !== true) {
 
-      };
+          newHomeopapeItemsReviewText.push(homeopapeItemsReview[i]);
 
-      if (inTitle !== true && inText !== true && homeopapeItemsReview[i].display === false) {
+        };
 
-        newHomeopapeItemsReviewNeither.push(homeopapeItemsReview[i]);
+        if (inTitle !== true && inText !== true) {
+
+          newHomeopapeItemsReviewNeither.push(homeopapeItemsReview[i]);
+
+        };
+
+      } else if (incorrectContext === true && homeopapeItemsReview[i].display === false) {
+
+        newHomeopapeItemsReviewIncorrectContext.push(homeopapeItemsReview[i]);
 
       };
 
@@ -409,6 +462,7 @@ const FromTheHomeopape = (props) => {
     setHomeopapeItemsReviewTitle(newHomeopapeItemsReviewTitle);
     setHomeopapeItemsReviewText(newHomeopapeItemsReviewText);
     setHomeopapeItemsReviewNeither(newHomeopapeItemsReviewNeither);
+    setHomeopapeItemsReviewIncorrectContext(newHomeopapeItemsReviewIncorrectContext);
 
   };
 
@@ -1082,7 +1136,7 @@ const FromTheHomeopape = (props) => {
             // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
 
             return (
-              <React.Fragment key={itemID}>
+              <React.Fragment key={index}>
 
                 {show === true ?
 
@@ -1096,7 +1150,8 @@ const FromTheHomeopape = (props) => {
                           {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                           {Parse(homeopapeItem.itemTitle)}<br />
                           <a href={itemLink} target="_blank">{itemLink}</a><br />
-                          ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
+                          ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+                          {itemID}
                         </div>
 
                         <FormGroup className="text-center">
@@ -1128,163 +1183,11 @@ const FromTheHomeopape = (props) => {
 
             <React.Fragment>
 
-              <h3>In Title <span className="text-muted ms-2 small-text">{homeopapeItemsReviewTitle.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+              <h3>In Title <span className="text-muted ms-2 small-text">{homeopapeItemsReviewTitle.length} in category out of {homeopapeItemsReview.length} total to review.</span></h3>
 
               {homeopapeItemsReviewTitle.map((homeopapeItem, index) => {
 
-                // * One method to only display ten items in the list. -- 06/26/2021 MF
-                // if (index > 100) {
-
-                //   breakArray = true;
-
-                // };
-
-                // if (breakArray === true) {
-
-                //   return;
-
-                // };
-
-                // * One method to only display ten items in the list. -- 06/26/2021 MF
-                // if (displayUpdateItemsCount >= 100) {
-
-                //   console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
-                //   homeopapeItemsReview.splice(0, index);
-
-                // };
-
-                let show = true;
-
-                if (homeopapeItem.display === true) { // homeopapeItem.display === 1
-
-                  show = false;
-
-                  // } else if (displayUpdateItemsCount >= 100) {
-
-                  //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
-                  //   // homeopapeItemsReview.splice(0, index);
-                  //   show = false;
-
-                  // } else {
-
-                  //   displayUpdateItemsCount++;
-                  //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
-
-                };
-
-                // SELECT * FROM homeopapeRSS
-                // WHERE itemLink like '%.ebay.%'
-                // OR itemLink like '%reddit.%'
-                // OR itemLink like '%craigslist.%'
-                // OR itemLink like '%amazon.%'
-                // OR itemLink like '%pinterest.%'
-                // OR itemLink like '%twitter.%'
-                // OR itemLink like '%facebook.%'
-                // OR itemLink like '%sites.google.%'
-                // OR itemLink like '%books.google.%'
-                // OR itemLink like '%elasticsearch.columbian.com%'
-                // goodreads.com
-
-
-                // UPDATE homeopapeRSS
-                // SET alwaysFilter = 1
-                // WHERE itemLink like '%.ebay.%'
-                // OR itemLink like '%reddit.%'
-                // OR itemLink like '%craigslist.%'
-                // OR itemLink like '%amazon.%'
-                // OR itemLink like '%audible.%'
-                // OR itemLink like '%pinterest.%'
-                // OR itemLink like '%twitter.%'
-                // OR itemLink like '%facebook.%'
-                // OR itemLink like '%sites.google.%'
-                // OR itemLink like '%books.google.%'
-                // OR itemLink like '%elasticsearch.columbian.com%'
-                // goodreads.com
-
-                // // if (homeopapeItem.itemLink.includes("ebay.com")) {
-                // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
-
-                //   show = false;
-
-                // };
+                let show = !homeopapeItem.display;
 
                 let itemLink;
                 let itemID;
@@ -1319,7 +1222,7 @@ const FromTheHomeopape = (props) => {
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
 
                 return (
-                  <React.Fragment key={itemID}>
+                  <React.Fragment key={index}>
 
                     {show === true ?
 
@@ -1333,7 +1236,8 @@ const FromTheHomeopape = (props) => {
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
                               <a href={itemLink} target="_blank">{itemLink}</a><br />
-                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
+                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+                              {itemID}
                             </div>
 
                             <FormGroup className="text-center">
@@ -1369,163 +1273,11 @@ const FromTheHomeopape = (props) => {
 
             <React.Fragment>
 
-              <h3>In Text <span className="text-muted ms-2 small-text">{homeopapeItemsReviewText.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+              <h3>In Text/Mentioned <span className="text-muted ms-2 small-text">{homeopapeItemsReviewText.length} in category out of {homeopapeItemsReview.length} total to review.</span></h3>
 
               {homeopapeItemsReviewText.map((homeopapeItem, index) => {
 
-                // * One method to only display ten items in the list. -- 06/26/2021 MF
-                // if (index > 100) {
-
-                //   breakArray = true;
-
-                // };
-
-                // if (breakArray === true) {
-
-                //   return;
-
-                // };
-
-                // * One method to only display ten items in the list. -- 06/26/2021 MF
-                // if (displayUpdateItemsCount >= 100) {
-
-                //   console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
-                //   homeopapeItemsReview.splice(0, index);
-
-                // };
-
-                let show = true;
-
-                if (homeopapeItem.display === true) { // homeopapeItem.display === 1
-
-                  show = false;
-
-                  // } else if (displayUpdateItemsCount >= 100) {
-
-                  //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
-                  //   // homeopapeItemsReview.splice(0, index);
-                  //   show = false;
-
-                  // } else {
-
-                  //   displayUpdateItemsCount++;
-                  //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
-
-                };
-
-                // SELECT * FROM homeopapeRSS
-                // WHERE itemLink like '%.ebay.%'
-                // OR itemLink like '%reddit.%'
-                // OR itemLink like '%craigslist.%'
-                // OR itemLink like '%amazon.%'
-                // OR itemLink like '%pinterest.%'
-                // OR itemLink like '%twitter.%'
-                // OR itemLink like '%facebook.%'
-                // OR itemLink like '%sites.google.%'
-                // OR itemLink like '%books.google.%'
-                // OR itemLink like '%elasticsearch.columbian.com%'
-                // goodreads.com
-
-
-                // UPDATE homeopapeRSS
-                // SET alwaysFilter = 1
-                // WHERE itemLink like '%.ebay.%'
-                // OR itemLink like '%reddit.%'
-                // OR itemLink like '%craigslist.%'
-                // OR itemLink like '%amazon.%'
-                // OR itemLink like '%audible.%'
-                // OR itemLink like '%pinterest.%'
-                // OR itemLink like '%twitter.%'
-                // OR itemLink like '%facebook.%'
-                // OR itemLink like '%sites.google.%'
-                // OR itemLink like '%books.google.%'
-                // OR itemLink like '%elasticsearch.columbian.com%'
-                // goodreads.com
-
-                // // if (homeopapeItem.itemLink.includes("ebay.com")) {
-                // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
-
-                //   show = false;
-
-                // };
+                let show = !homeopapeItem.display;
 
                 let itemLink;
                 let itemID;
@@ -1560,7 +1312,7 @@ const FromTheHomeopape = (props) => {
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
 
                 return (
-                  <React.Fragment key={itemID}>
+                  <React.Fragment key={index}>
 
                     {show === true ?
 
@@ -1574,7 +1326,8 @@ const FromTheHomeopape = (props) => {
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
                               <a href={itemLink} target="_blank">{itemLink}</a><br />
-                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
+                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+                              {itemID}
                             </div>
 
                             <FormGroup className="text-center">
@@ -1610,163 +1363,11 @@ const FromTheHomeopape = (props) => {
 
             <React.Fragment>
 
-              <h3>Neither <span className="text-muted ms-2 small-text">{homeopapeItemsReviewNeither.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
+              <h3>Neither <span className="text-muted ms-2 small-text">{homeopapeItemsReviewNeither.length} in category out of {homeopapeItemsReview.length} total to review.</span></h3>
 
               {homeopapeItemsReviewNeither.map((homeopapeItem, index) => {
 
-                // * One method to only display ten items in the list. -- 06/26/2021 MF
-                // if (index > 100) {
-
-                //   breakArray = true;
-
-                // };
-
-                // if (breakArray === true) {
-
-                //   return;
-
-                // };
-
-                // * One method to only display ten items in the list. -- 06/26/2021 MF
-                // if (displayUpdateItemsCount >= 100) {
-
-                //   console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
-                //   homeopapeItemsReview.splice(0, index);
-
-                // };
-
-                let show = true;
-
-                if (homeopapeItem.display === true) { // homeopapeItem.display === 1
-
-                  show = false;
-
-                  // } else if (displayUpdateItemsCount >= 100) {
-
-                  //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
-                  //   // homeopapeItemsReview.splice(0, index);
-                  //   show = false;
-
-                  // } else {
-
-                  //   displayUpdateItemsCount++;
-                  //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
-
-                };
-
-                // SELECT * FROM homeopapeRSS
-                // WHERE itemLink like '%.ebay.%'
-                // OR itemLink like '%reddit.%'
-                // OR itemLink like '%craigslist.%'
-                // OR itemLink like '%amazon.%'
-                // OR itemLink like '%pinterest.%'
-                // OR itemLink like '%twitter.%'
-                // OR itemLink like '%facebook.%'
-                // OR itemLink like '%sites.google.%'
-                // OR itemLink like '%books.google.%'
-                // OR itemLink like '%elasticsearch.columbian.com%'
-                // goodreads.com
-
-
-                // UPDATE homeopapeRSS
-                // SET alwaysFilter = 1
-                // WHERE itemLink like '%.ebay.%'
-                // OR itemLink like '%reddit.%'
-                // OR itemLink like '%craigslist.%'
-                // OR itemLink like '%amazon.%'
-                // OR itemLink like '%audible.%'
-                // OR itemLink like '%pinterest.%'
-                // OR itemLink like '%twitter.%'
-                // OR itemLink like '%facebook.%'
-                // OR itemLink like '%sites.google.%'
-                // OR itemLink like '%books.google.%'
-                // OR itemLink like '%elasticsearch.columbian.com%'
-                // goodreads.com
-
-                // // if (homeopapeItem.itemLink.includes("ebay.com")) {
-                // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
-
-                //   show = false;
-
-                // };
-
-                // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
-
-                //   show = false;
-
-                // };
+                let show = !homeopapeItem.display;
 
                 let itemLink;
                 let itemID;
@@ -1801,7 +1402,7 @@ const FromTheHomeopape = (props) => {
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
 
                 return (
-                  <React.Fragment key={itemID}>
+                  <React.Fragment key={index}>
 
                     {show === true ?
 
@@ -1815,7 +1416,98 @@ const FromTheHomeopape = (props) => {
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
                               <a href={itemLink} target="_blank">{itemLink}</a><br />
-                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
+                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+                              {itemID}
+                            </div>
+
+                            <FormGroup className="text-center">
+                              <Alert color="info">{formattedPost}</Alert>
+                            </FormGroup>
+
+                          </React.Fragment>
+
+                          <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); setViewed(itemID, !homeopapeItem.viewed); }} >{homeopapeItem.display === true || homeopapeItem.display === 1 ? <React.Fragment>Undo Display</React.Fragment> : <React.Fragment>Display</React.Fragment>}</Button>
+                          <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Post</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
+
+                        </Col>
+
+                      </Row>
+
+                      : null}
+
+                  </React.Fragment>
+
+                );
+              })}
+
+              <hr />
+
+            </React.Fragment>
+
+            : null}
+
+
+          {isEmpty(homeopapeItemsReviewIncorrectContext) === false ?
+
+            <React.Fragment>
+
+              <h3>Incorrect Context <span className="text-muted ms-2 small-text">{homeopapeItemsReviewIncorrectContext.length} in category out of {homeopapeItemsReview.length} total to review.</span></h3>
+
+              {homeopapeItemsReviewIncorrectContext.map((homeopapeItem, index) => {
+
+                let show = !homeopapeItem.display;
+
+                let itemLink;
+                let itemID;
+                let param = "";
+                let regExp = "";
+
+                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+
+                  itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+
+                  // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+                  // * Google -- 06/26/2021 MF
+                  // * Removes everything after the ct= -- 06/26/2021 MF
+                  // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+                  param = "ct";
+                  regExp = new RegExp("[?&]" + param + "=.*$");
+                  itemLink = itemLink.replace(regExp, "");
+                  itemLink = itemLink.replace("%3F", "?");
+                  itemLink = itemLink.replace("%3D", "=");
+                  itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
+
+                };
+
+                // * Remove html tags from string. -- 06/26/2021 MF
+                // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
+                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
+
+                // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
+                // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
+                // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
+                // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.display", homeopapeItem.display);
+                // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
+
+                return (
+                  <React.Fragment key={index}>
+
+                    {show === true ?
+
+                      <Row className="mb-5">
+
+                        <Col xs="12">
+
+                          <React.Fragment>
+
+                            <div>
+                              {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
+                              {Parse(homeopapeItem.itemTitle)}<br />
+                              <a href={itemLink} target="_blank">{itemLink}</a><br />
+                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+                              {itemID}
                             </div>
 
                             <FormGroup className="text-center">
@@ -2042,7 +1734,7 @@ const FromTheHomeopape = (props) => {
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
 
                 return (
-                  <React.Fragment key={itemID}>
+                  <React.Fragment key={index}>
 
                     {show === true ?
 
@@ -2056,7 +1748,8 @@ const FromTheHomeopape = (props) => {
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
                               <a href={itemLink} target="_blank">{itemLink}</a><br />
-                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}
+                              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+                              {itemID}
                             </div>
 
                             <FormGroup className="text-center">
