@@ -116,27 +116,6 @@ const FromTheHomeopape = (props) => {
 
       {homeopapeItems.map((homeopapeItem, index) => {
 
-        // * One method to only display ten items in the list. -- 06/26/2021 MF
-        // if (index > 10) {
-
-        //   breakArray = true;
-
-        // };
-
-        // if (breakArray === true) {
-
-        //   return;
-
-        // };
-
-        // * One method to only display ten items in the list. -- 06/26/2021 MF
-        // if (displayItemsCount >= 10) {
-
-        //   console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
-        //   homeopapeItems.splice(0, index);
-
-        // };
-
         let show = true;
 
         if (homeopapeItem.display !== true) { // homeopapeItem.display !== 1
