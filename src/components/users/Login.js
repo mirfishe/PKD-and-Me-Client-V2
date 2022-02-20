@@ -403,7 +403,7 @@ const Login = (props) => {
             <FormGroup>
               <Label for="txtEmail">Email Address</Label>
               <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
-              {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
+              {isEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
@@ -413,7 +413,7 @@ const Login = (props) => {
                 <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
                 {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
               </InputGroup>
-              {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
+              {isEmpty(errPassword) === false ? <Alert color="danger">{errPassword}</Alert> : null}
             </FormGroup>
 
             <ModalFooter>

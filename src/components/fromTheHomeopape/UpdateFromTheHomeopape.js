@@ -52,7 +52,7 @@ const FromTheHomeopape = (props) => {
   // const [cbxPosted, setCbxPosted] = useState(false);
 
   // let breakArray = false;
-  let displayItemsCount = 0;
+  // let displayItemsCount = 0;
   // let displayUpdateItemsCount = 0;
 
 
@@ -127,56 +127,56 @@ const FromTheHomeopape = (props) => {
     };
 
 
-    let param = "";
-    let regExp = "";
-    // let newURL = decodeURI(txtArticleURL);
-    let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=");
-    // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "=");
+    // let param = "";
+    // let regExp = "";
+    // // let newURL = decodeURI(txtArticleURL);
+    // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=");
+    // // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "=");
 
-    // if (/*newURL.includes("\%3F") === true || newURL.includes("\%3f") === true ||*/ newURL.includes("www.heavymetal.com")) {
+    // // if (/*newURL.includes("\%3F") === true || newURL.includes("\%3f") === true ||*/ newURL.includes("www.heavymetal.com")) {
 
-    //   console.log(componentName, getDateTime(), "formatPost txtArticleURL.replaceAll(\"\%3F\", \"?\")", txtArticleURL.replaceAll("\%3F", "?"));
-    //   console.log(componentName, getDateTime(), "formatPost txtArticleURLtxtArticleURL.replaceAll(\"\%3F\", \"?\").replaceAll(\"\%3f\", \"?\").replaceAll(\"\%26\", \"&\").replaceAll(\"\%3D\", \"=\").replaceAll(\"\%3d\", \"=\")", txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "="));
-    //   console.log(componentName, getDateTime(), "formatPost newURL", newURL);
-    //   console.log(componentName, getDateTime(), "formatPost decodeURI(txtArticleURL)", decodeURI(txtArticleURL));
-    //   console.log(componentName, getDateTime(), "formatPost decodeURI(newURL)", decodeURI(newURL));
-    // };
+    // //   console.log(componentName, getDateTime(), "formatPost txtArticleURL.replaceAll(\"\%3F\", \"?\")", txtArticleURL.replaceAll("\%3F", "?"));
+    // //   console.log(componentName, getDateTime(), "formatPost txtArticleURLtxtArticleURL.replaceAll(\"\%3F\", \"?\").replaceAll(\"\%3f\", \"?\").replaceAll(\"\%26\", \"&\").replaceAll(\"\%3D\", \"=\").replaceAll(\"\%3d\", \"=\")", txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "="));
+    // //   console.log(componentName, getDateTime(), "formatPost newURL", newURL);
+    // //   console.log(componentName, getDateTime(), "formatPost decodeURI(txtArticleURL)", decodeURI(txtArticleURL));
+    // //   console.log(componentName, getDateTime(), "formatPost decodeURI(newURL)", decodeURI(newURL));
+    // // };
 
-    // * Remove fbclid= -- 06/26/2021 MF
-    // * FaceBook analytics and tracking -- 06/26/2021 MF
-    // * Removes everything after the fbclid= -- 06/26/2021 MF
-    // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-    param = "fbclid";
-    regExp = new RegExp("[?&]" + param + "=.*$");
-    newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
+    // // * Remove fbclid= -- 06/26/2021 MF
+    // // * FaceBook analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the fbclid= -- 06/26/2021 MF
+    // // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+    // param = "fbclid";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
-    // * Remove utm_medium= -- 06/26/2021 MF
-    // * Google Analytics and tracking -- 06/26/2021 MF
-    // * Removes everything after the utm_medium= -- 06/26/2021 MF
-    param = "utm_medium";
-    regExp = new RegExp("[?&]" + param + "=.*$");
-    newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
+    // // * Remove utm_medium= -- 06/26/2021 MF
+    // // * Google Analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the utm_medium= -- 06/26/2021 MF
+    // param = "utm_medium";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
-    // * Remove utm_campaign= -- 06/26/2021 MF
-    // * Google Analytics and tracking -- 06/26/2021 MF
-    // * Removes everything after the utm_campaign= -- 06/26/2021 MF
-    param = "utm_campaign";
-    regExp = new RegExp("[?&]" + param + "=.*$");
-    newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
+    // // * Remove utm_campaign= -- 06/26/2021 MF
+    // // * Google Analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the utm_campaign= -- 06/26/2021 MF
+    // param = "utm_campaign";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
-    // * Remove utm_source= -- 06/26/2021 MF
-    // * Google Analytics and tracking -- 06/26/2021 MF
-    // * Removes everything after the utm_source= -- 06/26/2021 MF
-    param = "utm_source";
-    regExp = new RegExp("[?&]" + param + "=.*$");
-    newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
+    // // * Remove utm_source= -- 06/26/2021 MF
+    // // * Google Analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the utm_source= -- 06/26/2021 MF
+    // param = "utm_source";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
 
-    post = post + newURL;
+    post = post + txtArticleURL;
 
     // setFormattedPost(post);
 
@@ -377,43 +377,43 @@ const FromTheHomeopape = (props) => {
 
       };
 
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("wrestling") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("wrestling") === true) {
 
         incorrectContext = true;
 
       };
 
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("running") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("running") === true) {
 
         incorrectContext = true;
 
       };
 
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("marathon") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("marathon") === true) {
 
         incorrectContext = true;
 
       };
 
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputation") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputation") === true) {
 
         incorrectContext = true;
 
       };
 
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputee") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputee") === true) {
 
         incorrectContext = true;
 
       };
 
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("sprinter") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("sprinter") === true) {
 
         incorrectContext = true;
 
       };
 
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLink)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prostheses") === true) {
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prostheses") === true) {
 
         incorrectContext = true;
 
@@ -469,9 +469,9 @@ const FromTheHomeopape = (props) => {
 
   const getNews = () => {
 
-    let url = baseURL + "fromthehomeopape/";
-    // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // let url = baseURL + "fromthehomeopape/top/10";
+    let url = baseURL + "fromthehomeopape/top/50";
+    // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
+    // // let url = baseURL + "fromthehomeopape/top/10";
 
     fetch(url, {
       method: "GET",
@@ -511,7 +511,7 @@ const FromTheHomeopape = (props) => {
       .catch((error) => {
         // console.error(componentName, getDateTime(), "getNews error", error);
 
-        setErrorMessage(error.name + ": " + error.message);
+        addErrorMessage(error.name + ": " + error.message);
 
         // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
@@ -564,7 +564,7 @@ const FromTheHomeopape = (props) => {
       .catch((error) => {
         // console.error(componentName, getDateTime(), "getNewsReview error", error);
 
-        setErrorMessage(error.name + ": " + error.message);
+        addErrorMessage(error.name + ": " + error.message);
 
         // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
@@ -1063,71 +1063,55 @@ const FromTheHomeopape = (props) => {
 
           {homeopapeItems.map((homeopapeItem, index) => {
 
-            // * One method to only display ten items in the list. -- 06/26/2021 MF
-            // if (index > 20) {
+            // let show = true;
 
-            //   breakArray = true;
+            // if (homeopapeItem.display !== true) { // homeopapeItem.display !== 1
 
-            // };
+            //   show = false;
 
-            // if (breakArray === true) {
+            // } else if (displayItemsCount >= 20) {
 
-            //   return;
+            //   // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+            //   // homeopapeItems.splice(0, index);
+            //   show = false;
 
-            // };
+            // } else {
 
-            // * One method to only display ten items in the list. -- 06/26/2021 MF
-            // if (displayItemsCount >= 20) {
-
-            //   console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
-            //   homeopapeItems.splice(0, index);
+            //   displayItemsCount++;
+            //   // console.log(componentName, getDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
 
             // };
 
-            let show = true;
-
-            if (homeopapeItem.display !== true) { // homeopapeItem.display !== 1
-
-              show = false;
-
-            } else if (displayItemsCount >= 20) {
-
-              // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
-              // homeopapeItems.splice(0, index);
-              show = false;
-
-            } else {
-
-              displayItemsCount++;
-              // console.log(componentName, getDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
-
-            };
-
-            let itemLink;
+            // let itemLink;
             let itemID;
-            let param = "";
-            let regExp = "";
+            // let param = "";
+            // let regExp = "";
 
-            if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+            if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemID) === false) {
 
-              itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
-
-              // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
-              // * Google -- 06/26/2021 MF
-              // * Removes everything after the ct= -- 06/26/2021 MF
-              // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-              param = "ct";
-              regExp = new RegExp("[?&]" + param + "=.*$");
-              itemLink = itemLink.replace(regExp, "");
-              itemLink = itemLink.replace("%3F", "?");
-              itemLink = itemLink.replace("%3D", "=");
               itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
             };
 
+            // if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+
+            //   itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+
+            //   // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+            //   // * Google -- 06/26/2021 MF
+            //   // * Removes everything after the ct= -- 06/26/2021 MF
+            //   // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+            //   param = "ct";
+            //   regExp = new RegExp("[?&]" + param + "=.*$");
+            //   itemLink = itemLink.replace(regExp, "");
+            //   itemLink = itemLink.replace("%3F", "?");
+            //   itemLink = itemLink.replace("%3D", "=");
+
+            // };
+
             // * Remove html tags from string. -- 06/26/2021 MF
             // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
+            let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
             // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
             // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
@@ -1138,38 +1122,38 @@ const FromTheHomeopape = (props) => {
             return (
               <React.Fragment key={index}>
 
-                {show === true ?
+                {/* {show === true ? */}
 
-                  <Row className="mb-5">
+                <Row className="mb-5">
 
-                    <Col xs="12">
+                  <Col xs="12">
 
-                      <React.Fragment>
+                    <React.Fragment>
 
-                        <div>
-                          {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
-                          {Parse(homeopapeItem.itemTitle)}<br />
-                          <a href={itemLink} target="_blank">{itemLink}</a><br />
-                          ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
-                          {itemID}
-                        </div>
+                      <div>
+                        {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
+                        {Parse(homeopapeItem.itemTitle)}<br />
+                        <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
+                        ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+                        {itemID}
+                      </div>
 
-                        <FormGroup className="text-center">
-                          <Alert color="info">{formattedPost}</Alert>
-                        </FormGroup>
+                      <FormGroup className="text-center">
+                        <Alert color="info">{formattedPost}</Alert>
+                      </FormGroup>
 
-                      </React.Fragment>
+                    </React.Fragment>
 
-                      <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); setViewed(itemID, !homeopapeItem.viewed); }} >{homeopapeItem.display === true || homeopapeItem.display === 1 ? <React.Fragment>Undo Display</React.Fragment> : <React.Fragment>Display</React.Fragment>}</Button>
-                      <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Post</React.Fragment>}</Button>
-                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
-                      <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
+                    <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); setViewed(itemID, !homeopapeItem.viewed); }} >{homeopapeItem.display === true || homeopapeItem.display === 1 ? <React.Fragment>Undo Display</React.Fragment> : <React.Fragment>Display</React.Fragment>}</Button>
+                    <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Post</React.Fragment>}</Button>
+                    <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
+                    <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
-                    </Col>
+                  </Col>
 
-                  </Row>
+                </Row>
 
-                  : null}
+                {/* : null} */}
 
               </React.Fragment>
             );
@@ -1189,31 +1173,36 @@ const FromTheHomeopape = (props) => {
 
                 let show = !homeopapeItem.display;
 
-                let itemLink;
+                // let itemLink;
                 let itemID;
-                let param = "";
-                let regExp = "";
+                // let param = "";
+                // let regExp = "";
 
-                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemID) === false) {
 
-                  itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
-
-                  // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
-                  // * Google -- 06/26/2021 MF
-                  // * Removes everything after the ct= -- 06/26/2021 MF
-                  // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-                  param = "ct";
-                  regExp = new RegExp("[?&]" + param + "=.*$");
-                  itemLink = itemLink.replace(regExp, "");
-                  itemLink = itemLink.replace("%3F", "?");
-                  itemLink = itemLink.replace("%3D", "=");
                   itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
                 };
 
+                // if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+
+                //   itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+
+                //   // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+                //   // * Google -- 06/26/2021 MF
+                //   // * Removes everything after the ct= -- 06/26/2021 MF
+                //   // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+                //   param = "ct";
+                //   regExp = new RegExp("[?&]" + param + "=.*$");
+                //   itemLink = itemLink.replace(regExp, "");
+                //   itemLink = itemLink.replace("%3F", "?");
+                //   itemLink = itemLink.replace("%3D", "=");
+
+                // };
+
                 // * Remove html tags from string. -- 06/26/2021 MF
                 // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
+                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
@@ -1235,7 +1224,7 @@ const FromTheHomeopape = (props) => {
                             <div>
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
-                              <a href={itemLink} target="_blank">{itemLink}</a><br />
+                              <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
                               ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
                               {itemID}
                             </div>
@@ -1279,31 +1268,36 @@ const FromTheHomeopape = (props) => {
 
                 let show = !homeopapeItem.display;
 
-                let itemLink;
+                // let itemLink;
                 let itemID;
-                let param = "";
-                let regExp = "";
+                // let param = "";
+                // let regExp = "";
 
-                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemID) === false) {
 
-                  itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
-
-                  // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
-                  // * Google -- 06/26/2021 MF
-                  // * Removes everything after the ct= -- 06/26/2021 MF
-                  // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-                  param = "ct";
-                  regExp = new RegExp("[?&]" + param + "=.*$");
-                  itemLink = itemLink.replace(regExp, "");
-                  itemLink = itemLink.replace("%3F", "?");
-                  itemLink = itemLink.replace("%3D", "=");
                   itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
                 };
 
+                // if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+
+                //   itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+
+                //   // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+                //   // * Google -- 06/26/2021 MF
+                //   // * Removes everything after the ct= -- 06/26/2021 MF
+                //   // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+                //   param = "ct";
+                //   regExp = new RegExp("[?&]" + param + "=.*$");
+                //   itemLink = itemLink.replace(regExp, "");
+                //   itemLink = itemLink.replace("%3F", "?");
+                //   itemLink = itemLink.replace("%3D", "=");
+
+                // };
+
                 // * Remove html tags from string. -- 06/26/2021 MF
                 // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
+                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
@@ -1325,7 +1319,7 @@ const FromTheHomeopape = (props) => {
                             <div>
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
-                              <a href={itemLink} target="_blank">{itemLink}</a><br />
+                              <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
                               ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
                               {itemID}
                             </div>
@@ -1369,31 +1363,36 @@ const FromTheHomeopape = (props) => {
 
                 let show = !homeopapeItem.display;
 
-                let itemLink;
+                // let itemLink;
                 let itemID;
-                let param = "";
-                let regExp = "";
+                // let param = "";
+                // let regExp = "";
 
-                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemID) === false) {
 
-                  itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
-
-                  // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
-                  // * Google -- 06/26/2021 MF
-                  // * Removes everything after the ct= -- 06/26/2021 MF
-                  // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-                  param = "ct";
-                  regExp = new RegExp("[?&]" + param + "=.*$");
-                  itemLink = itemLink.replace(regExp, "");
-                  itemLink = itemLink.replace("%3F", "?");
-                  itemLink = itemLink.replace("%3D", "=");
                   itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
                 };
 
+                // if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+
+                //   itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+
+                //   // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+                //   // * Google -- 06/26/2021 MF
+                //   // * Removes everything after the ct= -- 06/26/2021 MF
+                //   // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+                //   param = "ct";
+                //   regExp = new RegExp("[?&]" + param + "=.*$");
+                //   itemLink = itemLink.replace(regExp, "");
+                //   itemLink = itemLink.replace("%3F", "?");
+                //   itemLink = itemLink.replace("%3D", "=");
+
+                // };
+
                 // * Remove html tags from string. -- 06/26/2021 MF
                 // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
+                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
@@ -1415,7 +1414,7 @@ const FromTheHomeopape = (props) => {
                             <div>
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
-                              <a href={itemLink} target="_blank">{itemLink}</a><br />
+                              <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
                               ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
                               {itemID}
                             </div>
@@ -1459,31 +1458,36 @@ const FromTheHomeopape = (props) => {
 
                 let show = !homeopapeItem.display;
 
-                let itemLink;
+                // let itemLink;
                 let itemID;
-                let param = "";
-                let regExp = "";
+                // let param = "";
+                // let regExp = "";
 
-                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemID) === false) {
 
-                  itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
-
-                  // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
-                  // * Google -- 06/26/2021 MF
-                  // * Removes everything after the ct= -- 06/26/2021 MF
-                  // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-                  param = "ct";
-                  regExp = new RegExp("[?&]" + param + "=.*$");
-                  itemLink = itemLink.replace(regExp, "");
-                  itemLink = itemLink.replace("%3F", "?");
-                  itemLink = itemLink.replace("%3D", "=");
                   itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
                 };
 
+                // if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+
+                //   itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+
+                //   // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+                //   // * Google -- 06/26/2021 MF
+                //   // * Removes everything after the ct= -- 06/26/2021 MF
+                //   // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+                //   param = "ct";
+                //   regExp = new RegExp("[?&]" + param + "=.*$");
+                //   itemLink = itemLink.replace(regExp, "");
+                //   itemLink = itemLink.replace("%3F", "?");
+                //   itemLink = itemLink.replace("%3D", "=");
+
+                // };
+
                 // * Remove html tags from string. -- 06/26/2021 MF
                 // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
+                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
@@ -1505,7 +1509,7 @@ const FromTheHomeopape = (props) => {
                             <div>
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
-                              <a href={itemLink} target="_blank">{itemLink}</a><br />
+                              <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
                               ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
                               {itemID}
                             </div>
@@ -1701,31 +1705,36 @@ const FromTheHomeopape = (props) => {
 
                 // };
 
-                let itemLink;
+                // let itemLink;
                 let itemID;
-                let param = "";
-                let regExp = "";
+                // let param = "";
+                // let regExp = "";
 
-                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+                if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemID) === false) {
 
-                  itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
-
-                  // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
-                  // * Google -- 06/26/2021 MF
-                  // * Removes everything after the ct= -- 06/26/2021 MF
-                  // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-                  param = "ct";
-                  regExp = new RegExp("[?&]" + param + "=.*$");
-                  itemLink = itemLink.replace(regExp, "");
-                  itemLink = itemLink.replace("%3F", "?");
-                  itemLink = itemLink.replace("%3D", "=");
                   itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
                 };
 
+                // if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+
+                //   itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+
+                //   // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+                //   // * Google -- 06/26/2021 MF
+                //   // * Removes everything after the ct= -- 06/26/2021 MF
+                //   // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+                //   param = "ct";
+                //   regExp = new RegExp("[?&]" + param + "=.*$");
+                //   itemLink = itemLink.replace(regExp, "");
+                //   itemLink = itemLink.replace("%3F", "?");
+                //   itemLink = itemLink.replace("%3D", "=");
+
+                // };
+
                 // * Remove html tags from string. -- 06/26/2021 MF
                 // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
-                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), itemLink, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
+                let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
                 // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
@@ -1747,7 +1756,7 @@ const FromTheHomeopape = (props) => {
                             <div>
                               {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
                               {Parse(homeopapeItem.itemTitle)}<br />
-                              <a href={itemLink} target="_blank">{itemLink}</a><br />
+                              <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
                               ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
                               {itemID}
                             </div>

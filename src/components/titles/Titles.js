@@ -424,8 +424,8 @@ const Titles = (props) => {
       <Row>
         <Col className="text-center" xs="12">
 
-          {/* {errCategoryMessage !== "" ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
-          {errTitleMessage !== "" ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+          {/* {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
+          {isEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
 
         </Col>
       </Row>

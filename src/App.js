@@ -36,6 +36,7 @@ import AddComment from "./components/comments/AddComment";
 import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
 import Comments from "./components/comments/Comments";
 import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
+import Amazon from "./components/amazon/Amazon";
 import Terms from "./components/terms/Terms";
 import BrokenLinks from "./components/reports/BrokenLinks";
 import ComputerLogs from "./components/reports/ComputerLogs";
@@ -816,6 +817,10 @@ function App() {
             </NavItem>
 
             <NavItem>
+              <NavLink tag={Link} to="/amazon"><NavbarText>Amazon</NavbarText></NavLink>
+            </NavItem>
+
+            <NavItem>
               <NavLink tag={Link} to="/terms"><NavbarText>Terms</NavbarText></NavLink>
             </NavItem>
 
@@ -1025,6 +1030,8 @@ function App() {
               <Route path="/comments" element={<Comments />} />
 
               <Route path="/titleSuggestions" element={<TitleSuggestions />} />
+
+              <Route path="/amazon" element={<Amazon />} />
 
               <Route path="/terms" element={<Terms />} />
 

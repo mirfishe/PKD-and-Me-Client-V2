@@ -88,7 +88,7 @@ const Terms = (props) => {
       .catch((error) => {
         // console.error(componentName, getDateTime(), "getTerms error", error);
 
-        setErrorMessage(error.name + ": " + error.message);
+        addErrorMessage(error.name + ": " + error.message);
 
         // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
@@ -144,7 +144,7 @@ const Terms = (props) => {
       .catch((error) => {
         // console.error(componentName, getDateTime(), "getTerm error", error);
 
-        setErrorMessage(error.name + ": " + error.message);
+        addErrorMessage(error.name + ": " + error.message);
 
         // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 

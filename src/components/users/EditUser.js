@@ -399,25 +399,25 @@ const EditUser = (props) => {
             <FormGroup>
               <Label for="txtFirstName">First Name</Label>
               <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtFirstName(event.target.value); }} />
-              {errFirstName !== "" ? <Alert color="danger">{errFirstName}</Alert> : null}
+              {isEmpty(errFirstName) === false ? <Alert color="danger">{errFirstName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtLastName">Last Name</Label>
               <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtLastName(event.target.value); }} />
-              {errLastName !== "" ? <Alert color="danger">{errLastName}</Alert> : null}
+              {isEmpty(errLastName) === false ? <Alert color="danger">{errLastName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtEmail">Email Address</Label>
               <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
-              {errEmail !== "" ? <Alert color="danger">{errEmail}</Alert> : null}
+              {isEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtPassword">Password</Label>
               <Input type="password" id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
-              {errPassword !== "" ? <Alert color="danger">{errPassword}</Alert> : null}
+              {isEmpty(errPassword) === false ? <Alert color="danger">{errPassword}</Alert> : null}
             </FormGroup>
 
             <ModalFooter>
