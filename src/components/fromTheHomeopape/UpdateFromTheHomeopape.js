@@ -257,6 +257,18 @@ const FromTheHomeopape = (props) => {
 
       };
 
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick, philip") === true) {
+
+        inTitle = true;
+
+      };
+
+      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick, philip") === true) {
+
+        inText = true;
+
+      };
+
       if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip dick") === true) {
 
         inTitle = true;
