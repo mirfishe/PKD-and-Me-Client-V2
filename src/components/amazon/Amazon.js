@@ -45,6 +45,7 @@ const Amazon = () => {
   const [amazonItemsNoCategory, setAmazonItemsNoCategory] = useState([]);
   const [amazonItemsIncorrectContext, setAmazonItemsIncorrectContext] = useState([]);
 
+  // SELECT * FROM logs WHERE componentName = 'amazon-controller'
 
   // INSERT INTO amazon (ASIN, titleName, authorName, publicationDate, imageName, textLinkFull)
   // SELECT DISTINCT ASIN, titleName, authorName, publicationDate, imageName, textLinkFull FROM amazonImport
@@ -64,11 +65,25 @@ const Amazon = () => {
   // HAVING COUNT(*) > 1)
   // ORDER BY amazon.ASIN, amazonImport.createDate
 
+  // --SELECT amazonImport.ASIN, amazonSource.ASIN, amazonImport.publicationDate, amazonSource.publicationDate
+  // -- FROM amazonImport
+  // UPDATE amazonImport
+  // INNER JOIN amazonImport AS amazonSource ON amazonImport.ASIN = amazonSource.ASIN AND amazonSource.publicationDate IS NOT NULL
+  // SET amazonImport.publicationDate = amazonSource.publicationDate
+  // WHERE amazonImport.publicationDate IS NULL
+
+  // --SELECT amazonImport.ASIN, amazonSource.ASIN, amazonImport.titleName, amazonSource.titleName
+  // -- FROM amazonImport
+  // UPDATE amazonImport
+  // INNER JOIN amazonImport AS amazonSource ON amazonImport.ASIN = amazonSource.ASIN AND amazonSource.titleName IS NOT NULL
+  // SET amazonImport.titleName = amazonSource.titleName
+  // WHERE amazonImport.titleName IS NULL
+
 
   const filterAmazonItems = (amazonItems) => {
     // console.log(componentName, getDateTime(), "filterAmazonItems amazonItems", amazonItems);
 
-    let newAmazonItems = [];
+    let newAmazonItems = [...amazonItems];
     let newAmazonItemsPhilipKDick = [];
     let newAmazonItemsBladeRunner = [];
     let newAmazonItemsTotalRecall = [];
@@ -611,7 +626,7 @@ const Amazon = () => {
       <Row>
         <Col xs="12">
 
-          <a href="#" onClick={(event) => { setAmazonItemsCategory("allItems"); }}>All Items</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("PhilipKDick"); }}>Philip K. Dick</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("BladeRunner"); }}>Blade Runner</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TotalRecall"); }}>Total Recall</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("MinorityReport"); }}>Minority Report</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TMITHC"); }}>TMITHC</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("IncorrectContext"); }}>Incorrect Context</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("NoCategory"); }}>No Category</a>
+          <a href="#" onClick={(event) => { setAmazonItemsCategory("AllItems"); }}>All Items</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("PhilipKDick"); }}>Philip K. Dick</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("BladeRunner"); }}>Blade Runner</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TotalRecall"); }}>Total Recall</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("MinorityReport"); }}>Minority Report</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TMITHC"); }}>TMITHC</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("IncorrectContext"); }}>Incorrect Context</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("NoCategory"); }}>No Category</a>
 
         </Col>
       </Row>
@@ -624,7 +639,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Philip K. Dick</h5>
+              <h5 className="text-center">Amazon Items: Philip K. Dick <span className="text-muted ms-2 small-text">{amazonItemsPhilipKDick.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -715,7 +730,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Blade Runner</h5>
+              <h5 className="text-center">Amazon Items: Blade Runner <span className="text-muted ms-2 small-text">{amazonItemsBladeRunner.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -806,7 +821,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Total Recall</h5>
+              <h5 className="text-center">Amazon Items: Total Recall <span className="text-muted ms-2 small-text">{amazonItemsTotalRecall.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -897,7 +912,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Minority Report</h5>
+              <h5 className="text-center">Amazon Items: Minority Report <span className="text-muted ms-2 small-text">{amazonItemsMinorityReport.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -988,7 +1003,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: TMITHC</h5>
+              <h5 className="text-center">Amazon Items: TMITHC <span className="text-muted ms-2 small-text">{amazonItemsTMITHC.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -1079,7 +1094,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Incorrect Context</h5>
+              <h5 className="text-center">Amazon Items: Incorrect Context <span className="text-muted ms-2 small-text">{amazonItemsIncorrectContext.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -1170,7 +1185,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: No Category</h5>
+              <h5 className="text-center">Amazon Items: No Category <span className="text-muted ms-2 small-text">{amazonItemsNoCategory.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -1261,7 +1276,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items</h5>
+              <h5 className="text-center">Amazon Items <span className="text-muted ms-2 small-text">{amazonItems.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
