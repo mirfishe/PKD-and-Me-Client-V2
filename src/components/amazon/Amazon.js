@@ -65,19 +65,33 @@ const Amazon = () => {
   // HAVING COUNT(*) > 1)
   // ORDER BY amazon.ASIN, amazonImport.createDate
 
-  // --SELECT amazonImport.ASIN, amazonSource.ASIN, amazonImport.publicationDate, amazonSource.publicationDate
-  // -- FROM amazonImport
-  // UPDATE amazonImport
-  // INNER JOIN amazonImport AS amazonSource ON amazonImport.ASIN = amazonSource.ASIN AND amazonSource.publicationDate IS NOT NULL
-  // SET amazonImport.publicationDate = amazonSource.publicationDate
-  // WHERE amazonImport.publicationDate IS NULL
+  // -- SELECT amazonImport.ASIN, amazonSource.ASIN, amazonImport.publicationDate, amazonSource.publicationDate;
+  // -- FROM amazonImport;
+  // -- UPDATE amazonImport
+  // INNER JOIN amazonImport AS amazonSource ON amazonImport.ASIN = amazonSource.ASIN AND amazonSource.publicationDate IS NOT NULL;
+  // -- SET amazonImport.publicationDate = amazonSource.publicationDate
+  // WHERE amazonImport.publicationDate IS NULL;
 
-  // --SELECT amazonImport.ASIN, amazonSource.ASIN, amazonImport.titleName, amazonSource.titleName
+  // -- SELECT amazonImport.ASIN, amazonSource.ASIN, amazonImport.titleName, amazonSource.titleName
   // -- FROM amazonImport
-  // UPDATE amazonImport
+  // -- UPDATE amazonImport
   // INNER JOIN amazonImport AS amazonSource ON amazonImport.ASIN = amazonSource.ASIN AND amazonSource.titleName IS NOT NULL
-  // SET amazonImport.titleName = amazonSource.titleName
+  // -- SET amazonImport.titleName = amazonSource.titleName
   // WHERE amazonImport.titleName IS NULL
+
+  // -- SELECT amazon.ASIN, amazonSource.ASIN, amazon.publicationDate, amazonSource.publicationDate
+  // -- FROM amazon
+  // -- UPDATE amazon
+  // INNER JOIN amazonImport AS amazonSource ON amazon.ASIN = amazonSource.ASIN AND amazonSource.publicationDate IS NOT NULL
+  // -- SET amazon.publicationDate = amazonSource.publicationDate
+  // WHERE amazon.publicationDate IS NULL
+
+  // -- SELECT amazon.ASIN, amazonSource.ASIN, amazon.titleName, amazonSource.titleName
+  // -- FROM amazon
+  // -- UPDATE amazon
+  // INNER JOIN amazonImport AS amazonSource ON amazon.ASIN = amazonSource.ASIN AND amazonSource.titleName IS NOT NULL
+  // -- SET amazon.titleName = amazonSource.titleName
+  // WHERE amazon.titleName IS NULL
 
 
   const filterAmazonItems = (amazonItems) => {
