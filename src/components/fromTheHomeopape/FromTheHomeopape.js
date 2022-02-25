@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
+import { Alert, Container, Col, Row } from "reactstrap";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
@@ -11,13 +9,10 @@ const FromTheHomeopape = (props) => {
 
   const componentName = "FromTheHomeopape";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
-  const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
+  // const sessionToken = useSelector(state => state.user.sessionToken);
+  // // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
+  // const admin = useSelector(state => state.user.admin);
+  // // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -44,14 +39,14 @@ const FromTheHomeopape = (props) => {
   // console.log(componentName, getDateTime(), "props.headerText", props.headerText);
 
   // let breakArray = false;
-  let displayItemsCount = 0;
+  // let displayItemsCount = 0;
 
 
   const getNews = () => {
 
-    let url = baseURL + "fromthehomeopape/";
-    // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // let url = baseURL + "fromthehomeopape/top/10/10";
+    let url = baseURL + "fromthehomeopape/top/20";
+    // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
+    // // let url = baseURL + "fromthehomeopape/top/10/10";
 
     fetch(url, {
       method: "GET",
@@ -89,7 +84,7 @@ const FromTheHomeopape = (props) => {
       .catch((error) => {
         // console.error(componentName, getDateTime(), "getNews error", error);
 
-        setErrorMessage(error.name + ": " + error.message);
+        addErrorMessage(error.name + ": " + error.message);
 
         // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
@@ -107,82 +102,91 @@ const FromTheHomeopape = (props) => {
 
   return (
     <Container className="mt-4">
-      <Row className="justify-content-center">
-        <Col className="text-center" xs="12">
-          {isEmpty(errorMessage) === false ? <Alert color="danger">{errorMessage}</Alert> : null}
-          {isEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
-        </Col>
-      </Row>
 
-      {homeopapeItems.map((homeopapeItem, index) => {
+      {isEmpty(homeopapeItems) === false ?
 
-        let show = true;
+        <React.Fragment>
 
-        if (homeopapeItem.display !== true) { // homeopapeItem.display !== 1
+          <Row className="justify-content-center">
+            <Col className="text-center" xs="12">
+              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+              {isEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
+            </Col>
+          </Row>
 
-          show = false;
+          {homeopapeItems.map((homeopapeItem, index) => {
 
-        } else if (displayItemsCount >= 20) {
+            // let show = true;
 
-          // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
-          // homeopapeItems.splice(0, index);
-          show = false;
+            // if (homeopapeItem.display !== true) { // homeopapeItem.display !== 1
 
-        } else {
+            //   show = false;
 
-          displayItemsCount++;
-          // console.log(componentName, getDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
+            //   } else if (displayItemsCount >= 20) {
 
-        };
+            //     // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
+            //     // homeopapeItems.splice(0, index);
+            //     show = false;
 
-        let itemLink;
-        let itemID;
-        let param = "";
-        let regExp = "";
+            //   } else {
 
-        if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
+            //     displayItemsCount++;
+            //     // console.log(componentName, getDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
 
-          itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
+            // };
 
-          // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
-          // * Google -- 06/26/2021 MF
-          // * Removes everything after the ct= -- 06/26/2021 MF
-          // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-          param = "ct";
-          regExp = new RegExp("[?&]" + param + "=.*$");
-          itemLink = itemLink.replace(regExp, "");
-          itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
+            // let itemLink;
+            // // let itemID;
+            // let param = "";
+            // let regExp = "";
 
-        };
+            // if (isEmpty(homeopapeItem) === false && isEmpty(homeopapeItem.itemLink) === false) {
 
-        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
-        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
-        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
-        // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
+            //   itemLink = homeopapeItem.itemLink.replaceAll("https://www.google.com/url?rct=j&sa=t&url=", "");
 
-        return (
-          <React.Fragment key={index}>
+            //   // * Remove &ct=ga&cd=CAIyGjFhOTgyNzMwYWNlOTE1ZDI6Y29tOmVuOlVT&usg=AFQjCNEhFPEPL8--91umtz1jWdrmBW2JZQ -- 06/26/2021 MF
+            //   // * Google -- 06/26/2021 MF
+            //   // * Removes everything after the ct= -- 06/26/2021 MF
+            //   // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+            //   param = "ct";
+            //   regExp = new RegExp("[?&]" + param + "=.*$");
+            //   itemLink = itemLink.replace(regExp, "");
+            //   // itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
-            {show === true ?
+            // };
 
-              <Row className="mt-3">
-                <Col xs="12">
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
+            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
 
-                  {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
+            return (
+              <React.Fragment key={index}>
 
-                  <a href={itemLink} target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
+                {/* {show === true ? */}
 
-                  ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
+                <Row className="mt-3">
+                  <Col xs="12">
 
-                </Col>
-              </Row>
+                    {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
 
-              : null}
+                    <a href={homeopapeItem.itemLinkFormatted} target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
 
-          </React.Fragment>
-        );
-      })}
+                    ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
+
+                  </Col>
+                </Row>
+
+                {/* : null} */}
+
+              </React.Fragment>
+            );
+          })}
+
+        </React.Fragment>
+
+        : null}
 
     </Container>
   );

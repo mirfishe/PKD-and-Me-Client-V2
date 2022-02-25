@@ -599,7 +599,7 @@ const Title = (props) => {
                   <React.Fragment>
 
                     {isEmpty(userReviewItem.read) === false && userReviewItem.read === true && (isEmpty(userReviewItem.dateRead) === true) ? <p>Read</p> : null}
-                    {isEmpty(userReviewItem.dateRead) === false && userReviewItem.dateRead !== "" ? <p>Read on {displayDate(userReviewItem.dateRead)}</p> : null}
+                    {isEmpty(userReviewItem.dateRead) === false ? <p>Read on {displayDate(userReviewItem.dateRead)}</p> : null}
 
                   </React.Fragment>
 

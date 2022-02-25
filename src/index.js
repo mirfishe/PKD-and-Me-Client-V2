@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.css";
+import { isEmpty, displayValue, getDateTime } from "./utilities/SharedFunctions";
 import './index.css';
 import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";
@@ -24,7 +25,7 @@ import { Provider } from 'react-redux';
 // console.log(componentName, "packageJSON.copyrightYear", packageJSON.copyrightYear);
 
 // * Google Tag Manager -- 03/06/2021 MF
-if (applicationSettings.tagManagerArgs.gtmId !== "") {
+if (isEmpty(applicationSettings.tagManagerArgs.gtmId) === false) {
 
   TagManager.initialize(applicationSettings.tagManagerArgs);
 
