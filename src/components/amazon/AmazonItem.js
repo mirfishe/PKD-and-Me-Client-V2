@@ -7,9 +7,9 @@ import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase, removeHTML } from "../../utilities/SharedFunctions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-const Amazon = () => {
+const AmazonItem = () => {
 
-  const componentName = "Amazon";
+  const componentName = "AmazonItem";
 
   const navigate = useNavigate();
 
@@ -103,340 +103,6 @@ const Amazon = () => {
   // INNER JOIN amazonImport AS amazonSource ON amazon.ASIN = amazonSource.ASIN AND amazonSource.titleName IS NOT NULL
   // -- SET amazon.titleName = amazonSource.titleName
   // WHERE amazon.titleName IS NULL
-
-
-  const filterAmazonItems = (amazonItems) => {
-    // console.log(componentName, getDateTime(), "filterAmazonItems amazonItems", amazonItems);
-
-    let newAmazonItems = [...amazonItems];
-    let newAmazonItemsPhilipKDick = [];
-    let newAmazonItemsBladeRunner = [];
-    let newAmazonItemsTotalRecall = [];
-    let newAmazonItemsMinorityReport = [];
-    let newAmazonItemsTMITHC = [];
-    let newAmazonItemsNoCategory = [];
-    let newAmazonItemsIncorrectContext = [];
-
-
-    for (let i = 0; i < amazonItems.length; i++) {
-
-      // console.log(componentName, getDateTime(), "filterAmazonItems amazonItems[i]", amazonItems[i]);
-
-      let categoryPhilipKDick = false;
-      let categoryBladeRunner = false;
-      let categoryTotalRecall = false;
-      let categoryMinorityReport = false;
-      let categoryTMITHC = false;
-      let categoryIncorrectContext = false;
-
-      if (isEmpty(amazonItems[i].authorName) === false) {
-
-        // ? Remove the punctuation in the checks? -- 02/13/2022 MF
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("philip k. dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("philip k dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("dick philip k") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("dick, philip k") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("dick, philip") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("philip dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        // if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("philip") === true && formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("dick") === true) {
-
-        //   categoryPhilipKDick = true;
-
-        // };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("philip kindred dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("pistorius") === true) {
-
-          categoryIncorrectContext = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].authorName)).includes("van dyke") === true) {
-
-          categoryIncorrectContext = true;
-
-        };
-
-      };
-
-      if (isEmpty(amazonItems[i].titleName) === false) {
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("philip k. dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("philip k dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("dick philip k") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("dick, philip k") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("dick, philip") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("philip dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-        // if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("philip") === true && formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("dick") === true) {
-
-        //   categoryPhilipKDick = true;
-
-        // };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("philip kindred dick") === true) {
-
-          categoryPhilipKDick = true;
-
-        };
-
-      };
-
-
-      if (isEmpty(amazonItems[i].titleName) === false) {
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("blade runner") === true) {
-
-          categoryBladeRunner = true;
-
-        };
-
-        // if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("blade runner 2049") === true) {
-
-        //   categoryBladeRunner = true;
-
-        // };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("black lotus") === true) {
-
-          categoryBladeRunner = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("total recall") === true) {
-
-          categoryTotalRecall = true;
-
-        };
-
-        // if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("electric dreams") === true) {
-
-        //   inTitle = true;
-
-        // };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("man in the high castle") === true) {
-
-          categoryTMITHC = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("minority report") === true) {
-
-          categoryMinorityReport = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("pistorius") === true) {
-
-          categoryIncorrectContext = true;
-
-        };
-
-        if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes("van dyke") === true) {
-
-          categoryIncorrectContext = true;
-
-        };
-
-      };
-
-
-      // if (amazonItems[i].active === true) {
-
-      //   newAmazonItems.push(amazonItems[i]);
-
-      // };
-
-      if (categoryIncorrectContext !== true) {
-
-        if (categoryPhilipKDick === true) {
-
-          newAmazonItemsPhilipKDick.push(amazonItems[i]);
-
-        };
-
-        if (categoryBladeRunner === true) {
-
-          newAmazonItemsBladeRunner.push(amazonItems[i]);
-
-        };
-
-        if (categoryTotalRecall === true) {
-
-          newAmazonItemsTotalRecall.push(amazonItems[i]);
-
-        };
-
-        if (categoryTMITHC === true) {
-
-          newAmazonItemsTMITHC.push(amazonItems[i]);
-
-        };
-
-        if (categoryMinorityReport === true) {
-
-          newAmazonItemsMinorityReport.push(amazonItems[i]);
-
-        };
-
-        if (categoryPhilipKDick === false && categoryBladeRunner === false && categoryTotalRecall === false && categoryMinorityReport === false && categoryTMITHC === false) {
-
-          newAmazonItemsNoCategory.push(amazonItems[i]);
-
-        };
-
-      } else {
-
-        newAmazonItemsIncorrectContext.push(amazonItems[i]);
-
-      };
-
-    };
-
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReview", newHomeopapeItemsReview);
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewTitle", newHomeopapeItemsReviewTitle);
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewText", newHomeopapeItemsReviewText);
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewNeither", newHomeopapeItemsReviewNeither);
-
-    newAmazonItems.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-    newAmazonItemsPhilipKDick.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-    newAmazonItemsBladeRunner.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-    newAmazonItemsTotalRecall.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-    newAmazonItemsMinorityReport.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-    newAmazonItemsTMITHC.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-    newAmazonItemsNoCategory.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-    newAmazonItemsIncorrectContext.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
-
-    setAmazonItems(newAmazonItems);
-    setAmazonItemsPhilipKDick(newAmazonItemsPhilipKDick);
-    setAmazonItemsBladeRunner(newAmazonItemsBladeRunner);
-    setAmazonItemsTotalRecall(newAmazonItemsTotalRecall);
-    setAmazonItemsMinorityReport(newAmazonItemsMinorityReport);
-    setAmazonItemsTMITHC(newAmazonItemsTMITHC);
-    setAmazonItemsNoCategory(newAmazonItemsNoCategory);
-    setAmazonItemsIncorrectContext(newAmazonItemsIncorrectContext);
-
-  };
-
-
-  const getAmazonItems = () => {
-
-    clearMessages();
-
-    let url = baseURL + "amazon";
-
-    fetch(url, {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        "Authorization": sessionToken
-      }),
-    })
-      .then(response => {
-        // console.log(componentName, getDateTime(), "getAmazonItems response", response);
-
-        if (!response.ok) {
-
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-        } else {
-
-          return response.json();
-
-        };
-
-      })
-      .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
-
-        if (isEmpty(results) === false && results.transactionSuccess === true) {
-
-          filterAmazonItems(results.records[0]);
-          // setAmazonItems(results.records[0]);
-
-        } else {
-
-          filterAmazonItems([]);
-          // setAmazonItems([]);
-
-        };
-
-      })
-      .catch((error) => {
-        // console.error(componentName, getDateTime(), "getNews error", error);
-
-        addErrorMessage(error.name + ": " + error.message);
-
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-      });
-
-  };
 
 
   const setActive = (ASIN, active) => {
@@ -624,13 +290,6 @@ const Amazon = () => {
 
 
   useEffect(() => {
-
-    getAmazonItems();
-
-  }, []);
-
-
-  useEffect(() => {
     // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
@@ -726,8 +385,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -741,6 +398,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -838,8 +496,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -853,6 +509,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -950,8 +607,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -965,6 +620,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -1062,8 +718,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -1077,6 +731,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -1174,8 +829,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -1189,6 +842,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -1286,8 +940,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -1301,6 +953,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -1398,8 +1051,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -1413,6 +1064,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -1510,8 +1162,6 @@ const Amazon = () => {
 
                         <a href={amazonItem.textLinkFull} target="_blank">{isEmpty(amazonItem.imageName) === false ? <CardImg src={amazonItem.imageName} /> : <Image size="150" className="no-image-icon" />}</a>
 
-                        <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
-
                       </Col>
                       <Col className="col-md-8">
                         <CardBody>
@@ -1525,6 +1175,7 @@ const Amazon = () => {
                           {amazonItem.ASIN}<br />
 
                           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setActive(amazonItem.ASIN, !amazonItem.active); }}>{amazonItem.active === true || amazonItem.active === 1 ? <React.Fragment>Not Active</React.Fragment> : <React.Fragment>Active</React.Fragment>}</Button>
+                          <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(amazonItem.ASIN, !amazonItem.viewed); }}>{amazonItem.viewed === true || amazonItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
                         </CardBody>
                       </Col>
@@ -1556,4 +1207,4 @@ const Amazon = () => {
   );
 };
 
-export default Amazon;
+export default AmazonItem;
