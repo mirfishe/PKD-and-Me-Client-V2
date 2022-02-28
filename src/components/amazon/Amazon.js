@@ -55,6 +55,12 @@ const Amazon = () => {
   // WHERE ASIN NOT IN(SELECT ASIN FROM amazon)
   // AND ASIN NOT IN(SELECT ASIN FROM editions)
 
+  // -- UPDATE
+  // SELECT * FROM
+  // amazon
+  // -- SET merchant = 'Amazon'
+  // WHERE ASIN IN (SELECT ASIN FROM `amazonImport` WHERE searchIndex IN ('KindleStore', 'AmazonVideo', 'DigitalMusic', 'MobileApps'))
+
   // -- DELETE
   // SELECT *
   // FROM amazon
