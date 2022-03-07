@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase, removeHTML } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, displayDate, formatLowerCase, formatUpperCase, removeHTML } from "../../utilities/SharedFunctions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const AmazonItem = (props) => {
@@ -263,6 +263,9 @@ const AmazonItem = (props) => {
   return (
     <Card>
 
+      <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
       {/* {isEmpty(activeString) === false ?
 
       <CardHeader className="card-header inactive-item">
@@ -295,6 +298,8 @@ const AmazonItem = (props) => {
             {isEmpty(amazonItem.authorName) === false ? <React.Fragment>{amazonItem.authorName}<br /></React.Fragment> : null}
 
             {/* {amazonItem.publicationDate}<br /> */}
+
+            {displayDate(amazonItem.updateDate)}<br />
 
             {amazonItem.ASIN}<br />
 

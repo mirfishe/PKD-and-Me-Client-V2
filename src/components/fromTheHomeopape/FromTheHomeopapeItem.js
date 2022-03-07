@@ -759,6 +759,11 @@ const FromTheHomeopapeItem = (props) => {
   return (
     <React.Fragment>
 
+
+      <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
+
       {/* {show === true ? */}
 
       <Row className="mb-5">
