@@ -561,7 +561,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Philip K. Dick <span className="text-muted ms-2 small-text">{amazonItemsPhilipKDick.length} in category out of {amazonItems.length} total to review.</span></h5>
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Philip K. Dick <span className="text-muted ms-2 small-text">{amazonItemsPhilipKDick.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -595,7 +595,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Blade Runner <span className="text-muted ms-2 small-text">{amazonItemsBladeRunner.length} in category out of {amazonItems.length} total to review.</span></h5>
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Blade Runner <span className="text-muted ms-2 small-text">{amazonItemsBladeRunner.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -629,7 +629,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Total Recall <span className="text-muted ms-2 small-text">{amazonItemsTotalRecall.length} in category out of {amazonItems.length} total to review.</span></h5>
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Total Recall <span className="text-muted ms-2 small-text">{amazonItemsTotalRecall.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -663,7 +663,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Minority Report <span className="text-muted ms-2 small-text">{amazonItemsMinorityReport.length} in category out of {amazonItems.length} total to review.</span></h5>
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Minority Report <span className="text-muted ms-2 small-text">{amazonItemsMinorityReport.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -697,7 +697,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: TMITHC <span className="text-muted ms-2 small-text">{amazonItemsTMITHC.length} in category out of {amazonItems.length} total to review.</span></h5>
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): TMITHC <span className="text-muted ms-2 small-text">{amazonItemsTMITHC.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -731,7 +731,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: Incorrect Context <span className="text-muted ms-2 small-text">{amazonItemsIncorrectContext.length} in category out of {amazonItems.length} total to review.</span></h5>
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Incorrect Context <span className="text-muted ms-2 small-text">{amazonItemsIncorrectContext.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
@@ -765,7 +765,7 @@ const Amazon = () => {
           <Row>
             <Col xs="12">
 
-              <h5 className="text-center">Amazon Items: No Category <span className="text-muted ms-2 small-text">{amazonItemsNoCategory.length} in category out of {amazonItems.length} total to review.</span></h5>
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): No Category <span className="text-muted ms-2 small-text">{amazonItemsNoCategory.length} in category out of {amazonItems.length} total to review.</span></h5>
 
             </Col>
           </Row>
