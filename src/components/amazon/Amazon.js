@@ -399,60 +399,11 @@ const Amazon = () => {
 
     let url = baseURL + "amazon";
 
-    fetch(url, {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        "Authorization": sessionToken
-      }),
-    })
-      .then(response => {
-        // console.log(componentName, getDateTime(), "getAmazonItems response", response);
+    if (amazonMerchants === "AllMerchants") {
 
-        if (!response.ok) {
+      url += "/all";
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-        } else {
-
-          return response.json();
-
-        };
-
-      })
-      .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
-
-        if (isEmpty(results) === false && results.transactionSuccess === true) {
-
-          filterAmazonItems(results.records[0]);
-          // setAmazonItems(results.records[0]);
-
-        } else {
-
-          filterAmazonItems([]);
-          // setAmazonItems([]);
-
-        };
-
-      })
-      .catch((error) => {
-        // console.error(componentName, getDateTime(), "getNews error", error);
-
-        addErrorMessage(error.name + ": " + error.message);
-
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-      });
-
-  };
-
-
-  const getAmazonItemsAll = () => {
-
-    clearMessages();
-
-    let url = baseURL + "amazon/all";
+    };
 
     fetch(url, {
       method: "GET",
@@ -501,19 +452,74 @@ const Amazon = () => {
       });
 
   };
+
+
+  // const getAmazonItemsAll = () => {
+
+  //   clearMessages();
+
+  //   let url = baseURL + "amazon/all";
+
+  //   fetch(url, {
+  //     method: "GET",
+  //     headers: new Headers({
+  //       "Content-Type": "application/json",
+  //       "Authorization": sessionToken
+  //     }),
+  //   })
+  //     .then(response => {
+  //       // console.log(componentName, getDateTime(), "getAmazonItems response", response);
+
+  //       if (!response.ok) {
+
+  //         throw Error(`${response.status} ${response.statusText} ${response.url}`);
+
+  //       } else {
+
+  //         return response.json();
+
+  //       };
+
+  //     })
+  //     .then(results => {
+  //       // console.log(componentName, getDateTime(), "getNews results", results);
+
+  //       if (isEmpty(results) === false && results.transactionSuccess === true) {
+
+  //         filterAmazonItems(results.records[0]);
+  //         // setAmazonItems(results.records[0]);
+
+  //       } else {
+
+  //         filterAmazonItems([]);
+  //         // setAmazonItems([]);
+
+  //       };
+
+  //     })
+  //     .catch((error) => {
+  //       // console.error(componentName, getDateTime(), "getNews error", error);
+
+  //       addErrorMessage(error.name + ": " + error.message);
+
+  //       // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
+  //     });
+
+  // };
 
 
   useEffect(() => {
 
-    if (amazonMerchants === "AllMerchants") {
+    // if (amazonMerchants === "AllMerchants") {
 
-      getAmazonItemsAll();
+    //   getAmazonItemsAll();
 
-    } else {
+    // } else {
 
-      getAmazonItems();
+    getAmazonItems();
 
-    }
+    // };
 
 
   }, [amazonMerchants]);
