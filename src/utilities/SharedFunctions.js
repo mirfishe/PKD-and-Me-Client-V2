@@ -1191,9 +1191,13 @@ export const randomizeItems = (items, randomize) => {
 
   if (randomize === true) {
 
-    itemsRandomized = items.map((a) => (
-      { sort: Math.random(), value: a }
-    ))
+    itemsRandomized = items.map((a) => {
+
+      return (
+        { sort: Math.random(), value: a }
+      );
+
+    })
       .sort((a, b) => a.sort - b.sort)
       .map((a) => a.value);
 
