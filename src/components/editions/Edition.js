@@ -179,8 +179,8 @@ const Edition = (props) => {
 
           // * fetch('http://localhost:4000/editions/broken', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});
 
-          let brokenURLText = "fetch('" + baseURL + "editions/broken/" + edition.editionID + "', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});";
-          let brokenURLReplaceText = "<img onError=\"console.error('Edition image not loaded!'); " + brokenURLText + "\" ";
+          // let brokenURLText = "fetch('" + baseURL + "editions/broken/" + edition.editionID + "', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});";
+          // let brokenURLReplaceText = "<img onError=\"console.error('Edition image not loaded!'); " + brokenURLText + "\" ";
 
           let activeString = "";
 
@@ -238,22 +238,42 @@ const Edition = (props) => {
                 <Row className="no-gutters">
                   <Col className="col-md-6">
 
-                    {isEmpty(edition.imageLinkLarge) === false && (edition.editionActive === true || edition.editionActive === 1) ?
+                    {edition.editionActive === true || edition.editionActive === 1 ?
 
                       <React.Fragment>
 
-                        {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
-                        {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))}
+                        {isEmpty(edition.imageNameAPI) === false && isEmpty(edition.textLinkFullAPI) === false /* isEmpty(edition.imageLinkLarge) === false */ ?
+
+                          <React.Fragment>
+
+                            {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
+                            {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
+
+                            <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                              {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={titleItem.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}
+                            </a>
+
+                          </React.Fragment>
+
+                          :
+
+                          <React.Fragment>
+
+                            {isEmpty(edition.imageName) === false && isEmpty(edition.textLinkFull) === false ?
+
+                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                                {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
+                              </a>
+
+                              : null}
+
+                          </React.Fragment>
+
+                        }
 
                       </React.Fragment>
 
-                      :
-
-                      <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
-                      </a>
-
-                    }
+                      : null}
 
                   </Col>
                   <Col className="col-md-6">
@@ -261,7 +281,7 @@ const Edition = (props) => {
 
                       {isEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {displayDate(edition.editionPublicationDate)}</CardText> : null}
 
-                      {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
+                      {/* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
                           <img src={amazonLogo} alt={titleItem.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
@@ -272,6 +292,28 @@ const Edition = (props) => {
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
                           <p className="my-2">Find Copy</p>
                         </a>
+
+                      } */}
+
+                      {isEmpty(edition.textLinkFullAPI) === false ?
+
+                        <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                          <img src={amazonLogo} alt={titleItem.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
+                        </a>
+
+                        :
+
+                        <React.Fragment>
+
+                          {isEmpty(edition.textLinkFullAPI) === false ?
+
+                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                              <p className="my-2">Find Copy</p>
+                            </a>
+
+                            : null}
+
+                        </React.Fragment>
 
                       }
 

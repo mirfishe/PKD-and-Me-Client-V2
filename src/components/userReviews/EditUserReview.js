@@ -998,7 +998,7 @@ const EditUserReview = (props) => {
 
       {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true ?
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}>Add Review</a>
+        <a href="#" onClick={(event) => { setModal(!modal); }}> Add Review</a>
 
         : null}
 
@@ -1008,7 +1008,7 @@ const EditUserReview = (props) => {
 
       {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) ?
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}>Update Review</a>
+        <a href="#" onClick={(event) => { setModal(!modal); }}> Update Review</a>
 
         : null}
 
