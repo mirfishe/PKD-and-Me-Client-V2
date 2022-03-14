@@ -41,6 +41,7 @@ const Amazon = () => {
 
   const [amazonItems, setAmazonItems] = useState([]);
   const [amazonItemsPhilipKDick, setAmazonItemsPhilipKDick] = useState([]);
+  const [amazonItemsPhilipKDickPublicDomain, setAmazonItemsPhilipKDickPublicDomain] = useState([]);
   const [amazonItemsBladeRunner, setAmazonItemsBladeRunner] = useState([]);
   const [amazonItemsTotalRecall, setAmazonItemsTotalRecall] = useState([]);
   const [amazonItemsMinorityReport, setAmazonItemsMinorityReport] = useState([]);
@@ -119,6 +120,7 @@ const Amazon = () => {
 
     let newAmazonItems = [...amazonItems];
     let newAmazonItemsPhilipKDick = [];
+    let newAmazonItemsPhilipKDickPublicDomain = [];
     let newAmazonItemsBladeRunner = [];
     let newAmazonItemsTotalRecall = [];
     let newAmazonItemsMinorityReport = [];
@@ -126,12 +128,18 @@ const Amazon = () => {
     let newAmazonItemsNoCategory = [];
     let newAmazonItemsIncorrectContext = [];
 
+    let publicDomainStoriesCommon = ["beyond lies the wub", "beyond the door", "the crystal crypt", "the defenders", "the eyes have it", "the gun", "the hanging stranger", "mr. spaceship", "piper in the woods", "second variety", "the skull", "tony and the beetles", "the variable man"];
+
+    let publicDomainStories = ["the golden man", "prominent author", "small town", "the turning wheel", "breakfast at twilight", "exhibit piece", "shell game", "adjustment team", "meddler", "the last of the masters", "protection agency", "progeny", "upon the dull earth", "foster, you're dead", "human is"];
+
+    let publicDomainStoriesLikely = ["roog", "james p. crow", "survey team", "time pawn", "the chromium fence", "a surface raid", "vulcan's hammer"];
 
     for (let i = 0; i < amazonItems.length; i++) {
 
       // console.log(componentName, getDateTime(), "filterAmazonItems amazonItems[i]", amazonItems[i]);
 
       let categoryPhilipKDick = false;
+      let categoryPhilipKDickPublicDomain = false;
       let categoryBladeRunner = false;
       let categoryTotalRecall = false;
       let categoryMinorityReport = false;
@@ -253,8 +261,31 @@ const Amazon = () => {
 
         };
 
-      };
+        if (categoryPhilipKDick === true) {
 
+          for (let j = 0; j < publicDomainStoriesCommon.length; j++) {
+
+            if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes(publicDomainStoriesCommon[j]) === true) {
+
+              categoryPhilipKDickPublicDomain = true;
+
+            };
+
+          };
+
+          for (let j = 0; j < publicDomainStories.length; j++) {
+
+            if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes(publicDomainStories[j]) === true) {
+
+              categoryPhilipKDickPublicDomain = true;
+
+            };
+
+          };
+
+        };
+
+      };
 
       if (isEmpty(amazonItems[i].titleName) === false) {
 
@@ -323,9 +354,15 @@ const Amazon = () => {
 
       if (categoryIncorrectContext !== true) {
 
-        if (categoryPhilipKDick === true) {
+        if (categoryPhilipKDick === true && categoryPhilipKDickPublicDomain !== true) {
 
           newAmazonItemsPhilipKDick.push(amazonItems[i]);
+
+        };
+
+        if (categoryPhilipKDickPublicDomain === true) {
+
+          newAmazonItemsPhilipKDickPublicDomain.push(amazonItems[i]);
 
         };
 
@@ -374,6 +411,7 @@ const Amazon = () => {
 
     newAmazonItems.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsPhilipKDick.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsPhilipKDickPublicDomain.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsBladeRunner.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsTotalRecall.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsMinorityReport.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
@@ -383,6 +421,7 @@ const Amazon = () => {
 
     setAmazonItems(newAmazonItems);
     setAmazonItemsPhilipKDick(newAmazonItemsPhilipKDick);
+    setAmazonItemsPhilipKDickPublicDomain(newAmazonItemsPhilipKDickPublicDomain);
     setAmazonItemsBladeRunner(newAmazonItemsBladeRunner);
     setAmazonItemsTotalRecall(newAmazonItemsTotalRecall);
     setAmazonItemsMinorityReport(newAmazonItemsMinorityReport);
@@ -554,7 +593,7 @@ const Amazon = () => {
       <Row>
         <Col xs="12">
 
-          <a href="#" onClick={(event) => { setAmazonItemsCategory("AllItems"); }}>All Items</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("PhilipKDick"); }}>Philip K. Dick</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("BladeRunner"); }}>Blade Runner</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TotalRecall"); }}>Total Recall</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("MinorityReport"); }}>Minority Report</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TMITHC"); }}>TMITHC</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("IncorrectContext"); }}>Incorrect Context</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("NoCategory"); }}>No Category</a>
+          <a href="#" onClick={(event) => { setAmazonItemsCategory("AllItems"); }}>All Items</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("PhilipKDick"); }}>Philip K. Dick</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("PhilipKDickPublicDomain"); }}>Philip K. Dick Public Domain</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("BladeRunner"); }}>Blade Runner</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TotalRecall"); }}>Total Recall</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("MinorityReport"); }}>Minority Report</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("TMITHC"); }}>TMITHC</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("IncorrectContext"); }}>Incorrect Context</a> | <a href="#" onClick={(event) => { setAmazonItemsCategory("NoCategory"); }}>No Category</a>
 
         </Col>
       </Row>
@@ -575,6 +614,40 @@ const Amazon = () => {
           <Row>
 
             {amazonItemsPhilipKDick.map((amazonItem, index) => {
+
+              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
+
+
+      {amazonItemsCategory === "PhilipKDickPublicDomain" && isEmpty(amazonItemsPhilipKDickPublicDomain) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Philip K. Dick Public Domain <span className="text-muted ms-2 small-text">{amazonItemsPhilipKDickPublicDomain.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsPhilipKDickPublicDomain.map((amazonItem, index) => {
 
               // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
 

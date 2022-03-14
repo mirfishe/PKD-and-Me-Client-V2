@@ -1057,7 +1057,7 @@ const EditEdition = (props) => {
 
       {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true ?
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}>Add Edition</a>
+        <a href="#" onClick={(event) => { setModal(!modal); }}> Add Edition</a>
 
         : null}
 
@@ -1067,7 +1067,7 @@ const EditEdition = (props) => {
 
       {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true ?
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}>Update Edition</a>
+        <a href="#" onClick={(event) => { setModal(!modal); }}> Update Edition</a>
 
         : null}
 

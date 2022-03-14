@@ -1265,7 +1265,7 @@ const EditTitle = (props) => {
 
       {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true ?
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}>Add Title</a>
+        <a href="#" onClick={(event) => { setModal(!modal); }}> Add Title</a>
 
         : null}
 
@@ -1275,7 +1275,7 @@ const EditTitle = (props) => {
 
       {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true ?
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}>Update Title</a>
+        <a href="#" onClick={(event) => { setModal(!modal); }}> Update Title</a>
 
         : null}
 
