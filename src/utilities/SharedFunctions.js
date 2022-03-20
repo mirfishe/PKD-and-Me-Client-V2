@@ -2,28 +2,10 @@
 const componentName = "SharedFunctions";
 
 export const isEmpty = (value) => {
-  // console.log(componentName, getDateTime(), "isEmpty value", value);
 
   // * https://stackoverflow.com/questions/4597900/checking-something-isempty-in-javascript -- 03/06/2021 MF
   // * https://stackoverflow.com/questions/5515310/is-there-a-standard-function-to-check-for-null-undefined-or-blank-variables-in -- 03/06/2021 MF
 
-  // const isEmpty = (object) => {
-
-  //   for (var key in object) {
-
-  //     if (object.hasOwnProperty(key)) {
-
-  //         return false;
-
-  //     };
-
-  //   };
-
-  //   return true;
-
-  // };
-
-  // return value === undefined || value === null || (typeof value === "object" && Object.keys(value).length === 0) || (typeof value === "string" && value.toString().trim().length === 0);
   return value === undefined || value === null || (typeof value === "object" && Object.keys(value).length === 0) || (typeof value === "string" && value.trim().length === 0);
 
   // * Returns true -- 03/06/2021 MF
@@ -44,7 +26,6 @@ export const isEmpty = (value) => {
 
 
 export const displayValue = (variableValue) => {
-  // console.log(componentName, getDateTime(), "displayValue variableValue", variableValue);
 
   let displayValue = "";
 
@@ -80,7 +61,6 @@ export const displayValue = (variableValue) => {
 
 
 export const displaySpaceAfterComma = (text) => {
-  // console.log(componentName, getDateTime(), "displaySpaceAfterComma text", text);
 
   let displayText = text;
 
@@ -90,15 +70,12 @@ export const displaySpaceAfterComma = (text) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "displaySpaceAfterComma displayText", displayText);
-
   return displayText;
 
 };
 
 
 export const removeForwardSlashes = (text) => {
-  // console.log(componentName, getDateTime(), "removeForwardSlashes text", text);
 
   let displayText = text;
 
@@ -108,15 +85,12 @@ export const removeForwardSlashes = (text) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "removeForwardSlashes displayText", displayText);
-
   return displayText;
 
 };
 
 
 export const tryParseJSON = (jsonString) => {
-  // console.log(componentName, getDateTime(), "tryParseJSON jsonString", jsonString);
 
   // * https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string-in-javascript-without-using-try -- 03/06/2021 MF
   try {
@@ -144,7 +118,6 @@ export const tryParseJSON = (jsonString) => {
 
 
 export const displayObjectData = (ObjectData) => {
-  // console.log(componentName, getDateTime(), "displayObjectData ObjectData", ObjectData);
 
   let objectDataString = JSON.stringify(ObjectData);
 
@@ -187,15 +160,10 @@ export const displayObjectData = (ObjectData) => {
 
 
 export const displayObjectDataTable = (ObjectData) => {
-  // console.log(componentName, getDateTime(), "displayObjectDataTable ObjectData", ObjectData);
 
   let objectDataString = JSON.stringify(ObjectData);
 
-  // console.log(componentName, getDateTime(), "displayObjectDataTable objectDataString", objectDataString);
-
   if (isEmpty(objectDataString) === false) {
-
-    // console.log(componentName, getDateTime(), "displayObjectDataTable objectDataString", objectDataString);
 
     objectDataString = objectDataString.replaceAll("\\", "");
 
@@ -246,7 +214,6 @@ export const displayObjectDataTable = (ObjectData) => {
 
 
 export const displayObjectDataXML = (ObjectData) => {
-  // console.log(componentName, getDateTime(), "displayObjectDataXML ObjectData", ObjectData);
 
   let objectDataString = JSON.stringify(ObjectData);
 
@@ -287,11 +254,6 @@ export const displayObjectDataXML = (ObjectData) => {
 
 
 export const getDateTime = () => {
-  // console.log("getDateTime");
-  // console.log("getDateTime new Date().toISOString().slice(0, 19).replace(\"T\", \" \")", new Date().toISOString().slice(0, 19).replace("T", " "));
-  // console.log("getDateTime new Date().toISOString().slice(0, 19).replace(\"T\", \"\")", new Date().toISOString().slice(0, 19).replace("T", ""));
-  // console.log("getDateTime new Date().toLocaleString().slice(0, 19).replace(\"T\", \" \")", new Date().toLocaleString().slice(0, 19).replace("T", " "));
-  // console.log("getDateTime new Date().toLocaleString().slice(0, 19).replace(\"T\", \"\")", new Date().toLocaleString().slice(0, 19).replace("T", ""));
 
   // * Time returned does not consider the time zone without adjustments. -- 08/09/2021 MF
   // * https://usefulangle.com/post/30/javascript-get-date-time-with-offset-hours-minutes -- 08/09/2021 MF
@@ -329,8 +291,6 @@ export const getCurrentYear = () => {
 
 
 export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
-  // console.log(componentName, getDateTime(), "displayDate dateToDisplay", dateToDisplay);
-  // console.log(componentName, getDateTime(), "displayDate removeLeadingZeroes", removeLeadingZeroes);
 
   let newDisplayDate = "";
 
@@ -353,16 +313,12 @@ export const displayDate = (dateToDisplay, removeLeadingZeroes) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "displayDate dateToDisplay", dateToDisplay);
-
   return newDisplayDate;
 
 };
 
 
 export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
-  // console.log(componentName, getDateTime(), "displayDateAndTime dateToDisplay", dateToDisplay);
-  // console.log(componentName, getDateTime(), "displayDateAndTime removeLeadingZeroes", removeLeadingZeroes);
 
   let newDisplayDateAndTime = "";
 
@@ -393,15 +349,12 @@ export const displayDateAndTime = (dateToDisplay, removeLeadingZeroes) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "displayDateAndTime newDisplayDateAndTime", newDisplayDateAndTime);
-
   return newDisplayDateAndTime;
 
 };
 
 
 export const displayYear = (dateToDisplay) => {
-  // console.log(componentName, getDateTime(), "displayYear dateToDisplay", dateToDisplay);
 
   let newDisplayDate = "";
 
@@ -420,15 +373,12 @@ export const displayYear = (dateToDisplay) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "displayYear dateToDisplay", dateToDisplay);
-
   return newDisplayDate;
 
 };
 
 
 export const daysSince = (dateToCompare) => {
-  // console.log(componentName, getDateTime(), "daysSince dateToCompare", dateToCompare);
 
   // * https://stackoverflow.com/questions/12986068/how-to-calculate-number-of-days-between-today-and-given-date-and-code-for-gettim -- 10/18/2021 MF
 
@@ -444,15 +394,12 @@ export const daysSince = (dateToCompare) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "daysSince newDaysSince", newDaysSince);
-
   return newDaysSince;
 
 };
 
 
 export const hasNonEmptyProperty = (objectItem, propertyName) => {
-  // console.log(componentName, getDateTime(), "hasFalseProperty property", property);
 
   let nonEmptyProperty = false;
 
@@ -472,7 +419,6 @@ export const hasNonEmptyProperty = (objectItem, propertyName) => {
 
 
 export const hasEqualsProperty = (objectItem, propertyName, value) => {
-  // console.log(componentName, getDateTime(), "hasEqualsProperty propertyName", propertyName);
 
   let equalsProperty = false;
 
@@ -492,7 +438,6 @@ export const hasEqualsProperty = (objectItem, propertyName, value) => {
 
 
 export const hasTrueProperty = (objectItem, propertyName) => {
-  // console.log(componentName, getDateTime(), "hasTrueProperty property", property);
 
   let trueProperty = false;
 
@@ -512,7 +457,6 @@ export const hasTrueProperty = (objectItem, propertyName) => {
 
 
 export const hasFalseProperty = (objectItem, propertyName) => {
-  // console.log(componentName, getDateTime(), "hasFalseProperty property", property);
 
   let falseProperty = false;
 
@@ -531,12 +475,30 @@ export const hasFalseProperty = (objectItem, propertyName) => {
 };
 
 
+export const convertSpecialCharacters = (value) => {
+
+  // * https://stackoverflow.com/questions/1787322/what-is-the-htmlspecialchars-equivalent-in-javascript/4835406#4835406 -- 12/28/2021 MF
+
+  let newValue = value;
+
+  if (isEmpty(value) === false) {
+
+    newValue = newValue.replace(/&/g, "&amp;");
+    newValue = newValue.replace(/</g, "&lt;");
+    newValue = newValue.replace(/>/g, "&gt;");
+    newValue = newValue.replace(/"/g, "&quot;");
+    newValue = newValue.replace(/'/g, "&#039;");
+
+  };
+
+  return newValue;
+
+};
+
+
 export const truncateText = (text, limit) => {
-  // console.log(componentName, getDateTime(), "truncateText text", text);
 
   // * https://stackoverflow.com/questions/4700226/i-want-to-truncate-a-text-or-line-with-ellipsis-using-javascript -- 03/06/2021 MF
-
-  // let newText = text;
 
   if (isEmpty(text) === false && text.length > limit) {
 
@@ -558,15 +520,10 @@ export const truncateText = (text, limit) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "truncateText newText", newText);
-
-  // return newText;
-
 };
 
 
 export const validateMilitaryTime = (timeEntered) => {
-  // console.log(componentName, getDateTime(), "validateMilitaryTime timeEntered", timeEntered);
 
   // * Time in 24 clock, no colon -- 03/05/2021 MF
 
@@ -577,7 +534,6 @@ export const validateMilitaryTime = (timeEntered) => {
   // * third digit is either a 0 or 1 or 2 or 3 or 4 or 5 
 
   // * Make sure that it is a string-- 03/05/2021 MF
-  // console.log(componentName, getDateTime(), "typeof \"8\"", typeof "8");
 
   let validTimeFormat = true;
 
@@ -625,79 +581,6 @@ export const validateMilitaryTime = (timeEntered) => {
 
       };
 
-
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"8\")", validateMilitaryTime("8"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"18\")", validateMilitaryTime("10"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"800\")", validateMilitaryTime("800"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"0800\")", validateMilitaryTime("0800"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"0880\")", validateMilitaryTime("0880"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"1600\")", validateMilitaryTime("1600"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"1645\")", validateMilitaryTime("1645"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"1650\")", validateMilitaryTime("1650"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"1680\")", validateMilitaryTime("1680"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"2150\")", validateMilitaryTime("2150"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"2160\")", validateMilitaryTime("2160"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"2300\")", validateMilitaryTime("2300"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"2500\")", validateMilitaryTime("2500"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(\"3000\")", validateMilitaryTime("3000"));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(8)", validateMilitaryTime(8));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(18)", validateMilitaryTime(10));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(800)", validateMilitaryTime(800));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(1600)", validateMilitaryTime(1600));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(1680)", validateMilitaryTime(1680));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(2500)", validateMilitaryTime(2500));
-      // console.log(componentName, getDateTime(), "validateMilitaryTime(3000)", validateMilitaryTime(3000));
-
-
-
-      // let timeArray = timeEnteredString.split("");
-
-      // // console.log(componentName, getDateTime(), "validateMilitaryTime timeArray", timeArray);
-
-      // for (let i = 0; i < timeArray.length; i++) {
-
-      //   // console.log(componentName, getDateTime(), "validateMilitaryTime parseInt(timeArray[i])", parseInt(timeArray[i]));
-      //   // console.log(componentName, getDateTime(), "validateMilitaryTime isNaN(parseInt(timeArray[i]))", isNaN(parseInt(timeArray[i])));
-
-      //   if (isNaN(parseInt(timeArray[i])) === false) {
-
-      //     if (i === 0) {
-
-      //       if (timeArray[i] !== "0" && timeArray[i] !== "1" && timeArray[i] !== "2") {
-
-      //         validTimeFormat = false;
-
-      //       };
-
-      //     } else if (i === 1) {
-
-      //       // if timeArray[1] =2 then 
-      //       if (timeArray[i] !== "0" && timeArray[i] !== "1" && timeArray[i] !== "2" && timeArray[i] !== "3" && timeArray[i] !== "4" && timeArray[i] !== "5") {
-
-      //         validTimeFormat = false;
-
-      //       };
-
-      //     } else if (i === 2) {
-
-      //       if (timeArray[i] !== "0" && timeArray[i] !== "1" && timeArray[i] !== "2" && timeArray[i] !== "3" && timeArray[i] !== "4" && timeArray[i] !== "5") {
-
-      //         validTimeFormat = false;
-
-      //       };
-
-      //     };
-
-      //   } else {
-
-      //     validTimeFormat = false;
-
-      //   };
-
-      // };
-
-
-
     };
 
   } else {
@@ -712,8 +595,6 @@ export const validateMilitaryTime = (timeEntered) => {
 
 
 export const convertTemperature = (temperatureScale, temperature) => {
-  // console.log(componentName, getDateTime(), "convertTemperature temperatureScale", temperatureScale);
-  // console.log(componentName, getDateTime(), "convertTemperature temperature", temperature);
 
   // let temperatureFloat = parseFloat(formatTrim(temperature));
   let temperatureFloat = parseFloat(temperature);
@@ -739,37 +620,12 @@ export const convertTemperature = (temperatureScale, temperature) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "convertTemperature temperatureConverted", temperatureConverted);
-
   return temperatureConverted;
 
 };
 
 
 export const convertYesNoTrueFalse = (value) => {
-  // console.log(componentName, getDateTime(), "convertYesNoTrueFalse value", value);
-
-  // if (isNaN(value) === true && formatTrim(value) === "Yes") {
-
-  //   return true;
-
-  // } else if (isNaN(value) === true && formatTrim(value) === "No") {
-
-  //   return false;
-
-  // } else if (value === true) {
-
-  //   return "Yes";
-
-  // } else if (value === false) {
-
-  //   return "No";
-
-  // } else {
-
-  //   return value;
-
-  // };
 
   if (isNaN(value) === true && value === "Yes") {
 
@@ -797,29 +653,6 @@ export const convertYesNoTrueFalse = (value) => {
 
 
 export const convertNormalAbnormalTrueFalse = (value) => {
-  // console.log(componentName, getDateTime(), "convertNormalAbnormalTrueFalse value", value);
-
-  // if (isNaN(value) === true && formatTrim(value) === "Normal") {
-
-  //   return true;
-
-  // } else if (isNaN(value) === true && formatTrim(value) === "Abnormal") {
-
-  //   return false;
-
-  // } else if (value === true) {
-
-  //   return "Normal";
-
-  // } else if (value === false) {
-
-  //   return "Abnormal";
-
-  // } else {
-
-  //   return value;
-
-  // };
 
   if (isNaN(value) === true && value === "Normal") {
 
@@ -847,29 +680,6 @@ export const convertNormalAbnormalTrueFalse = (value) => {
 
 
 export const convertEnableDisableTrueFalse = (value) => {
-  // console.log(componentName, getDateTime(), "convertEnableDisableTrueFalse value", value);
-
-  // if (isNaN(value) === true && formatTrim(value) === "Enable") {
-
-  //   return true;
-
-  // } else if (isNaN(value) === true && formatTrim(value) === "Disable") {
-
-  //   return false;
-
-  // } else if (value === true) {
-
-  //   return "Enable";
-
-  // } else if (value === false) {
-
-  //   return "Disable";
-
-  // } else {
-
-  //   return value;
-
-  // };
 
   if (isNaN(value) === true && value === "Enable") {
 
@@ -897,65 +707,36 @@ export const convertEnableDisableTrueFalse = (value) => {
 
 
 export const convertNullEmptyString = (value) => {
-  // console.log(componentName, getDateTime(), "convertNullEmptyString value", value);
-  // console.log(componentName, getDateTime(), "convertNullEmptyString typeof value", typeof value);
-
-  // if (value === null) {
-
-  //   return "";
-  // } else if (value === undefined) {
-
-  //   return "";
-
-  // } else if (isNaN(value) === true && formatTrim(value) === "") {
-
-  //   return null;
-
-  // } else if (value === "") {
-
-  //   return null;
-
-  // } else {
-
-  //   return value;
-
-  // };
 
   // TODO: Change this function so that it can handle if there are already empty string values in the database. -- 03/19/2021 MF
   // ! This can't be done in one function like this to handle both conversions because what if the database value is set to an empty string. -- 07/09/2021 MF
+
   if (value === null) {
 
-    // console.log(componentName, getDateTime(), "convertNullEmptyString null value", value);
     return "";
 
   } else if (value === undefined) {
 
-    // console.log(componentName, getDateTime(), "convertNullEmptyString undefined value", value);
     return "";
 
   } else if (value === "NaN") {
 
-    // console.log(componentName, getDateTime(), "convertNullEmptyString NaN value", value);
     return null;
 
   } else if (isNaN(value) === true && typeof value === "number") {
 
-    // console.log(componentName, getDateTime(), "convertNullEmptyString isNaN value", value);
     return null;
 
   } else if (isNaN(value) === true && value === "") {
 
-    // console.log(componentName, getDateTime(), "convertNullEmptyString isNaN \"\" value", value);
     return null;
 
   } else if (value === "") {
 
-    // console.log(componentName, getDateTime(), "convertNullEmptyString \"\" value", value);
     return null;
 
   } else {
 
-    // console.log(componentName, getDateTime(), "convertNullEmptyString else value", value);
     return value;
 
   };
@@ -964,33 +745,6 @@ export const convertNullEmptyString = (value) => {
 
 
 export const isWholeNumber = (value) => {
-  // console.log(componentName, getDateTime(), "isWholeNumber value", value);
-
-  // * I think this is always returning true because the decimal is stripped off before the check is done. -- 04/04/2021 MF
-  // console.log(componentName, getDateTime(), "isWholeNumber parseInt(formatTrim(value))", parseInt(formatTrim(value)));
-  // console.log(componentName, getDateTime(), "isWholeNumber isNaN(parseInt(formatTrim(value)))", isNaN(parseInt(formatTrim(value))));
-  // console.log(componentName, getDateTime(), "isWholeNumber Number.isInteger(parseFloat(formatTrim(value)))", Number.isInteger(parseFloat(formatTrim(value))));
-
-  // if (isNaN(parseInt(formatTrim(value))) === true) {
-
-  //   return false;
-
-  // } else {
-
-  //   return true;
-
-  // };
-
-  // * This removes any values from the string starting at and after a non-number value in the string. -- 06/21/2021 MF
-  // if (Number.isInteger(parseFloat(formatTrim(value))) === true) {
-
-  //   return true;
-
-  // } else {
-
-  //   return false;
-
-  // };
 
   if (isNaN(formatTrim(value)) === true) {
 
@@ -1016,11 +770,6 @@ export const isWholeNumber = (value) => {
 
 
 export const hasDecimalPlaces = (value, decimalPlaces) => {
-  // console.log(componentName, getDateTime(), "hasDecimalPlaces value", value);
-
-  // console.log(componentName, getDateTime(), "hasDecimalPlaces parseFloat(formatTrim(value))", parseFloat(formatTrim(value)));
-  // console.log(componentName, getDateTime(), "hasDecimalPlaces isNaN(parseFloat(formatTrim(value)))", isNaN(parseFloat(formatTrim(value))));
-  // console.log(componentName, getDateTime(), "hasDecimalPlaces Number.isInteger(parseFloat(formatTrim(value)) * 10)", Number.isInteger(parseFloat(formatTrim(value)) * 10));
 
   if (isNaN(formatTrim(value)) === true) {
 
@@ -1042,24 +791,12 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 
     let valueDecimals = 0;
 
-    // if (formatTrim(value).indexOf(".") > -1) {
     if (formatTrim(value).includes(".")) {
 
       // * Remove the characters after the decimal point to be counted later if there is a decimal point. -- 06/21/2021 MF
       valueDecimals = formatTrim(value).substring(formatTrim(value).indexOf(".") + 1);
 
     };
-
-    // console.log(componentName, getDateTime(), "hasDecimalPlaces currentDecimalPlaces", currentDecimalPlaces);
-
-    // if (isNaN(parseFloat(formatTrim(value))) === true || (isEmpty(currentDecimalPlaces) === false && Number.isInteger(parseFloat(formatTrim(value)) * 10 ** currentDecimalPlaces) === false)) {
-    // if (isNaN(valueToTest) === true || (isEmpty(currentDecimalPlaces) === false && Number.isInteger(valueToTest * 10 ** currentDecimalPlaces) === false)) {
-    // if (isNaN(parseFloat(formatTrim(value))) === true || (isEmpty(currentDecimalPlaces) === false && formatTrim(value).substring(formatTrim(value).indexOf(".") + 1).length > currentDecimalPlaces)) {
-
-    // console.log(componentName, getDateTime(), "hasDecimalPlaces valueToTest", valueToTest);
-    // console.log(componentName, getDateTime(), "hasDecimalPlaces isNaN(valueToTest)", isNaN(valueToTest));
-    // console.log(componentName, getDateTime(), "hasDecimalPlaces isEmpty(currentDecimalPlaces)", isEmpty(currentDecimalPlaces));
-    // console.log(componentName, getDateTime(), "hasDecimalPlaces valueDecimals.length > currentDecimalPlaces", valueDecimals.length > currentDecimalPlaces);
 
     if (isNaN(valueToTest) === true || (isEmpty(currentDecimalPlaces) === false && valueDecimals.length > currentDecimalPlaces)) {
 
@@ -1077,14 +814,10 @@ export const hasDecimalPlaces = (value, decimalPlaces) => {
 
 
 export const generateRandomNumber = (minimumValue, maximumValue) => {
-  // console.log(componentName, getDateTime(), "generateRandomNumber minimumValue", minimumValue);
-  // console.log(componentName, getDateTime(), "generateRandomNumber maximumValue", maximumValue);
 
   // * https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript -- 01/14/2022 MF
 
   let randomNumber = Math.floor(Math.random() * (maximumValue - minimumValue + 1)) + minimumValue;
-
-  // console.log(componentName, getDateTime(), "generateRandomNumber randomNumber", randomNumber);
 
   return randomNumber;
 
@@ -1092,7 +825,6 @@ export const generateRandomNumber = (minimumValue, maximumValue) => {
 
 
 export const generateRandomNumberDigits = (digits) => {
-  // console.log(componentName, getDateTime(), "generateRandomNumberDigits digits", digits);
 
   let randomNumber = formatToString(Math.floor(Math.random() * 10 ** digits));
 
@@ -1102,16 +834,12 @@ export const generateRandomNumberDigits = (digits) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "generateRandomNumberDigits randomNumber", randomNumber);
-
   return randomNumber;
 
 };
 
 
 export const formatPhoneNumber = (phoneNumber) => {
-  // console.log(componentName, getDateTime(), "formatPhoneNumber phoneNumber", phoneNumber);
-  // console.log(componentName, getDateTime(), "formatPhoneNumber typeof phoneNumber", typeof phoneNumber);
 
   // * From https://learnersbucket.com/examples/javascript/how-to-format-phone-number-in-javascript/ -- 07/22/2021 MF
 
@@ -1124,8 +852,6 @@ export const formatPhoneNumber = (phoneNumber) => {
   };
 
   let validPhoneNumber = onlyDigits.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-  // console.log(componentName, getDateTime(), "formatPhoneNumber validPhoneNumber", validPhoneNumber);
 
   if (isEmpty(validPhoneNumber) === false) {
 
@@ -1141,8 +867,6 @@ export const formatPhoneNumber = (phoneNumber) => {
 
 
 export const formatTitle = (title) => {
-  // console.log(componentName, getDateTime(), "formatTitle title", title);
-  // console.log(componentName, getDateTime(), "formatTitle typeof title", typeof title);
 
   // * From https://stackoverflow.com/questions/11427759/how-to-insert-space-before-capitalize-character-in-a-word-using-replace-and-rege -- 08/10/2021 MF
   // * From https://attacomsian.com/blog/string-capitalize-javascript -- 08/10/2021 MF
@@ -1150,16 +874,9 @@ export const formatTitle = (title) => {
 
   let formattedTitle = "";
 
-  // if (formatLowerCase(title).includes("isbar" === true)) {
-
-  //   console.log(componentName, getDateTime(), "formatTitle title", title);
-
-  // };
-
   if (isEmpty(title) === false && title !== "iSBAR" && title !== "iSBARs" && title !== "iSBAREnable") {
 
     // * iSBARs is the special case that is difficult to make work in regex. -- 08/16/2021 MF
-    // formattedTitle = title.replace(/([a-z])([A-Z])([a-z])/g, "$1 $2$3").replace(/\b\w/g, c => c.toUpperCase());
     formattedTitle = title.replace(/(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])/g, " $1").replace(/\b\w/g, c => c.toUpperCase());
 
   } else if (isEmpty(title) === false && title === "iSBAR") {
@@ -1176,16 +893,12 @@ export const formatTitle = (title) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "formatTitle formattedTitle", formattedTitle);
-
   return formattedTitle;
 
 };
 
 
 export const randomizeItems = (items, randomize) => {
-  // console.log(componentName, getDateTime(), "randomizeItems items", items);
-  // console.log(componentName, getDateTime(), "randomizeItems randomize", randomize);
 
   let itemsRandomized = [];
 
@@ -1213,7 +926,6 @@ export const randomizeItems = (items, randomize) => {
 
 
 export const formatLowerCase = (value) => {
-  // console.log(componentName, getDateTime(), "formatLowerCase value", value);
 
   let lowerCaseValue = value;
 
@@ -1229,7 +941,6 @@ export const formatLowerCase = (value) => {
 
 
 export const formatUpperCase = (value) => {
-  // console.log(componentName, getDateTime(), "formatUpperCase value", value);
 
   let upperCaseValue = value;
 
@@ -1245,7 +956,6 @@ export const formatUpperCase = (value) => {
 
 
 export const formatTrim = (value) => {
-  // console.log(componentName, getDateTime(), "formatTrim value", value);
 
   let trimValue = value;
 
@@ -1261,7 +971,6 @@ export const formatTrim = (value) => {
 
 
 export const formatToString = (value) => {
-  // console.log(componentName, getDateTime(), "formatToString value", value);
 
   let toStringValue = value;
 
@@ -1277,7 +986,6 @@ export const formatToString = (value) => {
 
 
 export const formatInt = (value) => {
-  // console.log(componentName, getDateTime(), "formatInt value", value);
 
   let formatedInt = value;
 
@@ -1297,7 +1005,6 @@ export const formatInt = (value) => {
 
 
 export const formatFloat = (value) => {
-  // console.log(componentName, getDateTime(), "formatFloat value", value);
 
   let formatedFloat = value;
 
@@ -1317,7 +1024,6 @@ export const formatFloat = (value) => {
 
 
 export const formatSearchInput = (value) => {
-  // console.log(componentName, getDateTime(), "formatSearchInput value", value);
 
   let formatedSearchInput = value;
 
@@ -1333,7 +1039,6 @@ export const formatSearchInput = (value) => {
 
 
 export const removeHTML = (text) => {
-  // console.log(componentName, getDateTime(), "removeHTML text", text);
 
   // * https://www.geeksforgeeks.org/how-to-strip-out-html-tags-from-a-string-using-javascript/ -- 02/08/2022 MF
 
@@ -1344,8 +1049,6 @@ export const removeHTML = (text) => {
     displayText = text.replace(/(<([^>]+)>)/ig, "");
 
   };
-
-  // console.log(componentName, getDateTime(), "removeHTML displayText", displayText);
 
   return displayText;
 
