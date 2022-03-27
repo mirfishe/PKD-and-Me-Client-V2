@@ -17,33 +17,24 @@ const EditUserReview = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
   // const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, getDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, getDateTime(), "titleListState", titleListState);
 
   // const checklistListState = useSelector(state => state.user.arrayChecklist);
-  // console.log(componentName, getDateTime(), "checklistListState", checklistListState);
 
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, getDateTime(), "userReviewListState", userReviewListState);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, getDateTime(), "userState", userState);
 
-  // console.log(componentName, getDateTime(), "props.titleID", props.titleID);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -90,16 +81,12 @@ const EditUserReview = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect userReviewListState", userReviewListState);
 
     if (isEmpty(props.reviewID) === false) {
 
       let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
-      // console.log(componentName, getDateTime(), "useEffect userReviewObject", userReviewObject);
-      // console.log(componentName, getDateTime(), "useEffect typeof userReviewObject", typeof userReviewObject);
 
       // setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
-      // console.log(componentName, getDateTime(), "useEffect userReviewItemIndex", userReviewItemIndex);
 
       if (isEmpty(userReviewObject) === false) {
 
@@ -156,16 +143,12 @@ const EditUserReview = (props) => {
 
 
   // useEffect(() => {
-  //     // console.log(componentName, getDateTime(), "useEffect userReviewListState", userReviewListState);
 
   //     if (isEmpty(props.titleID) === false) {
 
   //         let titleObject = titleListState.filter(title => title.titleID === props.titleID);
-  //         // console.log(componentName, getDateTime(), "useEffect titleObject", titleObject);
-  //         // console.log(componentName, getDateTime(), "useEffect typeof titleObject", typeof titleObject);
 
   //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
-  //         // console.log(componentName, getDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
   //         if (isEmpty(titleObject) === false) {
 
@@ -179,17 +162,12 @@ const EditUserReview = (props) => {
 
 
   // useEffect(() => {
-  //     // console.log(componentName, getDateTime(), "useEffect titleListState", titleListState);
-  //     // console.log(componentName, getDateTime(), "useEffect titleID", titleID);
 
   //     if (isEmpty(titleID) === false) {
 
   //         let titleObject = titleListState.filter(title => title.titleID === titleID);
-  //         // console.log(componentName, getDateTime(), "useEffect titleObject", titleObject);
-  //         // console.log(componentName, getDateTime(), "useEffect typeof titleObject", typeof titleObject);
 
   //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
-  //         // console.log(componentName, getDateTime(), "useEffect titleItemIndex", titleItemIndex);
 
   //         if (isEmpty(titleObject) === false) {
 
@@ -203,8 +181,6 @@ const EditUserReview = (props) => {
 
 
   const addUserReview = () => {
-    // console.log(componentName, getDateTime(), "addUserReview baseURL", baseURL);
-    // console.log(componentName, getDateTime(), "addUserReview props.titleID", props.titleID);
 
     clearMessages();
     setUserReviewRecordAdded(null);
@@ -229,9 +205,7 @@ const EditUserReview = (props) => {
     // * txtDateRead is expecting a date and rdoRating is expecting a number
     // if (isEmpty(txtDateRead) === false && isEmpty(rdoRating) === false) {
 
-    // console.log(componentName, getDateTime(), "addUserReview typeof props.titleID", typeof props.titleID);
 
-    // console.log(componentName, getDateTime(), "addUserReview parseInt(props.titleID)", parseInt(props.titleID));
 
     let recordObject = {
       titleID: parseInt(props.titleID),
@@ -300,10 +274,8 @@ const EditUserReview = (props) => {
 
     };
 
-    // console.log(componentName, getDateTime(), "addUserReview recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
-    // console.log(componentName, getDateTime(), "addUserReview url", url);
 
     if (isEmpty(sessionToken) === false) {
 
@@ -316,7 +288,6 @@ const EditUserReview = (props) => {
         body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "addUserReview response", response);
 
           // if (!response.ok) {
 
@@ -338,7 +309,6 @@ const EditUserReview = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "addUserReview data", data);
 
           setUserReviewRecordAdded(data.transactionSuccess);
           addMessage(data.message);
@@ -364,8 +334,6 @@ const EditUserReview = (props) => {
             // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
             titleItem = titleItem[0];
 
-            // console.log(componentName, getDateTime(), "addUserReview titleItem", titleItem);
-            // console.log(componentName, getDateTime(), "addUserReview typeof data.records[0].titleID", typeof data.records[0].titleID);
 
             // let titleItemIndex = titleListState.findIndex(title => title.titleID === data.records[0].titleID);
 
@@ -381,15 +349,18 @@ const EditUserReview = (props) => {
 
             let userReviews = [];
 
-            for (let i = 0; i < userReviewsList.length; i++) {
+            if (Array.isArray(userReviewsList) === true) {
 
-              userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
+              for (let i = 0; i < userReviewsList.length; i++) {
+
+                userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
+
+              };
 
             };
 
             // let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
-            // console.log(componentName, getDateTime(), "addUserReview userReviews", userReviews);
 
             // * Get all reviews for the title. -- 03/06/2021 MF
             // ? Get the latest from state? -- 03/06/2021 MF
@@ -399,21 +370,22 @@ const EditUserReview = (props) => {
               userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, rating: data.records[0].rating });
             };
 
-            // console.log(componentName, getDateTime(), "addUserReview userReviews", userReviews);
 
             // * Recompute the average. -- 03/06/2021 MF
             let userReviewCount = userReviews.length;
-            // console.log(componentName, getDateTime(), "addUserReview userReviewCount", userReviewCount);
 
             let userReviewSum = 0;
 
-            for (let i = 0; i < userReviews.length; i++) {
+            if (Array.isArray(userReviews) === true) {
 
-              userReviewSum += userReviews[i].rating;
+              for (let i = 0; i < userReviews.length; i++) {
+
+                userReviewSum += userReviews[i].rating;
+
+              };
 
             };
 
-            // console.log(componentName, getDateTime(), "addUserReview userReviewSum", userReviewSum);
 
             let userReviewAverage = 0;
 
@@ -425,14 +397,12 @@ const EditUserReview = (props) => {
 
             };
 
-            // console.log(componentName, getDateTime(), "addUserReview userReviewAverage", userReviewAverage);
 
             // * Update the title ratings. -- 03/06/2021 MF
             dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
 
-            // console.log(componentName, getDateTime(), "addUserReview checklistListIndex", checklistListIndex);
 
             if (data.records[0].active === true || data.records[0].active === 1) {
 
@@ -467,7 +437,6 @@ const EditUserReview = (props) => {
 
 
   const updateUserReview = (deleteUserReview) => {
-    // console.log(componentName, getDateTime(), "updateUserReview baseURL", baseURL);
 
     clearMessages();
     setUserReviewRecordUpdated(null);
@@ -492,9 +461,7 @@ const EditUserReview = (props) => {
     // * txtDateRead is expecting a date and rdoRating is expecting a number. -- 03/06/2021 MF
     // if (isEmpty(txtDateRead) === false && isEmpty(rdoRating) === false) {
 
-    // console.log(componentName, getDateTime(), "addUserReview typeof titleID", typeof titleID);
 
-    // console.log(componentName, getDateTime(), "addUserReview parseInt(titleID)", parseInt(titleID));
 
     let recordObject = {
       read: cbxRead,
@@ -563,7 +530,6 @@ const EditUserReview = (props) => {
 
     };
 
-    // console.log(componentName, getDateTime(), "updateUserReview recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
 
@@ -579,7 +545,6 @@ const EditUserReview = (props) => {
       };
 
       url = url + props.reviewID;
-      // console.log(componentName, getDateTime(), "updateUserReview url", url);
 
       fetch(url, {
         method: "PUT",
@@ -590,7 +555,6 @@ const EditUserReview = (props) => {
         body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "updateUserReview response", response);
 
           // if (!response.ok) {
 
@@ -612,7 +576,6 @@ const EditUserReview = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "updateUserReview data", data);
 
           setUserReviewRecordUpdated(data.transactionSuccess);
           addMessage(data.message);
@@ -636,7 +599,6 @@ const EditUserReview = (props) => {
             // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
             titleItem = titleItem[0];
 
-            // console.log(componentName, getDateTime(), "updateUserReview titleItem", titleItem);
 
             // let titleItemIndex = titleListState.findIndex(title => title.titleID === /*data.records[0].*/titleID);
 
@@ -652,22 +614,23 @@ const EditUserReview = (props) => {
 
             let userReviews = [];
 
-            for (let i = 0; i < userReviewsList.length; i++) {
+            if (Array.isArray(userReviewsList) === true) {
 
-              userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, titleID: userReviewsList[i].titleID, rating: userReviewsList[i].rating });
+              for (let i = 0; i < userReviewsList.length; i++) {
+
+                userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, titleID: userReviewsList[i].titleID, rating: userReviewsList[i].rating });
+
+              };
 
             };
 
             const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === props.reviewID);
-            // console.log(componentName, getDateTime(), "updateUserReview userReviewsIndex", userReviewsIndex);
 
-            // console.log(componentName, getDateTime(), "updateUserReview userReviews", userReviews);
 
             // * Get all reviews for the title. -- 03/06/2021 MF
             // ? Get the latest from state? -- 03/06/2021 MF
             // ? Update the state user review array? -- 03/06/2021 MF
             // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>' -- 03/06/2021 MF
-            // console.log(componentName, getDateTime(), "updateUserReview userReviews[userReviewsIndex].rating", userReviews[userReviewsIndex].rating);
             // userReviews[userReviewsIndex].rating = data.records[0].rating;
 
             if (userReviewsIndex > -1) {
@@ -678,36 +641,31 @@ const EditUserReview = (props) => {
 
             // userReviews.push({ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
 
-            // console.log(componentName, getDateTime(), "updateUserReview data.records[0].active", data.records[0].active);
 
             if (data.records[0].active === true || data.records[0].active === 1 && isEmpty(data.records[0].rating) === false) {
 
-              // console.log(componentName, getDateTime(), "updateUserReview props.reviewID", props.reviewID);
-              // console.log(componentName, getDateTime(), "updateUserReview data.records[0].userID", data.records[0].userID);
-              // console.log(componentName, getDateTime(), "updateUserReview data.records[0].updatedBy", data.records[0].updatedBy);
-              // console.log(componentName, getDateTime(), "updateUserReview data.records[0].rating", data.records[0].rating);
 
               userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, rating: data.records[0].rating });
 
-              // console.log(componentName, getDateTime(), "updateUserReview userReviews", userReviews);
 
             };
 
-            // console.log(componentName, getDateTime(), "updateUserReview userReviews", userReviews);
 
             // * Recompute the average. -- 03/06/2021 MF
             let userReviewCount = userReviews.length;
-            // console.log(componentName, getDateTime(), "updateUserReview userReviewCount", userReviewCount);
 
             let userReviewSum = 0;
 
-            for (let i = 0; i < userReviews.length; i++) {
+            if (Array.isArray(userReviews) === true) {
 
-              userReviewSum += userReviews[i].rating;
+              for (let i = 0; i < userReviews.length; i++) {
+
+                userReviewSum += userReviews[i].rating;
+
+              };
 
             };
 
-            // console.log(componentName, getDateTime(), "updateUserReview userReviewSum", userReviewSum);
 
             let userReviewAverage = 0;
 
@@ -719,10 +677,8 @@ const EditUserReview = (props) => {
 
             };
 
-            // console.log(componentName, getDateTime(), "updateUserReview userReviewAverage", userReviewAverage);
 
             // * Update the title ratings. -- 03/06/2021 MF
-            // console.log(componentName, getDateTime(), "updateUserReview titleItemIndex", titleItemIndex);
             dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /*data.records[0].*/titleID);
@@ -764,7 +720,6 @@ const EditUserReview = (props) => {
 
 
   const deleteUserReview = () => {
-    // console.log(componentName, getDateTime(), "deleteUserReview baseURL", baseURL);
 
     clearMessages();
     setUserReviewRecordDeleted(null);
@@ -775,7 +730,6 @@ const EditUserReview = (props) => {
 
       url = url + props.reviewID;
 
-      // console.log(componentName, getDateTime(), "deleteUserReview url", url);
 
       if (isEmpty(sessionToken) === false) {
 
@@ -787,7 +741,6 @@ const EditUserReview = (props) => {
           })
         })
           .then(response => {
-            // console.log(componentName, getDateTime(), "deleteUserReview response", response);
 
             // if (!response.ok) {
 
@@ -809,7 +762,6 @@ const EditUserReview = (props) => {
 
           })
           .then(data => {
-            // console.log(componentName, getDateTime(), "deleteUserReview data", data);
 
             setUserReviewRecordDeleted(data.transactionSuccess);
 
@@ -824,11 +776,9 @@ const EditUserReview = (props) => {
               // let titleItem = titleListState.filter(title => title.titleID === data.titleID);
               // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
               // titleItem = titleItem[0];
-              // // console.log(componentName, getDateTime(), "deleteUserReview titleItem", titleItem);
 
               let userReviewItem = userReviewListState.filter(userReview => userReview.reviewID === data.reviewID);
               userReviewItem = userReviewItem[0];
-              // console.log(componentName, getDateTime(), "deleteUserReview userReviewItem", userReviewItem);
 
               // let titleItemIndex = titleListState.findIndex(title => title.titleID === userReviewItem.titleID);
 
@@ -837,12 +787,10 @@ const EditUserReview = (props) => {
 
               const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === data.reviewID);
 
-              // console.log(componentName, getDateTime(), "deleteUserReview userReviews", userReviews);
               // * Get all reviews for the title. -- 03/06/2021 MF
               // ? Get the latest from state? -- 03/06/2021 MF
               // ? Update the state user review array? -- 03/06/2021 MF
               // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>' -- 03/06/2021 MF
-              // console.log(componentName, getDateTime(), "deleteUserReview userReviews[userReviewsIndex].rating", userReviews[userReviewsIndex].rating);
               // userReviews[userReviewsIndex].rating = data.rating;
 
               if (userReviewsIndex > -1) {
@@ -851,20 +799,22 @@ const EditUserReview = (props) => {
 
               };
 
-              // console.log(componentName, getDateTime(), "deleteUserReview userReviews", userReviews);
 
               // * Recompute the average. -- 03/06/2021 MF
               let userReviewCount = userReviews.length;
 
               let userReviewSum = 0;
 
-              for (let i = 0; i < userReviews.length; i++) {
+              if (Array.isArray(userReviews) === true) {
 
-                userReviewSum += userReviews[i].rating;
+                for (let i = 0; i < userReviews.length; i++) {
+
+                  userReviewSum += userReviews[i].rating;
+
+                };
 
               };
 
-              // console.log(componentName, getDateTime(), "deleteUserReview userReviewSum", userReviewSum);
 
               let userReviewAverage = 0;
 
@@ -876,7 +826,6 @@ const EditUserReview = (props) => {
 
               };
 
-              // console.log(componentName, getDateTime(), "deleteUserReview userReviewAverage", userReviewAverage);
 
               // * Update the title ratings. -- 03/06/2021 MF
               dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: userReviewItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
@@ -908,7 +857,6 @@ const EditUserReview = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect userReviewRecordAdded", userReviewRecordAdded);
 
     if (isEmpty(userReviewRecordAdded) === false && userReviewRecordAdded === true) {
 
@@ -932,8 +880,6 @@ const EditUserReview = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect userReviewRecordUpdated", userReviewRecordUpdated);
-    // console.log(componentName, getDateTime(), "useEffect userReviewRecordDeleted", userReviewRecordDeleted);
 
     if (isEmpty(userReviewRecordUpdated) === false && userReviewRecordUpdated === true) {
 
@@ -975,7 +921,6 @@ const EditUserReview = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if (isEmpty(sessionToken) === true) {
 
@@ -989,8 +934,6 @@ const EditUserReview = (props) => {
 
   return (
     <React.Fragment>
-
-      {/* {console.log(componentName, getDateTime(), "return userReviewItem", userReviewItem)} */}
 
       {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null} */}
 
@@ -1027,12 +970,12 @@ const EditUserReview = (props) => {
               <Col>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxRead"><Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxRead(!cbxRead); }} />Read</Label>
+                  <Label for="cbxRead"><Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => { setCbxRead(!cbxRead); }} />Read</Label>
                 </FormGroup>
 
                 <FormGroup>
                   <Label for="rdoRating" className="me-4">Rating</Label>
-                  <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setRdoRating(newValue); }} />
+                  <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => { setRdoRating(newValue); }} />
                   {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 2</Label>
@@ -1060,7 +1003,7 @@ const EditUserReview = (props) => {
 
                 <FormGroup>
                   <Label for="txtDateRead">Date Read</Label>
-                  <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtDateRead(event.target.value); }} />
+                  <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => { setTxtDateRead(event.target.value); }} />
                 </FormGroup>
 
               </Col>
@@ -1069,7 +1012,7 @@ const EditUserReview = (props) => {
             <FormGroup>
 
               <Label for="txtRanking">Ranking</Label>
-              <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtRanking(event.target.value); }} />
+              <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => { setTxtRanking(event.target.value); }} />
 
             </FormGroup>
             <FormGroup row>
@@ -1077,7 +1020,7 @@ const EditUserReview = (props) => {
               <Col>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxOwned"><Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxOwned(!cbxOwned); }} />Owned</Label>
+                  <Label for="cbxOwned"><Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => { setCbxOwned(!cbxOwned); }} />Owned</Label>
                 </FormGroup>
 
               </Col>
@@ -1086,7 +1029,7 @@ const EditUserReview = (props) => {
 
                 <FormGroup>
                   <Label for="txtDatePurchased">Date Purchased</Label>
-                  <Input type="date" id="txtDatePurchased" value={txtDatePurchased} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtDatePurchased(event.target.value); }} />
+                  <Input type="date" id="txtDatePurchased" value={txtDatePurchased} onChange={(event) => { setTxtDatePurchased(event.target.value); }} />
                 </FormGroup>
 
               </Col>
@@ -1095,12 +1038,12 @@ const EditUserReview = (props) => {
 
             <FormGroup>
               <Label for="txtShortReview">Short Review</Label>
-              <Input type="text" id="txtShortReview" value={txtShortReview} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtShortReview(event.target.value); }} />
+              <Input type="text" id="txtShortReview" value={txtShortReview} onChange={(event) => { setTxtShortReview(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtLongReview">Long Review</Label>
-              <Input type="textarea" id="txtLongReview" rows={10} value={txtLongReview} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtLongReview(event.target.value); }} />
+              <Input type="textarea" id="txtLongReview" rows={10} value={txtLongReview} onChange={(event) => { setTxtLongReview(event.target.value); }} />
             </FormGroup>
 
             <ModalFooter>
@@ -1113,9 +1056,9 @@ const EditUserReview = (props) => {
 
                 <React.Fragment>
 
-                  <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateUserReview(false); }}>Update Review</Button>
-                  <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateUserReview(true); }}>Delete Review</Button>
-                  {isEmpty(admin) === false && admin === true ? <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ deleteUserReview(); }}>Hard Delete Review</Button> : null}
+                  <Button outline size="lg" color="primary" onClick={(event) => { updateUserReview(false); }}>Update Review</Button>
+                  <Button outline size="lg" color="danger" onClick={(event) => { updateUserReview(true); }}>Delete Review</Button>
+                  {isEmpty(admin) === false && admin === true ? <Button outline size="lg" color="warning" onClick={(event) => { deleteUserReview(); }}>Hard Delete Review</Button> : null}
 
                 </React.Fragment>
 

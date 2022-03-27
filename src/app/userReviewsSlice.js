@@ -19,13 +19,14 @@ const userReviewsSlice = createSlice({
   initialState,
   reducers: {
     loadArrayUserReviews(state, action) {
-      // console.log(componentName, getDateTime(), "loadArrayUserReviews action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "loadArrayUserReviews action.payload.length", action.payload.length);
 
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "loadArrayTitles action.payload[i]", action.payload[i]);
-        state.arrayUserReviews.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayUserReviews.push(action.payload[i]);
+
+        };
 
       };
 
@@ -34,25 +35,23 @@ const userReviewsSlice = createSlice({
 
     },
     addStateUserReview(state, action) {
-      // console.log(componentName, getDateTime(), "addStateUserReview action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addStateUserReview action.payload.length", action.payload.length);
 
       // * Could change this to accept an object and add that object to the store
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "addStateUserReview action.payload[i]", action.payload[i]);
-        state.arrayUserReviews.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayUserReviews.push(action.payload[i]);
+
+        };
 
       };
 
     },
     updateStateUserReview(state, action) {
-      // console.log(componentName, getDateTime(), "updateStateUserReview action.payload", action.payload);
 
       const userReviewItem = action.payload;
       let userReviewListIndex;
-      // console.log(componentName, getDateTime(), "updateStateUserReview userReviewItem", userReviewItem);
-      // console.log(componentName, getDateTime(), "updateStateUserReview userReviewItem.reviewID", userReviewItem.reviewID);
 
       if (typeof userReviewItem === "object") {
 
@@ -60,7 +59,6 @@ const userReviewsSlice = createSlice({
 
           userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === userReviewItem.reviewID);
 
-          // console.log(componentName, getDateTime(), "updateStateUserReview userReviewListIndex", userReviewListIndex);
 
           // state.arrayUserReviews[userReviewListIndex].reviewID = userReviewItem.reviewID;
 
@@ -362,7 +360,6 @@ const userReviewsSlice = createSlice({
 
     },
     deleteStateUserReview(state, action) {
-      // console.log(componentName, getDateTime(), "deleteStateUserReview action.payload", action.payload);
 
       // let userReviewItemIndex = action.payload;
       let userReviewListIndex;
@@ -371,13 +368,11 @@ const userReviewsSlice = createSlice({
       // ? This doesn't work because state.arrayUserReviews isn't stored as an array of objects?
       // ? Need to copy the array?
       // const existingUserReviewIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
-      // console.log(componentName, getDateTime(), "deleteStateUserReview existingUserReviewIndex", existingUserReviewIndex);
 
       if (isEmpty(reviewID) === false) {
 
         userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
 
-        // console.log(componentName, getDateTime(), "deleteStateUserReview userReviewListIndex", userReviewListIndex);
 
         state.arrayUserReviews.splice(userReviewListIndex, 1);
 
@@ -385,47 +380,43 @@ const userReviewsSlice = createSlice({
 
     },
     setUserReviewsDataOffline(state, action) {
-      // console.log(componentName, getDateTime(), "setUserReviewsDataOffline action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "setUserReviewsDataOffline action.payload.length", action.payload.length);
 
       state.userReviewsDataOffline = action.payload;
 
     },
-    //   loadArrayUserReviewsRatings(state, action) {
-    //       // console.log(componentName, getDateTime(), "loadArrayUserReviewsRatings action.payload", action.payload);
-    //       // console.log(componentName, getDateTime(), "loadArrayUserReviewsRatings action.payload.length", action.payload.length);
+    // loadArrayUserReviewsRatings(state, action) {
 
-    //       for (let i = 0; i < action.payload.length; i++) {
+    //   if (Array.isArray(action.payload) === true) {
 
-    //         // console.log(componentName, getDateTime(), "loadArrayTitles action.payload[i]", action.payload[i]);
-    //         state.arrayUserReviewsRatings.push(action.payload[i]);
+    //     for (let i = 0; i < action.payload.length; i++) {
 
-    //       };
+    //       state.arrayUserReviewsRatings.push(action.payload[i]);
 
-    //       state.userReviewsRatingsLoaded = true;
-    //       state.lastDatabaseRetrievalUserReviewsRatings = getDateTime();
+    //     };
 
-    //   },
-    //   addStateUserReviewsRatings(state, action) {
-    //       // console.log(componentName, getDateTime(), "addStateUserReviewsRatings action.payload", action.payload);
-    //       // console.log(componentName, getDateTime(), "addStateUserReviewsRatings action.payload.length", action.payload.length);
+    //   };
 
-    //       // Could change this to accept an object and add that object to the store
-    //       for (let i = 0; i < action.payload.length; i++) {
+    //   state.userReviewsRatingsLoaded = true;
+    //   state.lastDatabaseRetrievalUserReviewsRatings = getDateTime();
 
-    //         // console.log(componentName, getDateTime(), "addStateUserReviewsRatings action.payload[i]", action.payload[i]);
-    //         state.arrayUserReviewsRatings.push(action.payload[i]);
+    // },
+    // addStateUserReviewsRatings(state, action) {
 
-    //       };
+    //   // Could change this to accept an object and add that object to the store
+    //   if (Array.isArray(action.payload) === true) {
 
-    //   },
+    //     for (let i = 0; i < action.payload.length; i++) {
+
+    //       state.arrayUserReviewsRatings.push(action.payload[i]);
+
+    //     };
+
+    //   };
+
+    // },
     // updateStateUserReviewsRatings(state, action) {
-    //     // console.log(componentName, getDateTime(), "updateStateUserReviewsRatings action.payload", action.payload);
 
     //     const userReviewRatingItem = action.payload;
-    //     // console.log(componentName, getDateTime(), "updateStateUserReviewsRatings userReviewRatingItem", userReviewRatingItem);
-    //     // console.log(componentName, getDateTime(), "updateStateUserReviewsRatings userReviewRatingItem.titleID", userReviewRatingItem.titleID);
-    //     // console.log(componentName, getDateTime(), "updateStateUserReviewsRatings userReviewRatingItem.userReviewItemIndex", userReviewRatingItem.userReviewRatingItemIndex);
 
     //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].titleID = userReviewRatingItem.titleID;
     //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].userReviewCount = userReviewRatingItem.userReviewCount;
@@ -434,7 +425,6 @@ const userReviewsSlice = createSlice({
 
     // },
     // deleteStateUserReviewsRatings(state, action) {
-    //     console.log(componentName, getDateTime(), "deleteStateUserReviewsRatings action.payload", action.payload);
 
     //     const userReviewItemIndex = action.payload;
     //     // const reviewID = action.payload;
@@ -442,28 +432,21 @@ const userReviewsSlice = createSlice({
     //     // This doesn't work because state.arrayUserReviewsRatings isn't stored as an array of objects?
     //     // Need to copy the array?
     //     // const existingUserReviewIndex = state.arrayUserReviewsRatings.findIndex(userReview => userReview.reviewID === reviewID);
-    //     // console.log(componentName, getDateTime(), "deleteStateUserReviewsRatings existingUserReviewIndex", existingUserReviewIndex);
 
     //     state.arrayUserReviewsRatings.splice(userReviewItemIndex, 1);
 
     // },
     setUserReviewsRatingsLoaded(state, action) {
-      // console.log(componentName, getDateTime(), "setUserReviewsRatingsLoaded action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "setUserReviewsRatingsLoaded action.payload.length", action.payload.length);
 
       state.userReviewsRatingsLoaded = action.payload;
 
     },
     setLastDatabaseRetrievalUserReviewsRatings(state, action) {
-      // console.log(componentName, getDateTime(), "setLastDatabaseRetrievalUserReviewsRatings action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "setLastDatabaseRetrievalUserReviewsRatings action.payload.length", action.payload.length);
 
       state.lastDatabaseRetrievalUserReviewsRatings = action.payload;
 
     }
     // setUserReviewsRatingsDataOffline(state, action) {
-    //   // console.log(componentName, getDateTime(), "setUserReviewsRatingsDataOffline action.payload", action.payload);
-    //   // console.log(componentName, getDateTime(), "setUserReviewsRatingsDataOffline action.payload.length", action.payload.length);
 
     //   state.userReviewsRatingsDataOffline = action.payload;
 

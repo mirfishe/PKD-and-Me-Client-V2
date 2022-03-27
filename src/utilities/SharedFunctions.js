@@ -902,7 +902,7 @@ export const randomizeItems = (items, randomize) => {
 
   let itemsRandomized = [];
 
-  if (randomize === true) {
+  if (randomize === true && Array.isArray(items) === true) {
 
     itemsRandomized = items.map((a) => {
 

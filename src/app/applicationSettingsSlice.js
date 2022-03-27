@@ -47,30 +47,25 @@ const applicationSettingsSlice = createSlice({
   initialState,
   reducers: {
     // setApplicationVersion(state, action) {
-    //   // console.log(componentName, getDateTime(), "setApplicationVersion action.payload", action.payload);
 
     //   state.applicationVersion = action.payload;
 
     // },
     // setCopyrightYear(state, action) {
-    //   // console.log(componentName, getDateTime(), "setCopyrightYear action.payload", action.payload);
 
     //   state.copyrightYear = action.payload;
 
     // },
     setLocationLogged(state, action) {
-      // console.log(componentName, getDateTime(), "setLocationLogged action.payload", action.payload);
 
       state.locationLogged = action.payload;
 
     },
     addComputerLog(state, action) {
-      // console.log(componentName, getDateTime(), "addComputerLog action.payload", action.payload);
 
       // state.computerLog = action.payload;
 
       const computerLogItem = action.payload;
-      // console.log(componentName, getDateTime(), "addComputerLog computerLogItem", computerLogItem);
 
       if (typeof computerLogItem === "object") {
 
@@ -176,148 +171,122 @@ const applicationSettingsSlice = createSlice({
 
     },
     setHostname(state, action) {
-      // console.log(componentName, getDateTime(), "setAPI_URL action.payload", action.payload);
 
       state.hostname = action.payload;
 
     },
     setProfileType(state, action) {
-      // console.log(componentName, getDateTime(), "setAPI_URL action.payload", action.payload);
 
       state.profileType = action.payload;
 
     },
     // setAPI_URL(state, action) {
-    //     // console.log(componentName, getDateTime(), "setAPI_URL action.payload", action.payload);
 
     //     state.API_URL = action.payload;
 
     // },
     // setBaseURL(state, action) {
-    //       // console.log(componentName, getDateTime(), "setBaseURL action.payload", action.payload);
 
     //       state.baseURL = action.payload;
 
     //   },
     setTagManagerArgsgtmId(state, action) {
-      // console.log(componentName, getDateTime(), "setTagManagerArgsgtmId action.payload", action.payload);
 
       state.tagManagerArgsgtmId = action.payload;
 
     },
     setSiteName(state, action) {
-      // console.log(componentName, getDateTime(), "setSiteName action.payload", action.payload);
 
       state.siteName = action.payload;
 
     },
     setApplicationName(state, action) {
-      // console.log(componentName, getDateTime(), "setApplicationName action.payload", action.payload);
 
       state.applicationName = action.payload;
 
     },
     setMetaDescription(state, action) {
-      // console.log(componentName, getDateTime(), "setMetaDescription action.payload", action.payload);
 
       state.metaDescription = action.payload;
 
     },
     setDefaultPageComponent(state, action) {
-      // console.log(componentName, getDateTime(), "setDefaultPageComponent action.payload", action.payload);
 
       state.defaultPageComponent = action.payload;
 
     },
     setRouterBaseName(state, action) {
-      // console.log(componentName, getDateTime(), "setRouterBaseName action.payload", action.payload);
 
       state.routerBaseName = action.payload;
 
     },
     setApplicationOffline(state, action) {
-      // console.log(componentName, getDateTime(), "setApplicationOffline action.payload", action.payload);
 
       state.applicationOffline = action.payload;
 
     },
     setElectronicOnly(state, action) {
-      // console.log(componentName, getDateTime(), "setElectronicOnly action.payload", action.payload);
 
       state.electronicOnly = action.payload;
 
     },
     setUserElectronicOnly(state, action) {
-      // console.log(componentName, getDateTime(), "setUserElectronicOnly action.payload", action.payload);
 
       state.userElectronicOnly = action.payload;
 
     },
     setElectronicOnlyMessage(state, action) {
-      // console.log(componentName, getDateTime(), "setElectronicOnlyMessage action.payload", action.payload);
 
       state.electronicOnlyMessage = action.payload;
 
     },
     setPhysicalOnly(state, action) {
-      // console.log(componentName, getDateTime(), "setPhysicalOnly action.payload", action.payload);
 
       state.physicalOnly = action.payload;
 
     },
     setUserPhysicalOnly(state, action) {
-      // console.log(componentName, getDateTime(), "setUserPhysicalOnly action.payload", action.payload);
 
       state.userPhysicalOnly = action.payload;
 
     },
     setPhysicalOnlyMessage(state, action) {
-      // console.log(componentName, getDateTime(), "setPhysicalOnlyMessage action.payload", action.payload);
 
       state.physicalOnlyMessage = action.payload;
 
     },
     setApplicationAllowUserInteractions(state, action) {
-      // console.log(componentName, getDateTime(), "setApplicationAllowUserInteractions action.payload", action.payload);
 
       state.applicationAllowUserInteractions = action.payload;
 
     },
     setRequireUserLogin(state, action) {
-      // console.log(componentName, getDateTime(), "setRequireUserLogin action.payload", action.payload);
 
       state.requireUserLogin = action.payload;
 
     },
     setApplicationSettingsLoaded(state, action) {
-      // console.log(componentName, getDateTime(), "setApplicationSettingsLoaded action.payload", action.payload);
 
       state.applicationSettingsLoaded = action.payload;
 
     },
     setApplicationSettingsJsonLoaded(state, action) {
-      // console.log(componentName, getDateTime(), "setApplicationSettingsJsonLoaded action.payload", action.payload);
 
       state.applicationSettingsJsonLoaded = action.payload;
 
     },
     setMenuSettings(state, action) {
-      // console.log(componentName, getDateTime(), "setMenuSettings action.payload", action.payload);
 
       state.menuSettings = action.payload;
 
     },
     setLinkItem(state, action) {
-      // console.log(componentName, getDateTime(), "setLinkItem action.payload", action.payload);
 
       state.linkItem = action.payload;
 
     },
     addInformationMessage(state, action) {
-      // console.log(componentName, getDateTime(), "addInformationMessage action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addInformationMessage state.informationMessage", state.informationMessage);
 
-      // console.log(componentName, getDateTime(), "addInformationMessage state.informationMessage", state.informationMessage);
 
       if (isEmpty(action.payload) === false) {
 
@@ -353,7 +322,6 @@ const applicationSettingsSlice = createSlice({
 
     },
     addSuccessMessage(state, action) {
-      // console.log(componentName, getDateTime(), "addSuccessMessage action.payload", action.payload);
 
       if (isEmpty(action.payload) === false) {
 
@@ -392,10 +360,7 @@ const applicationSettingsSlice = createSlice({
 
     },
     addWarningMessage(state, action) {
-      // console.log(componentName, getDateTime(), "addWarningMessage action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addWarningMessage state.warningMessage", state.warningMessage);
 
-      // console.log(componentName, getDateTime(), "addWarningMessage state.warningMessage", state.warningMessage);
 
       if (isEmpty(action.payload) === false) {
 
@@ -434,10 +399,7 @@ const applicationSettingsSlice = createSlice({
 
     },
     addErrorMessage(state, action) {
-      // console.log(componentName, getDateTime(), "addErrorMessage action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addErrorMessage state.errorMessage", state.errorMessage);
 
-      // console.log(componentName, getDateTime(), "addErrorMessage state.errorMessage", state.errorMessage);
 
       if (isEmpty(action.payload) === false) {
 
@@ -476,7 +438,6 @@ const applicationSettingsSlice = createSlice({
 
     },
     clearMessages(state, action) {
-      // console.log(componentName, getDateTime(), "clearMessages action.payload", action.payload);
 
       state.informationMessage = "";
       state.successMessage = "";
@@ -490,7 +451,6 @@ const applicationSettingsSlice = createSlice({
 
     },
     setShowMessages(state, action) {
-      // console.log(componentName, getDateTime(), "setShowMessages action.payload", action.payload);
 
       state.showMessages = action.payload;
 

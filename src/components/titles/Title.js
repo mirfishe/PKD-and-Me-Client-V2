@@ -29,7 +29,6 @@ const Title = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -39,11 +38,8 @@ const Title = (props) => {
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
   const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, getDateTime(), "userID", userID);
 
   // const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
   // const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
@@ -56,14 +52,9 @@ const Title = (props) => {
   // const [errEditionMessage, setErrEditionMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, getDateTime(), "titleListState", titleListState);
   // const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, getDateTime(), "editionListState", editionListState);
 
-  // console.log(componentName, getDateTime(), "props.match.params", props.match.params);
   const titleParam = props.linkItem.linkName; // props.match.params.title;
-  // console.log(componentName, getDateTime(), "typeof titleParam", typeof titleParam);
-  // console.log(componentName, getDateTime(), "titleParam", titleParam);
 
   let titleNameBreadCrumb = "";
   let titleID = "";
@@ -97,8 +88,6 @@ const Title = (props) => {
     // * If titleParam is not a number, then it's the title name
     titleList = titleListState.filter(title => title.titleURL === titleParam);
     const title = titleListState.find(title => title.titleURL === titleParam);
-    // console.log(componentName, getDateTime(), "typeof title", typeof title);
-    // console.log(componentName, getDateTime(), "title", title);
 
     if (isEmpty(title) === false) {
 
@@ -116,7 +105,6 @@ const Title = (props) => {
 
       document.title = "Title Not Found | " + applicationName + " | " + siteName;
       console.error("Title not found.");
-      // console.log(componentName, getDateTime(), "titleParam", titleParam);
       // // Display all active titles
       // titleList = titleListState;
       // // Display all active editions
@@ -167,21 +155,16 @@ const Title = (props) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "titleList", titleList);
 
   // * Sort the titleList array by title.titleSort
   // * Really not needed here since there should only be one item in the array
   titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-  // console.log(componentName, getDateTime(), "titleList", titleList);
 
   // * Sort the editionList array by media.sortID
-  // console.log(componentName, getDateTime(), "editionList", editionList);
   // // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
   // editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-  // console.log(componentName, getDateTime(), "editionList", editionList);
 
   const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, getDateTime(), "userReviewsState", userReviewsState);
 
   let userReviews = userReviewsState.filter(userReview => userReview.titleID === titleID);
 
@@ -194,23 +177,10 @@ const Title = (props) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "userReviewsState", userReviewsState);
-  // console.log(componentName, getDateTime(), "userReviews", userReviews);
-  // console.log(componentName, getDateTime(), "userReviewItem", userReviewItem);
-  // console.log(componentName, getDateTime(), "typeof userReviewItem.read", typeof userReviewItem.read);
-  // console.log(componentName, getDateTime(), "userReviewItem.read", userReviewItem.read);
-  // console.log(componentName, getDateTime(), "typeof userReviewItem.dateRead", typeof userReviewItem.dateRead);
-  // console.log(componentName, getDateTime(), "userReviewItem.dateRead", userReviewItem.dateRead);
-  // console.log(componentName, getDateTime(), "typeof userReviewItem[0].read", typeof userReviewItem[0].read);
-  // console.log(componentName, getDateTime(), "userReviewItem[0].read", userReviewItem[0].read);
-  // console.log(componentName, getDateTime(), "typeof userReviewItem[0].dateRead", typeof userReviewItem[0].dateRead);
-  // console.log(componentName, getDateTime(), "userReviewItem[0].dateRead", userReviewItem[0].dateRead);
 
   // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
-  // // console.log(componentName, getDateTime(), "userReviewsState", userReviewsState);
 
   // let userReviewRatingItem = {};
-  // // console.log(componentName, getDateTime(), "userReviewRatingItem", userReviewRatingItem);
 
   // if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
@@ -245,7 +215,6 @@ const Title = (props) => {
   // const [overallTitleRatingCount, setOverallTitleRatingCount] = useState(0);
 
   // const getTitleRating = () => {
-  //     // console.log(componentName, getDateTime(), "getTitleRating baseURL", baseURL);
 
   //     setOverallTitleRatingMessage("");
   //     setErrOverallTitleRatingMessage("");
@@ -259,11 +228,9 @@ const Title = (props) => {
 
   //         url = url + "rating/" + titleID;
 
-  //         // console.log(componentName, getDateTime(), "getTitleRating url", url);
 
   //         fetch(url)
   //         .then(response => {
-  //             // console.log(componentName, getDateTime(), "getTitleRating response", response);
   //             if (!response.ok) {
   //                 // throw Error(response.status + " " + response.statusText + " " + response.url);
   //                 return {transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews Rating data fetch used."};
@@ -272,14 +239,11 @@ const Title = (props) => {
   //             };
   //         })
   //         .then(results => {
-  //             // console.log(componentName, getDateTime(), "getTitleRating results", results);
 
   //             setOverallTitleRatingResultsFound(results.transactionSuccess);
   //             setOverallTitleRatingMessage(results.message);
 
   //             if (isEmpty(results) === false && results.transactionSuccess === true) {
-  //                 // console.log(componentName, getDateTime(), "getTitleRating results.userReviews[0].userReviewCount", results.userReviews[0].userReviewCount);
-  //                 // console.log(componentName, getDateTime(), "getTitleRating results.userReviews[0].userReviewSum", results.userReviews[0].userReviewSum);
 
   //                 setOverallTitleRatingCount(results.userReviews[0].userReviewCount);
   //                 let userReviewCount = results.userReviews[0].userReviewCount;
@@ -291,17 +255,13 @@ const Title = (props) => {
   //                     // let userReviewAverage: number = userReviewSum/0;
   //                     let userReviewAverage = userReviewSum/userReviewCount;
 
-  //                     // console.log(componentName, getDateTime(), "getTitleRating userReviewCount", userReviewCount);
-  //                     // console.log(componentName, getDateTime(), "getTitleRating state.overallTitleRatingCount", state.overallTitleRatingCount);
-  //                     // console.log(componentName, getDateTime(), "getTitleRating userReviewSum", userReviewSum);
-  //                     // console.log(componentName, getDateTime(), "getTitleRating userReviewAverage", userReviewAverage);
 
   //                     setOverallTitleRating(userReviewAverage);
 
   //                 };
 
   //             } else {
-  //                 console.log(componentName, getDateTime(), "getEditions error", results.message);
+  //                 console.error(componentName, getDateTime(), "getEditions error", results.message);
 
   //                 setErrOverallTitleRatingMessage(results.message);
 
@@ -325,7 +285,6 @@ const Title = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -337,7 +296,6 @@ const Title = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect titleList", titleList);
 
     if (titleList.length > 0) {
 
@@ -353,7 +311,6 @@ const Title = (props) => {
 
 
   // useEffect(() => {
-  //     // console.log(componentName, getDateTime(), "useEffect titleID", titleID);
 
   //     if (isEmpty(titleID) === false && isEmpty(overallTitleRatingResultsFound) === false) {
 
@@ -365,7 +322,6 @@ const Title = (props) => {
 
 
   // useEffect(() => {
-  //     // console.log(componentName, getDateTime(), "useEffect editionList", editionList);
 
   //     if (editionList.length > 0) {
 
@@ -381,9 +337,6 @@ const Title = (props) => {
 
 
   const saveRecord = () => {
-    // console.log(componentName, getDateTime(), "saveRecord computerLog", computerLog);
-    // console.log(componentName, getDateTime(), "saveRecord title", title);
-    // console.log(componentName, getDateTime(), "saveRecord window.location.href", window.location.href);
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -435,7 +388,6 @@ const Title = (props) => {
 
     };
 
-    // console.log(componentName, getDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
@@ -445,7 +397,6 @@ const Title = (props) => {
       body: JSON.stringify({ recordObject: recordObject })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -467,7 +418,6 @@ const Title = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "saveRecord results", results);
 
         data = results;
 
@@ -487,7 +437,6 @@ const Title = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect computerLog", computerLog);
 
     if (titleList.length > 0) {
 
@@ -508,11 +457,11 @@ const Title = (props) => {
 
             {isEmpty(titleList[0]) === false && isEmpty(titleList[0].category) === false && isNaN(titleList[0].category) ?
 
-              <BreadcrumbItem><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></BreadcrumbItem>
+              <BreadcrumbItem><Link to={encodeURL(titleList[0].category)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(titleList[0].category)); }}>{titleList[0].category}</Link></BreadcrumbItem>
 
               :
 
-              <BreadcrumbItem><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
+              <BreadcrumbItem><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
 
             }
 
@@ -529,106 +478,114 @@ const Title = (props) => {
         </Col>
       </Row>
 
-      {titleList.map((title) => {
+      {Array.isArray(titleList) === true ?
 
-        let activeString = "";
+        <React.Fragment>
 
-        if (title.titleActive === true || title.titleActive === 1) {
+          {titleList.map((title) => {
 
-          // activeString = "Active";
-          activeString = "";
+            let activeString = "";
 
-        } else {
+            if (title.titleActive === true || title.titleActive === 1) {
 
-          activeString = "Inactive";
+              // activeString = "Active";
+              activeString = "";
 
-        };
+            } else {
 
-        return (
-          <React.Fragment key={title.titleID}>
-            <Row>
-              <Col xs="12">
-                <h4>{title.titleName}
+              activeString = "Inactive";
 
-                  {isEmpty(title.publicationDate) === false ? <span className="ms-2 smaller-text"> ({title.publicationDate.includes("-01-01") === true ? <React.Fragment>{displayYear(title.publicationDate)}</React.Fragment> : <React.Fragment>{displayDate(title.publicationDate)}</React.Fragment>})</span> : null}
+            };
 
-                  {/* {isEmpty(title.category) === false ? <span className="ms-4 smaller-text"><Link to={encodeURL(title.category)}>{title.category}</Link>
+            return (
+              <React.Fragment key={title.titleID}>
+                <Row>
+                  <Col xs="12">
+                    <h4>{title.titleName}
+
+                      {isEmpty(title.publicationDate) === false ? <span className="ms-2 smaller-text"> ({title.publicationDate.includes("-01-01") === true ? <React.Fragment>{displayYear(title.publicationDate)}</React.Fragment> : <React.Fragment>{displayDate(title.publicationDate)}</React.Fragment>})</span> : null}
+
+                      {/* {isEmpty(title.category) === false ? <span className="ms-4 smaller-text"><Link to={encodeURL(title.category)}>{title.category}</Link>
                             </span> : null} */}
 
-                  {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
+                      {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
 
-                  {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null} */}
+                      {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null} */}
 
-                  {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                      {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
 
-                  {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null}
+                      {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null}
 
-                </h4>
-              </Col>
-            </Row>
+                    </h4>
+                  </Col>
+                </Row>
 
-            <Row className="mb-2">
-              <Col xs="12">
+                <Row className="mb-2">
+                  <Col xs="12">
 
-                <p>{title.authorFirstName} {title.authorLastName}</p>
+                    <p>{title.authorFirstName} {title.authorLastName}</p>
 
-              </Col>
-            </Row>
+                  </Col>
+                </Row>
 
-            <Row className="mb-4">
-              <Col xs="4">
+                <Row className="mb-4">
+                  <Col xs="4">
 
-                {isEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} className="cover-display" /> : <Image className="no-image-icon" />}
+                    {isEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} className="cover-display" /> : <Image className="no-image-icon" />}
 
-              </Col>
-              <Col xs="8">
+                  </Col>
+                  <Col xs="8">
 
-                {applicationAllowUserInteractions === true && isEmpty(title.userReviewCount) === false && title.userReviewCount > 0 && title.userReviewAverage > 0 ?
+                    {applicationAllowUserInteractions === true && isEmpty(title.userReviewCount) === false && title.userReviewCount > 0 && title.userReviewAverage > 0 ?
 
-                  <React.Fragment>
+                      <React.Fragment>
 
-                    <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} />
-                    <p><small>out of {title.userReviewCount} review(s)</small></p>
+                        <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} />
+                        <p><small>out of {title.userReviewCount} review(s)</small></p>
 
-                  </React.Fragment>
+                      </React.Fragment>
 
-                  : null}
+                      : null}
 
-                {applicationAllowUserInteractions === true && isEmpty(userReviewItem) === false ?
+                    {applicationAllowUserInteractions === true && isEmpty(userReviewItem) === false ?
 
-                  <React.Fragment>
+                      <React.Fragment>
 
-                    {isEmpty(userReviewItem.read) === false && userReviewItem.read === true && (isEmpty(userReviewItem.dateRead) === true) ? <p>Read</p> : null}
-                    {isEmpty(userReviewItem.dateRead) === false ? <p>Read on {displayDate(userReviewItem.dateRead)}</p> : null}
+                        {isEmpty(userReviewItem.read) === false && userReviewItem.read === true && (isEmpty(userReviewItem.dateRead) === true) ? <p>Read</p> : null}
+                        {isEmpty(userReviewItem.dateRead) === false ? <p>Read on {displayDate(userReviewItem.dateRead)}</p> : null}
 
-                  </React.Fragment>
+                      </React.Fragment>
 
-                  : null}
+                      : null}
 
-                {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
+                    {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
 
-                {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
+                    {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
 
-                {isEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
+                    {isEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
 
-                {isEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
+                    {isEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
 
-                {isEmpty(title.writtenDate) === false ? <p>Manuscript Written Date: {displayDate(title.writtenDate)}</p> : null}
+                    {isEmpty(title.writtenDate) === false ? <p>Manuscript Written Date: {displayDate(title.writtenDate)}</p> : null}
 
-                {isEmpty(title.submissionDate) === false ? <p>Manuscript Submission Date: {displayDate(title.submissionDate)}</p> : null}
+                    {isEmpty(title.submissionDate) === false ? <p>Manuscript Submission Date: {displayDate(title.submissionDate)}</p> : null}
 
-                {isEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {title.manuscriptTitle}</p> : null}
+                    {isEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {title.manuscriptTitle}</p> : null}
 
-                {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
+                    {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 
-                {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
+                    {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 
-              </Col>
-            </Row>
+                  </Col>
+                </Row>
 
-          </React.Fragment>
-        );
-      })}
+              </React.Fragment>
+            );
+          })}
+
+        </React.Fragment>
+
+        : null}
 
       {/* <Row className="my-4">
                 <Col className="text-center" xs="12">
@@ -657,6 +614,10 @@ const Title = (props) => {
             : null}
 
             <Row>
+                
+                {Array.isArray(editionList) === true ?
+
+            <React.Fragment>
 
             {editionList.map((edition) => {
 
@@ -749,6 +710,11 @@ const Title = (props) => {
                 </Col>
                 )
             })}
+
+            </React.Fragment>
+
+            : null}
+
             </Row> */}
 
       <Row>

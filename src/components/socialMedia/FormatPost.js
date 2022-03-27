@@ -12,9 +12,7 @@ const FormatPost = () => {
   const navigate = useNavigate();
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   const [txtArticleTitle, setTxtArticleTitle] = useState("");
   const [txtArticleURL, setTxtArticleURL] = useState("");
@@ -95,7 +93,6 @@ const FormatPost = () => {
     param = "fbclid";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_medium=
     // * Google Analytics and tracking
@@ -103,7 +100,6 @@ const FormatPost = () => {
     param = "utm_medium";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_campaign=
     // * Google Analytics and tracking
@@ -111,7 +107,6 @@ const FormatPost = () => {
     param = "utm_campaign";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // * Remove utm_source=
     // * Google Analytics and tracking
@@ -119,7 +114,6 @@ const FormatPost = () => {
     param = "utm_source";
     regExp = new RegExp("[?&]" + param + "=.*$");
     newURL = newURL.replace(regExp, "");
-    // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     post = post + newURL;
 
@@ -135,7 +129,6 @@ const FormatPost = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -161,50 +154,50 @@ const FormatPost = () => {
 
             <FormGroup>
               <Label for="txtImageName">Article Title</Label>
-              <Input type="text" id="txtArticleTitle" value={txtArticleTitle} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtArticleTitle(event.target.value); }} />
+              <Input type="text" id="txtArticleTitle" value={txtArticleTitle} onChange={(event) => { setTxtArticleTitle(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtArticleURL">Article URL</Label>
-              <Input type="text" id="txtArticleURL" value={txtArticleURL} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtArticleURL(event.target.value); }} />
+              <Input type="text" id="txtArticleURL" value={txtArticleURL} onChange={(event) => { setTxtArticleURL(event.target.value); }} />
             </FormGroup>
 
             <FormGroup row>
               <Col>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxPhilipKDickFestival"><Input type="checkbox" id="cbxPhilipKDickFestival" checked={cbxPhilipKDickFestival} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxPhilipKDickFestival(!cbxPhilipKDickFestival); }} /> Philip K. Dick Festival</Label>
+                  <Label for="cbxPhilipKDickFestival"><Input type="checkbox" id="cbxPhilipKDickFestival" checked={cbxPhilipKDickFestival} onChange={(event) => { setCbxPhilipKDickFestival(!cbxPhilipKDickFestival); }} /> Philip K. Dick Festival</Label>
                 </FormGroup>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxDickian"><Input type="checkbox" id="cbxDickian" checked={cbxDickian} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxDickian(!cbxDickian); }} /> Dickian</Label>
+                  <Label for="cbxDickian"><Input type="checkbox" id="cbxDickian" checked={cbxDickian} onChange={(event) => { setCbxDickian(!cbxDickian); }} /> Dickian</Label>
                 </FormGroup>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxBladeRunner"><Input type="checkbox" id="cbxBladeRunner" checked={cbxBladeRunner} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner(!cbxBladeRunner); }} /> Blade Runner</Label>
+                  <Label for="cbxBladeRunner"><Input type="checkbox" id="cbxBladeRunner" checked={cbxBladeRunner} onChange={(event) => { setCbxBladeRunner(!cbxBladeRunner); }} /> Blade Runner</Label>
                 </FormGroup>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxBladeRunner2049"><Input type="checkbox" id="cbxBladeRunner2049" checked={cbxBladeRunner2049} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxBladeRunner2049(!cbxBladeRunner2049); }} /> Blade Runner 2049</Label>
+                  <Label for="cbxBladeRunner2049"><Input type="checkbox" id="cbxBladeRunner2049" checked={cbxBladeRunner2049} onChange={(event) => { setCbxBladeRunner2049(!cbxBladeRunner2049); }} /> Blade Runner 2049</Label>
                 </FormGroup>
 
               </Col>
               <Col>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxTotalRecall"><Input type="checkbox" id="cbxTotalRecall" checked={cbxTotalRecall} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxTotalRecall(!cbxTotalRecall); }} /> Total Recall</Label>
+                  <Label for="cbxTotalRecall"><Input type="checkbox" id="cbxTotalRecall" checked={cbxTotalRecall} onChange={(event) => { setCbxTotalRecall(!cbxTotalRecall); }} /> Total Recall</Label>
                 </FormGroup>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxElectricDreams"><Input type="checkbox" id="cbxElectricDreams" checked={cbxElectricDreams} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxElectricDreams(!cbxElectricDreams); }} /> Electric Dreams</Label>
+                  <Label for="cbxElectricDreams"><Input type="checkbox" id="cbxElectricDreams" checked={cbxElectricDreams} onChange={(event) => { setCbxElectricDreams(!cbxElectricDreams); }} /> Electric Dreams</Label>
                 </FormGroup>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxTMITHC"><Input type="checkbox" id="cbxTMITHC" checked={cbxTMITHC} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxTMITHC(!cbxTMITHC); }} /> TMITHC</Label>
+                  <Label for="cbxTMITHC"><Input type="checkbox" id="cbxTMITHC" checked={cbxTMITHC} onChange={(event) => { setCbxTMITHC(!cbxTMITHC); }} /> TMITHC</Label>
                 </FormGroup>
 
                 <FormGroup className="ms-4">
-                  <Label for="cbxMinorityReport"><Input type="checkbox" id="cbxMinorityReport" checked={cbxMinorityReport} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxMinorityReport(!cbxMinorityReport); }} /> Minority Report</Label>
+                  <Label for="cbxMinorityReport"><Input type="checkbox" id="cbxMinorityReport" checked={cbxMinorityReport} onChange={(event) => { setCbxMinorityReport(!cbxMinorityReport); }} /> Minority Report</Label>
                 </FormGroup>
 
               </Col>
@@ -218,14 +211,22 @@ const FormatPost = () => {
                             {isEmpty(formattedPost) === false ? <Alert color="info">{formattedPost}</Alert> : null}
                         </FormGroup> */}
 
-            {formattedPosts.map((formattedPost, index) => {
+            {Array.isArray(formattedPosts) === true ?
 
-              return (
-                <FormGroup key={index} className="text-center">
-                  <Alert color="info">{formattedPost}</Alert>
-                </FormGroup>
-              );
-            })}
+              <React.Fragment>
+
+                {formattedPosts.map((formattedPost, index) => {
+
+                  return (
+                    <FormGroup key={index} className="text-center">
+                      <Alert color="info">{formattedPost}</Alert>
+                    </FormGroup>
+                  );
+                })}
+
+              </React.Fragment>
+
+              : null}
 
           </Form>
         </Col>

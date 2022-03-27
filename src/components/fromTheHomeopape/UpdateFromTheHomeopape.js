@@ -20,15 +20,12 @@ const FromTheHomeopape = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -58,7 +55,6 @@ const FromTheHomeopape = (props) => {
 
 
   const filterNewsReview = (homeopapeItemsReview) => {
-    // console.log(componentName, getDateTime(), "filterNewsReview homeopapeItemsReview", homeopapeItemsReview);
 
     let newHomeopapeItemsReview = [];
     let newHomeopapeItemsReviewTitle = [];
@@ -66,275 +62,274 @@ const FromTheHomeopape = (props) => {
     let newHomeopapeItemsReviewNeither = [];
     let newHomeopapeItemsReviewIncorrectContext = [];
 
-    for (let i = 0; i < homeopapeItemsReview.length; i++) {
+    if (Array.isArray(homeopapeItemsReview) === true) {
 
-      // console.log(componentName, getDateTime(), "filterNewsReview homeopapeItemsReview[i]", homeopapeItemsReview[i]);
+      for (let i = 0; i < homeopapeItemsReview.length; i++) {
 
-      let inTitle = false;
-      let inText = false;
-      let incorrectContext = false;
 
-      // ? Remove the punctuation in the checks? -- 02/13/2022 MF
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k. dick") === true) {
+        let inTitle = false;
+        let inText = false;
+        let incorrectContext = false;
 
-        inTitle = true;
+        // ? Remove the punctuation in the checks? -- 02/13/2022 MF
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k. dick") === true) {
 
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip k. dick") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k dick") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip k dick") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick philip k") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick philip k") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick, philip k") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick, philip k") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick, philip") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick, philip") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip dick") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip dick") === true) {
-
-        inText = true;
-
-      };
-
-      // if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip") === true && formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick") === true) {
-
-      //   inTitle = true;
-
-      // };
-
-      // if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip") === true && formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick") === true) {
-
-      //   inText = true;
-
-      // };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip kindred dick") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip kindred dick") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("blade runner") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("blade runner") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("blade runner 2049") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("blade runner 2049") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("black lotus") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("black lotus") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("total recall") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("total recall") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("electric dreams") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("electric dreams") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("man in the high castle") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("man in the high castle") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("minority report") === true) {
-
-        inTitle = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("minority report") === true) {
-
-        inText = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("wrestling") === true) {
-
-        incorrectContext = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("running") === true) {
-
-        incorrectContext = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("marathon") === true) {
-
-        incorrectContext = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputation") === true) {
-
-        incorrectContext = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputee") === true) {
-
-        incorrectContext = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("sprinter") === true) {
-
-        incorrectContext = true;
-
-      };
-
-      if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prostheses") === true) {
-
-        incorrectContext = true;
-
-      };
-
-      if (homeopapeItemsReview[i].display === false) {
-
-        newHomeopapeItemsReview.push(homeopapeItemsReview[i]);
-
-      };
-
-      if (incorrectContext !== true && homeopapeItemsReview[i].display === false) {
-
-        if (inTitle === true) {
-
-          newHomeopapeItemsReviewTitle.push(homeopapeItemsReview[i]);
+          inTitle = true;
 
         };
 
-        if (inText === true && inTitle !== true) {
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip k. dick") === true) {
 
-          newHomeopapeItemsReviewText.push(homeopapeItemsReview[i]);
-
-        };
-
-        if (inTitle !== true && inText !== true) {
-
-          newHomeopapeItemsReviewNeither.push(homeopapeItemsReview[i]);
+          inText = true;
 
         };
 
-      } else if (incorrectContext === true && homeopapeItemsReview[i].display === false) {
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip k dick") === true) {
 
-        newHomeopapeItemsReviewIncorrectContext.push(homeopapeItemsReview[i]);
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip k dick") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick philip k") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick philip k") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick, philip k") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick, philip k") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick, philip") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick, philip") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip dick") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip dick") === true) {
+
+          inText = true;
+
+        };
+
+        // if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip") === true && formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("dick") === true) {
+
+        //   inTitle = true;
+
+        // };
+
+        // if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip") === true && formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("dick") === true) {
+
+        //   inText = true;
+
+        // };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("philip kindred dick") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("philip kindred dick") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("blade runner") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("blade runner") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("blade runner 2049") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("blade runner 2049") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("black lotus") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("black lotus") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("total recall") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("total recall") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("electric dreams") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("electric dreams") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("man in the high castle") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("man in the high castle") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("minority report") === true) {
+
+          inTitle = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("minority report") === true) {
+
+          inText = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("wrestling") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("wrestling") === true) {
+
+          incorrectContext = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("running") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("running") === true) {
+
+          incorrectContext = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("marathon") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("marathon") === true) {
+
+          incorrectContext = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputation") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputation") === true) {
+
+          incorrectContext = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("amputee") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("amputee") === true) {
+
+          incorrectContext = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("sprinter") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("sprinter") === true) {
+
+          incorrectContext = true;
+
+        };
+
+        if (formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prosthesis") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemLinkFormatted)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemTitle)).includes("prostheses") === true || formatLowerCase(removeHTML(homeopapeItemsReview[i].itemContentSnippet)).includes("prostheses") === true) {
+
+          incorrectContext = true;
+
+        };
+
+        if (homeopapeItemsReview[i].display === false) {
+
+          newHomeopapeItemsReview.push(homeopapeItemsReview[i]);
+
+        };
+
+        if (incorrectContext !== true && homeopapeItemsReview[i].display === false) {
+
+          if (inTitle === true) {
+
+            newHomeopapeItemsReviewTitle.push(homeopapeItemsReview[i]);
+
+          };
+
+          if (inText === true && inTitle !== true) {
+
+            newHomeopapeItemsReviewText.push(homeopapeItemsReview[i]);
+
+          };
+
+          if (inTitle !== true && inText !== true) {
+
+            newHomeopapeItemsReviewNeither.push(homeopapeItemsReview[i]);
+
+          };
+
+        } else if (incorrectContext === true && homeopapeItemsReview[i].display === false) {
+
+          newHomeopapeItemsReviewIncorrectContext.push(homeopapeItemsReview[i]);
+
+        };
 
       };
 
     };
 
-    // console.log(componentName, getDateTime(), "filterNewsReview newHomeopapeItemsReview", newHomeopapeItemsReview);
-    // console.log(componentName, getDateTime(), "filterNewsReview newHomeopapeItemsReviewTitle", newHomeopapeItemsReviewTitle);
-    // console.log(componentName, getDateTime(), "filterNewsReview newHomeopapeItemsReviewText", newHomeopapeItemsReviewText);
-    // console.log(componentName, getDateTime(), "filterNewsReview newHomeopapeItemsReviewNeither", newHomeopapeItemsReviewNeither);
 
     setHomeopapeItemsReview(newHomeopapeItemsReview);
     setHomeopapeItemsReviewTitle(newHomeopapeItemsReviewTitle);
@@ -358,7 +353,6 @@ const FromTheHomeopape = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getNews response", response);
 
         if (!response.ok) {
 
@@ -372,7 +366,6 @@ const FromTheHomeopape = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -409,7 +402,6 @@ const FromTheHomeopape = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getNewsReview response", response);
 
         if (!response.ok) {
 
@@ -423,7 +415,6 @@ const FromTheHomeopape = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNewsReview results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -474,7 +465,6 @@ const FromTheHomeopape = (props) => {
 
     if (isEmpty(sessionToken) === false) {
 
-      // console.log(componentName, getDateTime(), "markAllViewed url", url);
 
       fetch(url, {
         method: "GET",
@@ -484,7 +474,6 @@ const FromTheHomeopape = (props) => {
         })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "markAllViewed response", response);
 
           // if (!response.ok) {
 
@@ -506,7 +495,6 @@ const FromTheHomeopape = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "markAllViewed data", data);
 
           addMessage(data.message);
 
@@ -540,7 +528,6 @@ const FromTheHomeopape = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -559,28 +546,31 @@ const FromTheHomeopape = (props) => {
 
       <Row>
 
+        {Array.isArray(homeopapeItems) === true ?
+
+          <Col xs="6">
+
+            <h3>Displayed</h3>
+
+            {homeopapeItems.map((homeopapeItem, index) => {
+
+
+              return (
+                <React.Fragment key={index}>
+
+                  <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+
+                </React.Fragment>
+              );
+            })}
+
+          </Col>
+
+          : null}
+
         <Col xs="6">
 
-          <h3>Displayed</h3>
-
-          {homeopapeItems.map((homeopapeItem, index) => {
-
-            // console.log(componentName, getDateTime(), "map homeopapeItem", homeopapeItem);
-
-            return (
-              <React.Fragment key={index}>
-
-                <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
-
-              </React.Fragment>
-            );
-          })}
-
-        </Col>
-
-        <Col xs="6">
-
-          {isEmpty(homeopapeItemsReviewTitle) === false ?
+          {Array.isArray(homeopapeItemsReviewTitle) === true ?
 
             <React.Fragment>
 
@@ -588,7 +578,6 @@ const FromTheHomeopape = (props) => {
 
               {homeopapeItemsReviewTitle.map((homeopapeItem, index) => {
 
-                // console.log(componentName, getDateTime(), "map homeopapeItem", homeopapeItem);
 
                 return (
                   <React.Fragment key={index}>
@@ -606,7 +595,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {isEmpty(homeopapeItemsReviewText) === false ?
+          {Array.isArray(homeopapeItemsReviewText) === true ?
 
             <React.Fragment>
 
@@ -614,7 +603,6 @@ const FromTheHomeopape = (props) => {
 
               {homeopapeItemsReviewText.map((homeopapeItem, index) => {
 
-                // console.log(componentName, getDateTime(), "map homeopapeItem", homeopapeItem);
 
                 return (
                   <React.Fragment key={index}>
@@ -632,7 +620,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {isEmpty(homeopapeItemsReviewNeither) === false ?
+          {Array.isArray(homeopapeItemsReviewNeither) === true ?
 
             <React.Fragment>
 
@@ -640,7 +628,6 @@ const FromTheHomeopape = (props) => {
 
               {homeopapeItemsReviewNeither.map((homeopapeItem, index) => {
 
-                // console.log(componentName, getDateTime(), "map homeopapeItem", homeopapeItem);
 
                 return (
                   <React.Fragment key={index}>
@@ -658,7 +645,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {isEmpty(homeopapeItemsReviewIncorrectContext) === false ?
+          {Array.isArray(homeopapeItemsReviewIncorrectContext) === true ?
 
             <React.Fragment>
 
@@ -666,7 +653,6 @@ const FromTheHomeopape = (props) => {
 
               {homeopapeItemsReviewIncorrectContext.map((homeopapeItem, index) => {
 
-                // console.log(componentName, getDateTime(), "map homeopapeItem", homeopapeItem);
 
                 return (
                   <React.Fragment key={index}>
@@ -684,7 +670,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {isEmpty(homeopapeItemsReview) === false ?
+          {Array.isArray(homeopapeItemsReview) === true ?
 
             <React.Fragment>
 
@@ -692,7 +678,6 @@ const FromTheHomeopape = (props) => {
 
               {homeopapeItemsReview.map((homeopapeItem, index) => {
 
-                // console.log(componentName, getDateTime(), "map homeopapeItem", homeopapeItem);
 
                 return (
                   <React.Fragment key={index}>

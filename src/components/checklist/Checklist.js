@@ -20,15 +20,12 @@ const Checklist = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   // const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
@@ -52,26 +49,19 @@ const Checklist = (props) => {
   const [readOrOwned, setReadOrOwned] = useState("read");
 
   const linkItem = useSelector(state => state.urls.linkItem);
-  // console.log(componentName, getDateTime(), "linkItem", linkItem);
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, getDateTime(), "titleListState", titleListState);
 
   // const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
-  // console.log(componentName, getDateTime(), "userReviewListState", userReviewListState);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, getDateTime(), "userState", userState);
 
   // const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, getDateTime(), "editionListState", editionListState);
 
   // let editionList = [...editionListState];
-  // console.log(componentName, getDateTime(), "editionList", editionList);
 
 
   const sortChecklistList = (sortBy) => {
-    // console.log(componentName, getDateTime(), "sortTitles sortBy", sortBy);
 
     if (isEmpty(checklistList) === false && checklistList.length > 0) {
 
@@ -103,15 +93,12 @@ const Checklist = (props) => {
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
         let titleListPublicationDate = checklistList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
         titleListPublicationDate.sort((a, b) => (a.titlePublicationDate > b.titlePublicationDate) ? 1 : -1);
-        // console.log(componentName, getDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
         let titleListNoPublicationDate = checklistList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
         titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-        // console.log(componentName, getDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
 
         let newtitleList = [...titleListPublicationDate];
         newtitleList.push(...titleListNoPublicationDate);
-        // console.log(componentName, getDateTime(), "newtitleList", newtitleList);
 
         checklistList = [...newtitleList];
 
@@ -132,10 +119,8 @@ const Checklist = (props) => {
   };
 
   const checklistListState = useSelector(state => state.user.arrayChecklist);
-  // console.log(componentName, getDateTime(), "checklistListState", checklistListState);
 
   let checklistList = [...checklistListState];
-  // console.log(componentName, getDateTime(), "checklistList", checklistList);
 
   // * Filter by category
   if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkType") === true) {
@@ -171,15 +156,10 @@ const Checklist = (props) => {
 
   // checklistList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
   sortChecklistList(titleSortBy);
-  // console.log(componentName, getDateTime(), "titleSortBy", titleSortBy);
-  // console.log(componentName, getDateTime(), "titleList", titleList);
 
 
   const updateChecklist = (titleID, reviewID, read, owned) => {
 
-    // console.log(componentName, getDateTime(), "updateChecklist titleID", titleID);
-    // console.log(componentName, getDateTime(), "updateChecklist read", read);
-    // console.log(componentName, getDateTime(), "updateChecklist reviewID", reviewID);
 
     clearMessages();
     setChecklistRecordUpdated(null);
@@ -192,7 +172,6 @@ const Checklist = (props) => {
       active: true // ? always true?
     };
 
-    // console.log(componentName, getDateTime(), "updateChecklist recordObject", recordObject);
 
     let url = baseURL + "userreviews/";
     let updateChecklistMethod = "";
@@ -208,8 +187,6 @@ const Checklist = (props) => {
 
     };
 
-    // console.log(componentName, getDateTime(), "updateChecklist url", url);
-    // console.log(componentName, getDateTime(), "updateChecklist updateChecklistMethod", updateChecklistMethod);
 
     if (isEmpty(sessionToken) === false) {
 
@@ -222,7 +199,6 @@ const Checklist = (props) => {
         body: JSON.stringify({ userReview: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "updateChecklist response", response);
 
           // if (!response.ok) {
 
@@ -244,7 +220,6 @@ const Checklist = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "updateChecklist data", data);
 
           let recordChanged = null;
 
@@ -276,10 +251,8 @@ const Checklist = (props) => {
             // this.props.userReviewUpdated();
 
             // const checklistListItem = checklistList.find(title => title.titleID === titleID);
-            // console.log(componentName, getDateTime(), "updateChecklist checklistListItem", checklistListItem);
 
             // const checklistListIndex = checklistList.findIndex(title => title.titleID === titleID);
-            // console.log(componentName, getDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
 
@@ -294,7 +267,6 @@ const Checklist = (props) => {
             };
 
             // const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
-            // console.log(componentName, getDateTime(), "updateChecklist checklistListIndex", checklistListIndex);
 
             if (updateChecklistMethod === "PUT") {
 
@@ -312,7 +284,7 @@ const Checklist = (props) => {
 
           } else {
 
-            console.log(componentName, getDateTime(), "updateChecklist transactionSuccess error", data.message);
+            console.error(componentName, getDateTime(), "updateChecklist transactionSuccess error", data.message);
             addErrorMessage(data.message);
 
           };
@@ -335,7 +307,6 @@ const Checklist = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -439,27 +410,35 @@ const Checklist = (props) => {
 
             : null}
 
-          {checklistList.map((title) => {
+          {Array.isArray(checklistList) === true ?
 
-            return (
-              <Row /*ListGroupItem*/ key={title.titleID}>
-                <Col className="mx-3">
+            <React.Fragment>
 
-                  {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
+              {checklistList.map((title) => {
 
-                  {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
+                return (
+                  <Row /*ListGroupItem*/ key={title.titleID}>
+                    <Col className="mx-3">
 
-                  <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                    {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}
-                  </p>
+                      {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
 
-                  {/* </ListGroupItem> */}
+                      {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
 
-                </Col>
-              </Row>
-            );
+                      <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                        {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}
+                      </p>
 
-          })}
+                      {/* </ListGroupItem> */}
+
+                    </Col>
+                  </Row>
+                );
+
+              })}
+
+            </React.Fragment>
+
+            : null}
 
           {/* </ListGroup> */}
 

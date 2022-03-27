@@ -20,7 +20,6 @@ const Register = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -69,9 +68,6 @@ const Register = (props) => {
     if (isEmpty(newToken) === false) {
 
       localStorage.setItem("token", newToken);
-      // console.log(componentName, getDateTime(), "updateToken newToken", newToken);
-      // console.log(componentName, getDateTime(), "updateToken state.sessionToken", state.sessionToken); // Never shows the current value of sessionToken
-      // console.log(componentName, getDateTime(), "updateToken User token changed.");
 
     };
 
@@ -107,15 +103,11 @@ const Register = (props) => {
 
         firstNameValidated = true;
         setErrFirstName("");
-        // console.log(componentName, getDateTime(), "register Valid First Name");
-        // console.log(componentName, getDateTime(), "register firstNameValidated true", firstNameValidated);
 
       } else {
 
         firstNameValidated = false;
         setErrFirstName("Please enter a first name.");
-        // console.log(componentName, getDateTime(), "register Invalid First Name");
-        // console.log(componentName, getDateTime(), "register firstNameValidated false", firstNameValidated);
 
       };
 
@@ -127,15 +119,11 @@ const Register = (props) => {
 
         lastNameValidated = true;
         setErrLastName("");
-        // console.log(componentName, getDateTime(), "register Valid Last Name");
-        // console.log(componentName, getDateTime(), "register lastNameValidated true", lastNameValidated);
 
       } else {
 
         lastNameValidated = false;
         setErrLastName("Please enter a last name.");
-        // console.log(componentName, getDateTime(), "register Invalid Last Name");
-        // console.log(componentName, getDateTime(), "register lastNameValidated false", lastNameValidated);
 
       };
 
@@ -148,15 +136,11 @@ const Register = (props) => {
         // if (formatTrim(txtEmail).match(emailFormat) && formatTrim(txtEmail).length > 0) {
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, getDateTime(), "register Valid Email Address");
-        // console.log(componentName, getDateTime(), "register emailValidated true", emailValidated);
 
       } else {
 
         emailValidated = false;
         setErrEmail("Please enter a valid email address.");
-        // console.log(componentName, getDateTime(), "register Invalid Email Address");
-        // console.log(componentName, getDateTime(), "register emailValidated false", emailValidated);
 
       };
 
@@ -168,15 +152,11 @@ const Register = (props) => {
 
         passwordValidated = true;
         setErrPassword("");
-        // console.log(componentName, getDateTime(), "register Valid Password");
-        // console.log(componentName, getDateTime(), "register passwordValidated true", passwordValidated);
 
       } else {
 
         passwordValidated = false;
         setErrPassword("Password must be at least 5 characters.");
-        // console.log(componentName, getDateTime(), "register Invalid Password");
-        // console.log(componentName, getDateTime(), "register passwordValidated false", passwordValidated);
 
       };
 
@@ -185,22 +165,13 @@ const Register = (props) => {
     if (firstNameValidated === true && lastNameValidated === true && emailValidated === true && passwordValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, getDateTime(), "register Valid Form");
-      // console.log(componentName, getDateTime(), "register formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, getDateTime(), "register Invalid Form");
-      // console.log(componentName, getDateTime(), "register formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, getDateTime(), "register firstNameValidated", firstNameValidated);
-    // console.log(componentName, getDateTime(), "register lastNameValidated", lastNameValidated);
-    // console.log(componentName, getDateTime(), "register emailValidated", emailValidated);
-    // console.log(componentName, getDateTime(), "register passwordValidated", passwordValidated);
-    // console.log(componentName, getDateTime(), "register formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -213,10 +184,8 @@ const Register = (props) => {
           password: formatTrim(txtPassword)
         };
 
-        // console.log(componentName, getDateTime(), "register recordObject", recordObject);
 
         let url = baseURL + "users/register/";
-        // console.log(componentName, getDateTime(), "register url", url);
 
         fetch(url, {
           method: "POST",
@@ -226,7 +195,6 @@ const Register = (props) => {
           body: JSON.stringify({ user: recordObject })
         })
           .then(response => {
-            // console.log(componentName, getDateTime(), "register response", response);
 
             // if (!response.ok) {
 
@@ -248,7 +216,6 @@ const Register = (props) => {
 
           })
           .then(data => {
-            // console.log(componentName, getDateTime(), "register data", data);
 
             // if (data !== 500 && data !== 401) {
 
@@ -308,7 +275,6 @@ const Register = (props) => {
 
 
   const getChecklist = (token) => {
-    // console.log(componentName, getDateTime(), "getChecklist baseURL", baseURL);
 
     setChecklistMessage("");
     setErrChecklistMessage("");
@@ -326,7 +292,6 @@ const Register = (props) => {
         }),
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "getChecklist response", response);
 
           // if (!response.ok) {
 
@@ -348,7 +313,6 @@ const Register = (props) => {
 
         })
         .then(results => {
-          // console.log(componentName, getDateTime(), "getChecklist results", results);
 
           setChecklistResultsFound(results.transactionSuccess);
           // setChecklistMessage(results.message);
@@ -359,7 +323,7 @@ const Register = (props) => {
 
           } else {
 
-            console.log(componentName, getDateTime(), "getChecklist error", results.message);
+            console.error(componentName, getDateTime(), "getChecklist error", results.message);
             addErrorMessage(results.message);
 
           };
@@ -382,7 +346,6 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect userRecordAdded", userRecordAdded);
 
     if (isEmpty(userRecordAdded) === false) {
 
@@ -400,7 +363,6 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect sessionToken", sessionToken);
 
     if (isEmpty(sessionToken) === false) {
 
@@ -417,7 +379,6 @@ const Register = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect process.env.NODE_ENV", process.env.NODE_ENV);
 
     if (process.env.NODE_ENV === "development") {
 
@@ -460,26 +421,26 @@ const Register = (props) => {
 
             <FormGroup>
               <Label for="txtFirstName">First Name</Label>
-              <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtFirstName(event.target.value); }} />
+              <Input type="text" id="txtFirstName" label="First Name" value={txtFirstName} onChange={(event) => { setTxtFirstName(event.target.value); }} />
               {isEmpty(errFirstName) === false ? <Alert color="danger">{errFirstName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtLastName">Last Name</Label>
-              <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtLastName(event.target.value); }} />
+              <Input type="text" id="txtLastName" label="Last Name" value={txtLastName} onChange={(event) => { setTxtLastName(event.target.value); }} />
               {isEmpty(errLastName) === false ? <Alert color="danger">{errLastName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtEmail">Email Address</Label>
-              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
+              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => { setTxtEmail(event.target.value); }} />
               {isEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtPassword">Password</Label>
               <InputGroup>
-                <Input type={showPassword} /*type="password"*/ id="txtPassword" value={txtPassword} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtPassword(event.target.value); }} />
+                <Input type={showPassword} /*type="password"*/ id="txtPassword" value={txtPassword} onChange={(event) => { setTxtPassword(event.target.value); }} />
                 <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
                 {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
               </InputGroup>

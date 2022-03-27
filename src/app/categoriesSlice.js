@@ -15,13 +15,14 @@ const categoriesSlice = createSlice({
   initialState,
   reducers: {
     loadArrayCategories(state, action) {
-      // console.log(componentName, getDateTime(), "loadArrayCategories action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "loadArrayCategories action.payload.length", action.payload.length);
 
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "loadArrayCategories action.payload[i]", action.payload[i]);
-        state.arrayCategories.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayCategories.push(action.payload[i]);
+
+        };
 
       };
 
@@ -30,25 +31,23 @@ const categoriesSlice = createSlice({
 
     },
     addStateCategory(state, action) {
-      // console.log(componentName, getDateTime(), "addStateCategory action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addStateCategory action.payload.length", action.payload.length);
 
       // * Could change this to accept an object and add that object to the store
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "addStateCategory action.payload[i]", action.payload[i]);
-        state.arrayCategories.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayCategories.push(action.payload[i]);
+
+        };
 
       };
 
     },
     updateStateCategory(state, action) {
-      // console.log(componentName, getDateTime(), "updateStateCategory action.payload", action.payload);
 
       const categoryItem = action.payload;
       let categoryItemIndex;
-      // console.log(componentName, getDateTime(), "updateStateTitle categoryItem", categoryItem);
-      // console.log(componentName, getDateTime(), "updateStateTitle categoryItem.categoryID", categoryItem.categoryID);
 
       if (typeof categoryItem === "object") {
 
@@ -56,7 +55,6 @@ const categoriesSlice = createSlice({
 
           categoryItemIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryItem.categoryID);
 
-          // console.log(componentName, getDateTime(), "updateStateUserReview categoryItemIndex", categoryItemIndex);
 
           // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
 
@@ -90,7 +88,6 @@ const categoriesSlice = createSlice({
 
     },
     deleteStateCategory(state, action) {
-      // console.log(componentName, getDateTime(), "deleteStateCategory action.payload", action.payload);
 
       // const categoryItemIndex = action.payload;
       let categoryListIndex;
@@ -99,13 +96,11 @@ const categoriesSlice = createSlice({
       // ? This doesn't work because state.arrayCategories isn't stored as an array of objects?
       // ? Need to copy the array?
       // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
-      // console.log(componentName, getDateTime(), "deleteStateCategory existingCategoryIndex", existingCategoryIndex);
 
       if (isEmpty(categoryID) === false) {
 
         categoryListIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
 
-        // console.log(componentName, getDateTime(), "updateStateUserReview categoryListIndex", categoryListIndex);
 
         state.arrayCategories.splice(categoryListIndex, 1);
 
@@ -113,7 +108,6 @@ const categoriesSlice = createSlice({
 
     },
     setCategoriesDataOffline(state, action) {
-      // console.log(componentName, getDateTime(), "setCategoriesDataOffline action.payload", action.payload);
 
       state.categoriesDataOffline = action.payload;
 

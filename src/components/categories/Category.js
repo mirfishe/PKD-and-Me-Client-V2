@@ -16,12 +16,9 @@ const Category = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, getDateTime(), "categoryListState", categoryListState);
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -29,7 +26,6 @@ const Category = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect categoryListState", categoryListState);
 
     let categoryListSort = [];
 
@@ -46,7 +42,6 @@ const Category = (props) => {
 
       };
 
-      // console.log(componentName, getDateTime(), "useEffect categoryListSort", categoryListSort);
 
       categoryListSort.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
@@ -58,7 +53,6 @@ const Category = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -76,44 +70,48 @@ const Category = (props) => {
 
       <Collapse isOpen={isOpen}>
 
-        <Nav vertical>
+        {Array.isArray(categoryList) === true ?
 
-          {categoryList.map((category) => {
+          <Nav vertical>
 
-            let activeString = "";
+            {categoryList.map((category) => {
 
-            if (category.active === true || category.active === 1) {
-              // if (category.categoryActive === true || category.categoryActive === 1) {
+              let activeString = "";
 
-              // activeString = "Active";
-              activeString = "";
+              if (category.active === true || category.active === 1) {
+                // if (category.categoryActive === true || category.categoryActive === 1) {
 
-            } else {
+                // activeString = "Active";
+                activeString = "";
 
-              activeString = "Inactive";
+              } else {
 
-            };
+                activeString = "Inactive";
 
-            return (
-              <NavItem key={category.categoryID}>
+              };
 
-                {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(componentName, getDateTime(), "event.target.value", event.target.value); props.getTitles(category.categoryID)}}>{category.category}</a> */}
+              return (
+                <NavItem key={category.categoryID}>
 
-                {/* <NavLink tag={Link} to={`/titles/${category.categoryID}`}>{category.categoryID}</NavLink>
+                  {/* <a href="#" onClick={(event) => {event.preventDefault(); props.getTitles(category.categoryID)}}>{category.category}</a> */}
+
+                  {/* <NavLink tag={Link} to={`/titles/${category.categoryID}`}>{category.categoryID}</NavLink>
                 <NavLink tag={Link} to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</NavLink>
                 <NavLink tag={Link} to={"/titles/" + category.categoryID}>{category.categoryID}</NavLink> */}
 
-                {/* <NavLink tag={Link} to={"/titles/" + encodeURL(category.category)}>{category.category}</NavLink> */}
+                  {/* <NavLink tag={Link} to={"/titles/" + encodeURL(category.category)}>{category.category}</NavLink> */}
 
-                <NavLink tag={Link} to={encodeURL(category.category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(category.category)); }}>{category.category}
-                  {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
-                </NavLink>
+                  <NavLink tag={Link} to={encodeURL(category.category)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(category.category)); }}>{category.category}
+                    {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
+                  </NavLink>
 
-              </NavItem>
-            );
-          })}
+                </NavItem>
+              );
+            })}
 
-        </Nav>
+          </Nav>
+
+          : null}
 
       </Collapse>
 

@@ -13,15 +13,12 @@ const Errors = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +47,6 @@ const Errors = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getErrors response", response);
 
         if (!response.ok) {
 
@@ -64,7 +60,6 @@ const Errors = () => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -93,7 +88,6 @@ const Errors = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -115,7 +109,7 @@ const Errors = () => {
 
           <h5 className="text-center">Errors</h5>
 
-          {isEmpty(errors) === false ?
+          {Array.isArray(errors) === true ?
 
             <Table responsive>
               <thead>
@@ -132,7 +126,6 @@ const Errors = () => {
 
                 {errors.map((error, index) => {
 
-                  // console.log(componentName, getDateTime(), "map error", error);
 
                   return (
                     <tr key={index}>

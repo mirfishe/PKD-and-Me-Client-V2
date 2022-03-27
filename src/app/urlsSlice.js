@@ -15,13 +15,14 @@ const urlsSlice = createSlice({
   initialState,
   reducers: {
     loadArrayURLs(state, action) {
-      // console.log(componentName, getDateTime(), "loadArrayURLs action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "loadArrayURLs action.payload.length", action.payload.length);
 
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "loadArrayURLs action.payload[i]", action.payload[i]);
-        state.arrayURLs.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayURLs.push(action.payload[i]);
+
+        };
 
       };
 
@@ -29,27 +30,25 @@ const urlsSlice = createSlice({
 
     },
     addStateURL(state, action) {
-      // console.log(componentName, getDateTime(), "addStateTitle action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addStateTitle action.payload.length", action.payload.length);
 
       // Could change this to accept an object and add that object to the store
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "addStateTitle action.payload[i]", action.payload[i]);
-        state.arrayURLs.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayURLs.push(action.payload[i]);
+
+        };
 
       };
 
     },
     updateStateURL(state, action) {
-      // console.log(componentName, getDateTime(), "updateStateURL action.payload", action.payload);
 
       // ? Doesn't seem to be updating the state for some reason?
 
       const urlItem = action.payload;
       let urlListIndex;
-      // console.log(componentName, getDateTime(), "updateStateURL urlItem", urlItem);
-      // console.log(componentName, getDateTime(), "updateStateURL urlItem.linkID", urlItem.linkID);
 
       if (typeof urlItem === "object") {
 
@@ -57,7 +56,6 @@ const urlsSlice = createSlice({
 
           urlListIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 
-          // console.log(componentName, getDateTime(), "updateStateURL urlListIndex", urlListIndex);
 
           if (isEmpty(urlListIndex) === false) {
 
@@ -99,7 +97,6 @@ const urlsSlice = createSlice({
 
     },
     deleteStateURL(state, action) {
-      // console.log(componentName, getDateTime(), "deleteStateURL action.payload", action.payload);
 
       // const urlListIndex = action.payload;
       const urlItem = action.payload;
@@ -111,7 +108,6 @@ const urlsSlice = createSlice({
 
           urlItemIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 
-          // console.log(componentName, getDateTime(), "deleteStateURL urlItemIndex", urlItemIndex);
 
           if (isEmpty(urlItemIndex) === false) {
 
@@ -125,13 +121,11 @@ const urlsSlice = createSlice({
 
     },
     setPageURL(state, action) {
-      // console.log(componentName, getDateTime(), "setPageURL action.payload", action.payload);
 
       state.pageURL = action.payload;
 
     },
     setLinkItem(state, action) {
-      // console.log(componentName, getDateTime(), "setLinkItem action.payload", action.payload);
 
       state.linkItem = action.payload;
 

@@ -22,7 +22,6 @@ const Homeopape = () => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -59,7 +58,7 @@ const Homeopape = () => {
 
               <p>In a corner of the large room a chime sounded and a tinkling mechanical voice called, "I'm your free homeopape machine, a service supplied exclusively by all the fine Rootes hotels throughout Earth and the colonies. Simply dial the classification of news that you wish, and in a matter of seconds I'll speedily provide you with a fresh, up-to-the-minute homeopape tailored to your individual requirements; and, let me repeat, at no cost to you!"</p>
 
-              <footer>From <Link to="/Ubik" onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage("Ubik"); }}>Ubik</Link>, by <Link to="/about">Philip K. Dick</Link></footer>
+              <footer>From <Link to="/Ubik" onClick={(event) => { event.preventDefault(); redirectPage("Ubik"); }}>Ubik</Link>, by <Link to="/about">Philip K. Dick</Link></footer>
 
             </blockquote>
 

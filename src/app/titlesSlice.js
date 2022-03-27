@@ -16,13 +16,14 @@ const titlesSlice = createSlice({
   initialState,
   reducers: {
     loadArrayTitles(state, action) {
-      // console.log(componentName, getDateTime(), "loadArrayTitles action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "loadArrayTitles action.payload.length", action.payload.length);
 
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "loadArrayTitles action.payload[i]", action.payload[i]);
-        state.arrayTitles.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayTitles.push(action.payload[i]);
+
+        };
 
       };
 
@@ -31,26 +32,23 @@ const titlesSlice = createSlice({
 
     },
     addStateTitle(state, action) {
-      // console.log(componentName, getDateTime(), "addStateTitle action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addStateTitle action.payload.length", action.payload.length);
 
       // * Could change this to accept an object and add that object to the store
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "addStateTitle action.payload[i]", action.payload[i]);
-        state.arrayTitles.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayTitles.push(action.payload[i]);
+
+        };
 
       };
 
     },
     updateStateTitle(state, action) {
-      // console.log(componentName, getDateTime(), "updateStateTitle action.payload", action.payload);
 
       const titleItem = action.payload;
       let titleItemIndex;
-      // console.log(componentName, getDateTime(), "updateStateTitle titleItem", titleItem);
-      // console.log(componentName, getDateTime(), "updateStateTitle titleItem.titleID", titleItem.titleID);
-      // console.log(componentName, getDateTime(), "updateStateTitle titleItem.titleItemIndex", titleItem.titleItemIndex);
 
       if (typeof titleItem === "object") {
 
@@ -58,7 +56,6 @@ const titlesSlice = createSlice({
 
           titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
 
-          // console.log(componentName, getDateTime(), "updateStateTitle titleItemIndex", titleItemIndex);
 
           // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
 
@@ -229,7 +226,6 @@ const titlesSlice = createSlice({
 
     },
     deleteStateTitle(state, action) {
-      // console.log(componentName, getDateTime(), "deleteStateTitle action.payload", action.payload);
 
       // const titleItemIndex = action.payload;
       let titleListIndex;
@@ -238,13 +234,11 @@ const titlesSlice = createSlice({
       // ? This doesn't work because state.arrayTitles isn't stored as an array of objects?
       // ? Need to copy the array?
       // const existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
-      // console.log(componentName, getDateTime(), "deleteStateTitle existingTitleIndex", existingTitleIndex);
 
       if (isEmpty(titleID) === false) {
 
         titleListIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
 
-        // console.log(componentName, getDateTime(), "deleteStateTitle titleListIndex", titleListIndex);
 
         state.arrayTitles.splice(titleListIndex, 1);
 
@@ -252,12 +246,9 @@ const titlesSlice = createSlice({
 
     },
     updateStateTitleRating(state, action) {
-      // console.log(componentName, getDateTime(), "updateStateTitleRating action.payload", action.payload);
 
       const titleItem = action.payload;
       let titleItemIndex;
-      // console.log(componentName, getDateTime(), "updateStateTitleRating titleItem", titleItem);
-      // console.log(componentName, getDateTime(), "updateStateTitleRating titleItem.titleID", titleItem.titleID);
 
       if (typeof titleItem === "object") {
 
@@ -265,7 +256,6 @@ const titlesSlice = createSlice({
 
           titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
 
-          // console.log(componentName, getDateTime(), "updateStateChecklist titleItemIndex", titleItemIndex);
 
           // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
 
@@ -315,13 +305,11 @@ const titlesSlice = createSlice({
 
     },
     setTitlesDataOffline(state, action) {
-      // console.log(componentName, getDateTime(), "setTitlesDataOffline action.payload", action.payload);
 
       state.titlesDataOffline = action.payload;
 
     },
     setTitleSortBy(state, action) {
-      // console.log(componentName, getDateTime(), "setTitleSortBy action.payload", action.payload);
 
       state.titleSortBy = action.payload;
 

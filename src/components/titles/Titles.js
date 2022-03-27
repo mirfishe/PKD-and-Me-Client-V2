@@ -25,7 +25,6 @@ const Titles = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
@@ -33,9 +32,7 @@ const Titles = (props) => {
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
 
@@ -50,21 +47,14 @@ const Titles = (props) => {
   const [errTitleMessage, setErrTitleMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, getDateTime(), "titleListState", titleListState);
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, getDateTime(), "categoryListState", categoryListState);
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, getDateTime(), "editionListState", editionListState);
 
   let categoryParam;
 
   if (isEmpty(props.linkItem) === false && hasNonEmptyProperty(props.linkItem, "linkName")) {
 
-    // console.log(componentName, getDateTime(), "props.match.params", props.match.params);
-    // console.log(componentName, getDateTime(), "props.linkItem.linkName", props.linkItem.linkName);
     categoryParam = props.linkItem.linkName; // props.match.params.category;
-    // console.log(componentName, getDateTime(), "typeof categoryParam", typeof categoryParam);
-    // console.log(componentName, getDateTime(), "categoryParam", categoryParam);
 
   };
 
@@ -100,7 +90,6 @@ const Titles = (props) => {
 
 
   const sortTitles = (sortBy) => {
-    // console.log(componentName, getDateTime(), "sortTitles sortBy", sortBy);
 
     if (isEmpty(titleList) === false && titleList.length > 0) {
 
@@ -134,15 +123,12 @@ const Titles = (props) => {
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
         let titleListPublicationDate = titleList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
         titleListPublicationDate.sort((a, b) => (a.titlePublicationDate > b.titlePublicationDate) ? 1 : -1);
-        // console.log(componentName, getDateTime(), "titleListPublicationDate", titleListPublicationDate);
 
         let titleListNoPublicationDate = titleList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
         titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-        // console.log(componentName, getDateTime(), "titleListNoPublicationDate", titleListNoPublicationDate);
 
         let newTitleList = [...titleListPublicationDate];
         newTitleList.push(...titleListNoPublicationDate);
-        // console.log(componentName, getDateTime(), "newTitleList", newTitleList);
 
         titleList = [...newTitleList];
 
@@ -176,8 +162,6 @@ const Titles = (props) => {
 
     // * If categoryParam is not a number, then it's the category name
     const category = categoryListState.find(category => category.category === decodeURL(categoryParam));
-    // console.log(componentName, getDateTime(), "typeof category", typeof category);
-    // console.log(componentName, getDateTime(), "category", category);
 
     if (isEmpty(category) === false) {
 
@@ -222,12 +206,9 @@ const Titles = (props) => {
   // ! If the user is viewing electronic only editions, all titles still appear even if there are no electronic editions of that title. -- 08/09/2021 MF
 
   sortTitles(titleSortBy);
-  // console.log(componentName, getDateTime(), "titleSortBy", titleSortBy);
-  // console.log(componentName, getDateTime(), "titleList", titleList);
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -239,7 +220,6 @@ const Titles = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect titleList", titleList);
 
     if (titleList.length > 0) {
 
@@ -255,9 +235,6 @@ const Titles = (props) => {
 
 
   const saveRecord = () => {
-    // console.log(componentName, getDateTime(), "saveRecord computerLog", computerLog);
-    // console.log(componentName, getDateTime(), "saveRecord title", title);
-    // console.log(componentName, getDateTime(), "saveRecord window.location.href", window.location.href);
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -309,7 +286,6 @@ const Titles = (props) => {
 
     };
 
-    // console.log(componentName, getDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
@@ -319,7 +295,6 @@ const Titles = (props) => {
       body: JSON.stringify({ recordObject: recordObject })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -341,7 +316,6 @@ const Titles = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "saveRecord results", results);
 
         data = results;
 
@@ -361,7 +335,6 @@ const Titles = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect computerLog", computerLog);
 
     if (titleList.length > 0) {
 
@@ -382,11 +355,11 @@ const Titles = (props) => {
 
             {isEmpty(categoryParam) === false && isNaN(categoryParam) ?
 
-              <BreadcrumbItem active><Link to={categoryParam} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(categoryParam); }}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={categoryParam} onClick={(event) => { event.preventDefault(); redirectPage(categoryParam); }}>{decodeURL(categoryParam)}</Link></BreadcrumbItem>
 
               :
 
-              <BreadcrumbItem active><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={"/titles/"} onClick={(event) => { event.preventDefault(); redirectPage("/titles/"); }}>All Titles</Link></BreadcrumbItem>
 
             }
 
@@ -429,32 +402,32 @@ const Titles = (props) => {
 
         </Col>
       </Row>
-      <Row>
 
-        {titleList.map((title) => {
+      {Array.isArray(titleList) === true ?
 
-          let activeString = "";
+        <Row>
 
-          if (title.titleActive === true || title.titleActive === 1) {
+          {titleList.map((title) => {
 
-            // activeString = "Active";
-            activeString = "";
+            let activeString = "";
 
-          } else {
+            if (title.titleActive === true || title.titleActive === 1) {
 
-            activeString = "Inactive";
+              // activeString = "Active";
+              activeString = "";
 
-          };
+            } else {
 
-          const editionsAvailable = editionList.reduce((titleCount, edition) => edition.titleID === title.titleID ? ++titleCount : titleCount, 0);
-          // console.log(componentName, getDateTime(), "useEffect title.titleID", title.titleID);
-          // console.log(componentName, getDateTime(), "useEffect title.titleName", title.titleName);
-          // console.log(componentName, getDateTime(), "useEffect editionsAvailable", editionsAvailable);
+              activeString = "Inactive";
 
-          return (
-            <Col key={title.titleID} xs="4" className="mb-4">
+            };
 
-              {/* <Link to={`${title.titleID}`}>{title.titleID}</Link>
+            const editionsAvailable = editionList.reduce((titleCount, edition) => edition.titleID === title.titleID ? ++titleCount : titleCount, 0);
+
+            return (
+              <Col key={title.titleID} xs="4" className="mb-4">
+
+                {/* <Link to={`${title.titleID}`}>{title.titleID}</Link>
                     <Link to={`${title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}`}>{title.titleName}</Link>
                     <Link to={title.titleID}>{title.titleID}</Link>
                     <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
@@ -464,21 +437,21 @@ const Titles = (props) => {
                     <Link to={title.titleID}>{title.titleID}</Link>
                     <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link> */}
 
-              {/* <Card key={title.titleID}>
+                {/* <Card key={title.titleID}>
 
                     {isEmpty(categoryParam) === false ?
                     
                     <CardHeader>
                         <Link to={encodeURL(title.category)}>{title.category}</Link> */}
 
-              {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
+                {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
                         {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
 
-              {/* </CardHeader>  
+                {/* </CardHeader>  
 
                     : null} */}
 
-              {/* <CardBody>
+                {/* <CardBody>
 
                         <Link to={title.titleURL}>
                         {isEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
@@ -488,81 +461,84 @@ const Titles = (props) => {
                     </CardBody>
                     <CardFooter> */}
 
-              {/* <Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link> */}
+                {/* <Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link> */}
 
-              {/* <Link to={title.titleURL}>{title.titleName}</Link>
+                {/* <Link to={title.titleURL}>{title.titleName}</Link>
                         {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null}
                     </CardFooter>
                     </Card> */}
 
-              <Card key={title.titleID}>
+                <Card key={title.titleID}>
 
-                {isEmpty(activeString) === false ?
+                  {isEmpty(activeString) === false ?
 
-                  <CardHeader className="card-header inactive-item">
-                    ({activeString})
-                  </CardHeader>
+                    <CardHeader className="card-header inactive-item">
+                      ({activeString})
+                    </CardHeader>
 
-                  : null}
+                    : null}
 
-                <Row className="no-gutters">
-                  <Col className="col-md-4">
+                  <Row className="no-gutters">
+                    <Col className="col-md-4">
 
-                    <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>
+                      <Link to={title.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(title.titleURL); }}>
 
-                      {isEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
+                        {isEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} /> : <Image className="no-image-icon" />}
 
-                    </Link>
+                      </Link>
 
-                  </Col>
-                  <Col className="col-md-8">
-                    <CardBody>
+                    </Col>
+                    <Col className="col-md-8">
+                      <CardBody>
 
-                      {/* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
+                        {/* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
 
-                      <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                        <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(title.titleURL); }}>{title.titleName}</Link>
 
-                        {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}</CardText>
+                          {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}</CardText>
 
-                      <CardText className="smaller-text">{title.authorFirstName} {title.authorLastName}</CardText>
+                        <CardText className="smaller-text">{title.authorFirstName} {title.authorLastName}</CardText>
 
-                      <CardText className="smaller-text">{editionsAvailable}<span> </span>
+                        <CardText className="smaller-text">{editionsAvailable}<span> </span>
 
-                        {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
+                          {electronicOnly === true || userElectronicOnly === true ? <span>electronic </span> : null}
 
-                        {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
+                          {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
 
-                        edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
+                          edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
 
-                      {/* {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null} */}
+                        {/* {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null} */}
 
-                      {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
+                        {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
-                      {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
+                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
-                    </CardBody>
-                  </Col>
-                </Row>
+                      </CardBody>
+                    </Col>
+                  </Row>
 
-                {isEmpty(categoryParam) === false ?
+                  {isEmpty(categoryParam) === false ?
 
-                  <CardFooter className="card-footer">
+                    <CardFooter className="card-footer">
 
-                    <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
+                      <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
 
-                    {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
+                      {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
                         {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
 
-                  </CardFooter>
+                    </CardFooter>
 
-                  : null}
+                    : null}
 
-              </Card>
+                </Card>
 
-            </Col>
-          );
-        })}
-      </Row>
+              </Col>
+            );
+          })}
+        </Row>
+
+        : null}
+
     </Container>
   );
 };

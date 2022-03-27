@@ -15,9 +15,7 @@ const Media = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
   const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
@@ -25,7 +23,6 @@ const Media = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
-  // console.log(componentName, getDateTime(), "mediaListState", mediaListState);
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -58,13 +55,11 @@ const Media = (props) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "mediaList", mediaList);
 
   mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -82,46 +77,50 @@ const Media = (props) => {
 
       <Collapse isOpen={isOpen}>
 
-        <Nav vertical>
+        {Array.isArray(mediaList) === true ?
 
-          {mediaList.map((media) => {
+          <Nav vertical>
 
-            let activeString = "";
+            {mediaList.map((media) => {
 
-            if (media.active === true || media.active === 1) {
-              // if (media.mediaActive === true || media.mediaActive === 1) {
+              let activeString = "";
 
-              // activeString = "Active";
-              activeString = "";
+              if (media.active === true || media.active === 1) {
+                // if (media.mediaActive === true || media.mediaActive === 1) {
 
-            } else {
+                // activeString = "Active";
+                activeString = "";
 
-              activeString = "Inactive";
+              } else {
 
-            };
+                activeString = "Inactive";
 
-            return (
-              <NavItem key={media.mediaID}>
+              };
 
-                {/* <a href="#" onClick={(event) => {event.preventDefault(); console.log(componentName, getDateTime(), "event.target.value", event.target.value); props.getTitles(media.mediaID)}}>{media.media}</a> */}
+              return (
+                <NavItem key={media.mediaID}>
 
-                {/* <<NavLink tag={Link} to={`/editions/${media.mediaID}`}>{media.mediaID}</NavLink>
+                  {/* <a href="#" onClick={(event) => {event.preventDefault(); props.getTitles(media.mediaID)}}>{media.media}</a> */}
+
+                  {/* <<NavLink tag={Link} to={`/editions/${media.mediaID}`}>{media.mediaID}</NavLink>
                 <<NavLink tag={Link} to={`/editions/${media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</NavLink>
                 <<NavLink tag={Link} to={"/editions/" + media.mediaID}>{media.mediaID}</NavLink> */}
 
-                {/* <<NavLink tag={Link} to={"/editions/" + encodeURL(media.media)}>{media.media}</NavLink> */}
+                  {/* <<NavLink tag={Link} to={"/editions/" + encodeURL(media.media)}>{media.media}</NavLink> */}
 
-                {/* <<NavLink tag={Link} to={encodeURL(media.media)}>{media.media}</NavLink> */}
+                  {/* <<NavLink tag={Link} to={encodeURL(media.media)}>{media.media}</NavLink> */}
 
-                <NavLink tag={Link} to={encodeURL(media.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(media.media)); }}>{media.media}
-                  {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
-                </NavLink>
+                  <NavLink tag={Link} to={encodeURL(media.media)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(media.media)); }}>{media.media}
+                    {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
+                  </NavLink>
 
-              </NavItem>
-            );
-          })}
+                </NavItem>
+              );
+            })}
 
-        </Nav>
+          </Nav>
+
+          : null}
 
       </Collapse>
 
