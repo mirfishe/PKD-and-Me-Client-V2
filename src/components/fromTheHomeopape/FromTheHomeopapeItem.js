@@ -15,15 +15,12 @@ const FromTheHomeopapeItem = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,13 +34,9 @@ const FromTheHomeopapeItem = (props) => {
 
   let homeopapeItem = isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
 
-  // console.log(componentName, getDateTime(), "homeopapeItem", homeopapeItem);
 
 
   const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
-    // console.log(componentName, getDateTime(), "formatPost txtArticleTitle", txtArticleTitle);
-    // console.log(componentName, getDateTime(), "formatPost txtArticleURL", txtArticleURL);
-    // console.log(componentName, getDateTime(), "formatPost itemContentSnippet", itemContentSnippet);
 
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
     let itemContentSnippet = "";
@@ -117,15 +110,6 @@ const FromTheHomeopapeItem = (props) => {
     // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=");
     // // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "=");
 
-    // // if (/*newURL.includes("\%3F") === true || newURL.includes("\%3f") === true ||*/ newURL.includes("www.heavymetal.com")) {
-
-    // //   console.log(componentName, getDateTime(), "formatPost txtArticleURL.replaceAll(\"\%3F\", \"?\")", txtArticleURL.replaceAll("\%3F", "?"));
-    // //   console.log(componentName, getDateTime(), "formatPost txtArticleURLtxtArticleURL.replaceAll(\"\%3F\", \"?\").replaceAll(\"\%3f\", \"?\").replaceAll(\"\%26\", \"&\").replaceAll(\"\%3D\", \"=\").replaceAll(\"\%3d\", \"=\")", txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "="));
-    // //   console.log(componentName, getDateTime(), "formatPost newURL", newURL);
-    // //   console.log(componentName, getDateTime(), "formatPost decodeURI(txtArticleURL)", decodeURI(txtArticleURL));
-    // //   console.log(componentName, getDateTime(), "formatPost decodeURI(newURL)", decodeURI(newURL));
-    // // };
-
     // // * Remove fbclid= -- 06/26/2021 MF
     // // * FaceBook analytics and tracking -- 06/26/2021 MF
     // // * Removes everything after the fbclid= -- 06/26/2021 MF
@@ -133,7 +117,6 @@ const FromTheHomeopapeItem = (props) => {
     // param = "fbclid";
     // regExp = new RegExp("[?&]" + param + "=.*$");
     // newURL = newURL.replace(regExp, "");
-    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // // * Remove utm_medium= -- 06/26/2021 MF
     // // * Google Analytics and tracking -- 06/26/2021 MF
@@ -141,7 +124,6 @@ const FromTheHomeopapeItem = (props) => {
     // param = "utm_medium";
     // regExp = new RegExp("[?&]" + param + "=.*$");
     // newURL = newURL.replace(regExp, "");
-    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // // * Remove utm_campaign= -- 06/26/2021 MF
     // // * Google Analytics and tracking -- 06/26/2021 MF
@@ -149,7 +131,6 @@ const FromTheHomeopapeItem = (props) => {
     // param = "utm_campaign";
     // regExp = new RegExp("[?&]" + param + "=.*$");
     // newURL = newURL.replace(regExp, "");
-    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
     // // * Remove utm_source= -- 06/26/2021 MF
     // // * Google Analytics and tracking -- 06/26/2021 MF
@@ -157,7 +138,6 @@ const FromTheHomeopapeItem = (props) => {
     // param = "utm_source";
     // regExp = new RegExp("[?&]" + param + "=.*$");
     // newURL = newURL.replace(regExp, "");
-    // // console.log(componentName, getDateTime(), "formatPost newURL", newURL);
 
 
     post = post + txtArticleURL;
@@ -191,7 +171,6 @@ const FromTheHomeopapeItem = (props) => {
   // * One method to only display ten items in the list. -- 06/26/2021 MF
   // if (displayUpdateItemsCount >= 100) {
 
-  //   console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
   //   homeopapeItemsReview.splice(0, index);
 
   // };
@@ -205,14 +184,12 @@ const FromTheHomeopapeItem = (props) => {
 
     // } else if (displayUpdateItemsCount >= 100) {
 
-    //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map Ten item maximum!", displayUpdateItemsCount, index);
     //   // homeopapeItemsReview.splice(0, index);
     //   show = false;
 
     // } else {
 
     //   displayUpdateItemsCount++;
-    //   // console.log(componentName, getDateTime(), "homeopapeItemsReview.map", homeopapeItem.itemTitle, displayUpdateItemsCount, index);
 
   };
 
@@ -361,16 +338,9 @@ const FromTheHomeopapeItem = (props) => {
   // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
   let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
-  // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem", homeopapeItem);
-  // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.itemID", homeopapeItem.itemID);
-  // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-  // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.display", homeopapeItem.display);
-  // console.log(componentName, getDateTime(), "homeopapeItemsReview.map homeopapeItem.posted", homeopapeItem.posted);
 
 
   const setDisplay = (itemID, display) => {
-    // console.log(componentName, getDateTime(), "setDisplay itemID", itemID);
-    // console.log(componentName, getDateTime(), "setDisplay display", display);
 
     clearMessages();
 
@@ -391,7 +361,6 @@ const FromTheHomeopapeItem = (props) => {
     if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, getDateTime(), "setDisplay url", url);
 
       let recordObject = {
         display: displayValue
@@ -406,7 +375,6 @@ const FromTheHomeopapeItem = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "setDisplay response", response);
 
           // if (!response.ok) {
 
@@ -428,7 +396,6 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "setDisplay data", data);
 
           addMessage(data.message);
 
@@ -463,8 +430,6 @@ const FromTheHomeopapeItem = (props) => {
 
 
   const setPosted = (itemID, posted) => {
-    // console.log(componentName, getDateTime(), "setPosted itemID", itemID);
-    // console.log(componentName, getDateTime(), "setPosted posted", posted);
 
     clearMessages();
 
@@ -485,7 +450,6 @@ const FromTheHomeopapeItem = (props) => {
     if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, getDateTime(), "setPosted url", url);
 
       let recordObject = {
         posted: postedValue
@@ -500,7 +464,6 @@ const FromTheHomeopapeItem = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "setPosted response", response);
 
           // if (!response.ok) {
 
@@ -522,7 +485,6 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "setPosted data", data);
 
           addMessage(data.message);
 
@@ -557,8 +519,6 @@ const FromTheHomeopapeItem = (props) => {
 
 
   const setAlwaysFilter = (itemID, alwaysFilter) => {
-    // console.log(componentName, getDateTime(), "setAlwaysFilter itemID", itemID);
-    // console.log(componentName, getDateTime(), "setAlwaysFilter alwaysFilter", alwaysFilter);
 
     clearMessages();
 
@@ -579,7 +539,6 @@ const FromTheHomeopapeItem = (props) => {
     if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, getDateTime(), "setAlwaysFilter url", url);
 
       let recordObject = {
         alwaysFilter: alwaysFilterValue
@@ -594,7 +553,6 @@ const FromTheHomeopapeItem = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "setAlwaysFilter response", response);
 
           // if (!response.ok) {
 
@@ -616,7 +574,6 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "setAlwaysFilter data", data);
 
           addMessage(data.message);
 
@@ -651,8 +608,6 @@ const FromTheHomeopapeItem = (props) => {
 
 
   const setViewed = (itemID, viewed) => {
-    // console.log(componentName, getDateTime(), "setViewed itemID", itemID);
-    // console.log(componentName, getDateTime(), "setViewed viewed", viewed);
 
     clearMessages();
 
@@ -673,7 +628,6 @@ const FromTheHomeopapeItem = (props) => {
     if (isEmpty(itemID) === false && isEmpty(sessionToken) === false) {
 
       url = url + itemID;
-      // console.log(componentName, getDateTime(), "setViewed url", url);
 
       let recordObject = {
         viewed: viewedValue
@@ -688,7 +642,6 @@ const FromTheHomeopapeItem = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "setViewed response", response);
 
           // if (!response.ok) {
 
@@ -710,7 +663,6 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "setViewed data", data);
 
           addMessage(data.message);
 
@@ -745,7 +697,6 @@ const FromTheHomeopapeItem = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 

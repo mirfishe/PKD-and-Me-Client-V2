@@ -10,15 +10,12 @@ const FromTheHomeopape = (props) => {
   const componentName = "FromTheHomeopape";
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
-  // // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   // const admin = useSelector(state => state.user.admin);
-  // // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,7 +33,6 @@ const FromTheHomeopape = (props) => {
   // const [cbxPosted, setCbxPosted] = useState(false);
 
   const headerText = props.headerText;
-  // console.log(componentName, getDateTime(), "props.headerText", props.headerText);
 
   // let breakArray = false;
   // let displayItemsCount = 0;
@@ -55,7 +51,6 @@ const FromTheHomeopape = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getNews response", response);
 
         if (!response.ok) {
 
@@ -69,11 +64,9 @@ const FromTheHomeopape = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          // console.log(componentName, getDateTime(), "getNews results.records[0]", results.records[0]);
 
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
@@ -103,7 +96,7 @@ const FromTheHomeopape = (props) => {
   return (
     <Container className="mt-4">
 
-      {isEmpty(homeopapeItems) === false ?
+      {Array.isArray(homeopapeItems) === true ?
 
         <React.Fragment>
 
@@ -124,14 +117,12 @@ const FromTheHomeopape = (props) => {
 
             //   } else if (displayItemsCount >= 20) {
 
-            //     // console.log(componentName, getDateTime(), "homeopapeItems.map Ten item maximum!", displayItemsCount, index);
             //     // homeopapeItems.splice(0, index);
             //     show = false;
 
             //   } else {
 
             //     displayItemsCount++;
-            //     // console.log(componentName, getDateTime(), "homeopapeItems.map", homeopapeItem.itemTitle, displayItemsCount, index);
 
             // };
 
@@ -155,11 +146,6 @@ const FromTheHomeopape = (props) => {
 
             // };
 
-            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem", homeopapeItem);
-            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.itemID", homeopapeItem.itemID);
-            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.homeopapeID", homeopapeItem.homeopapeID);
-            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.display", homeopapeItem.display);
-            // console.log(componentName, getDateTime(), "homeopapeItems.map homeopapeItem.posted", homeopapeItem.posted);
 
             return (
               <React.Fragment key={index}>

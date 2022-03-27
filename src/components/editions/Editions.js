@@ -25,7 +25,6 @@ const Editions = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
@@ -33,9 +32,7 @@ const Editions = (props) => {
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   const editionSortBy = useSelector(state => state.editions.editionSortBy);
 
@@ -49,18 +46,13 @@ const Editions = (props) => {
   const [errEditionMessage, setErrEditionMessage] = useState("");
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, getDateTime(), "editionListState", editionListState);
   const mediaListState = useSelector(state => state.media.arrayMedia);
-  // console.log(componentName, getDateTime(), "mediaListState", mediaListState);
 
   let mediaParam;
 
   if (isEmpty(props.linkItem) === false && hasNonEmptyProperty(props.linkItem, "linkName")) {
 
-    // console.log(componentName, getDateTime(), "props.match.params", props.match.params);
     mediaParam = props.linkItem.linkName; // props.match.params.media;
-    // console.log(componentName, getDateTime(), "typeof mediaParam", typeof mediaParam);
-    // console.log(componentName, getDateTime(), "mediaParam", mediaParam);
 
   };
 
@@ -129,7 +121,6 @@ const Editions = (props) => {
             return a.editionPublicationDate > b.editionPublicationDate ? 1 : -1;
 
           });
-        // console.log(componentName, getDateTime(), "editionListReleaseDate", editionListReleaseDate);
 
         let editionListNoReleaseDate = editionList.filter(edition => edition.editionPublicationDate === undefined || edition.editionPublicationDate === null);
 
@@ -142,16 +133,6 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
 
               // * Media is only important when title.titleSort are the same
-              // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-
-              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
-
-              // };
-
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
 
@@ -162,11 +143,9 @@ const Editions = (props) => {
 
           });
 
-        // console.log(componentName, getDateTime(), "editionListNoReleaseDate", editionListNoReleaseDate);
 
         let newEditionList = [...editionListReleaseDate];
         newEditionList.push(...editionListNoReleaseDate);
-        // console.log(componentName, getDateTime(), "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -233,7 +212,6 @@ const Editions = (props) => {
 
           });
 
-        // console.log(componentName, getDateTime(), "editionListPublicationDate", editionListPublicationDate);
 
         let editionListNoPublicationDate = editionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
 
@@ -246,16 +224,6 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
 
               // * Media is only important when title.titleSort are the same
-              // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-
-              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
-
-              // };
-
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
 
@@ -266,11 +234,9 @@ const Editions = (props) => {
 
           });
 
-        // console.log(componentName, getDateTime(), "editionListNoPublicationDate", editionListNoPublicationDate);
 
         let newEditionList = [...editionListPublicationDate];
         newEditionList.push(...editionListNoPublicationDate);
-        // console.log(componentName, getDateTime(), "newEditionList", newEditionList);
 
         editionList = [...newEditionList];
 
@@ -291,15 +257,6 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
 
               // * Media is only important when title.titleSort are the same
-              // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-
-              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
-              // };
-
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
 
@@ -327,15 +284,6 @@ const Editions = (props) => {
             if (a.titleSort === b.titleSort) {
 
               // * Media is only important when title.titleSort are the same
-              // if (a.title.titleName === "A Scanner Darkly" || b.title.titleName === "A Scanner Darkly") {
-
-              //     console.log(componentName, getDateTime(), "a.title.titleName", a.title.titleName);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID", a.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID", b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "a.medium.sortID - b.medium.sortID", a.medium.sortID - b.medium.sortID);
-              //     console.log(componentName, getDateTime(), "b.medium.sortID - a.medium.sortID", b.medium.sortID - a.medium.sortID);
-              // };
-
               // return a.medium.sortID - b.medium.sortID;
               return a.sortID - b.sortID;
 
@@ -366,8 +314,6 @@ const Editions = (props) => {
 
     // * If mediaParam is not a number, then it's the media name
     const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
-    // console.log(componentName, getDateTime(), "typeof media", typeof media);
-    // console.log(componentName, getDateTime(), "media", media);
 
     if (isEmpty(media) === false) {
 
@@ -422,11 +368,9 @@ const Editions = (props) => {
   };
 
   sortEditions(editionSortBy);
-  // console.log(componentName, getDateTime(), "editionList", editionList);
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -438,7 +382,6 @@ const Editions = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect editionList", editionList);
 
     if (editionList.length > 0) {
 
@@ -454,9 +397,6 @@ const Editions = (props) => {
 
 
   const saveRecord = () => {
-    // console.log(componentName, getDateTime(), "saveRecord computerLog", computerLog);
-    // console.log(componentName, getDateTime(), "saveRecord title", title);
-    // console.log(componentName, getDateTime(), "saveRecord window.location.href", window.location.href);
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -508,7 +448,6 @@ const Editions = (props) => {
 
     };
 
-    // console.log(componentName, getDateTime(), "saveRecord recordObject", recordObject);
 
     fetch(url, {
       method: "POST",
@@ -518,7 +457,6 @@ const Editions = (props) => {
       body: JSON.stringify({ recordObject: recordObject })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "saveRecord response", response);
 
         if (!response.ok) {
 
@@ -540,7 +478,6 @@ const Editions = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "saveRecord results", results);
 
         data = results;
 
@@ -560,7 +497,6 @@ const Editions = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect computerLog", computerLog);
 
     if (editionList.length > 0) {
 
@@ -581,11 +517,11 @@ const Editions = (props) => {
 
             {isEmpty(mediaParam) === false && isNaN(mediaParam) ?
 
-              <BreadcrumbItem active><Link to={mediaParam} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(mediaParam); }}>{decodeURL(mediaParam)}</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={mediaParam} onClick={(event) => { event.preventDefault(); redirectPage(mediaParam); }}>{decodeURL(mediaParam)}</Link></BreadcrumbItem>
 
               :
 
-              <BreadcrumbItem active><Link to={"/editions/"} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage("/editions/"); }}>All Editions</Link></BreadcrumbItem>
+              <BreadcrumbItem active><Link to={"/editions/"} onClick={(event) => { event.preventDefault(); redirectPage("/editions/"); }}>All Editions</Link></BreadcrumbItem>
 
             }
 
@@ -630,41 +566,38 @@ const Editions = (props) => {
 
         </Col>
       </Row>
-      <Row>
 
-        {editionList.map((edition) => {
+      {Array.isArray(editionList) === true ?
 
-          // console.log(componentName, getDateTime(), "editionList map edition", edition);
-          // console.log(componentName, getDateTime(), "editionList map edition.active", edition.active);
-          // console.log(componentName, getDateTime(), "editionList map edition.editionActive", edition.editionActive);
-          // console.log(componentName, getDateTime(), "editionList map edition.imageLinkLarge", edition.imageLinkLarge);
-          // console.log(componentName, getDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.error(\"onError\"}; } "));
-          // console.log(componentName, getDateTime(), "editionList map edition.imageLinkLarge.replaceAll(\"<img \", \"<img onLoad={(event) => { console.log(\"onLoad\"}; } onError={(event) => { console.log(\"onError\"}; } \")", edition.imageLinkLarge.replaceAll("<img ", "<img onload=\"console.log(\"onload\")\" onError=\"console.error(\"onError\")\" "));
-          // * let newWindow = window.open("http://localhost:4000/editions/broken"); newWindow.close();
-          // * let newWindow = window.open('http://localhost:4000/editions/broken'); newWindow.close();
+        <Row>
 
-          // * fetch('http://localhost:4000/editions/broken', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});
+          {editionList.map((edition) => {
 
-          // let brokenURLText = "fetch('" + baseURL + "editions/broken/" + edition.editionID + "', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});";
-          // let brokenURLReplaceText = "<img onError=\"console.error('Edition image not loaded!'); " + brokenURLText + "\" ";
+            // * let newWindow = window.open("http://localhost:4000/editions/broken"); newWindow.close();
+            // * let newWindow = window.open('http://localhost:4000/editions/broken'); newWindow.close();
 
-          let activeString = "";
+            // * fetch('http://localhost:4000/editions/broken', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});
 
-          if (edition.editionActive === true || edition.editionActive === 1) {
+            // let brokenURLText = "fetch('" + baseURL + "editions/broken/" + edition.editionID + "', {method: 'GET', headers: new Headers({'Content-Type': 'application/json'})});";
+            // let brokenURLReplaceText = "<img onError=\"console.error('Edition image not loaded!'); " + brokenURLText + "\" ";
 
-            // activeString = "Active";
-            activeString = "";
+            let activeString = "";
 
-          } else {
+            if (edition.editionActive === true || edition.editionActive === 1) {
 
-            activeString = "Inactive";
+              // activeString = "Active";
+              activeString = "";
 
-          };
+            } else {
 
-          return (
-            <Col key={edition.editionID} xs="6" className="mb-4">
+              activeString = "Inactive";
 
-              {/* <Card key={edition.editionID}>
+            };
+
+            return (
+              <Col key={edition.editionID} xs="6" className="mb-4">
+
+                {/* <Card key={edition.editionID}>
 
                     {isEmpty(mediaParam) === false ?
                     
@@ -699,59 +632,59 @@ const Editions = (props) => {
                     </CardFooter>
                     </Card> */}
 
-              <Card key={edition.editionID}>
+                <Card key={edition.editionID}>
 
-                {isEmpty(activeString) === false ?
+                  {isEmpty(activeString) === false ?
 
-                  <CardHeader className="card-header inactive-item">
-                    ({activeString})
-                  </CardHeader>
+                    <CardHeader className="card-header inactive-item">
+                      ({activeString})
+                    </CardHeader>
 
-                  : null}
+                    : null}
 
-                <Row className="no-gutters">
-                  <Col className="col-md-6">
+                  <Row className="no-gutters">
+                    <Col className="col-md-6">
 
-                    {edition.editionActive === true || edition.editionActive === 1 ?
+                      {edition.editionActive === true || edition.editionActive === 1 ?
 
-                      <React.Fragment>
+                        <React.Fragment>
 
-                        {isEmpty(edition.imageNameAPI) === false && isEmpty(edition.textLinkFullAPI) === false /* isEmpty(edition.imageLinkLarge) === false */ ?
+                          {isEmpty(edition.imageNameAPI) === false && isEmpty(edition.textLinkFullAPI) === false /* isEmpty(edition.imageLinkLarge) === false */ ?
 
-                          <React.Fragment>
+                            <React.Fragment>
 
-                            {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
-                            {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
+                              {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
+                              {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
 
-                            <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
-                              {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={edition.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}
+                              <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                                {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={edition.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}
+                              </a>
+
+                            </React.Fragment>
+
+                            :
+
+                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                              {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                             </a>
 
-                          </React.Fragment>
+                          }
 
-                          :
+                        </React.Fragment>
 
-                          <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
-                          </a>
+                        : null}
 
-                        }
+                    </Col>
+                    <Col className="col-md-6">
+                      <CardBody>
 
-                      </React.Fragment>
+                        <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
+                          {isEmpty(edition.editionPublicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(edition.editionPublicationDate)})</span> : null}
+                        </CardText>
 
-                      : null}
+                        {isEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {displayDate(edition.editionPublicationDate)}</CardText> : null}
 
-                  </Col>
-                  <Col className="col-md-6">
-                    <CardBody>
-
-                      <CardText><Link to={edition.titleURL} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(edition.titleURL); }}>{edition.titleName}</Link>
-                        {isEmpty(edition.editionPublicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(edition.editionPublicationDate)})</span> : null}
-                      </CardText>
-
-                      {isEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {displayDate(edition.editionPublicationDate)}</CardText> : null}
-
-                      {/* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
+                        {/* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
                           <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
@@ -765,54 +698,57 @@ const Editions = (props) => {
 
                       } */}
 
-                      {isEmpty(edition.textLinkFullAPI) === false ?
+                        {isEmpty(edition.textLinkFullAPI) === false ?
 
-                        <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
-                          <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
-                        </a>
+                          <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                            <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
+                          </a>
 
-                        :
+                          :
 
-                        <React.Fragment>
+                          <React.Fragment>
 
-                          {isEmpty(edition.textLinkFullAPI) === false ?
+                            {isEmpty(edition.textLinkFullAPI) === false ?
 
-                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                              <p className="my-2">Find Copy</p>
-                            </a>
+                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                                <p className="my-2">Find Copy</p>
+                              </a>
 
-                            : null}
+                              : null}
 
-                        </React.Fragment>
+                          </React.Fragment>
 
-                      }
+                        }
 
-                      {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
+                        {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
-                      {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
+                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
-                      {/* {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
+                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
-                    </CardBody>
-                  </Col>
-                </Row>
+                      </CardBody>
+                    </Col>
+                  </Row>
 
-                {isEmpty(mediaParam) === false ?
+                  {isEmpty(mediaParam) === false ?
 
-                  <CardFooter className="card-footer">
+                    <CardFooter className="card-footer">
 
-                    <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); /*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
+                      <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>
 
-                  </CardFooter>
+                    </CardFooter>
 
-                  : null}
+                    : null}
 
-              </Card>
+                </Card>
 
-            </Col>
-          );
-        })}
-      </Row>
+              </Col>
+            );
+          })}
+        </Row>
+
+        : null}
+
     </Container>
   );
 };

@@ -21,13 +21,11 @@ function LoadBibliographyData() {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   // ! Loading the applicationOffline from the state store here is too slow
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
   const applicationOffline = applicationSettings.applicationOffline;
-  // console.log(componentName, getDateTime(), "applicationOffline", applicationOffline);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const categoriesLoaded = useSelector(state => state.categories.categoriesLoaded);
@@ -53,8 +51,6 @@ function LoadBibliographyData() {
 
 
   const addRatings = (titleData, userReviewsRatingsData) => {
-    // console.log(componentName, getDateTime(), "addRatings baseURL", baseURL);
-    // console.log(componentName, getDateTime(), "addRatings userReviewsRatingsData", userReviewsRatingsData);
 
     let arrayTitles = [...titleData];
     let arrayUserReviewsRatings = [];
@@ -65,57 +61,53 @@ function LoadBibliographyData() {
 
     };
 
-    for (let i = 0; i < arrayTitles.length; i++) {
+    if (Array.isArray(arrayTitles) === true) {
 
-      let userReviewRatingItem = {};
-      // console.log(componentName, getDateTime(), "addRatings userReviewRatingItem", userReviewRatingItem);
+      for (let i = 0; i < arrayTitles.length; i++) {
 
-      if (isEmpty(arrayTitles[i].titleID) === false && !isNaN(arrayTitles[i].titleID)) {
+        let userReviewRatingItem = {};
 
-        userReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === arrayTitles[i].titleID);
-        userReviewRatingItem = userReviewRatingItem[0];
+        if (isEmpty(arrayTitles[i].titleID) === false && !isNaN(arrayTitles[i].titleID)) {
+
+          userReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === arrayTitles[i].titleID);
+          userReviewRatingItem = userReviewRatingItem[0];
+
+        };
+
+        let userReviewCount = 0;
+        let userReviewSum = 0;
+        let userReviewAverage = 0;
+
+        if (isEmpty(userReviewRatingItem) === false) {
+
+
+          if (hasNonEmptyProperty(userReviewRatingItem, "userReviewCount")) {
+
+            userReviewCount = userReviewRatingItem.userReviewCount;
+
+          };
+
+          if (hasNonEmptyProperty(userReviewRatingItem, "userReviewSum")) {
+
+            userReviewSum = userReviewRatingItem.userReviewSum;
+
+          };
+
+          if (userReviewCount > 0) {
+
+            // ? Check for division by zero? -- 03/06/2021 MF
+            // let userReviewAverage: number = userReviewSum/0;
+            userReviewAverage = userReviewSum / userReviewCount;
+
+          };
+
+
+        };
+
+
+        Object.assign(arrayTitles[i], { userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage });
 
       };
-
-      let userReviewCount = 0;
-      let userReviewSum = 0;
-      let userReviewAverage = 0;
-
-      if (isEmpty(userReviewRatingItem) === false) {
-
-        // console.log(componentName, getDateTime(), "addRatings userReviewRatingItem", userReviewRatingItem);
-
-        if (hasNonEmptyProperty(userReviewRatingItem, "userReviewCount")) {
-
-          userReviewCount = userReviewRatingItem.userReviewCount;
-
-        };
-
-        if (hasNonEmptyProperty(userReviewRatingItem, "userReviewSum")) {
-
-          userReviewSum = userReviewRatingItem.userReviewSum;
-
-        };
-
-        if (userReviewCount > 0) {
-
-          // ? Check for division by zero? -- 03/06/2021 MF
-          // let userReviewAverage: number = userReviewSum/0;
-          userReviewAverage = userReviewSum / userReviewCount;
-
-        };
-
-        // console.log(componentName, getDateTime(), "addRatings userReviewCount", userReviewCount);
-        // console.log(componentName, getDateTime(), "addRatings userReviewSum", userReviewSum);
-        // console.log(componentName, getDateTime(), "addRatings userReviewAverage", userReviewAverage);
-
-      };
-
-      // console.log(componentName, getDateTime(), "addRatings userReviewCount", userReviewCount);
-      // console.log(componentName, getDateTime(), "addRatings userReviewSum", userReviewSum);
-      // console.log(componentName, getDateTime(), "addRatings userReviewAverage", userReviewAverage);
-
-      Object.assign(arrayTitles[i], { userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage });
 
     };
 
@@ -127,8 +119,6 @@ function LoadBibliographyData() {
 
 
   const getUserReviewsRatings = (titleData) => {
-    // console.log(componentName, getDateTime(), "getUserReviewsRatings baseURL", baseURL);
-    // console.log(componentName, getDateTime(), "getUserReviewsRatings titleData", titleData);
 
     setOverallTitleRatingMessage("");
     setErrOverallTitleRatingMessage("");
@@ -137,11 +127,9 @@ function LoadBibliographyData() {
 
     url = url + "rating";
 
-    // console.log(componentName, getDateTime(), "getUserReviewsRatings url", url);
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "getUserReviewsRatings response", response);
 
         if (!response.ok) {
 
@@ -161,7 +149,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getUserReviewsRatings results", results);
         // setOverallTitleRatingMessage(results.message);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
@@ -171,7 +158,7 @@ function LoadBibliographyData() {
 
           // } else {
 
-          //   console.log(componentName, getDateTime(), "getUserReviewsRatings error", results.message);
+          //   console.error(componentName, getDateTime(), "getUserReviewsRatings error", results.message);
           //   // setErrOverallTitleRatingMessage(results.message);
           //   // dispatch(setUserReviewsRatingsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
@@ -200,7 +187,6 @@ function LoadBibliographyData() {
   const loadDataStore = (data, source) => {
 
     if (source === "categories") {
-      // console.log(componentName, getDateTime(), "loadDataStore data", data);
 
       dispatch(loadArrayCategories(data));
       // localStorage.setItem("arrayCategories", JSON.stringify(data));
@@ -208,7 +194,6 @@ function LoadBibliographyData() {
       loadURLs(data, source);
 
     } else if (source === "media") {
-      // console.log(componentName, getDateTime(), "loadDataStore data", data);
 
       dispatch(loadArrayMedia(data));
       // localStorage.setItem("arrayMedia", JSON.stringify(data));
@@ -216,7 +201,6 @@ function LoadBibliographyData() {
       loadURLs(data, source);
 
     } else if (source === "titles") {
-      // console.log(componentName, getDateTime(), "loadDataStore data", data);
 
       // dispatch(loadArrayTitles(data));
       getUserReviewsRatings(data);
@@ -225,7 +209,6 @@ function LoadBibliographyData() {
       loadURLs(data, source);
 
     } else if (source === "editions") {
-      // console.log(componentName, getDateTime(), "loadDataStore data", data);
 
       dispatch(loadArrayEditions(data));
       // localStorage.setItem("arrayEditions", JSON.stringify(data));
@@ -240,22 +223,23 @@ function LoadBibliographyData() {
 
     let arrayURLs = [];
 
-    for (let i = 0; i < data.length; i++) {
+    if (Array.isArray(data) === true) {
 
-      if (source === "categories") {
-        // console.log(componentName, getDateTime(), "loadURLs data[i].category", data[i].category);
+      for (let i = 0; i < data.length; i++) {
 
-        arrayURLs.push({ linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category });
+        if (source === "categories") {
 
-      } else if (source === "media") {
-        // console.log(componentName, getDateTime(), "loadURLs data[i].media", data[i].media);
+          arrayURLs.push({ linkName: encodeURL(data[i].category), linkType: source, linkID: data[i].categoryID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category });
 
-        arrayURLs.push({ linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID, linkTypeNameID: data[i].mediaID, linkTypeName: data[i].media });
+        } else if (source === "media") {
 
-      } else if (source === "titles") {
-        // console.log(componentName, getDateTime(), "loadURLs data[i].titleURL", data[i].titleURL);
+          arrayURLs.push({ linkName: encodeURL(data[i].media), linkType: source, linkID: data[i].mediaID, linkTypeNameID: data[i].mediaID, linkTypeName: data[i].media });
 
-        arrayURLs.push({ linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category });
+        } else if (source === "titles") {
+
+          arrayURLs.push({ linkName: data[i].titleURL, linkType: source, linkID: data[i].titleID, linkTypeNameID: data[i].categoryID, linkTypeName: data[i].category });
+
+        };
 
       };
 
@@ -267,7 +251,6 @@ function LoadBibliographyData() {
 
 
   const getCategories = () => {
-    // console.log(componentName, getDateTime(), "getCategories baseURL", baseURL);
 
     setCategoryMessage("");
     setErrCategoryMessage("");
@@ -276,7 +259,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "getCategories response", response);
 
         if (!response.ok) {
 
@@ -294,7 +276,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getCategories results", results);
 
         // setCategoryMessage(results.message);
 
@@ -304,7 +285,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "getCategories error", results.message);
+          console.error(componentName, getDateTime(), "getCategories error", results.message);
           // setErrCategoryMessage(results.message);
           dispatch(setCategoriesDataOffline(true));
           fetchLocalDataCategories();
@@ -329,7 +310,6 @@ function LoadBibliographyData() {
 
 
   const getMedia = () => {
-    // console.log(componentName, getDateTime(), "getMedia baseURL", baseURL);
 
     setMediaMessage("");
     setErrMediaMessage("");
@@ -338,7 +318,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "getMedia response", response);
 
         if (!response.ok) {
 
@@ -357,7 +336,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getMedia results", results);
 
         // setMediaMessage(results.message);
 
@@ -367,7 +345,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "getMedia error", results.message);
+          console.error(componentName, getDateTime(), "getMedia error", results.message);
           // setErrMediaMessage(results.message);
           // dispatch(setMediaDataOffline(true));
           fetchLocalDataMedia();
@@ -392,7 +370,6 @@ function LoadBibliographyData() {
 
 
   const getTitles = () => {
-    // console.log(componentName, getDateTime(), "getTitle baseURL", baseURL);
 
     setTitleMessage("");
     setErrTitleMessage("");
@@ -401,7 +378,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "getTitle response", response);
 
         if (!response.ok) {
 
@@ -420,7 +396,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getTitle results", results);
 
         // setTitleMessage(results.message);
 
@@ -430,7 +405,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "getTitles error", results.message);
+          console.error(componentName, getDateTime(), "getTitles error", results.message);
           // setErrTitleMessage(results.message);
           dispatch(setTitlesDataOffline(true));
           fetchLocalDataTitles();
@@ -455,7 +430,6 @@ function LoadBibliographyData() {
 
 
   const getEditions = () => {
-    // console.log(componentName, getDateTime(), "getEdition baseURL", baseURL);
 
     setEditionMessage("");
     setErrEditionMessage("");
@@ -464,7 +438,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "getEdition response", response);
 
         if (!response.ok) {
 
@@ -483,7 +456,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getEdition results", results);
 
         // setEditionMessage(results.message);
 
@@ -493,7 +465,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "getEditions error", results.message);
+          console.error(componentName, getDateTime(), "getEditions error", results.message);
           // setErrEditionMessage(results.message);
           dispatch(setEditionsDataOffline(true));
           fetchLocalDataEditions();
@@ -523,7 +495,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataCategories response", response);
 
         if (!response.ok) {
 
@@ -543,7 +514,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataCategories results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -551,7 +521,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "fetchLocalDataCategories error", results.message);
+          console.error(componentName, getDateTime(), "fetchLocalDataCategories error", results.message);
           // setErrCategoryMessage(results.message);
           dispatch(setCategoriesDataOffline(true));
           // loadDataStore(CategoryData, "categories");
@@ -582,7 +552,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataMedia response", response);
 
         if (!response.ok) {
 
@@ -602,7 +571,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataMedia results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -610,7 +578,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "fetchLocalDataMedia error", results.message);
+          console.error(componentName, getDateTime(), "fetchLocalDataMedia error", results.message);
           // setErrMediaMessage(results.message);
           dispatch(setMediaDataOffline(true));
           // loadDataStore(MediaData, "media");
@@ -641,7 +609,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataTitles response", response);
 
         if (!response.ok) {
 
@@ -661,7 +628,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataTitles results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -669,7 +635,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "fetchLocalDataTitles error", results.message);
+          console.error(componentName, getDateTime(), "fetchLocalDataTitles error", results.message);
           // setErrTitleMessage(results.message);
           dispatch(setTitlesDataOffline(true));
           // loadDataStore(TitleData, "titles");
@@ -700,7 +666,6 @@ function LoadBibliographyData() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataEditions response", response);
 
         if (!response.ok) {
 
@@ -720,7 +685,6 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "fetchLocalDataEditions results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -728,7 +692,7 @@ function LoadBibliographyData() {
 
         } else {
 
-          console.log(componentName, getDateTime(), "fetchLocalDataEditions error", results.message);
+          console.error(componentName, getDateTime(), "fetchLocalDataEditions error", results.message);
           // setErrEditionMessage(results.message);
           dispatch(setEditionsDataOffline(true));
           // loadDataStore(EditionData, "editions");
@@ -762,26 +726,17 @@ function LoadBibliographyData() {
     // let editionsDataLocalStorage = false;
 
     // let currentDateTime = new Date().setTime(new Date().getTime());
-    // // console.log(componentName, getDateTime(), "useEffect currentDateTime", currentDateTime);
-    // // console.log(componentName, getDateTime(), "useEffect new Date(currentDateTime).toISOString()", new Date(currentDateTime).toISOString());
 
     // if (!categoriesLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
 
-    //   // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalCategories\")", localStorage.getItem("lastDatabaseRetrievalCategories"));
 
     //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
-    //   // console.log(componentName, getDateTime(), "useEffect localStoragelastDatabaseRetrievalCategories", localStoragelastDatabaseRetrievalCategories);
-    //   // console.log(componentName, getDateTime(), "useEffect localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime())", localStoragelastDatabaseRetrievalCategories.setTime(localStoragelastDatabaseRetrievalCategories.getTime()));
-    //   // console.log(componentName, getDateTime(), "useEffect typeof localStoragelastDatabaseRetrievalCategories", typeof localStoragelastDatabaseRetrievalCategories);
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, getDateTime(), "useEffect checkDateTime", checkDateTime);
-    //   // console.log(componentName, getDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
 
     //     if (isEmpty(localStorage.getItem("arrayCategories")) === false) {
-    //       // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"arrayCategories\")", localStorage.getItem("arrayCategories"));
 
     //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
     //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
@@ -796,16 +751,12 @@ function LoadBibliographyData() {
 
     // if (!mediaLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
 
-    //   // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalMedia\")", localStorage.getItem("lastDatabaseRetrievalMedia"));
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, getDateTime(), "useEffect checkDateTime", checkDateTime);
-    //   // console.log(componentName, getDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
 
     //     if (isEmpty(localStorage.getItem("arrayMedia")) === false) {
-    //       // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"arrayMedia\")", localStorage.getItem("arrayMedia"));
 
     //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
     //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
@@ -820,16 +771,12 @@ function LoadBibliographyData() {
 
     // if (!titlesLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
 
-    //   // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalTitles\")", localStorage.getItem("lastDatabaseRetrievalTitles"));
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, getDateTime(), "useEffect checkDateTime", checkDateTime);
-    //   console.log(componentName, getDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
 
     //     if (isEmpty(localStorage.getItem("arrayTitles")) === false) {
-    //       // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"arrayTitles\")", localStorage.getItem("arrayTitles"));
 
     //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
     //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
@@ -844,16 +791,12 @@ function LoadBibliographyData() {
 
     // if (!editionsLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
 
-    //   // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"lastDatabaseRetrievalEditions\")", localStorage.getItem("lastDatabaseRetrievalEditions"));
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
-    //   // console.log(componentName, getDateTime(), "useEffect checkDateTime", checkDateTime);
-    //   console.log(componentName, getDateTime(), "useEffect new Date(checkDateTime).toISOString()", new Date(checkDateTime).toISOString());
 
     //   if (currentDateTime > checkDateTime) {
 
     //   if (isEmpty(localStorage.getItem("arrayEditions")) === false) {
-    //       // console.log(componentName, getDateTime(), "useEffect localStorage.getItem(\"arrayEditions\")", localStorage.getItem("arrayEditions"));
 
     //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
     //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");

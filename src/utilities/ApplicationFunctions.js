@@ -4,7 +4,6 @@ import { isEmpty, getDateTime, formatLowerCase, formatUpperCase } from "./Shared
 const componentName = "ApplicationFunctions";
 
 export const encodeURL = (titleName) => {
-  // console.log(componentName, getDateTime(), "encodeURL titleName", titleName);
 
   let newTitleName = titleName;
 
@@ -19,15 +18,12 @@ export const encodeURL = (titleName) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "encodeURL newTitleName", newTitleName);
-
   return newTitleName;
 
 };
 
 
 export const decodeURL = (titleName) => {
-  // console.log(componentName, getDateTime(), "decodeURL titleName", titleName);
 
   let newTitleName = titleName;
 
@@ -42,16 +38,12 @@ export const decodeURL = (titleName) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "decodeURL newTitleName", newTitleName);
-
   return newTitleName;
 
 };
 
 
 export const removeOnePixelImage = (text, ASIN) => {
-  // console.log(componentName, getDateTime(), "removeOnePixelImage text", text);
-  // console.log(componentName, getDateTime(), "removeOnePixelImage ASIN", ASIN);
 
   // * SELECT * FROM `editions` WHERE imageLinkSmall like '%ir-na.amazon-adsystem.com%' OR imageLinkMedium like '%ir-na.amazon-adsystem.com%' OR imageLinkLarge like '%ir-na.amazon-adsystem.com%'
 
@@ -103,14 +95,12 @@ export const removeOnePixelImage = (text, ASIN) => {
 
     if (newText.includes("https://ir-na.amazon-adsystem.com")) {
 
-      console.log(componentName, getDateTime(), "removeOnePixelImage ASIN", ASIN);
-      console.log(componentName, getDateTime(), "removeOnePixelImage newText", newText);
+      // console.log(componentName, getDateTime(), "removeOnePixelImage ASIN", ASIN);
+      // console.log(componentName, getDateTime(), "removeOnePixelImage newText", newText);
 
     };
 
   };
-
-  // console.log(componentName, getDateTime(), "removeOnePixelImage newText", newText);
 
   return newText;
 
@@ -118,8 +108,6 @@ export const removeOnePixelImage = (text, ASIN) => {
 
 
 export const setLocalImagePath = (text) => {
-  // console.log(componentName, getDateTime(), "setLocalImagePath text", text);
-  // console.log(componentName, getDateTime(), "setLocalImagePath applicationSettings.profileType", applicationSettings.profileType);
 
   let newText = text;
 
@@ -135,16 +123,12 @@ export const setLocalImagePath = (text) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "setLocalPath newText", newText);
-
   return newText;
 
 };
 
 
 export const setLocalPath = (text) => {
-  // console.log(componentName, getDateTime(), "setLocalPath text", text);
-  // console.log(componentName, getDateTime(), "setLocalPath applicationSettings.profileType", applicationSettings.profileType);
 
   let newText = text;
 
@@ -160,15 +144,12 @@ export const setLocalPath = (text) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "setLocalPath newText", newText);
-
   return newText;
 
 };
 
 
 export const createImageName = (titleName) => {
-  // console.log(componentName, getDateTime(), "createImageName titleName", titleName);
 
   let newImageName = "";
 
@@ -207,15 +188,12 @@ export const createImageName = (titleName) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "createImageName newImageName", newImageName);
-
   return newImageName;
 
 };
 
 
 export const createTitleURL = (titleName) => {
-  // console.log(componentName, getDateTime(), "createImageName titleName", titleName);
 
   let newTitleURL = "";
 
@@ -259,15 +237,12 @@ export const createTitleURL = (titleName) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "createImageName newTitleURL", newTitleURL);
-
   return newTitleURL;
 
 };
 
 
 export const getASIN = (textLinkFull) => {
-  // console.log(componentName, getDateTime(), "getASIN textLinkFull", textLinkFull);
 
   let txtASIN = "";
 
@@ -275,12 +250,8 @@ export const getASIN = (textLinkFull) => {
 
   if (isEmpty(textLinkFull) === false) {
 
-    // console.log(componentName, getDateTime(), "getASIN textLinkFull.indexOf(\"/dp/\")" , textLinkFull.indexOf("/dp/"));
-    // console.log(componentName, getDateTime(), "getASIN textLinkFull.indexOf(\"/product/\")" , textLinkFull.indexOf("/product/"));
-
     if (textLinkFull.indexOf("/dp/") !== -1) {
 
-      // console.log(componentName, getDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
       // txtASIN = textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref="));
 
       // txtASIN = txtASIN.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("?&linkCode="));
@@ -309,7 +280,6 @@ export const getASIN = (textLinkFull) => {
 
     } else if (textLinkFull.indexOf("/product/") !== -1) {
 
-      // console.log(componentName, getDateTime(), "getASIN textLinkFull.substring(textLinkFull.indexOf(\"/dp/\") + 4, textLinkFull.indexOf(\"/ref=\"))", textLinkFull.substring(textLinkFull.indexOf("/dp/") + 4, textLinkFull.indexOf("/ref=")));
       // txtASIN = textLinkFull.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("/ref="));
 
       // txtASIN = txtASIN.substring(textLinkFull.indexOf("/product/") + 9, textLinkFull.indexOf("?&linkCode="));
@@ -346,7 +316,6 @@ export const getASIN = (textLinkFull) => {
 
 
 export const toTitleCase = (title) => {
-  // console.log(componentName, getDateTime(), "toTitleCase title", title);
 
   // * Doesn't handle acronyms execpt for the few listed in the code below. -- 06/26/2021 MF
 
@@ -386,56 +355,58 @@ export const toTitleCase = (title) => {
 
 
 export const convertBitTrueFalse = (records) => {
-  // console.log(componentName, "convertBitTrueFalse records", records);
-  // console.log(componentName, "convertBitTrueFalse process.env.DATABASE_DIALECT", process.env.DATABASE_DIALECT);
 
   // if (process.env.DATABASE_DIALECT == "mysql") {
 
-  for (let i = 0; i < records.length; i++) {
+  if (Array.isArray(records) === true) {
 
-    if (records[i].active === 1) {
+    for (let i = 0; i < records.length; i++) {
 
-      records[i].active = true;
+      if (records[i].active === 1) {
 
-    } else if (records[i].active === 0) {
+        records[i].active = true;
 
-      records[i].active = false;
+      } else if (records[i].active === 0) {
+
+        records[i].active = false;
+
+      };
+
+      if (records[i].electronic === 1) {
+
+        records[i].electronic = true;
+
+      } else if (records[i].electronic === 0) {
+
+        records[i].electronic = false;
+
+      };
+
+      if (records[i].read === 1) {
+
+        records[i].read = true;
+
+      } else if (records[i].read === 0) {
+
+        records[i].read = false;
+
+      };
+
+      if (records[i].admin === 1) {
+
+        records[i].admin = true;
+
+      } else if (records[i].admin === 0) {
+
+        records[i].admin = false;
+
+      };
 
     };
 
-    if (records[i].electronic === 1) {
-
-      records[i].electronic = true;
-
-    } else if (records[i].electronic === 0) {
-
-      records[i].electronic = false;
-
-    };
-
-    if (records[i].read === 1) {
-
-      records[i].read = true;
-
-    } else if (records[i].read === 0) {
-
-      records[i].read = false;
-
-    };
-
-    if (records[i].admin === 1) {
-
-      records[i].admin = true;
-
-    } else if (records[i].admin === 0) {
-
-      records[i].admin = false;
-
-    };
+    // };
 
   };
-
-  // };
 
   return records;
 
@@ -443,7 +414,6 @@ export const convertBitTrueFalse = (records) => {
 
 
 export const addLog = (baseURL, logObject) => {
-  // console.log(componentName, getDateTime(), "addLog logObject", logObject);
 
   // const dispatch = useDispatch();
 
@@ -463,7 +433,6 @@ export const addLog = (baseURL, logObject) => {
     body: JSON.stringify({ recordObject: logObject })
   })
     .then(response => {
-      // console.log(componentName, getDateTime(), "addLog response", response);
 
       if (!response.ok) {
 
@@ -477,7 +446,6 @@ export const addLog = (baseURL, logObject) => {
 
     })
     .then(results => {
-      // console.log(componentName, getDateTime(), "addLog results", results);
 
       data = results;
 
@@ -499,7 +467,6 @@ export const addLog = (baseURL, logObject) => {
 
 
 export const addErrorLog = (baseURL, operation, componentName, dataObject, errorObject) => {
-  // console.log(componentName, getDateTime(), "addErrorLog errorObject", errorObject);
 
   // const dispatch = useDispatch();
 
@@ -522,7 +489,6 @@ export const addErrorLog = (baseURL, operation, componentName, dataObject, error
     body: JSON.stringify({ recordObject: recordObject })
   })
     .then(response => {
-      // console.log(componentName, getDateTime(), "addErrorLog response", response);
 
       if (!response.ok) {
 
@@ -544,7 +510,6 @@ export const addErrorLog = (baseURL, operation, componentName, dataObject, error
 
     })
     .then(results => {
-      // console.log(componentName, getDateTime(), "addErrorLog results", results);
 
     })
     .catch((error) => {

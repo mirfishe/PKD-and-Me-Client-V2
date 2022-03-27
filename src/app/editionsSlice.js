@@ -16,13 +16,14 @@ const editionsSlice = createSlice({
   initialState,
   reducers: {
     loadArrayEditions(state, action) {
-      // console.log(componentName, getDateTime(), "loadArrayEditions action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "loadArrayEditions action.payload.length", action.payload.length);
 
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "loadArrayEditions action.payload[i]", action.payload[i]);
-        state.arrayEditions.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayEditions.push(action.payload[i]);
+
+        };
 
       };
 
@@ -31,26 +32,23 @@ const editionsSlice = createSlice({
 
     },
     addStateEdition(state, action) {
-      // console.log(componentName, getDateTime(), "addStateEdition action.payload", action.payload);
-      // console.log(componentName, getDateTime(), "addStateEdition action.payload.length", action.payload.length);
 
       // * Could change this to accept an object and add that object to the store
-      for (let i = 0; i < action.payload.length; i++) {
+      if (Array.isArray(action.payload) === true) {
 
-        // console.log(componentName, getDateTime(), "addStateEdition action.payload[i]", action.payload[i]);
-        state.arrayEditions.push(action.payload[i]);
+        for (let i = 0; i < action.payload.length; i++) {
+
+          state.arrayEditions.push(action.payload[i]);
+
+        };
 
       };
 
     },
     updateStateEdition(state, action) {
-      // console.log(componentName, getDateTime(), "updateStateEdition action.payload", action.payload);
 
       const editionItem = action.payload;
       let editionItemIndex;
-      // console.log(componentName, getDateTime(), "updateStateEdition editionItem", editionItem);
-      // console.log(componentName, getDateTime(), "updateStateEdition editionItem.editionID", editionItem.editionID);
-      // console.log(componentName, getDateTime(), "updateStateEdition editionItem.editionItemIndex", editionItem.editionItemIndex);
 
       if (typeof editionItem === "object") {
 
@@ -58,7 +56,6 @@ const editionsSlice = createSlice({
 
           editionItemIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionItem.editionID);
 
-          // console.log(componentName, getDateTime(), "updateStateUserReview editionItemIndex", editionItemIndex);
 
           // state.arrayEditions[editionItemIndex].editionID = editionItem.editionID;
 
@@ -169,7 +166,6 @@ const editionsSlice = createSlice({
         // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
         // if (hasNonEmptyProperty(editionItem, "medium")) {
 
-        // console.log(componentName, getDateTime(), "updateStateEdition editionItem.medium", editionItem.medium);
 
         // if (hasNonEmptyProperty(editionItem.medium, "mediaID")) {
 
@@ -326,7 +322,6 @@ const editionsSlice = createSlice({
 
     },
     deleteStateEdition(state, action) {
-      // console.log(componentName, getDateTime(), "deleteStateEdition action.payload", action.payload);
 
       // const editionItemIndex = action.payload;
       let editionListIndex;
@@ -335,13 +330,11 @@ const editionsSlice = createSlice({
       // ? This doesn't work because state.arrayEditions isn't stored as an array of objects?
       // ? Need to copy the array?
       // const existingEditionIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
-      // console.log(componentName, getDateTime(), "deleteStateEdition existingEditionIndex", existingEditionIndex);
 
       if (isEmpty(editionID) === false) {
 
         editionListIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
 
-        // console.log(componentName, getDateTime(), "deleteStateEdition editionListIndex", editionListIndex);
 
         state.arrayEditions.splice(editionListIndex, 1);
 
@@ -349,13 +342,11 @@ const editionsSlice = createSlice({
 
     },
     setEditionsDataOffline(state, action) {
-      // console.log(componentName, getDateTime(), "setEditionsDataOffline action.payload", action.payload);
 
       state.editionsDataOffline = action.payload;
 
     },
     setEditionSortBy(state, action) {
-      // console.log(componentName, getDateTime(), "setEditionSortBy action.payload", action.payload);
 
       state.editionSortBy = action.payload;
 

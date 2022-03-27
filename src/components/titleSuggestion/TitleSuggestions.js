@@ -15,15 +15,12 @@ const TitleSuggestions = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -52,7 +49,6 @@ const TitleSuggestions = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getTitleSuggestions response", response);
 
         if (!response.ok) {
 
@@ -66,7 +62,6 @@ const TitleSuggestions = () => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -95,7 +90,6 @@ const TitleSuggestions = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -119,60 +113,66 @@ const TitleSuggestions = () => {
 
         </Col>
       </Row>
-      <Row>
 
-        {titleSuggestions.map((titleSuggestion) => {
+      {Array.isArray(titleSuggestions) === true ?
 
-          return (
-            <Col key={titleSuggestion.titleSuggestionID} className="my-4" xs="12">
+        <Row>
 
-              <Row>
-                <Col xs="12">
+          {titleSuggestions.map((titleSuggestion) => {
 
-                  <h6>{titleSuggestion.titleName}
-                    {isEmpty(titleSuggestion.publicationDate) === false ? <span className="ms-2 smaller-text"> ({displayDate(titleSuggestion.publicationDate)})</span> : null}
-                  </h6>
+            return (
+              <Col key={titleSuggestion.titleSuggestionID} className="my-4" xs="12">
 
-                </Col>
-              </Row>
+                <Row>
+                  <Col xs="12">
 
-              <Row className="mb-2">
-                <Col xs="12">
+                    <h6>{titleSuggestion.titleName}
+                      {isEmpty(titleSuggestion.publicationDate) === false ? <span className="ms-2 smaller-text"> ({displayDate(titleSuggestion.publicationDate)})</span> : null}
+                    </h6>
 
-                  <p>{titleSuggestion.authorFirstName} {titleSuggestion.authorLastName}</p>
+                  </Col>
+                </Row>
 
-                </Col>
-              </Row>
+                <Row className="mb-2">
+                  <Col xs="12">
 
-              <Row>
-                <Col xs="12">
+                    <p>{titleSuggestion.authorFirstName} {titleSuggestion.authorLastName}</p>
 
-                  {isEmpty(titleSuggestion.shortDescription) === false ? <p className="display-paragraphs">{titleSuggestion.shortDescription}</p> : null}
+                  </Col>
+                </Row>
 
-                </Col>
-              </Row>
+                <Row>
+                  <Col xs="12">
 
-              <Row>
-                <Col xs="12">
+                    {isEmpty(titleSuggestion.shortDescription) === false ? <p className="display-paragraphs">{titleSuggestion.shortDescription}</p> : null}
 
-                  {isEmpty(titleSuggestion.titleURL) === false ? <p>{titleSuggestion.titleURL}</p> : null}
+                  </Col>
+                </Row>
 
-                </Col>
-              </Row>
+                <Row>
+                  <Col xs="12">
 
-              <Row>
-                <Col xs="12">
+                    {isEmpty(titleSuggestion.titleURL) === false ? <p>{titleSuggestion.titleURL}</p> : null}
 
-                  <p>Suggested by {isEmpty(titleSuggestion.firstName) === false ? titleSuggestion.firstName : null} {isEmpty(titleSuggestion.lastName) === false ? titleSuggestion.lastName : null} {isEmpty(titleSuggestion.emailAddress) === false ? titleSuggestion.emailAddress : null} {isEmpty(titleSuggestion.updateDate) === false ? <small>on {displayDate(titleSuggestion.updateDate)}</small> : null}</p>
+                  </Col>
+                </Row>
 
-                </Col>
-              </Row>
+                <Row>
+                  <Col xs="12">
 
-            </Col>
-          );
-        })}
+                    <p>Suggested by {isEmpty(titleSuggestion.firstName) === false ? titleSuggestion.firstName : null} {isEmpty(titleSuggestion.lastName) === false ? titleSuggestion.lastName : null} {isEmpty(titleSuggestion.emailAddress) === false ? titleSuggestion.emailAddress : null} {isEmpty(titleSuggestion.updateDate) === false ? <small>on {displayDate(titleSuggestion.updateDate)}</small> : null}</p>
 
-      </Row>
+                  </Col>
+                </Row>
+
+              </Col>
+            );
+          })}
+
+        </Row>
+
+        : null}
+
     </Container>
   );
 };

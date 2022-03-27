@@ -15,25 +15,19 @@ const AddComment = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
   const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, getDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const requireUserLogin = useSelector(state => state.applicationSettings.requireUserLogin);
-  // console.log(componentName, getDateTime(), "requireUserLogin", requireUserLogin);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, getDateTime(), "userState", userState);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -62,7 +56,6 @@ const AddComment = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((isEmpty(userState) === false)) {
 
@@ -74,7 +67,6 @@ const AddComment = (props) => {
 
 
   const addComment = () => {
-    // console.log(componentName, getDateTime(), "addComment baseURL", baseURL);
 
     clearMessages();
     setCommentRecordAdded(null);
@@ -97,15 +89,11 @@ const AddComment = (props) => {
 
         commentValidated = true;
         setErrComment("");
-        // console.log(componentName, getDateTime(), "addComment Valid Comment");
-        // console.log(componentName, getDateTime(), "addComment commentValidated true", commentValidated);
 
       } else {
 
         commentValidated = false;
         setErrComment("Please enter a comment.");
-        // console.log(componentName, getDateTime(), "addComment Invalid Comment");
-        // console.log(componentName, getDateTime(), "addComment commentValidated false", commentValidated);
 
       };
 
@@ -117,15 +105,11 @@ const AddComment = (props) => {
 
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, getDateTime(), "addComment Valid email");
-        // console.log(componentName, getDateTime(), "addComment emailValidated true", emailValidated);
 
       } else {
 
         emailValidated = false;
         setErrEmail("Please enter an email address.");
-        // console.log(componentName, getDateTime(), "addComment Invalid email");
-        // console.log(componentName, getDateTime(), "addComment emailValidated false", emailValidated);
 
       };
 
@@ -134,20 +118,13 @@ const AddComment = (props) => {
     if (commentValidated === true /*&& emailValidated === true*/) {
 
       formValidated = true;
-      // console.log(componentName, getDateTime(), "addComment Valid Form");
-      // console.log(componentName, getDateTime(), "addComment formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, getDateTime(), "addComment Invalid Form");
-      // console.log(componentName, getDateTime(), "addComment formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, getDateTime(), "addComment emailValidated", emailValidated);
-    // console.log(componentName, getDateTime(), "addComment categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, getDateTime(), "addComment formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -160,10 +137,8 @@ const AddComment = (props) => {
           // email: userState.email
         };
 
-        // console.log(componentName, getDateTime(), "addComment recordObject", recordObject);
 
         let url = baseURL + "comments/";
-        // console.log(componentName, getDateTime(), "addComment url", url);
 
         if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
 
@@ -182,7 +157,6 @@ const AddComment = (props) => {
             body: JSON.stringify({ comment: recordObject })
           })
             .then(response => {
-              // console.log(componentName, getDateTime(), "addComment response", response);
 
               // if (!response.ok) {
 
@@ -204,7 +178,6 @@ const AddComment = (props) => {
 
             })
             .then(data => {
-              // console.log(componentName, getDateTime(), "addComment data", data);
 
               setCommentRecordAdded(data.transactionSuccess);
               addMessage(data.message);
@@ -250,7 +223,6 @@ const AddComment = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect commentRecordAdded", commentRecordAdded);
 
     if (isEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
 
@@ -270,7 +242,6 @@ const AddComment = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
 
@@ -313,7 +284,7 @@ const AddComment = (props) => {
 
             <FormGroup>
               <Label for="txtComment">Comment</Label>
-              <Input type="textarea" id="txtComment" rows={10} value={txtComment} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtComment(event.target.value); }} />
+              <Input type="textarea" id="txtComment" rows={10} value={txtComment} onChange={(event) => { setTxtComment(event.target.value); }} />
               {isEmpty(errComment) === false ? <Alert color="danger">{errComment}</Alert> : null}
             </FormGroup>
 

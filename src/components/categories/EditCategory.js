@@ -17,15 +17,12 @@ const EditCategory = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -56,7 +53,6 @@ const EditCategory = (props) => {
 
 
   const addCategory = () => {
-    // console.log(componentName, getDateTime(), "addCategory baseURL", baseURL);
 
     clearMessages();
     setCategoryRecordAdded(null);
@@ -76,15 +72,11 @@ const EditCategory = (props) => {
 
         categoryValidated = true;
         setErrCategory("");
-        // console.log(componentName, getDateTime(), "addCategory Valid Category");
-        // console.log(componentName, getDateTime(), "addCategory categoryValidated true", categoryValidated);
 
       } else {
 
         categoryValidated = false;
         setErrCategory("Please enter a category.");
-        // console.log(componentName, getDateTime(), "addCategory Invalid Category");
-        // console.log(componentName, getDateTime(), "addCategory categoryValidated false", categoryValidated);
 
       };
 
@@ -93,19 +85,13 @@ const EditCategory = (props) => {
     if (categoryValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, getDateTime(), "addCategory Valid Form");
-      // console.log(componentName, getDateTime(), "addCategory formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, getDateTime(), "addCategory Invalid Form");
-      // console.log(componentName, getDateTime(), "addCategory formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, getDateTime(), "addCategory categoryValidated", categoryValidated);
-    // console.log(componentName, getDateTime(), "addCategory formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -115,10 +101,8 @@ const EditCategory = (props) => {
           category: formatTrim(txtCategory)
         };
 
-        // console.log(componentName, getDateTime(), "addCategory recordObject", recordObject);
 
         let url = baseURL + "categories/";
-        // console.log(componentName, getDateTime(), "addCategory url", url);
 
         if (isEmpty(sessionToken) === false) {
 
@@ -131,7 +115,6 @@ const EditCategory = (props) => {
             body: JSON.stringify({ category: recordObject })
           })
             .then(response => {
-              // console.log(componentName, getDateTime(), "addCategory response", response);
 
               // if (!response.ok) {
 
@@ -153,7 +136,6 @@ const EditCategory = (props) => {
 
             })
             .then(data => {
-              // console.log(componentName, getDateTime(), "addCategory data", data);
 
               setCategoryRecordAdded(data.transactionSuccess);
               addMessage(data.message);
@@ -203,21 +185,18 @@ const EditCategory = (props) => {
 
 
   const updateCategory = (deleteCategory) => {
-    // console.log(componentName, getDateTime(), "updateCategory deleteCategory", deleteCategory);
 
 
   };
 
 
   const deleteCategory = () => {
-    // console.log(componentName, getDateTime(), "deleteCategory baseURL", baseURL);
 
 
   };
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect categoryRecordAdded", categoryRecordAdded);
 
     if (isEmpty(categoryRecordAdded) === false && categoryRecordAdded === true) {
 
@@ -234,8 +213,6 @@ const EditCategory = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect categoryRecordUpdated", categoryRecordUpdated);
-    // console.log(componentName, getDateTime(), "useEffect categoryRecordDeleted", categoryRecordDeleted);
 
     if (isEmpty(categoryRecordUpdated) === false && categoryRecordUpdated === true) {
 
@@ -263,7 +240,6 @@ const EditCategory = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -294,7 +270,7 @@ const EditCategory = (props) => {
 
             <FormGroup>
               <Label for="txtCategory">Category</Label>
-              <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtCategory(event.target.value); }} />
+              <Input type="text" id="txtCategory" value={txtCategory} onChange={(event) => { setTxtCategory(event.target.value); }} />
               {isEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null}
             </FormGroup>
 
@@ -308,21 +284,21 @@ const EditCategory = (props) => {
 
                 <React.Fragment>
 
-                  <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateCategory(false); }}>Update Category</Button>
+                  <Button outline size="lg" color="primary" onClick={(event) => { updateCategory(false); }}>Update Category</Button>
 
                   {isEmpty(active) === false && (active === false || active === 0) ?
 
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateCategory(false); }}>Undelete/Restore Category</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => { updateCategory(false); }}>Undelete/Restore Category</Button>
 
                     : null}
 
                   {isEmpty(active) === false && (active === true || active === 1) ?
 
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateCategory(true); }}>Delete Category</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => { updateCategory(true); }}>Delete Category</Button>
 
                     : null}
 
-                  <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ deleteCategory(); }}>Hard Delete Category</Button>
+                  <Button outline size="lg" color="warning" onClick={(event) => { deleteCategory(); }}>Hard Delete Category</Button>
                 </React.Fragment>
 
               }

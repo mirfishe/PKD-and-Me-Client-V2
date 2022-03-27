@@ -15,25 +15,19 @@ const AddTitleSuggestion = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   // const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
   // const userID = useSelector(state => state.user.userID);
-  // console.log(componentName, getDateTime(), "userID", userID);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const requireUserLogin = useSelector(state => state.applicationSettings.requireUserLogin);
-  // console.log(componentName, getDateTime(), "requireUserLogin", requireUserLogin);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
-  // console.log(componentName, getDateTime(), "userState", userState);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -73,7 +67,6 @@ const AddTitleSuggestion = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((isEmpty(userState) === false)) {
 
@@ -85,8 +78,6 @@ const AddTitleSuggestion = (props) => {
 
 
   const addTitleSuggestion = () => {
-    // console.log(componentName, getDateTime(), "addTitleSuggestion baseURL", baseURL);
-    // console.log(componentName, getDateTime(), "addTitleSuggestion sessionToken", sessionToken);
 
     clearMessages();
     setTitleSuggestionRecordAdded(null);
@@ -116,15 +107,11 @@ const AddTitleSuggestion = (props) => {
 
         titleNameValidated = true;
         setErrTitleName("");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion Valid TitleName");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion titleNameValidated true", titleNameValidated);
 
       } else {
 
         titleNameValidated = false;
         setErrTitleName("Please enter a title.");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion Invalid TitleName");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion titleNameValidated false", titleNameValidated);
 
       };
 
@@ -136,15 +123,11 @@ const AddTitleSuggestion = (props) => {
 
         shortDescriptionValidated = true;
         setErrShortDescription("");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion Valid TitleName");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion titleNameValidated true", titleNameValidated);
 
       } else {
 
         shortDescriptionValidated = false;
         setErrShortDescription("Please enter a description of why the title should be added.");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion Invalid TitleName");
-        // console.log(componentName, getDateTime(), "addTitleSuggestion titleNameValidated false", titleNameValidated);
 
       };
 
@@ -156,15 +139,11 @@ const AddTitleSuggestion = (props) => {
 
         emailValidated = true;
         setErrEmail("");
-        // console.log(componentName, getDateTime(), "addMessage Valid email");
-        // console.log(componentName, getDateTime(), "addMessage emailValidated true", emailValidated);
 
       } else {
 
         emailValidated = false;
         setErrEmail("Please enter an email address.");
-        // console.log(componentName, getDateTime(), "addMessage Invalid email");
-        // console.log(componentName, getDateTime(), "addMessage emailValidated false", emailValidated);
 
       };
 
@@ -173,20 +152,13 @@ const AddTitleSuggestion = (props) => {
     if (titleNameValidated === true && shortDescriptionValidated === true && emailValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, getDateTime(), "addTitleSuggestion Valid Form");
-      // console.log(componentName, getDateTime(), "addTitleSuggestion formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, getDateTime(), "addTitleSuggestion Invalid Form");
-      // console.log(componentName, getDateTime(), "addTitleSuggestion formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, getDateTime(), "addTitleSuggestion titleNameValidated", titleNameValidated);
-    // console.log(componentName, getDateTime(), "addTitleSuggestion categoryIDValidated", categoryIDValidated);
-    // console.log(componentName, getDateTime(), "addTitleSuggestion formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -246,10 +218,8 @@ const AddTitleSuggestion = (props) => {
 
         };
 
-        // console.log(componentName, getDateTime(), "addTitleSuggestion recordObject", recordObject);
 
         let url = baseURL + "titleSuggestions/";
-        // console.log(componentName, getDateTime(), "addTitleSuggestion url", url);
 
         if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
 
@@ -268,7 +238,6 @@ const AddTitleSuggestion = (props) => {
             body: JSON.stringify({ titleSuggestion: recordObject })
           })
             .then(response => {
-              // console.log(componentName, getDateTime(), "addTitleSuggestion response", response);
 
               // if (!response.ok) {
 
@@ -290,7 +259,6 @@ const AddTitleSuggestion = (props) => {
 
             })
             .then(data => {
-              // console.log(componentName, getDateTime(), "addTitleSuggestion data", data);
 
               setTitleSuggestionRecordAdded(data.transactionSuccess);
               addMessage(data.message);
@@ -341,7 +309,6 @@ const AddTitleSuggestion = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect titleSuggestionRecordAdded", titleSuggestionRecordAdded);
 
     if (isEmpty(titleSuggestionRecordAdded) === false) {
 
@@ -367,7 +334,6 @@ const AddTitleSuggestion = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for sessionToken", sessionToken);
 
     if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
 
@@ -410,39 +376,39 @@ const AddTitleSuggestion = (props) => {
 
             <FormGroup>
               <Label for="txtTitleName">Title</Label>
-              <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTitleName(event.target.value); }} />
+              <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => { setTxtTitleName(event.target.value); }} />
               {isEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtAuthorFirstName">Author First Name</Label>
-              <Input type="text" id="txtAuthorFirstName" value={txtAuthorFirstName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorFirstName(event.target.value); }} />
+              <Input type="text" id="txtAuthorFirstName" value={txtAuthorFirstName} onChange={(event) => { setTxtAuthorFirstName(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtAuthorLastName">Author Last Name</Label>
-              <Input type="text" id="txtAuthorLastName" value={txtAuthorLastName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtAuthorLastName(event.target.value); }} />
+              <Input type="text" id="txtAuthorLastName" value={txtAuthorLastName} onChange={(event) => { setTxtAuthorLastName(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtPublicationDate">Publication Date</Label>
-              <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtPublicationDate(event.target.value); }} />
+              <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtShortDescription">Description Of Why The Title Should Be Added</Label>
-              <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtShortDescription(event.target.value); }} />
+              <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => { setTxtShortDescription(event.target.value); }} />
               {isEmpty(errShortDescription) === false ? <Alert color="danger">{errShortDescription}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtTitleURL">Title URL</Label>
-              <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTitleURL(event.target.value); }} />
+              <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => { setTxtTitleURL(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtEmail">Email Address</Label>
-              <Input type="text" id="txtEmail" value={txtEmail} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtEmail(event.target.value); }} />
+              <Input type="text" id="txtEmail" value={txtEmail} onChange={(event) => { setTxtEmail(event.target.value); }} />
               {isEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
             </FormGroup>
 

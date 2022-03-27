@@ -17,15 +17,12 @@ const Terms = (props) => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -59,7 +56,6 @@ const Terms = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getTerms response", response);
 
         if (!response.ok) {
 
@@ -73,11 +69,9 @@ const Terms = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getTerms results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          // console.log(componentName, getDateTime(), "getTerms results.records[0]", results.records[0]);
 
           setTerms(results.records);
           // setTerms(results.records[0]);
@@ -108,7 +102,6 @@ const Terms = (props) => {
       })
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getTerm response", response);
 
         if (!response.ok) {
 
@@ -122,11 +115,9 @@ const Terms = (props) => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getTerm results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          // console.log(componentName, getDateTime(), "getTerm results.records[0]", results.records[0]);
 
           // setTerm(results.records);
           setTerm(results.records[0]);
@@ -161,7 +152,6 @@ const Terms = (props) => {
 
 
   const redirectPage = (linkName) => {
-    // console.log(componentName, getDateTime(), "redirectPage", linkName);
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
     window.scrollTo(0, 0);
@@ -173,7 +163,6 @@ const Terms = (props) => {
 
 
   // useEffect(() => {
-  //   // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
   //   if (admin !== true) {
 
@@ -190,30 +179,34 @@ const Terms = (props) => {
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
-      <Row>
-        <Col xs="12">
+      {Array.isArray(terms) === true ?
 
-          <h4 className="text-center mb-4">Terms</h4>
+        <Row>
+          <Col xs="12">
 
-          {terms.map((term, index) => {
+            <h4 className="text-center mb-4">Terms</h4>
 
-            return (
-              <React.Fragment key={index}>
+            {terms.map((term, index) => {
 
-                {index !== 0 ?
+              return (
+                <React.Fragment key={index}>
 
-                  <React.Fragment>,&nbsp;</React.Fragment>
+                  {index !== 0 ?
 
-                  : null}
+                    <React.Fragment>,&nbsp;</React.Fragment>
 
-                <a href="#" onClick={(event) => { event.preventDefault(); getTerm(term.termID); }}>{term.term}</a>
+                    : null}
 
-              </React.Fragment>
-            );
-          })}
+                  <a href="#" onClick={(event) => { event.preventDefault(); getTerm(term.termID); }}>{term.term}</a>
 
-        </Col>
-      </Row>
+                </React.Fragment>
+              );
+            })}
+
+          </Col>
+        </Row>
+
+        : null}
 
       {isEmpty(term) === false ?
 
@@ -233,121 +226,136 @@ const Terms = (props) => {
 
               <h5>Categories:</h5>
 
-              <p>
+              {Array.isArray(termCategories) === true ?
 
-                {termCategories.map((termCategory, index) => {
+                <p>
 
-                  let newCategory = previousCategoryID !== termCategory.termCategoryID ? true : false;
+                  {termCategories.map((termCategory, index) => {
 
-                  previousCategoryID = termCategory.termCategoryID;
+                    let newCategory = previousCategoryID !== termCategory.termCategoryID ? true : false;
 
-                  return (
-                    <React.Fragment key={index}>
+                    previousCategoryID = termCategory.termCategoryID;
 
-                      {isEmpty(termCategory.termCategory) === false && newCategory === true ?
+                    return (
+                      <React.Fragment key={index}>
 
-                        <React.Fragment>
+                        {isEmpty(termCategory.termCategory) === false && newCategory === true ?
 
-                          {index !== 0 ?
+                          <React.Fragment>
 
-                            <React.Fragment>,&nbsp;</React.Fragment>
+                            {index !== 0 ?
 
-                            : null}
+                              <React.Fragment>,&nbsp;</React.Fragment>
 
-                          {termCategory.termCategory}
+                              : null}
 
-                        </React.Fragment>
+                            {termCategory.termCategory}
 
-                        : null}
+                          </React.Fragment>
 
-                    </React.Fragment>
-                  );
-                })}
+                          : null}
 
-              </p>
+                      </React.Fragment>
+                    );
+                  })}
+
+                </p>
+
+                : null}
 
               <h5>Alternate Forms:</h5>
 
-              <p>
+              {Array.isArray(termAlternateForms) === true ?
 
-                {termAlternateForms.map((alternateForm, index) => {
+                <p>
 
-                  let newAlternateForm = previousAlternateFormID !== alternateForm.alternateFormID ? true : false;
+                  {termAlternateForms.map((alternateForm, index) => {
 
-                  previousAlternateFormID = alternateForm.alternateFormID;
+                    let newAlternateForm = previousAlternateFormID !== alternateForm.alternateFormID ? true : false;
 
-                  return (
-                    <React.Fragment key={index}>
+                    previousAlternateFormID = alternateForm.alternateFormID;
 
-                      {isEmpty(alternateForm.alternateFormID) === false && newAlternateForm === true ?
+                    return (
+                      <React.Fragment key={index}>
 
-                        <React.Fragment>
+                        {isEmpty(alternateForm.alternateFormID) === false && newAlternateForm === true ?
 
-                          {index !== 0 ?
+                          <React.Fragment>
 
-                            <React.Fragment>,&nbsp;</React.Fragment>
+                            {index !== 0 ?
 
-                            : null}
+                              <React.Fragment>,&nbsp;</React.Fragment>
 
-                          <a href="#" onClick={(event) => { event.preventDefault(); getTerm(alternateForm.alternateFormID); }}>{alternateForm.termsAlternateForm}</a>
+                              : null}
 
-                        </React.Fragment>
+                            <a href="#" onClick={(event) => { event.preventDefault(); getTerm(alternateForm.alternateFormID); }}>{alternateForm.termsAlternateForm}</a>
 
-                        : null}
+                          </React.Fragment>
 
-                    </React.Fragment>
-                  );
-                })}
+                          : null}
 
-              </p>
+                      </React.Fragment>
+                    );
+                  })}
+
+                </p>
+
+                : null}
+
               <h5>Synonyms:</h5>
 
-              <p>
+              {Array.isArray(termSynonyms) === true ?
 
-                {termSynonyms.map((termSynonym, index) => {
+                <p>
 
-                  let newSynonym = previousSynonymID !== termSynonym.synonymID ? true : false;
+                  {termSynonyms.map((termSynonym, index) => {
 
-                  previousSynonymID = termSynonym.synonymID;
+                    let newSynonym = previousSynonymID !== termSynonym.synonymID ? true : false;
 
-                  return (
-                    <React.Fragment key={index}>
+                    previousSynonymID = termSynonym.synonymID;
 
-                      {isEmpty(termSynonym.synonymID) === false && newSynonym === true ?
+                    return (
+                      <React.Fragment key={index}>
 
-                        <React.Fragment>
+                        {isEmpty(termSynonym.synonymID) === false && newSynonym === true ?
 
-                          {index !== 0 ?
+                          <React.Fragment>
 
-                            <React.Fragment>,&nbsp;</React.Fragment>
+                            {index !== 0 ?
 
-                            : null}
+                              <React.Fragment>,&nbsp;</React.Fragment>
 
-                          <a href="#" onClick={(event) => { event.preventDefault(); getTerm(termSynonym.synonymID); }}>{termSynonym.termsSynonym}</a>
+                              : null}
 
-                        </React.Fragment>
+                            <a href="#" onClick={(event) => { event.preventDefault(); getTerm(termSynonym.synonymID); }}>{termSynonym.termsSynonym}</a>
 
-                        : null}
+                          </React.Fragment>
 
-                    </React.Fragment>
-                  );
-                })}
+                          : null}
 
-              </p>
+                      </React.Fragment>
+                    );
+                  })}
+
+                </p>
+
+                : null}
 
             </Col>
           </Row>
 
-          <Row className="mt-3">
+          {Array.isArray(termTitles) === true ?
 
-            {termTitles.map((termTitle, index) => {
+            <Row className="mt-3">
 
-              return (
-                <React.Fragment>
+              {termTitles.map((termTitle, index) => {
 
-                  <TitleCard linkName={termTitle.titleURL} imageSide="right" />
+                return (
+                  <React.Fragment>
 
-                  {/* <Col key={termTitle.titleID} xs="6" className="mb-4">
+                    <TitleCard linkName={termTitle.titleURL} imageSide="right" />
+
+                    {/* <Col key={termTitle.titleID} xs="6" className="mb-4">
 
                     <Link to={termTitle.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(termTitle.titleURL); }}>{termTitle.titleName}</Link>
 
@@ -361,11 +369,13 @@ const Terms = (props) => {
 
                   </Col> */}
 
-                </React.Fragment>
-              );
-            })}
+                  </React.Fragment>
+                );
+              })}
 
-          </Row>
+            </Row>
+
+            : null}
 
         </React.Fragment>
 

@@ -14,15 +14,12 @@ const EditCategories = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -44,7 +41,6 @@ const EditCategories = (props) => {
   const [errSortID, setErrSortID] = useState("");
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
-  // console.log(componentName, getDateTime(), "categoryListState", categoryListState);
 
   let categoryList = [];
 
@@ -59,7 +55,6 @@ const EditCategories = (props) => {
 
   };
 
-  // console.log(componentName, getDateTime(), "categoryList", categoryList);
 
   categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
@@ -70,18 +65,19 @@ const EditCategories = (props) => {
 
     // Need to restructure the form for this to work
     // let formElements = event.target.elements;
-    // console.log(componentName, getDateTime(), "updateCategories formElements", formElements);
+
+    // if (Array.isArray() === true) {
 
     // for (let i = 0; i < .length; i++) {
 
     // };
 
+    // };
 
   };
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -121,26 +117,34 @@ const EditCategories = (props) => {
 
             </FormGroup>
 
-            {categoryList.map((category) => {
+            {Array.isArray(categoryList) === true ?
 
-              return (
+              <React.Fragment>
 
-                <FormGroup row key={category.categoryID}>
+                {categoryList.map((category) => {
 
-                  <Col xs="10">
-                    <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
-                    {/* {isEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
-                  </Col>
+                  return (
 
-                  <Col xs="2">
-                    <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
-                    {/* {isEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
-                  </Col>
+                    <FormGroup row key={category.categoryID}>
 
-                </FormGroup>
+                      <Col xs="10">
+                        <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
+                        {/* {isEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
+                      </Col>
 
-              );
-            })}
+                      <Col xs="2">
+                        <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
+                        {/* {isEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
+                      </Col>
+
+                    </FormGroup>
+
+                  );
+                })}
+
+              </React.Fragment>
+
+              : null}
 
             <ModalFooter>
               <Button outline size="lg" color="primary" onClick={updateCategories}>Update Categories</Button>

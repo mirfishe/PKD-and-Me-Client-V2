@@ -16,7 +16,6 @@ function LoadUserReviews() {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const userReviewsLoaded = useSelector(state => state.userReviews.userReviewsLoaded);
@@ -28,7 +27,6 @@ function LoadUserReviews() {
   const loadDataStore = (data, source) => {
 
     if (source === "userReview") {
-      // console.log(componentName, getDateTime(), "loadDataStore data", data);
 
       dispatch(loadArrayUserReviews(data));
       // localStorage.setItem("arrayUserReviews", data);
@@ -40,7 +38,6 @@ function LoadUserReviews() {
 
 
   const getUserReviews = () => {
-    // console.log(componentName, getDateTime(), "getUserReviews baseURL", baseURL);
 
     setUserReviewMessage("");
     setErrUserReviewMessage("");
@@ -49,7 +46,6 @@ function LoadUserReviews() {
 
     fetch(url)
       .then(response => {
-        // console.log(componentName, getDateTime(), "getUserReviews response", response);
 
         if (!response.ok) {
 
@@ -68,7 +64,6 @@ function LoadUserReviews() {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getUserReviews results", results);
 
         // setUserReviewMessage(results.message);
 
@@ -78,7 +73,7 @@ function LoadUserReviews() {
 
           // } else {
 
-          //   console.log(componentName, getDateTime(), "getUserReviews error", results.message);
+          //   console.error(componentName, getDateTime(), "getUserReviews error", results.message);
           //   // setErrUserReviewMessage(results.message);
           //   dispatch(setUserReviewsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF

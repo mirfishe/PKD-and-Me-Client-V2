@@ -13,15 +13,12 @@ const ComputerLogs = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +47,6 @@ const ComputerLogs = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getComputerLogs response", response);
 
         if (!response.ok) {
 
@@ -64,7 +60,6 @@ const ComputerLogs = () => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -93,7 +88,6 @@ const ComputerLogs = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -115,7 +109,7 @@ const ComputerLogs = () => {
 
           <h5 className="text-center">Computer Logs</h5>
 
-          {isEmpty(computerLogs) === false ?
+          {Array.isArray(computerLogs) === true ?
 
             <Table responsive>
               <thead>
@@ -136,7 +130,6 @@ const ComputerLogs = () => {
 
                 {computerLogs.map((computerLog, index) => {
 
-                  // console.log(componentName, getDateTime(), "map computerLog", computerLog);
 
                   return (
                     <tr key={index}>

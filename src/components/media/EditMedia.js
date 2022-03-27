@@ -15,15 +15,12 @@ const EditMedia = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
@@ -56,7 +53,6 @@ const EditMedia = (props) => {
 
 
   const addMedia = () => {
-    // console.log(componentName, getDateTime(), "addMedia baseURL", baseURL);
 
     clearMessages();
     setMediaRecordAdded(null);
@@ -77,15 +73,11 @@ const EditMedia = (props) => {
 
         mediaValidated = true;
         setErrMedia("");
-        // console.log(componentName, getDateTime(), "addMedia Valid Media");
-        // console.log(componentName, getDateTime(), "addMedia mediaValidated true", mediaValidated);
 
       } else {
 
         mediaValidated = false;
         setErrMedia("Please enter a media.");
-        // console.log(componentName, getDateTime(), "addMedia Invalid Media");
-        // console.log(componentName, getDateTime(), "addMedia mediaValidated false", mediaValidated);
 
       };
 
@@ -94,19 +86,13 @@ const EditMedia = (props) => {
     if (mediaValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, getDateTime(), "addMedia Valid Form");
-      // console.log(componentName, getDateTime(), "addMedia formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, getDateTime(), "addMedia Invalid Form");
-      // console.log(componentName, getDateTime(), "addMedia formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, getDateTime(), "addMedia mediaValidated", mediaValidated);
-    // console.log(componentName, getDateTime(), "addMedia formValidated", formValidated);
 
     if (formValidated === true) {
 
@@ -117,10 +103,8 @@ const EditMedia = (props) => {
           electronic: cbxElectronic
         };
 
-        // console.log(componentName, getDateTime(), "addMedia recordObject", recordObject);
 
         let url = baseURL + "media/";
-        // console.log(componentName, getDateTime(), "addMedia url", url);
 
         if (isEmpty(sessionToken) === false) {
 
@@ -133,7 +117,6 @@ const EditMedia = (props) => {
             body: JSON.stringify({ media: recordObject })
           })
             .then(response => {
-              // console.log(componentName, getDateTime(), "addMedia response", response);
 
               // if (!response.ok) {
 
@@ -155,7 +138,6 @@ const EditMedia = (props) => {
 
             })
             .then(data => {
-              // console.log(componentName, getDateTime(), "addMedia data", data);
 
               setMediaRecordAdded(data.transactionSuccess);
               addMessage(data.message);
@@ -206,21 +188,18 @@ const EditMedia = (props) => {
 
 
   const updateMedia = (deleteMedia) => {
-    // console.log(componentName, getDateTime(), "updateMedia deleteMedia", deleteMedia);
 
 
   };
 
 
   const deleteMedia = () => {
-    // console.log(componentName, getDateTime(), "deleteMedia baseURL", baseURL);
 
 
   };
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect mediaRecordAdded", mediaRecordAdded);
 
     if (isEmpty(mediaRecordAdded) === false && mediaRecordAdded === true) {
 
@@ -238,8 +217,6 @@ const EditMedia = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect mediaRecordUpdated", mediaRecordUpdated);
-    // console.log(componentName, getDateTime(), "useEffect mediaRecordDeleted", mediaRecordDeleted);
 
     if (isEmpty(mediaRecordUpdated) === false && mediaRecordUpdated === true) {
 
@@ -269,7 +246,6 @@ const EditMedia = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -300,12 +276,12 @@ const EditMedia = (props) => {
 
             <FormGroup>
               <Label for="txtMedia">Media</Label>
-              <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtMedia(event.target.value); }} />
+              <Input type="text" id="txtMedia" value={txtMedia} onChange={(event) => { setTxtMedia(event.target.value); }} />
               {isEmpty(errMedia) === false ? <Alert color="danger">{errMedia}</Alert> : null}
             </FormGroup>
 
             <FormGroup className="ms-4">
-              <Label for="cbxElectronic"><Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setCbxElectronic(!cbxElectronic); }} />Electronic</Label>
+              <Label for="cbxElectronic"><Input type="checkbox" id="cbxElectronic" checked={cbxElectronic} onChange={(event) => { setCbxElectronic(!cbxElectronic); }} />Electronic</Label>
             </FormGroup>
 
             <ModalFooter>
@@ -318,21 +294,21 @@ const EditMedia = (props) => {
 
                 <React.Fragment>
 
-                  <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateMedia(false); }}>Update Media</Button>
+                  <Button outline size="lg" color="primary" onClick={(event) => { updateMedia(false); }}>Update Media</Button>
 
                   {isEmpty(active) === false && (active === false || active === 0) ?
 
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateMedia(false); }}>Undelete/Restore Media</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => { updateMedia(false); }}>Undelete/Restore Media</Button>
 
                     : null}
 
                   {isEmpty(active) === false && (active === true || active === 1) ?
 
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateMedia(true); }}>Delete Media</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => { updateMedia(true); }}>Delete Media</Button>
 
                     : null}
 
-                  <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ deleteMedia(); }}>Hard Delete Media</Button>
+                  <Button outline size="lg" color="warning" onClick={(event) => { deleteMedia(); }}>Hard Delete Media</Button>
                 </React.Fragment>
 
               }

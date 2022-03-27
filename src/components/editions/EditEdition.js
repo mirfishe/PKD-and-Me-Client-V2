@@ -14,32 +14,24 @@ const EditEdition = (props) => {
   const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
-  // console.log(componentName, getDateTime(), "props.editionID", props.editionID);
-  // console.log(componentName, getDateTime(), "props.titleID", props.titleID); // Would come from the record that is being edited
-  // console.log(componentName, getDateTime(), "props.titlePublicationDate", props.titlePublicationDate);
 
   const [mediaMessage, setMediaMessage] = useState("");
   const [errMediaMessage, setErrMediaMessage] = useState("");
   const [mediaResultsFound, setMediaResultsFound] = useState(null);
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
-  // console.log(componentName, getDateTime(), "mediaListState", mediaListState);
 
   const mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
   // const mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
-  // console.log(componentName, getDateTime(), "mediaList", mediaList);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
   // * Sort the list alphabetically instead of by sortID
@@ -48,13 +40,13 @@ const EditEdition = (props) => {
   // ! This code is causing React to have too many re-renders in this location
   // if (mediaList.length < 1) {
 
-  //     console.log(componentName, getDateTime(), "mediaList is empty", mediaList.length);
+  //     console.error(componentName, getDateTime(), "mediaList is empty", mediaList.length);
   //     setErrMediaMessage("mediaList is empty", mediaList.length);
   //     setMediaResultsFound(false);
 
   // } else {
 
-  //     console.log(componentName, getDateTime(), "mediaList.length", mediaList.length);
+  //     console.error(componentName, getDateTime(), "mediaList.length", mediaList.length);
   //     setMediaMessage("mediaList.length", mediaList.length);
   //     setMediaResultsFound(true);
 
@@ -62,17 +54,15 @@ const EditEdition = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect mediaList", mediaList);
 
     if (mediaList.length < 1) {
 
-      console.log(componentName, getDateTime(), "mediaList is empty", mediaList.length);
+      console.error(componentName, getDateTime(), "mediaList is empty", mediaList.length);
       setErrMediaMessage("mediaList is empty", mediaList.length);
       setMediaResultsFound(false);
 
     } else {
 
-      // console.log(componentName, getDateTime(), "mediaList.length", mediaList.length);
       // setMediaMessage("mediaList.length", mediaList.length);
       setMediaResultsFound(true);
 
@@ -82,7 +72,6 @@ const EditEdition = (props) => {
 
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
-  // console.log(componentName, getDateTime(), "titleListState", titleListState);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -133,20 +122,15 @@ const EditEdition = (props) => {
   const [ASINResultsFound, setASINResultsFound] = useState(null);
 
   const editionListState = useSelector(state => state.editions.arrayEditions);
-  // console.log(componentName, getDateTime(), "editionListState", editionListState);
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect editionListState", editionListState);
 
     if (isEmpty(props.editionID) === false) {
 
       let editionObject = editionListState.find(edition => edition.editionID === props.editionID);
-      // console.log(componentName, getDateTime(), "useEffect editionObject", editionObject);
-      // console.log(componentName, getDateTime(), "useEffect typeof editionObject", typeof editionObject);
 
       // setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === props.editionID));
-      // console.log(componentName, getDateTime(), "useEffect editionItemIndex", editionItemIndex);
 
       if (isEmpty(editionObject) === false) {
 
@@ -194,8 +178,6 @@ const EditEdition = (props) => {
 
 
   const addEdition = () => {
-    // console.log(componentName, getDateTime(), "addEdition baseURL", baseURL);
-    // console.log(componentName, getDateTime(), "addEdition props.titleID", props.titleID);
 
     clearMessages();
     setEditionRecordAdded(null);
@@ -225,43 +207,28 @@ const EditEdition = (props) => {
 
       mediaIDValidated = true;
       setErrMediaID("");
-      // console.log(componentName, getDateTime(), "addEdition Valid mediaID");
-      // console.log(componentName, getDateTime(), "addEdition mediaIDValidated true", mediaIDValidated);
 
     } else {
 
       mediaIDValidated = false;
       setErrMediaID("Please select a media.");
-      // console.log(componentName, getDateTime(), "addEdition Invalid mediaID");
-      // console.log(componentName, getDateTime(), "addEdition mediaIDValidated false", mediaIDValidated);
 
     };
 
     if (mediaIDValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, getDateTime(), "addEdition Valid Form");
-      // console.log(componentName, getDateTime(), "addEdition formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, getDateTime(), "addEdition Invalid Form");
-      // console.log(componentName, getDateTime(), "addEdition formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, getDateTime(), "addEdition titleIDValidated", titleIDValidated);
-    // console.log(componentName, getDateTime(), "addEdition mediaIDValidated", mediaIDValidated);
-    // console.log(componentName, getDateTime(), "addEdition formValidated", formValidated);
 
     if (formValidated === true) {
 
-      // console.log(componentName, getDateTime(), "addEdition typeof props.titleID", typeof props.titleID);
-      // console.log(componentName, getDateTime(), "addEdition typeof ddMediaID", typeof ddMediaID);
 
-      // console.log(componentName, getDateTime(), "addEdition parseInt(props.titleID)", parseInt(props.titleID));
-      // console.log(componentName, getDateTime(), "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
 
       let recordObject = {
         titleID: parseInt(props.titleID),
@@ -375,10 +342,8 @@ const EditEdition = (props) => {
 
       };
 
-      // console.log(componentName, getDateTime(), "addEdition recordObject", recordObject);
 
       let url = baseURL + "editions/";
-      // console.log(componentName, getDateTime(), "addEdition url", url);
 
       if (isEmpty(sessionToken) === false) {
 
@@ -391,7 +356,6 @@ const EditEdition = (props) => {
           body: JSON.stringify({ edition: recordObject })
         })
           .then(response => {
-            // console.log(componentName, getDateTime(), "addEdition response", response);
 
             // if (!response.ok) {
 
@@ -413,7 +377,6 @@ const EditEdition = (props) => {
 
           })
           .then(data => {
-            // console.log(componentName, getDateTime(), "addEdition data", data);
 
             setEditionRecordAdded(data.transactionSuccess);
             addMessage(data.message);
@@ -439,15 +402,11 @@ const EditEdition = (props) => {
               // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
               mediaItem = mediaItem[0];
 
-              // console.log(componentName, getDateTime(), "addEdition typeof data.records[0].mediaID", typeof data.records[0].mediaID);
-              // console.log(componentName, getDateTime(), "addEdition mediaItem", mediaItem);
 
               let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
               // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
               titleItem = titleItem[0];
 
-              // console.log(componentName, getDateTime(), "addEdition typeof data.records[0].titleID", typeof data.records[0].titleID);
-              // console.log(componentName, getDateTime(), "addEdition titleItem", titleItem);
 
               // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
               dispatch(addStateEdition([{ editionID: data.records[0].editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }*/, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, mediaActive: mediaItem.active, mediaCreateDate: mediaItem.createDate, mediaUpdatedDate: mediaItem.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, titlePublicationDate: titleItem.publicationDate, titleImageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate }]));
@@ -481,10 +440,7 @@ const EditEdition = (props) => {
 
 
   const updateEdition = (deleteEdition) => {
-    // console.log(componentName, getDateTime(), "updateEdition deleteEdition", deleteEdition);
-    // console.log(componentName, getDateTime(), "updateEdition baseURL", baseURL);
 
-    // console.log(componentName, getDateTime(), "editionItemIndex", editionItemIndex);
 
     clearMessages();
     setEditionRecordUpdated(null);
@@ -514,43 +470,28 @@ const EditEdition = (props) => {
 
       mediaIDValidated = true;
       setErrMediaID("");
-      // console.log(componentName, getDateTime(), "updateEdition Valid mediaID");
-      // console.log(componentName, getDateTime(), "updateEdition mediaIDValidated true", mediaIDValidated);
 
     } else {
 
       mediaIDValidated = false;
       setErrMediaID("Please select a media.");
-      // console.log(componentName, getDateTime(), "updateEdition Invalid mediaID");
-      // console.log(componentName, getDateTime(), "updateEdition mediaIDValidated false", mediaIDValidated);
 
     };
 
     if (mediaIDValidated === true) {
 
       formValidated = true;
-      // console.log(componentName, getDateTime(), "updateEdition Valid Form");
-      // console.log(componentName, getDateTime(), "updateEdition formValidated true", formValidated);
 
     } else {
 
       formValidated = false;
-      // console.log(componentName, getDateTime(), "updateEdition Invalid Form");
-      // console.log(componentName, getDateTime(), "updateEdition formValidated false", formValidated);
 
     };
 
-    // console.log(componentName, getDateTime(), "updateEdition titleIDValidated", titleIDValidated);
-    // console.log(componentName, getDateTime(), "updateEdition mediaIDValidated", mediaIDValidated);
-    // console.log(componentName, getDateTime(), "updateEdition formValidated", formValidated);
 
     if (formValidated === true) {
 
-      // console.log(componentName, getDateTime(), "addEdition typeof titleID", typeof titleID);
-      // console.log(componentName, getDateTime(), "addEdition typeof ddMediaID", typeof ddMediaID);
 
-      // console.log(componentName, getDateTime(), "addEdition parseInt(titleID)", parseInt(titleID));
-      // console.log(componentName, getDateTime(), "addEdition parseInt(ddMediaID)", parseInt(ddMediaID));
 
       let recordObject = {
         editionID: props.editionID,
@@ -666,7 +607,6 @@ const EditEdition = (props) => {
 
       };
 
-      // console.log(componentName, getDateTime(), "updateEdition recordObject", recordObject);
 
       let url = baseURL + "editions/";
 
@@ -674,7 +614,6 @@ const EditEdition = (props) => {
 
         url = url + props.editionID;
 
-        // console.log(componentName, getDateTime(), "updateEdition url", url);
 
         fetch(url, {
           method: "PUT",
@@ -685,7 +624,6 @@ const EditEdition = (props) => {
           body: JSON.stringify({ edition: recordObject })
         })
           .then(response => {
-            // console.log(componentName, getDateTime(), "updateEdition response", response);
 
             // if (!response.ok) {
 
@@ -707,7 +645,6 @@ const EditEdition = (props) => {
 
           })
           .then(data => {
-            // console.log(componentName, getDateTime(), "updateEdition data", data);
 
             setEditionRecordUpdated(data.transactionSuccess);
             addMessage(data.message);
@@ -733,15 +670,11 @@ const EditEdition = (props) => {
               // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
               mediaItem = mediaItem[0];
 
-              // console.log(componentName, getDateTime(), "updateEdition typeof data.records[0].mediaID", typeof data.records[0].mediaID);
-              // console.log(componentName, getDateTime(), "updateEdition mediaItem", mediaItem);
 
               let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
               // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
               titleItem = titleItem[0];
 
-              // console.log(componentName, getDateTime(), "updateEdition typeof data.records[0].titleID", typeof data.records[0].titleID);
-              // console.log(componentName, getDateTime(), "updateEdition titleItem", titleItem);
 
               // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
               dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: props.editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: getDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
@@ -775,7 +708,6 @@ const EditEdition = (props) => {
 
 
   const deleteEdition = () => {
-    // console.log(componentName, getDateTime(), "deleteEdition baseURL", baseURL);
 
     clearMessages();
     setEditionRecordDeleted(null);
@@ -787,7 +719,6 @@ const EditEdition = (props) => {
 
       url = url + props.editionID;
 
-      // console.log(componentName, getDateTime(), "deleteEdition url", url);
 
       if (isEmpty(sessionToken) === false) {
 
@@ -799,7 +730,6 @@ const EditEdition = (props) => {
           })
         })
           .then(response => {
-            // console.log(componentName, getDateTime(), "deleteEdition response", response);
 
             // if (!response.ok) {
 
@@ -821,7 +751,6 @@ const EditEdition = (props) => {
 
           })
           .then(data => {
-            // console.log(componentName, getDateTime(), "deleteEdition data", data);
 
             setEditionRecordDeleted(data.transactionSuccess);
 
@@ -861,7 +790,6 @@ const EditEdition = (props) => {
 
 
   const checkASIN = (ASIN) => {
-    // console.log(componentName, getDateTime(), "checkASIN baseURL", baseURL);
 
     setASINMessage("");
     setErrASINMessage("");
@@ -873,11 +801,9 @@ const EditEdition = (props) => {
 
       url = url + ASIN;
 
-      // console.log(componentName, getDateTime(), "checkASIN url", url);
 
       fetch(url)
         .then(response => {
-          // console.log(componentName, getDateTime(), "checkASIN response", response);
 
           if (!response.ok) {
 
@@ -891,7 +817,6 @@ const EditEdition = (props) => {
 
         })
         .then(results => {
-          // console.log(componentName, getDateTime(), "checkASIN results", results);
 
           setASINResultsFound(results.transactionSuccess);
           setASINMessage(results.message);
@@ -900,9 +825,6 @@ const EditEdition = (props) => {
 
             setASINMessage(results.message + "That ASIN already exists in the database. " + results.records[0].titleName + " (" + results.records[0].media + ") editionID=" + results.records[0].editionID);
 
-            // console.log(componentName, getDateTime(), "checkASIN", results.records[0].titleName);
-            // console.log(componentName, getDateTime(), "checkASIN", results.records[0].media);
-            // console.log(componentName, getDateTime(), "checkASIN", results.records[0].editionID);
 
           } else {
 
@@ -928,7 +850,6 @@ const EditEdition = (props) => {
 
 
   const copyTitlePublicationDate = () => {
-    // console.log(componentName, getDateTime(), "copyTitlePublicationDate props.titlePublicationDate", props.titlePublicationDate);
 
     if (isEmpty(props.titlePublicationDate) === false) {
 
@@ -944,7 +865,6 @@ const EditEdition = (props) => {
 
 
   const copyTitleImageName = () => {
-    // console.log(componentName, getDateTime(), "copyTitleImageName props.titleImageName", props.titleImageName);
 
     if (isEmpty(props.titleImageName) === false) {
 
@@ -960,7 +880,6 @@ const EditEdition = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect editionRecordAdded", editionRecordAdded);
 
     if (isEmpty(editionRecordAdded) === false && editionRecordAdded === true) {
 
@@ -987,8 +906,6 @@ const EditEdition = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect editionRecordUpdated", editionRecordUpdated);
-    // console.log(componentName, getDateTime(), "useEffect editionRecordDeleted", editionRecordDeleted);
 
     if (isEmpty(editionRecordUpdated) === false && editionRecordUpdated === true) {
 
@@ -1036,7 +953,6 @@ const EditEdition = (props) => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -1088,13 +1004,23 @@ const EditEdition = (props) => {
               <Col>
 
                 <Label for="ddMediaID">Media</Label>
-                <Input type="select" id="ddMediaID" value={ddMediaID} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setDdMediaID(event.target.value); }}>
+                <Input type="select" id="ddMediaID" value={ddMediaID} onChange={(event) => { setDdMediaID(event.target.value); }}>
                   <option value="">Select a Media</option>
-                  {mediaList.map((media) => {
-                    return (
-                      <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
-                    );
-                  })}
+
+                  {Array.isArray(mediaList) === true ?
+
+                    <React.Fragment>
+
+                      {mediaList.map((media) => {
+                        return (
+                          <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
+                        );
+                      })}
+
+                    </React.Fragment>
+
+                    : null}
+
                 </Input>
                 {isEmpty(errMediaID) === false ? <Alert color="danger">{errMediaID}</Alert> : null}
 
@@ -1102,7 +1028,7 @@ const EditEdition = (props) => {
               <Col>
 
                 <Label for="txtPublicationDate">Publication Date</Label> {isEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
-                <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtPublicationDate(event.target.value); }} />
+                <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
 
               </Col>
 
@@ -1110,7 +1036,7 @@ const EditEdition = (props) => {
 
             <FormGroup>
               <Label for="txtImageName">Image Name</Label> {isEmpty(props.titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
-              <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageName(event.target.value); }} />
+              <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
               {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
             </FormGroup>
 
@@ -1118,38 +1044,38 @@ const EditEdition = (props) => {
               {isEmpty(txtTextLinkFull) === false ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
               {isEmpty(ASINMessage) === false ? <Alert color="info">{ASINMessage}</Alert> : null}
               {isEmpty(errASINMessage) === false ? <Alert color="danger">{errASINMessage}</Alert> : null}
-              <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ checkASIN(txtASIN); }}>Check for ASIN</Button>
-              <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(event.target.value); }} />
+              <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={(event) => { checkASIN(txtASIN); }}>Check for ASIN</Button>
+              <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => { setTxtASIN(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtTextLinkShort">Text Link Short</Label>
-              <Input type="text" id="txtTextLinkShort" value={txtTextLinkShort} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTextLinkShort(event.target.value); }} />
+              <Input type="text" id="txtTextLinkShort" value={txtTextLinkShort} onChange={(event) => { setTxtTextLinkShort(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
-              <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
+              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
+              <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => { setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
+              <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
+              <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => { setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkMedium(event.target.value); }} />
+              <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
+              <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => { setTxtImageLinkMedium(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtImageLinkLarge(event.target.value); }} />
+              <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
+              <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => { setTxtImageLinkLarge(event.target.value); }} />
             </FormGroup>
 
             <FormGroup>
               <Label for="txtTextImageLink">Text Image Link</Label>
-              <Input type="textarea" id="txtTextImageLink" rows={10} value={txtTextImageLink} onChange={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ setTxtTextImageLink(event.target.value); }} />
+              <Input type="textarea" id="txtTextImageLink" rows={10} value={txtTextImageLink} onChange={(event) => { setTxtTextImageLink(event.target.value); }} />
             </FormGroup>
 
             <ModalFooter>
@@ -1162,21 +1088,21 @@ const EditEdition = (props) => {
 
                 <React.Fragment>
 
-                  <Button outline size="lg" color="primary" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Update Edition</Button>
+                  <Button outline size="lg" color="primary" onClick={(event) => { updateEdition(false); }}>Update Edition</Button>
 
                   {isEmpty(active) === false && (active === false || active === 0) ?
 
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateEdition(false); }}>Undelete/Restore Edition</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(false); }}>Undelete/Restore Edition</Button>
 
                     : null}
 
                   {isEmpty(active) === false && (active === true || active === 1) ?
 
-                    <Button outline size="lg" color="danger" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ updateEdition(true); }}>Delete Edition</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(true); }}>Delete Edition</Button>
 
                     : null}
 
-                  <Button outline size="lg" color="warning" onClick={(event) => {/*console.log(componentName, getDateTime(), "event.target.value", event.target.value);*/ deleteEdition(); }}>Hard Delete Edition</Button>
+                  <Button outline size="lg" color="warning" onClick={(event) => { deleteEdition(); }}>Hard Delete Edition</Button>
                 </React.Fragment>
 
               }

@@ -15,15 +15,12 @@ const Comments = () => {
   const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
-  // console.log(componentName, getDateTime(), "sessionToken", sessionToken);
   const admin = useSelector(state => state.user.admin);
-  // console.log(componentName, getDateTime(), "admin", admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -52,7 +49,6 @@ const Comments = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getComments response", response);
 
         if (!response.ok) {
 
@@ -66,7 +62,6 @@ const Comments = () => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -95,7 +90,6 @@ const Comments = () => {
 
 
   useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
 
     if (admin !== true) {
 
@@ -119,34 +113,40 @@ const Comments = () => {
 
         </Col>
       </Row>
-      <Row>
 
-        {comments.map((comment) => {
+      {Array.isArray(comments) === true ?
 
-          return (
-            <Col className="my-4" xs="12" key={comment.commentID}>
+        <Row>
 
-              <Row>
-                <Col xs="12">
+          {comments.map((comment) => {
 
-                  {isEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
+            return (
+              <Col className="my-4" xs="12" key={comment.commentID}>
 
-                </Col>
-              </Row>
+                <Row>
+                  <Col xs="12">
 
-              <Row>
-                <Col xs="12">
+                    {isEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
 
-                  <p>Submitted by {isEmpty(comment.firstName) === false ? comment.firstName : null} {isEmpty(comment.lastName) === false ? comment.lastName : null} {isEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {isEmpty(comment.updateDate) === false ? <small>on {displayDate(comment.updateDate)}</small> : null}</p>
+                  </Col>
+                </Row>
 
-                </Col>
-              </Row>
+                <Row>
+                  <Col xs="12">
 
-            </Col>
-          );
-        })}
+                    <p>Submitted by {isEmpty(comment.firstName) === false ? comment.firstName : null} {isEmpty(comment.lastName) === false ? comment.lastName : null} {isEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {isEmpty(comment.updateDate) === false ? <small>on {displayDate(comment.updateDate)}</small> : null}</p>
 
-      </Row>
+                  </Col>
+                </Row>
+
+              </Col>
+            );
+          })}
+
+        </Row>
+
+        : null}
+
     </Container>
   );
 };
