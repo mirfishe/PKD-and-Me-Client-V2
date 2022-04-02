@@ -108,7 +108,7 @@ export const tryParseJSON = (jsonString) => {
     };
   }
   catch (error) {
-    // ! Don't display this error in the console. This function is already returning false is the JSON file is not in the correct format. -- 03/06/2021 MF
+    // ! Don't display this error in the console. This function is already returning false if the JSON file is not in the correct format. -- 03/06/2021 MF
     // console.log(componentName, getDateTime(), "tryParseJSON error", error);
   };
 
