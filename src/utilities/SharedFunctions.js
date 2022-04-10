@@ -925,6 +925,36 @@ export const randomizeItems = (items, randomize) => {
 };
 
 
+export const groupObjectArrayByProperties = (objectArray, ...keys) => {
+
+  // * From https://gist.github.com/robmathers/1830ce09695f759bf2c4df15c29dd22d?permalink_comment_id=3646957#gistcomment-3646957 -- 04/04/2022 KH
+
+  const getGroupFromItem = (item, keys) => {
+
+    return (keys.length > 1) ? getGroupFromItem(item[keys[0]], keys.slice(1)) : item[keys[0]];
+
+  };
+
+  return objectArray.reduce((results, item) => {
+
+    // * Get the first instance of the key by which we're grouping. -- 04/04/2022
+    let group = getGroupFromItem(item, keys);
+
+    // * Ensure that there's an array to hold our results for this group. -- 04/04/2022
+    results[group] = results[group] || [];
+
+    // * Add this item to the appropriate group within results. -- 04/04/2022
+    results[group].push(item);
+
+    // * Return the updated results object to be passed into next reduce call. -- 04/04/2022
+    return results;
+
+    // * Initial value of the results object -- 04/04/2022
+  }, {});
+
+};
+
+
 export const formatLowerCase = (value) => {
 
   let lowerCaseValue = value;
