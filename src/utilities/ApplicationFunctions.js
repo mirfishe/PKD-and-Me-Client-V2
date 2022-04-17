@@ -1,5 +1,5 @@
 import applicationSettings from "../app/environment";
-import { isEmpty, getDateTime, formatLowerCase, formatUpperCase } from "./SharedFunctions";
+import { isEmpty, getDateTime, formatLowerCase, formatUpperCase } from "shared-functions";
 
 const componentName = "ApplicationFunctions";
 

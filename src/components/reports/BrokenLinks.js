@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const BrokenLinks = () => {

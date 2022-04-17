@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 // import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase, removeHTML } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
 // import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
 import FromTheHomeopapeItem from "./FromTheHomeopapeItem";
 

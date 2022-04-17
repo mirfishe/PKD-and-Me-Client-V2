@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "shared-functions";
 import { encodeURL, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const FormatPost = () => {

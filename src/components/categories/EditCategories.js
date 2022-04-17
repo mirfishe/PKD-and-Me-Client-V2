@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { PencilSquare } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "shared-functions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF
 

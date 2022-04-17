@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Alert, Container, Col, Row } from "reactstrap";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "shared-functions";
 import { encodeURL, convertBitTrueFalse, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {

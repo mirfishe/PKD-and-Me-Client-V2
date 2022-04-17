@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatTrim } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, formatTrim } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, displayYear, truncateText } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, displayYear, truncateText } from "shared-functions";
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
