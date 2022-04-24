@@ -40,6 +40,7 @@ const FromTheHomeopape = (props) => {
   // const [feedItems, setFeedItems] = useState([]);
   // const [feedItems2, setFeedItems2] = useState([]);
   const [homeopapeItems, setHomeopapeItems] = useState([]);
+  const [homeopapeItemsPosted, setHomeopapeItemsPosted] = useState([]);
   const [homeopapeItemsReview, setHomeopapeItemsReview] = useState([]);
   const [homeopapeItemsReviewTitle, setHomeopapeItemsReviewTitle] = useState([]);
   const [homeopapeItemsReviewText, setHomeopapeItemsReviewText] = useState([]);
@@ -391,6 +392,57 @@ const FromTheHomeopape = (props) => {
   };
 
 
+  const getNewsPosted = () => {
+
+    let url = baseURL + "fromthehomeopape/posted";
+    // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
+    // // let url = baseURL + "fromthehomeopape/top/10";
+
+    fetch(url, {
+      method: "GET",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      })
+    })
+      .then(response => {
+
+        if (!response.ok) {
+
+          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+
+        } else {
+
+          return response.json();
+
+        };
+
+      })
+      .then(results => {
+
+        if (isEmpty(results) === false && results.transactionSuccess === true) {
+
+          setHomeopapeItemsPosted(results.records);
+          // setHomeopapeItemsPosted(results.records[0]);
+
+        } else {
+
+          setHomeopapeItemsPosted([]);
+
+        };
+
+      })
+      .catch((error) => {
+        // console.error(componentName, getDateTime(), "getNews error", error);
+
+        addErrorMessage(error.name + ": " + error.message);
+
+        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
+      });
+
+  };
+
+
   const getNewsReview = () => {
 
     let url = baseURL + "fromthehomeopape/review";
@@ -451,6 +503,8 @@ const FromTheHomeopape = (props) => {
     // fetchNews();
 
     getNews();
+
+    getNewsPosted();
 
     getNewsReview();
 
@@ -548,12 +602,11 @@ const FromTheHomeopape = (props) => {
 
         {Array.isArray(homeopapeItems) === true ?
 
-          <Col xs="6">
+          <Col xs="4">
 
             <h3>Displayed</h3>
 
             {homeopapeItems.map((homeopapeItem, index) => {
-
 
               return (
                 <React.Fragment key={index}>
@@ -568,7 +621,28 @@ const FromTheHomeopape = (props) => {
 
           : null}
 
-        <Col xs="6">
+        {Array.isArray(homeopapeItemsPosted) === true ?
+
+          <Col xs="4">
+
+            <h3>Posted</h3>
+
+            {homeopapeItemsPosted.map((homeopapeItem, index) => {
+
+              return (
+                <React.Fragment key={index}>
+
+                  <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+
+                </React.Fragment>
+              );
+            })}
+
+          </Col>
+
+          : null}
+
+        <Col xs="4">
 
           {Array.isArray(homeopapeItemsReviewTitle) === true ?
 
@@ -577,7 +651,6 @@ const FromTheHomeopape = (props) => {
               <h3>In Title <span className="text-muted ms-2 small-text">{homeopapeItemsReviewTitle.length} in category out of {homeopapeItemsReview.length} total to review.</span></h3>
 
               {homeopapeItemsReviewTitle.map((homeopapeItem, index) => {
-
 
                 return (
                   <React.Fragment key={index}>
@@ -603,7 +676,6 @@ const FromTheHomeopape = (props) => {
 
               {homeopapeItemsReviewText.map((homeopapeItem, index) => {
 
-
                 return (
                   <React.Fragment key={index}>
 
@@ -627,7 +699,6 @@ const FromTheHomeopape = (props) => {
               <h3>Neither <span className="text-muted ms-2 small-text">{homeopapeItemsReviewNeither.length} in category out of {homeopapeItemsReview.length} total to review.</span></h3>
 
               {homeopapeItemsReviewNeither.map((homeopapeItem, index) => {
-
 
                 return (
                   <React.Fragment key={index}>
@@ -653,7 +724,6 @@ const FromTheHomeopape = (props) => {
 
               {homeopapeItemsReviewIncorrectContext.map((homeopapeItem, index) => {
 
-
                 return (
                   <React.Fragment key={index}>
 
@@ -677,7 +747,6 @@ const FromTheHomeopape = (props) => {
               <h3>All Items <span className="text-muted ms-2 small-text">{homeopapeItemsReview.length} in category out of {homeopapeItemsReview.length} total to review.</span> <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { markAllViewed(); }}>Mark All Viewed</Button></h3>
 
               {homeopapeItemsReview.map((homeopapeItem, index) => {
-
 
                 return (
                   <React.Fragment key={index}>

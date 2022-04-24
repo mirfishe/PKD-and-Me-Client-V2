@@ -35,7 +35,6 @@ const FromTheHomeopapeItem = (props) => {
   let homeopapeItem = isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
 
 
-
   const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
 
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
@@ -81,13 +80,11 @@ const FromTheHomeopapeItem = (props) => {
 
       post = post + " #TotalRecall ";
 
-
     };
 
     if (formatLowerCase(removeHTML(txtArticleTitle)).includes("electric dreams") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("electric dreams") === true) {
 
       post = post + " #ElectricDreams ";
-
 
     };
 
@@ -102,7 +99,6 @@ const FromTheHomeopapeItem = (props) => {
       post = post + " #MinorityReport ";
 
     };
-
 
     // let param = "";
     // let regExp = "";
@@ -138,7 +134,6 @@ const FromTheHomeopapeItem = (props) => {
     // param = "utm_source";
     // regExp = new RegExp("[?&]" + param + "=.*$");
     // newURL = newURL.replace(regExp, "");
-
 
     post = post + txtArticleURL;
 
@@ -205,7 +200,6 @@ const FromTheHomeopapeItem = (props) => {
   // OR itemLink like '%books.google.%'
   // OR itemLink like '%elasticsearch.columbian.com%'
   // goodreads.com
-
 
   // UPDATE homeopapeRSS
   // SET alwaysFilter = 1
@@ -337,7 +331,6 @@ const FromTheHomeopapeItem = (props) => {
   // * Remove html tags from string. -- 06/26/2021 MF
   // * https://www.tutorialspoint.com/how-to-remove-html-tags-from-a-string-in-javascript -- 06/26/2021 MF
   let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
-
 
 
   const setDisplay = (itemID, display) => {
@@ -710,10 +703,8 @@ const FromTheHomeopapeItem = (props) => {
   return (
     <React.Fragment>
 
-
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-
 
       {/* {show === true ? */}
 
