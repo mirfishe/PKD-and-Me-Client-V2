@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, displayDate, formatLowerCase, formatUpperCase, removeHTML } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, displayDate, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const AmazonItem = (props) => {

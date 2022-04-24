@@ -6,7 +6,7 @@ import { Image } from "react-bootstrap-icons";
 import { Rating } from "@material-ui/lab/";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayDate, displayYear } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";

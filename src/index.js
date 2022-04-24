@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.css";
-import { isEmpty, displayValue, getDateTime } from "./utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime } from "shared-functions";
 import './index.css';
 import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";

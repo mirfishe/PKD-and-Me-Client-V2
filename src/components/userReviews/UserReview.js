@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 import { Rating } from "@material-ui/lab/";
-import { isEmpty, displayValue, getDateTime, displayDate } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, displayDate } from "shared-functions";
 // import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 

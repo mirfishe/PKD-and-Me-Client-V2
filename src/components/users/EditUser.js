@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
-import { isEmpty, displayValue, getDateTime, formatTrim } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, formatTrim } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadUserData } from "../../app/userSlice";
 

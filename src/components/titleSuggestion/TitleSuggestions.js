@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, displayDate } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, displayDate } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 // ! The coding on this component is not finished. -- 03/06/2021 MF

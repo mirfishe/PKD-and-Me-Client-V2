@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { PencilSquare, Plus } from 'react-bootstrap-icons';
 import { Rating } from "@material-ui/lab/";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "../../utilities/SharedFunctions";
+import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 import { updateStateTitleRating } from "../../app/titlesSlice";
