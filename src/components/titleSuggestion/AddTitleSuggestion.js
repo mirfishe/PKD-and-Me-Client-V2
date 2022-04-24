@@ -358,7 +358,7 @@ const AddTitleSuggestion = (props) => {
           {/* <NavItem> */}
           {/* <NavItem className="mx-3 my-2">
             <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Title Suggestion</NavbarText></a> */}
-          <NavLink onClick={(event) => { setModal(!modal); }}><NavbarText>Add Title Suggestion</NavbarText></NavLink>
+          <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Title Suggestion</NavbarText></NavLink>
           {/* </NavItem> */}
         </React.Fragment>
 

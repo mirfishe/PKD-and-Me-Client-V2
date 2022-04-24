@@ -22,7 +22,7 @@
 
   --philipdick-site-background: #EFEFE9;
 
-  --font-default: Helvetica,Arial,sans-serif;
+  --font-default: Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -37,6 +37,10 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.nav_link:hover {
+  cursor: pointer;
 }
 
 .no-image-icon {

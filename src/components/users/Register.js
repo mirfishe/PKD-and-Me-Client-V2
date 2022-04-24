@@ -403,7 +403,7 @@ const Register = (props) => {
           {/* <NavItem> */}
           {/* <NavItem className="mx-3 my-2">
             <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Register</NavbarText></a> */}
-          <NavLink onClick={(event) => { setModal(!modal); }}><NavbarText>Register</NavbarText></NavLink>
+          <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Register</NavbarText></NavLink>
           {/* </NavItem> */}
         </React.Fragment>
 

@@ -396,6 +396,8 @@ const FromTheHomeopapeItem = (props) => {
 
             props.getNews();
 
+            props.getNewsPosted();
+
             props.getNewsReview();
 
           } else {
@@ -484,6 +486,8 @@ const FromTheHomeopapeItem = (props) => {
           if (data.transactionSuccess === true) {
 
             props.getNews();
+
+            props.getNewsPosted();
 
             props.getNewsReview();
 
@@ -574,6 +578,8 @@ const FromTheHomeopapeItem = (props) => {
 
             props.getNews();
 
+            props.getNewsPosted();
+
             props.getNewsReview();
 
           } else {
@@ -662,6 +668,8 @@ const FromTheHomeopapeItem = (props) => {
           if (data.transactionSuccess === true) {
 
             props.getNews();
+
+            props.getNewsPosted();
 
             props.getNewsReview();
 
