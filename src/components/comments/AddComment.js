@@ -266,7 +266,7 @@ const AddComment = (props) => {
           {/* <NavItem> */}
           {/* <NavItem className="mx-3 my-2">
           <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></a> */}
-          <NavLink onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></NavLink>
+          <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></NavLink>
           {/* </NavItem> */}
         </React.Fragment>
 

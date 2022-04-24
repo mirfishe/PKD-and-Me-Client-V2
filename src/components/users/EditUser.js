@@ -348,7 +348,7 @@ const EditUser = (props) => {
           {/* <NavItem> */}
           {/* <NavItem className="mx-3 my-2">
             <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></a> */}
-          <NavLink onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></NavLink>
+          <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></NavLink>
           {/* </NavItem> */}
         </React.Fragment>
 

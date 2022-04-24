@@ -611,7 +611,7 @@ const FromTheHomeopape = (props) => {
               return (
                 <React.Fragment key={index}>
 
-                  <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+                  <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsPosted={getNewsPosted} getNewsReview={getNewsReview} />
 
                 </React.Fragment>
               );
@@ -632,7 +632,7 @@ const FromTheHomeopape = (props) => {
               return (
                 <React.Fragment key={index}>
 
-                  <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+                  <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsPosted={getNewsPosted} getNewsReview={getNewsReview} />
 
                 </React.Fragment>
               );
@@ -655,7 +655,7 @@ const FromTheHomeopape = (props) => {
                 return (
                   <React.Fragment key={index}>
 
-                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsPosted={getNewsPosted} getNewsReview={getNewsReview} />
 
                   </React.Fragment>
                 );
@@ -679,7 +679,7 @@ const FromTheHomeopape = (props) => {
                 return (
                   <React.Fragment key={index}>
 
-                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsPosted={getNewsPosted} getNewsReview={getNewsReview} />
 
                   </React.Fragment>
                 );
@@ -703,7 +703,7 @@ const FromTheHomeopape = (props) => {
                 return (
                   <React.Fragment key={index}>
 
-                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsPosted={getNewsPosted} getNewsReview={getNewsReview} />
 
                   </React.Fragment>
                 );
@@ -727,7 +727,7 @@ const FromTheHomeopape = (props) => {
                 return (
                   <React.Fragment key={index}>
 
-                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsPosted={getNewsPosted} getNewsReview={getNewsReview} />
 
                   </React.Fragment>
                 );
@@ -751,7 +751,7 @@ const FromTheHomeopape = (props) => {
                 return (
                   <React.Fragment key={index}>
 
-                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsReview={getNewsReview} />
+                    <FromTheHomeopapeItem homeopapeItem={homeopapeItem} getNews={getNews} getNewsPosted={getNewsPosted} getNewsReview={getNewsReview} />
 
                   </React.Fragment>
                 );

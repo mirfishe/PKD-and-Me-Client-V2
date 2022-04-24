@@ -336,7 +336,7 @@ const Checklist = (props) => {
           {/* <NavItem> */}
           {/* <NavItem className="mx-3 my-2">
             <a href="#" onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></a> */}
-          <NavLink onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></NavLink>
+          <NavLink className="nav_link" onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></NavLink>
           {/* </NavItem> */}
         </React.Fragment>
 
