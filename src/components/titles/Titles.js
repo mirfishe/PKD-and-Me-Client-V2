@@ -151,7 +151,7 @@ const Titles = (props) => {
 
   let titleList = [];
 
-  if (!isNaN(categoryParam)) {
+  if (isNaN(categoryParam) === false) {
 
     // ! This code no longer works with the current URL setup
     // * If categoryParam is a number, then it's the categoryID
@@ -296,7 +296,7 @@ const Titles = (props) => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
 

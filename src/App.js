@@ -328,7 +328,7 @@ function App() {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -421,7 +421,7 @@ function App() {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -452,7 +452,7 @@ function App() {
               dispatch(loadUserData(results));
 
 
-              if (!checklistLoaded) {
+              if (checklistLoaded !== true) {
 
                 getChecklist(token);
 
@@ -508,7 +508,7 @@ function App() {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -573,14 +573,14 @@ function App() {
       // setIsAdmin(true);
 
       // * Fetch from the API to check these. -- 03/06/2021 MF
-      if (!userLoaded) {
+      if (userLoaded !== true) {
 
         getUser(localStorage.getItem("token"));
 
       };
 
       // * Moved to the getUser function. -- 03/06/2021 MF
-      // if (!checklistLoaded) {
+      // if (checklistLoaded !== true) {
 
       //   getChecklist(localStorage.getItem("token"));
 

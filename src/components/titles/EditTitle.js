@@ -428,7 +428,7 @@ const EditTitle = (props) => {
           })
             .then(response => {
 
-              // if (!response.ok) {
+              // if (response.ok !== true) {
 
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -518,7 +518,7 @@ const EditTitle = (props) => {
   //     // * Could use a find here also. -- 03/06/2021 MF
   //     const categoryProps = categoryList.filter(category => category.category === categoryName);
 
-  //     if (!isNaN(categoryProps[0].categoryID)) {
+  //     if (isNaN(categoryProps[0].categoryID) === false) {
 
   //       // setDdCategoryID(categoryProps[0].categoryID);
 
@@ -754,7 +754,7 @@ const EditTitle = (props) => {
           })
             .then(response => {
 
-              // if (!response.ok) {
+              // if (response.ok !== true) {
 
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -909,7 +909,7 @@ const EditTitle = (props) => {
         })
           .then(response => {
 
-            // if (!response.ok) {
+            // if (response.ok !== true) {
 
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -1010,7 +1010,7 @@ const EditTitle = (props) => {
         })
           .then(response => {
 
-            // if (!response.ok) {
+            // if (response.ok !== true) {
 
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
 

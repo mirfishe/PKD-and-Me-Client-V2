@@ -47,7 +47,7 @@ function LoadUserReviews() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
@@ -102,7 +102,7 @@ function LoadUserReviews() {
   useEffect(() => {
 
     // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
-    if (!userReviewsLoaded) {
+    if (userReviewsLoaded !== true) {
 
       getUserReviews();
       // getUserReviewsRatings();

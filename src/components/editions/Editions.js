@@ -303,7 +303,7 @@ const Editions = (props) => {
 
   let editionList = [];
 
-  if (!isNaN(mediaParam)) {
+  if (isNaN(mediaParam) === false) {
 
     // ! This code no longer works with the current URL setup
     // * If mediaParam is a number, then it's the mediaID
@@ -458,7 +458,7 @@ const Editions = (props) => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
 

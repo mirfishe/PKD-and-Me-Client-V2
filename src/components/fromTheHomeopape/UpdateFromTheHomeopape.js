@@ -355,7 +355,7 @@ const FromTheHomeopape = (props) => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
@@ -406,7 +406,7 @@ const FromTheHomeopape = (props) => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
@@ -455,7 +455,7 @@ const FromTheHomeopape = (props) => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
@@ -529,7 +529,7 @@ const FromTheHomeopape = (props) => {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 

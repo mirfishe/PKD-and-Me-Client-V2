@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input, NavItem, NavbarText } from "reactstrap";
-import { Drawer } from "@material-ui/core";
+// import { Drawer } from "@mui/material";
 import applicationSettings from "../../app/environment";
 import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
@@ -200,7 +200,7 @@ const Checklist = (props) => {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -342,109 +342,109 @@ const Checklist = (props) => {
 
         : null}
 
-      <Drawer anchor="right" open={drawer} onClose={(event) => { setDrawer(!drawer); }}>
+      {/* <Drawer anchor="right" open={drawer} onClose={(event) => { setDrawer(!drawer); }}> */}
 
-        <Container className="checklist-drawer mx-3">
-          <Row className="mb-2">
-            <Col>
+      <Container className="checklist-drawer mx-3">
+        <Row className="mb-2">
+          <Col>
 
-              <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Close</Button>
+            <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Close</Button>
+
+          </Col>
+        </Row>
+
+        <Row className="mb-2">
+          <Col className="text-center">
+
+            <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+            <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
+          </Col>
+        </Row>
+
+        <Row className="mb-2">
+          <Col>
+
+            <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("read"); }}>Read</Button>
+            <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("owned"); }}>Own</Button>
+            {readOrOwned === "read" ? <p>Read</p> : null}
+            {readOrOwned === "owned" ? <p>Owned</p> : null}
+
+          </Col>
+        </Row>
+
+        {/* <ListGroup flush> */}
+
+        {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkTypeName") === true ?
+
+          <Row className="justify-content-center">
+            <Col xs="8">
+
+              {/* <ListGroupItem> */}
+
+              <h6 className="text-center mb-2">{linkItem.linkTypeName}
+                <br />
+
+                <span className="text-muted ms-2 small-text">Sort By&nbsp;
+
+                  {titleSortBy !== "publicationDate" ?
+
+                    <a href="#" onClick={(event) => { event.preventDefault(); sortChecklistList("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
+
+                    : null}
+
+                  {titleSortBy !== "titleName" ?
+
+                    <a href="#" onClick={(event) => { event.preventDefault(); sortChecklistList("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
+
+                    : null}
+
+                </span>
+
+              </h6>
+
+              {/* </ListGroupItem> */}
 
             </Col>
           </Row>
 
-          <Row className="mb-2">
-            <Col className="text-center">
+          : null}
 
-              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+        {Array.isArray(checklistList) === true ?
 
-            </Col>
-          </Row>
+          <React.Fragment>
 
-          <Row className="mb-2">
-            <Col>
+            {checklistList.map((title) => {
 
-              <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("read"); }}>Read</Button>
-              <Button outline className="my-2" size="sm" color="info" onClick={(event) => { event.preventDefault(); setReadOrOwned("owned"); }}>Own</Button>
-              {readOrOwned === "read" ? <p>Read</p> : null}
-              {readOrOwned === "owned" ? <p>Owned</p> : null}
+              return (
+                <Row /*ListGroupItem*/ key={title.titleID}>
+                  <Col className="mx-3">
 
-            </Col>
-          </Row>
+                    {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
 
-          {/* <ListGroup flush> */}
+                    {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
 
-          {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkTypeName") === true ?
+                    <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(title.titleURL); }}>{title.titleName}</Link>
+                      {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}
+                    </p>
 
-            <Row className="justify-content-center">
-              <Col xs="8">
+                    {/* </ListGroupItem> */}
 
-                {/* <ListGroupItem> */}
+                  </Col>
+                </Row>
+              );
 
-                <h6 className="text-center mb-2">{linkItem.linkTypeName}
-                  <br />
+            })}
 
-                  <span className="text-muted ms-2 small-text">Sort By&nbsp;
+          </React.Fragment>
 
-                    {titleSortBy !== "publicationDate" ?
+          : null}
 
-                      <a href="#" onClick={(event) => { event.preventDefault(); sortChecklistList("publicationDate"); dispatch(setTitleSortBy("publicationDate")); dispatch(setEditionSortBy("publicationDate")); }}>Publication Date</a>
+        {/* </ListGroup> */}
 
-                      : null}
+      </Container>
 
-                    {titleSortBy !== "titleName" ?
-
-                      <a href="#" onClick={(event) => { event.preventDefault(); sortChecklistList("titleName"); dispatch(setTitleSortBy("titleName")); dispatch(setEditionSortBy("titleName")); }}>Title</a>
-
-                      : null}
-
-                  </span>
-
-                </h6>
-
-                {/* </ListGroupItem> */}
-
-              </Col>
-            </Row>
-
-            : null}
-
-          {Array.isArray(checklistList) === true ?
-
-            <React.Fragment>
-
-              {checklistList.map((title) => {
-
-                return (
-                  <Row /*ListGroupItem*/ key={title.titleID}>
-                    <Col className="mx-3">
-
-                      {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
-
-                      {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
-
-                      <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(title.titleURL); }}>{title.titleName}</Link>
-                        {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}
-                      </p>
-
-                      {/* </ListGroupItem> */}
-
-                    </Col>
-                  </Row>
-                );
-
-              })}
-
-            </React.Fragment>
-
-            : null}
-
-          {/* </ListGroup> */}
-
-        </Container>
-
-      </Drawer>
+      {/* </Drawer> */}
 
       {/* <ModalFooter>
     

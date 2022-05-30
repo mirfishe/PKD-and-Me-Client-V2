@@ -66,7 +66,7 @@ const TitleCard = (props) => {
 
   let titleList = [];
 
-  if (!isNaN(titleParam)) {
+  if (isNaN(titleParam) === false) {
 
     // * If titleParam is a number, then it's the titleID
 
