@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import { Rating } from "@mui/lab/";
-import { isEmpty, displayValue, getDateTime, displayDate } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
 // import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 
@@ -65,7 +65,7 @@ const UserReview = (props) => {
 
       let displayCount = 0;
 
-      if (Array.isArray(userReviews) === true) {
+      if (isNonEmptyArray(userReviews) === true) {
 
         for (let i = 0; i < userReviews.length; i++) {
 
@@ -125,7 +125,7 @@ const UserReview = (props) => {
 
       {/* : null} */}
 
-      {Array.isArray(userReviews) === true ?
+      {isNonEmptyArray(userReviews) === true ?
 
         <Row>
 

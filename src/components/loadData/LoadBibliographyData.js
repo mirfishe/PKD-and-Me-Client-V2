@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
 import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../app/categoriesSlice";
@@ -61,7 +61,7 @@ function LoadBibliographyData() {
 
     };
 
-    if (Array.isArray(arrayTitles) === true) {
+    if (isNonEmptyArray(arrayTitles) === true) {
 
       for (let i = 0; i < arrayTitles.length; i++) {
 
@@ -223,7 +223,7 @@ function LoadBibliographyData() {
 
     let arrayURLs = [];
 
-    if (Array.isArray(data) === true) {
+    if (isNonEmptyArray(data) === true) {
 
       for (let i = 0; i < data.length; i++) {
 

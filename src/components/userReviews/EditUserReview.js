@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label
 import { PencilSquare, Plus } from 'react-bootstrap-icons';
 // import { Rating } from "@mui/lab/";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, formatTrim, formatToString } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 import { updateStateTitleRating } from "../../app/titlesSlice";
@@ -349,7 +349,7 @@ const EditUserReview = (props) => {
 
             let userReviews = [];
 
-            if (Array.isArray(userReviewsList) === true) {
+            if (isNonEmptyArray(userReviewsList) === true) {
 
               for (let i = 0; i < userReviewsList.length; i++) {
 
@@ -376,7 +376,7 @@ const EditUserReview = (props) => {
 
             let userReviewSum = 0;
 
-            if (Array.isArray(userReviews) === true) {
+            if (isNonEmptyArray(userReviews) === true) {
 
               for (let i = 0; i < userReviews.length; i++) {
 
@@ -614,7 +614,7 @@ const EditUserReview = (props) => {
 
             let userReviews = [];
 
-            if (Array.isArray(userReviewsList) === true) {
+            if (isNonEmptyArray(userReviewsList) === true) {
 
               for (let i = 0; i < userReviewsList.length; i++) {
 
@@ -656,7 +656,7 @@ const EditUserReview = (props) => {
 
             let userReviewSum = 0;
 
-            if (Array.isArray(userReviews) === true) {
+            if (isNonEmptyArray(userReviews) === true) {
 
               for (let i = 0; i < userReviews.length; i++) {
 
@@ -805,7 +805,7 @@ const EditUserReview = (props) => {
 
               let userReviewSum = 0;
 
-              if (Array.isArray(userReviews) === true) {
+              if (isNonEmptyArray(userReviews) === true) {
 
                 for (let i = 0; i < userReviews.length; i++) {
 

@@ -6,7 +6,7 @@ import { Image } from "react-bootstrap-icons";
 // import { Rating } from "@mui/lab/";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
@@ -478,7 +478,7 @@ const Title = (props) => {
         </Col>
       </Row>
 
-      {Array.isArray(titleList) === true ?
+      {isNonEmptyArray(titleList) === true ?
 
         <React.Fragment>
 
@@ -615,7 +615,7 @@ const Title = (props) => {
 
             <Row>
                 
-                {Array.isArray(editionList) === true ?
+                {isNonEmptyArray(editionList) === true ?
 
             <React.Fragment>
 

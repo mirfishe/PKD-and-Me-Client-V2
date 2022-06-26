@@ -1,5 +1,5 @@
 import applicationSettings from "../app/environment";
-import { isEmpty, getDateTime, formatLowerCase, formatUpperCase } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase } from "shared-functions";
 
 const componentName = "ApplicationFunctions";
 
@@ -358,7 +358,7 @@ export const convertBitTrueFalse = (records) => {
 
   // if (process.env.DATABASE_DIALECT == "mysql") {
 
-  if (Array.isArray(records) === true) {
+  if (isNonEmptyArray(records) === true) {
 
     for (let i = 0; i < records.length; i++) {
 

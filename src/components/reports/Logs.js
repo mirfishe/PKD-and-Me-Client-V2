@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const Logs = () => {
@@ -109,7 +109,7 @@ const Logs = () => {
 
           <h5 className="text-center">Logs</h5>
 
-          {Array.isArray(logs) === true ?
+          {isNonEmptyArray(logs) === true ?
 
             <Table responsive>
               <thead>

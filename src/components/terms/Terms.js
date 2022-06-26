@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem, NavLink } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayYear } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 import TitleCard from "../titles/TitleCard";
@@ -179,7 +179,7 @@ const Terms = (props) => {
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
-      {Array.isArray(terms) === true ?
+      {isNonEmptyArray(terms) === true ?
 
         <Row>
           <Col xs="12">
@@ -226,7 +226,7 @@ const Terms = (props) => {
 
               <h5>Categories:</h5>
 
-              {Array.isArray(termCategories) === true ?
+              {isNonEmptyArray(termCategories) === true ?
 
                 <p>
 
@@ -265,7 +265,7 @@ const Terms = (props) => {
 
               <h5>Alternate Forms:</h5>
 
-              {Array.isArray(termAlternateForms) === true ?
+              {isNonEmptyArray(termAlternateForms) === true ?
 
                 <p>
 
@@ -304,7 +304,7 @@ const Terms = (props) => {
 
               <h5>Synonyms:</h5>
 
-              {Array.isArray(termSynonyms) === true ?
+              {isNonEmptyArray(termSynonyms) === true ?
 
                 <p>
 
@@ -344,7 +344,7 @@ const Terms = (props) => {
             </Col>
           </Row>
 
-          {Array.isArray(termTitles) === true ?
+          {isNonEmptyArray(termTitles) === true ?
 
             <Row className="mt-3">
 

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 // import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
 // import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
 import FromTheHomeopapeItem from "./FromTheHomeopapeItem";
 
@@ -63,7 +63,7 @@ const FromTheHomeopape = (props) => {
     let newHomeopapeItemsReviewNeither = [];
     let newHomeopapeItemsReviewIncorrectContext = [];
 
-    if (Array.isArray(homeopapeItemsReview) === true) {
+    if (isNonEmptyArray(homeopapeItemsReview) === true) {
 
       for (let i = 0; i < homeopapeItemsReview.length; i++) {
 
@@ -600,7 +600,7 @@ const FromTheHomeopape = (props) => {
 
       <Row>
 
-        {Array.isArray(homeopapeItems) === true ?
+        {isNonEmptyArray(homeopapeItems) === true ?
 
           <Col xs="4">
 
@@ -621,7 +621,7 @@ const FromTheHomeopape = (props) => {
 
           : null}
 
-        {Array.isArray(homeopapeItemsPosted) === true ?
+        {isNonEmptyArray(homeopapeItemsPosted) === true ?
 
           <Col xs="4">
 
@@ -644,7 +644,7 @@ const FromTheHomeopape = (props) => {
 
         <Col xs="4">
 
-          {Array.isArray(homeopapeItemsReviewTitle) === true ?
+          {isNonEmptyArray(homeopapeItemsReviewTitle) === true ?
 
             <React.Fragment>
 
@@ -668,7 +668,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {Array.isArray(homeopapeItemsReviewText) === true ?
+          {isNonEmptyArray(homeopapeItemsReviewText) === true ?
 
             <React.Fragment>
 
@@ -692,7 +692,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {Array.isArray(homeopapeItemsReviewNeither) === true ?
+          {isNonEmptyArray(homeopapeItemsReviewNeither) === true ?
 
             <React.Fragment>
 
@@ -716,7 +716,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {Array.isArray(homeopapeItemsReviewIncorrectContext) === true ?
+          {isNonEmptyArray(homeopapeItemsReviewIncorrectContext) === true ?
 
             <React.Fragment>
 
@@ -740,7 +740,7 @@ const FromTheHomeopape = (props) => {
             : null}
 
 
-          {Array.isArray(homeopapeItemsReview) === true ?
+          {/* {isNonEmptyArray(homeopapeItemsReview) === true ?
 
             <React.Fragment>
 
@@ -759,7 +759,7 @@ const FromTheHomeopape = (props) => {
 
             </React.Fragment>
 
-            : null}
+            : null} */}
 
         </Col>
 

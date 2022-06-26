@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, formatTrim, formatToString } from "shared-functions";
 import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
@@ -1007,7 +1007,7 @@ const EditEdition = (props) => {
                 <Input type="select" id="ddMediaID" value={ddMediaID} onChange={(event) => { setDdMediaID(event.target.value); }}>
                   <option value="">Select a Media</option>
 
-                  {Array.isArray(mediaList) === true ?
+                  {isNonEmptyArray(mediaList) === true ?
 
                     <React.Fragment>
 
