@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
 
 const componentName = "userReviewsSlice";
 
@@ -20,7 +20,7 @@ const userReviewsSlice = createSlice({
   reducers: {
     loadArrayUserReviews(state, action) {
 
-      if (Array.isArray(action.payload) === true) {
+      if (isNonEmptyArray(action.payload) === true) {
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -37,7 +37,7 @@ const userReviewsSlice = createSlice({
     addStateUserReview(state, action) {
 
       // * Could change this to accept an object and add that object to the store
-      if (Array.isArray(action.payload) === true) {
+      if (isNonEmptyArray(action.payload) === true) {
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -386,7 +386,7 @@ const userReviewsSlice = createSlice({
     },
     // loadArrayUserReviewsRatings(state, action) {
 
-    //   if (Array.isArray(action.payload) === true) {
+    //   if (isNonEmptyArray(action.payload) === true) {
 
     //     for (let i = 0; i < action.payload.length; i++) {
 
@@ -403,7 +403,7 @@ const userReviewsSlice = createSlice({
     // addStateUserReviewsRatings(state, action) {
 
     //   // Could change this to accept an object and add that object to the store
-    //   if (Array.isArray(action.payload) === true) {
+    //   if (isNonEmptyArray(action.payload) === true) {
 
     //     for (let i = 0; i < action.payload.length; i++) {
 

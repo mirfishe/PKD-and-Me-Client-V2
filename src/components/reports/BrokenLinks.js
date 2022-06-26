@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const BrokenLinks = () => {
@@ -48,7 +48,7 @@ const BrokenLinks = () => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           throw Error(`${response.status} ${response.statusText} ${response.url}`);
 
@@ -109,7 +109,7 @@ const BrokenLinks = () => {
 
           <h5 className="text-center">Broken Links</h5>
 
-          {Array.isArray(brokenLinks) === true ?
+          {isNonEmptyArray(brokenLinks) === true ?
 
             <Table responsive>
               <thead>

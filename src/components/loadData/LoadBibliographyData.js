@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
 import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, setCategoriesDataOffline } from "../../app/categoriesSlice";
@@ -61,7 +61,7 @@ function LoadBibliographyData() {
 
     };
 
-    if (Array.isArray(arrayTitles) === true) {
+    if (isNonEmptyArray(arrayTitles) === true) {
 
       for (let i = 0; i < arrayTitles.length; i++) {
 
@@ -131,7 +131,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
@@ -223,7 +223,7 @@ function LoadBibliographyData() {
 
     let arrayURLs = [];
 
-    if (Array.isArray(data) === true) {
+    if (isNonEmptyArray(data) === true) {
 
       for (let i = 0; i < data.length; i++) {
 
@@ -260,7 +260,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
@@ -319,7 +319,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
@@ -379,7 +379,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
@@ -439,7 +439,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
@@ -496,7 +496,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
@@ -553,7 +553,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
@@ -610,7 +610,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
@@ -667,7 +667,7 @@ function LoadBibliographyData() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
@@ -727,7 +727,7 @@ function LoadBibliographyData() {
 
     // let currentDateTime = new Date().setTime(new Date().getTime());
 
-    // if (!categoriesLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
+    // if (categoriesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
 
 
     //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
@@ -749,7 +749,7 @@ function LoadBibliographyData() {
 
     // };
 
-    // if (!mediaLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
+    // if (mediaLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
 
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
@@ -769,7 +769,7 @@ function LoadBibliographyData() {
 
     // };
 
-    // if (!titlesLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
+    // if (titlesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
 
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
@@ -789,7 +789,7 @@ function LoadBibliographyData() {
 
     // };
 
-    // if (!editionsLoaded && isEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
+    // if (editionsLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
 
 
     //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
@@ -812,28 +812,28 @@ function LoadBibliographyData() {
     // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
     if (applicationOffline) {
 
-      if (!categoriesLoaded /*&& !categoriesDataLocalStorage*/) {
+      if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
 
         dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
 
       };
 
-      if (!mediaLoaded /*&& !mediaDataLocalStorage*/) {
+      if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
 
         dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
 
       };
 
-      if (!titlesLoaded /*&& !titlesDataLocalStorage*/) {
+      if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
 
         dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
 
       };
 
-      if (!editionsLoaded /*&& !editionsDataLocalStorage*/) {
+      if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
 
         dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
@@ -842,25 +842,29 @@ function LoadBibliographyData() {
 
     } else {
 
-      if (!categoriesLoaded /*&& !categoriesDataLocalStorage*/) {
+      if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
+
+        console.log(componentName, getDateTime(), "categoriesLoaded", categoriesLoaded);
+
+        console.log(componentName, getDateTime(), "getCategories()");
 
         getCategories();
 
       };
 
-      if (!mediaLoaded /*&& !mediaDataLocalStorage*/) {
+      if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
 
         getMedia();
 
       };
 
-      if (!titlesLoaded /*&& !titlesDataLocalStorage*/) {
+      if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
 
         getTitles();
 
       };
 
-      if (!editionsLoaded /*&& !editionsDataLocalStorage*/) {
+      if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
 
         getEditions();
 

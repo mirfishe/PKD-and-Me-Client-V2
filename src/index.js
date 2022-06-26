@@ -1,22 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Provider } from "react-redux";
+import store from "./app/store";
 import "bootstrap/dist/css/bootstrap.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.css";
 import { isEmpty, displayValue, getDateTime } from "shared-functions";
-import './index.css';
 import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";
 import applicationSettings from "./app/environment";
 import App from './App';
-import store from './app/store';
-import { Provider } from 'react-redux';
+import './index.css';
 // import * as serviceWorker from "./serviceWorker";
 // import reportWebVitals from './reportWebVitals';
 // * https://stackoverflow.com/questions/66384368/how-is-it-possible-to-access-homepage-from-package-json-in-a-react-app -- 12/17/2021 MF
 // import { version, copyrightYear } from '../package.json';
 // * https://stackoverflow.com/questions/64993118/error-should-not-import-the-named-export-version-imported-as-version -- 12/27/2021 MF
-// ! Now imports the entire package.json file because of changes needed to be made due to updates with webpack 5. -- 12/27/2021 MF
+// * Now imports the entire package.json file because of changes needed to be made due to updates with webpack 5. -- 12/27/2021 MF
 // import packageJSON from '../package.json';
 
 // const componentName = "index";
@@ -35,14 +35,25 @@ if (isEmpty(applicationSettings.tagManagerArgs.gtmId) === false) {
 // document.getElementsByTagName("META")[3].content = metaDescription;
 document.getElementsByTagName("META")[3].content = applicationSettings.metaDescription;
 
-ReactDOM.render(
+// * The old syntax for React 17 and older. -- 05/29/2022 MF
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Provider store={store}>
+//       {/* <App applicationVersion={packageJSON.version} copyrightYear={packageJSON.copyrightYear} /> */}
+//       <App />
+//     </Provider>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       {/* <App applicationVersion={packageJSON.version} copyrightYear={packageJSON.copyrightYear} /> */}
       <App />
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

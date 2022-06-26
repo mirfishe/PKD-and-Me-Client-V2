@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 // import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
 import { addErrorLog } from "./utilities/ApplicationFunctions";
 import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
@@ -328,7 +328,7 @@ function App() {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -421,7 +421,7 @@ function App() {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -452,7 +452,7 @@ function App() {
               dispatch(loadUserData(results));
 
 
-              if (!checklistLoaded) {
+              if (checklistLoaded !== true) {
 
                 getChecklist(token);
 
@@ -508,7 +508,7 @@ function App() {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -573,14 +573,14 @@ function App() {
       // setIsAdmin(true);
 
       // * Fetch from the API to check these. -- 03/06/2021 MF
-      if (!userLoaded) {
+      if (userLoaded !== true) {
 
         getUser(localStorage.getItem("token"));
 
       };
 
       // * Moved to the getUser function. -- 03/06/2021 MF
-      // if (!checklistLoaded) {
+      // if (checklistLoaded !== true) {
 
       //   getChecklist(localStorage.getItem("token"));
 
@@ -611,7 +611,7 @@ function App() {
 
       let linkArrayItem = {};
 
-      if (Array.isArray(urlLookup) === true) {
+      if (isNonEmptyArray(urlLookup) === true) {
 
         for (let i = 0; i < urlLookup.length; i++) {
 
@@ -720,13 +720,13 @@ function App() {
 
             : null} */}
 
-          {applicationAllowUserInteractions === true && isEmpty(checklistLoaded) === false && checklistLoaded === true ?
+          {/* {applicationAllowUserInteractions === true && isEmpty(checklistLoaded) === false && checklistLoaded === true ?
 
             <NavItem>
               <Checklist displayButton={true} />
             </NavItem>
 
-            : null}
+            : null} */}
 
           {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
@@ -929,7 +929,7 @@ function App() {
 
             <Row className="text-center">
 
-              {/* {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") ? <Alert color="info">{JSON.stringify(linkItem)}</Alert> : null} */}
+              {/* {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") ? <Alert color="info">{JSON.stringify(linkItem, null, 1)}</Alert> : null} */}
 
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>

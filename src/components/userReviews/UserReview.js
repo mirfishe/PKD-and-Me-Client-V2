@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
-import { Rating } from "@material-ui/lab/";
-import { isEmpty, displayValue, getDateTime, displayDate } from "shared-functions";
+// import { Rating } from "@mui/lab/";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
 // import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 
@@ -65,7 +65,7 @@ const UserReview = (props) => {
 
       let displayCount = 0;
 
-      if (Array.isArray(userReviews) === true) {
+      if (isNonEmptyArray(userReviews) === true) {
 
         for (let i = 0; i < userReviews.length; i++) {
 
@@ -125,7 +125,7 @@ const UserReview = (props) => {
 
       {/* : null} */}
 
-      {Array.isArray(userReviews) === true ?
+      {isNonEmptyArray(userReviews) === true ?
 
         <Row>
 
@@ -188,7 +188,7 @@ const UserReview = (props) => {
                     <Row>
                       <Col xs="5">
 
-                        {isEmpty(userReview.rating) === false ? <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={userReview.rating} /> : null}
+                        {/* {isEmpty(userReview.rating) === false ? <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={userReview.rating} /> : null} */}
 
                       </Col>
                       <Col xs="7">

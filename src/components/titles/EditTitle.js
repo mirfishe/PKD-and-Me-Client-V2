@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, formatTrim, formatToString } from "shared-functions";
 import { createTitleURL, createImageName, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
@@ -428,7 +428,7 @@ const EditTitle = (props) => {
           })
             .then(response => {
 
-              // if (!response.ok) {
+              // if (response.ok !== true) {
 
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -518,7 +518,7 @@ const EditTitle = (props) => {
   //     // * Could use a find here also. -- 03/06/2021 MF
   //     const categoryProps = categoryList.filter(category => category.category === categoryName);
 
-  //     if (!isNaN(categoryProps[0].categoryID)) {
+  //     if (isNaN(categoryProps[0].categoryID) === false) {
 
   //       // setDdCategoryID(categoryProps[0].categoryID);
 
@@ -754,7 +754,7 @@ const EditTitle = (props) => {
           })
             .then(response => {
 
-              // if (!response.ok) {
+              // if (response.ok !== true) {
 
               //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -811,7 +811,7 @@ const EditTitle = (props) => {
                 // * Update/Delete related editions also if active is set to false. -- 03/06/2021 MF
                 if (data.records[0].active === false || data.records[0].active === 0) {
 
-                  if (Array.isArray(editionList) === true) {
+                  if (isNonEmptyArray(editionList) === true) {
 
                     for (let i = 0; i < editionList.length; i++) {
 
@@ -909,7 +909,7 @@ const EditTitle = (props) => {
         })
           .then(response => {
 
-            // if (!response.ok) {
+            // if (response.ok !== true) {
 
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -940,7 +940,7 @@ const EditTitle = (props) => {
               // dispatch(deleteStateTitle(titleItemIndex));
               // ? Update local storage also? -- 03/06/2021 MF
 
-              if (Array.isArray(editionList) === true) {
+              if (isNonEmptyArray(editionList) === true) {
 
                 // * Delete related editions also. -- 03/06/2021 MF
                 for (let i = 0; i < editionList.length; i++) {
@@ -1010,7 +1010,7 @@ const EditTitle = (props) => {
         })
           .then(response => {
 
-            // if (!response.ok) {
+            // if (response.ok !== true) {
 
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -1234,7 +1234,7 @@ const EditTitle = (props) => {
               <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => { setDdCategoryID(event.target.value); }}>
                 <option value="">Select a Category</option>
 
-                {Array.isArray(categoryList) === true ?
+                {isNonEmptyArray(categoryList) === true ?
 
                   <React.Fragment>
 

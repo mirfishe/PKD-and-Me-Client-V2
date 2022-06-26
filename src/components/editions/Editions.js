@@ -5,7 +5,7 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from 'react-bootstrap-icons';
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
@@ -303,7 +303,7 @@ const Editions = (props) => {
 
   let editionList = [];
 
-  if (!isNaN(mediaParam)) {
+  if (isNaN(mediaParam) === false) {
 
     // ! This code no longer works with the current URL setup
     // * If mediaParam is a number, then it's the mediaID
@@ -458,7 +458,7 @@ const Editions = (props) => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -567,7 +567,7 @@ const Editions = (props) => {
         </Col>
       </Row>
 
-      {Array.isArray(editionList) === true ?
+      {isNonEmptyArray(editionList) === true ?
 
         <Row>
 

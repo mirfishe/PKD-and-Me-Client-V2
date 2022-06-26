@@ -95,7 +95,7 @@ function LoadApplicationSettings() {
     fetch(url)
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
           // * Load offline data. -- 03/06/2021 MF
@@ -292,7 +292,7 @@ function LoadApplicationSettings() {
   useEffect(() => {
 
     // * Only load the applicationSettings data once per session unless the data is changed. -- 03/06/2021 MF
-    if (!applicationSettingsLoaded) {
+    if (applicationSettingsLoaded !== true) {
 
       getApplicationSettings();
 

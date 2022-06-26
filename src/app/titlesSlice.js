@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
 
 const componentName = "titlesSlice";
 
@@ -17,7 +17,7 @@ const titlesSlice = createSlice({
   reducers: {
     loadArrayTitles(state, action) {
 
-      if (Array.isArray(action.payload) === true) {
+      if (isNonEmptyArray(action.payload) === true) {
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -34,7 +34,7 @@ const titlesSlice = createSlice({
     addStateTitle(state, action) {
 
       // * Could change this to accept an object and add that object to the store
-      if (Array.isArray(action.payload) === true) {
+      if (isNonEmptyArray(action.payload) === true) {
 
         for (let i = 0; i < action.payload.length; i++) {
 

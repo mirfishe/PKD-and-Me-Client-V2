@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { Rating } from "@material-ui/lab/";
+// import { Rating } from "@mui/lab/";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
@@ -67,7 +67,7 @@ const Title = (props) => {
   let titleList = [];
   // let editionList = [];
 
-  if (!isNaN(titleParam)) {
+  if (isNaN(titleParam) === false) {
 
     // ! This code no longer works with the current URL setup
     // * If titleParam is a number, then it's the titleID
@@ -231,7 +231,7 @@ const Title = (props) => {
 
   //         fetch(url)
   //         .then(response => {
-  //             if (!response.ok) {
+  //             if (response.ok !== true) {
   //                 // throw Error(response.status + " " + response.statusText + " " + response.url);
   //                 return {transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews Rating data fetch used."};
   //             } else {
@@ -398,7 +398,7 @@ const Title = (props) => {
     })
       .then(response => {
 
-        if (!response.ok) {
+        if (response.ok !== true) {
 
           // throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -478,7 +478,7 @@ const Title = (props) => {
         </Col>
       </Row>
 
-      {Array.isArray(titleList) === true ?
+      {isNonEmptyArray(titleList) === true ?
 
         <React.Fragment>
 
@@ -540,7 +540,7 @@ const Title = (props) => {
 
                       <React.Fragment>
 
-                        <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} />
+                        {/* <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} /> */}
                         <p><small>out of {title.userReviewCount} review(s)</small></p>
 
                       </React.Fragment>
@@ -615,7 +615,7 @@ const Title = (props) => {
 
             <Row>
                 
-                {Array.isArray(editionList) === true ?
+                {isNonEmptyArray(editionList) === true ?
 
             <React.Fragment>
 

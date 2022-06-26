@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
-import { isEmpty, displayValue, getDateTime } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray } from "shared-functions";
 import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import EditCategory from "./EditCategory";
@@ -70,7 +70,7 @@ const Category = (props) => {
 
       <Collapse isOpen={isOpen}>
 
-        {Array.isArray(categoryList) === true ?
+        {isNonEmptyArray(categoryList) === true ?
 
           <Nav vertical>
 

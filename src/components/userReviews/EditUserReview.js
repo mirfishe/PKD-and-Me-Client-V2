@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { PencilSquare, Plus } from 'react-bootstrap-icons';
-import { Rating } from "@material-ui/lab/";
+// import { Rating } from "@mui/lab/";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatTrim, formatToString } from "shared-functions";
+import { isEmpty, displayValue, getDateTime, isNonEmptyArray, formatTrim, formatToString } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 import { updateStateTitleRating } from "../../app/titlesSlice";
@@ -289,7 +289,7 @@ const EditUserReview = (props) => {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -349,7 +349,7 @@ const EditUserReview = (props) => {
 
             let userReviews = [];
 
-            if (Array.isArray(userReviewsList) === true) {
+            if (isNonEmptyArray(userReviewsList) === true) {
 
               for (let i = 0; i < userReviewsList.length; i++) {
 
@@ -376,7 +376,7 @@ const EditUserReview = (props) => {
 
             let userReviewSum = 0;
 
-            if (Array.isArray(userReviews) === true) {
+            if (isNonEmptyArray(userReviews) === true) {
 
               for (let i = 0; i < userReviews.length; i++) {
 
@@ -556,7 +556,7 @@ const EditUserReview = (props) => {
       })
         .then(response => {
 
-          // if (!response.ok) {
+          // if (response.ok !== true) {
 
           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -614,7 +614,7 @@ const EditUserReview = (props) => {
 
             let userReviews = [];
 
-            if (Array.isArray(userReviewsList) === true) {
+            if (isNonEmptyArray(userReviewsList) === true) {
 
               for (let i = 0; i < userReviewsList.length; i++) {
 
@@ -656,7 +656,7 @@ const EditUserReview = (props) => {
 
             let userReviewSum = 0;
 
-            if (Array.isArray(userReviews) === true) {
+            if (isNonEmptyArray(userReviews) === true) {
 
               for (let i = 0; i < userReviews.length; i++) {
 
@@ -742,7 +742,7 @@ const EditUserReview = (props) => {
         })
           .then(response => {
 
-            // if (!response.ok) {
+            // if (response.ok !== true) {
 
             //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
@@ -805,7 +805,7 @@ const EditUserReview = (props) => {
 
               let userReviewSum = 0;
 
-              if (Array.isArray(userReviews) === true) {
+              if (isNonEmptyArray(userReviews) === true) {
 
                 for (let i = 0; i < userReviews.length; i++) {
 
@@ -975,7 +975,7 @@ const EditUserReview = (props) => {
 
                 <FormGroup>
                   <Label for="rdoRating" className="me-4">Rating</Label>
-                  <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => { setRdoRating(newValue); }} />
+                  {/* <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => { setRdoRating(newValue); }} /> */}
                   {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 2</Label>
