@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, formatTrim } from "shared-functions";
+import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
 import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateCategory } from "../../app/categoriesSlice";
 import { addStateURL } from "../../app/urlsSlice";
