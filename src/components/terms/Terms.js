@@ -381,7 +381,7 @@ const Terms = (props) => {
 
         : null}
 
-    </Container >
+    </Container>
   );
 };
 
