@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input, NavItem, NavbarText } from "reactstrap";
 // import { Drawer } from "@mui/material";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayYear } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";

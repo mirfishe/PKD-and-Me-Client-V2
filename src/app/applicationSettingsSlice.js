@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, displayValue, getDateTime, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, displayValue, hasNonEmptyProperty } from "shared-functions";
 
 const componentName = "applicationSettingsSlice";
 

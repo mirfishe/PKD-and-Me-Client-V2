@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime } from "shared-functions";
+import { isEmpty, getDateTime, displayValue } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../app/userReviewsSlice";
 

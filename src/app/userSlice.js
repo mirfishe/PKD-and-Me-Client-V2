@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, displayValue, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
 
 const componentName = "userSlice";
 

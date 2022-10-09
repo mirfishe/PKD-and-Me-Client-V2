@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { isEmpty, displayValue, getDateTime } from "shared-functions";
+import { isEmpty, getDateTime, displayValue } from "shared-functions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
 import { setPageURL } from "../app/urlsSlice";
 import TitleCard from "../components/titles/TitleCard";

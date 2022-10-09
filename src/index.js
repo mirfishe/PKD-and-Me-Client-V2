@@ -5,7 +5,7 @@ import store from "./app/store";
 import "bootstrap/dist/css/bootstrap.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.css";
-import { isEmpty, displayValue, getDateTime } from "shared-functions";
+import { isEmpty, getDateTime, displayValue } from "shared-functions";
 import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";
 import applicationSettings from "./app/environment";

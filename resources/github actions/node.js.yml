@@ -1,0 +1,37 @@
+# * This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node.
+# * For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# * About the CI environment variable: https://stackoverflow.com/questions/62663451/treating-warnings-as-errors-because-process-env-ci-true-failed-to-compile -- 10/04/2022 MF
+# * Adding the .env property doesn't seem to work so that warnings aren't treated as errors. -- 10/10/2022 MF
+# * This starter workflow example is from https://github.com/actions/starter-workflows/blob/main/ci/node.js.yml but it's been modified. -- 10/04/2022 MF
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+env:
+  CI: false
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        # * See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
