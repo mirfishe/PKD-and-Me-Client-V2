@@ -43,7 +43,7 @@ import ComputerLogs from "./components/reports/ComputerLogs";
 import Logs from "./components/reports/Logs";
 import Errors from "./components/reports/Errors";
 
-function App() {
+const App = () => {
 
   const componentName = "App";
 
@@ -1033,6 +1033,6 @@ function App() {
 
     </BrowserRouter>
   );
-}
+};
 
 export default App;
