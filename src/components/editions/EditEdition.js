@@ -23,7 +23,6 @@ const EditEdition = (props) => {
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
-
   const [mediaMessage, setMediaMessage] = useState("");
   const [errMediaMessage, setErrMediaMessage] = useState("");
   const [mediaResultsFound, setMediaResultsFound] = useState(null);
@@ -51,25 +50,6 @@ const EditEdition = (props) => {
   //     setMediaResultsFound(true);
 
   // };
-
-
-  useEffect(() => {
-
-    if (mediaList.length < 1) {
-
-      console.error(componentName, getDateTime(), "mediaList is empty", mediaList.length);
-      setErrMediaMessage("mediaList is empty", mediaList.length);
-      setMediaResultsFound(false);
-
-    } else {
-
-      // setMediaMessage("mediaList.length", mediaList.length);
-      setMediaResultsFound(true);
-
-    };
-
-  }, [mediaList]);
-
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
 
@@ -126,6 +106,36 @@ const EditEdition = (props) => {
 
   useEffect(() => {
 
+    if (admin !== true) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [admin]);
+
+
+  useEffect(() => {
+
+    if (mediaList.length < 1) {
+
+      console.error(componentName, getDateTime(), "mediaList is empty", mediaList.length);
+      setErrMediaMessage("mediaList is empty", mediaList.length);
+      setMediaResultsFound(false);
+
+    } else {
+
+      // setMediaMessage("mediaList.length", mediaList.length);
+      setMediaResultsFound(true);
+
+    };
+
+  }, [mediaList]);
+
+
+  useEffect(() => {
+
     if (isEmpty(props.editionID) === false) {
 
       let editionObject = editionListState.find(edition => edition.editionID === props.editionID);
@@ -175,6 +185,79 @@ const EditEdition = (props) => {
     };
 
   }, [props.editionID, editionListState]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(editionRecordAdded) === false && editionRecordAdded === true) {
+
+      clearMessages();
+      setErrMediaID("");
+      setEditionRecordAdded(null);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
+      setModal(!modal);
+
+    };
+
+  }, [editionRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(editionRecordUpdated) === false && editionRecordUpdated === true) {
+
+      clearMessages();
+      setErrMediaID("");
+      setEditionRecordUpdated(null);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
+      setModal(!modal);
+
+    };
+
+    if (isEmpty(editionRecordDeleted) === false && editionRecordDeleted === true) {
+
+      clearMessages();
+      setErrMediaID("");
+      setEditionRecordDeleted(null);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
+      setModal(!modal);
+
+    };
+
+  }, [editionRecordUpdated, editionRecordDeleted]);
 
 
   const addEdition = () => {
@@ -877,91 +960,6 @@ const EditEdition = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(editionRecordAdded) === false && editionRecordAdded === true) {
-
-      clearMessages();
-      setErrMediaID("");
-      setEditionRecordAdded(null);
-
-      setDdMediaID("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setTxtASIN("");
-      setTxtTextLinkShort("");
-      setTxtTextLinkFull("");
-      setTxtImageLinkSmall("");
-      setTxtImageLinkMedium("");
-      setTxtImageLinkLarge("");
-      setTxtTextImageLink("");
-
-      setModal(!modal);
-
-    };
-
-  }, [editionRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(editionRecordUpdated) === false && editionRecordUpdated === true) {
-
-      clearMessages();
-      setErrMediaID("");
-      setEditionRecordUpdated(null);
-
-      setDdMediaID("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setTxtASIN("");
-      setTxtTextLinkShort("");
-      setTxtTextLinkFull("");
-      setTxtImageLinkSmall("");
-      setTxtImageLinkMedium("");
-      setTxtImageLinkLarge("");
-      setTxtTextImageLink("");
-
-      setModal(!modal);
-
-    };
-
-    if (isEmpty(editionRecordDeleted) === false && editionRecordDeleted === true) {
-
-      clearMessages();
-      setErrMediaID("");
-      setEditionRecordDeleted(null);
-
-      setDdMediaID("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setTxtASIN("");
-      setTxtTextLinkShort("");
-      setTxtTextLinkFull("");
-      setTxtImageLinkSmall("");
-      setTxtImageLinkMedium("");
-      setTxtImageLinkLarge("");
-      setTxtTextImageLink("");
-
-      setModal(!modal);
-
-    };
-
-  }, [editionRecordUpdated, editionRecordDeleted]);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
 
 
   return (

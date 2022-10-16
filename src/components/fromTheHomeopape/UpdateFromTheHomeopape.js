@@ -55,6 +55,34 @@ const FromTheHomeopape = (props) => {
   // let displayUpdateItemsCount = 0;
 
 
+  useEffect(() => {
+
+    // fetchNews();
+    // fetchNews2();
+
+    // * Handled in a cron job on the server now. -- 06/26/2021 MF
+    // fetchNews();
+
+    getNews();
+
+    getNewsPosted();
+
+    getNewsReview();
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const filterNewsReview = (homeopapeItemsReview) => {
 
     let newHomeopapeItemsReview = [];
@@ -494,23 +522,6 @@ const FromTheHomeopape = (props) => {
   };
 
 
-  useEffect(() => {
-
-    // fetchNews();
-    // fetchNews2();
-
-    // * Handled in a cron job on the server now. -- 06/26/2021 MF
-    // fetchNews();
-
-    getNews();
-
-    getNewsPosted();
-
-    getNewsReview();
-
-  }, []);
-
-
   const markAllViewed = () => {
 
     clearMessages();
@@ -579,17 +590,6 @@ const FromTheHomeopape = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

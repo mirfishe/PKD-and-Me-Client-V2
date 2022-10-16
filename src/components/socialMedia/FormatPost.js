@@ -30,6 +30,17 @@ const FormatPost = () => {
   const [formattedPosts, setFormattedPosts] = useState([]);
 
 
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const formatPost = () => {
 
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
@@ -126,17 +137,6 @@ const FormatPost = () => {
     setFormattedPosts(formattedPostsArray);
 
   };
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

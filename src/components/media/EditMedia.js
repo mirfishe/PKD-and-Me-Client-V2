@@ -52,6 +52,64 @@ const EditMedia = (props) => {
   const [active, setActive] = useState(null);
 
 
+  useEffect(() => {
+
+    if (isEmpty(mediaRecordAdded) === false && mediaRecordAdded === true) {
+
+      clearMessages();
+      setMediaRecordAdded(null);
+
+      setTxtMedia("");
+      setCbxElectronic(false);
+
+      setModal(!modal);
+
+    };
+
+  }, [mediaRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(mediaRecordUpdated) === false && mediaRecordUpdated === true) {
+
+      clearMessages();
+      setMediaRecordUpdated(null);
+
+      setTxtMedia("");
+      setCbxElectronic(false);
+
+      setModal(!modal);
+
+    };
+
+    if (isEmpty(mediaRecordDeleted) === false && mediaRecordDeleted === true) {
+
+      clearMessages();
+      setMediaRecordDeleted(null);
+
+      setTxtMedia("");
+      setCbxElectronic(false);
+
+      setModal(!modal);
+
+    };
+
+  }, [mediaRecordUpdated, mediaRecordDeleted]);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [admin]);
+
+
   const addMedia = () => {
 
     clearMessages();
@@ -197,64 +255,6 @@ const EditMedia = (props) => {
 
 
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(mediaRecordAdded) === false && mediaRecordAdded === true) {
-
-      clearMessages();
-      setMediaRecordAdded(null);
-
-      setTxtMedia("");
-      setCbxElectronic(false);
-
-      setModal(!modal);
-
-    };
-
-  }, [mediaRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(mediaRecordUpdated) === false && mediaRecordUpdated === true) {
-
-      clearMessages();
-      setMediaRecordUpdated(null);
-
-      setTxtMedia("");
-      setCbxElectronic(false);
-
-      setModal(!modal);
-
-    };
-
-    if (isEmpty(mediaRecordDeleted) === false && mediaRecordDeleted === true) {
-
-      clearMessages();
-      setMediaRecordDeleted(null);
-
-      setTxtMedia("");
-      setCbxElectronic(false);
-
-      setModal(!modal);
-
-    };
-
-  }, [mediaRecordUpdated, mediaRecordDeleted]);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
 
 
   return (

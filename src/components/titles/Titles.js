@@ -88,7 +88,6 @@ const Titles = (props) => {
 
   };
 
-
   const sortTitles = (sortBy) => {
 
     if (isEmpty(titleList) === false && titleList.length > 0) {
@@ -148,7 +147,6 @@ const Titles = (props) => {
 
   };
 
-
   let titleList = [];
 
   if (isNaN(categoryParam) === false) {
@@ -201,22 +199,9 @@ const Titles = (props) => {
 
   };
 
-
-
   // ! If the user is viewing electronic only editions, all titles still appear even if there are no electronic editions of that title. -- 08/09/2021 MF
 
   sortTitles(titleSortBy);
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
 
 
   useEffect(() => {
@@ -232,6 +217,28 @@ const Titles = (props) => {
     };
 
   }, [titleList]);
+
+
+  useEffect(() => {
+
+    if (titleList.length > 0) {
+
+      saveRecord();
+
+    };
+
+  }, [titleList]);
+
+
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
 
 
   const saveRecord = () => {
@@ -286,7 +293,6 @@ const Titles = (props) => {
 
     };
 
-
     fetch(url, {
       method: "POST",
       headers: new Headers({
@@ -332,17 +338,6 @@ const Titles = (props) => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    if (titleList.length > 0) {
-
-      saveRecord();
-
-    };
-
-  }, [titleList]);
 
 
   return (

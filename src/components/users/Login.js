@@ -57,6 +57,47 @@ const Login = (props) => {
   const [errPassword, setErrPassword] = useState("");
 
 
+  useEffect(() => {
+
+    if (isEmpty(userResultsFound) === false) {
+
+      clearMessages();
+      setErrEmail("");
+      setErrPassword("");
+      setUserResultsFound(null);
+      setModal(!modal);
+
+    };
+
+  }, [userResultsFound]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(sessionToken) === false) {
+
+      clearMessages();
+      setErrEmail("");
+      setErrPassword("");
+      setModal(!modal);
+
+    };
+
+  }, [sessionToken]);
+
+
+  useEffect(() => {
+
+    if (process.env.NODE_ENV === "development") {
+
+      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
+      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
+
+    };
+
+  }, []);
+
+
   const updateToken = (newToken) => {
 
     if (isEmpty(newToken) === false) {
@@ -129,7 +170,6 @@ const Login = (props) => {
       formValidated = false;
 
     };
-
 
     if (formValidated === true) {
 
@@ -299,47 +339,6 @@ const Login = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(userResultsFound) === false) {
-
-      clearMessages();
-      setErrEmail("");
-      setErrPassword("");
-      setUserResultsFound(null);
-      setModal(!modal);
-
-    };
-
-  }, [userResultsFound]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(sessionToken) === false) {
-
-      clearMessages();
-      setErrEmail("");
-      setErrPassword("");
-      setModal(!modal);
-
-    };
-
-  }, [sessionToken]);
-
-
-  useEffect(() => {
-
-    if (process.env.NODE_ENV === "development") {
-
-      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
-      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
-
-    };
-
-  }, []);
 
 
   return (

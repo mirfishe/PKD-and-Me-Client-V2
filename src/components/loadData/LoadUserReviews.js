@@ -24,6 +24,19 @@ function LoadUserReviews() {
   const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
 
 
+  useEffect(() => {
+
+    // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
+    if (userReviewsLoaded !== true) {
+
+      getUserReviews();
+      // getUserReviewsRatings();
+
+    };
+
+  }, []);
+
+
   const loadDataStore = (data, source) => {
 
     if (source === "userReview") {
@@ -97,19 +110,6 @@ function LoadUserReviews() {
       });
 
   };
-
-
-  useEffect(() => {
-
-    // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
-    if (userReviewsLoaded !== true) {
-
-      getUserReviews();
-      // getUserReviewsRatings();
-
-    };
-
-  }, []);
 
 
   return (

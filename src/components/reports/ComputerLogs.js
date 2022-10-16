@@ -33,6 +33,24 @@ const ComputerLogs = () => {
   const [computerLogs, setComputerLogs] = useState([]);
 
 
+  useEffect(() => {
+
+    getComputerLogs();
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const getComputerLogs = () => {
 
     clearMessages();
@@ -78,24 +96,6 @@ const ComputerLogs = () => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    getComputerLogs();
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

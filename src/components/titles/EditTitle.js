@@ -55,27 +55,6 @@ const EditTitle = (props) => {
 
   // };
 
-
-  useEffect(() => {
-
-    if (categoryList.length < 1) {
-
-      console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
-      setErrCategoryMessage("categoryList is empty", categoryList.length);
-      setCategoryResultsFound(false);
-
-    } else {
-
-      // setCategoryMessage("categoryList.length", categoryList.length);
-      setCategoryResultsFound(true);
-
-    };
-
-    // setDdCategoryID(getCategoryIDFromCategoryName(props.categoryName));
-
-  }, [categoryList]);
-
-
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -136,6 +115,26 @@ const EditTitle = (props) => {
   // const urlLookup = useSelector(state => state.urls.arrayURLs);
 
   const linkItem = useSelector(state => state.urls.linkItem);
+
+
+  useEffect(() => {
+
+    if (categoryList.length < 1) {
+
+      console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
+      setErrCategoryMessage("categoryList is empty", categoryList.length);
+      setCategoryResultsFound(false);
+
+    } else {
+
+      // setCategoryMessage("categoryList.length", categoryList.length);
+      setCategoryResultsFound(true);
+
+    };
+
+    // setDdCategoryID(getCategoryIDFromCategoryName(props.categoryName));
+
+  }, [categoryList]);
 
 
   useEffect(() => {
@@ -217,6 +216,100 @@ const EditTitle = (props) => {
     };
 
   }, [props.titleID, titleListState]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleRecordAdded) === false && titleRecordAdded === true) {
+
+      clearMessages();
+      setErrTitleName("");
+      setErrCategoryID("");
+      setTitleRecordAdded(null);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
+      setModal(!modal);
+
+    };
+
+  }, [titleRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleRecordUpdated) === false && titleRecordUpdated === true) {
+
+      clearMessages();
+      setErrTitleName("");
+      setErrCategoryID("");
+      setTitleRecordUpdated(null);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
+      setModal(!modal);
+
+    };
+
+    if (isEmpty(titleRecordDeleted) === false && titleRecordDeleted === true) {
+
+      clearMessages();
+      setErrTitleName("");
+      setErrCategoryID("");
+      setTitleRecordDeleted(null);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
+      setModal(!modal);
+
+    };
+
+  }, [titleRecordUpdated, titleRecordDeleted]);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [admin]);
 
 
   const addTitle = () => {
@@ -1067,88 +1160,6 @@ const EditTitle = (props) => {
   };
 
 
-  useEffect(() => {
-
-    if (isEmpty(titleRecordAdded) === false && titleRecordAdded === true) {
-
-      clearMessages();
-      setErrTitleName("");
-      setErrCategoryID("");
-      setTitleRecordAdded(null);
-
-      setTxtTitleName("");
-      setTxtTitleURL("");
-      setTxtAuthorFirstName("");
-      setTxtAuthorLastName("");
-      setTxtManuscriptTitle("");
-      setTxtWrittenDate("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setDdCategoryID("");
-      setTxtShortDescription("");
-      setTxtUrlPKDWeb("");
-
-      setModal(!modal);
-
-    };
-
-  }, [titleRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(titleRecordUpdated) === false && titleRecordUpdated === true) {
-
-      clearMessages();
-      setErrTitleName("");
-      setErrCategoryID("");
-      setTitleRecordUpdated(null);
-
-      setTxtTitleName("");
-      setTxtTitleURL("");
-      setTxtAuthorFirstName("");
-      setTxtAuthorLastName("");
-      setTxtManuscriptTitle("");
-      setTxtWrittenDate("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setDdCategoryID("");
-      setTxtShortDescription("");
-      setTxtUrlPKDWeb("");
-
-      setModal(!modal);
-
-    };
-
-    if (isEmpty(titleRecordDeleted) === false && titleRecordDeleted === true) {
-
-      clearMessages();
-      setErrTitleName("");
-      setErrCategoryID("");
-      setTitleRecordDeleted(null);
-
-      setTxtTitleName("");
-      setTxtTitleURL("");
-      setTxtAuthorFirstName("");
-      setTxtAuthorLastName("");
-      setTxtManuscriptTitle("");
-      setTxtWrittenDate("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setDdCategoryID("");
-      setTxtShortDescription("");
-      setTxtUrlPKDWeb("");
-
-      setModal(!modal);
-
-    };
-
-  }, [titleRecordUpdated, titleRecordDeleted]);
-
-
   const redirectPage = (linkName) => {
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
@@ -1158,18 +1169,6 @@ const EditTitle = (props) => {
     navigate("/" + linkName);
 
   };
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
 
 
   return (

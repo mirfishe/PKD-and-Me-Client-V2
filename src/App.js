@@ -384,6 +384,75 @@ const App = () => {
   }, [computerLog, /*latitude, longitude, postalCode*/ url1Loaded, url2Loaded]);
 
 
+  useEffect(() => {
+
+    if (applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
+
+      dispatch(setSessionToken(localStorage.getItem("token")));
+
+      // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
+      // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
+      // * ########## TEMPORARY ##########
+      // setUserID(1);
+      // setIsAdmin(true);
+
+      // * Fetch from the API to check these. -- 03/06/2021 MF
+      if (userLoaded !== true) {
+
+        getUser(localStorage.getItem("token"));
+
+      };
+
+      // * Moved to the getUser function. -- 03/06/2021 MF
+      // if (checklistLoaded !== true) {
+
+      //   getChecklist(localStorage.getItem("token"));
+
+      // };
+
+    };
+
+    let documentURL = new URL(document.URL);
+    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
+
+      dispatch(setApplicationOffline(true));
+
+    };
+
+  }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(pageURL) === false) {
+
+      let linkArrayItem = {};
+
+      if (isNonEmptyArray(urlLookup) === true) {
+
+        for (let i = 0; i < urlLookup.length; i++) {
+
+          linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
+          // setLinkItem(linkArrayItem);
+
+        };
+
+      };
+
+      dispatch(setLinkItem(linkArrayItem));
+
+    };
+
+  }, [pageURL, urlLookup]);
+
+
   const clearToken = () => {
 
     localStorage.clear();
@@ -558,75 +627,6 @@ const App = () => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
-
-      dispatch(setSessionToken(localStorage.getItem("token")));
-
-      // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
-      // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
-      // * ########## TEMPORARY ##########
-      // setUserID(1);
-      // setIsAdmin(true);
-
-      // * Fetch from the API to check these. -- 03/06/2021 MF
-      if (userLoaded !== true) {
-
-        getUser(localStorage.getItem("token"));
-
-      };
-
-      // * Moved to the getUser function. -- 03/06/2021 MF
-      // if (checklistLoaded !== true) {
-
-      //   getChecklist(localStorage.getItem("token"));
-
-      // };
-
-    };
-
-    let documentURL = new URL(document.URL);
-    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
-
-      dispatch(setApplicationOffline(true));
-
-    };
-
-  }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(pageURL) === false) {
-
-      let linkArrayItem = {};
-
-      if (isNonEmptyArray(urlLookup) === true) {
-
-        for (let i = 0; i < urlLookup.length; i++) {
-
-          linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
-          // setLinkItem(linkArrayItem);
-
-        };
-
-      };
-
-      dispatch(setLinkItem(linkArrayItem));
-
-    };
-
-  }, [pageURL, urlLookup]);
 
 
   return (

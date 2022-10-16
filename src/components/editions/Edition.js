@@ -88,18 +88,6 @@ const Edition = (props) => {
   editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
 
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
-
-
   useEffect(() => {
 
     if (editionList.length > 0) {
@@ -113,6 +101,17 @@ const Edition = (props) => {
     };
 
   }, [editionList]);
+
+
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
 
 
   // ! This doesn't work. The function needs to stay contained within the img tag. -- 03/06/2021 MF

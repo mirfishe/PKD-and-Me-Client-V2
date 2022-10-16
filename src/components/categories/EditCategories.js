@@ -55,10 +55,21 @@ const EditCategories = (props) => {
 
   };
 
-
   categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
   let categoryListForm = [...categoryList];
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [admin]);
 
 
   const updateCategories = () => {
@@ -75,18 +86,6 @@ const EditCategories = (props) => {
     // };
 
   };
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
 
 
   return (

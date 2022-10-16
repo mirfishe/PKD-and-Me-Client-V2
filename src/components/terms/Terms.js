@@ -45,6 +45,25 @@ const Terms = (props) => {
   let previousSynonymID = 0;
   let previousAlternateFormID = 0;
 
+
+  useEffect(() => {
+
+    getTerms();
+
+  }, []);
+
+
+  // useEffect(() => {
+
+  //   if (admin !== true) {
+
+  //     navigate("/");
+
+  //   };
+
+  // }, [admin]);
+
+
   const getTerms = () => {
 
     let url = baseURL + "terms/";
@@ -144,13 +163,6 @@ const Terms = (props) => {
   };
 
 
-  useEffect(() => {
-
-    getTerms();
-
-  }, []);
-
-
   const redirectPage = (linkName) => {
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
@@ -160,17 +172,6 @@ const Terms = (props) => {
     navigate("/" + linkName);
 
   };
-
-
-  // useEffect(() => {
-
-  //   if (admin !== true) {
-
-  //     navigate("/");
-
-  //   };
-
-  // }, [admin]);
 
 
   return (

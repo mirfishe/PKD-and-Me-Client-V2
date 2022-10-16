@@ -66,6 +66,37 @@ const AddComment = (props) => {
   }, [userState]);
 
 
+  useEffect(() => {
+
+    if (isEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
+
+      clearMessages();
+      setErrComment("");
+      setErrEmail("");
+      setCommentRecordAdded(null);
+
+      setTxtComment("");
+      setTxtEmail("");
+
+      setModal(!modal);
+
+    };
+
+  }, [commentRecordAdded]);
+
+
+  useEffect(() => {
+
+    if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [sessionToken]);
+
+
   const addComment = () => {
 
     clearMessages();
@@ -220,37 +251,6 @@ const AddComment = (props) => {
 
     };
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
-
-      clearMessages();
-      setErrComment("");
-      setErrEmail("");
-      setCommentRecordAdded(null);
-
-      setTxtComment("");
-      setTxtEmail("");
-
-      setModal(!modal);
-
-    };
-
-  }, [commentRecordAdded]);
-
-
-  useEffect(() => {
-
-    if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [sessionToken]);
 
 
   return (

@@ -35,7 +35,6 @@ const EditUserReview = (props) => {
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
 
-
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -180,6 +179,82 @@ const EditUserReview = (props) => {
   // }, [titleID, titleListState]);
 
 
+  useEffect(() => {
+
+    if (isEmpty(userReviewRecordAdded) === false && userReviewRecordAdded === true) {
+
+      clearMessages();
+      setUserReviewRecordAdded(null);
+
+      setCbxRead("");
+      setTxtDateRead("");
+      setRdoRating("");
+      setTxtRanking("");
+      setTxtShortReview("");
+      setTxtLongReview("");
+      setCbxOwned("");
+      setTxtDatePurchased("");
+
+      setModal(!modal);
+
+    };
+
+  }, [userReviewRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(userReviewRecordUpdated) === false && userReviewRecordUpdated === true) {
+
+      clearMessages();
+      setUserReviewRecordUpdated(null);
+
+      setCbxRead("");
+      setTxtDateRead("");
+      setRdoRating("");
+      setTxtRanking("");
+      setTxtShortReview("");
+      setTxtLongReview("");
+      setCbxOwned("");
+      setTxtDatePurchased("");
+
+      setModal(!modal);
+
+    };
+
+    if (isEmpty(userReviewRecordDeleted) === false && userReviewRecordDeleted === true) {
+
+      clearMessages();
+      setUserReviewRecordDeleted(null);
+
+      setCbxRead("");
+      setTxtDateRead("");
+      setRdoRating("");
+      setTxtRanking("");
+      setTxtShortReview("");
+      setTxtLongReview("");
+      setCbxOwned("");
+      setTxtDatePurchased("");
+
+      setModal(!modal);
+
+    };
+
+  }, [userReviewRecordUpdated, userReviewRecordDeleted]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(sessionToken) === true) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [sessionToken]);
+
+
   const addUserReview = () => {
 
     clearMessages();
@@ -204,8 +279,6 @@ const EditUserReview = (props) => {
     // ? Check to make sure that props.titleID is a number?
     // * txtDateRead is expecting a date and rdoRating is expecting a number
     // if (isEmpty(txtDateRead) === false && isEmpty(rdoRating) === false) {
-
-
 
     let recordObject = {
       titleID: parseInt(props.titleID),
@@ -273,7 +346,6 @@ const EditUserReview = (props) => {
       };
 
     };
-
 
     let url = baseURL + "userreviews/";
 
@@ -361,7 +433,6 @@ const EditUserReview = (props) => {
 
             // let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
-
             // * Get all reviews for the title. -- 03/06/2021 MF
             // ? Get the latest from state? -- 03/06/2021 MF
             // ? Update the state user review array? -- 03/06/2021 MF
@@ -369,7 +440,6 @@ const EditUserReview = (props) => {
               // userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active });
               userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, rating: data.records[0].rating });
             };
-
 
             // * Recompute the average. -- 03/06/2021 MF
             let userReviewCount = userReviews.length;
@@ -386,7 +456,6 @@ const EditUserReview = (props) => {
 
             };
 
-
             let userReviewAverage = 0;
 
             if (userReviewCount > 0) {
@@ -396,7 +465,6 @@ const EditUserReview = (props) => {
               userReviewAverage = userReviewSum / userReviewCount;
 
             };
-
 
             // * Update the title ratings. -- 03/06/2021 MF
             dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
@@ -460,8 +528,6 @@ const EditUserReview = (props) => {
     // ? Check to make sure that props.titleID is a number? -- 03/06/2021 MF
     // * txtDateRead is expecting a date and rdoRating is expecting a number. -- 03/06/2021 MF
     // if (isEmpty(txtDateRead) === false && isEmpty(rdoRating) === false) {
-
-
 
     let recordObject = {
       read: cbxRead,
@@ -529,7 +595,6 @@ const EditUserReview = (props) => {
       };
 
     };
-
 
     let url = baseURL + "userreviews/";
 
@@ -626,7 +691,6 @@ const EditUserReview = (props) => {
 
             const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === props.reviewID);
 
-
             // * Get all reviews for the title. -- 03/06/2021 MF
             // ? Get the latest from state? -- 03/06/2021 MF
             // ? Update the state user review array? -- 03/06/2021 MF
@@ -644,12 +708,9 @@ const EditUserReview = (props) => {
 
             if (data.records[0].active === true || data.records[0].active === 1 && isEmpty(data.records[0].rating) === false) {
 
-
               userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, rating: data.records[0].rating });
 
-
             };
-
 
             // * Recompute the average. -- 03/06/2021 MF
             let userReviewCount = userReviews.length;
@@ -666,7 +727,6 @@ const EditUserReview = (props) => {
 
             };
 
-
             let userReviewAverage = 0;
 
             if (userReviewCount > 0) {
@@ -676,7 +736,6 @@ const EditUserReview = (props) => {
               userReviewAverage = userReviewSum / userReviewCount;
 
             };
-
 
             // * Update the title ratings. -- 03/06/2021 MF
             dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
@@ -729,7 +788,6 @@ const EditUserReview = (props) => {
     if (isEmpty(props.reviewID) === false) {
 
       url = url + props.reviewID;
-
 
       if (isEmpty(sessionToken) === false) {
 
@@ -799,7 +857,6 @@ const EditUserReview = (props) => {
 
               };
 
-
               // * Recompute the average. -- 03/06/2021 MF
               let userReviewCount = userReviews.length;
 
@@ -815,7 +872,6 @@ const EditUserReview = (props) => {
 
               };
 
-
               let userReviewAverage = 0;
 
               if (userReviewCount > 0) {
@@ -825,7 +881,6 @@ const EditUserReview = (props) => {
                 userReviewAverage = userReviewSum / userReviewCount;
 
               };
-
 
               // * Update the title ratings. -- 03/06/2021 MF
               dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: userReviewItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
@@ -854,82 +909,6 @@ const EditUserReview = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(userReviewRecordAdded) === false && userReviewRecordAdded === true) {
-
-      clearMessages();
-      setUserReviewRecordAdded(null);
-
-      setCbxRead("");
-      setTxtDateRead("");
-      setRdoRating("");
-      setTxtRanking("");
-      setTxtShortReview("");
-      setTxtLongReview("");
-      setCbxOwned("");
-      setTxtDatePurchased("");
-
-      setModal(!modal);
-
-    };
-
-  }, [userReviewRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(userReviewRecordUpdated) === false && userReviewRecordUpdated === true) {
-
-      clearMessages();
-      setUserReviewRecordUpdated(null);
-
-      setCbxRead("");
-      setTxtDateRead("");
-      setRdoRating("");
-      setTxtRanking("");
-      setTxtShortReview("");
-      setTxtLongReview("");
-      setCbxOwned("");
-      setTxtDatePurchased("");
-
-      setModal(!modal);
-
-    };
-
-    if (isEmpty(userReviewRecordDeleted) === false && userReviewRecordDeleted === true) {
-
-      clearMessages();
-      setUserReviewRecordDeleted(null);
-
-      setCbxRead("");
-      setTxtDateRead("");
-      setRdoRating("");
-      setTxtRanking("");
-      setTxtShortReview("");
-      setTxtLongReview("");
-      setCbxOwned("");
-      setTxtDatePurchased("");
-
-      setModal(!modal);
-
-    };
-
-  }, [userReviewRecordUpdated, userReviewRecordDeleted]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(sessionToken) === true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [sessionToken]);
 
 
   return (

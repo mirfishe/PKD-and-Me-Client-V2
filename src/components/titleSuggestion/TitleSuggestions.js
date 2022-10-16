@@ -6,9 +6,9 @@ import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
-
 const TitleSuggestions = () => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
 
   const componentName = "TitleSuggestions";
 
@@ -33,6 +33,24 @@ const TitleSuggestions = () => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [titleSuggestions, setTitleSuggestions] = useState([]);
+
+
+  useEffect(() => {
+
+    getTitleSuggestions();
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
 
 
   const getTitleSuggestions = () => {
@@ -80,24 +98,6 @@ const TitleSuggestions = () => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    getTitleSuggestions();
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

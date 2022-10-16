@@ -8,9 +8,9 @@ import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { addStateCategory } from "../../app/categoriesSlice";
 import { addStateURL } from "../../app/urlsSlice";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
-
 const EditCategory = (props) => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
 
   const componentName = "EditCategory";
 
@@ -50,6 +50,61 @@ const EditCategory = (props) => {
   // const [category, setCategory] = useState(null);
   // const [sortID, setSortID] = useState(null);
   const [active, setActive] = useState(null);
+
+
+  useEffect(() => {
+
+    if (isEmpty(categoryRecordAdded) === false && categoryRecordAdded === true) {
+
+      clearMessages();
+      setCategoryRecordAdded(null);
+
+      setTxtCategory("");
+
+      setModal(!modal);
+
+    };
+
+  }, [categoryRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(categoryRecordUpdated) === false && categoryRecordUpdated === true) {
+
+      clearMessages();
+      setCategoryRecordUpdated(null);
+
+      setTxtCategory("");
+
+      setModal(!modal);
+
+    };
+
+    if (isEmpty(categoryRecordDeleted) === false && categoryRecordDeleted === true) {
+
+      clearMessages();
+      setCategoryRecordDeleted(null);
+
+      setTxtCategory("");
+
+      setModal(!modal);
+
+    };
+
+  }, [categoryRecordUpdated, categoryRecordDeleted]);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [admin]);
 
 
   const addCategory = () => {
@@ -194,61 +249,6 @@ const EditCategory = (props) => {
 
 
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(categoryRecordAdded) === false && categoryRecordAdded === true) {
-
-      clearMessages();
-      setCategoryRecordAdded(null);
-
-      setTxtCategory("");
-
-      setModal(!modal);
-
-    };
-
-  }, [categoryRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(categoryRecordUpdated) === false && categoryRecordUpdated === true) {
-
-      clearMessages();
-      setCategoryRecordUpdated(null);
-
-      setTxtCategory("");
-
-      setModal(!modal);
-
-    };
-
-    if (isEmpty(categoryRecordDeleted) === false && categoryRecordDeleted === true) {
-
-      clearMessages();
-      setCategoryRecordDeleted(null);
-
-      setTxtCategory("");
-
-      setModal(!modal);
-
-    };
-
-  }, [categoryRecordUpdated, categoryRecordDeleted]);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
 
 
   return (

@@ -38,6 +38,13 @@ const FromTheHomeopape = (props) => {
   // let displayItemsCount = 0;
 
 
+  useEffect(() => {
+
+    getNews();
+
+  }, []);
+
+
   const getNews = () => {
 
     let url = baseURL + "fromthehomeopape/top/20";
@@ -84,13 +91,6 @@ const FromTheHomeopape = (props) => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    getNews();
-
-  }, []);
 
 
   return (

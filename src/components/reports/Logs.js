@@ -33,6 +33,25 @@ const Logs = () => {
   const [logs, setLogs] = useState([]);
 
 
+  useEffect(() => {
+
+    getLogs();
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
+
   const getLogs = () => {
 
     clearMessages();
@@ -78,24 +97,6 @@ const Logs = () => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    getLogs();
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

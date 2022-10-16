@@ -284,17 +284,6 @@ const Title = (props) => {
   // };
 
 
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
-
-
   useEffect(() => {
 
     if (titleList.length > 0) {
@@ -334,6 +323,28 @@ const Title = (props) => {
   //     };
 
   // }, [editionList]);
+
+
+  useEffect(() => {
+
+    if (titleList.length > 0) {
+
+      saveRecord();
+
+    };
+
+  }, [titleList]);
+
+
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
 
 
   const saveRecord = () => {
@@ -434,17 +445,6 @@ const Title = (props) => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    if (titleList.length > 0) {
-
-      saveRecord();
-
-    };
-
-  }, [titleList]);
 
 
   return (

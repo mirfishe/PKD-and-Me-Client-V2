@@ -35,6 +35,17 @@ const FromTheHomeopapeItem = (props) => {
   let homeopapeItem = isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
 
 
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
 
     let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
@@ -695,17 +706,6 @@ const FromTheHomeopapeItem = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

@@ -50,6 +50,164 @@ function LoadBibliographyData() {
   const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
 
 
+  useEffect(() => {
+
+    // ! Experiment in adding bibliographical data to local storage that doesn't work. -- 03/06/2021 MF
+    // let categoriesDataLocalStorage = false;
+    // let mediaDataLocalStorage = false;
+    // let titlesDataLocalStorage = false;
+    // let editionsDataLocalStorage = false;
+
+    // let currentDateTime = new Date().setTime(new Date().getTime());
+
+    // if (categoriesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
+
+
+    //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).getTime() - (8*60*60*1000));
+
+    //   if (currentDateTime > checkDateTime) {
+
+    //     if (isEmpty(localStorage.getItem("arrayCategories")) === false) {
+
+    //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
+    //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
+
+    //       categoriesDataLocalStorage = true;
+
+    //     };
+
+    //   };
+
+    // };
+
+    // if (mediaLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
+
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
+
+    //   if (currentDateTime > checkDateTime) {
+
+    //     if (isEmpty(localStorage.getItem("arrayMedia")) === false) {
+
+    //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
+    //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
+
+    //       mediaDataLocalStorage = true;
+
+    //     };
+
+    //   };
+
+    // };
+
+    // if (titlesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
+
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
+
+    //   if (currentDateTime > checkDateTime) {
+
+    //     if (isEmpty(localStorage.getItem("arrayTitles")) === false) {
+
+    //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
+    //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
+
+    //       titlesDataLocalStorage = true;
+
+    //     };
+
+    //   };
+
+    // };
+
+    // if (editionsLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
+
+
+    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
+
+    //   if (currentDateTime > checkDateTime) {
+
+    //   if (isEmpty(localStorage.getItem("arrayEditions")) === false) {
+
+    //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
+    //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");
+
+    //       editionsDataLocalStorage = true;
+
+    //     };
+
+    //   };
+
+    // };
+
+    // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
+    if (applicationOffline) {
+
+      if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
+
+        dispatch(setCategoriesDataOffline(true));
+        fetchLocalDataCategories();
+
+      };
+
+      if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
+
+        dispatch(setMediaDataOffline(true));
+        fetchLocalDataMedia();
+
+      };
+
+      if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
+
+        dispatch(setTitlesDataOffline(true));
+        fetchLocalDataTitles();
+
+      };
+
+      if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
+
+        dispatch(setEditionsDataOffline(true));
+        fetchLocalDataEditions();
+
+      };
+
+    } else {
+
+      if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
+
+        console.log(componentName, getDateTime(), "categoriesLoaded", categoriesLoaded);
+
+        console.log(componentName, getDateTime(), "getCategories()");
+
+        getCategories();
+
+      };
+
+      if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
+
+        getMedia();
+
+      };
+
+      if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
+
+        getTitles();
+
+      };
+
+      if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
+
+        getEditions();
+
+      };
+
+    };
+
+  }, []);
+
+
   const addRatings = (titleData, userReviewsRatingsData) => {
 
     let arrayTitles = [...titleData];
@@ -715,164 +873,6 @@ function LoadBibliographyData() {
       });
 
   };
-
-
-  useEffect(() => {
-
-    // ! Experiment in adding bibliographical data to local storage that doesn't work. -- 03/06/2021 MF
-    // let categoriesDataLocalStorage = false;
-    // let mediaDataLocalStorage = false;
-    // let titlesDataLocalStorage = false;
-    // let editionsDataLocalStorage = false;
-
-    // let currentDateTime = new Date().setTime(new Date().getTime());
-
-    // if (categoriesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
-
-
-    //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
-
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).getTime() - (8*60*60*1000));
-
-    //   if (currentDateTime > checkDateTime) {
-
-    //     if (isEmpty(localStorage.getItem("arrayCategories")) === false) {
-
-    //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
-    //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
-
-    //       categoriesDataLocalStorage = true;
-
-    //     };
-
-    //   };
-
-    // };
-
-    // if (mediaLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
-
-
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
-
-    //   if (currentDateTime > checkDateTime) {
-
-    //     if (isEmpty(localStorage.getItem("arrayMedia")) === false) {
-
-    //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
-    //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
-
-    //       mediaDataLocalStorage = true;
-
-    //     };
-
-    //   };
-
-    // };
-
-    // if (titlesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
-
-
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
-
-    //   if (currentDateTime > checkDateTime) {
-
-    //     if (isEmpty(localStorage.getItem("arrayTitles")) === false) {
-
-    //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
-    //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
-
-    //       titlesDataLocalStorage = true;
-
-    //     };
-
-    //   };
-
-    // };
-
-    // if (editionsLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
-
-
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
-
-    //   if (currentDateTime > checkDateTime) {
-
-    //   if (isEmpty(localStorage.getItem("arrayEditions")) === false) {
-
-    //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
-    //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");
-
-    //       editionsDataLocalStorage = true;
-
-    //     };
-
-    //   };
-
-    // };
-
-    // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
-    if (applicationOffline) {
-
-      if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
-
-        dispatch(setCategoriesDataOffline(true));
-        fetchLocalDataCategories();
-
-      };
-
-      if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
-
-        dispatch(setMediaDataOffline(true));
-        fetchLocalDataMedia();
-
-      };
-
-      if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
-
-        dispatch(setTitlesDataOffline(true));
-        fetchLocalDataTitles();
-
-      };
-
-      if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
-
-        dispatch(setEditionsDataOffline(true));
-        fetchLocalDataEditions();
-
-      };
-
-    } else {
-
-      if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
-
-        console.log(componentName, getDateTime(), "categoriesLoaded", categoriesLoaded);
-
-        console.log(componentName, getDateTime(), "getCategories()");
-
-        getCategories();
-
-      };
-
-      if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
-
-        getMedia();
-
-      };
-
-      if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
-
-        getTitles();
-
-      };
-
-      if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
-
-        getEditions();
-
-      };
-
-    };
-
-  }, []);
 
 
   return (

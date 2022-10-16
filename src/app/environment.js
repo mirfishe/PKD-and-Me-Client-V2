@@ -41,17 +41,7 @@ switch (window.location.hostname) {
   case "localhost" || "127.0.0.1":
     profileType = "localhost";
     break;
-  // case "pkd-and-me-server":
-  //   profileType = "heroku";
-  //   break;
-  // case "pkd-and-me-client":
-  //   profileType = "heroku";
-  //   break;
-  // case "pkd-and-me.herokuapp.com":
-  //   profileType = "heroku";
-  //   break;
   case "pkd-and-me":
-    // profileType = "heroku";
     profileType = "pkd-and-me";
     break;
   case "pkd-and-me.philipdick.com":
@@ -76,7 +66,6 @@ switch (window.location.hostname) {
 switch (profileType) {
   case "localhost":
     // API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
-    // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "localhost";
     applicationName = "PKD and Me";
@@ -90,22 +79,7 @@ switch (profileType) {
     requireUserLogin = true;
     tagManagerArgs.gtmId = "";
     break;
-  // case "heroku":
-  //   API_URL = "https://pkd-and-me-server.herokuapp.com";
-  //   siteName = "PKD and Me";
-  //   applicationName = "Philip K. Dick Bibliography";
-  //   metaDescription = "Purchase versions of the novels, short stories, and non-fiction of Philip K. Dick or other works related to Philip K. Dick.";
-  //   defaultPageComponent = "Home";
-  //   routerBaseName = "";
-  //   applicationOffline = false;
-  //   electronicOnly = false;
-  //   physicalOnly = false;
-  //   applicationAllowUserInteractions = true;
-  //   requireUserLogin = true;
-  //   tagManagerArgs.gtmId = "";
-  //   break;
   case "philipdick":
-    // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "Philip K. Dick";
     applicationName = "PKD and Me";
@@ -134,7 +108,6 @@ switch (profileType) {
     tagManagerArgs.gtmId = "GTM-NW2GPF2";
     break;
   case "homeopape":
-    // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "Homeopape";
     applicationName = "Philip K. Dick Bibliography";
@@ -150,7 +123,6 @@ switch (profileType) {
     break;
   default:
     // API_URL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}`;
-    // API_URL = "https://pkd-and-me-server.herokuapp.com";
     API_URL = "https://api.philipdick.com";
     siteName = "PKD and Me";
     applicationName = "Philip K. Dick Bibliography";
@@ -179,7 +151,6 @@ switch (profileType) {
 
 // * Override the profileType setting to test the applicationSetting files
 // profileType = "localhost";
-// profileType = "heroku";
 // profileType = "philipdick";
 // profileType = "homeopape";
 // profileType = "";

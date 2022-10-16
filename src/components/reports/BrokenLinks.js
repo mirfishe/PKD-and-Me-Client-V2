@@ -33,6 +33,24 @@ const BrokenLinks = () => {
   const [brokenLinks, setBrokenLinks] = useState([]);
 
 
+  useEffect(() => {
+
+    getBrokenLinks();
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const getBrokenLinks = () => {
 
     clearMessages();
@@ -78,24 +96,6 @@ const BrokenLinks = () => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    getBrokenLinks();
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

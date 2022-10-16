@@ -33,6 +33,24 @@ const Errors = () => {
   const [errors, setErrors] = useState([]);
 
 
+  useEffect(() => {
+
+    getErrors();
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const getErrors = () => {
 
     clearMessages();
@@ -78,24 +96,6 @@ const Errors = () => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    getErrors();
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

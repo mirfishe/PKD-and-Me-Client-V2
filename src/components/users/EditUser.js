@@ -62,6 +62,49 @@ const EditUser = (props) => {
   const [errPassword, setErrPassword] = useState("");
 
 
+  useEffect(() => {
+
+    if (isEmpty(userRecordUpdated) === false) {
+
+      clearMessages();
+      setErrFirstName("");
+      setErrLastName("");
+      setErrEmail("");
+      setErrPassword("");
+      setUserRecordUpdated(null);
+
+      setTxtFirstName("");
+      setTxtLastName("");
+      setTxtEmail("");
+      setTxtPassword("");
+
+      setModal(!modal);
+
+    };
+
+  }, [userRecordUpdated]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(userLoaded) === false && userLoaded === false) {
+
+      clearMessages();
+      setErrEmail("");
+      setErrPassword("");
+
+      setTxtFirstName("");
+      setTxtLastName("");
+      setTxtEmail("");
+      setTxtPassword("");
+
+      setModal(false);
+
+    };
+
+  }, [userLoaded]);
+
+
   const updateUser = (deleteUser) => {
 
     clearMessages();
@@ -292,49 +335,6 @@ const EditUser = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(userRecordUpdated) === false) {
-
-      clearMessages();
-      setErrFirstName("");
-      setErrLastName("");
-      setErrEmail("");
-      setErrPassword("");
-      setUserRecordUpdated(null);
-
-      setTxtFirstName("");
-      setTxtLastName("");
-      setTxtEmail("");
-      setTxtPassword("");
-
-      setModal(!modal);
-
-    };
-
-  }, [userRecordUpdated]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(userLoaded) === false && userLoaded === false) {
-
-      clearMessages();
-      setErrEmail("");
-      setErrPassword("");
-
-      setTxtFirstName("");
-      setTxtLastName("");
-      setTxtEmail("");
-      setTxtPassword("");
-
-      setModal(false);
-
-    };
-
-  }, [userLoaded]);
 
 
   return (

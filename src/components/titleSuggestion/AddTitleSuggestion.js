@@ -6,9 +6,9 @@ import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
-
 const AddTitleSuggestion = (props) => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
 
   const componentName = "AddTitleSuggestion";
 
@@ -75,6 +75,43 @@ const AddTitleSuggestion = (props) => {
     };
 
   }, [userState]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleSuggestionRecordAdded) === false) {
+
+      clearMessages();
+      setErrTitleName("");
+      setErrShortDescription("");
+      setErrEmail("");
+      setTitleSuggestionRecordAdded(null);
+
+      setTxtTitleName("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtPublicationDate("");
+      setTxtShortDescription("");
+      setTxtTitleURL("");
+      setTxtEmail("");
+
+      setModal(!modal);
+
+    };
+
+  }, [titleSuggestionRecordAdded]);
+
+
+  useEffect(() => {
+
+    if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [sessionToken]);
 
 
   const addTitleSuggestion = () => {
@@ -306,43 +343,6 @@ const AddTitleSuggestion = (props) => {
 
     };
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(titleSuggestionRecordAdded) === false) {
-
-      clearMessages();
-      setErrTitleName("");
-      setErrShortDescription("");
-      setErrEmail("");
-      setTitleSuggestionRecordAdded(null);
-
-      setTxtTitleName("");
-      setTxtAuthorFirstName("");
-      setTxtAuthorLastName("");
-      setTxtPublicationDate("");
-      setTxtShortDescription("");
-      setTxtTitleURL("");
-      setTxtEmail("");
-
-      setModal(!modal);
-
-    };
-
-  }, [titleSuggestionRecordAdded]);
-
-
-  useEffect(() => {
-
-    if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [sessionToken]);
 
 
   return (

@@ -49,6 +49,35 @@ const Amazon = () => {
   const [amazonItemsNoCategory, setAmazonItemsNoCategory] = useState([]);
   const [amazonItemsIncorrectContext, setAmazonItemsIncorrectContext] = useState([]);
 
+
+  useEffect(() => {
+
+    // if (amazonMerchants === "AllMerchants") {
+
+    //   getAmazonItemsAll();
+
+    // } else {
+
+    getAmazonItems();
+
+    // };
+
+
+  }, [amazonMerchants]);
+
+
+  useEffect(() => {
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   // SELECT * FROM logs WHERE componentName = 'amazon-controller'
 
   // INSERT INTO amazon(ASIN, titleName, authorName, publicationDate, imageName, textLinkFull)
@@ -546,34 +575,6 @@ const Amazon = () => {
   //     });
 
   // };
-
-
-  useEffect(() => {
-
-    // if (amazonMerchants === "AllMerchants") {
-
-    //   getAmazonItemsAll();
-
-    // } else {
-
-    getAmazonItems();
-
-    // };
-
-
-  }, [amazonMerchants]);
-
-
-  useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

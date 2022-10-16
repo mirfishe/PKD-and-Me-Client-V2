@@ -64,6 +64,18 @@ const AmazonItem = (props) => {
   };
 
 
+  useEffect(() => {
+    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const setActive = (ASIN, active) => {
     // console.log(componentName, getDateTime(), "setActive ASIN", ASIN);
     // console.log(componentName, getDateTime(), "setActive active", active);
@@ -246,18 +258,6 @@ const AmazonItem = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

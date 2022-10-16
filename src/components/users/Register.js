@@ -63,6 +63,53 @@ const Register = (props) => {
   const [errPassword, setErrPassword] = useState("");
 
 
+  useEffect(() => {
+
+    if (isEmpty(userRecordAdded) === false) {
+
+      clearMessages();
+      setErrFirstName("");
+      setErrLastName("");
+      setErrEmail("");
+      setErrPassword("");
+      setUserRecordAdded(null);
+      setModal(!modal);
+
+    };
+
+  }, [userRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(sessionToken) === false) {
+
+      clearMessages();
+      setErrFirstName("");
+      setErrLastName("");
+      setErrEmail("");
+      setErrPassword("");
+      setModal(!modal);
+
+    };
+
+  }, [sessionToken]);
+
+
+  useEffect(() => {
+
+    if (process.env.NODE_ENV === "development") {
+
+      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
+      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
+      setTxtFirstName(process.env.REACT_APP_FIRSTNAME_DEFAULT);
+      setTxtLastName(process.env.REACT_APP_LASTNAME_DEFAULT);
+
+    };
+
+  }, []);
+
+
   const updateToken = (newToken) => {
 
     if (isEmpty(newToken) === false) {
@@ -343,53 +390,6 @@ const Register = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (isEmpty(userRecordAdded) === false) {
-
-      clearMessages();
-      setErrFirstName("");
-      setErrLastName("");
-      setErrEmail("");
-      setErrPassword("");
-      setUserRecordAdded(null);
-      setModal(!modal);
-
-    };
-
-  }, [userRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(sessionToken) === false) {
-
-      clearMessages();
-      setErrFirstName("");
-      setErrLastName("");
-      setErrEmail("");
-      setErrPassword("");
-      setModal(!modal);
-
-    };
-
-  }, [sessionToken]);
-
-
-  useEffect(() => {
-
-    if (process.env.NODE_ENV === "development") {
-
-      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
-      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
-      setTxtFirstName(process.env.REACT_APP_FIRSTNAME_DEFAULT);
-      setTxtLastName(process.env.REACT_APP_LASTNAME_DEFAULT);
-
-    };
-
-  }, []);
 
 
   return (

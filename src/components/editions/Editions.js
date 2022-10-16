@@ -56,6 +56,100 @@ const Editions = (props) => {
 
   };
 
+  let editionList = [];
+
+  if (isNaN(mediaParam) === false) {
+
+    // ! This code no longer works with the current URL setup
+    // * If mediaParam is a number, then it's the mediaID
+    document.title = editionList[0].medium.media + " | " + applicationName + " | " + siteName;
+    editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
+
+  } else if (isEmpty(mediaParam) === false) {
+
+    // * If mediaParam is not a number, then it's the media name
+    const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
+
+    if (isEmpty(media) === false) {
+
+      document.title = media.media + " | " + applicationName + " | " + siteName;
+      editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
+
+    } else {
+
+      document.title = "Media Not Found | " + applicationName + " | " + siteName;
+      console.error("Media not found.");
+      // * Display all active editions
+      // editionList = editionListState;
+      // setErrTitleMessage("Media not found.")
+
+    };
+
+  } else {
+
+    document.title = "All Editions | " + applicationName + " | " + siteName;
+    // * Display all active editions
+    editionList = [...editionListState];
+    // editionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+
+  };
+
+  if (electronicOnly === true || userElectronicOnly === true) {
+
+    // editionList = editionList.filter(edition => edition.medium.electronic === true);
+    editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
+
+  } else if (physicalOnly === true || userPhysicalOnly === true) {
+
+    // editionList = editionList.filter(edition => edition.medium.electronic === false);
+    editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
+
+  } else {
+
+    editionList = [...editionList];
+
+  };
+
+  if (isEmpty(admin) === false && admin === true) {
+
+    editionList = [...editionList];
+
+  } else {
+
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
+    // editionList = editionList.filter(edition => (edition.active === true || edition.active === 1) && (edition.medium.active === true || edition.medium.active === 1));
+    editionList = editionList.filter(edition => (edition.editionActive === true || edition.editionActive === 1) && (edition.mediaActive === true || edition.mediaActive === 1));
+
+  };
+
+  sortEditions(editionSortBy);
+
+
+  useEffect(() => {
+
+    if (editionList.length > 0) {
+
+      setErrEditionMessage("");
+
+    } else {
+
+      setErrEditionMessage("No editions found.");
+
+    };
+
+  }, [editionList]);
+
+
+  useEffect(() => {
+
+    if (editionList.length > 0) {
+
+      saveRecord();
+
+    };
+
+  }, [editionList]);
+
 
   const sortEditions = (sortBy) => {
     // console.log("componentName, sortTitles sortBy", sortBy);
@@ -301,75 +395,6 @@ const Editions = (props) => {
   };
 
 
-  let editionList = [];
-
-  if (isNaN(mediaParam) === false) {
-
-    // ! This code no longer works with the current URL setup
-    // * If mediaParam is a number, then it's the mediaID
-    document.title = editionList[0].medium.media + " | " + applicationName + " | " + siteName;
-    editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
-
-  } else if (isEmpty(mediaParam) === false) {
-
-    // * If mediaParam is not a number, then it's the media name
-    const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
-
-    if (isEmpty(media) === false) {
-
-      document.title = media.media + " | " + applicationName + " | " + siteName;
-      editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
-
-    } else {
-
-      document.title = "Media Not Found | " + applicationName + " | " + siteName;
-      console.error("Media not found.");
-      // * Display all active editions
-      // editionList = editionListState;
-      // setErrTitleMessage("Media not found.")
-
-    };
-
-  } else {
-
-    document.title = "All Editions | " + applicationName + " | " + siteName;
-    // * Display all active editions
-    editionList = [...editionListState];
-    // editionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
-
-  };
-
-  if (electronicOnly === true || userElectronicOnly === true) {
-
-    // editionList = editionList.filter(edition => edition.medium.electronic === true);
-    editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
-
-  } else if (physicalOnly === true || userPhysicalOnly === true) {
-
-    // editionList = editionList.filter(edition => edition.medium.electronic === false);
-    editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
-
-  } else {
-
-    editionList = [...editionList];
-
-  };
-
-  if (isEmpty(admin) === false && admin === true) {
-
-    editionList = [...editionList];
-
-  } else {
-
-    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
-    // editionList = editionList.filter(edition => (edition.active === true || edition.active === 1) && (edition.medium.active === true || edition.medium.active === 1));
-    editionList = editionList.filter(edition => (edition.editionActive === true || edition.editionActive === 1) && (edition.mediaActive === true || edition.mediaActive === 1));
-
-  };
-
-  sortEditions(editionSortBy);
-
-
   const redirectPage = (linkName) => {
 
     // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
@@ -379,21 +404,6 @@ const Editions = (props) => {
     navigate("/" + linkName);
 
   };
-
-
-  useEffect(() => {
-
-    if (editionList.length > 0) {
-
-      setErrEditionMessage("");
-
-    } else {
-
-      setErrEditionMessage("No editions found.");
-
-    };
-
-  }, [editionList]);
 
 
   const saveRecord = () => {
@@ -494,17 +504,6 @@ const Editions = (props) => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    if (editionList.length > 0) {
-
-      saveRecord();
-
-    };
-
-  }, [editionList]);
 
 
   return (

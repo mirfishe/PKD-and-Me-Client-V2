@@ -14,6 +14,18 @@ function LoadApplicationSettings() {
   const applicationSettingsLoaded = useSelector(state => state.applicationSettings.applicationSettingsLoaded);
 
 
+  useEffect(() => {
+
+    // * Only load the applicationSettings data once per session unless the data is changed. -- 03/06/2021 MF
+    if (applicationSettingsLoaded !== true) {
+
+      getApplicationSettings();
+
+    };
+
+  }, []);
+
+
   // * Loads the settings from environment.js first and then if there are any settings in the applicationSettings.json file on the server, those override what was set in environment.js. -- 03/06/2021 MF
   const getApplicationSettings = () => {
 
@@ -289,16 +301,6 @@ function LoadApplicationSettings() {
 
   };
 
-  useEffect(() => {
-
-    // * Only load the applicationSettings data once per session unless the data is changed. -- 03/06/2021 MF
-    if (applicationSettingsLoaded !== true) {
-
-      getApplicationSettings();
-
-    };
-
-  }, []);
 
   return (
     <React.Fragment></React.Fragment>

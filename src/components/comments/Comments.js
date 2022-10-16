@@ -35,6 +35,24 @@ const Comments = () => {
   const [comments, setComments] = useState([]);
 
 
+  useEffect(() => {
+
+    getComments();
+
+  }, []);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const getComments = () => {
 
     clearMessages();
@@ -80,24 +98,6 @@ const Comments = () => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    getComments();
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

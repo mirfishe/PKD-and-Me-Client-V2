@@ -43,7 +43,6 @@ const TitleCard = (props) => {
 
   };
 
-
   const showShortDescription = props.showShortDescription;
 
   const headerText = props.headerText;
@@ -95,17 +94,6 @@ const TitleCard = (props) => {
   };
 
 
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
-
-
   useEffect(() => {
 
     if (titleList.length > 0) {
@@ -119,6 +107,17 @@ const TitleCard = (props) => {
     };
 
   }, [titleList]);
+
+
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
 
 
   return (
