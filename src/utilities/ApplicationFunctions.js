@@ -3,42 +3,42 @@ import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase
 
 const componentName = "ApplicationFunctions";
 
-export const encodeURL = (titleName) => {
+export const encodeURL = (url) => {
 
-  let newTitleName = titleName;
+  let newURL = url;
 
-  if (isEmpty(titleName) === false) {
+  if (isEmpty(url) === false) {
 
     // Changes the - to | -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("-", "|");
+    newURL = newURL.replaceAll("-", "|");
     // Changes the spaces to - -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll(" ", "-");
+    newURL = newURL.replaceAll(" ", "-");
     // Changes the rest to be a safe URL -- 02/20/2021 MF
-    newTitleName = encodeURIComponent(newTitleName);
+    newURL = encodeURIComponent(newURL);
 
   };
 
-  return newTitleName;
+  return newURL;
 
 };
 
 
-export const decodeURL = (titleName) => {
+export const decodeURL = (url) => {
 
-  let newTitleName = titleName;
+  let newURL = url;
 
-  if (isEmpty(titleName) === false) {
+  if (isEmpty(url) === false) {
 
     // Changes it back from a safe URL -- 02/20/2021 MF
-    newTitleName = decodeURIComponent(newTitleName);
+    newURL = decodeURIComponent(newURL);
     // Changes the - to space -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("-", " ");
+    newURL = newURL.replaceAll("-", " ");
     // Changes the | to - -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("|", "-");
+    newURL = newURL.replaceAll("|", "-");
 
   };
 
-  return newTitleName;
+  return newURLText;
 
 };
 
