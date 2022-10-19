@@ -7,7 +7,7 @@ const initialState = {
   arrayCategories: [],
   categoriesLoaded: false,
   lastDatabaseRetrievalCategories: null,
-  categoriesDataOffline: false
+  // categoriesDataOffline: false
 };
 
 const categoriesSlice = createSlice({
@@ -17,6 +17,8 @@ const categoriesSlice = createSlice({
     loadArrayCategories(state, action) {
 
       if (isNonEmptyArray(action.payload) === true) {
+
+        state.arrayCategories = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -107,14 +109,14 @@ const categoriesSlice = createSlice({
       };
 
     },
-    setCategoriesDataOffline(state, action) {
+    // setCategoriesDataOffline(state, action) {
 
-      state.categoriesDataOffline = action.payload;
+    //   state.categoriesDataOffline = action.payload;
 
-    }
+    // }
   }
 });
 
-export const { loadArrayCategories, addStateCategory, updateStateCategory, deleteStateCategory, setCategoriesDataOffline } = categoriesSlice.actions;
+export const { loadArrayCategories, addStateCategory, updateStateCategory, deleteStateCategory, /* setCategoriesDataOffline */ } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

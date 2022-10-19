@@ -1,7 +1,6 @@
 {
     "transactionSuccess": true,
     "errorOccurred": false,
-    "message": "Offline Application Settings data used.",
     "siteName": "localhost",
     "applicationName": "PKD and Me",
     "electronicOnly": false,

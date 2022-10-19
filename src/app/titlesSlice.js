@@ -7,7 +7,7 @@ const initialState = {
   arrayTitles: [],
   titlesLoaded: false,
   lastDatabaseRetrievalTitles: null,
-  titlesDataOffline: false,
+  // titlesDataOffline: false,
   titleSortBy: "titleName"
 };
 
@@ -18,6 +18,8 @@ const titlesSlice = createSlice({
     loadArrayTitles(state, action) {
 
       if (isNonEmptyArray(action.payload) === true) {
+
+        state.arrayTitles = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -304,11 +306,11 @@ const titlesSlice = createSlice({
       // };
 
     },
-    setTitlesDataOffline(state, action) {
+    // setTitlesDataOffline(state, action) {
 
-      state.titlesDataOffline = action.payload;
+    //   state.titlesDataOffline = action.payload;
 
-    },
+    // },
     setTitleSortBy(state, action) {
 
       state.titleSortBy = action.payload;
@@ -317,6 +319,6 @@ const titlesSlice = createSlice({
   }
 });
 
-export const { loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, updateStateTitleRating, setTitlesDataOffline, setTitleSortBy } = titlesSlice.actions;
+export const { loadArrayTitles, addStateTitle, updateStateTitle, deleteStateTitle, updateStateTitleRating, /* setTitlesDataOffline, */ setTitleSortBy } = titlesSlice.actions;
 
 export default titlesSlice.reducer;

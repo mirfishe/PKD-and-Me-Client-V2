@@ -4,7 +4,7 @@ import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
-import { loadArrayUserReviews, setUserReviewsDataOffline } from "../../app/userReviewsSlice";
+import { loadArrayUserReviews, /* setUserReviewsDataOffline */ } from "../../app/userReviewsSlice";
 
 function LoadUserReviews() {
 
@@ -70,7 +70,7 @@ function LoadUserReviews() {
 
         } else {
 
-          dispatch(setUserReviewsDataOffline(false));
+          // dispatch(setUserReviewsDataOffline(false));
           return response.json();
 
         };

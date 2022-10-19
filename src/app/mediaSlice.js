@@ -7,7 +7,7 @@ const initialState = {
   arrayMedia: [],
   mediaLoaded: false,
   lastDatabaseRetrievalMedia: null,
-  mediaDataOffline: false
+  // mediaDataOffline: false
 };
 
 const mediaSlice = createSlice({
@@ -17,6 +17,8 @@ const mediaSlice = createSlice({
     loadArrayMedia(state, action) {
 
       if (isNonEmptyArray(action.payload) === true) {
+
+        state.arrayMedia = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -112,14 +114,14 @@ const mediaSlice = createSlice({
       };
 
     },
-    setMediaDataOffline(state, action) {
+    // setMediaDataOffline(state, action) {
 
-      state.mediaDataOffline = action.payload;
+    //   state.mediaDataOffline = action.payload;
 
-    }
+    // }
   }
 });
 
-export const { loadArrayMedia, addStateMedia, updateStateMedia, deleteStateMedia, setMediaDataOffline } = mediaSlice.actions;
+export const { loadArrayMedia, addStateMedia, updateStateMedia, deleteStateMedia, /* setMediaDataOffline */ } = mediaSlice.actions;
 
 export default mediaSlice.reducer;

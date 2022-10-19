@@ -18,6 +18,8 @@ const urlsSlice = createSlice({
 
       if (isNonEmptyArray(action.payload) === true) {
 
+        // state.arrayURLs = [];
+
         for (let i = 0; i < action.payload.length; i++) {
 
           state.arrayURLs.push(action.payload[i]);
@@ -33,6 +35,8 @@ const urlsSlice = createSlice({
 
       // Could change this to accept an object and add that object to the store
       if (isNonEmptyArray(action.payload) === true) {
+
+        // state.arrayURLs = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 

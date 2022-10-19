@@ -7,7 +7,7 @@ import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, Navbar
 import applicationSettings from "./app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
 import { addErrorLog } from "./utilities/ApplicationFunctions";
-import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
+import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, /* setApplicationOffline, */ setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
@@ -65,10 +65,10 @@ const App = () => {
   const lastName = useSelector(state => state.user.lastName);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
-  const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
-  const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
-  const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
-  const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
+  // const categoriesDataOffline = useSelector(state => state.categories.categoriesDataOffline);
+  // const mediaDataOffline = useSelector(state => state.media.mediaDataOffline);
+  // const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
+  // const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
 
   const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
   const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
@@ -418,15 +418,15 @@ const App = () => {
   }, []);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
+  //   if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
 
-      dispatch(setApplicationOffline(true));
+  //     dispatch(setApplicationOffline(true));
 
-    };
+  //   };
 
-  }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
+  // }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
 
 
   useEffect(() => {

@@ -7,7 +7,7 @@ const initialState = {
   arrayEditions: [],
   editionsLoaded: false,
   lastDatabaseRetrievalEditions: null,
-  editionsDataOffline: false,
+  // editionsDataOffline: false,
   editionSortBy: "titleName"
 };
 
@@ -18,6 +18,8 @@ const editionsSlice = createSlice({
     loadArrayEditions(state, action) {
 
       if (isNonEmptyArray(action.payload) === true) {
+
+        state.arrayEditions = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -341,11 +343,11 @@ const editionsSlice = createSlice({
       };
 
     },
-    setEditionsDataOffline(state, action) {
+    // setEditionsDataOffline(state, action) {
 
-      state.editionsDataOffline = action.payload;
+    //   state.editionsDataOffline = action.payload;
 
-    },
+    // },
     setEditionSortBy(state, action) {
 
       state.editionSortBy = action.payload;
@@ -354,6 +356,6 @@ const editionsSlice = createSlice({
   }
 });
 
-export const { loadArrayEditions, addStateEdition, updateStateEdition, deleteStateEdition, setEditionsDataOffline, setEditionSortBy } = editionsSlice.actions;
+export const { loadArrayEditions, addStateEdition, updateStateEdition, deleteStateEdition, /* setEditionsDataOffline, */ setEditionSortBy } = editionsSlice.actions;
 
 export default editionsSlice.reducer;

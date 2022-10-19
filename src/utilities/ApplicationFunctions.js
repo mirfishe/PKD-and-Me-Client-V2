@@ -38,7 +38,7 @@ export const decodeURL = (url) => {
 
   };
 
-  return newURLText;
+  return newURL;
 
 };
 

@@ -18,7 +18,7 @@ const initialState = {
   metaDescription: "",
   defaultPageComponent: "",
   routerBaseName: "",
-  applicationOffline: false,
+  // applicationOffline: false,
   electronicOnly: false,
   userElectronicOnly: false,
   electronicOnlyMessage: "",
@@ -220,11 +220,11 @@ const applicationSettingsSlice = createSlice({
       state.routerBaseName = action.payload;
 
     },
-    setApplicationOffline(state, action) {
+    // setApplicationOffline(state, action) {
 
-      state.applicationOffline = action.payload;
+    //   state.applicationOffline = action.payload;
 
-    },
+    // },
     setElectronicOnly(state, action) {
 
       state.electronicOnly = action.payload;
@@ -458,6 +458,6 @@ const applicationSettingsSlice = createSlice({
   }
 });
 
-export const { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
+export const { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
 
 export default applicationSettingsSlice.reducer;

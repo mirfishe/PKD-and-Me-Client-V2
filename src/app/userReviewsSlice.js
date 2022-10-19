@@ -7,7 +7,7 @@ const initialState = {
   arrayUserReviews: [],
   userReviewsLoaded: false,
   lastDatabaseRetrievalUserReviews: null,
-  userReviewsDataOffline: false,
+  // userReviewsDataOffline: false,
   // arrayUserReviewsRatings: [],
   userReviewsRatingsLoaded: false,
   lastDatabaseRetrievalUserReviewsRatings: null
@@ -21,6 +21,8 @@ const userReviewsSlice = createSlice({
     loadArrayUserReviews(state, action) {
 
       if (isNonEmptyArray(action.payload) === true) {
+
+        state.arrayUserReviews = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -379,11 +381,11 @@ const userReviewsSlice = createSlice({
       };
 
     },
-    setUserReviewsDataOffline(state, action) {
+    // setUserReviewsDataOffline(state, action) {
 
-      state.userReviewsDataOffline = action.payload;
+    //   state.userReviewsDataOffline = action.payload;
 
-    },
+    // },
     // loadArrayUserReviewsRatings(state, action) {
 
     //   if (isNonEmptyArray(action.payload) === true) {
@@ -454,6 +456,6 @@ const userReviewsSlice = createSlice({
   }
 });
 
-export const { loadArrayUserReviews, addStateUserReview, updateStateUserReview, deleteStateUserReview, setUserReviewsDataOffline, /*loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings,*/ setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings /* , setUserReviewsRatingsDataOffline */ } = userReviewsSlice.actions;
+export const { loadArrayUserReviews, addStateUserReview, updateStateUserReview, deleteStateUserReview, /* setUserReviewsDataOffline, */ /*loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings,*/ setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings /* , setUserReviewsRatingsDataOffline */ } = userReviewsSlice.actions;
 
 export default userReviewsSlice.reducer;

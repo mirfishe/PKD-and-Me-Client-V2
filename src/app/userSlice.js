@@ -16,7 +16,7 @@ const initialState = {
   arrayChecklist: [],
   checklistLoaded: false,
   lastDatabaseRetrievalChecklist: null,
-  checklistDataOffline: false
+  // checklistDataOffline: false
 };
 
 const userSlice = createSlice({
@@ -108,6 +108,8 @@ const userSlice = createSlice({
     loadArrayChecklist(state, action) {
 
       if (isNonEmptyArray(action.payload) === true) {
+
+        state.arrayChecklist = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -225,14 +227,14 @@ const userSlice = createSlice({
       };
 
     },
-    setChecklistDataOffline(state, action) {
+    // setChecklistDataOffline(state, action) {
 
-      state.checklistDataOffline = action.payload;
+    //   state.checklistDataOffline = action.payload;
 
-    }
+    // }
   }
 });
 
-export const { loadUserData, setSessionToken, loadArrayChecklist, /*addStateChecklist,*/ updateStateChecklist, setChecklistDataOffline } = userSlice.actions;
+export const { loadUserData, setSessionToken, loadArrayChecklist, /*addStateChecklist,*/ updateStateChecklist, /* setChecklistDataOffline */ } = userSlice.actions;
 
 export default userSlice.reducer;

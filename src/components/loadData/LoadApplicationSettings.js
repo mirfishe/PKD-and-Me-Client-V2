@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
-import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings } from "../../app/applicationSettingsSlice";
+import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings } from "../../app/applicationSettingsSlice";
 
 function LoadApplicationSettings() {
 
@@ -76,7 +76,7 @@ function LoadApplicationSettings() {
     dispatch(setRouterBaseName(applicationSettings.routerBaseName));
 
     // let applicationOffline = applicationSettings.applicationOffline;
-    dispatch(setApplicationOffline(applicationSettings.applicationOffline));
+    // dispatch(setApplicationOffline(applicationSettings.applicationOffline));
 
     // let electronicOnly = applicationSettings.electronicOnly;
     dispatch(setElectronicOnly(applicationSettings.electronicOnly));
@@ -163,14 +163,12 @@ function LoadApplicationSettings() {
 
           // };
 
-
           if (isEmpty(results.siteName) === false) {
 
             // siteName = results.siteName;
             dispatch(setSiteName(results.siteName));
 
           };
-
 
           if (isEmpty(results.applicationName) === false) {
 
@@ -209,14 +207,12 @@ function LoadApplicationSettings() {
 
           // };
 
+          // if (isEmpty(results.applicationOffline) === false) {
 
-          if (isEmpty(results.applicationOffline) === false) {
+          //   // applicationOffline = results.applicationOffline;
+          //   dispatch(setApplicationOffline(results.applicationOffline));
 
-            // applicationOffline = results.applicationOffline;
-            dispatch(setApplicationOffline(results.applicationOffline));
-
-          };
-
+          // };
 
           if (isEmpty(results.electronicOnly) === false) {
 
@@ -225,14 +221,12 @@ function LoadApplicationSettings() {
 
           };
 
-
           if (isEmpty(results.electronicOnlyMessage) === false) {
 
             // electronicOnlyMessage = results.electronicOnlyMessage;
             dispatch(setElectronicOnlyMessage(results.electronicOnlyMessage));
 
           };
-
 
           if (isEmpty(results.physicalOnly) === false) {
 
@@ -241,7 +235,6 @@ function LoadApplicationSettings() {
 
           };
 
-
           if (isEmpty(results.physicalOnlyMessage) === false) {
 
             // physicalOnlyMessage = results.physicalOnlyMessage;
@@ -249,14 +242,12 @@ function LoadApplicationSettings() {
 
           };
 
-
           if (isEmpty(results.applicationAllowUserInteractions) === false) {
 
             // applicationAllowUserInteractions = results.applicationAllowUserInteractions;
             dispatch(setApplicationAllowUserInteractions(results.applicationAllowUserInteractions));
 
           };
-
 
           if (isEmpty(results.requireUserLogin) === false) {
 
@@ -272,7 +263,6 @@ function LoadApplicationSettings() {
             dispatch(setPhysicalOnly(false));
 
           };
-
 
           if (isEmpty(results.menuSettings) === false) {
 
