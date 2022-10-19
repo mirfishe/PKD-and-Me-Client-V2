@@ -6,9 +6,9 @@ import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
 import { createTitleURL, createImageName, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
-import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
-import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
+// import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
+// import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
+import { /* addStateURL, updateStateURL, deleteStateURL, */ setPageURL } from "../../app/urlsSlice";
 
 const EditTitle = (props) => {
 
@@ -564,17 +564,17 @@ const EditTitle = (props) => {
                 // setUrlPKDWeb(data.records[0].urlPKDWeb);
                 setActive(data.records[0].active);
 
-                let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
-                // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
-                categoryItem = categoryItem[0];
+                // let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
+                // // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
+                // categoryItem = categoryItem[0];
 
 
-                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
+                // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                // dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
 
-                // ? Add to local storage also? -- 03/06/2021 MF
+                // // ? Add to local storage also? -- 03/06/2021 MF
 
-                dispatch(addStateURL([{ linkName: data.records[0].titleURL, linkType: "title", linkID: data.records[0].titleID }]));
+                // dispatch(addStateURL([{ linkName: data.records[0].titleURL, linkType: "title", linkID: data.records[0].titleID }]));
 
               } else {
 
@@ -891,56 +891,56 @@ const EditTitle = (props) => {
                 setActive(data.records[0].active);
 
 
-                let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
-                // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
-                categoryItem = categoryItem[0];
+                // let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
+                // // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
+                // categoryItem = categoryItem[0];
 
 
-                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                // dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
 
-                // ? Update local storage also? -- 03/06/2021 MF
+                // // ? Update local storage also? -- 03/06/2021 MF
 
-                // * Update/Delete related editions also if active is set to false. -- 03/06/2021 MF
-                if (data.records[0].active === false || data.records[0].active === 0) {
+                // // * Update/Delete related editions also if active is set to false. -- 03/06/2021 MF
+                // if (data.records[0].active === false || data.records[0].active === 0) {
 
-                  if (isNonEmptyArray(editionList) === true) {
+                //   if (isNonEmptyArray(editionList) === true) {
 
-                    for (let i = 0; i < editionList.length; i++) {
+                //     for (let i = 0; i < editionList.length; i++) {
 
-                      // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+                //       // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
-                      // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                      dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
+                //       // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                //       dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
 
-                    };
+                //     };
 
-                  };
+                //   };
 
-                };
+                // };
 
-                // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
+                // // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
 
-                // * Update/Delete related urls in arrayURLs also. -- 03/06/2021 MF
-                if (data.records[0].active === false || data.records[0].active === 0) {
+                // // * Update/Delete related urls in arrayURLs also. -- 03/06/2021 MF
+                // if (data.records[0].active === false || data.records[0].active === 0) {
 
-                  // dispatch(deleteStateURL(urlListIndex));
-                  dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
+                //   // dispatch(deleteStateURL(urlListIndex));
+                //   dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
 
-                } else {
-
-
-                  let categoryName = categoryList.find(category => category.categoryID === data.records[0].categoryID);
+                // } else {
 
 
-                  // ? Doesn't seem to be updating the state for some reason? -- 03/06/2021 MF
-                  // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
+                //   let categoryName = categoryList.find(category => category.categoryID === data.records[0].categoryID);
 
-                  // dispatch(deleteStateURL(urlListIndex));
-                  dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
-                  dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: data.records[0].titleURL, linkType: "titles", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
 
-                };
+                //   // ? Doesn't seem to be updating the state for some reason? -- 03/06/2021 MF
+                //   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
+
+                //   // dispatch(deleteStateURL(urlListIndex));
+                //   dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
+                //   dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: data.records[0].titleURL, linkType: "titles", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
+
+                // };
 
                 // * Redirect to the new titleURL is that was changed. -- 03/06/2021 MF
                 if (linkItem.linkName !== data.records[0].titleURL) {
@@ -1029,30 +1029,30 @@ const EditTitle = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              dispatch(deleteStateTitle(props.titleID));
-              // dispatch(deleteStateTitle(titleItemIndex));
-              // ? Update local storage also? -- 03/06/2021 MF
+              // dispatch(deleteStateTitle(props.titleID));
+              // // dispatch(deleteStateTitle(titleItemIndex));
+              // // ? Update local storage also? -- 03/06/2021 MF
 
-              if (isNonEmptyArray(editionList) === true) {
+              // if (isNonEmptyArray(editionList) === true) {
 
-                // * Delete related editions also. -- 03/06/2021 MF
-                for (let i = 0; i < editionList.length; i++) {
+              //   // * Delete related editions also. -- 03/06/2021 MF
+              //   for (let i = 0; i < editionList.length; i++) {
 
-                  // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+              //     // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
-                  deleteEdition(editionList[i].editionID/*, editionItemIndex*/);
+              //     deleteEdition(editionList[i].editionID/*, editionItemIndex*/);
 
-                };
+              //   };
 
-              };
+              // };
 
-              // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
+              // // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
 
-              // Update/Delete related urls in arrayURLs also
-              // dispatch(deleteStateURL(urlListIndex));
-              dispatch(deleteStateURL({ linkID: data.titleID, linkType: "titles" }));
+              // // Update/Delete related urls in arrayURLs also
+              // // dispatch(deleteStateURL(urlListIndex));
+              // dispatch(deleteStateURL({ linkID: data.titleID, linkType: "titles" }));
 
-              // ? Redirect when the title is deleted? -- 03/06/2021 MF
+              // // ? Redirect when the title is deleted? -- 03/06/2021 MF
 
             } else {
 
@@ -1080,84 +1080,84 @@ const EditTitle = (props) => {
   };
 
 
-  const deleteEdition = (editionID/*, editionItemIndex*/) => {
+  // const deleteEdition = (editionID/*, editionItemIndex*/) => {
 
-    clearMessages();
-    setEditionRecordDeleted(null);
+  //   clearMessages();
+  //   setEditionRecordDeleted(null);
 
-    let url = baseURL + "editions/";
+  //   let url = baseURL + "editions/";
 
-    if (isEmpty(editionID) === false) {
+  //   if (isEmpty(editionID) === false) {
 
-      url = url + editionID;
+  //     url = url + editionID;
 
 
-      if (isEmpty(sessionToken) === false) {
+  //     if (isEmpty(sessionToken) === false) {
 
-        fetch(url, {
-          method: "DELETE",
-          headers: new Headers({
-            "Content-Type": "application/json",
-            "Authorization": sessionToken
-          })
-        })
-          .then(response => {
+  //       fetch(url, {
+  //         method: "DELETE",
+  //         headers: new Headers({
+  //           "Content-Type": "application/json",
+  //           "Authorization": sessionToken
+  //         })
+  //       })
+  //         .then(response => {
 
-            // if (response.ok !== true) {
+  //           // if (response.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
+  //           //     throw Error(response.status + " " + response.statusText + " " + response.url);
 
-            // } else {
+  //           // } else {
 
-            // if (response.status === 200) {
+  //           // if (response.status === 200) {
 
-            return response.json();
+  //           return response.json();
 
-            // } else {
+  //           // } else {
 
-            //     return response.status;
+  //           //     return response.status;
 
-            // };
+  //           // };
 
-            // };
+  //           // };
 
-          })
-          .then(data => {
+  //         })
+  //         .then(data => {
 
-            setEditionRecordDeleted(data.transactionSuccess);
+  //           setEditionRecordDeleted(data.transactionSuccess);
 
-            addMessage(data.message); // Never seen by the user if the delete was successful
+  //           addMessage(data.message); // Never seen by the user if the delete was successful
 
-            if (data.transactionSuccess === true) {
+  //           if (data.transactionSuccess === true) {
 
-              dispatch(deleteStateEdition(props.editionID));
-              // dispatch(deleteStateEdition(editionItemIndex));
-              // ? Update local storage also? -- 03/06/2021 MF
+  //             dispatch(deleteStateEdition(props.editionID));
+  //             // dispatch(deleteStateEdition(editionItemIndex));
+  //             // ? Update local storage also? -- 03/06/2021 MF
 
-            } else {
+  //           } else {
 
-              // addErrorMessage(data.error);
-              addErrorMessage(data.errorMessages);
+  //             // addErrorMessage(data.error);
+  //             addErrorMessage(data.errorMessages);
 
-            };
+  //           };
 
-          })
-          .catch((error) => {
-            console.error(componentName, getDateTime(), "deleteEdition error", error);
-            // console.error(componentName, getDateTime(), "deleteEdition error.name", error.name);
-            // console.error(componentName, getDateTime(), "deleteEdition error.message", error.message);
+  //         })
+  //         .catch((error) => {
+  //           console.error(componentName, getDateTime(), "deleteEdition error", error);
+  //           // console.error(componentName, getDateTime(), "deleteEdition error.name", error.name);
+  //           // console.error(componentName, getDateTime(), "deleteEdition error.message", error.message);
 
-            addErrorMessage(error.name + ": " + error.message);
+  //           addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+  //           // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
-          });
+  //         });
 
-      };
+  //     };
 
-    };
+  //   };
 
-  };
+  // };
 
 
   const redirectPage = (linkName) => {

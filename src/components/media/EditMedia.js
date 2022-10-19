@@ -5,8 +5,8 @@ import { Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
 import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { addStateMedia } from "../../app/mediaSlice";
-import { addStateURL } from "../../app/urlsSlice";
+// import { addStateMedia } from "../../app/mediaSlice";
+// import { addStateURL } from "../../app/urlsSlice";
 
 const EditMedia = (props) => {
 
@@ -210,12 +210,12 @@ const EditMedia = (props) => {
                 // setSortID(data.records[0].sortID);
                 setActive(data.records[0].active);
 
-                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(addStateMedia([{ mediaID: data.records[0].mediaID, media: data.records[0].media, electronic: data.records[0].electronic, sortID: data.records[0].sortID, active: data.records[0].active, mediaActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
+                // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                // dispatch(addStateMedia([{ mediaID: data.records[0].mediaID, media: data.records[0].media, electronic: data.records[0].electronic, sortID: data.records[0].sortID, active: data.records[0].active, mediaActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
 
-                // ? Add to local storage also? -- 03/06/2021 MF
+                // // ? Add to local storage also? -- 03/06/2021 MF
 
-                dispatch(addStateURL([{ linkName: encodeURL(data.records[0].media), linkType: "media", linkID: data.records[0].mediaID }]));
+                // dispatch(addStateURL([{ linkName: encodeURL(data.records[0].media), linkType: "media", linkID: data.records[0].mediaID }]));
 
               } else {
 

@@ -6,9 +6,9 @@ import { PencilSquare, Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
-import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
-import { updateStateTitleRating } from "../../app/titlesSlice";
-import { updateStateChecklist } from "../../app/userSlice";
+// import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
+// import { updateStateTitleRating } from "../../app/titlesSlice";
+// import { updateStateChecklist } from "../../app/userSlice";
 
 const EditUserReview = (props) => {
 
@@ -402,81 +402,81 @@ const EditUserReview = (props) => {
             // setDatePurchased(data.records[0].datePurchased);
             setActive(data.records[0].active);
 
-            let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
-            // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-            titleItem = titleItem[0];
+            // let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
+            // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
+            // titleItem = titleItem[0];
 
 
-            // let titleItemIndex = titleListState.findIndex(title => title.titleID === data.records[0].titleID);
+            // // let titleItemIndex = titleListState.findIndex(title => title.titleID === data.records[0].titleID);
 
-            // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
+            // // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
-            // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-            dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
+            // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+            // dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
 
-            // ? Add to local storage also? -- 03/06/2021 MF
+            // // ? Add to local storage also? -- 03/06/2021 MF
 
-            // * Recalculate ratings
-            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*data.records[0].*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
+            // // * Recalculate ratings
+            // let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*data.records[0].*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
-            let userReviews = [];
+            // let userReviews = [];
 
-            if (isNonEmptyArray(userReviewsList) === true) {
+            // if (isNonEmptyArray(userReviewsList) === true) {
 
-              for (let i = 0; i < userReviewsList.length; i++) {
+            //   for (let i = 0; i < userReviewsList.length; i++) {
 
-                userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
+            //     userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, rating: userReviewsList[i].rating });
 
-              };
+            //   };
 
-            };
+            // };
 
-            // let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
+            // // let userReviews = userReviewListState.filter(userReview => userReview.titleID === data.records[0].titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
-            // * Get all reviews for the title. -- 03/06/2021 MF
-            // ? Get the latest from state? -- 03/06/2021 MF
-            // ? Update the state user review array? -- 03/06/2021 MF
-            if (isEmpty(data.records[0].rating) === false) {
-              // userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active });
-              userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, rating: data.records[0].rating });
-            };
+            // // * Get all reviews for the title. -- 03/06/2021 MF
+            // // ? Get the latest from state? -- 03/06/2021 MF
+            // // ? Update the state user review array? -- 03/06/2021 MF
+            // if (isEmpty(data.records[0].rating) === false) {
+            //   // userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active });
+            //   userReviews.push({ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, rating: data.records[0].rating });
+            // };
 
-            // * Recompute the average. -- 03/06/2021 MF
-            let userReviewCount = userReviews.length;
+            // // * Recompute the average. -- 03/06/2021 MF
+            // let userReviewCount = userReviews.length;
 
-            let userReviewSum = 0;
+            // let userReviewSum = 0;
 
-            if (isNonEmptyArray(userReviews) === true) {
+            // if (isNonEmptyArray(userReviews) === true) {
 
-              for (let i = 0; i < userReviews.length; i++) {
+            //   for (let i = 0; i < userReviews.length; i++) {
 
-                userReviewSum += userReviews[i].rating;
+            //     userReviewSum += userReviews[i].rating;
 
-              };
+            //   };
 
-            };
+            // };
 
-            let userReviewAverage = 0;
+            // let userReviewAverage = 0;
 
-            if (userReviewCount > 0) {
+            // if (userReviewCount > 0) {
 
-              // ? Check for division by zero? -- 03/06/2021 MF
-              // let userReviewAverage: number = userReviewSum/0;
-              userReviewAverage = userReviewSum / userReviewCount;
+            //   // ? Check for division by zero? -- 03/06/2021 MF
+            //   // let userReviewAverage: number = userReviewSum/0;
+            //   userReviewAverage = userReviewSum / userReviewCount;
 
-            };
+            // };
 
-            // * Update the title ratings. -- 03/06/2021 MF
-            dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+            // // * Update the title ratings. -- 03/06/2021 MF
+            // dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
+            // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
 
 
-            if (data.records[0].active === true || data.records[0].active === 1) {
+            // if (data.records[0].active === true || data.records[0].active === 1) {
 
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
+            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
 
-            };
+            // };
 
           } else {
 
@@ -660,97 +660,97 @@ const EditUserReview = (props) => {
             // setLongReview(data.records[0].longReview);
             setActive(data.records[0].active);
 
-            let titleItem = titleListState.filter(title => title.titleID === /*data.records[0].*/titleID);
-            // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-            titleItem = titleItem[0];
+            // let titleItem = titleListState.filter(title => title.titleID === /*data.records[0].*/titleID);
+            // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
+            // titleItem = titleItem[0];
 
 
-            // let titleItemIndex = titleListState.findIndex(title => title.titleID === /*data.records[0].*/titleID);
+            // // let titleItemIndex = titleListState.findIndex(title => title.titleID === /*data.records[0].*/titleID);
 
-            // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
+            // // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
-            // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-            dispatch(updateStateUserReview({ /*userReviewItemIndex: userReviewItemIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: getDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
+            // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+            // dispatch(updateStateUserReview({ /*userReviewItemIndex: userReviewItemIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: getDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
 
-            // ? Add to local storage also? -- 03/06/2021 MF
+            // // ? Add to local storage also? -- 03/06/2021 MF
 
-            // * Recalculate ratings
-            let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*data.records[0].*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
+            // // * Recalculate ratings
+            // let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*data.records[0].*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
-            let userReviews = [];
+            // let userReviews = [];
 
-            if (isNonEmptyArray(userReviewsList) === true) {
+            // if (isNonEmptyArray(userReviewsList) === true) {
 
-              for (let i = 0; i < userReviewsList.length; i++) {
+            //   for (let i = 0; i < userReviewsList.length; i++) {
 
-                userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, titleID: userReviewsList[i].titleID, rating: userReviewsList[i].rating });
+            //     userReviews.push({ reviewID: userReviewsList[i].reviewID, userID: userReviewsList[i].userID, updatedBy: userReviewsList[i].updatedBy, titleID: userReviewsList[i].titleID, rating: userReviewsList[i].rating });
 
-              };
+            //   };
 
-            };
+            // };
 
-            const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === props.reviewID);
+            // const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === props.reviewID);
 
-            // * Get all reviews for the title. -- 03/06/2021 MF
-            // ? Get the latest from state? -- 03/06/2021 MF
-            // ? Update the state user review array? -- 03/06/2021 MF
-            // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>' -- 03/06/2021 MF
-            // userReviews[userReviewsIndex].rating = data.records[0].rating;
+            // // * Get all reviews for the title. -- 03/06/2021 MF
+            // // ? Get the latest from state? -- 03/06/2021 MF
+            // // ? Update the state user review array? -- 03/06/2021 MF
+            // // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>' -- 03/06/2021 MF
+            // // userReviews[userReviewsIndex].rating = data.records[0].rating;
 
-            if (userReviewsIndex > -1) {
+            // if (userReviewsIndex > -1) {
 
-              userReviews.splice(userReviewsIndex, 1);
+            //   userReviews.splice(userReviewsIndex, 1);
 
-            };
+            // };
 
-            // userReviews.push({ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
+            // // userReviews.push({ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
 
 
-            if (data.records[0].active === true || data.records[0].active === 1 && isEmpty(data.records[0].rating) === false) {
+            // if (data.records[0].active === true || data.records[0].active === 1 && isEmpty(data.records[0].rating) === false) {
 
-              userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, rating: data.records[0].rating });
+            //   userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, rating: data.records[0].rating });
 
-            };
+            // };
 
-            // * Recompute the average. -- 03/06/2021 MF
-            let userReviewCount = userReviews.length;
+            // // * Recompute the average. -- 03/06/2021 MF
+            // let userReviewCount = userReviews.length;
 
-            let userReviewSum = 0;
+            // let userReviewSum = 0;
 
-            if (isNonEmptyArray(userReviews) === true) {
+            // if (isNonEmptyArray(userReviews) === true) {
 
-              for (let i = 0; i < userReviews.length; i++) {
+            //   for (let i = 0; i < userReviews.length; i++) {
 
-                userReviewSum += userReviews[i].rating;
+            //     userReviewSum += userReviews[i].rating;
 
-              };
+            //   };
 
-            };
+            // };
 
-            let userReviewAverage = 0;
+            // let userReviewAverage = 0;
 
-            if (userReviewCount > 0) {
+            // if (userReviewCount > 0) {
 
-              // ? Check for division by zero? -- 03/06/2021 MF
-              // let userReviewAverage: number = userReviewSum/0;
-              userReviewAverage = userReviewSum / userReviewCount;
+            //   // ? Check for division by zero? -- 03/06/2021 MF
+            //   // let userReviewAverage: number = userReviewSum/0;
+            //   userReviewAverage = userReviewSum / userReviewCount;
 
-            };
+            // };
 
-            // * Update the title ratings. -- 03/06/2021 MF
-            dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+            // // * Update the title ratings. -- 03/06/2021 MF
+            // dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /*data.records[0].*/titleID);
+            // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /*data.records[0].*/titleID);
 
-            if (data.records[0].active === true || data.records[0].active === 1) {
+            // if (data.records[0].active === true || data.records[0].active === 1) {
 
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
+            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
 
-            } else {
+            // } else {
 
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: null, userID: null, updatedBy: null, titleID: /*data.records[0].*/titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
+            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: null, userID: null, updatedBy: null, titleID: /*data.records[0].*/titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
 
-            };
+            // };
 
           } else {
 
@@ -827,63 +827,63 @@ const EditUserReview = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              // dispatch(deleteStateUserReview(userReviewItemIndex));
-              dispatch(deleteStateUserReview(data.reviewID));
-              // ? Update local storage also? -- 03/06/2021 MF
+              // // dispatch(deleteStateUserReview(userReviewItemIndex));
+              // dispatch(deleteStateUserReview(data.reviewID));
+              // // ? Update local storage also? -- 03/06/2021 MF
 
-              // let titleItem = titleListState.filter(title => title.titleID === data.titleID);
-              // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-              // titleItem = titleItem[0];
+              // // let titleItem = titleListState.filter(title => title.titleID === data.titleID);
+              // // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
+              // // titleItem = titleItem[0];
 
-              let userReviewItem = userReviewListState.filter(userReview => userReview.reviewID === data.reviewID);
-              userReviewItem = userReviewItem[0];
+              // let userReviewItem = userReviewListState.filter(userReview => userReview.reviewID === data.reviewID);
+              // userReviewItem = userReviewItem[0];
 
-              // let titleItemIndex = titleListState.findIndex(title => title.titleID === userReviewItem.titleID);
+              // // let titleItemIndex = titleListState.findIndex(title => title.titleID === userReviewItem.titleID);
 
-              // * Recalculate ratings. -- 03/06/2021 MF
-              let userReviews = userReviewListState.filter(userReview => userReview.titleID === userReviewItem.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
+              // // * Recalculate ratings. -- 03/06/2021 MF
+              // let userReviews = userReviewListState.filter(userReview => userReview.titleID === userReviewItem.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
-              const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === data.reviewID);
+              // const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === data.reviewID);
 
-              // * Get all reviews for the title. -- 03/06/2021 MF
-              // ? Get the latest from state? -- 03/06/2021 MF
-              // ? Update the state user review array? -- 03/06/2021 MF
-              // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>' -- 03/06/2021 MF
-              // userReviews[userReviewsIndex].rating = data.rating;
+              // // * Get all reviews for the title. -- 03/06/2021 MF
+              // // ? Get the latest from state? -- 03/06/2021 MF
+              // // ? Update the state user review array? -- 03/06/2021 MF
+              // // * TypeError: Cannot assign to read only property 'rating' of object '#<Object>' -- 03/06/2021 MF
+              // // userReviews[userReviewsIndex].rating = data.rating;
 
-              if (userReviewsIndex > -1) {
+              // if (userReviewsIndex > -1) {
 
-                userReviews.splice(userReviewsIndex, 1);
+              //   userReviews.splice(userReviewsIndex, 1);
 
-              };
+              // };
 
-              // * Recompute the average. -- 03/06/2021 MF
-              let userReviewCount = userReviews.length;
+              // // * Recompute the average. -- 03/06/2021 MF
+              // let userReviewCount = userReviews.length;
 
-              let userReviewSum = 0;
+              // let userReviewSum = 0;
 
-              if (isNonEmptyArray(userReviews) === true) {
+              // if (isNonEmptyArray(userReviews) === true) {
 
-                for (let i = 0; i < userReviews.length; i++) {
+              //   for (let i = 0; i < userReviews.length; i++) {
 
-                  userReviewSum += userReviews[i].rating;
+              //     userReviewSum += userReviews[i].rating;
 
-                };
+              //   };
 
-              };
+              // };
 
-              let userReviewAverage = 0;
+              // let userReviewAverage = 0;
 
-              if (userReviewCount > 0) {
+              // if (userReviewCount > 0) {
 
-                // ? Check for division by zero? -- 03/06/2021 MF
-                // let userReviewAverage: number = userReviewSum/0;
-                userReviewAverage = userReviewSum / userReviewCount;
+              //   // ? Check for division by zero? -- 03/06/2021 MF
+              //   // let userReviewAverage: number = userReviewSum/0;
+              //   userReviewAverage = userReviewSum / userReviewCount;
 
-              };
+              // };
 
-              // * Update the title ratings. -- 03/06/2021 MF
-              dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: userReviewItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+              // // * Update the title ratings. -- 03/06/2021 MF
+              // dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: userReviewItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             } else {
 

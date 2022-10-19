@@ -32,83 +32,83 @@ const categoriesSlice = createSlice({
       state.lastDatabaseRetrievalCategories = getDateTime();
 
     },
-    addStateCategory(state, action) {
+    // addStateCategory(state, action) {
 
-      // * Could change this to accept an object and add that object to the store
-      if (isNonEmptyArray(action.payload) === true) {
+    //   // * Could change this to accept an object and add that object to the store
+    //   if (isNonEmptyArray(action.payload) === true) {
 
-        for (let i = 0; i < action.payload.length; i++) {
+    //     for (let i = 0; i < action.payload.length; i++) {
 
-          state.arrayCategories.push(action.payload[i]);
+    //       state.arrayCategories.push(action.payload[i]);
 
-        };
+    //     };
 
-      };
+    //   };
 
-    },
-    updateStateCategory(state, action) {
+    // },
+    // updateStateCategory(state, action) {
 
-      const categoryItem = action.payload;
-      let categoryItemIndex;
+    //   const categoryItem = action.payload;
+    //   let categoryItemIndex;
 
-      if (typeof categoryItem === "object") {
+    //   if (typeof categoryItem === "object") {
 
-        if (hasNonEmptyProperty(categoryItem, "categoryID")) {
+    //     if (hasNonEmptyProperty(categoryItem, "categoryID")) {
 
-          categoryItemIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryItem.categoryID);
-
-
-          // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
-
-        };
-
-        if (hasNonEmptyProperty(categoryItem, "category")) {
-
-          state.arrayCategories[categoryItemIndex].category = categoryItem.category;
-
-        };
-
-        if (hasNonEmptyProperty(categoryItem, "sortID")) {
-
-          state.arrayCategories[categoryItemIndex].sortID = categoryItem.sortID;
-
-        };
-
-        if (hasNonEmptyProperty(categoryItem, "active")) {
-
-          state.arrayCategories[categoryItemIndex].active = categoryItem.active;
-
-        };
-
-        if (hasNonEmptyProperty(categoryItem, "updateDate")) {
-
-          state.arrayCategories[categoryItemIndex].updateDate = categoryItem.updateDate;
-
-        };
-
-      };
-
-    },
-    deleteStateCategory(state, action) {
-
-      // const categoryItemIndex = action.payload;
-      let categoryListIndex;
-      const categoryID = action.payload;
-
-      // ? This doesn't work because state.arrayCategories isn't stored as an array of objects?
-      // ? Need to copy the array?
-      // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
-
-      if (isEmpty(categoryID) === false) {
-
-        categoryListIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
+    //       categoryItemIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryItem.categoryID);
 
 
-        state.arrayCategories.splice(categoryListIndex, 1);
+    //       // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
 
-      };
+    //     };
 
-    },
+    //     if (hasNonEmptyProperty(categoryItem, "category")) {
+
+    //       state.arrayCategories[categoryItemIndex].category = categoryItem.category;
+
+    //     };
+
+    //     if (hasNonEmptyProperty(categoryItem, "sortID")) {
+
+    //       state.arrayCategories[categoryItemIndex].sortID = categoryItem.sortID;
+
+    //     };
+
+    //     if (hasNonEmptyProperty(categoryItem, "active")) {
+
+    //       state.arrayCategories[categoryItemIndex].active = categoryItem.active;
+
+    //     };
+
+    //     if (hasNonEmptyProperty(categoryItem, "updateDate")) {
+
+    //       state.arrayCategories[categoryItemIndex].updateDate = categoryItem.updateDate;
+
+    //     };
+
+    //   };
+
+    // },
+    // deleteStateCategory(state, action) {
+
+    //   // const categoryItemIndex = action.payload;
+    //   let categoryListIndex;
+    //   const categoryID = action.payload;
+
+    //   // ? This doesn't work because state.arrayCategories isn't stored as an array of objects?
+    //   // ? Need to copy the array?
+    //   // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
+
+    //   if (isEmpty(categoryID) === false) {
+
+    //     categoryListIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
+
+
+    //     state.arrayCategories.splice(categoryListIndex, 1);
+
+    //   };
+
+    // },
     // setCategoriesDataOffline(state, action) {
 
     //   state.categoriesDataOffline = action.payload;
@@ -117,6 +117,6 @@ const categoriesSlice = createSlice({
   }
 });
 
-export const { loadArrayCategories, addStateCategory, updateStateCategory, deleteStateCategory, /* setCategoriesDataOffline */ } = categoriesSlice.actions;
+export const { loadArrayCategories, /* addStateCategory, updateStateCategory, deleteStateCategory, */ /* setCategoriesDataOffline */ } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

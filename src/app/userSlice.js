@@ -161,72 +161,72 @@ const userSlice = createSlice({
     //   };
 
     // },
-    updateStateChecklist(state, action) {
+    // updateStateChecklist(state, action) {
 
-      const checklistItem = action.payload;
-      let checklistListIndex;
+    //   const checklistItem = action.payload;
+    //   let checklistListIndex;
 
-      if (typeof checklistItem === "object") {
+    //   if (typeof checklistItem === "object") {
 
-        if (hasNonEmptyProperty(checklistItem, "titleID")) {
+    //     if (hasNonEmptyProperty(checklistItem, "titleID")) {
 
-          checklistListIndex = state.arrayChecklist.findIndex(title => title.titleID === checklistItem.titleID);
+    //       checklistListIndex = state.arrayChecklist.findIndex(title => title.titleID === checklistItem.titleID);
 
 
-          // state.arrayChecklist[checklistListIndex].titleID = checklistItem.titleID;
-        };
+    //       // state.arrayChecklist[checklistListIndex].titleID = checklistItem.titleID;
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "reviewID")) {
+    //     if (hasNonEmptyProperty(checklistItem, "reviewID")) {
 
-          state.arrayChecklist[checklistListIndex].reviewID = checklistItem.reviewID;
+    //       state.arrayChecklist[checklistListIndex].reviewID = checklistItem.reviewID;
 
-        };
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "userID")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userID")) {
 
-          state.arrayChecklist[checklistListIndex].userID = checklistItem.userID;
+    //       state.arrayChecklist[checklistListIndex].userID = checklistItem.userID;
 
-        };
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "updatedBy")) {
+    //     if (hasNonEmptyProperty(checklistItem, "updatedBy")) {
 
-          state.arrayChecklist[checklistListIndex].updatedBy = checklistItem.updatedBy;
+    //       state.arrayChecklist[checklistListIndex].updatedBy = checklistItem.updatedBy;
 
-        };
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "read")) {
+    //     if (hasNonEmptyProperty(checklistItem, "read")) {
 
-          state.arrayChecklist[checklistListIndex].read = checklistItem.read;
+    //       state.arrayChecklist[checklistListIndex].read = checklistItem.read;
 
-        };
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "dateRead")) {
+    //     if (hasNonEmptyProperty(checklistItem, "dateRead")) {
 
-          state.arrayChecklist[checklistListIndex].dateRead = checklistItem.dateRead;
+    //       state.arrayChecklist[checklistListIndex].dateRead = checklistItem.dateRead;
 
-        };
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "userReviewActive")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userReviewActive")) {
 
-          state.arrayChecklist[checklistListIndex].userReviewActive = checklistItem.userReviewActive;
+    //       state.arrayChecklist[checklistListIndex].userReviewActive = checklistItem.userReviewActive;
 
-        };
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "userReviewCreatedDate")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userReviewCreatedDate")) {
 
-          state.arrayChecklist[checklistListIndex].userReviewCreatedDate = checklistItem.userReviewCreatedDate;
+    //       state.arrayChecklist[checklistListIndex].userReviewCreatedDate = checklistItem.userReviewCreatedDate;
 
-        };
+    //     };
 
-        if (hasNonEmptyProperty(checklistItem, "userReviewUpdateDate")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userReviewUpdateDate")) {
 
-          state.arrayChecklist[checklistListIndex].userReviewUpdateDate = checklistItem.userReviewUpdateDate;
+    //       state.arrayChecklist[checklistListIndex].userReviewUpdateDate = checklistItem.userReviewUpdateDate;
 
-        };
+    //     };
 
-      };
+    //   };
 
-    },
+    // },
     // setChecklistDataOffline(state, action) {
 
     //   state.checklistDataOffline = action.payload;
@@ -235,6 +235,6 @@ const userSlice = createSlice({
   }
 });
 
-export const { loadUserData, setSessionToken, loadArrayChecklist, /*addStateChecklist,*/ updateStateChecklist, /* setChecklistDataOffline */ } = userSlice.actions;
+export const { loadUserData, setSessionToken, loadArrayChecklist, /*addStateChecklist, updateStateChecklist, */ /* setChecklistDataOffline */ } = userSlice.actions;
 
 export default userSlice.reducer;

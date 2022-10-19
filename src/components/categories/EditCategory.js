@@ -5,8 +5,8 @@ import { Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
 import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { addStateCategory } from "../../app/categoriesSlice";
-import { addStateURL } from "../../app/urlsSlice";
+// import { addStateCategory } from "../../app/categoriesSlice";
+// import { addStateURL } from "../../app/urlsSlice";
 
 const EditCategory = (props) => {
 
@@ -204,12 +204,12 @@ const EditCategory = (props) => {
                 // setSortID(data.records[0].sortID);
                 setActive(data.records[0].active);
 
-                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, categoryActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
+                // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                // dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, categoryActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
 
-                // ? Add to local storage also? -- 03/06/2021 MF
+                // // ? Add to local storage also? -- 03/06/2021 MF
 
-                dispatch(addStateURL([{ linkName: encodeURL(data.records[0].category), linkType: "category", linkID: data.records[0].categoryID }]));
+                // dispatch(addStateURL([{ linkName: encodeURL(data.records[0].category), linkType: "category", linkID: data.records[0].categoryID }]));
 
               } else {
 
