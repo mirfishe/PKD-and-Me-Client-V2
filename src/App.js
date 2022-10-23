@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
 // import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
@@ -18,10 +18,9 @@ import New from "./content/New";
 import About from "./content/About";
 import Homeopape from "./content/Homeopape";
 import Dickian from "./content/Dickian";
-import FormatPost from "./components/socialMedia/FormatPost";
 // import EditCategory from "./components/categories/EditCategory";
-import EditMedia from "./components/media/EditMedia";
-import EditTitle from "./components/titles/EditTitle";
+// import EditMedia from "./components/media/EditMedia";
+// import EditTitle from "./components/titles/EditTitle";
 import Category from "./components/categories/Category";
 import Media from "./components/media/Media";
 import Titles from "./components/titles/Titles";
@@ -29,19 +28,20 @@ import Title from "./components/titles/Title";
 import Editions from "./components/editions/Editions";
 import Login from "./components/users/Login";
 import Register from "./components/users/Register";
-import EditUser from "./components/users/EditUser";
-import Checklist from "./components/checklist/Checklist";
-import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
-import AddComment from "./components/comments/AddComment";
-import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
-import Comments from "./components/comments/Comments";
-import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
-import Amazon from "./components/amazon/Amazon";
-import Terms from "./components/terms/Terms";
-import BrokenLinks from "./components/reports/BrokenLinks";
-import ComputerLogs from "./components/reports/ComputerLogs";
-import Logs from "./components/reports/Logs";
-import Errors from "./components/reports/Errors";
+// import EditUser from "./components/users/EditUser";
+// import Checklist from "./components/checklist/Checklist";
+// import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
+// import FormatPost from "./components/socialMedia/FormatPost";
+// import AddComment from "./components/comments/AddComment";
+// import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
+// import Comments from "./components/comments/Comments";
+// import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
+// import Amazon from "./components/amazon/Amazon";
+// import Terms from "./components/terms/Terms";
+// import BrokenLinks from "./components/reports/BrokenLinks";
+// import ComputerLogs from "./components/reports/ComputerLogs";
+// import Logs from "./components/reports/Logs";
+// import Errors from "./components/reports/Errors";
 
 const App = () => {
 
@@ -51,6 +51,7 @@ const App = () => {
   const componentName = "App";
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -632,6 +633,17 @@ const App = () => {
   };
 
 
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
+
+
   return (
     <BrowserRouter basename={routerBaseName}>
       <Navbar color="light" light>
@@ -701,13 +713,13 @@ const App = () => {
 
             : null}
 
-          {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
+          {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
 
             <NavItem>
               <EditUser />
             </NavItem>
 
-            : null}
+            : null} */}
 
           <NavItem className="mx-3 my-2">
             <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
@@ -731,21 +743,21 @@ const App = () => {
 
             : null} */}
 
-          {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
+          {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddTitleSuggestion displayButton={true} />
             </NavItem>
 
-            : null}
+            : null} */}
 
-          {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
+          {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddComment displayButton={true} />
             </NavItem>
 
-            : null}
+            : null} */}
 
           {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
@@ -759,7 +771,7 @@ const App = () => {
         </Nav>
       </Navbar>
 
-      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
+      {/* {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
@@ -807,7 +819,7 @@ const App = () => {
           </Nav>
         </Navbar>
 
-        : null}
+        : null} */}
 
       {showAllCategories === true || showAllMedia === true || showAllTitles === true || showAllEditions === true || showAllMenuItems === true ?
 
@@ -949,77 +961,77 @@ const App = () => {
             <Routes>
 
               {/* // * Set the default page from the defaultPageComponent from environment. -- 03/06/2021 MF */}
-              {defaultPageComponent === "Home" ? <Route path="/" element={<Home />} /> : null}
-              {defaultPageComponent === "About" ? <Route path="/" element={<About />} /> : null}
-              {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape />} /> : null}
-              {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian />} /> : null}
+              {defaultPageComponent === "Home" ? <Route path="/" element={<Home redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian redirectPage={redirectPage} />} /> : null}
 
               {/* <Route path="/">
                 {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
-                {defaultPageComponent === "Home" ? <Route path="/" element={<Home />}  /> : null}
-                {defaultPageComponent === "About" ? <Route path="/" element={<About />}  /> : null}
-                {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape />}  /> : null}
+                {defaultPageComponent === "Home" ? <Route path="/" element={<Home redirectPage={redirectPage} />}  /> : null}
+                {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />}  /> : null}
+                {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />}  /> : null}
               </Route> */}
 
-              <Route path="/home" element={<Home />} />
-              <Route path="/new" element={<New />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/homeopape" element={<Homeopape />} />
+              <Route path="/home" element={<Home redirectPage={redirectPage} />} />
+              <Route path="/new" element={<New redirectPage={redirectPage} />} />
+              <Route path="/about" element={<About redirectPage={redirectPage} />} />
+              <Route path="/homeopape" element={<Homeopape redirectPage={redirectPage} />} />
 
               {/* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}
               {/* {isEmpty(admin) === false && admin === true ?
 
                 <React.Fragment> */}
 
-              <Route path="/socialMedia" element={<FormatPost />} />
+              {/* <Route path="/socialMedia" element={<FormatPost redirectPage={redirectPage} />} />
 
-              <Route path="/fromTheHomeopape" element={<UpdateFromTheHomeopape />} />
+              <Route path="/fromTheHomeopape" element={<UpdateFromTheHomeopape redirectPage={redirectPage} />} />
 
-              <Route path="/brokenLinks" element={<BrokenLinks />} />
+              <Route path="/brokenLinks" element={<BrokenLinks redirectPage={redirectPage} />} />
 
-              <Route path="/computerLogs" element={<ComputerLogs />} />
+              <Route path="/computerLogs" element={<ComputerLogs redirectPage={redirectPage} />} />
 
-              <Route path="/logs" element={<Logs />} />
+              <Route path="/logs" element={<Logs redirectPage={redirectPage} />} />
 
-              <Route path="/errors" element={<Errors />} />
+              <Route path="/errors" element={<Errors redirectPage={redirectPage} />} />
 
-              <Route path="/comments" element={<Comments />} />
+              <Route path="/comments" element={<Comments redirectPage={redirectPage} />} />
 
-              <Route path="/titleSuggestions" element={<TitleSuggestions />} />
+              <Route path="/titleSuggestions" element={<TitleSuggestions redirectPage={redirectPage} />} />
 
-              <Route path="/amazon" element={<Amazon />} />
+              <Route path="/amazon" element={<Amazon redirectPage={redirectPage} />} />
 
-              <Route path="/terms" element={<Terms />} />
+              <Route path="/terms" element={<Terms redirectPage={redirectPage} />} /> */}
 
               {/* </React.Fragment>
 
                 : null} */}
 
-              <Route path="/dickian" element={<Dickian />} />
+              <Route path="/dickian" element={<Dickian redirectPage={redirectPage} />} />
 
-              <Route path="/categories" element={<Category />} />
-              <Route path="/media" element={<Media />} />
-
-              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route path="/titles" element={<Titles />} />
-              {/* <Route path="/titles/:category" element={<Titles />} />
-              <Route path="/title/:title" element={<Title />} /> */}
+              <Route path="/categories" element={<Category redirectPage={redirectPage} />} />
+              <Route path="/media" element={<Media redirectPage={redirectPage} />} />
 
               {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route path="/editions" element={<Editions />} />
-              {/* <Route path="/editions/:title" element={<Editions />} />
-               <Route path="/editions/:media" element={<Editions />} /> */}
+              <Route path="/titles" element={<Titles redirectPage={redirectPage} />} />
+              {/* <Route path="/titles/:category" element={<Titles redirectPage={redirectPage} />} />
+              <Route path="/title/:title" element={<Title redirectPage={redirectPage} />} /> */}
+
+              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
+              <Route path="/editions" element={<Editions redirectPage={redirectPage} />} />
+              {/* <Route path="/editions/:title" element={<Editions redirectPage={redirectPage} />} />
+               <Route path="/editions/:media" element={<Editions redirectPage={redirectPage} />} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
             </Routes>
 
-            {/* {process.env.NODE_ENV === "development" ? <FromTheHomeopape /> : null} */}
+            {/* {process.env.NODE_ENV === "development" ? <FromTheHomeopape redirectPage={redirectPage} /> : null} */}
 
           </Col>
         </Row>

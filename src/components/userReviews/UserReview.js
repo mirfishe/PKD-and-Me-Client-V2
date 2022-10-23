@@ -4,12 +4,13 @@ import { Container, Col, Row, Alert } from "reactstrap";
 // import { Rating } from "@mui/lab/";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
 // import AddUserReview from "../userReviews/AddUserReview";
-import EditUserReview from "../userReviews/EditUserReview";
+// import EditUserReview from "../userReviews/EditUserReview";
 
 const UserReview = (props) => {
 
   // * Available props: -- 10/21/2022 MF
   // * Properties: titleID, userReviewUpdated -- 10/21/2022 MF
+  // * Functions: redirectPage, userReviewUpdated -- 10/21/2022 MF
 
   const componentName = "UserReview";
 
@@ -17,16 +18,17 @@ const UserReview = (props) => {
   const admin = useSelector(state => state.user.admin);
   const userID = useSelector(state => state.user.userID);
 
+  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
+
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
   let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   // const [userReviewMessage, setUserReviewMessage] = useState("");
   const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
   // const [userReviewResultsFound, setUserReviewResultsFound] = useState(null);
 
   // const [userReviewDisplayCount, setUserReviewDisplayCount] = useState(0);
-
-  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
 
   let userReviews = [...userReviewsState];
 
@@ -35,7 +37,6 @@ const UserReview = (props) => {
     userReviews = userReviews.filter(userReview => userReview.titleID === titleID);
 
   };
-
 
   if (isEmpty(admin) === false && admin === true) {
 
@@ -46,7 +47,6 @@ const UserReview = (props) => {
     userReviews = userReviews.filter(userReview => userReview.userReview === true);
 
   };
-
 
   // * Sort the list by createDate. -- 03/06/2021 MF
   userReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
@@ -84,7 +84,6 @@ const UserReview = (props) => {
 
       };
 
-
       if (displayCount > 0) {
 
         setErrUserReviewMessage("");
@@ -115,7 +114,7 @@ const UserReview = (props) => {
 
           <h5 className="text-center">User Reviews
             {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <AddUserReview titleID={titleID} displayButton={true} /> : null} */}
-            {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <EditUserReview titleID={titleID} displayButton={true} /> : null}
+            {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <EditUserReview titleID={titleID} displayButton={true} /> : null} */}
           </h5>
 
         </Col>
@@ -174,7 +173,7 @@ const UserReview = (props) => {
                         {isEmpty(userReview.shortReview) === false ?
 
                           <h6>{userReview.shortReview}
-                            {/* {userID === userReview.userID || isAdmin === true ? <UpdateUserReview userID={userID} isAdmin={isAdmin} sessionToken={sessionToken} titleID={titleID} userReviewUpdated={userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
+                            {/* {props.userID === userReview.userID || props.isAdmin === true ? <UpdateUserReview userID={props.userID} isAdmin={props.isAdmin} sessionToken={props.sessionToken} titleID={props.titleID} userReviewUpdated={userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
                           </h6>
 
                           : null}
@@ -206,11 +205,11 @@ const UserReview = (props) => {
                     <Row>
                       <Col xs="12">
 
-                        {isEmpty(sessionToken) === false && ((isEmpty(userID) === false && userID === userReview.userID) || (isEmpty(admin) === false && admin === true)) ?
+                        {/* {isEmpty(sessionToken) === false && ((isEmpty(userID) === false && userID === userReview.userID) || (isEmpty(admin) === false && admin === true)) ?
 
                           <EditUserReview reviewID={userReview.reviewID} displayButton={true} />
 
-                          : null}
+                          : null} */}
 
                       </Col>
                     </Row>

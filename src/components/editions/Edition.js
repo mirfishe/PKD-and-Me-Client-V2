@@ -5,22 +5,23 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from "react-bootstrap-icons";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate, displayYear } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddEdition from "../editions/AddEdition";
-import EditEdition from "../editions/EditEdition";
+// import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
 const Edition = (props) => {
 
   // * Available props: -- 10/21/2022 MF
   // * Properties: titleID -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
 
   const componentName = "Edition";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -37,17 +38,17 @@ const Edition = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
+  const editionsState = useSelector(state => state.editions.arrayEditions);
+  const titleListState = useSelector(state => state.titles.arrayTitles);
+
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   // const [editionMessage, setEditionMessage] = useState("");
   const [errEditionMessage, setErrEditionMessage] = useState("");
   // const [editionResultsFound, setEditionResultsFound] = useState(null);
 
-  const editionsState = useSelector(state => state.editions.arrayEditions);
-
   let editionList = [...editionsState];
-
-  const titleListState = useSelector(state => state.titles.arrayTitles);
 
   let titleItemArray = [];
   let titleItem = {};
@@ -86,7 +87,6 @@ const Edition = (props) => {
 
   };
 
-
   // * Sort the editionList array by media.sortID
   // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
   editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -105,17 +105,6 @@ const Edition = (props) => {
     };
 
   }, [editionList]);
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
 
 
   // ! This doesn't work. The function needs to stay contained within the img tag. -- 03/06/2021 MF
@@ -138,7 +127,7 @@ const Edition = (props) => {
 
             {/* {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null} */}
 
-            {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <EditEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null}
+            {/* {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <EditEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null} */}
 
           </h5>
 

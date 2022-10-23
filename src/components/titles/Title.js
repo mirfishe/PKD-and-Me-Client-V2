@@ -4,29 +4,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 // import { Rating } from "@mui/lab/";
-import Parse from "html-react-parser";
+// import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
-import EditTitle from "./EditTitle";
+// import EditTitle from "./EditTitle";
 import Edition from "../editions/Edition";
 // import AddEdition from "../editions/AddEdition";
-import EditEdition from "../editions/EditEdition";
+// import EditEdition from "../editions/EditEdition";
 import UserReview from "../userReviews/UserReview";
 // import AddUserReview from "../userReviews/AddUserReview";
-import EditUserReview from "../userReviews/EditUserReview";
+// import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
 
   // * Available props: -- 10/21/2022 MF
   // * Properties: applicationVersion, linkItem, match -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
 
   const componentName = "Title";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -51,15 +52,18 @@ const Title = (props) => {
   // const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
+  const titleListState = useSelector(state => state.titles.arrayTitles);
+  // const editionListState = useSelector(state => state.editions.arrayEditions);
+  // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
+  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
+
   let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
   let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   const [errTitleMessage, setErrTitleMessage] = useState("");
   // const [errEditionMessage, setErrEditionMessage] = useState("");
-
-  const titleListState = useSelector(state => state.titles.arrayTitles);
-  // const editionListState = useSelector(state => state.editions.arrayEditions);
 
   let titleParam;
 
@@ -168,7 +172,6 @@ const Title = (props) => {
 
   };
 
-
   // * Sort the titleList array by title.titleSort
   // * Really not needed here since there should only be one item in the array
   titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
@@ -176,8 +179,6 @@ const Title = (props) => {
   // * Sort the editionList array by media.sortID
   // // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
   // editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-
-  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
 
   let userReviews = userReviewsState.filter(userReview => userReview.titleID === titleID);
 
@@ -189,9 +190,6 @@ const Title = (props) => {
     userReviewItem = userReviewItem[0];
 
   };
-
-
-  // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
 
   // let userReviewRatingItem = {};
 
@@ -347,17 +345,6 @@ const Title = (props) => {
     };
 
   }, [titleList]);
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
 
 
   const saveRecord = () => {
@@ -525,9 +512,9 @@ const Title = (props) => {
 
                       {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null} */}
 
-                      {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
+                      {/* {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null} */}
 
-                      {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null}
+                      {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 
                     </h4>
                   </Col>
@@ -573,7 +560,7 @@ const Title = (props) => {
 
                     {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
 
-                    {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
+                    {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null} */}
 
                     {isEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
 

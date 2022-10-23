@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem, NavLink } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
-import EditTitle from "./EditTitle";
+// import EditTitle from "./EditTitle";
 // import AddEdition from "../editions/AddEdition";
 // import EditEdition from "../editions/EditEdition";
 
@@ -18,11 +18,12 @@ const Titles = (props) => {
 
   // * Available props: -- 10/21/2022 MF
   // * Properties: applicationVersion, linkItem, match -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
 
   const componentName = "Titles";
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -46,16 +47,17 @@ const Titles = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
-  let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
-  let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
-
-  // const [errCategoryMessage, setErrCategoryMessage] = useState("");
-  const [errTitleMessage, setErrTitleMessage] = useState("");
-
   const titleListState = useSelector(state => state.titles.arrayTitles);
   const categoryListState = useSelector(state => state.categories.arrayCategories);
   const editionListState = useSelector(state => state.editions.arrayEditions);
+
+  let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
+  let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
+  let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
+  // const [errCategoryMessage, setErrCategoryMessage] = useState("");
+  const [errTitleMessage, setErrTitleMessage] = useState("");
 
   let categoryParam;
 
@@ -92,65 +94,6 @@ const Titles = (props) => {
     // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
     // editionList = editionList.filter(edition => (edition.active === true || edition.active === 1) && (edition.medium.active === true || edition.medium.active === 1));
     editionList = editionList.filter(edition => (edition.editionActive === true || edition.editionActive === 1) && (edition.mediaActive === true || edition.mediaActive === 1));
-
-  };
-
-  const sortTitles = (sortBy) => {
-
-    if (isEmpty(titleList) === false && titleList.length > 0) {
-
-      if (sortBy === "publicationDate") {
-
-        // * Sort the titleList array by title.publicationDate
-        // ! Doesn't handle null values well; treats them as "null"
-        // titleList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
-
-        // * Sort by titleSort first to order the items with a null value for publicationDate?
-        // titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-        // ! Doesn't sort at all
-        // https://stackoverflow.com/questions/29829205/sort-an-array-so-that-null-values-always-come-last
-        // https://stackoverflow.com/questions/2328562/javascript-sorting-array-of-mixed-strings-and-null-values
-        // titleList.sort((a, b) => ((b.publicationDate !== null) - (a.publicationDate !== null) || a.publicationDate - b.publicationDate));
-
-        // ! Doesn't sort correctly
-        // * https://stackoverflow.com/questions/29829205/sort-an-array-so-that-null-values-always-come-last
-        // * https://stackoverflow.com/questions/2328562/javascript-sorting-array-of-mixed-strings-and-null-values
-        // titleList.sort(function(a, b) {
-        //     if (a.publicationDate === b.publicationDate) {
-
-        //         // titleSort is only important when publicationDates are the same
-        //         return b.titleSort - a.titleSort;
-
-        //      };
-
-        //     return ((b.publicationDate != null) - (a.publicationDate != null) || a.publicationDate - b.publicationDate);
-        // });
-
-        // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
-        let titleListPublicationDate = titleList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
-        titleListPublicationDate.sort((a, b) => (a.titlePublicationDate > b.titlePublicationDate) ? 1 : -1);
-
-        let titleListNoPublicationDate = titleList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
-        titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-
-        let newTitleList = [...titleListPublicationDate];
-        newTitleList.push(...titleListNoPublicationDate);
-
-        titleList = [...newTitleList];
-
-      } else if (sortBy === "titleName") {
-
-        // * Sort the titleList array by title.titleSort
-        titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-
-      } else {
-
-        // * Sort the titleList array by title.titleSort
-        titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-
-      };
-
-    };
 
   };
 
@@ -237,13 +180,62 @@ const Titles = (props) => {
   }, [titleList]);
 
 
-  const redirectPage = (linkName) => {
+  const sortTitles = (sortBy) => {
 
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
+    if (isEmpty(titleList) === false && titleList.length > 0) {
 
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
+      if (sortBy === "publicationDate") {
+
+        // * Sort the titleList array by title.publicationDate
+        // ! Doesn't handle null values well; treats them as "null"
+        // titleList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : -1);
+
+        // * Sort by titleSort first to order the items with a null value for publicationDate?
+        // titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+        // ! Doesn't sort at all
+        // https://stackoverflow.com/questions/29829205/sort-an-array-so-that-null-values-always-come-last
+        // https://stackoverflow.com/questions/2328562/javascript-sorting-array-of-mixed-strings-and-null-values
+        // titleList.sort((a, b) => ((b.publicationDate !== null) - (a.publicationDate !== null) || a.publicationDate - b.publicationDate));
+
+        // ! Doesn't sort correctly
+        // * https://stackoverflow.com/questions/29829205/sort-an-array-so-that-null-values-always-come-last
+        // * https://stackoverflow.com/questions/2328562/javascript-sorting-array-of-mixed-strings-and-null-values
+        // titleList.sort(function(a, b) {
+        //     if (a.publicationDate === b.publicationDate) {
+
+        //         // titleSort is only important when publicationDates are the same
+        //         return b.titleSort - a.titleSort;
+
+        //      };
+
+        //     return ((b.publicationDate != null) - (a.publicationDate != null) || a.publicationDate - b.publicationDate);
+        // });
+
+        // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
+        let titleListPublicationDate = titleList.filter(title => title.titlePublicationDate !== undefined && title.titlePublicationDate !== null);
+        titleListPublicationDate.sort((a, b) => (a.titlePublicationDate > b.titlePublicationDate) ? 1 : -1);
+
+        let titleListNoPublicationDate = titleList.filter(title => title.titlePublicationDate === undefined || title.titlePublicationDate === null);
+        titleListNoPublicationDate.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+
+        let newTitleList = [...titleListPublicationDate];
+        newTitleList.push(...titleListNoPublicationDate);
+
+        titleList = [...newTitleList];
+
+      } else if (sortBy === "titleName") {
+
+        // * Sort the titleList array by title.titleSort
+        titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+
+      } else {
+
+        // * Sort the titleList array by title.titleSort
+        titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+
+      };
+
+    };
 
   };
 
@@ -376,7 +368,7 @@ const Titles = (props) => {
 
             {/* {isEmpty(admin) === false && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null} */}
 
-            {isEmpty(admin) === false && admin === true ? <EditTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null}
+            {/* {isEmpty(admin) === false && admin === true ? <EditTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null} */}
 
             <span className="text-muted ms-2 small-text">Sort By&nbsp;
 
