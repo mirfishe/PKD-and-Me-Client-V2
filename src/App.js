@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./App.css";
-import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+import { /* BrowserRouter, */ Routes, Route, Link, useNavigate } from "react-router-dom";
 // import { HouseFill } from "react-bootstrap-icons";
 import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
@@ -42,6 +41,7 @@ import Register from "./components/users/Register";
 // import ComputerLogs from "./components/reports/ComputerLogs";
 // import Logs from "./components/reports/Logs";
 // import Errors from "./components/reports/Errors";
+import "./App.css";
 
 const App = () => {
 
@@ -182,7 +182,6 @@ const App = () => {
 
   useEffect(() => {
 
-
     if (locationLogged === false) {
 
       // * Only has the IP Address -- 07/29/2021 MF
@@ -321,7 +320,6 @@ const App = () => {
       postal: postal
 
     };
-
 
     fetch(url, {
       method: "POST",
@@ -633,19 +631,22 @@ const App = () => {
   };
 
 
-  const redirectPage = (linkName) => {
+  // const redirectPage = (linkName) => {
 
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
+  //   // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+  //   window.scrollTo(0, 0);
 
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
+  //   dispatch(setPageURL(linkName.replaceAll("/", "")));
+  //   navigate("/" + linkName);
 
-  };
+  // };
 
 
   return (
-    <BrowserRouter basename={routerBaseName}>
+    <React.Fragment>
+
+      {/* <BrowserRouter basename={routerBaseName}> */}
+
       <Navbar color="light" light>
         <Nav>
 
@@ -961,77 +962,77 @@ const App = () => {
             <Routes>
 
               {/* // * Set the default page from the defaultPageComponent from environment. -- 03/06/2021 MF */}
-              {defaultPageComponent === "Home" ? <Route path="/" element={<Home redirectPage={redirectPage} />} /> : null}
-              {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />} /> : null}
-              {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />} /> : null}
-              {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "Home" ? <Route path="/" element={<Home /* redirectPage={redirectPage} */ />} /> : null}
+              {defaultPageComponent === "About" ? <Route path="/" element={<About /* redirectPage={redirectPage} */ />} /> : null}
+              {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape /* redirectPage={redirectPage} */ />} /> : null}
+              {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian /* redirectPage={redirectPage} */ />} /> : null}
 
               {/* <Route path="/">
                 {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
-                {defaultPageComponent === "Home" ? <Route path="/" element={<Home redirectPage={redirectPage} />}  /> : null}
-                {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />}  /> : null}
-                {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />}  /> : null}
+                {defaultPageComponent === "Home" ? <Route path="/" element={<Home />}  /> : null}
+                {defaultPageComponent === "About" ? <Route path="/" element={<About />}  /> : null}
+                {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape />}  /> : null}
               </Route> */}
 
-              <Route path="/home" element={<Home redirectPage={redirectPage} />} />
-              <Route path="/new" element={<New redirectPage={redirectPage} />} />
-              <Route path="/about" element={<About redirectPage={redirectPage} />} />
-              <Route path="/homeopape" element={<Homeopape redirectPage={redirectPage} />} />
+              <Route path="/home" element={<Home /* redirectPage={redirectPage} */ />} />
+              <Route path="/new" element={<New /* redirectPage={redirectPage} */ />} />
+              <Route path="/about" element={<About /* redirectPage={redirectPage} */ />} />
+              <Route path="/homeopape" element={<Homeopape /* redirectPage={redirectPage} */ />} />
 
               {/* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}
               {/* {isEmpty(admin) === false && admin === true ?
 
                 <React.Fragment> */}
 
-              {/* <Route path="/socialMedia" element={<FormatPost redirectPage={redirectPage} />} />
+              {/* <Route path="/socialMedia" element={<FormatPost />} />
 
-              <Route path="/fromTheHomeopape" element={<UpdateFromTheHomeopape redirectPage={redirectPage} />} />
+              <Route path="/fromTheHomeopape" element={<UpdateFromTheHomeopape />} />
 
-              <Route path="/brokenLinks" element={<BrokenLinks redirectPage={redirectPage} />} />
+              <Route path="/brokenLinks" element={<BrokenLinks />} />
 
-              <Route path="/computerLogs" element={<ComputerLogs redirectPage={redirectPage} />} />
+              <Route path="/computerLogs" element={<ComputerLogs />} />
 
-              <Route path="/logs" element={<Logs redirectPage={redirectPage} />} />
+              <Route path="/logs" element={<Logs />} />
 
-              <Route path="/errors" element={<Errors redirectPage={redirectPage} />} />
+              <Route path="/errors" element={<Errors />} />
 
-              <Route path="/comments" element={<Comments redirectPage={redirectPage} />} />
+              <Route path="/comments" element={<Comments />} />
 
-              <Route path="/titleSuggestions" element={<TitleSuggestions redirectPage={redirectPage} />} />
+              <Route path="/titleSuggestions" element={<TitleSuggestions />} />
 
-              <Route path="/amazon" element={<Amazon redirectPage={redirectPage} />} />
+              <Route path="/amazon" element={<Amazon />} />
 
-              <Route path="/terms" element={<Terms redirectPage={redirectPage} />} /> */}
+              <Route path="/terms" element={<Terms />} /> */}
 
               {/* </React.Fragment>
 
                 : null} */}
 
-              <Route path="/dickian" element={<Dickian redirectPage={redirectPage} />} />
+              <Route path="/dickian" element={<Dickian /* redirectPage={redirectPage} */ />} />
 
-              <Route path="/categories" element={<Category redirectPage={redirectPage} />} />
-              <Route path="/media" element={<Media redirectPage={redirectPage} />} />
-
-              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route path="/titles" element={<Titles redirectPage={redirectPage} />} />
-              {/* <Route path="/titles/:category" element={<Titles redirectPage={redirectPage} />} />
-              <Route path="/title/:title" element={<Title redirectPage={redirectPage} />} /> */}
+              <Route path="/categories" element={<Category testProp={"testProp"} /* redirectPage={redirectPage} */ />} />
+              <Route path="/media" element={<Media /* redirectPage={redirectPage} */ />} />
 
               {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route path="/editions" element={<Editions redirectPage={redirectPage} />} />
-              {/* <Route path="/editions/:title" element={<Editions redirectPage={redirectPage} />} />
-               <Route path="/editions/:media" element={<Editions redirectPage={redirectPage} />} /> */}
+              <Route path="/titles" element={<Titles /* redirectPage={redirectPage} */ />} />
+              {/* <Route path="/titles/:category" element={<Titles />} />
+              <Route path="/title/:title" element={<Title />} /> */}
+
+              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
+              <Route path="/editions" element={<Editions /* redirectPage={redirectPage} */ />} />
+              {/* <Route path="/editions/:title" element={<Editions />} />
+               <Route path="/editions/:media" element={<Editions />} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles /* redirectPage={redirectPage} */ linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title /* redirectPage={redirectPage} */ linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions /* redirectPage={redirectPage} */ linkItem={linkItem} />} /> : null}
 
             </Routes>
 
-            {/* {process.env.NODE_ENV === "development" ? <FromTheHomeopape redirectPage={redirectPage} /> : null} */}
+            {/* {process.env.NODE_ENV === "development" ? <FromTheHomeopape /> : null} */}
 
           </Col>
         </Row>
@@ -1046,7 +1047,9 @@ const App = () => {
         </Row>
       </Container>
 
-    </BrowserRouter>
+      {/* </BrowserRouter> */}
+
+    </React.Fragment>
   );
 };
 

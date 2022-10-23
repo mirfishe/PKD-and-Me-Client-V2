@@ -16,16 +16,16 @@ const Category = (props) => {
 
   const componentName = "Category";
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
 
-  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
-  let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
+  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  // let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -34,29 +34,40 @@ const Category = (props) => {
 
   useEffect(() => {
 
-    let categoryListSort = [];
+    let newCategoryList = [];
 
     if (isEmpty(categoryListState) === false) {
 
       if (isEmpty(admin) === false && admin === true) {
 
-        categoryListSort = [...categoryListState];
+        newCategoryList = [...categoryListState];
 
       } else {
 
-        categoryListSort = categoryListState.filter(category => category.active === true || category.active === 1);
-        // categoryListSort = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
+        newCategoryList = categoryListState.filter(category => category.active === true || category.active === 1);
+        // newCategoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
 
       };
 
 
-      categoryListSort.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+      newCategoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
-      setCategoryList(categoryListSort);
+      setCategoryList(newCategoryList);
 
     };
 
   }, [categoryListState]);
+
+
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
 
 
   return (

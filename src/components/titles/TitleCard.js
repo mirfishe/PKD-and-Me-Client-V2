@@ -20,8 +20,8 @@ const TitleCard = (props) => {
 
   const componentName = "TitleCard";
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -39,56 +39,69 @@ const TitleCard = (props) => {
   let linkName = isEmpty(props) === false && isEmpty(props.linkName) === false ? props.linkName : "";
   let randomTitle = isEmpty(props) === false && isEmpty(props.randomTitle) === false ? props.randomTitle : false;
   let showShortDescription = isEmpty(props) === false && isEmpty(props.showShortDescription) === false ? props.showShortDescription : "";
-  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
+  const [titleParam, setTitleParam] = useState(null);
+  const [titleList, setTitleList] = useState([]);
 
   const [errTitleMessage, setErrTitleMessage] = useState("");
-
-  let titleParam = linkName;
-
-  // * Only show title in certain categories or by certain authors
-  // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
-  const randomTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
-
-  if (randomTitle === true) {
-
-    titleParam = Math.floor(Math.random() * randomTitleList.length);
-
-  };
-
-  let titleList = [];
-
-  if (isNaN(titleParam) === false) {
-
-    // * If titleParam is a number, then it's the titleID
-
-    if (randomTitle) {
-
-      // * Active titles were filtered out above
-      titleList = randomTitleList.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
-
-    } else {
-
-      titleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
-
-    };
-
-  } else if (isEmpty(titleParam) === false) {
-
-    // * If titleParam is not a number, then it's the title name
-    titleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
-
-  } else {
-
-    // console.error("Title not found.");
-    // * Display all active titles
-    // titleList = [...titleListState];
-
-  };
 
 
   useEffect(() => {
 
-    if (titleList.length > 0) {
+    if (isEmpty(linkName) === false) {
+
+      setTitleParam(linkName);
+
+    };
+
+    // * Only show title in certain categories or by certain authors
+    // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
+    const randomTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+
+    if (randomTitle === true) {
+
+      setTitleParam(Math.floor(Math.random() * randomTitleList.length));
+
+    };
+
+    let newTitleList = [];
+
+    // * If titleParam is a number, then it's the titleID
+    if (isNaN(titleParam) === false) {
+
+      if (randomTitle === true) {
+
+        // * Active titles were filtered out above
+        newTitleList = randomTitleList.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
+
+      } else {
+
+        newTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
+
+      };
+
+    } else if (isEmpty(titleParam) === false) {
+
+      // * If titleParam is not a number, then it's the title name
+      newTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
+
+    } else {
+
+      // console.error("Title not found.");
+      // * Display all active titles
+      // newTitleList = [...titleListState];
+
+    };
+
+    setTitleList(newTitleList);
+
+  }, [linkName, titleListState]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleList) === false) {
 
       setErrTitleMessage("");
 
@@ -99,6 +112,17 @@ const TitleCard = (props) => {
     };
 
   }, [titleList]);
+
+
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
 
 
   return (

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import Parse from "html-react-parser";
+// import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
@@ -20,8 +20,8 @@ const Edition = (props) => {
 
   const componentName = "Edition";
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -42,59 +42,71 @@ const Edition = (props) => {
   const titleListState = useSelector(state => state.titles.arrayTitles);
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
-  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
+  const [titleItem, setTitleItem] = useState({});
+  const [editionList, setEditionList] = useState([]);
 
   // const [editionMessage, setEditionMessage] = useState("");
   const [errEditionMessage, setErrEditionMessage] = useState("");
   // const [editionResultsFound, setEditionResultsFound] = useState(null);
 
-  let editionList = [...editionsState];
 
-  let titleItemArray = [];
-  let titleItem = {};
+  useEffect(() => {
 
-  if (isEmpty(titleID) === false && !isNaN(titleID)) {
+    let newEditionList = [...editionsState];
 
-    editionList = editionList.filter(edition => edition.titleID === titleID);
-    titleItemArray = titleListState.filter(title => title.titleID === titleID);
-    titleItem = titleItemArray[0];
+    let titleItemArray = [];
+    let newTitleItem = {};
 
-  };
+    if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
-  if (electronicOnly === true || userElectronicOnly === true) {
+      newEditionList = newEditionList.filter(edition => edition.titleID === titleID);
+      titleItemArray = titleListState.filter(title => title.titleID === titleID);
+      newTitleItem = titleItemArray[0];
 
-    // editionList = editionList.filter(edition => edition.medium.electronic === true);
-    editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
+    };
 
-  } else if (physicalOnly === true || userPhysicalOnly === true) {
+    if (electronicOnly === true || userElectronicOnly === true) {
 
-    // editionList = editionList.filter(edition => edition.medium.electronic === false);
-    editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
+      // newEditionList = newEditionList.filter(edition => edition.medium.electronic === true);
+      newEditionList = newEditionList.filter(edition => edition.electronic === true || edition.electronic === 1);
 
-  } else {
+    } else if (physicalOnly === true || userPhysicalOnly === true) {
 
-    editionList = [...editionList];
+      // newEditionList = newEditionList.filter(edition => edition.medium.electronic === false);
+      newEditionList = newEditionList.filter(edition => edition.electronic === false || edition.electronic === 0);
 
-  };
+    } else {
 
-  if (isEmpty(admin) === false && admin === true) {
+      newEditionList = [...newEditionList];
 
-    editionList = [...editionList];
+    };
 
-  } else {
+    if (isEmpty(admin) === false && admin === true) {
 
-    editionList = editionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+      newEditionList = [...newEditionList];
 
-  };
+    } else {
 
-  // * Sort the editionList array by media.sortID
-  // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
-  editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+      newEditionList = newEditionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+
+    };
+
+    // * Sort the newEditionList array by media.sortID
+    // newEditionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+    newEditionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
+    setTitleItem(newTitleItem);
+
+    setEditionList(newEditionList);
+
+  }, [editionsState]);
 
 
   useEffect(() => {
 
-    if (editionList.length > 0) {
+    if (isEmpty(editionList) === false) {
 
       setErrEditionMessage("");
 
@@ -115,10 +127,21 @@ const Edition = (props) => {
   // };
 
 
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
+
+  };
+
+
   return (
     <Container className="my-4">
 
-      {/* {editionList.length > 0 ? */}
+      {/* {isEmpty(editionList) === false ? */}
 
       <Row className="my-4">
         <Col xs="12">

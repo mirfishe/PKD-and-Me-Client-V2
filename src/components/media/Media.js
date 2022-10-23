@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
@@ -15,8 +15,8 @@ const Media = (props) => {
 
   const componentName = "Media";
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -28,41 +28,65 @@ const Media = (props) => {
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
 
-  let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
-  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  // let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
+  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   const [isOpen, setIsOpen] = useState(true);
 
-  let mediaList = [];
+  const [mediaList, setMediaList] = useState([]);
 
-  if (electronicOnly === true || userElectronicOnly === true) {
 
-    mediaList = mediaListState.filter(media => media.electronic === true);
+  useEffect(() => {
 
-  } else if (physicalOnly === true || userPhysicalOnly === true) {
+    let newMediaList = [];
 
-    mediaList = mediaListState.filter(media => media.electronic === false);
+    if (isEmpty(mediaListState) === false) {
 
-  } else {
+      if (electronicOnly === true || userElectronicOnly === true) {
 
-    mediaList = [...mediaListState];
-    // mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
-    // mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
+        newMediaList = mediaListState.filter(media => media.electronic === true);
+
+      } else if (physicalOnly === true || userPhysicalOnly === true) {
+
+        newMediaList = mediaListState.filter(media => media.electronic === false);
+
+      } else {
+
+        newMediaList = [...mediaListState];
+        // newMediaList = mediaListState.filter(media => media.active === true || media.active === 1);
+        // newMediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
+
+      };
+
+      if (isEmpty(admin) === false && admin === true) {
+
+        newMediaList = [...newMediaList];
+
+      } else {
+
+        newMediaList = newMediaList.filter(media => media.active === true || media.active === 1);
+        // newMediaList = newMediaList.filter(media => media.mediaActive === true || media.mediaActive === 1);
+
+      };
+
+      newMediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
+      setMediaList(newMediaList);
+
+    };
+
+  }, [mediaListState]);
+
+
+  const redirectPage = (linkName) => {
+
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
+
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
 
   };
-
-  if (isEmpty(admin) === false && admin === true) {
-
-    mediaList = [...mediaList];
-
-  } else {
-
-    mediaList = mediaList.filter(media => media.active === true || media.active === 1);
-    // mediaList = mediaList.filter(media => media.mediaActive === true || media.mediaActive === 1);
-
-  };
-
-  mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
 
   return (

@@ -14,15 +14,17 @@ const UserReview = (props) => {
 
   const componentName = "UserReview";
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
+  // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
   const userID = useSelector(state => state.user.userID);
 
   const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
-  let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
-  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  // let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
+  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
+  const [userReviews, setUserReviews] = useState([]);
 
   // const [userReviewMessage, setUserReviewMessage] = useState("");
   const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
@@ -30,43 +32,50 @@ const UserReview = (props) => {
 
   // const [userReviewDisplayCount, setUserReviewDisplayCount] = useState(0);
 
-  let userReviews = [...userReviewsState];
 
-  if (isEmpty(titleID) === false && !isNaN(titleID)) {
+  useEffect(() => {
 
-    userReviews = userReviews.filter(userReview => userReview.titleID === titleID);
+    let newUserReviews = [...userReviewsState];
 
-  };
+    if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
-  if (isEmpty(admin) === false && admin === true) {
+      newUserReviews = newUserReviews.filter(userReview => userReview.titleID === titleID);
 
-    userReviews = [...userReviews];
+    };
 
-  } else {
+    if (isEmpty(admin) === false && admin === true) {
 
-    userReviews = userReviews.filter(userReview => userReview.userReview === true);
+      // newUserReviews = [...newUserReviews];
 
-  };
+    } else {
 
-  // * Sort the list by createDate. -- 03/06/2021 MF
-  userReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
+      newUserReviews = newUserReviews.filter(userReview => userReview.userReview === true);
 
-  // * Sort the list by updateDate. -- 03/06/2021 MF
-  // userReviews.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
+    };
 
-  let userReviewItem = {};
+    // * Sort the list by createDate. -- 03/06/2021 MF
+    newUserReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
 
-  if (isEmpty(userID) === false && !isNaN(userID)) {
+    // * Sort the list by updateDate. -- 03/06/2021 MF
+    // newUserReviews.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
 
-    userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
-    userReviewItem = userReviewItem[0];
+    let userReviewItem = {};
 
-  };
+    if (isEmpty(userID) === false && !isNaN(userID)) {
+
+      userReviewItem = newUserReviews.filter(userReview => userReview.userID === userID);
+      userReviewItem = userReviewItem[0];
+
+    };
+
+    setUserReviews(newUserReviews);
+
+  }, [userReviewsState]);
 
 
   useEffect(() => {
 
-    if (userReviews.length > 0) {
+    if (isEmpty(userReviews) === false) {
 
       let displayCount = 0;
 
@@ -107,7 +116,7 @@ const UserReview = (props) => {
     <Container className="my-4">
 
       {/* // * This is not filtering correctly if there are reviews with no text or ratings in them; only read and dateRead reviews
-            {userReviews.length > 0 ? */}
+            {isEmpty(userReviews) === false ? */}
 
       <Row>
         <Col xs="12">

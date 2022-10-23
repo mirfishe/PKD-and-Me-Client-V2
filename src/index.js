@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import TagManager from 'react-gtm-module';
+import { isEmpty, getDateTime, displayValue } from "shared-functions";
 import store from "./app/store";
 import "bootstrap/dist/css/bootstrap.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.css";
-import { isEmpty, getDateTime, displayValue } from "shared-functions";
-import TagManager from 'react-gtm-module';
 // import {tagManagerArgs} from "./app/constants";
 import applicationSettings from "./app/environment";
 import App from './App';
@@ -23,6 +24,8 @@ import './index.css';
 
 // console.log(componentName, "packageJSON.version", packageJSON.version);
 // console.log(componentName, "packageJSON.copyrightYear", packageJSON.copyrightYear);
+
+const routerBaseName = applicationSettings.routerBaseName;
 
 // * Google Tag Manager -- 03/06/2021 MF
 if (isEmpty(applicationSettings.tagManagerArgs.gtmId) === false) {
@@ -50,8 +53,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <App applicationVersion={packageJSON.version} copyrightYear={packageJSON.copyrightYear} /> */}
-      <App />
+      <BrowserRouter basename={routerBaseName}>
+        {/* <App applicationVersion={packageJSON.version} copyrightYear={packageJSON.copyrightYear} /> */}
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
