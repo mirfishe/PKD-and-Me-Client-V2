@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
 import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import EditCategory from "./EditCategory";
@@ -10,15 +10,21 @@ import { setPageURL } from "../../app/urlsSlice";
 
 const Category = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: -- 10/21/2022 MF
+  // * Functions: getTitles -- 10/21/2022 MF
+
   const componentName = "Category";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
+  // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
+
+  let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -93,7 +99,7 @@ const Category = (props) => {
               return (
                 <NavItem key={category.categoryID}>
 
-                  {/* <a href="#" onClick={(event) => {event.preventDefault(); props.getTitles(category.categoryID)}}>{category.category}</a> */}
+                  {/* <a href="#" onClick={(event) => {event.preventDefault(); getTitles(category.categoryID)}}>{category.category}</a> */}
 
                   {/* <NavLink tag={Link} to={`/titles/${category.categoryID}`}>{category.categoryID}</NavLink>
                 <NavLink tag={Link} to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</NavLink>

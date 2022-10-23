@@ -45,6 +45,9 @@ import Errors from "./components/reports/Errors";
 
 const App = () => {
 
+  // // * Available props: -- 10/21/2022 MF
+  // // * Properties: applicationVersion, copyrightYear -- 10/21/2022 MF
+
   const componentName = "App";
 
   const dispatch = useDispatch();

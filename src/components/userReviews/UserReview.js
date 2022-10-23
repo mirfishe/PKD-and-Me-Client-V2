@@ -2,17 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import { Rating } from "@mui/lab/";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
 // import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 
 const UserReview = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: titleID, userReviewUpdated -- 10/21/2022 MF
 
   const componentName = "UserReview";
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
   const userID = useSelector(state => state.user.userID);
+
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
+  let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
 
   // const [userReviewMessage, setUserReviewMessage] = useState("");
   const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
@@ -24,9 +30,9 @@ const UserReview = (props) => {
 
   let userReviews = [...userReviewsState];
 
-  if (isEmpty(props.titleID) === false && !isNaN(props.titleID)) {
+  if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
-    userReviews = userReviews.filter(userReview => userReview.titleID === props.titleID);
+    userReviews = userReviews.filter(userReview => userReview.titleID === titleID);
 
   };
 
@@ -108,8 +114,8 @@ const UserReview = (props) => {
         <Col xs="12">
 
           <h5 className="text-center">User Reviews
-            {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <AddUserReview titleID={props.titleID} displayButton={true} /> : null} */}
-            {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <EditUserReview titleID={props.titleID} displayButton={true} /> : null}
+            {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <AddUserReview titleID={titleID} displayButton={true} /> : null} */}
+            {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <EditUserReview titleID={titleID} displayButton={true} /> : null}
           </h5>
 
         </Col>
@@ -168,7 +174,7 @@ const UserReview = (props) => {
                         {isEmpty(userReview.shortReview) === false ?
 
                           <h6>{userReview.shortReview}
-                            {/* {props.userID === userReview.userID || props.isAdmin === true ? <UpdateUserReview userID={props.userID} isAdmin={props.isAdmin} sessionToken={props.sessionToken} titleID={props.titleID} userReviewUpdated={props.userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
+                            {/* {userID === userReview.userID || isAdmin === true ? <UpdateUserReview userID={userID} isAdmin={isAdmin} sessionToken={sessionToken} titleID={titleID} userReviewUpdated={userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
                           </h6>
 
                           : null}

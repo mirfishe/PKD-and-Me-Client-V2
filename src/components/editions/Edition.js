@@ -14,6 +14,9 @@ import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png"
 
 const Edition = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: titleID -- 10/21/2022 MF
+
   const componentName = "Edition";
 
   const dispatch = useDispatch();
@@ -34,6 +37,8 @@ const Edition = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
+
   // const [editionMessage, setEditionMessage] = useState("");
   const [errEditionMessage, setErrEditionMessage] = useState("");
   // const [editionResultsFound, setEditionResultsFound] = useState(null);
@@ -47,14 +52,13 @@ const Edition = (props) => {
   let titleItemArray = [];
   let titleItem = {};
 
-  if (isEmpty(props.titleID) === false && !isNaN(props.titleID)) {
+  if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
-    editionList = editionList.filter(edition => edition.titleID === props.titleID);
-    titleItemArray = titleListState.filter(title => title.titleID === props.titleID);
+    editionList = editionList.filter(edition => edition.titleID === titleID);
+    titleItemArray = titleListState.filter(title => title.titleID === titleID);
     titleItem = titleItemArray[0];
 
   };
-
 
   if (electronicOnly === true || userElectronicOnly === true) {
 

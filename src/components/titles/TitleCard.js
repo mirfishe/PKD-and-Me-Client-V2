@@ -14,6 +14,9 @@ import { setPageURL } from "../../app/urlsSlice";
 
 const TitleCard = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: additionalText, headerText, imageSide, linkName, randomTitle, showShortDescription -- 10/21/2022 MF
+
   const componentName = "TitleCard";
 
   const dispatch = useDispatch();
@@ -27,37 +30,24 @@ const TitleCard = (props) => {
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // const admin = useSelector(state => state.user.admin);
 
+  let additionalText = isEmpty(props) === false && isEmpty(props.additionalText) === false ? props.additionalText : "";
+  let headerText = isEmpty(props) === false && isEmpty(props.headerText) === false ? props.headerText : "";
+  let imageSide = isEmpty(props) === false && isEmpty(props.imageSide) === false ? props.imageSide : "left";
+  let linkName = isEmpty(props) === false && isEmpty(props.linkName) === false ? props.linkName : "";
+  let randomTitle = isEmpty(props) === false && isEmpty(props.randomTitle) === false ? props.randomTitle : false;
+  let showShortDescription = isEmpty(props) === false && isEmpty(props.showShortDescription) === false ? props.showShortDescription : "";
+
   const [errTitleMessage, setErrTitleMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
 
-  let imageSide = "left";
-
-  if (isEmpty(props.imageSide) === false) {
-
-    imageSide = props.imageSide;
-
-  } else {
-
-    imageSide = "left";
-
-  };
-
-  const showShortDescription = props.showShortDescription;
-
-  const headerText = props.headerText;
-
-  const additionalText = props.additionalText;
-
-  let titleParam = props.linkName;
-
-  const randomTitle = props.randomTitle;
+  let titleParam = linkName;
 
   // * Only show title in certain categories or by certain authors
   // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
   const randomTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
 
-  if (randomTitle) {
+  if (randomTitle === true) {
 
     titleParam = Math.floor(Math.random() * randomTitleList.length);
 

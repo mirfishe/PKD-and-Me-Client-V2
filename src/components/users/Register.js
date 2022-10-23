@@ -7,7 +7,7 @@ import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
-const Register = (props) => {
+const Register = () => {
 
   // ? What if the user has deleted their account and wants to reupdateUser? -- 03/06/2021 MF
   // * The database won't allow duplicate email addresses to be entered. -- 03/06/2021 MF

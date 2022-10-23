@@ -9,7 +9,7 @@ import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, addErrorLog } fr
 import { setPageURL } from "../../app/urlsSlice";
 import TitleCard from "../titles/TitleCard";
 
-const Terms = (props) => {
+const Terms = () => {
 
   const componentName = "Terms";
 

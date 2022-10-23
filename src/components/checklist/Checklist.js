@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input, NavItem, NavbarText } from "reactstrap";
 // import { Drawer } from "@mui/material";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
@@ -13,6 +13,10 @@ import { setPageURL } from "../../app/urlsSlice";
 // import { updateStateChecklist } from "../../app/userSlice";
 
 const Checklist = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton -- 10/21/2022 MF
+  // * Functions: userReviewUpdated -- 10/21/2022 MF
 
   const componentName = "Checklist";
 
@@ -28,6 +32,9 @@ const Checklist = (props) => {
   const baseURL = applicationSettings.baseURL;
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
 
   // const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -248,7 +255,7 @@ const Checklist = (props) => {
             // updateChecklistItemRead(titleID);
 
             // ! Need to update the other components after this function runs
-            // this.props.userReviewUpdated();
+            // userReviewUpdated();
 
             // const checklistListItem = checklistList.find(title => title.titleID === titleID);
 
@@ -320,15 +327,15 @@ const Checklist = (props) => {
   return (
     <React.Fragment>
 
-      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Checklist</Button> : null}
+      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Checklist</Button> : null}
 
         <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
            <ModalHeader toggle={(event) => { setModal(!modal); }}>Checklist</ModalHeader>
            <ModalBody> */}
 
-      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null} */}
+      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null} */}
 
-      {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ?
+      {isEmpty(checklistLoaded) === false && checklistLoaded === true && displayButton === true ?
 
         <React.Fragment>
           {/* <NavItem> */}

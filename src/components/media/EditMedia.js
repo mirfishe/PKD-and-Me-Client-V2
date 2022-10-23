@@ -10,6 +10,9 @@ import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const EditMedia = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton, displayIcon -- 10/21/2022 MF
+
   const componentName = "EditMedia";
 
   const dispatch = useDispatch();
@@ -23,6 +26,9 @@ const EditMedia = (props) => {
   const baseURL = applicationSettings.baseURL;
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -260,9 +266,9 @@ const EditMedia = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Media</Button></span> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Media</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Media</ModalHeader>

@@ -20,6 +20,9 @@ import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: applicationVersion, linkItem, match -- 10/21/2022 MF
+
   const componentName = "Title";
 
   const dispatch = useDispatch();
@@ -48,13 +51,23 @@ const Title = (props) => {
   // const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
+  let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
+  let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
+  let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
+
   const [errTitleMessage, setErrTitleMessage] = useState("");
   // const [errEditionMessage, setErrEditionMessage] = useState("");
 
   const titleListState = useSelector(state => state.titles.arrayTitles);
   // const editionListState = useSelector(state => state.editions.arrayEditions);
 
-  const titleParam = props.linkItem.linkName; // props.match.params.title;
+  let titleParam;
+
+  if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName")) {
+
+    titleParam = linkItem.linkName; // match.params.category;
+
+  };
 
   let titleNameBreadCrumb = "";
   let titleID = "";
@@ -376,7 +389,7 @@ const Title = (props) => {
 
       title: titleList[0].titleName,
       href: href,
-      // applicationVersion: props.applicationVersion,
+      // applicationVersion: applicationVersion,
       applicationVersion: process.env.REACT_APP_VERSION,
 
       lastAccessed: getDateTime(),

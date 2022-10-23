@@ -7,6 +7,9 @@ import { encodeURL, convertBitTrueFalse, addErrorLog } from "../../utilities/App
 
 const FromTheHomeopape = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: headerText -- 10/21/2022 MF
+
   const componentName = "FromTheHomeopape";
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
@@ -16,6 +19,8 @@ const FromTheHomeopape = (props) => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
+
+  let headerText = isEmpty(props) === false && isEmpty(props.headerText) === false ? props.headerText : "";
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,8 +36,6 @@ const FromTheHomeopape = (props) => {
 
   // const [cbxDisplay, setCbxDisplay] = useState(false);
   // const [cbxPosted, setCbxPosted] = useState(false);
-
-  const headerText = props.headerText;
 
   // let breakArray = false;
   // let displayItemsCount = 0;

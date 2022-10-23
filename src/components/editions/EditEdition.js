@@ -9,6 +9,9 @@ import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/Appli
 
 const EditEdition = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton, displayIcon, editionID, titleID, titleImageName, titlePublicationDate -- 10/21/2022 MF
+
   const componentName = "EditEdition";
 
   const dispatch = useDispatch();
@@ -22,6 +25,13 @@ const EditEdition = (props) => {
   const baseURL = applicationSettings.baseURL;
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
+  let editionID = isEmpty(props) === false && isEmpty(props.editionID) === false ? props.editionID : 0;
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : 0;
+  let titleImageName = isEmpty(props) === false && isEmpty(props.titleImageName) === false ? props.titleImageName : "";
+  let titlePublicationDate = isEmpty(props) === false && isEmpty(props.titlePublicationDate) === false ? props.titlePublicationDate : null;
 
   const [mediaMessage, setMediaMessage] = useState("");
   const [errMediaMessage, setErrMediaMessage] = useState("");
@@ -84,7 +94,7 @@ const EditEdition = (props) => {
   // const [editionItemIndex, setEditionItemIndex] = useState(null);
   const [editionItem, setEditionItem] = useState(null);
   // const [editionID, setEditionID] = useState(null);
-  const [titleID, setTitleID] = useState(null);
+  // const [titleID, setTitleID] = useState(null);
   // const [mediaID, setMediaID] = useState(null);
   // const [publicationDate, setPublicationDate] = useState(null);
   // const [imageName, setImageName] = useState(null);
@@ -136,17 +146,17 @@ const EditEdition = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(props.editionID) === false) {
+    if (isEmpty(editionID) === false) {
 
-      let editionObject = editionListState.find(edition => edition.editionID === props.editionID);
+      let editionObject = editionListState.find(edition => edition.editionID === editionID);
 
-      // setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === props.editionID));
+      // setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === editionID));
 
       if (isEmpty(editionObject) === false) {
 
         setEditionItem(editionObject);
         // setEditionID(editionObject.editionID);
-        setTitleID(editionObject.titleID);
+        // setTitleID(editionObject.titleID);
         // setMediaID(editionObject.mediaID);
         // setPublicationDate(editionObject.publicationDate);
         // setImageName(editionObject.imageName);
@@ -184,7 +194,7 @@ const EditEdition = (props) => {
 
     };
 
-  }, [props.editionID, editionListState]);
+  }, [editionID, editionListState]);
 
 
   useEffect(() => {
@@ -268,7 +278,7 @@ const EditEdition = (props) => {
 
     setEditionItem(null);
     // setEditionID(null);
-    setTitleID(null);
+    // setTitleID(null);
     // setMediaID(null);
     // setPublicationDate(null);
     // setImageName(null);
@@ -284,7 +294,7 @@ const EditEdition = (props) => {
     let mediaIDValidated = false;
     let formValidated = false;
 
-    // ? Check to make sure that props.titleID is a number? -- 03/06/2021 MF
+    // ? Check to make sure that titleID is a number? -- 03/06/2021 MF
 
     if (isEmpty(ddMediaID) === false) {
 
@@ -314,7 +324,7 @@ const EditEdition = (props) => {
 
 
       let recordObject = {
-        titleID: parseInt(props.titleID),
+        titleID: parseInt(titleID),
         mediaID: parseInt(ddMediaID),
         // imageName: formatTrim(txtImageName),
         // ASIN: formatTrim(txtASIN),
@@ -531,7 +541,7 @@ const EditEdition = (props) => {
 
     setEditionItem(null);
     // setEditionID(null);
-    setTitleID(null);
+    // setTitleID(null);
     // setMediaID(null);
     // setPublicationDate(null);
     // setImageName(null);
@@ -547,7 +557,7 @@ const EditEdition = (props) => {
     let mediaIDValidated = false;
     let formValidated = false;
 
-    // ? Check to make sure that props.editionID is a number? -- 03/06/2021 MF
+    // ? Check to make sure that editionID is a number? -- 03/06/2021 MF
 
     if (isEmpty(ddMediaID) === false) {
 
@@ -577,7 +587,7 @@ const EditEdition = (props) => {
 
 
       let recordObject = {
-        editionID: props.editionID,
+        editionID: editionID,
         titleID: parseInt(titleID),
         mediaID: parseInt(ddMediaID),
         // imageName: formatTrim(txtImageName),
@@ -693,9 +703,9 @@ const EditEdition = (props) => {
 
       let url = baseURL + "editions/";
 
-      if (isEmpty(props.editionID) === false && isEmpty(sessionToken) === false) {
+      if (isEmpty(editionID) === false && isEmpty(sessionToken) === false) {
 
-        url = url + props.editionID;
+        url = url + editionID;
 
 
         fetch(url, {
@@ -736,7 +746,7 @@ const EditEdition = (props) => {
 
               setEditionItem(data.records[0]);
               // setEditionID(data.records[0].editionID);
-              setTitleID(data.records[0].titleID);
+              // setTitleID(data.records[0].titleID);
               // setMediaID(data.records[0].mediaID);
               // setPublicationDate(data.records[0].publicationDate);
               // setImageName(data.records[0].imageName);
@@ -760,7 +770,7 @@ const EditEdition = (props) => {
 
 
               // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-              // dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: props.editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: getDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
+              // dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: getDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
 
               // // ? Add to local storage also? -- 03/06/2021 MF
 
@@ -798,9 +808,9 @@ const EditEdition = (props) => {
 
     let url = baseURL + "editions/";
 
-    if (isEmpty(props.editionID) === false) {
+    if (isEmpty(editionID) === false) {
 
-      url = url + props.editionID;
+      url = url + editionID;
 
 
       if (isEmpty(sessionToken) === false) {
@@ -841,7 +851,7 @@ const EditEdition = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              // // dispatch(deleteStateEdition(props.editionID));
+              // // dispatch(deleteStateEdition(editionID));
               // // dispatch(deleteStateEdition(editionItemIndex));
               // dispatch(deleteStateEdition(data.editionID));
               // // ? Update local storage also?. -- 03/06/2021 MF
@@ -934,9 +944,9 @@ const EditEdition = (props) => {
 
   const copyTitlePublicationDate = () => {
 
-    if (isEmpty(props.titlePublicationDate) === false) {
+    if (isEmpty(titlePublicationDate) === false) {
 
-      setTxtPublicationDate(formatToString(props.titlePublicationDate).substring(0, 10));
+      setTxtPublicationDate(formatToString(titlePublicationDate).substring(0, 10));
 
     } else {
 
@@ -949,9 +959,9 @@ const EditEdition = (props) => {
 
   const copyTitleImageName = () => {
 
-    if (isEmpty(props.titleImageName) === false) {
+    if (isEmpty(titleImageName) === false) {
 
-      setTxtImageName(formatToString(props.titleImageName));
+      setTxtImageName(formatToString(titleImageName));
 
     } else {
 
@@ -965,9 +975,9 @@ const EditEdition = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true ?
 
@@ -975,9 +985,9 @@ const EditEdition = (props) => {
 
         : null}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true ?
 
@@ -1025,7 +1035,7 @@ const EditEdition = (props) => {
               </Col>
               <Col>
 
-                <Label for="txtPublicationDate">Publication Date</Label> {isEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
+                <Label for="txtPublicationDate">Publication Date</Label> {isEmpty(titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
                 <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
 
               </Col>
@@ -1033,7 +1043,7 @@ const EditEdition = (props) => {
             </FormGroup>
 
             <FormGroup>
-              <Label for="txtImageName">Image Name</Label> {isEmpty(props.titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
+              <Label for="txtImageName">Image Name</Label> {isEmpty(titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
               <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
               {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
             </FormGroup>

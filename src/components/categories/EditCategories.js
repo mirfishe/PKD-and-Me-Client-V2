@@ -5,23 +5,29 @@ import { PencilSquare } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
-
 const EditCategories = (props) => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton, displayIcon -- 10/21/2022 MF
 
   const componentName = "EditCategories";
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
+  // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  // const baseURL = applicationSettings.baseURL;
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -91,9 +97,9 @@ const EditCategories = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Edit Categories</Button></span> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Edit Categories</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Update Categories</ModalHeader>

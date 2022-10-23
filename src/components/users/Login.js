@@ -7,7 +7,7 @@ import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
-const Login = (props) => {
+const Login = () => {
 
   const componentName = "Login";
 

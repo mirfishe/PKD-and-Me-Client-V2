@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, displayValue, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
 import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopapeItem = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: homeopapeItem -- 10/21/2022 MF
+  // * Functions: getNews, getNewsPosted, getNewsReview -- 10/21/2022 MF
 
   const componentName = "FromTheHomeopapeItem";
 
@@ -22,6 +26,11 @@ const FromTheHomeopapeItem = (props) => {
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
 
+  let homeopapeItem = isEmpty(props) === false && isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
+  let getNews = isEmpty(props) === false && isEmpty(props.getNews) === false ? props.getNews : noFunctionAvailable;
+  let getNewsPosted = isEmpty(props) === false && isEmpty(props.getNewsPosted) === false ? props.getNewsPosted : noFunctionAvailable;
+  let getNewsReview = isEmpty(props) === false && isEmpty(props.getNewsReview) === false ? props.getNewsReview : noFunctionAvailable;
+
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -31,8 +40,6 @@ const FromTheHomeopapeItem = (props) => {
   const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
-
-  let homeopapeItem = isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
 
 
   useEffect(() => {
@@ -405,11 +412,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 
@@ -496,11 +503,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 
@@ -587,11 +594,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 
@@ -678,11 +685,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 

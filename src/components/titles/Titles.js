@@ -16,6 +16,9 @@ import EditTitle from "./EditTitle";
 
 const Titles = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: applicationVersion, linkItem, match -- 10/21/2022 MF
+
   const componentName = "Titles";
 
   const dispatch = useDispatch();
@@ -43,6 +46,10 @@ const Titles = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
+  let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
+  let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
+  let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
+
   // const [errCategoryMessage, setErrCategoryMessage] = useState("");
   const [errTitleMessage, setErrTitleMessage] = useState("");
 
@@ -52,9 +59,9 @@ const Titles = (props) => {
 
   let categoryParam;
 
-  if (isEmpty(props.linkItem) === false && hasNonEmptyProperty(props.linkItem, "linkName")) {
+  if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName")) {
 
-    categoryParam = props.linkItem.linkName; // props.match.params.category;
+    categoryParam = linkItem.linkName; // match.params.category;
 
   };
 
@@ -270,7 +277,7 @@ const Titles = (props) => {
 
       title: "Titles",
       href: href,
-      // applicationVersion: props.applicationVersion,
+      // applicationVersion: applicationVersion,
       applicationVersion: process.env.REACT_APP_VERSION,
 
       lastAccessed: getDateTime(),

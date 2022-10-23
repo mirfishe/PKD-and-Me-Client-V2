@@ -12,6 +12,9 @@ import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const EditUserReview = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: reviewID, titleID -- 10/21/2022 MF
+
   const componentName = "EditUserReview";
 
   const dispatch = useDispatch();
@@ -32,6 +35,9 @@ const EditUserReview = (props) => {
   // const checklistListState = useSelector(state => state.user.arrayChecklist);
 
   const userReviewListState = useSelector(state => state.userReviews.arrayUserReviews);
+
+  let reviewID = isEmpty(props) === false && isEmpty(props.reviewID) === false ? props.reviewID : null;
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
 
@@ -64,7 +70,7 @@ const EditUserReview = (props) => {
   // const [reviewID, setReviewID] = useState(null);
   const [userID, setUserID] = useState(null);
   // const [updatedBy, setUpdatedBy] = useState(null);
-  const [titleID, setTitleID] = useState(null);
+  // const [titleID, setTitleID] = useState(null);
   // const [read, setRead] = useState(null);
   // const [dateRead, setDateRead] = useState(null);
   const [rating, setRating] = useState(null);
@@ -81,9 +87,9 @@ const EditUserReview = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(props.reviewID) === false) {
+    if (isEmpty(reviewID) === false) {
 
-      let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === props.reviewID);
+      let userReviewObject = userReviewListState.find(userReview => userReview.reviewID === reviewID);
 
       // setUserReviewItemIndex(userReviewListState.findIndex(userReview => userReview.reviewID === userReviewObject.reviewID));
 
@@ -94,7 +100,7 @@ const EditUserReview = (props) => {
         // setReviewID(userReviewObject.reviewID);
         setUserID(userReviewObject.userID);
         // setUpdatedBy(userReviewObject.updatedBy);
-        setTitleID(userReviewObject.titleID);
+        // setTitleID(userReviewObject.titleID);
         // setRead(userReviewObject.read);
         // setDateRead(userReviewObject.dateRead);
         setRating(userReviewObject.rating);
@@ -138,14 +144,14 @@ const EditUserReview = (props) => {
 
     };
 
-  }, [props.reviewID, userReviewListState]);
+  }, [reviewID, userReviewListState]);
 
 
   // useEffect(() => {
 
-  //     if (isEmpty(props.titleID) === false) {
+  //     if (isEmpty(titleID) === false) {
 
-  //         let titleObject = titleListState.filter(title => title.titleID === props.titleID);
+  //         let titleObject = titleListState.filter(title => title.titleID === titleID);
 
   //         setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
 
@@ -157,7 +163,7 @@ const EditUserReview = (props) => {
 
   //     };
 
-  // }, [props.titleID, titleListState]);
+  // }, [titleID, titleListState]);
 
 
   // useEffect(() => {
@@ -264,7 +270,7 @@ const EditUserReview = (props) => {
     // setReviewID(null);
     setUserID(null);
     // setUpdatedBy(null);
-    setTitleID(null);
+    // setTitleID(null);
     // setRead(null);
     // setDateRead(null);
     setRating(null);
@@ -276,12 +282,12 @@ const EditUserReview = (props) => {
     setActive(null);
 
     // ? Check to make sure that txtDateRead) is a date?
-    // ? Check to make sure that props.titleID is a number?
+    // ? Check to make sure that titleID is a number?
     // * txtDateRead is expecting a date and rdoRating is expecting a number
     // if (isEmpty(txtDateRead) === false && isEmpty(rdoRating) === false) {
 
     let recordObject = {
-      titleID: parseInt(props.titleID),
+      titleID: parseInt(titleID),
       read: cbxRead,
       // dateRead: formatTrim(txtDateRead),
       rating: rdoRating,
@@ -391,7 +397,7 @@ const EditUserReview = (props) => {
             // setReviewID(data.records[0].reviewID);
             setUserID(data.records[0].userID);
             // setUpdatedBy(data.records[0].updatedBy);
-            setTitleID(data.records[0].titleID);
+            // setTitleID(data.records[0].titleID);
             // setRead(data.records[0].read);
             // setDateRead(data.records[0].dateRead);
             setRating(data.records[0].rating);
@@ -525,7 +531,7 @@ const EditUserReview = (props) => {
     setActive(null);
 
     // ? Check to make sure that txtDateRead) is a date? -- 03/06/2021 MF
-    // ? Check to make sure that props.titleID is a number? -- 03/06/2021 MF
+    // ? Check to make sure that titleID is a number? -- 03/06/2021 MF
     // * txtDateRead is expecting a date and rdoRating is expecting a number. -- 03/06/2021 MF
     // if (isEmpty(txtDateRead) === false && isEmpty(rdoRating) === false) {
 
@@ -598,7 +604,7 @@ const EditUserReview = (props) => {
 
     let url = baseURL + "userreviews/";
 
-    if (isEmpty(props.reviewID) === false && isEmpty(sessionToken) === false) {
+    if (isEmpty(reviewID) === false && isEmpty(sessionToken) === false) {
 
       // ? Does it matter if the user is updating their own review as an admin or not? -- 03/06/2021 MF
       if (isEmpty(admin) === false && admin === true) {
@@ -609,7 +615,7 @@ const EditUserReview = (props) => {
 
       };
 
-      url = url + props.reviewID;
+      url = url + reviewID;
 
       fetch(url, {
         method: "PUT",
@@ -670,7 +676,7 @@ const EditUserReview = (props) => {
             // // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-            // dispatch(updateStateUserReview({ /*userReviewItemIndex: userReviewItemIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: getDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
+            // dispatch(updateStateUserReview({ /*userReviewItemIndex: userReviewItemIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, ranking: data.records[0].ranking, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: getDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
 
             // // ? Add to local storage also? -- 03/06/2021 MF
 
@@ -689,7 +695,7 @@ const EditUserReview = (props) => {
 
             // };
 
-            // const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === props.reviewID);
+            // const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === reviewID);
 
             // // * Get all reviews for the title. -- 03/06/2021 MF
             // // ? Get the latest from state? -- 03/06/2021 MF
@@ -703,12 +709,12 @@ const EditUserReview = (props) => {
 
             // };
 
-            // // userReviews.push({ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
+            // // userReviews.push({ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
 
 
             // if (data.records[0].active === true || data.records[0].active === 1 && isEmpty(data.records[0].rating) === false) {
 
-            //   userReviews.push({ reviewID: parseInt(props.reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, rating: data.records[0].rating });
+            //   userReviews.push({ reviewID: parseInt(reviewID), userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, rating: data.records[0].rating });
 
             // };
 
@@ -744,7 +750,7 @@ const EditUserReview = (props) => {
 
             // if (data.records[0].active === true || data.records[0].active === 1) {
 
-            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: props.reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
+            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
 
             // } else {
 
@@ -785,9 +791,9 @@ const EditUserReview = (props) => {
 
     let url = baseURL + "userreviews/";
 
-    if (isEmpty(props.reviewID) === false) {
+    if (isEmpty(reviewID) === false) {
 
-      url = url + props.reviewID;
+      url = url + reviewID;
 
       if (isEmpty(sessionToken) === false) {
 
@@ -914,9 +920,9 @@ const EditUserReview = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true ?
 
@@ -924,9 +930,9 @@ const EditUserReview = (props) => {
 
         : null}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Review</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Review</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) && displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) ?
 

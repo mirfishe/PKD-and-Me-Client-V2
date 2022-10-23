@@ -12,6 +12,9 @@ import { /* addStateURL, updateStateURL, deleteStateURL, */ setPageURL } from ".
 
 const EditTitle = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton, displayIcon, categoryName, editionID, titleID -- 10/21/2022 MF
+
   const componentName = "EditTitle";
 
   const dispatch = useDispatch();
@@ -26,6 +29,12 @@ const EditTitle = (props) => {
   const baseURL = applicationSettings.baseURL;
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
+  let categoryName = isEmpty(props) === false && isEmpty(props.categoryName) === false ? props.categoryName : "";
+  let editionID = isEmpty(props) === false && isEmpty(props.editionID) === false ? props.editionID : 0;
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : 0;
 
   const [categoryMessage, setCategoryMessage] = useState("");
   const [errCategoryMessage, setErrCategoryMessage] = useState("");
@@ -132,16 +141,16 @@ const EditTitle = (props) => {
 
     };
 
-    // setDdCategoryID(getCategoryIDFromCategoryName(props.categoryName));
+    // setDdCategoryID(getCategoryIDFromCategoryName(categoryName));
 
   }, [categoryList]);
 
 
   useEffect(() => {
 
-    if (isEmpty(props.titleID) === false) {
+    if (isEmpty(titleID) === false) {
 
-      let titleObject = titleListState.find(title => title.titleID === props.titleID);
+      let titleObject = titleListState.find(title => title.titleID === titleID);
 
       // setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
 
@@ -215,7 +224,7 @@ const EditTitle = (props) => {
 
     };
 
-  }, [props.titleID, titleListState]);
+  }, [titleID, titleListState]);
 
 
   useEffect(() => {
@@ -832,9 +841,9 @@ const EditTitle = (props) => {
 
         let url = baseURL + "titles/";
 
-        if (isEmpty(props.titleID) === false && isEmpty(sessionToken) === false) {
+        if (isEmpty(titleID) === false && isEmpty(sessionToken) === false) {
 
-          url = url + props.titleID;
+          url = url + titleID;
 
 
           fetch(url, {
@@ -897,7 +906,7 @@ const EditTitle = (props) => {
 
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                // dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                // dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
 
                 // // ? Update local storage also? -- 03/06/2021 MF
 
@@ -919,13 +928,13 @@ const EditTitle = (props) => {
 
                 // };
 
-                // // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
+                // // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === titleID);
 
                 // // * Update/Delete related urls in arrayURLs also. -- 03/06/2021 MF
                 // if (data.records[0].active === false || data.records[0].active === 0) {
 
                 //   // dispatch(deleteStateURL(urlListIndex));
-                //   dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
+                //   dispatch(deleteStateURL({ linkID: titleID, linkType: "titles" }));
 
                 // } else {
 
@@ -934,11 +943,11 @@ const EditTitle = (props) => {
 
 
                 //   // ? Doesn't seem to be updating the state for some reason? -- 03/06/2021 MF
-                //   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
+                //   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
 
                 //   // dispatch(deleteStateURL(urlListIndex));
-                //   dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
-                //   dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: data.records[0].titleURL, linkType: "titles", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
+                //   dispatch(deleteStateURL({ linkID: titleID, linkType: "titles" }));
+                //   dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: data.records[0].titleURL, linkType: "titles", linkID: titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
 
                 // };
 
@@ -986,9 +995,9 @@ const EditTitle = (props) => {
 
     let url = baseURL + "titles/";
 
-    if (isEmpty(props.titleID) === false) {
+    if (isEmpty(titleID) === false) {
 
-      url = url + props.titleID;
+      url = url + titleID;
 
 
       if (isEmpty(sessionToken) === false) {
@@ -1029,7 +1038,7 @@ const EditTitle = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              // dispatch(deleteStateTitle(props.titleID));
+              // dispatch(deleteStateTitle(titleID));
               // // dispatch(deleteStateTitle(titleItemIndex));
               // // ? Update local storage also? -- 03/06/2021 MF
 
@@ -1130,7 +1139,7 @@ const EditTitle = (props) => {
 
   //           if (data.transactionSuccess === true) {
 
-  //             dispatch(deleteStateEdition(props.editionID));
+  //             dispatch(deleteStateEdition(editionID));
   //             // dispatch(deleteStateEdition(editionItemIndex));
   //             // ? Update local storage also? -- 03/06/2021 MF
 
@@ -1174,9 +1183,9 @@ const EditTitle = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true ?
 
@@ -1184,9 +1193,9 @@ const EditTitle = (props) => {
 
         : null}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null} */}
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true ?
 
@@ -1240,7 +1249,7 @@ const EditTitle = (props) => {
                     {categoryList.map((category) => {
                       return (
                         <React.Fragment key={category.categoryID}>
-                          {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
+                          {/* {getCategoryIDFromCategoryName(categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
                           <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
                         </React.Fragment>
                       );

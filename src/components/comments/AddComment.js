@@ -6,9 +6,12 @@ import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
-
 const AddComment = (props) => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton, displayIcon -- 10/21/2022 MF
 
   const componentName = "AddComment";
 
@@ -26,6 +29,9 @@ const AddComment = (props) => {
   const requireUserLogin = useSelector(state => state.applicationSettings.requireUserLogin);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
 
@@ -256,9 +262,9 @@ const AddComment = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
+      {/* {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
 
       {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) ?
 

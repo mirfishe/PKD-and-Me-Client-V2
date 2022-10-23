@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
 import { encodeURL } from "../../utilities/ApplicationFunctions";
 import { setPageURL } from "../../app/urlsSlice";
 // import EditMedia from "./EditMedia";
 
 const Media = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: -- 10/21/2022 MF
+  // * Functions: getTitles -- 10/21/2022 MF
 
   const componentName = "Media";
 
@@ -23,6 +27,8 @@ const Media = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
+
+  let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -100,7 +106,7 @@ const Media = (props) => {
               return (
                 <NavItem key={media.mediaID}>
 
-                  {/* <a href="#" onClick={(event) => {event.preventDefault(); props.getTitles(media.mediaID)}}>{media.media}</a> */}
+                  {/* <a href="#" onClick={(event) => {event.preventDefault(); getTitles(media.mediaID)}}>{media.media}</a> */}
 
                   {/* <<NavLink tag={Link} to={`/editions/${media.mediaID}`}>{media.mediaID}</NavLink>
                 <<NavLink tag={Link} to={`/editions/${media.replaceAll("-", "|").replaceAll(" ", "-")}`}>{media.media}</NavLink>
