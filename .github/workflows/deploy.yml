@@ -45,7 +45,7 @@ jobs:
 
     - name: Build
       run: |
-        npm run buildci --if-present
+        npm run buildcontinuousintegration --if-present
 
     - name: FTP Deploy - PKD And Me
       uses: SamKirkland/FTP-Deploy-Action@4.3.0

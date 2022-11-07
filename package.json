@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "buildci": "CI=false && npm run build",
+    "buildcontinuousintegration": "CI=false && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -29,8 +29,8 @@ import Login from "./components/users/Login";
 import Register from "./components/users/Register";
 // import EditUser from "./components/users/EditUser";
 // import Checklist from "./components/checklist/Checklist";
-// import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
-// import FormatPost from "./components/socialMedia/FormatPost";
+import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
+import FormatPost from "./components/socialMedia/FormatPost";
 // import AddComment from "./components/comments/AddComment";
 // import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
 // import Comments from "./components/comments/Comments";
@@ -772,7 +772,7 @@ const App = () => {
         </Nav>
       </Navbar>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
@@ -785,7 +785,7 @@ const App = () => {
               <NavLink tag={Link} to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></NavLink>
             </NavItem>
 
-            <NavItem>
+            {/* <NavItem>
               <NavLink tag={Link} to="/amazon"><NavbarText>Amazon</NavbarText></NavLink>
             </NavItem>
 
@@ -815,12 +815,12 @@ const App = () => {
 
             <NavItem>
               <NavLink tag={Link} to="/comments"><NavbarText>Comments</NavbarText></NavLink>
-            </NavItem>
+            </NavItem> */}
 
           </Nav>
         </Navbar>
 
-        : null} */}
+        : null}
 
       {showAllCategories === true || showAllMedia === true || showAllTitles === true || showAllEditions === true || showAllMenuItems === true ?
 
@@ -984,11 +984,11 @@ const App = () => {
 
                 <React.Fragment> */}
 
-              {/* <Route path="/socialMedia" element={<FormatPost />} />
+              <Route path="/socialMedia" element={<FormatPost />} />
 
               <Route path="/fromTheHomeopape" element={<UpdateFromTheHomeopape />} />
 
-              <Route path="/brokenLinks" element={<BrokenLinks />} />
+              {/* <Route path="/brokenLinks" element={<BrokenLinks />} />
 
               <Route path="/computerLogs" element={<ComputerLogs />} />
 
