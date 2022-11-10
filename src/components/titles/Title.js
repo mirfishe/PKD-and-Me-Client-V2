@@ -57,6 +57,8 @@ const Title = (props) => {
   // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
   const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
 
+  const applicationVersion = useSelector(state => state.activity.applicationVersion);
+
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
   // let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
@@ -419,8 +421,7 @@ const Title = (props) => {
 
       title: titleList[0].titleName,
       href: href,
-      // applicationVersion: applicationVersion,
-      applicationVersion: process.env.REACT_APP_VERSION,
+      applicationVersion: applicationVersion,
 
       lastAccessed: getDateTime(),
 

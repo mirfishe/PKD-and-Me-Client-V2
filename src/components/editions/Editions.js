@@ -50,6 +50,8 @@ const Editions = (props) => {
   const editionListState = useSelector(state => state.editions.arrayEditions);
   const mediaListState = useSelector(state => state.media.arrayMedia);
 
+  const applicationVersion = useSelector(state => state.activity.applicationVersion);
+
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : "";
   // let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
@@ -450,8 +452,7 @@ const Editions = (props) => {
 
       title: "Editions",
       href: href,
-      // applicationVersion: applicationVersion,
-      applicationVersion: process.env.REACT_APP_VERSION,
+      applicationVersion: applicationVersion,
 
       lastAccessed: getDateTime(),
 

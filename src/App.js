@@ -43,10 +43,10 @@ import FormatPost from "./components/socialMedia/FormatPost";
 // import Errors from "./components/reports/Errors";
 import "./App.css";
 
-const App = () => {
+const App = (props) => {
 
-  // // * Available props: -- 10/21/2022 MF
-  // // * Properties: applicationVersion, copyrightYear -- 10/21/2022 MF
+  // * Available props: -- 04/29/2022 MF
+  // * Properties: applicationVersion, copyrightYear -- 04/29/2022 MF
 
   const componentName = "App";
 
@@ -137,6 +137,9 @@ const App = () => {
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
   // const defaultPageComponent = useSelector(state => state.applicationSettings.defaultPageComponent);
   const defaultPageComponent = applicationSettings.defaultPageComponent;
+
+  let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : "0.0.0";
+  let copyrightYear = isEmpty(props) === false && isEmpty(props.copyrightYear) === false ? props.copyrightYear : 2022;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -299,7 +302,7 @@ const App = () => {
       title: "Homepage",
       href: href,
       // applicationVersion: props.applicationVersion,
-      applicationVersion: process.env.REACT_APP_VERSION,
+      applicationVersion: applicationVersion,
 
       lastAccessed: getDateTime(),
 
@@ -1041,7 +1044,7 @@ const App = () => {
 
             {/* &copy; {props.copyrightYear} All rights reserved. Version: {props.applicationVersion} */}
 
-            &copy; 2022 All rights reserved. Version: {process.env.REACT_APP_VERSION}
+            &copy; {copyrightYear} All rights reserved. Version: {applicationVersion}
 
           </Col>
         </Row>
