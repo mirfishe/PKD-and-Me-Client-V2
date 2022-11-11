@@ -40,17 +40,6 @@ if (isEmpty(applicationSettings.tagManagerArgs.gtmId) === false) {
 // document.getElementsByTagName("META")[3].content = metaDescription;
 document.getElementsByTagName("META")[3].content = applicationSettings.metaDescription;
 
-// * The old syntax for React 17 and older. -- 05/29/2022 MF
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Provider store={store}>
-//       {/* <App applicationVersion={applicationVersion} copyrightYear={copyrightYear} /> */}
-//       <App />
-//     </Provider>
-//   </React.StrictMode>,
-//   document.getElementById("root")
-// );
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

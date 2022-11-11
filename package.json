@@ -13,7 +13,7 @@
   "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "buildcontinuousintegration": "CI=false && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -37,6 +37,9 @@
     "rss-parser": "^3.12.0",
     "shared-functions": "github:mirfishe/shared-functions",
     "web-vitals": "^3.0.4"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
   },
   "eslintConfig": {
     "extends": [
