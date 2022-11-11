@@ -14,7 +14,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
-    "buildcontinuousintegration": "CI=false && npm run build",
+    "continuousintegrationbuild": "CI=false && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
