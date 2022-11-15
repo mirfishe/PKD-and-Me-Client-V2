@@ -14,7 +14,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
-    "continuousintegrationbuild": "CI=false && npm run build",
+    "buildmac": "GENERATE_SOURCEMAP=false react-scripts build",
+    "continuousintegrationbuild": "CI=false && npm run buildmac",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
