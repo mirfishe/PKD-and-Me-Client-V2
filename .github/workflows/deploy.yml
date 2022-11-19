@@ -4,13 +4,13 @@
 # * About the CI environment variable: https://stackoverflow.com/questions/62663451/treating-warnings-as-errors-because-process-env-ci-true-failed-to-compile -- 10/04/2022 MF
 # * Adding the .env property doesn't seem to work so that warnings aren't treated as errors. -- 10/10/2022 MF
 
-name: Deploy
+name: Deploy PKD And Me Development
 
 on:
   pull_request:
     types:
       - closed
-    branches: [ "master" ]
+    branches: [ "develop" ]
 
 env:
   CI: false
@@ -59,7 +59,7 @@ jobs:
         # * Server port to connect to (read your web hosts docs)
         port: 22
         # * protocol to deploy with - ftp, ftps, or ftps-legacy
-        protocol: ftps-legacy
+        protocol: ftps
         # * Folder to upload from, must end with trailing slash /
         local-dir: ./build/
         # * Path to upload to on the server. Must end with trailing slash /
