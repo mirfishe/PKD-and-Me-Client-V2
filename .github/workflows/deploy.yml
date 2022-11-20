@@ -49,6 +49,11 @@ jobs:
       run: |
         npm run continuousintegrationbuild --if-present
 
+    - name: Remove File
+      uses: JesseTG/rm@v1.0.3
+      with:
+        path: build/build/asset-manifest.json
+
     - name: Sync Files
       uses: SamKirkland/web-deploy@v1
       with:
