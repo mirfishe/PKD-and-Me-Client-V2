@@ -57,7 +57,7 @@ jobs:
         private-ssh-key: ${{ secrets.SSHKEY }}
         source-path: build/
         destination-path: /var/www/html/pkd-and-meTEST/
-        rsync-options: --exclude=asset-manifest.json --exclude=.htaccess --exclude=robots.txt
+        rsync-options: --stats --itemize-changes --exclude='asset-manifest.json' --exclude='.htaccess' --exclude='robots.txt'
 
     # - name: FTP Deploy - PKD And Me
     #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
