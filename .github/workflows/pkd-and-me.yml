@@ -14,8 +14,8 @@ on:
       - closed
     branches: [ "master" ]
 
-env:
-  CI: false
+# env:
+#   CI: false
 
 jobs:
   build:
@@ -46,13 +46,16 @@ jobs:
       run: npm install
 
     - name: Build
-      run: |
-        npm run continuousintegrationbuild --if-present
+      run: npm run continuousintegrationbuild --if-present
+
+    # - name: Remove File
+    #   uses: JesseTG/rm@v1.0.3
+    #   with:
+    #     path: build/asset-manifest.json
 
     - name: Remove File
-      uses: JesseTG/rm@v1.0.3
-      with:
-        path: build/asset-manifest.json
+      run: rm -fv build/asset-manifest.json
+      shell: bash
 
     - name: Sync Files
       uses: SamKirkland/web-deploy@v1
