@@ -38,7 +38,8 @@ jobs:
     - name: Cache dependencies
       uses: actions/cache@v2
       with:
-        path: **/node_modules
+        path: |
+          **/node_modules
         key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
@@ -47,6 +48,9 @@ jobs:
     - name: Build
       run: npm run continuousintegrationbuild --if-present
 
+    - name: List output files
+      run: find build/ -print
+      
     - name: Remove asset-manifest.json
       run: rm -fv build/asset-manifest.json
       shell: bash
