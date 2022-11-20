@@ -52,12 +52,12 @@ const Title = (props) => {
   // const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  const titleListState = useSelector(state => state.titles.arrayTitles);
-  // const editionListState = useSelector(state => state.editions.arrayEditions);
-  // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
-  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
+  const arrayTitles = useSelector(state => state.titles.arrayTitles);
+  // const arrayEditions = useSelector(state => state.editions.arrayEditions);
+  // const arrayUserReviewsRatings = useSelector(state => state.userReviews.arrayUserReviewsRatings);
+  const arrayUserReviews = useSelector(state => state.userReviews.arrayUserReviews);
 
-  const applicationVersion = useSelector(state => state.activity.applicationVersion);
+  const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
 
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
@@ -113,9 +113,9 @@ const Title = (props) => {
 
     if (isNaN(titleParam) === false) {
 
-      newTitleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
+      newTitleList = arrayTitles.filter(title => title.titleID === parseInt(titleParam));
 
-      // newEditionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
+      // newEditionList = arrayEditions.filter(edition => edition.titleID === parseInt(titleParam));
 
       if (isEmpty(newTitleList) === false) {
 
@@ -134,8 +134,8 @@ const Title = (props) => {
     } else if (isEmpty(titleParam) === false) {
 
       // * If titleParam is not a number, then it's the title name
-      newTitleList = titleListState.filter(title => title.titleURL === titleParam);
-      const title = titleListState.find(title => title.titleURL === titleParam);
+      newTitleList = arrayTitles.filter(title => title.titleURL === titleParam);
+      const title = arrayTitles.find(title => title.titleURL === titleParam);
 
       if (isEmpty(title) === false) {
 
@@ -147,16 +147,16 @@ const Title = (props) => {
         // setTitleID(title.titleID);
         // setTitlePublicationDate(title.publicationDate);
 
-        // newEditionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
+        // newEditionList = arrayEditions.filter(edition => edition.titleID === parseInt(title.titleID));
 
       } else {
 
         document.title = "Title Not Found | " + applicationName + " | " + siteName;
         console.error("Title not found.");
         // // Display all active titles
-        // newTitleList = titleListState;
+        // newTitleList = arrayTitles;
         // // Display all active editions
-        // newEditionList = editionListState;
+        // newEditionList = arrayEditions;
         // setErrTitleMessage("Title not found.")
 
       };
@@ -165,11 +165,11 @@ const Title = (props) => {
 
       document.title = "All Titles | " + applicationName + " | " + siteName;
       // * Display all active titles
-      // newTitleList = [...titleListState];
-      newTitleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);
+      // newTitleList = [...arrayTitles];
+      newTitleList = arrayTitles.filter(title => title.titleActive === true || title.titleActive === 1);
       // * Display all active editions
-      // newEditionList = [...editionListState];
-      // newEditionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+      // newEditionList = [...arrayEditions];
+      // newEditionList = arrayEditions.filter(edition => edition.editionActive === true || edition.editionActive === 1);
 
     };
 
@@ -215,12 +215,12 @@ const Title = (props) => {
 
     // setEditionList(newEditionList);
 
-  }, [titleParam, titleListState]);
+  }, [titleParam, arrayTitles]);
 
 
   useEffect(() => {
 
-    let newUserReviews = userReviewsState.filter(userReview => userReview.titleID === titleID);
+    let newUserReviews = arrayUserReviews.filter(userReview => userReview.titleID === titleID);
 
     let newUserReviewItem = {};
 
@@ -239,7 +239,7 @@ const Title = (props) => {
 
     // if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
-    //     newUserReviewRatingItem = userReviewsRatingsState.filter(userReview => userReview.titleID === titleID);
+    //     newUserReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === titleID);
     //     newUserReviewRatingItem = newUserReviewRatingItem[0];
 
     // };
@@ -267,7 +267,7 @@ const Title = (props) => {
     // setOverallTitleRating(newOverallTitleRating);
     // setOverallTitleRatingCount(newOverallTitleRatingCount);
 
-  }, [userReviewsState]);
+  }, [arrayUserReviews]);
 
 
   useEffect(() => {

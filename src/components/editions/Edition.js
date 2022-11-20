@@ -38,8 +38,8 @@ const Edition = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  const editionsState = useSelector(state => state.editions.arrayEditions);
-  const titleListState = useSelector(state => state.titles.arrayTitles);
+  const arrayEditions = useSelector(state => state.editions.arrayEditions);
+  const arrayTitles = useSelector(state => state.titles.arrayTitles);
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
   // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
@@ -54,7 +54,7 @@ const Edition = (props) => {
 
   useEffect(() => {
 
-    let newEditionList = [...editionsState];
+    let newEditionList = [...arrayEditions];
 
     let titleItemArray = [];
     let newTitleItem = {};
@@ -62,7 +62,7 @@ const Edition = (props) => {
     if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
       newEditionList = newEditionList.filter(edition => edition.titleID === titleID);
-      titleItemArray = titleListState.filter(title => title.titleID === titleID);
+      titleItemArray = arrayTitles.filter(title => title.titleID === titleID);
       newTitleItem = titleItemArray[0];
 
     };
@@ -101,7 +101,7 @@ const Edition = (props) => {
 
     setEditionList(newEditionList);
 
-  }, [editionsState]);
+  }, [arrayEditions]);
 
 
   useEffect(() => {

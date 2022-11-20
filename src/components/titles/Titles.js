@@ -47,11 +47,11 @@ const Titles = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  const titleListState = useSelector(state => state.titles.arrayTitles);
-  const categoryListState = useSelector(state => state.categories.arrayCategories);
-  const editionListState = useSelector(state => state.editions.arrayEditions);
+  const arrayTitles = useSelector(state => state.titles.arrayTitles);
+  const arrayCategories = useSelector(state => state.categories.arrayCategories);
+  const arrayEditions = useSelector(state => state.editions.arrayEditions);
 
-  const applicationVersion = useSelector(state => state.activity.applicationVersion);
+  const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
 
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
@@ -88,28 +88,28 @@ const Titles = (props) => {
         // ! This code no longer works with the current URL setup
         // * If categoryParam is a number, then it's the categoryID
         document.title = newTitleList[0].category + " | " + applicationName + " | " + siteName;
-        newTitleList = titleListState.filter(title => title.categoryID === parseInt(categoryParam));
+        newTitleList = arrayTitles.filter(title => title.categoryID === parseInt(categoryParam));
 
       };
 
     } else if (isEmpty(categoryParam) === false) {
 
       // * If categoryParam is not a number, then it's the category name
-      let category = categoryListState.find(category => category.category === decodeURL(categoryParam));
+      let category = arrayCategories.find(category => category.category === decodeURL(categoryParam));
 
       if (isEmpty(category) === false) {
 
         document.title = category.category + " | " + applicationName + " | " + siteName;
-        newTitleList = titleListState.filter(title => title.categoryID === parseInt(category.categoryID));
+        newTitleList = arrayTitles.filter(title => title.categoryID === parseInt(category.categoryID));
 
       } else {
 
         document.title = "Category Not Found | " + applicationName + " | " + siteName;
         console.error("Category not found.");
         // // Display all active titles
-        // newTitleList = titleListState;
+        // newTitleList = arrayTitles;
         // // Display all editions
-        // editionList = editionListState;
+        // editionList = arrayEditions;
         // setErrCategoryMessage("Category not found.")
 
       };
@@ -118,8 +118,8 @@ const Titles = (props) => {
 
       document.title = "All Titles | " + applicationName + " | " + siteName;
       // Display all active titles
-      newTitleList = [...titleListState];
-      // newTitleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);
+      newTitleList = [...arrayTitles];
+      // newTitleList = arrayTitles.filter(title => title.titleActive === true || title.titleActive === 1);
 
     };
 
@@ -141,12 +141,12 @@ const Titles = (props) => {
 
     setTitleList(newTitleList);
 
-  }, [categoryParam, titleListState]);
+  }, [categoryParam, arrayTitles]);
 
 
   useEffect(() => {
 
-    let newEditionList = [...editionListState];
+    let newEditionList = [...arrayEditions];
 
     if (electronicOnly === true || userElectronicOnly === true) {
 
@@ -178,7 +178,7 @@ const Titles = (props) => {
 
     setEditionList(newEditionList);
 
-  }, [editionListState]);
+  }, [arrayEditions]);
 
 
   useEffect(() => {

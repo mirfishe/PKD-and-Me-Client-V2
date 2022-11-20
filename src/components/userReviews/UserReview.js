@@ -18,7 +18,7 @@ const UserReview = (props) => {
   const admin = useSelector(state => state.user.admin);
   const userID = useSelector(state => state.user.userID);
 
-  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
+  const arrayUserReviews = useSelector(state => state.userReviews.arrayUserReviews);
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
   // let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
@@ -35,7 +35,7 @@ const UserReview = (props) => {
 
   useEffect(() => {
 
-    let newUserReviews = [...userReviewsState];
+    let newUserReviews = [...arrayUserReviews];
 
     if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
@@ -70,7 +70,7 @@ const UserReview = (props) => {
 
     setUserReviews(newUserReviews);
 
-  }, [userReviewsState]);
+  }, [arrayUserReviews]);
 
 
   useEffect(() => {

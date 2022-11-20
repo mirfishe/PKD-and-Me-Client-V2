@@ -30,7 +30,6 @@ const initialState = {
   applicationSettingsLoaded: false,
   applicationSettingsJsonLoaded: false,
   menuSettings: {},
-  linkItem: {},
   informationMessage: "",
   informationMessageVisible: false,
   successMessage: "",
@@ -280,11 +279,6 @@ const applicationSettingsSlice = createSlice({
       state.menuSettings = action.payload;
 
     },
-    setLinkItem(state, action) {
-
-      state.linkItem = action.payload;
-
-    },
     addInformationMessage(state, action) {
 
 
@@ -458,6 +452,6 @@ const applicationSettingsSlice = createSlice({
   }
 });
 
-export const { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
+export const { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
 
 export default applicationSettingsSlice.reducer;

@@ -7,8 +7,6 @@
 name: Deploy PhilipDick
 
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
     types:
       - closed
@@ -68,5 +66,5 @@ jobs:
         remote-user: mrfisher
         private-ssh-key: ${{ secrets.SSHKEY }}
         source-path: build/
-        destination-path: /var/www/html/philipdickTEST/pkd-and-me/
+        destination-path: /var/www/html/philipdick/pkd-and-me/
         rsync-options: --archive --verbose --compress --human-readable --progress --delete-after --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore --stats --itemize-changes --exclude=images --exclude=sitemap.xml

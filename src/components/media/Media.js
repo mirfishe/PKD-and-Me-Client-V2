@@ -26,7 +26,7 @@ const Media = (props) => {
   const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
 
-  const mediaListState = useSelector(state => state.media.arrayMedia);
+  const arrayMedia = useSelector(state => state.media.arrayMedia);
 
   // let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
   // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
@@ -40,21 +40,21 @@ const Media = (props) => {
 
     let newMediaList = [];
 
-    if (isEmpty(mediaListState) === false) {
+    if (isEmpty(arrayMedia) === false) {
 
       if (electronicOnly === true || userElectronicOnly === true) {
 
-        newMediaList = mediaListState.filter(media => media.electronic === true);
+        newMediaList = arrayMedia.filter(media => media.electronic === true);
 
       } else if (physicalOnly === true || userPhysicalOnly === true) {
 
-        newMediaList = mediaListState.filter(media => media.electronic === false);
+        newMediaList = arrayMedia.filter(media => media.electronic === false);
 
       } else {
 
-        newMediaList = [...mediaListState];
-        // newMediaList = mediaListState.filter(media => media.active === true || media.active === 1);
-        // newMediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
+        newMediaList = [...arrayMedia];
+        // newMediaList = arrayMedia.filter(media => media.active === true || media.active === 1);
+        // newMediaList = arrayMedia.filter(media => media.mediaActive === true || media.mediaActive === 1);
 
       };
 
@@ -75,7 +75,7 @@ const Media = (props) => {
 
     };
 
-  }, [mediaListState]);
+  }, [arrayMedia]);
 
 
   const redirectPage = (linkName) => {

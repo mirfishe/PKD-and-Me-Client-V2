@@ -31,7 +31,7 @@ const TitleCard = (props) => {
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // const admin = useSelector(state => state.user.admin);
 
-  const titleListState = useSelector(state => state.titles.arrayTitles);
+  const arrayTitles = useSelector(state => state.titles.arrayTitles);
 
   let additionalText = isEmpty(props) === false && isEmpty(props.additionalText) === false ? props.additionalText : "";
   let headerText = isEmpty(props) === false && isEmpty(props.headerText) === false ? props.headerText : "";
@@ -56,8 +56,8 @@ const TitleCard = (props) => {
     };
 
     // * Only show title in certain categories or by certain authors
-    // const randomTitleList = titleListState.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
-    const randomTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+    // const randomTitleList = arrayTitles.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
+    const randomTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
 
     if (randomTitle === true) {
 
@@ -77,26 +77,26 @@ const TitleCard = (props) => {
 
       } else {
 
-        newTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
+        newTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
 
       };
 
     } else if (isEmpty(titleParam) === false) {
 
       // * If titleParam is not a number, then it's the title name
-      newTitleList = titleListState.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
+      newTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
 
     } else {
 
       // console.error("Title not found.");
       // * Display all active titles
-      // newTitleList = [...titleListState];
+      // newTitleList = [...arrayTitles];
 
     };
 
     setTitleList(newTitleList);
 
-  }, [linkName, titleListState]);
+  }, [linkName, arrayTitles]);
 
 
   useEffect(() => {

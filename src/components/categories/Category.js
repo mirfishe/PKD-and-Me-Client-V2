@@ -22,7 +22,7 @@ const Category = (props) => {
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
-  const categoryListState = useSelector(state => state.categories.arrayCategories);
+  const arrayCategories = useSelector(state => state.categories.arrayCategories);
 
   // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
   // let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
@@ -36,16 +36,16 @@ const Category = (props) => {
 
     let newCategoryList = [];
 
-    if (isEmpty(categoryListState) === false) {
+    if (isEmpty(arrayCategories) === false) {
 
       if (isEmpty(admin) === false && admin === true) {
 
-        newCategoryList = [...categoryListState];
+        newCategoryList = [...arrayCategories];
 
       } else {
 
-        newCategoryList = categoryListState.filter(category => category.active === true || category.active === 1);
-        // newCategoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
+        newCategoryList = arrayCategories.filter(category => category.active === true || category.active === 1);
+        // newCategoryList = arrayCategories.filter(category => category.categoryActive === true || category.categoryActive === 1);
 
       };
 
@@ -56,7 +56,7 @@ const Category = (props) => {
 
     };
 
-  }, [categoryListState]);
+  }, [arrayCategories]);
 
 
   const redirectPage = (linkName) => {

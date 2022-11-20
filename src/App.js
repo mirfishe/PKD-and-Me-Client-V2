@@ -6,7 +6,7 @@ import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, Navbar
 import applicationSettings from "./app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
 import { addErrorLog } from "./utilities/ApplicationFunctions";
-import { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, /* setApplicationOffline, */ setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
+import { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, /* setApplicationOffline, */ setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
@@ -122,11 +122,11 @@ const App = (props) => {
   let showUserPhysicalOnly = useSelector(state => state.applicationSettings.menuSettings.showUserPhysicalOnly);
   let showUserElectronicOnly = useSelector(state => state.applicationSettings.menuSettings.showUserElectronicOnly);
 
-  const urlLookup = useSelector(state => state.urls.arrayURLs);
+  const arrayURLs = useSelector(state => state.urls.arrayURLs);
   const pageURL = useSelector(state => state.urls.pageURL);
   const linkItem = useSelector(state => state.urls.linkItem);
 
-  const categoryListState = useSelector(state => state.categories.arrayCategories);
+  const arrayCategories = useSelector(state => state.categories.arrayCategories);
 
   // ! Loading the routerBaseName from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -161,26 +161,26 @@ const App = (props) => {
   const [url2Loaded, setURL2Loaded] = useState(false);
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (isEmpty(props.applicationVersion) === false) {
+    if (isEmpty(applicationVersion) === false) {
 
-  //     dispatch(setApplicationVersion(props.applicationVersion));
+      dispatch(setApplicationVersion(applicationVersion));
 
-  //   };
+    };
 
-  // }, [props.applicationVersion]);
+  }, [applicationVersion]);
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (isEmpty(props.copyrightYear) === false) {
+    if (isEmpty(copyrightYear) === false) {
 
-  //     dispatch(setCopyrightYear(props.copyrightYear));
+      dispatch(setCopyrightYear(copyrightYear));
 
-  //   };
+    };
 
-  // }, [props.copyrightYear]);
+  }, [copyrightYear]);
 
 
   useEffect(() => {
@@ -436,18 +436,14 @@ const App = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(pageURL) === false) {
+    if (isEmpty(pageURL) === false && isNonEmptyArray(arrayURLs) === true) {
 
       let linkArrayItem = {};
 
-      if (isNonEmptyArray(urlLookup) === true) {
+      for (let i = 0; i < arrayURLs.length; i++) {
 
-        for (let i = 0; i < urlLookup.length; i++) {
-
-          linkArrayItem = urlLookup.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
-          // setLinkItem(linkArrayItem);
-
-        };
+        linkArrayItem = arrayURLs.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
+        // setLinkItem(linkArrayItem);
 
       };
 
@@ -455,7 +451,7 @@ const App = (props) => {
 
     };
 
-  }, [pageURL, urlLookup]);
+  }, [pageURL, arrayURLs]);
 
 
   const clearToken = () => {
@@ -939,7 +935,7 @@ const App = (props) => {
         <Row>
           <Col xs="2">
 
-            {isEmpty(categoryListState) === false ? <Category /> : null}
+            {isEmpty(arrayCategories) === false ? <Category /> : null}
 
             <Media />
 

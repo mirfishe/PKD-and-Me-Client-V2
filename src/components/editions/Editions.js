@@ -47,10 +47,10 @@ const Editions = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  const editionListState = useSelector(state => state.editions.arrayEditions);
-  const mediaListState = useSelector(state => state.media.arrayMedia);
+  const arrayEditions = useSelector(state => state.editions.arrayEditions);
+  const arrayMedia = useSelector(state => state.media.arrayMedia);
 
-  const applicationVersion = useSelector(state => state.activity.applicationVersion);
+  const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
 
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : "";
@@ -85,26 +85,26 @@ const Editions = (props) => {
         // ! This code no longer works with the current URL setup
         // * If mediaParam is a number, then it's the mediaID
         document.title = newEditionList[0].medium.media + " | " + applicationName + " | " + siteName;
-        newEditionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
+        newEditionList = arrayEditions.filter(edition => edition.mediaID === parseInt(mediaParam));
 
       };
 
     } else if (isEmpty(mediaParam) === false) {
 
       // * If mediaParam is not a number, then it's the media name
-      const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
+      const media = arrayMedia.find(media => media.media === decodeURL(mediaParam));
 
       if (isEmpty(media) === false) {
 
         document.title = media.media + " | " + applicationName + " | " + siteName;
-        newEditionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
+        newEditionList = arrayEditions.filter(edition => edition.mediaID === parseInt(media.mediaID));
 
       } else {
 
         document.title = "Media Not Found | " + applicationName + " | " + siteName;
         console.error("Media not found.");
         // * Display all active editions
-        // newEditionList = editionListState;
+        // newEditionList = arrayEditions;
         // setErrTitleMessage("Media not found.")
 
       };
@@ -113,8 +113,8 @@ const Editions = (props) => {
 
       document.title = "All Editions | " + applicationName + " | " + siteName;
       // * Display all active editions
-      newEditionList = [...editionListState];
-      // newEditionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+      newEditionList = [...arrayEditions];
+      // newEditionList = arrayEditions.filter(edition => edition.editionActive === true || edition.editionActive === 1);
 
     };
 
@@ -150,7 +150,7 @@ const Editions = (props) => {
 
     setEditionList(newEditionList);
 
-  }, [linkItem]);
+  }, [mediaParam, arrayEditions]);
 
 
   useEffect(() => {
