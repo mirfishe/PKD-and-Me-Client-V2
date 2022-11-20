@@ -85,4 +85,5 @@ jobs:
         target-server: 209.97.152.234
         remote-user: mrfisher
         private-ssh-key: ${{ secrets.SSHKEY }}
+        source-path: build/
         destination-path: /var/www/html/pkd-and-meTEST/
