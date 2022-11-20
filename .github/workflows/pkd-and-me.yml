@@ -48,13 +48,14 @@ jobs:
     - name: Build
       run: npm run continuousintegrationbuild --if-present
 
-    # - name: Remove File
-    #   uses: JesseTG/rm@v1.0.3
-    #   with:
-    #     path: build/asset-manifest.json
-
-    - name: Remove File
+    - name: Remove asset-manifest.json
       run: rm -fv build/asset-manifest.json
+      shell: bash
+
+    - name: Copy .htaccess and remove unnecessary ones
+      run: |
+        cp build/htaccess/pkd-and-me.htaccess build/.htaccess
+        rm -rfv build/htaccess
       shell: bash
 
     - name: Sync Files
