@@ -69,4 +69,4 @@ jobs:
         private-ssh-key: ${{ secrets.SSHKEY }}
         source-path: build/
         destination-path: /var/www/html/pkd-and-me/
-        rsync-options: --archive --verbose --compress --human-readable --progress --delete-after --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore --stats --itemize-changes --omit-dir-times --perms
+        rsync-options: --archive --verbose --compress --human-readable --progress --delete-after --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore --stats --itemize-changes --omit-dir-times
