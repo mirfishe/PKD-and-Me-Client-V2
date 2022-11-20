@@ -61,5 +61,6 @@ jobs:
         remote-user: mrfisher
         private-ssh-key: ${{ secrets.SSHKEY }}
         source-path: build/
-        destination-path: /var/www/html/pkd-and-meTEST/
+        destination-path: /var/www/html/pkd-and-me/
+        # * Adding some of these resulted in no files being copied. -- 11/20/2022 MF
         # rsync-options: --verbose --stats --itemize-changes --exclude='asset-manifest.json' --exclude='.htaccess' --exclude='robots.txt'
