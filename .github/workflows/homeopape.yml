@@ -4,7 +4,7 @@
 # * About the CI environment variable: https://stackoverflow.com/questions/62663451/treating-warnings-as-errors-because-process-env-ci-true-failed-to-compile -- 10/04/2022 MF
 # * Adding the .env property doesn't seem to work so that warnings aren't treated as errors. -- 10/10/2022 MF
 
-name: Deploy PKD And Me Development
+name: Deploy Homeopape
 
 on:
   push:
@@ -57,7 +57,7 @@ jobs:
 
     - name: Copy .htaccess and remove htaccess directory
       run: |
-        cp build/htaccess/pkd-and-me.htaccess build/.htaccess
+        cp build/htaccess/homeopape.htaccess build/.htaccess
         rm -rfv build/htaccess
       shell: bash
 
@@ -68,5 +68,5 @@ jobs:
         remote-user: mrfisher
         private-ssh-key: ${{ secrets.SSHKEY }}
         source-path: build/
-        destination-path: /var/www/html/pkd-and-me/
+        destination-path: /var/www/html/homeopapeTEST/
         rsync-options: --archive --verbose --compress --human-readable --progress --delete-after --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore --stats --itemize-changes --exclude=images --exclude=sitemap.xml
