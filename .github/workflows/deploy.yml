@@ -54,43 +54,43 @@ jobs:
       with:
         path: build/asset-manifest.json
 
-    - name: Sync Files
-      uses: SamKirkland/web-deploy@v1
-      with:
-        target-server: 209.97.152.234
-        remote-user: mrfisher
-        private-ssh-key: ${{ secrets.SSHKEY }}
-        source-path: build/
-        destination-path: /var/www/html/pkd-and-me/
-        # rsync-options: --verbose --stats --itemize-changes --exclude='asset-manifest.json' --exclude='.htaccess' --exclude='robots.txt'
-
-    # - name: FTP Deploy - PKD And Me
-    #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
+    # - name: Sync Files
+    #   uses: SamKirkland/web-deploy@v1
     #   with:
-    #     # * ftp server
-    #     server: 209.97.152.234
-    #     # * ftp username
-    #     username: ${{ secrets.ftpusername }}
-    #     # * ftp password
-    #     password: ${{ secrets.ftppassword }}
-    #     # * Server port to connect to (read your web hosts docs)
-    #     port: 22
-    #     # * protocol to deploy with - ftp, ftps, or ftps-legacy
-    #     protocol: ftps
-    #     # * Folder to upload from, must end with trailing slash /
-    #     local-dir: ./build/
-    #     # * Path to upload to on the server. Must end with trailing slash /
-    #     server-dir: /var/www/html/pkd-and-me/
-    #     # * Path and name of the state file - this file is used to track which files have been deployed
-    #     # state-name: # optional
-    #     # * Prints which modifications will be made with current config options, but doesn't actually make any changes
-    #     # dry-run: # optional
-    #     # * Deletes ALL contents of server-dir, even items in excluded with exclude argument
-    #     # dangerous-clean-slate: # optional
-    #     # * An array of glob patterns, these files will not be included in the publish/delete process
-    #     # exclude: # optional
-    #     # * How verbose should the information be - minimal, standard, or verbose
-    #     log-level: verbose
-    #     # * strict or loose
-    #     security: loose
+    #     target-server: 209.97.152.234
+    #     remote-user: mrfisher
+    #     private-ssh-key: ${{ secrets.SSHKEY }}
+    #     source-path: build/
+    #     destination-path: /var/www/html/pkd-and-me/
+    #     # rsync-options: --verbose --stats --itemize-changes --exclude='asset-manifest.json' --exclude='.htaccess' --exclude='robots.txt'
+
+    - name: FTP Deploy - PKD And Me
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        # * ftp server
+        server: 209.97.152.234
+        # * ftp username
+        username: ${{ secrets.ftpusername }}
+        # * ftp password
+        password: ${{ secrets.ftppassword }}
+        # * Server port to connect to (read your web hosts docs)
+        port: 22
+        # * protocol to deploy with - ftp, ftps, or ftps-legacy
+        protocol: ftps
+        # * Folder to upload from, must end with trailing slash /
+        local-dir: build/
+        # * Path to upload to on the server. Must end with trailing slash /
+        server-dir: /var/www/html/pkd-and-meTEST/
+        # * Path and name of the state file - this file is used to track which files have been deployed
+        # state-name: # optional
+        # * Prints which modifications will be made with current config options, but doesn't actually make any changes
+        # dry-run: # optional
+        # * Deletes ALL contents of server-dir, even items in excluded with exclude argument
+        # dangerous-clean-slate: # optional
+        # * An array of glob patterns, these files will not be included in the publish/delete process
+        # exclude: # optional
+        # * How verbose should the information be - minimal, standard, or verbose
+        log-level: verbose
+        # * strict or loose
+        security: loose
 
