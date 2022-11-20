@@ -38,8 +38,7 @@ jobs:
     - name: Cache dependencies
       uses: actions/cache@v2
       with:
-        path: |
-          **/node_modules
+        path: **/node_modules
         key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install dependencies
@@ -52,7 +51,7 @@ jobs:
       run: rm -fv build/asset-manifest.json
       shell: bash
 
-    - name: Copy .htaccess and remove unnecessary ones
+    - name: Copy .htaccess and remove htaccess directory
       run: |
         cp build/htaccess/pkd-and-me.htaccess build/.htaccess
         rm -rfv build/htaccess
