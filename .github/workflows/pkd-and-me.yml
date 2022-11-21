@@ -4,7 +4,6 @@
 # * About the CI environment variable: https://stackoverflow.com/questions/62663451/treating-warnings-as-errors-because-process-env-ci-true-failed-to-compile -- 10/04/2022 MF
 # * Adding the .env property doesn't seem to work so that warnings aren't treated as errors. -- 10/10/2022 MF
 
-
 name: Deploy PKD And Me Development
 
 on:
