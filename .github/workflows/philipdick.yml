@@ -62,8 +62,8 @@ jobs:
     - name: Sync Files
       uses: SamKirkland/web-deploy@v1
       with:
-        target-server: 209.97.152.234
-        remote-user: mrfisher
+        target-server: ${{ secrets.SSHSERVERNAME }}
+        remote-user: ${{ secrets.SSHUSERNAME }}
         private-ssh-key: ${{ secrets.SSHKEY }}
         source-path: build/
         destination-path: /var/www/html/philipdick/pkd-and-me/
