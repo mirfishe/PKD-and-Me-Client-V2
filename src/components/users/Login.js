@@ -188,7 +188,7 @@ const Login = () => {
           headers: new Headers({
             "Content-Type": "application/json"
           }),
-          body: JSON.stringify({ user: recordObject })
+          body: JSON.stringify({ recordObject: recordObject })
         })
           .then(response => {
 

@@ -413,7 +413,7 @@ export const convertBitTrueFalse = (records) => {
 };
 
 
-export const addLog = (baseURL, logObject) => {
+export const addLog = (baseURL, recordObject) => {
 
   // const dispatch = useDispatch();
 
@@ -430,7 +430,7 @@ export const addLog = (baseURL, logObject) => {
     headers: new Headers({
       "Content-Type": "application/json"
     }),
-    body: JSON.stringify({ recordObject: logObject })
+    body: JSON.stringify({ recordObject: recordObject })
   })
     .then(response => {
 
@@ -457,7 +457,7 @@ export const addLog = (baseURL, logObject) => {
       // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
       // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
 
-      addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, logObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+      addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
     });
 

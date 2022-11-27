@@ -191,7 +191,7 @@ const AddComment = (props) => {
           fetch(url, {
             method: "POST",
             headers: headerObject,
-            body: JSON.stringify({ comment: recordObject })
+            body: JSON.stringify({ recordObject: recordObject })
           })
             .then(response => {
 
