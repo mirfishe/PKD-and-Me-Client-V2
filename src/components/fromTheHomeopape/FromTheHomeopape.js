@@ -77,7 +77,6 @@ const FromTheHomeopape = (props) => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
 
@@ -148,7 +147,6 @@ const FromTheHomeopape = (props) => {
             //   // itemID = homeopapeItem.itemID.replaceAll("tag:google.com,2013:googlealerts/feed:", "");
 
             // };
-
 
             return (
               <React.Fragment key={index}>

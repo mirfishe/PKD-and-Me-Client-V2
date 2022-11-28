@@ -49,7 +49,6 @@ const Category = (props) => {
 
       };
 
-
       newCategoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
 
       setCategoryList(newCategoryList);

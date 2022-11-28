@@ -667,7 +667,6 @@ const FromTheHomeopape = () => {
 
             : null}
 
-
           {isNonEmptyArray(homeopapeItemsReviewText) === true ?
 
             <React.Fragment>
@@ -690,7 +689,6 @@ const FromTheHomeopape = () => {
             </React.Fragment>
 
             : null}
-
 
           {isNonEmptyArray(homeopapeItemsReviewNeither) === true ?
 
@@ -715,7 +713,6 @@ const FromTheHomeopape = () => {
 
             : null}
 
-
           {isNonEmptyArray(homeopapeItemsReviewIncorrectContext) === true ?
 
             <React.Fragment>
@@ -738,7 +735,6 @@ const FromTheHomeopape = () => {
             </React.Fragment>
 
             : null}
-
 
           {/* {isNonEmptyArray(homeopapeItemsReview) === true ?
 
