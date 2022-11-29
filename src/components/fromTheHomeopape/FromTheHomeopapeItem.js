@@ -41,6 +41,122 @@ const FromTheHomeopapeItem = (props) => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
+
+  const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
+
+    let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
+    let itemContentSnippet = "";
+
+    if (isEmpty(txtItemContentSnippet) === false) {
+
+      itemContentSnippet = txtItemContentSnippet;
+
+    };
+
+    // if (cbxPhilipKDickFestival === true) {
+
+    //   post = post + " #PhilipKDickFestival ";
+
+    // };
+
+    // if (cbxDickian === true) {
+
+    //   post = post + " #Dickian ";
+
+    // };
+
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("blade runner") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("blade runner") === true) {
+
+      post = post + " #BladeRunner ";
+
+    };
+
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("blade runner 2049") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("blade runner 2049") === true) {
+
+      post = post + " #BladeRunner2049 ";
+
+    };
+
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("black lotus") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("black lotus") === true) {
+
+      post = post + " #BladeRunner2049 ";
+
+    };
+
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("total recall") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("total recall") === true) {
+
+      post = post + " #TotalRecall ";
+
+    };
+
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("electric dreams") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("electric dreams") === true) {
+
+      post = post + " #ElectricDreams ";
+
+    };
+
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("man in the high castle") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("man in the high castle") === true) {
+
+      post = post + " #TMITHC #HighCastle ";
+
+    };
+
+    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("minority report") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("minority report") === true) {
+
+      post = post + " #MinorityReport ";
+
+    };
+
+    // let param = "";
+    // let regExp = "";
+    // // let newURL = decodeURI(txtArticleURL);
+    // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=");
+    // // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "=");
+
+    // // * Remove fbclid= -- 06/26/2021 MF
+    // // * FaceBook analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the fbclid= -- 06/26/2021 MF
+    // // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
+    // param = "fbclid";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+
+    // // * Remove utm_medium= -- 06/26/2021 MF
+    // // * Google Analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the utm_medium= -- 06/26/2021 MF
+    // param = "utm_medium";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+
+    // // * Remove utm_campaign= -- 06/26/2021 MF
+    // // * Google Analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the utm_campaign= -- 06/26/2021 MF
+    // param = "utm_campaign";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+
+    // // * Remove utm_source= -- 06/26/2021 MF
+    // // * Google Analytics and tracking -- 06/26/2021 MF
+    // // * Removes everything after the utm_source= -- 06/26/2021 MF
+    // param = "utm_source";
+    // regExp = new RegExp("[?&]" + param + "=.*$");
+    // newURL = newURL.replace(regExp, "");
+
+    post = post + txtArticleURL;
+
+    // setFormattedPost(post);
+
+    // let formattedPostsArray = [...formattedPosts];
+
+    // formattedPostsArray.push(post);
+
+    // setFormattedPosts(formattedPostsArray);
+
+    return post;
+
+  };
+
+
   // * One method to only display ten items in the list. -- 06/26/2021 MF
   // if (index > 100) {
 
@@ -233,121 +349,6 @@ const FromTheHomeopapeItem = (props) => {
     };
 
   }, [admin]);
-
-
-  const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
-
-    let post = toTitleCase(txtArticleTitle) + " #PhilipDick #PhilipKDick ";
-    let itemContentSnippet = "";
-
-    if (isEmpty(txtItemContentSnippet) === false) {
-
-      itemContentSnippet = txtItemContentSnippet;
-
-    };
-
-    // if (cbxPhilipKDickFestival === true) {
-
-    //   post = post + " #PhilipKDickFestival ";
-
-    // };
-
-    // if (cbxDickian === true) {
-
-    //   post = post + " #Dickian ";
-
-    // };
-
-    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("blade runner") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("blade runner") === true) {
-
-      post = post + " #BladeRunner ";
-
-    };
-
-    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("blade runner 2049") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("blade runner 2049") === true) {
-
-      post = post + " #BladeRunner2049 ";
-
-    };
-
-    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("black lotus") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("black lotus") === true) {
-
-      post = post + " #BladeRunner2049 ";
-
-    };
-
-    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("total recall") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("total recall") === true) {
-
-      post = post + " #TotalRecall ";
-
-    };
-
-    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("electric dreams") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("electric dreams") === true) {
-
-      post = post + " #ElectricDreams ";
-
-    };
-
-    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("man in the high castle") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("man in the high castle") === true) {
-
-      post = post + " #TMITHC #HighCastle ";
-
-    };
-
-    if (formatLowerCase(removeHTML(txtArticleTitle)).includes("minority report") === true || formatLowerCase(removeHTML(itemContentSnippet)).includes("minority report") === true) {
-
-      post = post + " #MinorityReport ";
-
-    };
-
-    // let param = "";
-    // let regExp = "";
-    // // let newURL = decodeURI(txtArticleURL);
-    // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=");
-    // // let newURL = txtArticleURL.replaceAll("\%3F", "?").replaceAll("\%3f", "?").replaceAll("\%26", "&").replaceAll("\%3D", "=").replaceAll("\%3d", "=");
-
-    // // * Remove fbclid= -- 06/26/2021 MF
-    // // * FaceBook analytics and tracking -- 06/26/2021 MF
-    // // * Removes everything after the fbclid= -- 06/26/2021 MF
-    // // * https://gist.github.com/hehe24h/acfa46c57bc4f37a5ca6814cb1652537 -- 06/26/2021 MF
-    // param = "fbclid";
-    // regExp = new RegExp("[?&]" + param + "=.*$");
-    // newURL = newURL.replace(regExp, "");
-
-    // // * Remove utm_medium= -- 06/26/2021 MF
-    // // * Google Analytics and tracking -- 06/26/2021 MF
-    // // * Removes everything after the utm_medium= -- 06/26/2021 MF
-    // param = "utm_medium";
-    // regExp = new RegExp("[?&]" + param + "=.*$");
-    // newURL = newURL.replace(regExp, "");
-
-    // // * Remove utm_campaign= -- 06/26/2021 MF
-    // // * Google Analytics and tracking -- 06/26/2021 MF
-    // // * Removes everything after the utm_campaign= -- 06/26/2021 MF
-    // param = "utm_campaign";
-    // regExp = new RegExp("[?&]" + param + "=.*$");
-    // newURL = newURL.replace(regExp, "");
-
-    // // * Remove utm_source= -- 06/26/2021 MF
-    // // * Google Analytics and tracking -- 06/26/2021 MF
-    // // * Removes everything after the utm_source= -- 06/26/2021 MF
-    // param = "utm_source";
-    // regExp = new RegExp("[?&]" + param + "=.*$");
-    // newURL = newURL.replace(regExp, "");
-
-    post = post + txtArticleURL;
-
-    // setFormattedPost(post);
-
-    // let formattedPostsArray = [...formattedPosts];
-
-    // formattedPostsArray.push(post);
-
-    // setFormattedPosts(formattedPostsArray);
-
-    return post;
-
-  };
 
 
   const setDisplay = (itemID, display) => {
