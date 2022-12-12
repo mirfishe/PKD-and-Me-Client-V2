@@ -730,7 +730,9 @@ const App = (props) => {
 
           {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true && isEmpty(firstName) === false && isEmpty(lastName) === false ?
 
-            <NavItem><NavbarText>Welcome, {firstName} {lastName}.</NavbarText></NavItem>
+            <NavItem className="mx-3 my-2">
+              <NavbarText>Welcome, {firstName} {lastName}.</NavbarText>
+            </NavItem>
 
             : null} */}
 
@@ -760,7 +762,7 @@ const App = (props) => {
 
           {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
-            <NavItem>
+            <NavItem className="mx-3 my-2">
               {/* <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span> */}
               <a href="#" onClick={() => logOut()}><NavbarText>Log Out</NavbarText></a>
             </NavItem>
