@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
 
 const componentName = "editionsSlice";
 

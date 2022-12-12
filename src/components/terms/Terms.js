@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem, NavLink } from "reactstrap";
-import { Image } from "react-bootstrap-icons";
+// import { useSelector } from "react-redux";
+// import { Link } from "react-router-dom";
+import { Container, Col, Row, Alert } from "reactstrap";
+// import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
-import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { setPageURL } from "../../app/urlsSlice";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
+// import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import TitleCard from "../titles/TitleCard";
 
-const Terms = () => {
+const Terms = (props) => {
 
   const componentName = "Terms";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const sessionToken = useSelector(state => state.user.sessionToken);
-  const admin = useSelector(state => state.user.admin);
+  // const sessionToken = useSelector(state => state.user.sessionToken);
+  // const admin = useSelector(state => state.user.admin);
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -159,17 +155,6 @@ const Terms = () => {
         // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
-
-  };
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
 
   };
 

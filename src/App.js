@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { /* BrowserRouter, */ Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 // import { HouseFill } from "react-bootstrap-icons";
-import { Container, Col, Row, Nav, Navbar, NavbarBrand, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
+import { Container, Col, Row, Nav, Navbar, /* NavbarBrand, */ NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
-import { addErrorLog } from "./utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
+// import { addErrorLog } from "./utilities/ApplicationFunctions";
 import { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, /* setApplicationOffline, */ setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
@@ -32,15 +32,15 @@ import Register from "./components/users/Register";
 import UpdateFromTheHomeopape from "./components/fromTheHomeopape/UpdateFromTheHomeopape";
 import FormatPost from "./components/socialMedia/FormatPost";
 // import AddComment from "./components/comments/AddComment";
-// import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
-// import Comments from "./components/comments/Comments";
+import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
+import Comments from "./components/comments/Comments";
 // import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
-// import Amazon from "./components/amazon/Amazon";
-// import Terms from "./components/terms/Terms";
-// import BrokenLinks from "./components/reports/BrokenLinks";
-// import ComputerLogs from "./components/reports/ComputerLogs";
-// import Logs from "./components/reports/Logs";
-// import Errors from "./components/reports/Errors";
+import Amazon from "./components/amazon/Amazon";
+import Terms from "./components/terms/Terms";
+import BrokenLinks from "./components/reports/BrokenLinks";
+import ComputerLogs from "./components/reports/ComputerLogs";
+import Logs from "./components/reports/Logs";
+import Errors from "./components/reports/Errors";
 import "./App.css";
 
 const App = (props) => {
@@ -418,6 +418,7 @@ const App = (props) => {
     };
 
     let documentURL = new URL(document.URL);
+
     dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
 
   }, []);
@@ -630,21 +631,19 @@ const App = (props) => {
   };
 
 
-  // const redirectPage = (linkName) => {
+  const redirectPage = (linkName) => {
 
-  //   // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-  //   window.scrollTo(0, 0);
+    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
+    window.scrollTo(0, 0);
 
-  //   dispatch(setPageURL(linkName.replaceAll("/", "")));
-  //   navigate("/" + linkName);
+    dispatch(setPageURL(linkName.replaceAll("/", "")));
+    navigate("/" + linkName);
 
-  // };
+  };
 
 
   return (
     <React.Fragment>
-
-      {/* <BrowserRouter basename={routerBaseName}> */}
 
       <Navbar color="light" light>
         <Nav>
@@ -784,7 +783,7 @@ const App = (props) => {
               <NavLink tag={Link} to="/socialMedia"><NavbarText>Hootsuite Post</NavbarText></NavLink>
             </NavItem>
 
-            {/* <NavItem>
+            <NavItem>
               <NavLink tag={Link} to="/amazon"><NavbarText>Amazon</NavbarText></NavLink>
             </NavItem>
 
@@ -814,7 +813,7 @@ const App = (props) => {
 
             <NavItem>
               <NavLink tag={Link} to="/comments"><NavbarText>Comments</NavbarText></NavLink>
-            </NavItem> */}
+            </NavItem>
 
           </Nav>
         </Navbar>
@@ -935,9 +934,9 @@ const App = (props) => {
         <Row>
           <Col xs="2">
 
-            {isEmpty(arrayCategories) === false ? <Category /> : null}
+            {isEmpty(arrayCategories) === false ? <Category redirectPage={redirectPage} /> : null}
 
-            <Media />
+            <Media redirectPage={redirectPage} />
 
           </Col>
           <Col xs="10">
@@ -961,10 +960,10 @@ const App = (props) => {
             <Routes>
 
               {/* // * Set the default page from the defaultPageComponent from environment. -- 03/06/2021 MF */}
-              {defaultPageComponent === "Home" ? <Route path="/" element={<Home /* redirectPage={redirectPage} */ />} /> : null}
-              {defaultPageComponent === "About" ? <Route path="/" element={<About /* redirectPage={redirectPage} */ />} /> : null}
-              {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape /* redirectPage={redirectPage} */ />} /> : null}
-              {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian /* redirectPage={redirectPage} */ />} /> : null}
+              {defaultPageComponent === "Home" ? <Route path="/" element={<Home redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian redirectPage={redirectPage} />} /> : null}
 
               {/* <Route path="/">
                 {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
@@ -973,10 +972,10 @@ const App = (props) => {
                 {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape />}  /> : null}
               </Route> */}
 
-              <Route path="/home" element={<Home /* redirectPage={redirectPage} */ />} />
-              <Route path="/new" element={<New /* redirectPage={redirectPage} */ />} />
-              <Route path="/about" element={<About /* redirectPage={redirectPage} */ />} />
-              <Route path="/homeopape" element={<Homeopape /* redirectPage={redirectPage} */ />} />
+              <Route path="/home" element={<Home redirectPage={redirectPage} />} />
+              <Route path="/new" element={<New redirectPage={redirectPage} />} />
+              <Route path="/about" element={<About redirectPage={redirectPage} />} />
+              <Route path="/homeopape" element={<Homeopape redirectPage={redirectPage} />} />
 
               {/* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}
               {/* {isEmpty(admin) === false && admin === true ?
@@ -987,7 +986,7 @@ const App = (props) => {
 
               <Route path="/fromTheHomeopape" element={<UpdateFromTheHomeopape />} />
 
-              {/* <Route path="/brokenLinks" element={<BrokenLinks />} />
+              <Route path="/brokenLinks" element={<BrokenLinks />} />
 
               <Route path="/computerLogs" element={<ComputerLogs />} />
 
@@ -1001,33 +1000,33 @@ const App = (props) => {
 
               <Route path="/amazon" element={<Amazon />} />
 
-              <Route path="/terms" element={<Terms />} /> */}
+              <Route path="/terms" element={<Terms />} />
 
               {/* </React.Fragment>
 
                 : null} */}
 
-              <Route path="/dickian" element={<Dickian /* redirectPage={redirectPage} */ />} />
+              <Route path="/dickian" element={<Dickian redirectPage={redirectPage} />} />
 
-              <Route path="/categories" element={<Category testProp={"testProp"} /* redirectPage={redirectPage} */ />} />
-              <Route path="/media" element={<Media /* redirectPage={redirectPage} */ />} />
+              <Route path="/categories" element={<Category redirectPage={redirectPage} />} />
+              <Route path="/media" element={<Media redirectPage={redirectPage} />} />
 
               {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route path="/titles" element={<Titles /* redirectPage={redirectPage} */ />} />
+              <Route path="/titles" element={<Titles redirectPage={redirectPage} />} />
               {/* <Route path="/titles/:category" element={<Titles />} />
               <Route path="/title/:title" element={<Title />} /> */}
 
               {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
-              <Route path="/editions" element={<Editions /* redirectPage={redirectPage} */ />} />
+              <Route path="/editions" element={<Editions redirectPage={redirectPage} />} />
               {/* <Route path="/editions/:title" element={<Editions />} />
                <Route path="/editions/:media" element={<Editions />} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles /* redirectPage={redirectPage} */ linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title /* redirectPage={redirectPage} */ linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions /* redirectPage={redirectPage} */ linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
             </Routes>
 
@@ -1038,15 +1037,11 @@ const App = (props) => {
         <Row>
           <Col xs="12" className="smaller-text text-center">
 
-            {/* &copy; {props.copyrightYear} All rights reserved. Version: {props.applicationVersion} */}
-
             &copy; {copyrightYear} All rights reserved. Version: {applicationVersion}
 
           </Col>
         </Row>
       </Container>
-
-      {/* </BrowserRouter> */}
 
     </React.Fragment>
   );

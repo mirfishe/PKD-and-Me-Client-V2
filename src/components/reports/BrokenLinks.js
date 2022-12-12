@@ -3,14 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
+const BrokenLinks = () => {
 
-const Comments = () => {
-
-  const componentName = "Comments";
+  const componentName = "BrokenLinks";
 
   const navigate = useNavigate();
 
@@ -32,12 +30,12 @@ const Comments = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [comments, setComments] = useState([]);
+  const [brokenLinks, setBrokenLinks] = useState([]);
 
 
   useEffect(() => {
 
-    getComments();
+    getBrokenLinks();
 
   }, []);
 
@@ -53,11 +51,11 @@ const Comments = () => {
   }, [admin]);
 
 
-  const getComments = () => {
+  const getBrokenLinks = () => {
 
     clearMessages();
 
-    let url = baseURL + "comments/";
+    let url = baseURL + "computerLogs/broken/";
 
     fetch(url, {
       method: "GET",
@@ -83,7 +81,7 @@ const Comments = () => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          setComments(results.records);
+          setBrokenLinks(results.records);
 
         };
 
@@ -101,7 +99,7 @@ const Comments = () => {
 
 
   return (
-    <Container className="my-4">
+    <Container className="mt-4">
 
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
@@ -109,46 +107,51 @@ const Comments = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Comments</h5>
+          <h5 className="text-center">Broken Links</h5>
+
+          {isNonEmptyArray(brokenLinks) === true ?
+
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Create Date</th>
+                  <th>Endpoint</th>
+                  <th>Edition ID</th>
+                  <th>Title ID</th>
+                  <th>Title</th>
+                  <th>Image</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {brokenLinks.map((brokenLink, index) => {
+
+
+                  return (
+                    <tr key={index}>
+                      {isEmpty(brokenLink.createDate) === false ? <td>{brokenLink.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{brokenLink.createDate}</td>}
+                      <td>{brokenLink.endpoint}</td>
+                      <td>{brokenLink.editionID}</td>
+                      <td>{brokenLink.titleID}</td>
+                      <td>{brokenLink.titleName}</td>
+                      <td>{brokenLink.imageName}</td>
+                    </tr>
+                  );
+                })}
+
+
+              </tbody>
+
+            </Table>
+
+            : <p>There are no broken links.</p>}
 
         </Col>
       </Row>
-
-      {isNonEmptyArray(comments) === true ?
-
-        <Row>
-
-          {comments.map((comment) => {
-
-            return (
-              <Col className="my-4" xs="12" key={comment.commentID}>
-
-                <Row>
-                  <Col xs="12">
-
-                    {isEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
-
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="12">
-
-                    <p>Submitted by {isEmpty(comment.firstName) === false ? comment.firstName : null} {isEmpty(comment.lastName) === false ? comment.lastName : null} {isEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {isEmpty(comment.updateDate) === false ? <small>on {displayDate(comment.updateDate)}</small> : null}</p>
-
-                  </Col>
-                </Row>
-
-              </Col>
-            );
-          })}
-
-        </Row>
-
-        : null}
 
     </Container>
   );
 };
 
-export default Comments;
+export default BrokenLinks;

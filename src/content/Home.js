@@ -1,10 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
 import { noFunctionAvailable, isEmpty, getDateTime, displayValue } from "shared-functions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
-import { setPageURL } from "../app/urlsSlice";
 import TitleCard from "../components/titles/TitleCard";
 import FromTheHomeopape from "../components/fromTheHomeopape/FromTheHomeopape";
 
@@ -16,26 +15,12 @@ const Home = (props) => {
 
   const componentName = "Home";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   document.title = "Home | " + applicationName + " | " + siteName;
-
-
-  // const redirectPage = (linkName) => {
-
-  //   // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-  //   window.scrollTo(0, 0);
-
-  //   dispatch(setPageURL(linkName.replaceAll("/", "")));
-  //   navigate("/" + linkName);
-
-  // };
 
 
   return (
@@ -74,7 +59,7 @@ const Home = (props) => {
       <Row className="mx-4">
         <Col xs="12">
 
-          <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+          <TitleCard redirectPage={redirectPage} randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
 
         </Col>
       </Row>
@@ -90,7 +75,7 @@ const Home = (props) => {
       {/* <Row className="my-4">
         <Col xs="8">
 
-          <TitleCard randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
+          <TitleCard redirectPage={redirectPage} randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
 
         </Col>
         <Col xs="4">

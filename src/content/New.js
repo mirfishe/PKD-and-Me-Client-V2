@@ -1,10 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
 import { noFunctionAvailable, isEmpty, getDateTime, displayValue } from "shared-functions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
-import { setPageURL } from "../app/urlsSlice";
 import TitleCard from "../components/titles/TitleCard";
 
 const New = (props) => {
@@ -15,26 +14,12 @@ const New = (props) => {
 
   const componentName = "New";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   document.title = "New To Philip K. Dick? | " + applicationName + " | " + siteName;
-
-
-  // const redirectPage = (linkName) => {
-
-  //   // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-  //   window.scrollTo(0, 0);
-
-  //   dispatch(setPageURL(linkName.replaceAll("/", "")));
-  //   navigate("/" + linkName);
-
-  // };
 
 
   return (
@@ -52,7 +37,7 @@ const New = (props) => {
       <Row>
         <Col xs="12" className="mb-4">
 
-          <TitleCard linkName="Do-Androids-Dream-Of-Electric-Sheep" imageSide="right" additionalText="His most famous novel which inspired Blade Runner. A chilling futuristic story that demonstrates his creative genius. The most common gateway book for new readers of Philip K. Dick, I believe." />
+          <TitleCard redirectPage={redirectPage} linkName="Do-Androids-Dream-Of-Electric-Sheep" imageSide="right" additionalText="His most famous novel which inspired Blade Runner. A chilling futuristic story that demonstrates his creative genius. The most common gateway book for new readers of Philip K. Dick, I believe." />
 
         </Col>
       </Row>
@@ -60,7 +45,7 @@ const New = (props) => {
       <Row>
         <Col xs="12" className="mb-4">
 
-          <TitleCard linkName="Ubik" imageSide="left" additionalText="A great story of corporate intrigue where time moves backwards. Intensely psychological with unpredictable plot twists." />
+          <TitleCard redirectPage={redirectPage} linkName="Ubik" imageSide="left" additionalText="A great story of corporate intrigue where time moves backwards. Intensely psychological with unpredictable plot twists." />
 
         </Col>
       </Row>
@@ -68,7 +53,7 @@ const New = (props) => {
       <Row>
         <Col xs="12" className="mb-4">
 
-          <TitleCard linkName="The-Man-In-The-High-Castle" imageSide="right" additionalText="Dick's masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters." />
+          <TitleCard redirectPage={redirectPage} linkName="The-Man-In-The-High-Castle" imageSide="right" additionalText="Dick's masterpiece which won the Hugo Award in 1963. A mind-bending novel which takes place in an America occupied by Axis forces. These are some of his strongest characters." />
 
         </Col>
       </Row>
@@ -76,7 +61,7 @@ const New = (props) => {
       <Row>
         <Col xs="12" className="mb-4">
 
-          <TitleCard linkName="Four-Novels-Of-The-1960s" imageSide="left" additionalText="Or instead if you are more daring and think you would like to read more than one of these books, this Library of America press book is a bargain, containing all three of these recommended books plus another excellent novel." />
+          <TitleCard redirectPage={redirectPage} linkName="Four-Novels-Of-The-1960s" imageSide="left" additionalText="Or instead if you are more daring and think you would like to read more than one of these books, this Library of America press book is a bargain, containing all three of these recommended books plus another excellent novel." />
 
         </Col>
       </Row>

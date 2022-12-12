@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
 // import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
+import { encodeURL, decodeURL, setLocalImagePath /* , addErrorLog */ } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
-import { setPageURL } from "../../app/urlsSlice";
 // import AddEdition from "../editions/AddEdition";
 // import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
@@ -23,7 +22,6 @@ const Editions = (props) => {
   const componentName = "Editions";
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -55,7 +53,7 @@ const Editions = (props) => {
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : "";
   // let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   const [mediaParam, setMediaParam] = useState(null);
   const [editionList, setEditionList] = useState([]);
@@ -517,17 +515,6 @@ const Editions = (props) => {
         // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
-
-  };
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
 
   };
 

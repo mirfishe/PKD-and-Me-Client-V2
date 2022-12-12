@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Alert, Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Button } from "reactstrap";
-import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
+import { Alert, Col, Row, Card, CardBody, /* CardText, */ CardHeader, CardFooter, CardImg, Button } from "reactstrap";
+import { Image } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, displayDate, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, displayDate } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const AmazonItem = (props) => {
 
@@ -35,6 +35,7 @@ const AmazonItem = (props) => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   let amazonItem = isEmpty(props.amazonItem) === false ? props.amazonItem : {};
+  let getAmazonItems = isEmpty(props) === false && isEmpty(props.getAmazonItems) === false ? props.getAmazonItems : noFunctionAvailable;
 
   // console.log(componentName, getDateTime(), "amazonItem", amazonItem);
 
@@ -142,7 +143,7 @@ const AmazonItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getAmazonItems();
+            getAmazonItems();
 
           } else {
 
@@ -234,7 +235,7 @@ const AmazonItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getAmazonItems();
+            getAmazonItems();
 
           } else {
 

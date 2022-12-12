@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-const Errors = () => {
+const Logs = () => {
 
-  const componentName = "Errors";
+  const componentName = "Logs";
 
   const navigate = useNavigate();
 
@@ -30,12 +30,12 @@ const Errors = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [errors, setErrors] = useState([]);
+  const [logs, setLogs] = useState([]);
 
 
   useEffect(() => {
 
-    getErrors();
+    getLogs();
 
   }, []);
 
@@ -51,11 +51,12 @@ const Errors = () => {
   }, [admin]);
 
 
-  const getErrors = () => {
+
+  const getLogs = () => {
 
     clearMessages();
 
-    let url = baseURL + "errors/";
+    let url = baseURL + "logs/";
 
     fetch(url, {
       method: "GET",
@@ -81,7 +82,7 @@ const Errors = () => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          setErrors(results.records);
+          setLogs(results.records);
 
         };
 
@@ -107,9 +108,9 @@ const Errors = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Errors</h5>
+          <h5 className="text-center">Logs</h5>
 
-          {isNonEmptyArray(errors) === true ?
+          {isNonEmptyArray(logs) === true ?
 
             <Table responsive>
               <thead>
@@ -118,22 +119,20 @@ const Errors = () => {
                   <th>Operation</th>
                   <th>Component Name</th>
                   <th>Transaction Data</th>
-                  <th>Error Data</th>
                 </tr>
               </thead>
 
               <tbody>
 
-                {errors.map((error, index) => {
+                {logs.map((log, index) => {
 
 
                   return (
                     <tr key={index}>
-                      {isEmpty(error.createDate) === false ? <td>{error.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{error.createDate}</td>}
-                      <td>{error.operation}</td>
-                      <td>{error.componentName}</td>
-                      <td>{error.transactionData}</td>
-                      <td>{error.errorData}</td>
+                      {isEmpty(log.createDate) === false ? <td>{log.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{log.createDate}</td>}
+                      <td>{log.operation}</td>
+                      <td>{log.componentName}</td>
+                      <td>{log.transactionData}</td>
                     </tr>
                   );
                 })}
@@ -143,7 +142,7 @@ const Errors = () => {
 
             </Table>
 
-            : <p>There are no errors.</p>}
+            : <p>There are no logs.</p>}
 
         </Col>
       </Row>
@@ -152,4 +151,4 @@ const Errors = () => {
   );
 };
 
-export default Errors;
+export default Logs;

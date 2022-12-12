@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-const Logs = () => {
+const TitleSuggestions = () => {
 
-  const componentName = "Logs";
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
+
+  const componentName = "TitleSuggestions";
 
   const navigate = useNavigate();
 
@@ -30,12 +32,12 @@ const Logs = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [logs, setLogs] = useState([]);
+  const [titleSuggestions, setTitleSuggestions] = useState([]);
 
 
   useEffect(() => {
 
-    getLogs();
+    getTitleSuggestions();
 
   }, []);
 
@@ -51,12 +53,11 @@ const Logs = () => {
   }, [admin]);
 
 
-
-  const getLogs = () => {
+  const getTitleSuggestions = () => {
 
     clearMessages();
 
-    let url = baseURL + "logs/";
+    let url = baseURL + "titleSuggestions/";
 
     fetch(url, {
       method: "GET",
@@ -82,7 +83,7 @@ const Logs = () => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          setLogs(results.records);
+          setTitleSuggestions(results.records);
 
         };
 
@@ -100,7 +101,7 @@ const Logs = () => {
 
 
   return (
-    <Container className="mt-4">
+    <Container className="my-4">
 
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
@@ -108,47 +109,72 @@ const Logs = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Logs</h5>
-
-          {isNonEmptyArray(logs) === true ?
-
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>Create Date</th>
-                  <th>Operation</th>
-                  <th>Component Name</th>
-                  <th>Transaction Data</th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                {logs.map((log, index) => {
-
-
-                  return (
-                    <tr key={index}>
-                      {isEmpty(log.createDate) === false ? <td>{log.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{log.createDate}</td>}
-                      <td>{log.operation}</td>
-                      <td>{log.componentName}</td>
-                      <td>{log.transactionData}</td>
-                    </tr>
-                  );
-                })}
-
-
-              </tbody>
-
-            </Table>
-
-            : <p>There are no logs.</p>}
+          <h5 className="text-center">Title Suggestions</h5>
 
         </Col>
       </Row>
+
+      {isNonEmptyArray(titleSuggestions) === true ?
+
+        <Row>
+
+          {titleSuggestions.map((titleSuggestion) => {
+
+            return (
+              <Col key={titleSuggestion.titleSuggestionID} className="my-4" xs="12">
+
+                <Row>
+                  <Col xs="12">
+
+                    <h6>{titleSuggestion.titleName}
+                      {isEmpty(titleSuggestion.publicationDate) === false ? <span className="ms-2 smaller-text"> ({displayDate(titleSuggestion.publicationDate)})</span> : null}
+                    </h6>
+
+                  </Col>
+                </Row>
+
+                <Row className="mb-2">
+                  <Col xs="12">
+
+                    <p>{titleSuggestion.authorFirstName} {titleSuggestion.authorLastName}</p>
+
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col xs="12">
+
+                    {isEmpty(titleSuggestion.shortDescription) === false ? <p className="display-paragraphs">{titleSuggestion.shortDescription}</p> : null}
+
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col xs="12">
+
+                    {isEmpty(titleSuggestion.titleURL) === false ? <p>{titleSuggestion.titleURL}</p> : null}
+
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col xs="12">
+
+                    <p>Suggested by {isEmpty(titleSuggestion.firstName) === false ? titleSuggestion.firstName : null} {isEmpty(titleSuggestion.lastName) === false ? titleSuggestion.lastName : null} {isEmpty(titleSuggestion.emailAddress) === false ? titleSuggestion.emailAddress : null} {isEmpty(titleSuggestion.updateDate) === false ? <small>on {displayDate(titleSuggestion.updateDate)}</small> : null}</p>
+
+                  </Col>
+                </Row>
+
+              </Col>
+            );
+          })}
+
+        </Row>
+
+        : null}
 
     </Container>
   );
 };
 
-export default Logs;
+export default TitleSuggestions;

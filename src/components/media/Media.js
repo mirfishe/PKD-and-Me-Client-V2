@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
-import { noFunctionAvailable, isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
 import { encodeURL } from "../../utilities/ApplicationFunctions";
-import { setPageURL } from "../../app/urlsSlice";
 // import EditMedia from "./EditMedia";
 
 const Media = (props) => {
@@ -14,9 +13,6 @@ const Media = (props) => {
   // * Functions: redirectPage, getTitles -- 10/21/2022 MF
 
   const componentName = "Media";
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -29,7 +25,7 @@ const Media = (props) => {
   const arrayMedia = useSelector(state => state.media.arrayMedia);
 
   // let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -76,17 +72,6 @@ const Media = (props) => {
     };
 
   }, [arrayMedia]);
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
 
 
   return (

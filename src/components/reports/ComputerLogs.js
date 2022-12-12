@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-const BrokenLinks = () => {
+const ComputerLogs = () => {
 
-  const componentName = "BrokenLinks";
+  const componentName = "ComputerLogs";
 
   const navigate = useNavigate();
 
@@ -30,12 +30,12 @@ const BrokenLinks = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [brokenLinks, setBrokenLinks] = useState([]);
+  const [computerLogs, setComputerLogs] = useState([]);
 
 
   useEffect(() => {
 
-    getBrokenLinks();
+    getComputerLogs();
 
   }, []);
 
@@ -51,11 +51,11 @@ const BrokenLinks = () => {
   }, [admin]);
 
 
-  const getBrokenLinks = () => {
+  const getComputerLogs = () => {
 
     clearMessages();
 
-    let url = baseURL + "computerLogs/broken/";
+    let url = baseURL + "computerLogs/";
 
     fetch(url, {
       method: "GET",
@@ -81,7 +81,7 @@ const BrokenLinks = () => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          setBrokenLinks(results.records);
+          setComputerLogs(results.records);
 
         };
 
@@ -107,35 +107,41 @@ const BrokenLinks = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Broken Links</h5>
+          <h5 className="text-center">Computer Logs</h5>
 
-          {isNonEmptyArray(brokenLinks) === true ?
+          {isNonEmptyArray(computerLogs) === true ?
 
             <Table responsive>
               <thead>
                 <tr>
-                  <th>Create Date</th>
-                  <th>Endpoint</th>
-                  <th>Edition ID</th>
-                  <th>Title ID</th>
+                  <th>Last Accessed</th>
                   <th>Title</th>
-                  <th>Image</th>
+                  <th>href</th>
+                  <th>IP Address</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Postal Code</th>
+                  <th>Country</th>
+                  <th>Continent</th>
                 </tr>
               </thead>
 
               <tbody>
 
-                {brokenLinks.map((brokenLink, index) => {
+                {computerLogs.map((computerLog, index) => {
 
 
                   return (
                     <tr key={index}>
-                      {isEmpty(brokenLink.createDate) === false ? <td>{brokenLink.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{brokenLink.createDate}</td>}
-                      <td>{brokenLink.endpoint}</td>
-                      <td>{brokenLink.editionID}</td>
-                      <td>{brokenLink.titleID}</td>
-                      <td>{brokenLink.titleName}</td>
-                      <td>{brokenLink.imageName}</td>
+                      {isEmpty(computerLog.lastAccessed) === false ? <td>{computerLog.lastAccessed.slice(0, 19).replace("T", " ")}</td> : <td>{computerLog.lastAccessed}</td>}
+                      <td>{computerLog.title}</td>
+                      <td>{computerLog.href}</td>
+                      <td>{computerLog.ipAddress}</td>
+                      <td>{computerLog.city}</td>
+                      <td>{computerLog.state}</td>
+                      <td>{computerLog.postal}</td>
+                      <td>{computerLog.countryName}</td>
+                      <td>{computerLog.continentName}</td>
                     </tr>
                   );
                 })}
@@ -145,7 +151,7 @@ const BrokenLinks = () => {
 
             </Table>
 
-            : <p>There are no broken links.</p>}
+            : <p>There are no computer logs.</p>}
 
         </Col>
       </Row>
@@ -154,4 +160,4 @@ const BrokenLinks = () => {
   );
 };
 
-export default BrokenLinks;
+export default ComputerLogs;

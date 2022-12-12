@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-const TitleSuggestions = () => {
+// ! The coding on this component is not finished. -- 03/06/2021 MF
 
-  // ! The coding on this component is not finished. -- 03/06/2021 MF
+const Comments = () => {
 
-  const componentName = "TitleSuggestions";
+  const componentName = "Comments";
 
   const navigate = useNavigate();
 
@@ -32,12 +32,12 @@ const TitleSuggestions = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [titleSuggestions, setTitleSuggestions] = useState([]);
+  const [comments, setComments] = useState([]);
 
 
   useEffect(() => {
 
-    getTitleSuggestions();
+    getComments();
 
   }, []);
 
@@ -53,11 +53,11 @@ const TitleSuggestions = () => {
   }, [admin]);
 
 
-  const getTitleSuggestions = () => {
+  const getComments = () => {
 
     clearMessages();
 
-    let url = baseURL + "titleSuggestions/";
+    let url = baseURL + "comments/";
 
     fetch(url, {
       method: "GET",
@@ -83,7 +83,7 @@ const TitleSuggestions = () => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          setTitleSuggestions(results.records);
+          setComments(results.records);
 
         };
 
@@ -109,34 +109,24 @@ const TitleSuggestions = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Title Suggestions</h5>
+          <h5 className="text-center">Comments</h5>
 
         </Col>
       </Row>
 
-      {isNonEmptyArray(titleSuggestions) === true ?
+      {isNonEmptyArray(comments) === true ?
 
         <Row>
 
-          {titleSuggestions.map((titleSuggestion) => {
+          {comments.map((comment) => {
 
             return (
-              <Col key={titleSuggestion.titleSuggestionID} className="my-4" xs="12">
+              <Col className="my-4" xs="12" key={comment.commentID}>
 
                 <Row>
                   <Col xs="12">
 
-                    <h6>{titleSuggestion.titleName}
-                      {isEmpty(titleSuggestion.publicationDate) === false ? <span className="ms-2 smaller-text"> ({displayDate(titleSuggestion.publicationDate)})</span> : null}
-                    </h6>
-
-                  </Col>
-                </Row>
-
-                <Row className="mb-2">
-                  <Col xs="12">
-
-                    <p>{titleSuggestion.authorFirstName} {titleSuggestion.authorLastName}</p>
+                    {isEmpty(comment.comment) === false ? <p className="display-paragraphs">{comment.comment}</p> : null}
 
                   </Col>
                 </Row>
@@ -144,23 +134,7 @@ const TitleSuggestions = () => {
                 <Row>
                   <Col xs="12">
 
-                    {isEmpty(titleSuggestion.shortDescription) === false ? <p className="display-paragraphs">{titleSuggestion.shortDescription}</p> : null}
-
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="12">
-
-                    {isEmpty(titleSuggestion.titleURL) === false ? <p>{titleSuggestion.titleURL}</p> : null}
-
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="12">
-
-                    <p>Suggested by {isEmpty(titleSuggestion.firstName) === false ? titleSuggestion.firstName : null} {isEmpty(titleSuggestion.lastName) === false ? titleSuggestion.lastName : null} {isEmpty(titleSuggestion.emailAddress) === false ? titleSuggestion.emailAddress : null} {isEmpty(titleSuggestion.updateDate) === false ? <small>on {displayDate(titleSuggestion.updateDate)}</small> : null}</p>
+                    <p>Submitted by {isEmpty(comment.firstName) === false ? comment.firstName : null} {isEmpty(comment.lastName) === false ? comment.lastName : null} {isEmpty(comment.emailAddress) === false ? comment.emailAddress : null} {isEmpty(comment.updateDate) === false ? <small>on {displayDate(comment.updateDate)}</small> : null}</p>
 
                   </Col>
                 </Row>
@@ -177,4 +151,4 @@ const TitleSuggestions = () => {
   );
 };
 
-export default TitleSuggestions;
+export default Comments;

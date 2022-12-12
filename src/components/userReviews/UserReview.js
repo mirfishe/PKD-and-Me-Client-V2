@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import { Rating } from "@mui/lab/";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
 // import AddUserReview from "../userReviews/AddUserReview";
 // import EditUserReview from "../userReviews/EditUserReview";
 
@@ -22,7 +22,7 @@ const UserReview = (props) => {
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
   // let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   const [userReviews, setUserReviews] = useState([]);
 
@@ -182,7 +182,7 @@ const UserReview = (props) => {
                         {isEmpty(userReview.shortReview) === false ?
 
                           <h6>{userReview.shortReview}
-                            {/* {props.userID === userReview.userID || props.isAdmin === true ? <UpdateUserReview userID={props.userID} isAdmin={props.isAdmin} sessionToken={props.sessionToken} titleID={props.titleID} userReviewUpdated={userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
+                            {/* {userID === userReview.userID || isAdmin === true ? <UpdateUserReview titleID={titleID} userReviewUpdated={userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
                           </h6>
 
                           : null}

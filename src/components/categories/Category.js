@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
-import { noFunctionAvailable, isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
 import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
-import { setPageURL } from "../../app/urlsSlice";
 // import EditCategory from "./EditCategory";
 // import EditCategories from "./EditCategories";
 
@@ -16,15 +15,12 @@ const Category = (props) => {
 
   const componentName = "Category";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
   const arrayCategories = useSelector(state => state.categories.arrayCategories);
 
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
   // let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
 
   const [isOpen, setIsOpen] = useState(true);
@@ -56,17 +52,6 @@ const Category = (props) => {
     };
 
   }, [arrayCategories]);
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
 
 
   return (

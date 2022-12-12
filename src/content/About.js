@@ -1,10 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
 import { noFunctionAvailable, isEmpty, getDateTime, displayValue } from "shared-functions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
-import { setPageURL } from "../app/urlsSlice";
 
 const About = (props) => {
 
@@ -14,26 +13,12 @@ const About = (props) => {
 
   const componentName = "About";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   document.title = "About Philip K. Dick | " + applicationName + " | " + siteName;
-
-
-  // const redirectPage = (linkName) => {
-
-  //   // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-  //   window.scrollTo(0, 0);
-
-  //   dispatch(setPageURL(linkName.replaceAll("/", "")));
-  //   navigate("/" + linkName);
-
-  // };
 
 
   return (

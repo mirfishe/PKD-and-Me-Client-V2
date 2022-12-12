@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-const ComputerLogs = () => {
+const Errors = () => {
 
-  const componentName = "ComputerLogs";
+  const componentName = "Errors";
 
   const navigate = useNavigate();
 
@@ -30,12 +30,12 @@ const ComputerLogs = () => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [computerLogs, setComputerLogs] = useState([]);
+  const [errors, setErrors] = useState([]);
 
 
   useEffect(() => {
 
-    getComputerLogs();
+    getErrors();
 
   }, []);
 
@@ -51,11 +51,11 @@ const ComputerLogs = () => {
   }, [admin]);
 
 
-  const getComputerLogs = () => {
+  const getErrors = () => {
 
     clearMessages();
 
-    let url = baseURL + "computerLogs/";
+    let url = baseURL + "errors/";
 
     fetch(url, {
       method: "GET",
@@ -81,7 +81,7 @@ const ComputerLogs = () => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-          setComputerLogs(results.records);
+          setErrors(results.records);
 
         };
 
@@ -107,41 +107,33 @@ const ComputerLogs = () => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">Computer Logs</h5>
+          <h5 className="text-center">Errors</h5>
 
-          {isNonEmptyArray(computerLogs) === true ?
+          {isNonEmptyArray(errors) === true ?
 
             <Table responsive>
               <thead>
                 <tr>
-                  <th>Last Accessed</th>
-                  <th>Title</th>
-                  <th>href</th>
-                  <th>IP Address</th>
-                  <th>City</th>
-                  <th>State</th>
-                  <th>Postal Code</th>
-                  <th>Country</th>
-                  <th>Continent</th>
+                  <th>Create Date</th>
+                  <th>Operation</th>
+                  <th>Component Name</th>
+                  <th>Transaction Data</th>
+                  <th>Error Data</th>
                 </tr>
               </thead>
 
               <tbody>
 
-                {computerLogs.map((computerLog, index) => {
+                {errors.map((error, index) => {
 
 
                   return (
                     <tr key={index}>
-                      {isEmpty(computerLog.lastAccessed) === false ? <td>{computerLog.lastAccessed.slice(0, 19).replace("T", " ")}</td> : <td>{computerLog.lastAccessed}</td>}
-                      <td>{computerLog.title}</td>
-                      <td>{computerLog.href}</td>
-                      <td>{computerLog.ipAddress}</td>
-                      <td>{computerLog.city}</td>
-                      <td>{computerLog.state}</td>
-                      <td>{computerLog.postal}</td>
-                      <td>{computerLog.countryName}</td>
-                      <td>{computerLog.continentName}</td>
+                      {isEmpty(error.createDate) === false ? <td>{error.createDate.slice(0, 19).replace("T", " ")}</td> : <td>{error.createDate}</td>}
+                      <td>{error.operation}</td>
+                      <td>{error.componentName}</td>
+                      <td>{error.transactionData}</td>
+                      <td>{error.errorData}</td>
                     </tr>
                   );
                 })}
@@ -151,7 +143,7 @@ const ComputerLogs = () => {
 
             </Table>
 
-            : <p>There are no computer logs.</p>}
+            : <p>There are no errors.</p>}
 
         </Col>
       </Row>
@@ -160,4 +152,4 @@ const ComputerLogs = () => {
   );
 };
 
-export default ComputerLogs;
+export default Errors;

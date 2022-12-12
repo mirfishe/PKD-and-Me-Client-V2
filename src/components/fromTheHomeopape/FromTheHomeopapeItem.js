@@ -5,7 +5,7 @@ import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "rea
 import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
 import { noFunctionAvailable, isEmpty, getDateTime, displayValue, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
-import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { encodeURL, convertBitTrueFalse, toTitleCase /* , addErrorLog */ } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopapeItem = (props) => {
 

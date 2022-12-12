@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
-import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, formatTrim } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Login = () => {

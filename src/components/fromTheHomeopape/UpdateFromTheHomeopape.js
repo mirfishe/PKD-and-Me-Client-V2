@@ -5,7 +5,7 @@ import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "rea
 // import Parse from "html-react-parser";
 // import Parser from "rss-parser";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
 // import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
 import FromTheHomeopapeItem from "./FromTheHomeopapeItem";
 

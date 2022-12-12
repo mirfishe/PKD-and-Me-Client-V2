@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, displayYear, truncateText } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayYear, truncateText } from "shared-functions";
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
-import { setPageURL } from "../../app/urlsSlice";
 // import AddTitle from "./AddTitle";
 // import EditTitle from "./EditTitle";
 // import AddEdition from "../editions/AddEdition";
@@ -19,9 +18,6 @@ const TitleCard = (props) => {
   // * Functions: redirectPage -- 10/21/2022 MF
 
   const componentName = "TitleCard";
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
   // ! Always pulling it from environment.js. -- 03/06/2021 MF
@@ -39,7 +35,7 @@ const TitleCard = (props) => {
   let linkName = isEmpty(props) === false && isEmpty(props.linkName) === false ? props.linkName : "";
   let randomTitle = isEmpty(props) === false && isEmpty(props.randomTitle) === false ? props.randomTitle : false;
   let showShortDescription = isEmpty(props) === false && isEmpty(props.showShortDescription) === false ? props.showShortDescription : "";
-  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   const [titleParam, setTitleParam] = useState(null);
   const [titleList, setTitleList] = useState([]);
@@ -112,17 +108,6 @@ const TitleCard = (props) => {
     };
 
   }, [titleList]);
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
 
 
   return (
