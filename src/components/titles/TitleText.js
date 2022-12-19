@@ -16,7 +16,7 @@ const TitleText = (props) => {
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
 
-  const [showText, setShowText] = useState(true);
+  const [showText, setShowText] = useState(false);
   const [titleText, setTitleText] = useState([]);
 
   // * This same functionality can be done in HTML. -- 10/06/2022 MF
