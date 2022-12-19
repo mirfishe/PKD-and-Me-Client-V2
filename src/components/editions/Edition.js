@@ -97,7 +97,7 @@ const Edition = (props) => {
 
     setEditionList(newEditionList);
 
-  }, [arrayEditions]);
+  }, [arrayEditions, titleID]);
 
 
   useEffect(() => {

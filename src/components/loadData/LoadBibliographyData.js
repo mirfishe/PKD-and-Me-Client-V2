@@ -568,9 +568,9 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
-        console.error(componentName, getDateTime(), "getTitle error", error);
-        // console.error(componentName, getDateTime(), "getTitle error.name", error.name);
-        // console.error(componentName, getDateTime(), "getTitle error.message", error.message);
+        console.error(componentName, getDateTime(), "getTitles error", error);
+        // console.error(componentName, getDateTime(), "getTitles error.name", error.name);
+        // console.error(componentName, getDateTime(), "getTitles error.message", error.message);
 
         // setErrTitleMessage(error.name + ": " + error.message);
         // dispatch(setTitlesDataOffline(true));

@@ -10,6 +10,7 @@ import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmpty
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 // import AddTitle from "./AddTitle";
 // import EditTitle from "./EditTitle";
+import TitleText from "./TitleText";
 import Edition from "../editions/Edition";
 // import AddEdition from "../editions/AddEdition";
 // import EditEdition from "../editions/EditEdition";
@@ -623,6 +624,16 @@ const Title = (props) => {
           })}
 
         </React.Fragment>
+
+        : null}
+
+      {isEmpty(admin) === false && admin === true ?
+
+        <Row>
+
+          <TitleText titleID={titleID} />
+
+        </Row>
 
         : null}
 
