@@ -185,6 +185,36 @@ const App = (props) => {
 
   useEffect(() => {
 
+    if (applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
+
+      dispatch(setSessionToken(localStorage.getItem("token")));
+
+      // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
+      // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
+      // * ########## TEMPORARY ##########
+      // setUserID(1);
+      // setIsAdmin(true);
+
+      // * Fetch from the API to check these. -- 03/06/2021 MF
+      if (userLoaded !== true) {
+
+        getUser(localStorage.getItem("token"));
+
+      };
+
+      // * Moved to the getUser function. -- 03/06/2021 MF
+      // if (checklistLoaded !== true) {
+
+      //   getChecklist(localStorage.getItem("token"));
+
+      // };
+
+    };
+
+    let documentURL = new URL(document.URL);
+
+    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
+
     if (locationLogged === false) {
 
       // * Only has the IP Address -- 07/29/2021 MF
@@ -387,41 +417,6 @@ const App = (props) => {
     };
 
   }, [computerLog, /*latitude, longitude, postalCode*/ url1Loaded, url2Loaded]);
-
-
-  useEffect(() => {
-
-    if (applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
-
-      dispatch(setSessionToken(localStorage.getItem("token")));
-
-      // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
-      // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
-      // * ########## TEMPORARY ##########
-      // setUserID(1);
-      // setIsAdmin(true);
-
-      // * Fetch from the API to check these. -- 03/06/2021 MF
-      if (userLoaded !== true) {
-
-        getUser(localStorage.getItem("token"));
-
-      };
-
-      // * Moved to the getUser function. -- 03/06/2021 MF
-      // if (checklistLoaded !== true) {
-
-      //   getChecklist(localStorage.getItem("token"));
-
-      // };
-
-    };
-
-    let documentURL = new URL(document.URL);
-
-    dispatch(setPageURL(documentURL.pathname.replaceAll(routerBaseName, "").replaceAll("/", "")));
-
-  }, []);
 
 
   // useEffect(() => {
