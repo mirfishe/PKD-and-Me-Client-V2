@@ -88,6 +88,7 @@ const Logs = () => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);

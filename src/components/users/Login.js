@@ -253,6 +253,7 @@ const Login = () => {
 
           })
           .catch((error) => {
+
             console.error(componentName, getDateTime(), "logIn error", error);
             // console.error(componentName, getDateTime(), "logIn error.name", error.name);
             // console.error(componentName, getDateTime(), "logIn error.message", error.message);
@@ -326,6 +327,7 @@ const Login = () => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "getChecklist error", error);
           // console.error(componentName, getDateTime(), "getChecklist error.name", error.name);
           // console.error(componentName, getDateTime(), "getChecklist error.message", error.message);

@@ -39,15 +39,15 @@ function LoadBibliographyData() {
   // const lastDatabaseRetrievalEditions = useSelector(state => state.editions.lastDatabaseRetrievalEditions);
 
   const [categoryMessage, setCategoryMessage] = useState("");
-  const [errCategoryMessage, setErrCategoryMessage] = useState("");
+  const [errorCategoryMessage, setErrorCategoryMessage] = useState("");
   const [mediaMessage, setMediaMessage] = useState("");
-  const [errMediaMessage, setErrMediaMessage] = useState("");
+  const [errorMediaMessage, setErrorMediaMessage] = useState("");
   const [titleMessage, setTitleMessage] = useState("");
-  const [errTitleMessage, setErrTitleMessage] = useState("");
+  const [errorTitleMessage, setErrorTitleMessage] = useState("");
   const [editionMessage, setEditionMessage] = useState("");
-  const [errEditionMessage, setErrEditionMessage] = useState("");
+  const [errorEditionMessage, setErrorEditionMessage] = useState("");
   const [overallTitleRatingMessage, setOverallTitleRatingMessage] = useState("");
-  const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
+  const [errorOverallTitleRatingMessage, setErrorOverallTitleRatingMessage] = useState("");
 
 
   useEffect(() => {
@@ -275,7 +275,7 @@ function LoadBibliographyData() {
   const getUserReviewsRatings = (titleData) => {
 
     setOverallTitleRatingMessage("");
-    setErrOverallTitleRatingMessage("");
+    setErrorOverallTitleRatingMessage("");
 
     let url = baseURL + "userreviews/";
 
@@ -303,6 +303,7 @@ function LoadBibliographyData() {
 
       })
       .then(results => {
+
         // setOverallTitleRatingMessage(results.message);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
@@ -313,7 +314,7 @@ function LoadBibliographyData() {
           // } else {
 
           //   console.error(componentName, getDateTime(), "getUserReviewsRatings error", results.message);
-          //   // setErrOverallTitleRatingMessage(results.message);
+          //   // setErrorOverallTitleRatingMessage(results.message);
           //   // dispatch(setUserReviewsRatingsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           //   // fetchLocalDataUserReviewsRatings(titleData);
@@ -322,11 +323,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "getUserReviewsRatings error", error);
         // console.error(componentName, getDateTime(), "getUserReviewsRatings error.name", error.name);
         // console.error(componentName, getDateTime(), "getUserReviewsRatings error.message", error.message);
 
-        // setErrOverallTitleRatingMessage(error.name + ": " + error.message);
+        // setErrorOverallTitleRatingMessage(error.name + ": " + error.message);
         // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
         // dispatch(setUserReviewsRatingsDataOffline(true));
         // fetchLocalDataUserReviewsRatings(titleData);
@@ -407,7 +409,7 @@ function LoadBibliographyData() {
   const getCategories = () => {
 
     setCategoryMessage("");
-    setErrCategoryMessage("");
+    setErrorCategoryMessage("");
 
     let url = baseURL + "categories";
 
@@ -440,7 +442,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "getCategories error", results.message);
-          // setErrCategoryMessage(results.message);
+          // setErrorCategoryMessage(results.message);
           // dispatch(setCategoriesDataOffline(true));
           fetchLocalDataCategories();
 
@@ -448,11 +450,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "getCategories error", error);
         // console.error(componentName, getDateTime(), "getCategories error.name", error.name);
         // console.error(componentName, getDateTime(), "getCategories error.message", error.message);
 
-        // setErrCategoryMessage(error.name + ": " + error.message);
+        // setErrorCategoryMessage(error.name + ": " + error.message);
         // dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
 
@@ -466,7 +469,7 @@ function LoadBibliographyData() {
   const getMedia = () => {
 
     setMediaMessage("");
-    setErrMediaMessage("");
+    setErrorMediaMessage("");
 
     let url = baseURL + "media";
 
@@ -500,7 +503,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "getMedia error", results.message);
-          // setErrMediaMessage(results.message);
+          // setErrorMediaMessage(results.message);
           // dispatch(setMediaDataOffline(true));
           fetchLocalDataMedia();
 
@@ -508,11 +511,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "getMedia error", error);
         // console.error(componentName, getDateTime(), "getMedia error.name", error.name);
         // console.error(componentName, getDateTime(), "getMedia error.message", error.message);
 
-        // setErrMediaMessage(error.name + ": " + error.message);
+        // setErrorMediaMessage(error.name + ": " + error.message);
         // dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
 
@@ -526,7 +530,7 @@ function LoadBibliographyData() {
   const getTitles = () => {
 
     setTitleMessage("");
-    setErrTitleMessage("");
+    setErrorTitleMessage("");
 
     let url = baseURL + "titles";
 
@@ -560,7 +564,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "getTitles error", results.message);
-          // setErrTitleMessage(results.message);
+          // setErrorTitleMessage(results.message);
           // dispatch(setTitlesDataOffline(true));
           fetchLocalDataTitles();
 
@@ -568,11 +572,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "getTitles error", error);
         // console.error(componentName, getDateTime(), "getTitles error.name", error.name);
         // console.error(componentName, getDateTime(), "getTitles error.message", error.message);
 
-        // setErrTitleMessage(error.name + ": " + error.message);
+        // setErrorTitleMessage(error.name + ": " + error.message);
         // dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
 
@@ -586,7 +591,7 @@ function LoadBibliographyData() {
   const getEditions = () => {
 
     setEditionMessage("");
-    setErrEditionMessage("");
+    setErrorEditionMessage("");
 
     let url = baseURL + "editions";
 
@@ -620,7 +625,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "getEditions error", results.message);
-          // setErrEditionMessage(results.message);
+          // setErrorEditionMessage(results.message);
           // dispatch(setEditionsDataOffline(true));
           fetchLocalDataEditions();
 
@@ -628,11 +633,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "getEditions error", error);
         // console.error(componentName, getDateTime(), "getEdition error.name", error.name);
         // console.error(componentName, getDateTime(), "getEdition error.message", error.message);
 
-        // setErrEditionMessage(error.name + ": " + error.message);
+        // setErrorEditionMessage(error.name + ": " + error.message);
         // dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
 
@@ -676,7 +682,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "fetchLocalDataCategories error", results.message);
-          // setErrCategoryMessage(results.message);
+          // setErrorCategoryMessage(results.message);
           // dispatch(setCategoriesDataOffline(true));
           // loadDataStore(CategoryData, "categories");
 
@@ -684,11 +690,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "fetchLocalDataCategories error", error);
         // console.error(componentName, getDateTime(), "fetchLocalDataCategories error.name", error.name);
         // console.error(componentName, getDateTime(), "fetchLocalDataCategories error.message", error.message);
 
-        // setErrCategoryMessage(error.name + ": " + error.message);
+        // setErrorCategoryMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         // dispatch(setCategoriesDataOffline(true));
         // loadDataStore(CategoryData, "categories");
@@ -733,7 +740,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "fetchLocalDataMedia error", results.message);
-          // setErrMediaMessage(results.message);
+          // setErrorMediaMessage(results.message);
           // dispatch(setMediaDataOffline(true));
           // loadDataStore(MediaData, "media");
 
@@ -741,11 +748,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "fetchLocalDataMedia error", error);
         // console.error(componentName, getDateTime(), "fetchLocalDataMedia error.name", error.name);
         // console.error(componentName, getDateTime(), "fetchLocalDataMedia error.message", error.message);
 
-        // setErrMediaMessage(error.name + ": " + error.message);
+        // setErrorMediaMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         // dispatch(setMediaDataOffline(true));
         // loadDataStore(MediaData, "media");
@@ -790,7 +798,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "fetchLocalDataTitles error", results.message);
-          // setErrTitleMessage(results.message);
+          // setErrorTitleMessage(results.message);
           // dispatch(setTitlesDataOffline(true));
           // loadDataStore(TitleData, "titles");
 
@@ -798,11 +806,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "fetchLocalDataTitles error", error);
         // console.error(componentName, getDateTime(), "fetchLocalDataTitles error.name", error.name);
         // console.error(componentName, getDateTime(), "fetchLocalDataTitles error.message", error.message);
 
-        // setErrTitleMessage(error.name + ": " + error.message);
+        // setErrorTitleMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         // dispatch(setTitlesDataOffline(true));
         // loadDataStore(TitleData, "titles");
@@ -847,7 +856,7 @@ function LoadBibliographyData() {
         } else {
 
           console.error(componentName, getDateTime(), "fetchLocalDataEditions error", results.message);
-          // setErrEditionMessage(results.message);
+          // setErrorEditionMessage(results.message);
           // dispatch(setEditionsDataOffline(true));
           // loadDataStore(EditionData, "editions");
 
@@ -855,11 +864,12 @@ function LoadBibliographyData() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "fetchLocalDataEditions error", error);
         // console.error(componentName, getDateTime(), "fetchLocalDataEditions error.name", error.name);
         // console.error(componentName, getDateTime(), "fetchLocalDataEditions error.message", error.message);
 
-        // setErrEditionMessage(error.name + ": " + error.message);
+        // setErrorEditionMessage(error.name + ": " + error.message);
         // ! This doesn't actually run as far as I can tell. -- 03/06/2021 MF
         // dispatch(setEditionsDataOffline(true));
         // loadDataStore(EditionData, "editions");
@@ -875,19 +885,19 @@ function LoadBibliographyData() {
     <Row className="text-center">
 
       {isEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
-      {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
+      {isEmpty(errorCategoryMessage) === false ? <Alert color="danger">{errorCategoryMessage}</Alert> : null}
 
       {isEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
-      {isEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+      {isEmpty(errorMediaMessage) === false ? <Alert color="danger">{errorMediaMessage}</Alert> : null}
 
       {isEmpty(titleMessage) === false ? <Alert color="info">{titleMessage}</Alert> : null}
-      {isEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
+      {isEmpty(errorTitleMessage) === false ? <Alert color="danger">{errorTitleMessage}</Alert> : null}
 
       {isEmpty(editionMessage) === false ? <Alert color="info">{editionMessage}</Alert> : null}
-      {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+      {isEmpty(errorEditionMessage) === false ? <Alert color="danger">{errorEditionMessage}</Alert> : null}
 
       {isEmpty(overallTitleRatingMessage) === false ? <Alert color="info">{overallTitleRatingMessage}</Alert> : null}
-      {isEmpty(errOverallTitleRatingMessage) === false ? <Alert color="danger">{errOverallTitleRatingMessage}</Alert> : null}
+      {isEmpty(errorOverallTitleRatingMessage) === false ? <Alert color="danger">{errorOverallTitleRatingMessage}</Alert> : null}
 
     </Row>
   );

@@ -374,6 +374,7 @@ const Title = (props) => {
 
   //         })
   //         .catch((error) => {
+
   //             console.error(componentName, getDateTime(), "getTitleRating error", error);
 
   //             // console.error(componentName, getDateTime(), "getTitleRating error.name", error.name);
@@ -476,6 +477,7 @@ const Title = (props) => {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);

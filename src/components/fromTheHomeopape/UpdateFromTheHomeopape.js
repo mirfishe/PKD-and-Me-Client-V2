@@ -409,6 +409,7 @@ const FromTheHomeopape = () => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
@@ -460,6 +461,7 @@ const FromTheHomeopape = () => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
@@ -511,6 +513,7 @@ const FromTheHomeopape = () => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNewsReview error", error);
 
         addErrorMessage(error.name + ": " + error.message);
@@ -577,6 +580,7 @@ const FromTheHomeopape = () => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "markAllViewed error", error);
           // console.error(componentName, getDateTime(), "markAllViewed error.name", error.name);
           // console.error(componentName, getDateTime(), "markAllViewed error.message", error.message);

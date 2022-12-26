@@ -451,6 +451,7 @@ export const addLog = (baseURL, recordObject) => {
 
     })
     .catch((error) => {
+
       // console.error(componentName, getDateTime(), "addLog error", error);
       // console.error(componentName, getDateTime(), "addLog error.name", error.name);
       // console.error(componentName, getDateTime(), "addLog error.message", error.message);
@@ -513,6 +514,7 @@ export const addErrorLog = (baseURL, operation, componentName, dataObject, error
 
     })
     .catch((error) => {
+
       // console.error(componentName, getDateTime(), "addErrorLog error", error);
       // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
       // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);

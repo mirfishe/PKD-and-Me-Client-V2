@@ -281,6 +281,7 @@ function LoadApplicationSettings() {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), "getApplicationSettings error", error);
         // console.error(componentName, getDateTime(), "getApplicationSettings error.name", error.name);
         // console.error(componentName, getDateTime(), "getApplicationSettings error.message", error.message);

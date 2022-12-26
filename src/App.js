@@ -36,7 +36,6 @@ import TitleSuggestions from "./components/titleSuggestion/TitleSuggestions";
 import Comments from "./components/comments/Comments";
 // import AddTitleSuggestion from "./components/titleSuggestion/AddTitleSuggestion";
 import Amazon from "./components/amazon/Amazon";
-import Terms from "./components/terms/Terms";
 import BrokenLinks from "./components/reports/BrokenLinks";
 import ComputerLogs from "./components/reports/ComputerLogs";
 import Logs from "./components/reports/Logs";
@@ -234,6 +233,7 @@ const App = (props) => {
           return response.json();
 
         }).then((results) => {
+
           // console.log(componentName, getDateTime(), operationValue1, "results", results);
 
           data = results;
@@ -246,6 +246,7 @@ const App = (props) => {
 
         })
         .catch((error) => {
+
           // console.error(componentName, getDateTime(), operationValue1, "error", error);
 
           setURL1Loaded(true);
@@ -262,6 +263,7 @@ const App = (props) => {
           return response.json();
 
         }).then((results) => {
+
           // console.log(componentName, getDateTime(), operationValue2, "results", results);
 
           data = results;
@@ -282,6 +284,7 @@ const App = (props) => {
             dispatch(addComputerLog(results));
 
           } else {
+
             // console.error(componentName, getDateTime(), operationValue2, "data.error", data.error);
             // console.error(componentName, getDateTime(), operationValue2, "data.errorCode", data.errorCode);
 
@@ -291,6 +294,7 @@ const App = (props) => {
 
         })
         .catch((error) => {
+
           // console.error(componentName, getDateTime(), operationValue2, "error", error);
 
           setURL2Loaded(true);
@@ -390,6 +394,7 @@ const App = (props) => {
 
       })
       .catch((error) => {
+
         console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
@@ -540,6 +545,7 @@ const App = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "getUser error", error);
           // console.error(componentName, getDateTime(), "getUser error.name", error.name);
           // console.error(componentName, getDateTime(), "getUser error.message", error.message);
@@ -603,6 +609,7 @@ const App = (props) => {
             dispatch(loadArrayChecklist(results.records));
 
           } else {
+
             console.error(componentName, getDateTime(), "getChecklist error", results.message);
 
             // addErrorMessage(results.message);
@@ -611,6 +618,7 @@ const App = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "getChecklist error", error);
           // console.error(componentName, getDateTime(), "getChecklist error.name", error.name);
           // console.error(componentName, getDateTime(), "getChecklist error.message", error.message);
@@ -650,14 +658,6 @@ const App = (props) => {
           <NavItem>
             <NavLink tag={Link} to="/"><NavbarText>Home</NavbarText></NavLink>
           </NavItem>
-
-          {process.env.NODE_ENV === "development" ?
-
-            <NavItem>
-              <NavLink tag={Link} to="/terms"><NavbarText>Terms</NavbarText></NavLink>
-            </NavItem>
-
-            : null}
 
           {showHomeopape === true || showAllMenuItems === true ?
 
@@ -782,10 +782,6 @@ const App = (props) => {
 
             <NavItem>
               <NavLink tag={Link} to="/amazon"><NavbarText>Amazon</NavbarText></NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink tag={Link} to="/terms"><NavbarText>Terms</NavbarText></NavLink>
             </NavItem>
 
             <NavItem>
@@ -996,8 +992,6 @@ const App = (props) => {
               <Route path="/titleSuggestions" element={<TitleSuggestions />} />
 
               <Route path="/amazon" element={<Amazon />} />
-
-              <Route path="/terms" element={<Terms />} />
 
               {/* </React.Fragment>
 

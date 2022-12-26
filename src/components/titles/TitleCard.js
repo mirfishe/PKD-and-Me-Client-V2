@@ -157,7 +157,7 @@ const TitleCard = (props) => {
 
                         {isEmpty(additionalText) === false ? <CardText className="my-4">{additionalText}</CardText> : null}
 
-                        {showShortDescription && isEmpty(title.shortDescription) === false ? <p className="my-4 display-paragraphs">{truncateText(title.shortDescription, 250)}</p> : null}
+                        {showShortDescription === true && isEmpty(title.shortDescription) === false ? <p className="my-4 display-paragraphs">{truncateText(title.shortDescription, 250)}</p> : null}
 
                         {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
                                 {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}

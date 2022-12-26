@@ -427,6 +427,7 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setDisplay error", error);
           // console.error(componentName, getDateTime(), "setDisplay error.name", error.name);
           // console.error(componentName, getDateTime(), "setDisplay error.message", error.message);
@@ -518,6 +519,7 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setPosted error", error);
           // console.error(componentName, getDateTime(), "setPosted error.name", error.name);
           // console.error(componentName, getDateTime(), "setPosted error.message", error.message);
@@ -609,6 +611,7 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setAlwaysFilter error", error);
           // console.error(componentName, getDateTime(), "setAlwaysFilter error.name", error.name);
           // console.error(componentName, getDateTime(), "setAlwaysFilter error.message", error.message);
@@ -700,6 +703,7 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setViewed error", error);
           // console.error(componentName, getDateTime(), "setViewed error.name", error.name);
           // console.error(componentName, getDateTime(), "setViewed error.message", error.message);
