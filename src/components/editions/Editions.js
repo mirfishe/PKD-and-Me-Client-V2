@@ -63,7 +63,7 @@ const Editions = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName")) {
+    if (isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false) {
 
       setMediaParam(linkItem.linkName); // match.params.media;
 

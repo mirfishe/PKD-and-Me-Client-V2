@@ -66,7 +66,7 @@ const Titles = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName")) {
+    if (isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false) {
 
       setCategoryParam(linkItem.linkName); // match.params.category;
 

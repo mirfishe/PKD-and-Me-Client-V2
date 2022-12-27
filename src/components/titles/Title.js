@@ -86,7 +86,7 @@ const Title = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName")) {
+    if (isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false) {
 
       setTitleParam(linkItem.linkName); // match.params.category;
 
@@ -236,8 +236,8 @@ const Title = (props) => {
 
     // if (isEmpty(titleID) === false && !isNaN(titleID)) {
 
-    //     newUserReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === titleID);
-    //     newUserReviewRatingItem = newUserReviewRatingItem[0];
+    //   newUserReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === titleID);
+    //   newUserReviewRatingItem = newUserReviewRatingItem[0];
 
     // };
 
@@ -246,17 +246,17 @@ const Title = (props) => {
 
     // if (isEmpty(newUserReviewRatingItem) === false) {
 
-    //     if (hasNonEmptyProperty(newUserReviewRatingItem, "userReviewAverage")) {
+    //   if (isEmpty(userReviewRatingItem.userReviewCount) === false) {
 
-    //         newOverallTitleRating = newUserReviewRatingItem.userReviewAverage;
+    //     userReviewCount = userReviewRatingItem.userReviewCount;
 
-    //     };
+    //   };
 
-    //     if (hasNonEmptyProperty(newUserReviewRatingItem, "userReviewCount")) {
+    //   if (isEmpty(userReviewRatingItem.userReviewSum) === false) {
 
-    //         newOverallTitleRatingCount = newUserReviewRatingItem.userReviewCount;
+    //     userReviewSum = userReviewRatingItem.userReviewSum;
 
-    //     };
+    //   };
 
     // };
 

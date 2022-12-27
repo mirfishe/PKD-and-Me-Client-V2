@@ -130,7 +130,7 @@ const Checklist = (props) => {
   let checklistList = [...checklistListState];
 
   // * Filter by category
-  if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkType") === true) {
+  if (isEmpty(linkItem) === false && isEmpty(linkItem.linkType) === false) {
 
     if (linkItem.linkType === "categories") {
 
@@ -380,7 +380,7 @@ const Checklist = (props) => {
 
         {/* <ListGroup flush> */}
 
-        {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkTypeName") === true ?
+        {isEmpty(linkItem) === false && isEmpty(linkItem.linkTypeName) === false ?
 
           <Row className="justify-content-center">
             <Col xs="8">

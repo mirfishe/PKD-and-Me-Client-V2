@@ -234,14 +234,13 @@ function LoadBibliographyData() {
 
         if (isEmpty(userReviewRatingItem) === false) {
 
-
-          if (hasNonEmptyProperty(userReviewRatingItem, "userReviewCount")) {
+          if (isEmpty(userReviewRatingItem.userReviewCount) === false) {
 
             userReviewCount = userReviewRatingItem.userReviewCount;
 
           };
 
-          if (hasNonEmptyProperty(userReviewRatingItem, "userReviewSum")) {
+          if (isEmpty(userReviewRatingItem.userReviewSum) === false) {
 
             userReviewSum = userReviewRatingItem.userReviewSum;
 

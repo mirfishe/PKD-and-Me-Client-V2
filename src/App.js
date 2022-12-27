@@ -936,7 +936,7 @@ const App = (props) => {
 
             <Row className="text-center">
 
-              {/* {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") ? <Alert color="info">{JSON.stringify(linkItem, null, 1)}</Alert> : null} */}
+              {/* {isEmpty(linkItem) === false && isEmpty(linkItem.linkName)===false ? <Alert color="info">{JSON.stringify(linkItem, null, 1)}</Alert> : null} */}
 
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
@@ -1013,11 +1013,11 @@ const App = (props) => {
                <Route path="/editions/:media" element={<Editions />} /> */}
 
               {/* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
-              {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkName") && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
+              {isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
             </Routes>
 
