@@ -306,6 +306,55 @@ const App = (props) => {
   }, []);
 
 
+  useEffect(() => {
+
+    if (url1Loaded === true && url2Loaded === true) {
+
+      if (locationLogged === false) {
+
+        saveRecord();
+
+      };
+
+      setURL1Loaded(false);
+      setURL2Loaded(false);
+
+    };
+
+  }, [computerLog, /*latitude, longitude, postalCode*/ url1Loaded, url2Loaded]);
+
+
+  // useEffect(() => {
+
+  //   if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
+
+  //     dispatch(setApplicationOffline(true));
+
+  //   };
+
+  // }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(pageURL) === false && isNonEmptyArray(arrayURLs) === true) {
+
+      let linkArrayItem = {};
+
+      for (let i = 0; i < arrayURLs.length; i++) {
+
+        linkArrayItem = arrayURLs.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
+        // setLinkItem(linkArrayItem);
+
+      };
+
+      dispatch(setLinkItem(linkArrayItem));
+
+    };
+
+  }, [pageURL, arrayURLs]);
+
+
   const saveRecord = () => {
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
@@ -404,55 +453,6 @@ const App = (props) => {
       });
 
   };
-
-
-  useEffect(() => {
-
-    if (url1Loaded === true && url2Loaded === true) {
-
-      if (locationLogged === false) {
-
-        saveRecord();
-
-      };
-
-      setURL1Loaded(false);
-      setURL2Loaded(false);
-
-    };
-
-  }, [computerLog, /*latitude, longitude, postalCode*/ url1Loaded, url2Loaded]);
-
-
-  // useEffect(() => {
-
-  //   if (categoriesDataOffline && mediaDataOffline && titlesDataOffline && editionsDataOffline) {
-
-  //     dispatch(setApplicationOffline(true));
-
-  //   };
-
-  // }, [categoriesDataOffline, mediaDataOffline, titlesDataOffline, editionsDataOffline]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(pageURL) === false && isNonEmptyArray(arrayURLs) === true) {
-
-      let linkArrayItem = {};
-
-      for (let i = 0; i < arrayURLs.length; i++) {
-
-        linkArrayItem = arrayURLs.find(linkName => linkName.linkName === pageURL.replaceAll("/", ""));
-        // setLinkItem(linkArrayItem);
-
-      };
-
-      dispatch(setLinkItem(linkArrayItem));
-
-    };
-
-  }, [pageURL, arrayURLs]);
 
 
   const clearToken = () => {
