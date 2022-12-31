@@ -6,10 +6,6 @@ import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayYear, truncateText } from "shared-functions";
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
-// import AddTitle from "./AddTitle";
-// import EditTitle from "./EditTitle";
-// import AddEdition from "../editions/AddEdition";
-// import EditEdition from "../editions/EditEdition";
 
 const TitleCard = (props) => {
 
@@ -158,10 +154,6 @@ const TitleCard = (props) => {
                         {isEmpty(additionalText) === false ? <CardText className="my-4">{additionalText}</CardText> : null}
 
                         {showShortDescription === true && isEmpty(title.shortDescription) === false ? <p className="my-4 display-paragraphs">{truncateText(title.shortDescription, 250)}</p> : null}
-
-                        {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null}
-                                {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-                                {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
                       </CardBody>
                     </Col>

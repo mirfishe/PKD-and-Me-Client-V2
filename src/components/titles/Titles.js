@@ -8,10 +8,6 @@ import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmpty
 import { encodeURL, decodeURL, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
-// import AddTitle from "./AddTitle";
-// import EditTitle from "./EditTitle";
-// import AddEdition from "../editions/AddEdition";
-// import EditEdition from "../editions/EditEdition";
 
 const Titles = (props) => {
 
@@ -395,10 +391,6 @@ const Titles = (props) => {
 
           <h4 className="text-center mb-4">{isEmpty(categoryParam) === false && isNaN(categoryParam) ? decodeURL(categoryParam) : "All Titles"}
 
-            {/* {isEmpty(admin) === false && admin === true ? <AddTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null} */}
-
-            {/* {isEmpty(admin) === false && admin === true ? <EditTitle categoryName={decodeURL(categoryParam)} displayButton={true} /> : null} */}
-
             <span className="text-muted ms-2 small-text">Sort By&nbsp;
 
               {titleSortBy !== "publicationDate" ?
@@ -529,12 +521,6 @@ const Titles = (props) => {
                           {physicalOnly === true || userPhysicalOnly === true ? <span>physical </span> : null}
 
                           edition{editionsAvailable !== 1 ? <span>s</span> : null} available</CardText>
-
-                        {/* {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null} */}
-
-                        {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
-
-                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={title.publicationDate} titleImageName={title.imageName} displayButton={true} /> : null} */}
 
                       </CardBody>
                     </Col>

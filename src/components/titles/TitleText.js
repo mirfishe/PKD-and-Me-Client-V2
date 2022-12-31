@@ -63,14 +63,14 @@ const TitleText = (props) => {
 
           } else {
 
-            console.error(componentName, getDateTime(), "getTitleText error", results.message);
+            // console.error(componentName, getDateTime(), "getTitleText error", results.message);
 
           };
 
         })
         .catch((error) => {
 
-          console.error(componentName, getDateTime(), "getTitleText error", error);
+          // console.error(componentName, getDateTime(), "getTitleText error", error);
           // console.error(componentName, getDateTime(), "getTitleText error.name", error.name);
           // console.error(componentName, getDateTime(), "getTitleText error.message", error.message);
 

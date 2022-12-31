@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import { Rating } from "@mui/lab/";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
-// import AddUserReview from "../userReviews/AddUserReview";
 // import EditUserReview from "../userReviews/EditUserReview";
 
 const UserReview = (props) => {
@@ -122,7 +121,6 @@ const UserReview = (props) => {
         <Col xs="12">
 
           <h5 className="text-center">User Reviews
-            {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <AddUserReview titleID={titleID} displayButton={true} /> : null} */}
             {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <EditUserReview titleID={titleID} displayButton={true} /> : null} */}
           </h5>
 

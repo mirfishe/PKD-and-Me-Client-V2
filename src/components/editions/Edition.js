@@ -7,7 +7,6 @@ import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
 import { encodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
-// import AddEdition from "../editions/AddEdition";
 // import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
@@ -132,8 +131,6 @@ const Edition = (props) => {
         <Col xs="12">
 
           <h5 className="text-center">Find A Copy
-
-            {/* {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null} */}
 
             {/* {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <EditEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null} */}
 

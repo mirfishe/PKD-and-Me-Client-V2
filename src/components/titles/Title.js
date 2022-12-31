@@ -8,14 +8,11 @@ import { Image } from "react-bootstrap-icons";
 import applicationSettings from "../../app/environment";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
-// import AddTitle from "./AddTitle";
-// import EditTitle from "./EditTitle";
+import EditTitle from "./EditTitle";
 import TitleText from "./TitleText";
 import Edition from "../editions/Edition";
-// import AddEdition from "../editions/AddEdition";
 // import EditEdition from "../editions/EditEdition";
 import UserReview from "../userReviews/UserReview";
-// import AddUserReview from "../userReviews/AddUserReview";
 // import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
@@ -552,10 +549,6 @@ const Title = (props) => {
 
                       {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
 
-                      {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null} */}
-
-                      {/* {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null} */}
-
                       {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 
                     </h4>
@@ -600,8 +593,6 @@ const Title = (props) => {
 
                       : null}
 
-                    {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
-
                     {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null} */}
 
                     {isEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
@@ -613,8 +604,6 @@ const Title = (props) => {
                     {isEmpty(title.submissionDate) === false ? <p>Manuscript Submission Date: {displayDate(title.submissionDate)}</p> : null}
 
                     {isEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {title.manuscriptTitle}</p> : null}
-
-                    {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 
                     {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
 
@@ -633,141 +622,21 @@ const Title = (props) => {
 
         <Row>
 
-          <TitleText titleID={titleID} />
+          <EditTitle titleID={titleID} displayButton={true} />
 
         </Row>
 
         : null}
 
-      {/* <Row className="my-4">
-                <Col className="text-center" xs="12">
+      {isEmpty(admin) === false && admin === true ?
 
-                {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+        <Row>
 
-                {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+          <TitleText titleID={titleID} />
 
-                {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
+        </Row>
 
-                </Col>
-            </Row>
-
-            {isEmpty(editionList) === false ?
-            
-            <Row className="my-4">
-                <Col xs="12">
-
-                    <h5 className="text-center">Find A Copy 
-                    {isEmpty(admin) === false && admin === true ? <EditEdition titleID={titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
-                    </h5>
-
-                </Col>
-            </Row>
-
-            : null}
-
-            <Row>
-                
-                {isNonEmptyArray(editionList) === true ?
-
-            <React.Fragment>
-
-            {editionList.map((edition) => {
-
-                let activeString = "";
-
-                if (edition.editionActive === true || edition.editionActive === 1) {
-                
-                    // activeString = "Active";
-                    activeString = "";
-
-                } else {
-                
-                    activeString = "Inactive";
-
-                };
-
-            return (
-                <Col key={edition.editionID} xs="6" className="mb-4"> */}
-
-      {/* <Card key={edition.editionID}>
-                    <CardHeader>
-
-                        <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
-
-                    </CardHeader>
-                    <CardBody>
-
-                    {isEmpty(edition.imageLinkLarge) === false ? 
-                    
-                        <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
-
-                    :
-
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
-                        </a>
-
-                    }
-
-                    </CardBody>
-                    <CardFooter>
-
-                        {isEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {displayDate(editionPublicationDate)}</CardText> : null}
-
-                    </CardFooter>
-                    </Card> */}
-
-      {/* <Card key={edition.editionID}>
-
-                    {isEmpty(activeString) === false ?
-                    
-                        <CardHeader className="card-header inactive-item">
-                            ({activeString})
-                        </CardHeader>
-
-                    : null}
-
-                    <Row className="no-gutters">
-                        <Col className="col-md-6">
-
-                        {isEmpty(edition.imageLinkLarge) === false ? 
-                        
-                            <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
-                            
-                        :
-
-                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
-                            </a>
-
-                        }
-
-                        </Col>
-                        <Col className="col-md-6">
-                            <CardBody>
-
-                                {isEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {displayDate(editionPublicationDate)}</CardText> : null}
-                                {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
-
-                            </CardBody>
-                        </Col>
-                    </Row>
-                    <CardFooter className="card-footer">
-
-                        <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => {event.preventDefault(); redirectPage(encodeURL(edition.medium.media));}}>{edition.medium.media}</Link></CardText>
-
-                    </CardFooter>
-                    </Card>
-
-                </Col>
-                )
-            })}
-
-            </React.Fragment>
-
-            : null}
-
-            </Row> */}
+        : null}
 
       <Row>
 

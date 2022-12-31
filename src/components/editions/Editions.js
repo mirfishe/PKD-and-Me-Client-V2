@@ -9,8 +9,6 @@ import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmpty
 import { encodeURL, decodeURL, setLocalImagePath /* , addErrorLog */ } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
-// import AddEdition from "../editions/AddEdition";
-// import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
 const Editions = (props) => {
@@ -732,12 +730,6 @@ const Editions = (props) => {
                           </React.Fragment>
 
                         }
-
-                        {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
-
-                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
-
-                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
                       </CardBody>
                     </Col>
