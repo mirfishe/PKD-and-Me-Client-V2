@@ -106,7 +106,7 @@ const TitleText = (props) => {
                   <React.Fragment key={index}>
 
                     <h3>{titleText.chapter}</h3>
-                    <p>{titleText.titleText}</p>
+                    <pre>{titleText.titleText}</pre>
 
                   </React.Fragment>
                 );

@@ -60,115 +60,6 @@ const applicationSettingsSlice = createSlice({
       state.locationLogged = action.payload;
 
     },
-    addComputerLog(state, action) {
-
-      // state.computerLog = action.payload;
-
-      const computerLogItem = action.payload;
-
-      if (typeof computerLogItem === "object") {
-
-        // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
-        if (hasNonEmptyProperty(computerLogItem, "country_code") === true) {
-
-          state.computerLog.countryCode = computerLogItem.country_code;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "country_name") === true) {
-
-          state.computerLog.countryName = computerLogItem.country_name;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "city") === true) {
-
-          state.computerLog.city = computerLogItem.city;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "postal") === true) {
-
-          state.computerLog.postal = computerLogItem.postal;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "latitude") === true) {
-
-          state.computerLog.latitude = computerLogItem.latitude;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "longitude") === true) {
-
-          state.computerLog.longitude = computerLogItem.longitude;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "IPv4") === true) {
-
-          state.computerLog.ipAddress = computerLogItem.IPv4;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "state") === true) {
-
-          state.computerLog.state = computerLogItem.state;
-
-        };
-
-        // * From https://api.db-ip.com/v2/free/self -- 09/27/2021 MF
-        if (hasNonEmptyProperty(computerLogItem, "ipAddress") === true) {
-
-          state.computerLog.ipAddress = computerLogItem.ipAddress;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "continentCode") === true) {
-
-          state.computerLog.continentCode = computerLogItem.continentCode;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "continentName") === true) {
-
-          state.computerLog.continentName = computerLogItem.continentName;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "countryCode") === true) {
-
-          state.computerLog.countryCode = computerLogItem.countryCode;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "countryName") === true) {
-
-          state.computerLog.countryName = computerLogItem.countryName;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "stateProvCode") === true) {
-
-          state.computerLog.stateProvCode = computerLogItem.stateProvCode;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "stateProv") === true) {
-
-          state.computerLog.state = computerLogItem.state;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "city") === true) {
-
-          state.computerLog.city = computerLogItem.city;
-
-        };
-
-      };
-
-    },
     setHostname(state, action) {
 
       state.hostname = action.payload;
@@ -452,6 +343,6 @@ const applicationSettingsSlice = createSlice({
   }
 });
 
-export const { setApplicationVersion, setCopyrightYear, setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
+export const { setApplicationVersion, setCopyrightYear, setLocationLogged, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
 
 export default applicationSettingsSlice.reducer;
