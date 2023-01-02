@@ -223,86 +223,86 @@ const FromTheHomeopapeItem = (props) => {
   // OR itemLink like '%elasticsearch.columbian.com%'
   // goodreads.com
 
-  // // if (homeopapeItem.itemLink.includes("ebay.com")) {
-  // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
+  // // if (homeopapeItem.itemLink.includes("ebay.com") === true) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
+  // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") === true || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius") === true) {
 
   //   show = false;
 

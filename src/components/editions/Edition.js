@@ -5,9 +5,9 @@ import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, 
 import { Image } from "react-bootstrap-icons";
 // import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem } from "shared-functions";
 import { encodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
-// import EditEdition from "../editions/EditEdition";
+import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
 const Edition = (props) => {
@@ -54,11 +54,11 @@ const Edition = (props) => {
     let titleItemArray = [];
     let newTitleItem = {};
 
-    if (isEmpty(titleID) === false && !isNaN(titleID)) {
+    if (isEmpty(titleID) === false && !isNaN(titleID) === true) {
 
       newEditionList = newEditionList.filter(edition => edition.titleID === titleID);
       titleItemArray = arrayTitles.filter(title => title.titleID === titleID);
-      newTitleItem = titleItemArray[0];
+      newTitleItem = getFirstItem(titleItemArray);
 
     };
 
@@ -130,11 +130,7 @@ const Edition = (props) => {
       <Row className="my-4">
         <Col xs="12">
 
-          <h5 className="text-center">Find A Copy
-
-            {/* {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <EditEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null} */}
-
-          </h5>
+          <h5 className="text-center">Find A Copy</h5>
 
         </Col>
       </Row>
@@ -298,11 +294,20 @@ const Edition = (props) => {
 
                         }
 
-                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
-
                       </CardBody>
                     </Col>
                   </Row>
+
+                  {isEmpty(admin) === false && admin === true ?
+
+                    <Row>
+
+                      <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} />
+
+                    </Row>
+
+                    : null}
+
                   <CardFooter className="card-footer">
 
                     <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>

@@ -56,38 +56,37 @@ const urlsSlice = createSlice({
 
     //   if (typeof urlItem === "object") {
 
-    //     if (hasNonEmptyProperty(urlItem, "linkID") && hasNonEmptyProperty(urlItem, "linkType")) {
+    //     if (hasNonEmptyProperty(urlItem, "linkID") === true && hasNonEmptyProperty(urlItem, "linkType") === true) {
 
     //       urlListIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 
-
     //       if (isEmpty(urlListIndex) === false) {
 
-    //         if (hasNonEmptyProperty(urlItem, "linkName")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkName") === true) {
 
     //           state.arrayURLs[urlListIndex].linkName = urlItem.linkName;
 
     //         };
 
-    //         if (hasNonEmptyProperty(urlItem, "linkType")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkType") === true) {
 
     //           state.arrayURLs[urlListIndex].linkType = urlItem.linkType;
 
     //         };
 
-    //         if (hasNonEmptyProperty(urlItem, "linkID")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkID") === true) {
 
     //           state.arrayURLs[urlListIndex].linkID = urlItem.linkID;
 
     //         };
 
-    //         if (hasNonEmptyProperty(urlItem, "linkTypeNameID")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkTypeNameID") === true) {
 
     //           state.arrayURLs[urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
 
     //         };
 
-    //         if (hasNonEmptyProperty(urlItem, "linkTypeName")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkTypeName") === true) {
 
     //           state.arrayURLs[urlListIndex].linkTypeName = urlItem.linkTypeName;
 
@@ -108,10 +107,9 @@ const urlsSlice = createSlice({
 
     //   if (typeof urlItem === "object") {
 
-    //     if (hasNonEmptyProperty(urlItem, "linkID") && hasNonEmptyProperty(urlItem, "linkType")) {
+    //     if (hasNonEmptyProperty(urlItem, "linkID") === true && hasNonEmptyProperty(urlItem, "linkType") === true) {
 
     //       urlItemIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
-
 
     //       if (isEmpty(urlItemIndex) === false) {
 

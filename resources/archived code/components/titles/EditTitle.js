@@ -573,9 +573,8 @@ const EditTitle = (props) => {
                 // setUrlPKDWeb(data.records[0].urlPKDWeb);
                 setActive(data.records[0].active);
 
-                // let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === data.records[0].categoryID));
                 // // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
-                // categoryItem = categoryItem[0];
 
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
@@ -900,9 +899,8 @@ const EditTitle = (props) => {
                 setActive(data.records[0].active);
 
 
-                // let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === data.records[0].categoryID));
                 // // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
-                // categoryItem = categoryItem[0];
 
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF

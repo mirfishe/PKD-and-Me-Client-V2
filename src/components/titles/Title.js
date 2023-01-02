@@ -6,14 +6,14 @@ import { Image } from "react-bootstrap-icons";
 // import { Rating } from "@mui/lab/";
 // import Parse from "html-react-parser";
 import applicationSettings from "../../app/environment";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, getFirstItem } from "shared-functions";
 import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
 import EditTitle from "./EditTitle";
 import TitleText from "./TitleText";
 import Edition from "../editions/Edition";
-// import EditEdition from "../editions/EditEdition";
+import EditEdition from "../editions/EditEdition";
 import UserReview from "../userReviews/UserReview";
-// import EditUserReview from "../userReviews/EditUserReview";
+import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
 
@@ -35,7 +35,7 @@ const Title = (props) => {
   // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
-  // const sessionToken = useSelector(state => state.user.sessionToken);
+  const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
   const userID = useSelector(state => state.user.userID);
 
@@ -218,10 +218,9 @@ const Title = (props) => {
 
     let newUserReviewItem = {};
 
-    if (isEmpty(userID) === false && !isNaN(userID)) {
+    if (isEmpty(userID) === false && !isNaN(userID) === true) {
 
-      newUserReviewItem = newUserReviews.filter(userReview => userReview.userID === userID);
-      newUserReviewItem = newUserReviewItem[0];
+      newUserReviewItem = getFirstItem(newUserReviews.filter(userReview => userReview.userID === userID));
 
     };
 
@@ -231,10 +230,9 @@ const Title = (props) => {
 
     // let newUserReviewRatingItem = {};
 
-    // if (isEmpty(titleID) === false && !isNaN(titleID)) {
+    // if (isEmpty(titleID) === false && !isNaN(titleID) === true) {
 
-    //   newUserReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === titleID);
-    //   newUserReviewRatingItem = newUserReviewRatingItem[0];
+    //   newUserReviewRatingItem = getFirstItem(arrayUserReviewsRatings.filter(userReview => userReview.titleID === titleID));
 
     // };
 
@@ -309,7 +307,7 @@ const Title = (props) => {
 
     if (isEmpty(titleList) === false) {
 
-      saveRecord();
+      addVisitLog();
 
     };
 
@@ -387,7 +385,7 @@ const Title = (props) => {
   // };
 
 
-  const saveRecord = () => {
+  const addVisitLog = () => {
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -475,7 +473,7 @@ const Title = (props) => {
       })
       .catch((error) => {
 
-        console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
+        console.error(componentName, getDateTime(), operationValue, "addVisitLog error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
@@ -549,8 +547,6 @@ const Title = (props) => {
 
                       {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
 
-                      {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
-
                     </h4>
                   </Col>
                 </Row>
@@ -593,8 +589,6 @@ const Title = (props) => {
 
                       : null}
 
-                    {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null} */}
-
                     {isEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
 
                     {isEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
@@ -605,7 +599,21 @@ const Title = (props) => {
 
                     {isEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {title.manuscriptTitle}</p> : null}
 
-                    {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
+                    {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === true ?
+
+                      <EditUserReview titleID={title.titleID} />
+
+                      : null}
+
+                    {isEmpty(admin) === false && admin === true ?
+
+                      <Row>
+
+                        <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} />
+
+                      </Row>
+
+                      : null}
 
                   </Col>
                 </Row>
@@ -622,7 +630,17 @@ const Title = (props) => {
 
         <Row>
 
-          <EditTitle titleID={titleID} displayButton={true} />
+          <EditTitle />
+
+        </Row>
+
+        : null}
+
+      {isEmpty(admin) === false && admin === true ?
+
+        <Row>
+
+          <EditTitle titleID={titleID} />
 
         </Row>
 

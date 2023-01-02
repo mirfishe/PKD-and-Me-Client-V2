@@ -312,7 +312,7 @@ const App = (props) => {
 
       if (locationLogged === false) {
 
-        saveRecord();
+        addVisitLog();
 
       };
 
@@ -355,7 +355,7 @@ const App = (props) => {
   }, [pageURL, arrayURLs]);
 
 
-  const saveRecord = () => {
+  const addVisitLog = () => {
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -444,7 +444,7 @@ const App = (props) => {
       })
       .catch((error) => {
 
-        console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
+        console.error(componentName, getDateTime(), operationValue, "addVisitLog error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
@@ -879,7 +879,7 @@ const App = (props) => {
             {showEditTitle && isEmpty(admin) === false && admin === true ?
 
               <NavItem>
-                <EditTitle displayButton={true} />
+                <EditTitle />
               </NavItem>
 
               : null}

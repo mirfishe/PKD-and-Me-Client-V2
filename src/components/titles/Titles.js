@@ -194,7 +194,7 @@ const Titles = (props) => {
 
     if (isEmpty(titleList) === false) {
 
-      saveRecord();
+      addVisitLog();
 
     };
 
@@ -265,7 +265,7 @@ const Titles = (props) => {
   };
 
 
-  const saveRecord = () => {
+  const addVisitLog = () => {
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -353,7 +353,7 @@ const Titles = (props) => {
       })
       .catch((error) => {
 
-        console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
+        console.error(componentName, getDateTime(), operationValue, "addVisitLog error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 

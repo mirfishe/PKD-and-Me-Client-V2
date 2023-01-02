@@ -53,34 +53,33 @@ const categoriesSlice = createSlice({
 
     //   if (typeof categoryItem === "object") {
 
-    //     if (hasNonEmptyProperty(categoryItem, "categoryID")) {
+    //     if (hasNonEmptyProperty(categoryItem, "categoryID") === true) {
 
     //       categoryItemIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryItem.categoryID);
-
 
     //       // state.arrayCategories[categoryItemIndex].categoryID = categoryItem.categoryID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(categoryItem, "category")) {
+    //     if (hasNonEmptyProperty(categoryItem, "category") === true) {
 
     //       state.arrayCategories[categoryItemIndex].category = categoryItem.category;
 
     //     };
 
-    //     if (hasNonEmptyProperty(categoryItem, "sortID")) {
+    //     if (hasNonEmptyProperty(categoryItem, "sortID") === true) {
 
     //       state.arrayCategories[categoryItemIndex].sortID = categoryItem.sortID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(categoryItem, "active")) {
+    //     if (hasNonEmptyProperty(categoryItem, "active") === true) {
 
     //       state.arrayCategories[categoryItemIndex].active = categoryItem.active;
 
     //     };
 
-    //     if (hasNonEmptyProperty(categoryItem, "updateDate")) {
+    //     if (hasNonEmptyProperty(categoryItem, "updateDate") === true) {
 
     //       state.arrayCategories[categoryItemIndex].updateDate = categoryItem.updateDate;
 
@@ -102,7 +101,6 @@ const categoriesSlice = createSlice({
     //   if (isEmpty(categoryID) === false) {
 
     //     categoryListIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
-
 
     //     state.arrayCategories.splice(categoryListIndex, 1);
 

@@ -93,7 +93,7 @@ export const removeOnePixelImage = (text, ASIN) => {
     newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
 
 
-    if (newText.includes("https://ir-na.amazon-adsystem.com")) {
+    if (newText.includes("https://ir-na.amazon-adsystem.com") === true) {
 
       // console.log(componentName, getDateTime(), "removeOnePixelImage ASIN", ASIN);
       // console.log(componentName, getDateTime(), "removeOnePixelImage newText", newText);

@@ -53,39 +53,38 @@ const mediaSlice = createSlice({
 
     //   if (typeof mediaItem === "object") {
 
-    //     if (hasNonEmptyProperty(mediaItem, "mediaID")) {
+    //     if (hasNonEmptyProperty(mediaItem, "mediaID") === true) {
 
     //       mediaItemIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaItem.mediaID);
-
 
     //       // state.arrayMedia[mediaItemIndex].mediaID = mediaItem.mediaID;
     //     };
 
-    //     if (hasNonEmptyProperty(mediaItem, "media")) {
+    //     if (hasNonEmptyProperty(mediaItem, "media") === true) {
 
     //       state.arrayMedia[mediaItemIndex].media = mediaItem.media;
 
     //     };
 
-    //     if (hasNonEmptyProperty(mediaItem, "electronic")) {
+    //     if (hasNonEmptyProperty(mediaItem, "electronic") === true) {
 
     //       state.arrayMedia[mediaItemIndex].electronic = mediaItem.electronic;
 
     //     };
 
-    //     if (hasNonEmptyProperty(mediaItem, "sortID")) {
+    //     if (hasNonEmptyProperty(mediaItem, "sortID") === true) {
 
     //       state.arrayMedia[mediaItemIndex].sortID = mediaItem.sortID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(mediaItem, "active")) {
+    //     if (hasNonEmptyProperty(mediaItem, "active") === true) {
 
     //       state.arrayMedia[mediaItemIndex].active = mediaItem.active;
 
     //     };
 
-    //     if (hasNonEmptyProperty(mediaItem, "updateDate")) {
+    //     if (hasNonEmptyProperty(mediaItem, "updateDate") === true) {
 
     //       state.arrayMedia[mediaItemIndex].updateDate = mediaItem.updateDate;
 
@@ -107,7 +106,6 @@ const mediaSlice = createSlice({
     //   if (isEmpty(mediaID) === false) {
 
     //     mediaListIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
-
 
     //     state.arrayMedia.splice(mediaListIndex, 1);
 

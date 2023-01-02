@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import { Rating } from "@mui/lab/";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate } from "shared-functions";
-// import EditUserReview from "../userReviews/EditUserReview";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem } from "shared-functions";
+import EditUserReview from "../userReviews/EditUserReview";
 
 const UserReview = (props) => {
 
@@ -13,7 +13,7 @@ const UserReview = (props) => {
 
   const componentName = "UserReview";
 
-  // const sessionToken = useSelector(state => state.user.sessionToken);
+  const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
   const userID = useSelector(state => state.user.userID);
 
@@ -21,7 +21,7 @@ const UserReview = (props) => {
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
   // let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
-  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
   const [userReviews, setUserReviews] = useState([]);
 
@@ -34,42 +34,41 @@ const UserReview = (props) => {
 
   useEffect(() => {
 
-    let newUserReviews = [...arrayUserReviews];
+    if (isEmpty(titleID) === false && !isNaN(titleID) === true) {
 
-    if (isEmpty(titleID) === false && !isNaN(titleID)) {
+      let newUserReviews = [...arrayUserReviews];
 
       newUserReviews = newUserReviews.filter(userReview => userReview.titleID === titleID);
 
+      if (isEmpty(admin) === false && admin === true) {
+
+        // newUserReviews = [...newUserReviews];
+
+      } else {
+
+        newUserReviews = newUserReviews.filter(userReview => userReview.userReviewActive === true || userReview.userReviewActive === 1);
+
+      };
+
+      // * Sort the list by createDate. -- 03/06/2021 MF
+      newUserReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
+
+      // * Sort the list by updateDate. -- 03/06/2021 MF
+      // newUserReviews.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
+
+      let userReviewItem = {};
+
+      if (isEmpty(userID) === false && !isNaN(userID) === true) {
+
+        userReviewItem = getFirstItem(newUserReviews.filter(userReview => userReview.userID === userID));
+
+      };
+
+      setUserReviews(newUserReviews);
+
     };
 
-    if (isEmpty(admin) === false && admin === true) {
-
-      // newUserReviews = [...newUserReviews];
-
-    } else {
-
-      newUserReviews = newUserReviews.filter(userReview => userReview.userReview === true);
-
-    };
-
-    // * Sort the list by createDate. -- 03/06/2021 MF
-    newUserReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
-
-    // * Sort the list by updateDate. -- 03/06/2021 MF
-    // newUserReviews.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
-
-    let userReviewItem = {};
-
-    if (isEmpty(userID) === false && !isNaN(userID)) {
-
-      userReviewItem = newUserReviews.filter(userReview => userReview.userID === userID);
-      userReviewItem = userReviewItem[0];
-
-    };
-
-    setUserReviews(newUserReviews);
-
-  }, [arrayUserReviews]);
+  }, [titleID, arrayUserReviews]);
 
 
   useEffect(() => {
@@ -120,9 +119,7 @@ const UserReview = (props) => {
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">User Reviews
-            {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <EditUserReview titleID={titleID} displayButton={true} /> : null} */}
-          </h5>
+          <h5 className="text-center">User Reviews</h5>
 
         </Col>
       </Row>
@@ -160,7 +157,7 @@ const UserReview = (props) => {
 
                 {isEmpty(userReview.rating) === false || isEmpty(userReview.shortReview) === false || isEmpty(userReview.longReview) === false ?
 
-                  <Col className="my-4" xs="12" key={userReview.reviewID}>
+                  <Col className="my-4" xs="12">
 
                     {isEmpty(activeString) === false ?
 
@@ -179,9 +176,7 @@ const UserReview = (props) => {
 
                         {isEmpty(userReview.shortReview) === false ?
 
-                          <h6>{userReview.shortReview}
-                            {/* {userID === userReview.userID || isAdmin === true ? <UpdateUserReview titleID={titleID} userReviewUpdated={userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
-                          </h6>
+                          <h6>{userReview.shortReview}</h6>
 
                           : null}
 
@@ -212,11 +207,11 @@ const UserReview = (props) => {
                     <Row>
                       <Col xs="12">
 
-                        {/* {isEmpty(sessionToken) === false && ((isEmpty(userID) === false && userID === userReview.userID) || (isEmpty(admin) === false && admin === true)) ?
+                        {isEmpty(sessionToken) === false && ((isEmpty(userID) === false && userID === userReview.userID) || (isEmpty(admin) === false && admin === true)) ?
 
-                          <EditUserReview reviewID={userReview.reviewID} displayButton={true} />
+                          <EditUserReview reviewID={userReview.reviewID} />
 
-                          : null} */}
+                          : null}
 
                       </Col>
                     </Row>

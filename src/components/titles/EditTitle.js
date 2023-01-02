@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
@@ -567,9 +567,8 @@ const EditTitle = (props) => {
                 // setUrlPKDWeb(data.records[0].urlPKDWeb);
                 setActive(data.records[0].active);
 
-                // let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === data.records[0].categoryID));
                 // // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
-                // categoryItem = categoryItem[0];
 
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
@@ -887,9 +886,8 @@ const EditTitle = (props) => {
                 // setUrlPKDWeb(data.records[0].urlPKDWeb);
                 setActive(data.records[0].active);
 
-                // let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === data.records[0].categoryID));
                 // // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
-                // categoryItem = categoryItem[0];
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
                 // dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
@@ -1166,7 +1164,7 @@ const EditTitle = (props) => {
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true ?
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
 
         <React.Fragment>
 

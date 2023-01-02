@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, getFirstItem } from "shared-functions";
 import { encodeURL /* , addErrorLog */ } from "../../utilities/ApplicationFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, /* setCategoriesDataOffline */ } from "../../app/categoriesSlice";
@@ -221,10 +221,9 @@ function LoadBibliographyData() {
 
         let userReviewRatingItem = {};
 
-        if (isEmpty(arrayTitles[i].titleID) === false && !isNaN(arrayTitles[i].titleID)) {
+        if (isEmpty(arrayTitles[i].titleID) === false && !isNaN(arrayTitles[i].titleID) === true) {
 
-          userReviewRatingItem = arrayUserReviewsRatings.filter(userReview => userReview.titleID === arrayTitles[i].titleID);
-          userReviewRatingItem = userReviewRatingItem[0];
+          userReviewRatingItem = getFirstItem(arrayUserReviewsRatings.filter(userReview => userReview.titleID === arrayTitles[i].titleID));
 
         };
 

@@ -54,169 +54,168 @@ const titlesSlice = createSlice({
 
     //   if (typeof titleItem === "object") {
 
-    //     if (hasNonEmptyProperty(titleItem, "titleID")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleID") === true) {
 
     //       titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
-
 
     //       // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titleName")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleName") === true) {
 
     //       state.arrayTitles[titleItemIndex].titleName = titleItem.titleName;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titleSort")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleSort") === true) {
 
     //       state.arrayTitles[titleItemIndex].titleSort = titleItem.titleSort;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titleURL")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleURL") === true) {
 
     //       state.arrayTitles[titleItemIndex].titleURL = titleItem.titleURL;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "authorFirstName")) {
+    //     if (hasNonEmptyProperty(titleItem, "authorFirstName") === true) {
 
     //       state.arrayTitles[titleItemIndex].authorFirstName = titleItem.authorFirstName;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "authorLastName")) {
+    //     if (hasNonEmptyProperty(titleItem, "authorLastName") === true) {
 
     //       state.arrayTitles[titleItemIndex].authorLastName = titleItem.authorLastName;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "submissionDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "submissionDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].submissionDate = titleItem.submissionDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "publicationDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "publicationDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].publicationDate = titleItem.publicationDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titlePublicationDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "titlePublicationDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].titlePublicationDate = titleItem.titlePublicationDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "imageName")) {
+    //     if (hasNonEmptyProperty(titleItem, "imageName") === true) {
 
     //       state.arrayTitles[titleItemIndex].imageName = titleItem.imageName;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titleImageName")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleImageName") === true) {
 
     //       state.arrayTitles[titleItemIndex].titleImageName = titleItem.titleImageName;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "categoryID")) {
+    //     if (hasNonEmptyProperty(titleItem, "categoryID") === true) {
 
     //       state.arrayTitles[titleItemIndex].categoryID = titleItem.categoryID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "shortDescription")) {
+    //     if (hasNonEmptyProperty(titleItem, "shortDescription") === true) {
 
     //       state.arrayTitles[titleItemIndex].shortDescription = titleItem.shortDescription;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "urlPKDWeb")) {
+    //     if (hasNonEmptyProperty(titleItem, "urlPKDWeb") === true) {
 
     //       state.arrayTitles[titleItemIndex].urlPKDWeb = titleItem.urlPKDWeb;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "active")) {
+    //     if (hasNonEmptyProperty(titleItem, "active") === true) {
 
     //       state.arrayTitles[titleItemIndex].active = titleItem.active;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titleActive")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleActive") === true) {
 
     //       state.arrayTitles[titleItemIndex].titleActive = titleItem.titleActive;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "createDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "createDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].createDate = titleItem.createDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titleCreateDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleCreateDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].titleCreateDate = titleItem.titleCreateDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "updateDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "updateDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].updateDate = titleItem.updateDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "titleUpdatedDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleUpdatedDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].titleUpdatedDate = titleItem.titleUpdatedDate;
 
     //     };
 
     //     // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-    //     // if (hasNonEmptyProperty(titleItem, "category")) {
+    //     // if (hasNonEmptyProperty(titleItem, "category") === true) {
 
-    //     //   if (hasNonEmptyProperty(titleItem.category, "categoryID")) {
+    //     //   if (hasNonEmptyProperty(titleItem.category, "categoryID") === true) {
 
     //     //     state.arrayTitles[titleItemIndex].category.categoryID = titleItem.category.categoryID;
 
     //     //   };
 
-    //     if (hasNonEmptyProperty(titleItem, "category")) {
+    //     if (hasNonEmptyProperty(titleItem, "category") === true) {
 
     //       state.arrayTitles[titleItemIndex].category = titleItem.category;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "sortID")) {
+    //     if (hasNonEmptyProperty(titleItem, "sortID") === true) {
 
     //       state.arrayTitles[titleItemIndex].sortID = titleItem.sortID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "categorySortID")) {
+    //     if (hasNonEmptyProperty(titleItem, "categorySortID") === true) {
 
     //       state.arrayTitles[titleItemIndex].categorySortID = titleItem.categorySortID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "categoryActive")) {
+    //     if (hasNonEmptyProperty(titleItem, "categoryActive") === true) {
 
     //       state.arrayTitles[titleItemIndex].categoryActive = titleItem.categoryActive;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "categoryCreateDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "categoryCreateDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].categoryCreateDate = titleItem.categoryCreateDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "categoryUpdatedDate")) {
+    //     if (hasNonEmptyProperty(titleItem, "categoryUpdatedDate") === true) {
 
     //       state.arrayTitles[titleItemIndex].categoryUpdatedDate = titleItem.categoryUpdatedDate;
 
@@ -241,7 +240,6 @@ const titlesSlice = createSlice({
 
     //     titleListIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
 
-
     //     state.arrayTitles.splice(titleListIndex, 1);
 
     //   };
@@ -254,28 +252,27 @@ const titlesSlice = createSlice({
 
     //   if (typeof titleItem === "object") {
 
-    //     if (hasNonEmptyProperty(titleItem, "titleID")) {
+    //     if (hasNonEmptyProperty(titleItem, "titleID") === true) {
 
     //       titleItemIndex = state.arrayTitles.findIndex(title => title.titleID === titleItem.titleID);
-
 
     //       // state.arrayTitles[titleItemIndex].titleID = titleItem.titleID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "userReviewCount")) {
+    //     if (hasNonEmptyProperty(titleItem, "userReviewCount") === true) {
 
     //       state.arrayTitles[titleItemIndex].userReviewCount = titleItem.userReviewCount;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "userReviewSum")) {
+    //     if (hasNonEmptyProperty(titleItem, "userReviewSum") === true) {
 
     //       state.arrayTitles[titleItemIndex].userReviewSum = titleItem.userReviewSum;
 
     //     };
 
-    //     if (hasNonEmptyProperty(titleItem, "userReviewAverage")) {
+    //     if (hasNonEmptyProperty(titleItem, "userReviewAverage") === true) {
 
     //       state.arrayTitles[titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
 
@@ -285,19 +282,19 @@ const titlesSlice = createSlice({
 
     //   // if (typeof titleItem === "object") {
 
-    //   //   if (hasNonEmptyProperty(titleItem, "userReviewCount")) {
+    //   //   if (hasNonEmptyProperty(titleItem, "userReviewCount") === true) {
 
     //   //     state.arrayTitles[titleItem.titleItemIndex].userReviewCount = titleItem.userReviewCount;
 
     //   //   };
 
-    //   //   if (hasNonEmptyProperty(titleItem, "userReviewSum")) {
+    //   //   if (hasNonEmptyProperty(titleItem, "userReviewSum") === true) {
 
     //   //     state.arrayTitles[titleItem.titleItemIndex].userReviewSum = titleItem.userReviewSum;
 
     //   //   };
 
-    //   //   if (hasNonEmptyProperty(titleItem, "userReviewAverage")) {
+    //   //   if (hasNonEmptyProperty(titleItem, "userReviewAverage") === true) {
 
     //   //     state.arrayTitles[titleItem.titleItemIndex].userReviewAverage = titleItem.userReviewAverage;
 

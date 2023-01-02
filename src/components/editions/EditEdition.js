@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
+import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Image } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
 import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/ApplicationFunctions";
@@ -10,7 +10,7 @@ import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/Appli
 const EditEdition = (props) => {
 
   // * Available props: -- 10/21/2022 MF
-  // * Properties: displayButton, displayIcon, editionID, titleID, titleImageName, titlePublicationDate -- 10/21/2022 MF
+  // * Properties: editionID, titleID, titleImageName, titlePublicationDate -- 10/21/2022 MF
 
   const componentName = "EditEdition";
 
@@ -24,44 +24,22 @@ const EditEdition = (props) => {
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
 
+  const mediaListState = useSelector(state => state.media.arrayMedia);
+  const titleListState = useSelector(state => state.titles.arrayTitles);
+  const editionListState = useSelector(state => state.editions.arrayEditions);
+
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
-  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
-  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
   let editionID = isEmpty(props) === false && isEmpty(props.editionID) === false ? props.editionID : 0;
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : 0;
   let titleImageName = isEmpty(props) === false && isEmpty(props.titleImageName) === false ? props.titleImageName : "";
   let titlePublicationDate = isEmpty(props) === false && isEmpty(props.titlePublicationDate) === false ? props.titlePublicationDate : null;
 
+  const [showForm, setShowForm] = useState(false);
+
   const [mediaMessage, setMediaMessage] = useState("");
   const [errMediaMessage, setErrMediaMessage] = useState("");
   const [mediaResultsFound, setMediaResultsFound] = useState(null);
-
-  const mediaListState = useSelector(state => state.media.arrayMedia);
-
-  const mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
-  // const mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
-
-  // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-  // * Sort the list alphabetically instead of by sortID
-  mediaList.sort((a, b) => (a.media > b.media) ? 1 : -1);
-
-  // ! This code is causing React to have too many re-renders in this location
-  // if (mediaList.length < 1) {
-
-  //     console.error(componentName, getDateTime(), "mediaList is empty", mediaList.length);
-  //     setErrMediaMessage("mediaList is empty", mediaList.length);
-  //     setMediaResultsFound(false);
-
-  // } else {
-
-  //     console.error(componentName, getDateTime(), "mediaList.length", mediaList.length);
-  //     setMediaMessage("mediaList.length", mediaList.length);
-  //     setMediaResultsFound(true);
-
-  // };
-
-  const titleListState = useSelector(state => state.titles.arrayTitles);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -73,7 +51,6 @@ const EditEdition = (props) => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [modal, setModal] = useState(false);
   const [editionRecordAdded, setEditionRecordAdded] = useState(null);
   const [editionRecordUpdated, setEditionRecordUpdated] = useState(null);
   const [editionRecordDeleted, setEditionRecordDeleted] = useState(null);
@@ -111,19 +88,39 @@ const EditEdition = (props) => {
   const [errASINMessage, setErrASINMessage] = useState("");
   const [ASINResultsFound, setASINResultsFound] = useState(null);
 
-  const editionListState = useSelector(state => state.editions.arrayEditions);
+  let mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
+  // const mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
+
+  // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+  // * Sort the list alphabetically instead of by sortID
+  mediaList.sort((a, b) => (a.media > b.media) ? 1 : -1);
+
+  // ! This code is causing React to have too many re-renders in this location
+  // if (mediaList.length < 1) {
+
+  //     console.error(componentName, getDateTime(), "mediaList is empty", mediaList.length);
+  //     setErrMediaMessage("mediaList is empty", mediaList.length);
+  //     setMediaResultsFound(false);
+
+  // } else {
+
+  //     console.error(componentName, getDateTime(), "mediaList.length", mediaList.length);
+  //     setMediaMessage("mediaList.length", mediaList.length);
+  //     setMediaResultsFound(true);
+
+  // };
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (admin !== true) {
+  //   if (admin !== true) {
 
-      // return <Redirect to="/" />;
-      setModal(false);
+  //     // return <Redirect to="/" />;
+  //     setModal(false);
 
-    };
+  //   };
 
-  }, [admin]);
+  // }, [admin]);
 
 
   useEffect(() => {
@@ -216,7 +213,7 @@ const EditEdition = (props) => {
       setTxtImageLinkLarge("");
       setTxtTextImageLink("");
 
-      setModal(!modal);
+      // setModal(!modal);
 
     };
 
@@ -242,7 +239,7 @@ const EditEdition = (props) => {
       setTxtImageLinkLarge("");
       setTxtTextImageLink("");
 
-      setModal(!modal);
+      // setModal(!modal);
 
     };
 
@@ -263,7 +260,7 @@ const EditEdition = (props) => {
       setTxtImageLinkLarge("");
       setTxtTextImageLink("");
 
-      setModal(!modal);
+      // setModal(!modal);
 
     };
 
@@ -318,10 +315,7 @@ const EditEdition = (props) => {
 
     };
 
-
     if (formValidated === true) {
-
-
 
       let recordObject = {
         titleID: parseInt(titleID),
@@ -435,7 +429,6 @@ const EditEdition = (props) => {
 
       };
 
-
       let url = baseURL + "editions/";
 
       if (isEmpty(sessionToken) === false) {
@@ -494,10 +487,8 @@ const EditEdition = (props) => {
               // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === data.records[0].mediaID));
               // // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
 
-
               // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === data.records[0].titleID));
               // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-
 
               // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
               // dispatch(addStateEdition([{ editionID: data.records[0].editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }*/, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, mediaActive: mediaItem.active, mediaCreateDate: mediaItem.createDate, mediaUpdatedDate: mediaItem.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, titlePublicationDate: titleItem.publicationDate, titleImageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate }]));
@@ -531,7 +522,6 @@ const EditEdition = (props) => {
 
 
   const updateEdition = (deleteEdition) => {
-
 
     clearMessages();
     setEditionRecordUpdated(null);
@@ -579,10 +569,7 @@ const EditEdition = (props) => {
 
     };
 
-
     if (formValidated === true) {
-
-
 
       let recordObject = {
         editionID: editionID,
@@ -698,13 +685,11 @@ const EditEdition = (props) => {
 
       };
 
-
       let url = baseURL + "editions/";
 
       if (isEmpty(editionID) === false && isEmpty(sessionToken) === false) {
 
         url = url + editionID;
-
 
         fetch(url, {
           method: "PUT",
@@ -760,10 +745,8 @@ const EditEdition = (props) => {
               // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === data.records[0].mediaID));
               // // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
 
-
               // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === data.records[0].titleID));
               // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-
 
               // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
               // dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: getDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
@@ -807,7 +790,6 @@ const EditEdition = (props) => {
     if (isEmpty(editionID) === false) {
 
       url = url + editionID;
-
 
       if (isEmpty(sessionToken) === false) {
 
@@ -890,7 +872,6 @@ const EditEdition = (props) => {
 
       url = url + ASIN;
 
-
       fetch(url)
         .then(response => {
 
@@ -913,7 +894,6 @@ const EditEdition = (props) => {
           if (isEmpty(results) === false && results.transactionSuccess === true) {
 
             setASINMessage(results.message + "That ASIN already exists in the database. " + results.records[0].titleName + " (" + results.records[0].media + ") editionID=" + results.records[0].editionID);
-
 
           } else {
 
@@ -971,152 +951,145 @@ const EditEdition = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null} */}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+        <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true ?
+          <button aria-label={showForm === false ? "expand" : "collapse"} onClick={() => { setShowForm(!showForm); }}>
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Add Edition</a>
+            <div>
+              {isEmpty(editionItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Edition
+
+              {showForm === false ? <i className="fas fa-caret-down"></i> : <i className="fas fa-caret-up"></i>}
+            </div>
+
+            {showForm === true ?
+
+              <span onClick={() => { setShowForm(!showForm); }}>
+
+                <FormGroup className="text-center">
+                  <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+                  <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+                  {isEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
+                  {isEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+                </FormGroup>
+
+                <FormGroup row>
+                  <Col>
+
+                    <Label for="ddMediaID">Media</Label>
+                    <Input type="select" id="ddMediaID" value={ddMediaID} onChange={(event) => { setDdMediaID(event.target.value); }}>
+                      <option value="">Select a Media</option>
+
+                      {isNonEmptyArray(mediaList) === true ?
+
+                        <React.Fragment>
+
+                          {mediaList.map((media) => {
+                            return (
+                              <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
+                            );
+                          })}
+
+                        </React.Fragment>
+
+                        : null}
+
+                    </Input>
+                    {isEmpty(errMediaID) === false ? <Alert color="danger">{errMediaID}</Alert> : null}
+
+                  </Col>
+                  <Col>
+
+                    <Label for="txtPublicationDate">Publication Date</Label> {isEmpty(titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
+                    <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
+
+                  </Col>
+
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageName">Image Name</Label> {isEmpty(titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
+                  <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
+                  {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
+                </FormGroup>
+
+                <FormGroup>
+                  {isEmpty(txtTextLinkFull) === false ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
+                  {isEmpty(ASINMessage) === false ? <Alert color="info">{ASINMessage}</Alert> : null}
+                  {isEmpty(errASINMessage) === false ? <Alert color="danger">{errASINMessage}</Alert> : null}
+                  <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={(event) => { checkASIN(txtASIN); }}>Check for ASIN</Button>
+                  <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => { setTxtASIN(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtTextLinkShort">Text Link Short</Label>
+                  <Input type="text" id="txtTextLinkShort" value={txtTextLinkShort} onChange={(event) => { setTxtTextLinkShort(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
+                  <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => { setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
+                  <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => { setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
+                  <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => { setTxtImageLinkMedium(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
+                  <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => { setTxtImageLinkLarge(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtTextImageLink">Text Image Link</Label>
+                  <Input type="textarea" id="txtTextImageLink" rows={10} value={txtTextImageLink} onChange={(event) => { setTxtTextImageLink(event.target.value); }} />
+                </FormGroup>
+
+                {isEmpty(editionItem) === true ?
+
+                  <Button outline size="lg" color="primary" onClick={addEdition}>Add Edition</Button>
+
+                  :
+
+                  <React.Fragment>
+
+                    <Button outline size="lg" color="primary" onClick={(event) => { updateEdition(false); }}>Update Edition</Button>
+
+                    {isEmpty(active) === false && (active === false || active === 0) ?
+
+                      <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(false); }}>Undelete/Restore Edition</Button>
+
+                      : null}
+
+                    {isEmpty(active) === false && (active === true || active === 1) ?
+
+                      <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(true); }}>Delete Edition</Button>
+
+                      : null}
+
+                    <Button outline size="lg" color="warning" onClick={(event) => { deleteEdition(); }}>Hard Delete Edition</Button>
+                  </React.Fragment>
+
+                }
+
+                {/* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
+
+              </span>
+
+              : null}
+
+          </button>
+
+        </React.Fragment>
 
         : null}
-
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null} */}
-
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
-
-      {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true ?
-
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Update Edition</a>
-
-        : null}
-
-
-      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
-        <ModalHeader toggle={(event) => { setModal(!modal); }}>{isEmpty(editionItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Edition</ModalHeader>
-        <ModalBody>
-          <Form>
-
-            <FormGroup className="text-center">
-              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-              {isEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
-              {isEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
-            </FormGroup>
-
-            <FormGroup row>
-              <Col>
-
-                <Label for="ddMediaID">Media</Label>
-                <Input type="select" id="ddMediaID" value={ddMediaID} onChange={(event) => { setDdMediaID(event.target.value); }}>
-                  <option value="">Select a Media</option>
-
-                  {isNonEmptyArray(mediaList) === true ?
-
-                    <React.Fragment>
-
-                      {mediaList.map((media) => {
-                        return (
-                          <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
-                        );
-                      })}
-
-                    </React.Fragment>
-
-                    : null}
-
-                </Input>
-                {isEmpty(errMediaID) === false ? <Alert color="danger">{errMediaID}</Alert> : null}
-
-              </Col>
-              <Col>
-
-                <Label for="txtPublicationDate">Publication Date</Label> {isEmpty(titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
-                <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
-
-              </Col>
-
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageName">Image Name</Label> {isEmpty(titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
-              <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
-              {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
-            </FormGroup>
-
-            <FormGroup>
-              {isEmpty(txtTextLinkFull) === false ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
-              {isEmpty(ASINMessage) === false ? <Alert color="info">{ASINMessage}</Alert> : null}
-              {isEmpty(errASINMessage) === false ? <Alert color="danger">{errASINMessage}</Alert> : null}
-              <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={(event) => { checkASIN(txtASIN); }}>Check for ASIN</Button>
-              <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => { setTxtASIN(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtTextLinkShort">Text Link Short</Label>
-              <Input type="text" id="txtTextLinkShort" value={txtTextLinkShort} onChange={(event) => { setTxtTextLinkShort(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
-              <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => { setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => { setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => { setTxtImageLinkMedium(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => { setTxtImageLinkLarge(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtTextImageLink">Text Image Link</Label>
-              <Input type="textarea" id="txtTextImageLink" rows={10} value={txtTextImageLink} onChange={(event) => { setTxtTextImageLink(event.target.value); }} />
-            </FormGroup>
-
-            <ModalFooter>
-
-              {isEmpty(editionItem) === true ?
-
-                <Button outline size="lg" color="primary" onClick={addEdition}>Add Edition</Button>
-
-                :
-
-                <React.Fragment>
-
-                  <Button outline size="lg" color="primary" onClick={(event) => { updateEdition(false); }}>Update Edition</Button>
-
-                  {isEmpty(active) === false && (active === false || active === 0) ?
-
-                    <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(false); }}>Undelete/Restore Edition</Button>
-
-                    : null}
-
-                  {isEmpty(active) === false && (active === true || active === 1) ?
-
-                    <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(true); }}>Delete Edition</Button>
-
-                    : null}
-
-                  <Button outline size="lg" color="warning" onClick={(event) => { deleteEdition(); }}>Hard Delete Edition</Button>
-                </React.Fragment>
-
-              }
-
-              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
-
-            </ModalFooter>
-          </Form>
-        </ModalBody>
-      </Modal>
 
     </React.Fragment>
   );

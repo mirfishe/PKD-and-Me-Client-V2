@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { PencilSquare, Plus } from 'react-bootstrap-icons';
+import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 // import { Rating } from "@mui/lab/";
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 // import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 // import { updateStateTitleRating } from "../../app/titlesSlice";
 // import { updateStateChecklist } from "../../app/userSlice";
@@ -17,7 +16,7 @@ const EditUserReview = (props) => {
 
   const componentName = "EditUserReview";
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -30,7 +29,7 @@ const EditUserReview = (props) => {
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
-  const titleListState = useSelector(state => state.titles.arrayTitles);
+  // const titleListState = useSelector(state => state.titles.arrayTitles);
 
   // const checklistListState = useSelector(state => state.user.arrayChecklist);
 
@@ -40,6 +39,8 @@ const EditUserReview = (props) => {
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
+
+  const [showForm, setShowForm] = useState(false);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -51,7 +52,6 @@ const EditUserReview = (props) => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [modal, setModal] = useState(false);
   const [userReviewRecordAdded, setUserReviewRecordAdded] = useState(null);
   const [userReviewRecordUpdated, setUserReviewRecordUpdated] = useState(null);
   const [userReviewRecordDeleted, setUserReviewRecordDeleted] = useState(null);
@@ -201,7 +201,7 @@ const EditUserReview = (props) => {
       setCbxOwned("");
       setTxtDatePurchased("");
 
-      setModal(!modal);
+      // setModal(!modal);
 
     };
 
@@ -224,7 +224,7 @@ const EditUserReview = (props) => {
       setCbxOwned("");
       setTxtDatePurchased("");
 
-      setModal(!modal);
+      // setModal(!modal);
 
     };
 
@@ -242,23 +242,23 @@ const EditUserReview = (props) => {
       setCbxOwned("");
       setTxtDatePurchased("");
 
-      setModal(!modal);
+      // setModal(!modal);
 
     };
 
   }, [userReviewRecordUpdated, userReviewRecordDeleted]);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (isEmpty(sessionToken) === true) {
+  //   if (isEmpty(sessionToken) === true) {
 
-      // return <Redirect to="/" />;
-      setModal(false);
+  //     // return <Redirect to="/" />;
+  //     setModal(false);
 
-    };
+  //   };
 
-  }, [sessionToken]);
+  // }, [sessionToken]);
 
 
   const addUserReview = () => {
@@ -476,7 +476,6 @@ const EditUserReview = (props) => {
 
             // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === data.records[0].titleID);
 
-
             // if (data.records[0].active === true || data.records[0].active === 1) {
 
             //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
@@ -669,6 +668,7 @@ const EditUserReview = (props) => {
             // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
 
+
             // // let titleItemIndex = titleListState.findIndex(title => title.titleID === /*data.records[0].*/titleID);
 
             // // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
@@ -708,7 +708,6 @@ const EditUserReview = (props) => {
             // };
 
             // // userReviews.push({ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: /*data.records[0].*/titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
-
 
             // if (data.records[0].active === true || data.records[0].active === 1 && isEmpty(data.records[0].rating) === false) {
 
@@ -916,48 +915,39 @@ const EditUserReview = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Review</Button></span> : null} */}
+      {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true || ((isEmpty(userReviewItem) === false && isEmpty(userState.userID) === false && userState.userID === userReviewItem.userID) || (isEmpty(userReviewItem) === false && isEmpty(admin) === false && admin === true))) ?
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+        <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === true ?
+          <button aria-label={showForm === false ? "expand" : "collapse"} onClick={() => { setShowForm(!showForm); }}>
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Add Review</a>
+            <div>
+              {isEmpty(userReviewItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Review
 
-        : null}
+              {showForm === false ? <i className="fas fa-caret-down"></i> : <i className="fas fa-caret-up"></i>}
+            </div>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Review</Button></span> : null} */}
+            {showForm === true ?
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) && displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+              <span onClick={() => { setShowForm(!showForm); }}>
 
-      {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userReviewItem) === false && ((isEmpty(userState.userID) === false && isEmpty(userReviewItem) === false && userState.userID === userReviewItem.userID) || (isEmpty(admin) === false && admin === true)) ?
-
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Update Review</a>
-
-        : null}
-
-      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
-        <ModalHeader toggle={(event) => { setModal(!modal); }}>{isEmpty(userReviewItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Review</ModalHeader>
-        <ModalBody>
-          <Form>
-
-            <FormGroup className="text-center">
-              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-            </FormGroup>
-
-            <FormGroup row>
-
-              <Col>
-
-                <FormGroup className="ms-4">
-                  <Label for="cbxRead"><Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => { setCbxRead(!cbxRead); }} />Read</Label>
+                <FormGroup className="text-center">
+                  <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+                  <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
                 </FormGroup>
 
-                <FormGroup>
-                  <Label for="rdoRating" className="me-4">Rating</Label>
-                  {/* <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => { setRdoRating(newValue); }} /> */}
-                  {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
+                <FormGroup row>
+
+                  <Col>
+
+                    <FormGroup className="ms-4">
+                      <Label for="cbxRead"><Input type="checkbox" id="cbxRead" checked={cbxRead} onChange={(event) => { setCbxRead(!cbxRead); }} />Read</Label>
+                    </FormGroup>
+
+                    <FormGroup>
+                      <Label for="rdoRating" className="me-4">Rating</Label>
+                      {/* <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => { setRdoRating(newValue); }} /> */}
+                      {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 2</Label>
                     
@@ -976,82 +966,84 @@ const EditUserReview = (props) => {
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 9</Label>
                                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 10</Label> */}
+                    </FormGroup>
+
+                  </Col>
+
+                  <Col>
+
+                    <FormGroup>
+                      <Label for="txtDateRead">Date Read</Label>
+                      <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => { setTxtDateRead(event.target.value); }} />
+                    </FormGroup>
+
+                  </Col>
+
                 </FormGroup>
+                <FormGroup>
 
-              </Col>
+                  <Label for="txtRanking">Ranking</Label>
+                  <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => { setTxtRanking(event.target.value); }} />
 
-              <Col>
+                </FormGroup>
+                <FormGroup row>
+
+                  <Col>
+
+                    <FormGroup className="ms-4">
+                      <Label for="cbxOwned"><Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => { setCbxOwned(!cbxOwned); }} />Owned</Label>
+                    </FormGroup>
+
+                  </Col>
+
+                  <Col>
+
+                    <FormGroup>
+                      <Label for="txtDatePurchased">Date Purchased</Label>
+                      <Input type="date" id="txtDatePurchased" value={txtDatePurchased} onChange={(event) => { setTxtDatePurchased(event.target.value); }} />
+                    </FormGroup>
+
+                  </Col>
+
+                </FormGroup>
 
                 <FormGroup>
-                  <Label for="txtDateRead">Date Read</Label>
-                  <Input type="date" id="txtDateRead" value={txtDateRead} onChange={(event) => { setTxtDateRead(event.target.value); }} />
+                  <Label for="txtShortReview">Short Review</Label>
+                  <Input type="text" id="txtShortReview" value={txtShortReview} onChange={(event) => { setTxtShortReview(event.target.value); }} />
                 </FormGroup>
-
-              </Col>
-
-            </FormGroup>
-            <FormGroup>
-
-              <Label for="txtRanking">Ranking</Label>
-              <Input type="text" id="txtRanking" value={txtRanking} onChange={(event) => { setTxtRanking(event.target.value); }} />
-
-            </FormGroup>
-            <FormGroup row>
-
-              <Col>
-
-                <FormGroup className="ms-4">
-                  <Label for="cbxOwned"><Input type="checkbox" id="cbxOwned" checked={cbxOwned} onChange={(event) => { setCbxOwned(!cbxOwned); }} />Owned</Label>
-                </FormGroup>
-
-              </Col>
-
-              <Col>
 
                 <FormGroup>
-                  <Label for="txtDatePurchased">Date Purchased</Label>
-                  <Input type="date" id="txtDatePurchased" value={txtDatePurchased} onChange={(event) => { setTxtDatePurchased(event.target.value); }} />
+                  <Label for="txtLongReview">Long Review</Label>
+                  <Input type="textarea" id="txtLongReview" rows={10} value={txtLongReview} onChange={(event) => { setTxtLongReview(event.target.value); }} />
                 </FormGroup>
 
-              </Col>
+                {isEmpty(userReviewItem) === true ?
 
-            </FormGroup>
+                  <Button outline size="lg" color="primary" onClick={addUserReview}>Add Review</Button>
 
-            <FormGroup>
-              <Label for="txtShortReview">Short Review</Label>
-              <Input type="text" id="txtShortReview" value={txtShortReview} onChange={(event) => { setTxtShortReview(event.target.value); }} />
-            </FormGroup>
+                  :
 
-            <FormGroup>
-              <Label for="txtLongReview">Long Review</Label>
-              <Input type="textarea" id="txtLongReview" rows={10} value={txtLongReview} onChange={(event) => { setTxtLongReview(event.target.value); }} />
-            </FormGroup>
+                  <React.Fragment>
 
-            <ModalFooter>
+                    <Button outline size="lg" color="primary" onClick={(event) => { updateUserReview(false); }}>Update Review</Button>
+                    <Button outline size="lg" color="danger" onClick={(event) => { updateUserReview(true); }}>Delete Review</Button>
+                    {isEmpty(admin) === false && admin === true ? <Button outline size="lg" color="warning" onClick={(event) => { deleteUserReview(); }}>Hard Delete Review</Button> : null}
 
-              {isEmpty(userReviewItem) === true ?
+                  </React.Fragment>
 
-                <Button outline size="lg" color="primary" onClick={addUserReview}>Add Review</Button>
+                }
 
-                :
+                {/* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
 
-                <React.Fragment>
+              </span>
 
-                  <Button outline size="lg" color="primary" onClick={(event) => { updateUserReview(false); }}>Update Review</Button>
-                  <Button outline size="lg" color="danger" onClick={(event) => { updateUserReview(true); }}>Delete Review</Button>
-                  {isEmpty(admin) === false && admin === true ? <Button outline size="lg" color="warning" onClick={(event) => { deleteUserReview(); }}>Hard Delete Review</Button> : null}
+              : null}
 
-                </React.Fragment>
+          </button>
 
-              }
+        </React.Fragment>
 
-              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
-
-            </ModalFooter>
-
-          </Form>
-        </ModalBody>
-      </Modal>
+        : null}
 
     </React.Fragment>
   );

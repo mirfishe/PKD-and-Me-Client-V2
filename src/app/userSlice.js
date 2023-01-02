@@ -27,67 +27,67 @@ const userSlice = createSlice({
 
       if (typeof action.payload === "object") {
 
-        if (hasNonEmptyProperty(action.payload, "userID")) {
+        if (hasNonEmptyProperty(action.payload, "userID") === true) {
 
           state.userID = action.payload.userID;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "firstName")) {
+        if (hasNonEmptyProperty(action.payload, "firstName") === true) {
 
           state.firstName = action.payload.firstName;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "lastName")) {
+        if (hasNonEmptyProperty(action.payload, "lastName") === true) {
 
           state.lastName = action.payload.lastName;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "email")) {
+        if (hasNonEmptyProperty(action.payload, "email") === true) {
 
           state.email = action.payload.email;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "updatedBy")) {
+        if (hasNonEmptyProperty(action.payload, "updatedBy") === true) {
 
           state.updatedBy = action.payload.updatedBy;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "admin")) {
+        if (hasNonEmptyProperty(action.payload, "admin") === true) {
 
           state.admin = action.payload.admin;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "active")) {
+        if (hasNonEmptyProperty(action.payload, "active") === true) {
 
           state.active = action.payload.active;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "arrayChecklist")) {
+        if (hasNonEmptyProperty(action.payload, "arrayChecklist") === true) {
 
           state.arrayChecklist = action.payload.arrayChecklist;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "checklistLoaded")) {
+        if (hasNonEmptyProperty(action.payload, "checklistLoaded") === true) {
 
           state.checklistLoaded = action.payload.checklistLoaded;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "lastDatabaseRetrievalChecklist")) {
+        if (hasNonEmptyProperty(action.payload, "lastDatabaseRetrievalChecklist") === true) {
 
           state.lastDatabaseRetrievalChecklist = action.payload.lastDatabaseRetrievalChecklist;
 
         };
 
-        if (hasNonEmptyProperty(action.payload, "userLoaded")) {
+        if (hasNonEmptyProperty(action.payload, "userLoaded") === true) {
 
           state.userLoaded = action.payload.userLoaded;
 
@@ -168,57 +168,56 @@ const userSlice = createSlice({
 
     //   if (typeof checklistItem === "object") {
 
-    //     if (hasNonEmptyProperty(checklistItem, "titleID")) {
+    //     if (hasNonEmptyProperty(checklistItem, "titleID") === true) {
 
     //       checklistListIndex = state.arrayChecklist.findIndex(title => title.titleID === checklistItem.titleID);
-
 
     //       // state.arrayChecklist[checklistListIndex].titleID = checklistItem.titleID;
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "reviewID")) {
+    //     if (hasNonEmptyProperty(checklistItem, "reviewID") === true) {
 
     //       state.arrayChecklist[checklistListIndex].reviewID = checklistItem.reviewID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "userID")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userID") === true) {
 
     //       state.arrayChecklist[checklistListIndex].userID = checklistItem.userID;
 
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "updatedBy")) {
+    //     if (hasNonEmptyProperty(checklistItem, "updatedBy") === true) {
 
     //       state.arrayChecklist[checklistListIndex].updatedBy = checklistItem.updatedBy;
 
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "read")) {
+    //     if (hasNonEmptyProperty(checklistItem, "read") === true) {
 
     //       state.arrayChecklist[checklistListIndex].read = checklistItem.read;
 
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "dateRead")) {
+    //     if (hasNonEmptyProperty(checklistItem, "dateRead") === true) {
 
     //       state.arrayChecklist[checklistListIndex].dateRead = checklistItem.dateRead;
 
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "userReviewActive")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userReviewActive") === true) {
 
     //       state.arrayChecklist[checklistListIndex].userReviewActive = checklistItem.userReviewActive;
 
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "userReviewCreatedDate")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userReviewCreatedDate") === true) {
 
     //       state.arrayChecklist[checklistListIndex].userReviewCreatedDate = checklistItem.userReviewCreatedDate;
 
     //     };
 
-    //     if (hasNonEmptyProperty(checklistItem, "userReviewUpdateDate")) {
+    //     if (hasNonEmptyProperty(checklistItem, "userReviewUpdateDate") === true) {
 
     //       state.arrayChecklist[checklistListIndex].userReviewUpdateDate = checklistItem.userReviewUpdateDate;
 
