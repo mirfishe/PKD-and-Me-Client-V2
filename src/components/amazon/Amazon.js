@@ -161,12 +161,12 @@ const Amazon = () => {
 
     // console.log(componentName, getDateTime(), "filterAmazonItems amazonItems", amazonItems);
 
-    // let newAmazonItems = [...amazonItems];
-    // let newAmazonItemsViewed = [...amazonItems];
+    let newAmazonItems = [...amazonItems];
+    let newAmazonItemsViewed = [...amazonItems];
     // let newAmazonItems = amazonItems.filter(item => item.viewed === false || item.viewed === 0);
     // let newAmazonItemsViewed = amazonItems.filter(item => item.viewed === true || item.viewed === 1);
-    let newAmazonItems = [];
-    let newAmazonItemsViewed = [];
+    // let newAmazonItems = [];
+    // let newAmazonItemsViewed = [];
 
     let newAmazonItemsPhilipKDick = [];
     let newAmazonItemsPhilipKDickViewed = [];
@@ -470,29 +470,24 @@ const Amazon = () => {
 
     };
 
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReview", newHomeopapeItemsReview);
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewTitle", newHomeopapeItemsReviewTitle);
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewText", newHomeopapeItemsReviewText);
-    // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewNeither", newHomeopapeItemsReviewNeither);
-
     newAmazonItems = newAmazonItems.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsViewed = newAmazonItemsViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsViewed = newAmazonItems.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsPhilipKDick = newAmazonItemsPhilipKDick.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsPhilipKDickViewed = newAmazonItemsPhilipKDickViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsPhilipKDickViewed = newAmazonItemsPhilipKDick.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsPhilipKDickPublicDomain = newAmazonItemsPhilipKDickPublicDomain.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsPhilipKDickPublicDomainViewed = newAmazonItemsPhilipKDickPublicDomainViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsPhilipKDickPublicDomainViewed = newAmazonItemsPhilipKDickPublicDomain.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsBladeRunner = newAmazonItemsBladeRunner.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsBladeRunnerViewed = newAmazonItemsBladeRunnerViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsBladeRunnerViewed = newAmazonItemsBladeRunner.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsTotalRecall = newAmazonItemsTotalRecall.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsTotalRecallViewed = newAmazonItemsTotalRecallViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsTotalRecallViewed = newAmazonItemsTotalRecall.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsMinorityReport = newAmazonItemsMinorityReport.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsMinorityReportViewed = newAmazonItemsMinorityReportViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsMinorityReportViewed = newAmazonItemsMinorityReport.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsTMITHC = newAmazonItemsTMITHC.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsTMITHCViewed = newAmazonItemsTMITHCViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsTMITHCViewed = newAmazonItemsTMITHC.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsNoCategory = newAmazonItemsNoCategory.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsNoCategoryViewed = newAmazonItemsNoCategoryViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsNoCategoryViewed = newAmazonItemsNoCategory.filter(item => item.viewed === true || item.viewed === 1);
     newAmazonItemsIncorrectContext = newAmazonItemsIncorrectContext.filter(item => item.viewed === false || item.viewed === 0);
-    newAmazonItemsIncorrectContextViewed = newAmazonItemsIncorrectContextViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsIncorrectContextViewed = newAmazonItemsIncorrectContext.filter(item => item.viewed === true || item.viewed === 1);
 
     newAmazonItems.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
@@ -555,7 +550,6 @@ const Amazon = () => {
       }),
     })
       .then(response => {
-        // console.log(componentName, getDateTime(), "getAmazonItems response", response);
 
         if (!response.ok) {
 
@@ -569,7 +563,6 @@ const Amazon = () => {
 
       })
       .then(results => {
-        // console.log(componentName, getDateTime(), "getNews results", results);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -585,6 +578,7 @@ const Amazon = () => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
@@ -594,61 +588,6 @@ const Amazon = () => {
       });
 
   };
-
-
-  // const getAmazonItemsAll = () => {
-
-  //   clearMessages();
-
-  //   let url = baseURL + "amazon/all";
-
-  //   fetch(url, {
-  //     method: "GET",
-  //     headers: new Headers({
-  //       "Content-Type": "application/json",
-  //       "Authorization": sessionToken
-  //     }),
-  //   })
-  //     .then(response => {
-  //       // console.log(componentName, getDateTime(), "getAmazonItems response", response);
-
-  //       if (!response.ok) {
-
-  //         throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-  //       } else {
-
-  //         return response.json();
-
-  //       };
-
-  //     })
-  //     .then(results => {
-  //       // console.log(componentName, getDateTime(), "getNews results", results);
-
-  //       if (isEmpty(results) === false && results.transactionSuccess === true) {
-
-  //         filterAmazonItems(results.records[0]);
-  //         // setAmazonItems(results.records[0]);
-
-  //       } else {
-
-  //         filterAmazonItems([]);
-  //         // setAmazonItems([]);
-
-  //       };
-
-  //     })
-  //     .catch((error) => {
-  //       // console.error(componentName, getDateTime(), "getNews error", error);
-
-  //       addErrorMessage(error.name + ": " + error.message);
-
-  //       // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-  //     });
-
-  // };
 
 
   return (
@@ -673,7 +612,6 @@ const Amazon = () => {
         </Col>
       </Row>
 
-
       {amazonItemsCategory === "PhilipKDick" && isEmpty(amazonItemsPhilipKDick) === false ?
 
         <React.Fragment>
@@ -690,8 +628,6 @@ const Amazon = () => {
 
             {amazonItemsPhilipKDick.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -707,6 +643,38 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "PhilipKDick" && isEmpty(amazonItemsPhilipKDickViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h4>Viewed</h4>
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Philip K. Dick <span className="text-muted ms-2 small-text">{amazonItemsPhilipKDickViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsPhilipKDickViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "PhilipKDickPublicDomain" && isEmpty(amazonItemsPhilipKDickPublicDomain) === false ?
 
@@ -724,8 +692,6 @@ const Amazon = () => {
 
             {amazonItemsPhilipKDickPublicDomain.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -741,6 +707,36 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "PhilipKDickPublicDomain" && isEmpty(amazonItemsPhilipKDickPublicDomainViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Philip K. Dick Public Domain <span className="text-muted ms-2 small-text">{amazonItemsPhilipKDickPublicDomainViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsPhilipKDickPublicDomainViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "BladeRunner" && isEmpty(amazonItemsBladeRunner) === false ?
 
@@ -758,8 +754,6 @@ const Amazon = () => {
 
             {amazonItemsBladeRunner.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -775,6 +769,36 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "BladeRunner" && isEmpty(amazonItemsBladeRunnerViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Blade Runner <span className="text-muted ms-2 small-text">{amazonItemsBladeRunnerViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsBladeRunnerViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "TotalRecall" && isEmpty(amazonItemsTotalRecall) === false ?
 
@@ -792,8 +816,6 @@ const Amazon = () => {
 
             {amazonItemsTotalRecall.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -809,6 +831,36 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "TotalRecall" && isEmpty(amazonItemsTotalRecallViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Total Recall <span className="text-muted ms-2 small-text">{amazonItemsTotalRecallViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsTotalRecallViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "MinorityReport" && isEmpty(amazonItemsMinorityReport) === false ?
 
@@ -826,8 +878,6 @@ const Amazon = () => {
 
             {amazonItemsMinorityReport.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -843,6 +893,36 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "MinorityReport" && isEmpty(amazonItemsMinorityReportViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Minority Report <span className="text-muted ms-2 small-text">{amazonItemsMinorityReportViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsMinorityReportViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "TMITHC" && isEmpty(amazonItemsTMITHC) === false ?
 
@@ -860,8 +940,6 @@ const Amazon = () => {
 
             {amazonItemsTMITHC.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -877,6 +955,36 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "TMITHC" && isEmpty(amazonItemsTMITHCViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): TMITHC <span className="text-muted ms-2 small-text">{amazonItemsTMITHCViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsTMITHCViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "IncorrectContext" && isEmpty(amazonItemsIncorrectContext) === false ?
 
@@ -894,8 +1002,6 @@ const Amazon = () => {
 
             {amazonItemsIncorrectContext.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -911,6 +1017,36 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "IncorrectContext" && isEmpty(amazonItemsIncorrectContextViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): Incorrect Context <span className="text-muted ms-2 small-text">{amazonItemsIncorrectContextViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsIncorrectContextViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "NoCategory" && isEmpty(amazonItemsNoCategory) === false ?
 
@@ -928,8 +1064,6 @@ const Amazon = () => {
 
             {amazonItemsNoCategory.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
-
               return (
                 <Col key={index} xs="3">
 
@@ -945,6 +1079,36 @@ const Amazon = () => {
 
         : null}
 
+      {amazonItemsCategory === "NoCategory" && isEmpty(amazonItemsNoCategoryViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items ({amazonMerchants}): No Category <span className="text-muted ms-2 small-text">{amazonItemsNoCategoryViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsNoCategoryViewed.map((amazonItem, index) => {
+
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
 
       {amazonItemsCategory === "AllItems" && isEmpty(amazonItems) === false ?
 
@@ -962,7 +1126,36 @@ const Amazon = () => {
 
             {amazonItems.map((amazonItem, index) => {
 
-              // console.log(componentName, getDateTime(), "map amazonItem", amazonItem);
+              return (
+                <Col key={index} xs="3">
+
+                  <AmazonItem amazonItem={amazonItem} getAmazonItems={getAmazonItems} />
+
+                </Col>
+              );
+            })}
+
+          </Row>
+
+        </React.Fragment>
+
+        : null}
+
+      {amazonItemsCategory === "AllItems" && isEmpty(amazonItemsViewed) === false ?
+
+        <React.Fragment>
+
+          <Row>
+            <Col xs="12">
+
+              <h5 className="text-center">Amazon Items <span className="text-muted ms-2 small-text">{amazonItemsViewed.length} in category out of {amazonItems.length} total to review.</span></h5>
+
+            </Col>
+          </Row>
+
+          <Row>
+
+            {amazonItemsViewed.map((amazonItem, index) => {
 
               return (
                 <Col key={index} xs="3">

@@ -234,8 +234,6 @@ const App = (props) => {
 
         }).then((results) => {
 
-          // console.log(componentName, getDateTime(), operationValue1, "results", results);
-
           data = results;
 
           // {"country_code":"US","country_name":"United States","city":null,"postal":null,"latitude":37.751,"longitude":-97.822,"IPv4":"65.132.108.210","state":null}
@@ -263,8 +261,6 @@ const App = (props) => {
           return response.json();
 
         }).then((results) => {
-
-          // console.log(componentName, getDateTime(), operationValue2, "results", results);
 
           data = results;
 
