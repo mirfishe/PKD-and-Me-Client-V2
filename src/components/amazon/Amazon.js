@@ -24,6 +24,9 @@ const Amazon = () => {
   const baseURL = applicationSettings.baseURL;
   // console.log(componentName, getDateTime(), "baseURL", baseURL);
 
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -39,14 +42,25 @@ const Amazon = () => {
   const [amazonItemsCategory, setAmazonItemsCategory] = useState("PhilipKDick");
 
   const [amazonItems, setAmazonItems] = useState([]);
+  const [amazonItemsViewed, setAmazonItemsViewed] = useState([]);
   const [amazonItemsPhilipKDick, setAmazonItemsPhilipKDick] = useState([]);
+  const [amazonItemsPhilipKDickViewed, setAmazonItemsPhilipKDickViewed] = useState([]);
   const [amazonItemsPhilipKDickPublicDomain, setAmazonItemsPhilipKDickPublicDomain] = useState([]);
+  const [amazonItemsPhilipKDickPublicDomainViewed, setAmazonItemsPhilipKDickPublicDomainViewed] = useState([]);
   const [amazonItemsBladeRunner, setAmazonItemsBladeRunner] = useState([]);
+  const [amazonItemsBladeRunnerViewed, setAmazonItemsBladeRunnerViewed] = useState([]);
   const [amazonItemsTotalRecall, setAmazonItemsTotalRecall] = useState([]);
+  const [amazonItemsTotalRecallViewed, setAmazonItemsTotalRecallViewed] = useState([]);
   const [amazonItemsMinorityReport, setAmazonItemsMinorityReport] = useState([]);
+  const [amazonItemsMinorityReportViewed, setAmazonItemsMinorityReportViewed] = useState([]);
   const [amazonItemsTMITHC, setAmazonItemsTMITHC] = useState([]);
+  const [amazonItemsTMITHCViewed, setAmazonItemsTMITHCViewed] = useState([]);
   const [amazonItemsNoCategory, setAmazonItemsNoCategory] = useState([]);
+  const [amazonItemsNoCategoryViewed, setAmazonItemsNoCategoryViewed] = useState([]);
   const [amazonItemsIncorrectContext, setAmazonItemsIncorrectContext] = useState([]);
+  const [amazonItemsIncorrectContextViewed, setAmazonItemsIncorrectContextViewed] = useState([]);
+
+  document.title = "Amazon | " + applicationName + " | " + siteName;
 
 
   useEffect(() => {
@@ -144,17 +158,32 @@ const Amazon = () => {
 
 
   const filterAmazonItems = (amazonItems) => {
+
     // console.log(componentName, getDateTime(), "filterAmazonItems amazonItems", amazonItems);
 
-    let newAmazonItems = [...amazonItems];
+    // let newAmazonItems = [...amazonItems];
+    // let newAmazonItemsViewed = [...amazonItems];
+    // let newAmazonItems = amazonItems.filter(item => item.viewed === false || item.viewed === 0);
+    // let newAmazonItemsViewed = amazonItems.filter(item => item.viewed === true || item.viewed === 1);
+    let newAmazonItems = [];
+    let newAmazonItemsViewed = [];
+
     let newAmazonItemsPhilipKDick = [];
+    let newAmazonItemsPhilipKDickViewed = [];
     let newAmazonItemsPhilipKDickPublicDomain = [];
+    let newAmazonItemsPhilipKDickPublicDomainViewed = [];
     let newAmazonItemsBladeRunner = [];
+    let newAmazonItemsBladeRunnerViewed = [];
     let newAmazonItemsTotalRecall = [];
+    let newAmazonItemsTotalRecallViewed = [];
     let newAmazonItemsMinorityReport = [];
+    let newAmazonItemsMinorityReportViewed = [];
     let newAmazonItemsTMITHC = [];
+    let newAmazonItemsTMITHCViewed = [];
     let newAmazonItemsNoCategory = [];
+    let newAmazonItemsNoCategoryViewed = [];
     let newAmazonItemsIncorrectContext = [];
+    let newAmazonItemsIncorrectContextViewed = [];
 
     let publicDomainStoriesCommon = ["beyond lies the wub", "beyond the door", "the crystal crypt", "the defenders", "the eyes have it", "the gun", "the hanging stranger", "mr. spaceship", "piper in the woods", "second variety", "the skull", "tony and the beetles", "the variable man"];
 
@@ -311,6 +340,16 @@ const Amazon = () => {
 
           };
 
+          for (let j = 0; j < publicDomainStoriesLikely.length; j++) {
+
+            if (formatLowerCase(removeHTML(amazonItems[i].titleName)).includes(publicDomainStoriesLikely[j]) === true) {
+
+              categoryPhilipKDickPublicDomain = true;
+
+            };
+
+          };
+
         };
 
       };
@@ -372,7 +411,6 @@ const Amazon = () => {
         };
 
       };
-
 
       // if (amazonItems[i].active === true) {
 
@@ -437,25 +475,62 @@ const Amazon = () => {
     // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewText", newHomeopapeItemsReviewText);
     // console.log(componentName, getDateTime(), "filterAmazonItems newHomeopapeItemsReviewNeither", newHomeopapeItemsReviewNeither);
 
+    newAmazonItems = newAmazonItems.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsViewed = newAmazonItemsViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsPhilipKDick = newAmazonItemsPhilipKDick.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsPhilipKDickViewed = newAmazonItemsPhilipKDickViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsPhilipKDickPublicDomain = newAmazonItemsPhilipKDickPublicDomain.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsPhilipKDickPublicDomainViewed = newAmazonItemsPhilipKDickPublicDomainViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsBladeRunner = newAmazonItemsBladeRunner.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsBladeRunnerViewed = newAmazonItemsBladeRunnerViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsTotalRecall = newAmazonItemsTotalRecall.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsTotalRecallViewed = newAmazonItemsTotalRecallViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsMinorityReport = newAmazonItemsMinorityReport.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsMinorityReportViewed = newAmazonItemsMinorityReportViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsTMITHC = newAmazonItemsTMITHC.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsTMITHCViewed = newAmazonItemsTMITHCViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsNoCategory = newAmazonItemsNoCategory.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsNoCategoryViewed = newAmazonItemsNoCategoryViewed.filter(item => item.viewed === true || item.viewed === 1);
+    newAmazonItemsIncorrectContext = newAmazonItemsIncorrectContext.filter(item => item.viewed === false || item.viewed === 0);
+    newAmazonItemsIncorrectContextViewed = newAmazonItemsIncorrectContextViewed.filter(item => item.viewed === true || item.viewed === 1);
+
     newAmazonItems.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsPhilipKDick.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsPhilipKDickViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsPhilipKDickPublicDomain.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsPhilipKDickPublicDomainViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsBladeRunner.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsBladeRunnerViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsTotalRecall.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsTotalRecallViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsMinorityReport.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsMinorityReportViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsTMITHC.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsTMITHCViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsNoCategory.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsNoCategoryViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
     newAmazonItemsIncorrectContext.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
+    newAmazonItemsIncorrectContextViewed.sort((a, b) => (formatLowerCase(a.authorName) > formatLowerCase(b.authorName)) ? 1 : -1);
 
     setAmazonItems(newAmazonItems);
+    setAmazonItemsViewed(newAmazonItemsViewed);
     setAmazonItemsPhilipKDick(newAmazonItemsPhilipKDick);
+    setAmazonItemsPhilipKDickViewed(newAmazonItemsPhilipKDickViewed);
     setAmazonItemsPhilipKDickPublicDomain(newAmazonItemsPhilipKDickPublicDomain);
+    setAmazonItemsPhilipKDickPublicDomainViewed(newAmazonItemsPhilipKDickPublicDomainViewed);
     setAmazonItemsBladeRunner(newAmazonItemsBladeRunner);
+    setAmazonItemsBladeRunnerViewed(newAmazonItemsBladeRunnerViewed);
     setAmazonItemsTotalRecall(newAmazonItemsTotalRecall);
+    setAmazonItemsTotalRecallViewed(newAmazonItemsTotalRecallViewed);
     setAmazonItemsMinorityReport(newAmazonItemsMinorityReport);
+    setAmazonItemsMinorityReportViewed(newAmazonItemsMinorityReportViewed);
     setAmazonItemsTMITHC(newAmazonItemsTMITHC);
+    setAmazonItemsTMITHCViewed(newAmazonItemsTMITHCViewed);
     setAmazonItemsNoCategory(newAmazonItemsNoCategory);
+    setAmazonItemsNoCategoryViewed(newAmazonItemsNoCategoryViewed);
     setAmazonItemsIncorrectContext(newAmazonItemsIncorrectContext);
+    setAmazonItemsIncorrectContextViewed(newAmazonItemsIncorrectContextViewed);
 
   };
 

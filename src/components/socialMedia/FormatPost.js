@@ -14,6 +14,9 @@ const FormatPost = () => {
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
   const [txtArticleTitle, setTxtArticleTitle] = useState("");
   const [txtArticleURL, setTxtArticleURL] = useState("");
 
@@ -28,6 +31,8 @@ const FormatPost = () => {
 
   // const [formattedPost, setFormattedPost] = useState("");
   const [formattedPosts, setFormattedPosts] = useState([]);
+
+  document.title = "Format Social Media Post | " + applicationName + " | " + siteName;
 
 
   useEffect(() => {

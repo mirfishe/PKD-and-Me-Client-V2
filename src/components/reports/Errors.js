@@ -20,6 +20,9 @@ const Errors = () => {
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
 
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -31,6 +34,8 @@ const Errors = () => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [errors, setErrors] = useState([]);
+
+  document.title = "Errors | " + applicationName + " | " + siteName;
 
 
   useEffect(() => {

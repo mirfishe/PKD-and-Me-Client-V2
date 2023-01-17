@@ -20,6 +20,9 @@ const ComputerLogs = () => {
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
 
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -31,6 +34,8 @@ const ComputerLogs = () => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [computerLogs, setComputerLogs] = useState([]);
+
+  document.title = "Computer Logs | " + applicationName + " | " + siteName;
 
 
   useEffect(() => {

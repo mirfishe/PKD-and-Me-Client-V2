@@ -27,6 +27,9 @@ const FromTheHomeopape = () => {
   // const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const baseURL = applicationSettings.baseURL;
 
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -53,6 +56,8 @@ const FromTheHomeopape = () => {
   // let breakArray = false;
   // let displayItemsCount = 0;
   // let displayUpdateItemsCount = 0;
+
+  document.title = "Update From The Homeopape | " + applicationName + " | " + siteName;
 
 
   useEffect(() => {
@@ -94,7 +99,6 @@ const FromTheHomeopape = () => {
     if (isNonEmptyArray(homeopapeItemsReview) === true) {
 
       for (let i = 0; i < homeopapeItemsReview.length; i++) {
-
 
         let inTitle = false;
         let inText = false;
@@ -532,7 +536,6 @@ const FromTheHomeopape = () => {
     let url = baseURL + "fromthehomeopape/markviewed/";
 
     if (isEmpty(sessionToken) === false) {
-
 
       fetch(url, {
         method: "GET",
