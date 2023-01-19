@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString } from "shared-functions";
 import { createTitleURL, createImageName, addErrorLog } from "../../utilities/ApplicationFunctions";
 // import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 // import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
@@ -550,33 +550,35 @@ const EditTitle = (props) => {
 
               if (data.transactionSuccess === true) {
 
-                setTitleItem(data.records[0]);
-                // setTitleID(data.records[0].titleID);
-                // setTitleName(data.records[0].titleName);
-                // setTitleSort(data.records[0].titleSort);
-                // setTitleURL(data.records[0].titleURL);
-                // setAuthorFirstName(data.records[0].authorFirstName);
-                // setAuthorLastName(data.records[0].authorLastName);
-                // setManuscriptTitle(data.records[0].manuscriptTitle);
-                // setWrittenDate(data.records[0].writtenDate);
-                // setSubmissionDate(data.records[0].submissionDate);
-                // setPublicationDate(data.records[0].publicationDate);
-                // setImageName(data.records[0].imageName);
-                // setCategoryID(data.records[0].categoryID);
-                // setShortDescription(data.records[0].shortDescription);
-                // setUrlPKDWeb(data.records[0].urlPKDWeb);
-                setActive(data.records[0].active);
+                let dataRecord = getFirstItem(data.records);
 
-                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === data.records[0].categoryID));
+                setTitleItem(dataRecord);
+                // setTitleID(dataRecord.titleID);
+                // setTitleName(dataRecord.titleName);
+                // setTitleSort(dataRecord.titleSort);
+                // setTitleURL(dataRecord.titleURL);
+                // setAuthorFirstName(dataRecord.authorFirstName);
+                // setAuthorLastName(dataRecord.authorLastName);
+                // setManuscriptTitle(dataRecord.manuscriptTitle);
+                // setWrittenDate(dataRecord.writtenDate);
+                // setSubmissionDate(dataRecord.submissionDate);
+                // setPublicationDate(dataRecord.publicationDate);
+                // setImageName(dataRecord.imageName);
+                // setCategoryID(dataRecord.categoryID);
+                // setShortDescription(dataRecord.shortDescription);
+                // setUrlPKDWeb(dataRecord.urlPKDWeb);
+                setActive(dataRecord.active);
+
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === dataRecord.categoryID));
                 // // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
 
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                // dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
+                // dispatch(addStateTitle([{ titleID: dataRecord.titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
 
                 // // ? Add to local storage also? -- 03/06/2021 MF
 
-                // dispatch(addStateURL([{ linkName: data.records[0].titleURL, linkType: "title", linkID: data.records[0].titleID }]));
+                // dispatch(addStateURL([{ linkName: dataRecord.titleURL, linkType: "title", linkID: dataRecord.titleID }]));
 
               } else {
 
@@ -869,33 +871,35 @@ const EditTitle = (props) => {
 
               if (data.transactionSuccess === true) {
 
-                setTitleItem(data.records[0]);
-                // // setTitleID(data.records[0].titleID);
-                // setTitleName(data.records[0].titleName);
-                // setTitleSort(data.records[0].titleSort);
-                // setTitleURL(data.records[0].titleURL);
-                // setAuthorFirstName(data.records[0].authorFirstName);
-                // setAuthorLastName(data.records[0].authorLastName);
-                // setManuscriptTitle(data.records[0].manuscriptTitle);
-                // setWrittenDate(data.records[0].writtenDate);
-                // setSubmissionDate(data.records[0].submissionDate);
-                // setPublicationDate(data.records[0].publicationDate);
-                // setImageName(data.records[0].imageName);
-                // setCategoryID(data.records[0].categoryID);
-                // setShortDescription(data.records[0].shortDescription);
-                // setUrlPKDWeb(data.records[0].urlPKDWeb);
-                setActive(data.records[0].active);
+                let dataRecord = getFirstItem(data.records);
 
-                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === data.records[0].categoryID));
+                setTitleItem(dataRecord);
+                // // setTitleID(dataRecord.titleID);
+                // setTitleName(dataRecord.titleName);
+                // setTitleSort(dataRecord.titleSort);
+                // setTitleURL(dataRecord.titleURL);
+                // setAuthorFirstName(dataRecord.authorFirstName);
+                // setAuthorLastName(dataRecord.authorLastName);
+                // setManuscriptTitle(dataRecord.manuscriptTitle);
+                // setWrittenDate(dataRecord.writtenDate);
+                // setSubmissionDate(dataRecord.submissionDate);
+                // setPublicationDate(dataRecord.publicationDate);
+                // setImageName(dataRecord.imageName);
+                // setCategoryID(dataRecord.categoryID);
+                // setShortDescription(dataRecord.shortDescription);
+                // setUrlPKDWeb(dataRecord.urlPKDWeb);
+                setActive(dataRecord.active);
+
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === dataRecord.categoryID));
                 // // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                // dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                // dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
 
                 // // ? Update local storage also? -- 03/06/2021 MF
 
                 // // * Update/Delete related editions also if active is set to false. -- 03/06/2021 MF
-                // if (data.records[0].active === false || data.records[0].active === 0) {
+                // if (dataRecord.active === false || dataRecord.active === 0) {
 
                 //   if (isNonEmptyArray(editionList) === true) {
 
@@ -915,28 +919,28 @@ const EditTitle = (props) => {
                 // // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === titleID);
 
                 // // * Update/Delete related urls in arrayURLs also. -- 03/06/2021 MF
-                // if (data.records[0].active === false || data.records[0].active === 0) {
+                // if (dataRecord.active === false || dataRecord.active === 0) {
 
                 //   // dispatch(deleteStateURL(urlListIndex));
                 //   dispatch(deleteStateURL({ linkID: titleID, linkType: "titles" }));
 
                 // } else {
 
-                //   let categoryName = categoryList.find(category => category.categoryID === data.records[0].categoryID);
+                //   let categoryName = categoryList.find(category => category.categoryID === dataRecord.categoryID);
 
                 //   // ? Doesn't seem to be updating the state for some reason? -- 03/06/2021 MF
-                //   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
+                //   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: dataRecord.titleURL, linkType: "title", linkID: titleID, linkTypeNameID: dataRecord.categoryID, linkTypeName: categoryName.category}]));
 
                 //   // dispatch(deleteStateURL(urlListIndex));
                 //   dispatch(deleteStateURL({ linkID: titleID, linkType: "titles" }));
-                //   dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: data.records[0].titleURL, linkType: "titles", linkID: titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
+                //   dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: dataRecord.titleURL, linkType: "titles", linkID: titleID, linkTypeNameID: dataRecord.categoryID, linkTypeName: categoryName.category }]));
 
                 // };
 
                 // * Redirect to the new titleURL is that was changed. -- 03/06/2021 MF
-                if (linkItem.linkName !== data.records[0].titleURL) {
+                if (linkItem.linkName !== dataRecord.titleURL) {
 
-                  redirectPage(data.records[0].titleURL);
+                  redirectPage(dataRecord.titleURL);
 
                 };
 

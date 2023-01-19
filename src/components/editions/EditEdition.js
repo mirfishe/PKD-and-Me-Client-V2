@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString } from "shared-functions";
 import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/ApplicationFunctions";
 // import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
@@ -469,29 +469,31 @@ const EditEdition = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              // setEditionItem(data.records[0]);
-              // // setEditionID(data.records[0].editionID);
-              // setTitleID(data.records[0].titleID);
-              // // setMediaID(data.records[0].mediaID);
-              // // setPublicationDate(data.records[0].publicationDate);
-              // // setImageName(data.records[0].imageName);
-              // // setASIN(data.records[0].ASIN);
-              // // setTextLinkShort(data.records[0].textLinkShort);
-              // // setTextLinkFull(data.records[0].textLinkFull);
-              // // setImageLinkSmall(data.records[0].imageLinkSmall);
-              // // setImageLinkMedium(data.records[0].imageLinkMedium);
-              // // setImageLinkLarge(data.records[0].imageLinkLarge);
-              // // setTextImageLink(data.records[0].textImageLink);
-              // setActive(data.records[0].active);
+              let dataRecord = getFirstItem(data.records);
 
-              // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === data.records[0].mediaID));
+              // setEditionItem(dataRecord);
+              // // setEditionID(dataRecord.editionID);
+              // setTitleID(dataRecord.titleID);
+              // // setMediaID(dataRecord.mediaID);
+              // // setPublicationDate(dataRecord.publicationDate);
+              // // setImageName(dataRecord.imageName);
+              // // setASIN(dataRecord.ASIN);
+              // // setTextLinkShort(dataRecord.textLinkShort);
+              // // setTextLinkFull(dataRecord.textLinkFull);
+              // // setImageLinkSmall(dataRecord.imageLinkSmall);
+              // // setImageLinkMedium(dataRecord.imageLinkMedium);
+              // // setImageLinkLarge(dataRecord.imageLinkLarge);
+              // // setTextImageLink(dataRecord.textImageLink);
+              // setActive(dataRecord.active);
+
+              // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === dataRecord.mediaID));
               // // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
 
-              // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === data.records[0].titleID));
+              // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === dataRecord.titleID));
               // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
               // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-              // dispatch(addStateEdition([{ editionID: data.records[0].editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }*/, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, mediaActive: mediaItem.active, mediaCreateDate: mediaItem.createDate, mediaUpdatedDate: mediaItem.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, titlePublicationDate: titleItem.publicationDate, titleImageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate }]));
+              // dispatch(addStateEdition([{ editionID: dataRecord.editionID, titleID: dataRecord.titleID, mediaID: dataRecord.mediaID, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, ASIN: dataRecord.ASIN, textLinkShort: dataRecord.textLinkShort, textLinkFull: dataRecord.textLinkFull, imageLinkSmall: dataRecord.imageLinkSmall, imageLinkMedium: dataRecord.imageLinkMedium, imageLinkLarge: dataRecord.imageLinkLarge, textImageLink: dataRecord.textImageLink, active: dataRecord.active, editionActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }*/, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, mediaActive: mediaItem.active, mediaCreateDate: mediaItem.createDate, mediaUpdatedDate: mediaItem.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, titlePublicationDate: titleItem.publicationDate, titleImageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate }]));
 
               // // ? Add to local storage also? -- 03/06/2021 MF
 
@@ -727,29 +729,31 @@ const EditEdition = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              setEditionItem(data.records[0]);
-              // setEditionID(data.records[0].editionID);
-              // setTitleID(data.records[0].titleID);
-              // setMediaID(data.records[0].mediaID);
-              // setPublicationDate(data.records[0].publicationDate);
-              // setImageName(data.records[0].imageName);
-              // setASIN(data.records[0].ASIN);
-              // setTextLinkShort(data.records[0].textLinkShort);
-              // setTextLinkFull(data.records[0].textLinkFull);
-              // setImageLinkSmall(data.records[0].imageLinkSmall);
-              // setImageLinkMedium(data.records[0].imageLinkMedium);
-              // setImageLinkLarge(data.records[0].imageLinkLarge);
-              // setTextImageLink(data.records[0].textImageLink);
-              setActive(data.records[0].active);
+              let dataRecord = getFirstItem(data.records);
 
-              // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === data.records[0].mediaID));
+              setEditionItem(dataRecord);
+              // setEditionID(dataRecord.editionID);
+              // setTitleID(dataRecord.titleID);
+              // setMediaID(dataRecord.mediaID);
+              // setPublicationDate(dataRecord.publicationDate);
+              // setImageName(dataRecord.imageName);
+              // setASIN(dataRecord.ASIN);
+              // setTextLinkShort(dataRecord.textLinkShort);
+              // setTextLinkFull(dataRecord.textLinkFull);
+              // setImageLinkSmall(dataRecord.imageLinkSmall);
+              // setImageLinkMedium(dataRecord.imageLinkMedium);
+              // setImageLinkLarge(dataRecord.imageLinkLarge);
+              // setTextImageLink(dataRecord.textImageLink);
+              setActive(dataRecord.active);
+
+              // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === dataRecord.mediaID));
               // // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
 
-              // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === data.records[0].titleID));
+              // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === dataRecord.titleID));
               // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
               // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-              // dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: getDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
+              // dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionID, titleID: dataRecord.titleID, mediaID: dataRecord.mediaID, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, ASIN: dataRecord.ASIN, textLinkShort: dataRecord.textLinkShort, textLinkFull: dataRecord.textLinkFull, imageLinkSmall: dataRecord.imageLinkSmall, imageLinkMedium: dataRecord.imageLinkMedium, imageLinkLarge: dataRecord.imageLinkLarge, textImageLink: dataRecord.textImageLink, active: dataRecord.active, editionActive: dataRecord.active, updateDate: getDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
 
               // // ? Add to local storage also? -- 03/06/2021 MF
 
