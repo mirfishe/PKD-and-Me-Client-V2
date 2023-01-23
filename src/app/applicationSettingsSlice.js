@@ -10,15 +10,14 @@ const initialState = {
   locationLogged: false,
   hostname: "",
   profileType: "",
-  // API_URL: "",
-  // baseURL: "",
+  baseURL: "",
   tagManagerArgsgtmId: "",
   siteName: "",
   applicationName: "",
   metaDescription: "",
   defaultPageComponent: "",
   routerBaseName: "",
-  // applicationOffline: false,
+  applicationOffline: false,
   electronicOnly: false,
   userElectronicOnly: false,
   electronicOnlyMessage: "",
@@ -70,16 +69,11 @@ const applicationSettingsSlice = createSlice({
       state.profileType = action.payload;
 
     },
-    // setAPI_URL(state, action) {
+    setBaseURL(state, action) {
 
-    //     state.API_URL = action.payload;
+      state.baseURL = action.payload;
 
-    // },
-    // setBaseURL(state, action) {
-
-    //       state.baseURL = action.payload;
-
-    //   },
+    },
     setTagManagerArgsgtmId(state, action) {
 
       state.tagManagerArgsgtmId = action.payload;
@@ -110,11 +104,11 @@ const applicationSettingsSlice = createSlice({
       state.routerBaseName = action.payload;
 
     },
-    // setApplicationOffline(state, action) {
+    setApplicationOffline(state, action) {
 
-    //   state.applicationOffline = action.payload;
+      state.applicationOffline = action.payload;
 
-    // },
+    },
     setElectronicOnly(state, action) {
 
       state.electronicOnly = action.payload;
@@ -172,7 +166,6 @@ const applicationSettingsSlice = createSlice({
     },
     addInformationMessage(state, action) {
 
-
       if (isEmpty(action.payload) === false) {
 
         // * Make sure that the new phrase isn't in the existing information message. -- 09/27/2021 MF
@@ -210,11 +203,9 @@ const applicationSettingsSlice = createSlice({
 
       if (isEmpty(action.payload) === false) {
 
-
         // * Make sure that the new phrase isn't in the existing success message. -- 09/27/2021 MF
         // if (state.successMessage !== action.payload) {
         if (state.successMessage.includes(action.payload) === false) {
-
 
           if (isEmpty(state.successMessage) === false) {
 
@@ -246,14 +237,11 @@ const applicationSettingsSlice = createSlice({
     },
     addWarningMessage(state, action) {
 
-
       if (isEmpty(action.payload) === false) {
-
 
         // * Make sure that the new phrase isn't in the existing warning message. -- 09/27/2021 MF
         // if (state.warningMessage !== action.payload) {
         if (state.warningMessage.includes(action.payload) === false) {
-
 
           if (isEmpty(state.warningMessage) === false) {
 
@@ -285,14 +273,11 @@ const applicationSettingsSlice = createSlice({
     },
     addErrorMessage(state, action) {
 
-
       if (isEmpty(action.payload) === false) {
-
 
         // * Make sure that the new phrase isn't in the existing error message. -- 09/27/2021 MF
         // if (state.errorMessage !== action.payload) {
         if (state.errorMessage.includes(action.payload) === false) {
-
 
           if (isEmpty(state.errorMessage) === false) {
 
@@ -343,6 +328,6 @@ const applicationSettingsSlice = createSlice({
   }
 });
 
-export const { setApplicationVersion, setCopyrightYear, setLocationLogged, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
+export const { setApplicationVersion, setCopyrightYear, setLocationLogged, setHostname, setProfileType, setBaseURL, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
 
 export default applicationSettingsSlice.reducer;

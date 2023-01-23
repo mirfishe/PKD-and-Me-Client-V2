@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
-import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, /* setApplicationOffline, */ setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings } from "../../app/applicationSettingsSlice";
+import { isEmpty, getDateTime, tryParseJSON, getQueryStringData, addErrorLog } from "shared-functions";
+import { setHostname, setProfileType, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings } from "../../app/applicationSettingsSlice";
 
 function LoadApplicationSettings() {
 
@@ -11,7 +10,10 @@ function LoadApplicationSettings() {
 
   const dispatch = useDispatch();
 
+  // const profileType = useSelector(state => state.applicationSettings.profileType);
+  const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
   const applicationSettingsLoaded = useSelector(state => state.applicationSettings.applicationSettingsLoaded);
+  const applicationSettingsJsonLoaded = useSelector(state => state.applicationSettings.applicationSettingsJsonLoaded);
 
 
   useEffect(() => {
@@ -30,250 +32,127 @@ function LoadApplicationSettings() {
   const getApplicationSettings = () => {
 
     // * Load settings from environment.js into Redux. -- 03/06/2021 MF
-    // const hostname = applicationSettings.hostname;
+
     dispatch(setHostname(applicationSettings.hostname));
 
-    let profileType = applicationSettings.profileType;
+    let newProfileType = applicationSettings.profileType;
 
-    if (isEmpty(profileType) === true) {
+    if (isEmpty(newProfileType) === true) {
 
-      profileType = "localhost";
+      newProfileType = "localhost";
 
     };
 
-    dispatch(setProfileType(applicationSettings.profileType));
+    let queryStringData = getQueryStringData();
 
-    // ! Loading the API_URL from the state store here is too slow
-    // ! Always pulling it from environment.js. -- 03/06/2021 MF
-    // let API_URL = applicationSettings.API_URL;
-    // dispatch(setAPI_URL(applicationSettings.API_URL));
+    // * Retreive the queryString values if there are any. -- 05/10/2022 MF
+    let profileTypeQueryString = isEmpty(queryStringData) === false && isEmpty(queryStringData.profileType) === false ? queryStringData.profileType : null;
 
-    // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-    // ! Always pulling it from environment.js. -- 03/06/2021 MF
-    // let baseURL = applicationSettings.baseURL;
-    // dispatch(setBaseURL(applicationSettings.baseURL));
+    if (isEmpty(profileTypeQueryString) === false) {
 
-    // let tagManagerArgsgtmId = applicationSettings.tagManagerArgs.gtmId;
+      newProfileType = profileTypeQueryString;
+
+    };
+
+    dispatch(setProfileType(newProfileType));
+
     dispatch(setTagManagerArgsgtmId(applicationSettings.tagManagerArgs.gtmId));
 
-    // let siteName = applicationSettings.siteName;
-    dispatch(setSiteName(applicationSettings.siteName));
-
-    // let applicationName = applicationSettings.applicationName;
-    dispatch(setApplicationName(applicationSettings.applicationName));
-
-    // let metaDescription = applicationSettings.metaDescription;
     dispatch(setMetaDescription(applicationSettings.metaDescription));
 
-    // ! Loading the defaultPageComponent from the state store here is too slow
-    // ! Always pulling it from environment.js. -- 03/06/2021 MF
-    // let defaultPageComponent = applicationSettings.defaultPageComponent;
     dispatch(setDefaultPageComponent(applicationSettings.defaultPageComponent));
 
-    // ! Loading the routerBaseName from the state store here is too slow
-    // ! Always pulling it from environment.js. -- 03/06/2021 MF
-    // let routerBaseName = applicationSettings.routerBaseName;
     dispatch(setRouterBaseName(applicationSettings.routerBaseName));
-
-    // let applicationOffline = applicationSettings.applicationOffline;
-    // dispatch(setApplicationOffline(applicationSettings.applicationOffline));
-
-    // let electronicOnly = applicationSettings.electronicOnly;
-    dispatch(setElectronicOnly(applicationSettings.electronicOnly));
-
-    // let electronicOnlyMessage = applicationSettings.electronicOnlyMessage;
-    dispatch(setElectronicOnlyMessage(applicationSettings.electronicOnlyMessage));
-
-    // let physicalOnly = applicationSettings.physicalOnly;
-    dispatch(setPhysicalOnly(applicationSettings.physicalOnly));
-
-    // let physicalOnlyMessage = applicationSettings.physicalOnlyMessage;
-    dispatch(setPhysicalOnlyMessage(applicationSettings.physicalOnlyMessage));
-
-    // let applicationAllowUserInteractions = applicationSettings.applicationAllowUserInteractions;
-    dispatch(setApplicationAllowUserInteractions(applicationSettings.applicationAllowUserInteractions));
-
-    // let requireUserLogin = applicationSettings.requireUserLogin;
-    dispatch(setRequireUserLogin(applicationSettings.requireUserLogin));
-
-    // let menuSettings = applicationSettings.menuSettings;
-    dispatch(setMenuSettings(applicationSettings.menuSettings));
 
     dispatch(setApplicationSettingsLoaded(true));
 
-    let url = "applicationSettings/" + profileType + ".json";
-
+    let url = "applicationSettings/" + newProfileType + ".json";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // * Load offline data. -- 03/06/2021 MF
           // return {transactionSuccess: true, errorOccurred: false, message: "Offline Categories data used.", categories: CategoryData};
 
         } else {
 
-          return response.json();
+          // return results.json();
+          return results.text();
 
         };
 
       })
       .then(results => {
 
-        if (isEmpty(results) === false && results.transactionSuccess === true) {
+        // * Verifies that the data returned is in correct JSON format. -- 04/19/2021 MF
+        let jsonData = tryParseJSON(results);
 
-          // ! Don't change the profileType even if the applicationSettings are loaded from the .json file. -- 03/06/2021 MF
+        if (isEmpty(jsonData) === false && jsonData !== false) {
 
-          // if isEmpty(results.profileType) === false) {
+          if (isEmpty(jsonData.siteName) === false) {
 
-          //     // profileType = results.profileType;
-          //     dispatch(setProfileType(results.profileType));
-
-          // };
-
-          // ! Loading the API_URL from the state store here is too slow. -- 03/06/2021 MF
-          // ! Always pulling it from environment.js. -- 03/06/2021 MF
-
-          // if (isEmpty(results.API_URL) === false) {
-
-          //     // API_URL = results.API_URL;
-          //     dispatch(setAPI_URL(results.API_URL));
-
-          // };
-
-          // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-          // ! Always pulling it from environment.js. -- 03/06/2021 MF
-
-          // if (isEmpty(results.baseURL) === false) {
-
-          //     // baseURL = results.baseURL;
-          //     dispatch(setBaseURL(results.baseURL));
-
-          // };
-
-          // ! Loading the tagManagerArgs from the state store here is too slow. -- 03/06/2021 MF
-          // ! Always pulling it from environment.js. -- 03/06/2021 MF
-
-          // if (isEmpty(results.tagManagerArgs) === false && isEmpty(results.tagManagerArgs.gtmId) === false) {
-
-          //     // tagManagerArgsgtmId = results.tagManagerArgs.gtmId;
-          //     dispatch(setTagManagerArgsgtmId(results.tagManagerArgs.gtmId));
-
-          // };
-
-          if (isEmpty(results.siteName) === false) {
-
-            // siteName = results.siteName;
-            dispatch(setSiteName(results.siteName));
+            dispatch(setSiteName(jsonData.siteName));
 
           };
 
-          if (isEmpty(results.applicationName) === false) {
+          if (isEmpty(jsonData.applicationName) === false) {
 
-            // applicationName = results.applicationName;
-            dispatch(setApplicationName(results.applicationName));
-
-          };
-
-          // ! Loading the metaDescription from the state store here is too slow. -- 03/06/2021 MF
-          // ! Always pulling it from environment.js. -- 03/06/2021 MF
-
-          // if (isEmpty(results.metaDescription) === false) {
-
-          //     // metaDescription = results.metaDescription;
-          //     dispatch(setMetaDescription(results.metaDescription));
-
-          // };
-
-          // ! Loading the defaultPageComponent from the state store here is too slow. -- 03/06/2021 MF
-          // ! Always pulling it from environment.js. -- 03/06/2021 MF
-
-          // if (isEmpty(results.defaultPageComponent) === false) {
-
-          //     // defaultPageComponent = results.defaultPageComponent;
-          //     dispatch(setDefaultPageComponent(results.defaultPageComponent));
-
-          // };
-
-          // ! Loading the routerBaseName from the state store here is too slow. -- 03/06/2021 MF
-          // ! Always pulling it from environment.js. -- 03/06/2021 MF
-
-          // if (isEmpty(results.routerBaseName) === false) {
-
-          //     // routerBaseName = results.routerBaseName;
-          //     dispatch(setRouterBaseName(results.routerBaseName));
-
-          // };
-
-          // if (isEmpty(results.applicationOffline) === false) {
-
-          //   // applicationOffline = results.applicationOffline;
-          //   dispatch(setApplicationOffline(results.applicationOffline));
-
-          // };
-
-          if (isEmpty(results.electronicOnly) === false) {
-
-            // electronicOnly = results.electronicOnly;
-            dispatch(setElectronicOnly(results.electronicOnly));
+            dispatch(setApplicationName(jsonData.applicationName));
 
           };
 
-          if (isEmpty(results.electronicOnlyMessage) === false) {
+          if (isEmpty(jsonData.electronicOnly) === false) {
 
-            // electronicOnlyMessage = results.electronicOnlyMessage;
-            dispatch(setElectronicOnlyMessage(results.electronicOnlyMessage));
-
-          };
-
-          if (isEmpty(results.physicalOnly) === false) {
-
-            // physicalOnly = results.physicalOnly;
-            dispatch(setPhysicalOnly(results.physicalOnly));
+            dispatch(setElectronicOnly(jsonData.electronicOnly));
 
           };
 
-          if (isEmpty(results.physicalOnlyMessage) === false) {
+          if (isEmpty(jsonData.electronicOnlyMessage) === false) {
 
-            // physicalOnlyMessage = results.physicalOnlyMessage;
-            dispatch(setPhysicalOnlyMessage(results.physicalOnlyMessage));
-
-          };
-
-          if (isEmpty(results.applicationAllowUserInteractions) === false) {
-
-            // applicationAllowUserInteractions = results.applicationAllowUserInteractions;
-            dispatch(setApplicationAllowUserInteractions(results.applicationAllowUserInteractions));
+            dispatch(setElectronicOnlyMessage(jsonData.electronicOnlyMessage));
 
           };
 
-          if (isEmpty(results.requireUserLogin) === false) {
+          if (isEmpty(jsonData.physicalOnly) === false) {
 
-            // requireUserLogin = results.requireUserLogin;
-            dispatch(setRequireUserLogin(results.requireUserLogin));
+            dispatch(setPhysicalOnly(jsonData.physicalOnly));
+
+          };
+
+          if (isEmpty(jsonData.physicalOnlyMessage) === false) {
+
+            dispatch(setPhysicalOnlyMessage(jsonData.physicalOnlyMessage));
+
+          };
+
+          if (isEmpty(jsonData.applicationAllowUserInteractions) === false) {
+
+            dispatch(setApplicationAllowUserInteractions(jsonData.applicationAllowUserInteractions));
+
+          };
+
+          if (isEmpty(jsonData.requireUserLogin) === false) {
+
+            dispatch(setRequireUserLogin(jsonData.requireUserLogin));
 
           };
 
           // * In case accidentally set both to true, then electronicOnly overides.
-          if (results.physicalOnly && results.electronicOnly) {
+          if (jsonData.physicalOnly && jsonData.electronicOnly) {
 
             dispatch(setElectronicOnly(true));
             dispatch(setPhysicalOnly(false));
 
           };
 
-          if (isEmpty(results.menuSettings) === false) {
+          if (isEmpty(jsonData.menuSettings) === false) {
 
-            // tagManagerArgsgtmId = results.menuSettings;
-            dispatch(setMenuSettings(results.menuSettings));
+            dispatch(setMenuSettings(jsonData.menuSettings));
 
           };
-
-        } else {
-
-          console.error(componentName, getDateTime(), "getApplicationSettings error", results.message);
 
         };
 
@@ -286,7 +165,7 @@ function LoadApplicationSettings() {
         // console.error(componentName, getDateTime(), "getApplicationSettings error.name", error.name);
         // console.error(componentName, getDateTime(), "getApplicationSettings error.message", error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

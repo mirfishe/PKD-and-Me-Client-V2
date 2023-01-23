@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 // import Parse from "html-react-parser";
 // import Parser from "rss-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
-// import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, removeHTML, addErrorLog } from "shared-functions";
+// import { encodeURL, convertBitTrueFalse, toTitleCase } from "../../utilities/ApplicationFunctions";
 import FromTheHomeopapeItem from "./FromTheHomeopapeItem";
 
 const FromTheHomeopape = () => {
@@ -19,16 +18,12 @@ const FromTheHomeopape = () => {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
-  const admin = useSelector(state => state.user.admin);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
+  const sessionToken = useSelector(state => state.user.sessionToken);
+  const admin = useSelector(state => state.user.admin);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -385,15 +380,15 @@ const FromTheHomeopape = () => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -418,7 +413,7 @@ const FromTheHomeopape = () => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -437,15 +432,15 @@ const FromTheHomeopape = () => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -470,7 +465,7 @@ const FromTheHomeopape = () => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -487,15 +482,15 @@ const FromTheHomeopape = () => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -522,7 +517,7 @@ const FromTheHomeopape = () => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -544,21 +539,21 @@ const FromTheHomeopape = () => {
           "Authorization": sessionToken
         })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -590,7 +585,7 @@ const FromTheHomeopape = () => {
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

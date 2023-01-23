@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 // import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem } from "shared-functions";
 import { encodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import EditEdition from "../editions/EditEdition";
@@ -18,10 +17,8 @@ const Edition = (props) => {
 
   const componentName = "Edition";
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const profileType = useSelector(state => state.applicationSettings.profileType);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -188,7 +185,7 @@ const Edition = (props) => {
                     :
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
 
-                        {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
+                        {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName, profileType)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
 
                         </a>
 
@@ -239,7 +236,7 @@ const Edition = (props) => {
                               {isEmpty(edition.imageName) === false && isEmpty(edition.textLinkFull) === false ?
 
                                 <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                                  {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
+                                  {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName, profileType)} alt={titleItem.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                                 </a>
 
                                 : null}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Nav, NavItem, NavLink, Collapse, Card } from "reactstrap";
+import { Container, Col, Row, Nav, NavItem, NavLink } from "reactstrap";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
 import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
 // import EditCategory from "./EditCategory";
@@ -11,7 +11,7 @@ const Category = (props) => {
 
   // * Available props: -- 10/21/2022 MF
   // * Properties: -- 10/21/2022 MF
-  // * Functions: redirectPage, getTitles -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
 
   const componentName = "Category";
 
@@ -21,9 +21,6 @@ const Category = (props) => {
   const arrayCategories = useSelector(state => state.categories.arrayCategories);
 
   let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
-  // let getTitles = isEmpty(props) === false && isEmpty(props.getTitles) === false ? props.getTitles : noFunctionAvailable;
-
-  const [isOpen, setIsOpen] = useState(true);
 
   const [categoryList, setCategoryList] = useState([]);
 
@@ -41,7 +38,6 @@ const Category = (props) => {
       } else {
 
         newCategoryList = arrayCategories.filter(category => category.active === true || category.active === 1);
-        // newCategoryList = arrayCategories.filter(category => category.categoryActive === true || category.categoryActive === 1);
 
       };
 
@@ -55,61 +51,51 @@ const Category = (props) => {
 
 
   return (
-    <React.Fragment>
+    <Container>
+      <Row>
+        <Col>
 
-      <Card onClick={(event) => { setIsOpen(!isOpen); }} color="light" className="mt-2 p-2"><h5>Categories</h5></Card>
+          <h5 className="mt-2 p-2">Categories</h5>
 
-      <Collapse isOpen={isOpen}>
+          {isNonEmptyArray(categoryList) === true ?
 
-        {isNonEmptyArray(categoryList) === true ?
+            <Nav vertical>
 
-          <Nav vertical>
+              {categoryList.map((category) => {
 
-            {categoryList.map((category) => {
+                let activeString = "";
 
-              let activeString = "";
+                if (category.active === true || category.active === 1) {
 
-              if (category.active === true || category.active === 1) {
-                // if (category.categoryActive === true || category.categoryActive === 1) {
+                  activeString = "";
 
-                // activeString = "Active";
-                activeString = "";
+                } else {
 
-              } else {
+                  activeString = "Inactive";
 
-                activeString = "Inactive";
+                };
 
-              };
+                return (
+                  <NavItem key={category.categoryID}>
 
-              return (
-                <NavItem key={category.categoryID}>
+                    <NavLink tag={Link} to={encodeURL(category.category)} className="mt-1 p-0" onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(category.category)); }}>{category.category}
+                      {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
+                    </NavLink>
 
-                  {/* <a href="#" onClick={(event) => {event.preventDefault(); getTitles(category.categoryID)}}>{category.category}</a> */}
+                  </NavItem>
+                );
+              })}
 
-                  {/* <NavLink tag={Link} to={`/titles/${category.categoryID}`}>{category.categoryID}</NavLink>
-                <NavLink tag={Link} to={`/titles/${category.category.replaceAll("-", "|").replaceAll("-", "|").replaceAll(" ", "-")}`}>{category.category}</NavLink>
-                <NavLink tag={Link} to={"/titles/" + category.categoryID}>{category.categoryID}</NavLink> */}
+            </Nav>
 
-                  {/* <NavLink tag={Link} to={"/titles/" + encodeURL(category.category)}>{category.category}</NavLink> */}
+            : null}
 
-                  <NavLink tag={Link} to={encodeURL(category.category)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(category.category)); }}>{category.category}
-                    {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
-                  </NavLink>
+          {/* {isEmpty(admin) === false && admin === true ? <EditCategory displayButton={true} /> : null} */}
+          {/* {isEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null} */}
 
-                </NavItem>
-              );
-            })}
-
-          </Nav>
-
-          : null}
-
-      </Collapse>
-
-      {/* {isEmpty(admin) === false && admin === true ? <EditCategory displayButton={true} /> : null} */}
-      {/* {isEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null} */}
-
-    </React.Fragment>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

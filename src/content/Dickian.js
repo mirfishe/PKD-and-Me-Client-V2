@@ -13,6 +13,7 @@ const Dickian = (props) => {
 
   const componentName = "Dickian";
 
+  const profileType = useSelector(state => state.applicationSettings.profileType);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
@@ -39,7 +40,7 @@ const Dickian = (props) => {
         </Col>
         <Col xs="3">
 
-          <img src={setLocalImagePath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg")} alt="Philip K. Dick" />
+          <img src={setLocalImagePath("https://www.homeopape.com/images/Portrait_512x340_brushes-crop1-1.jpg", profileType)} alt="Philip K. Dick" />
 
         </Col>
       </Row>

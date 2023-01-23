@@ -5,9 +5,8 @@ import { Container, Col, Row, Alert, Breadcrumb, BreadcrumbItem } from "reactstr
 import { Image } from "react-bootstrap-icons";
 // import { Rating } from "@mui/lab/";
 // import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, getFirstItem } from "shared-functions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, getFirstItem, addErrorLog } from "shared-functions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import EditTitle from "./EditTitle";
 import TitleText from "./TitleText";
 import Edition from "../editions/Edition";
@@ -23,17 +22,13 @@ const Title = (props) => {
 
   const componentName = "Title";
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
-  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
-
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const profileType = useSelector(state => state.applicationSettings.profileType);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
   // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -330,13 +325,19 @@ const Title = (props) => {
 
 
   //         fetch(url)
-  //         .then(response => {
-  //             if (response.ok !== true) {
-  //                 // throw Error(response.status + " " + response.statusText + " " + response.url);
+  //         .then(results => {
+
+  //             if (results.ok !== true) {
+
+  //                 // throw Error(results.status + " " + results.statusText + " " + results.url);
   //                 return {transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews Rating data fetch used."};
+
   //             } else {
-  //                 return response.json();
+
+  //                 return results.json();
+
   //             };
+
   //         })
   //         .then(results => {
 
@@ -376,7 +377,7 @@ const Title = (props) => {
   //             // console.error(componentName, getDateTime(), "getTitleRating error.message", error.message);
   //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
 
-  //            addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+  //            addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //         });
 
@@ -443,21 +444,21 @@ const Title = (props) => {
       }),
       body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
 
         } else {
 
-          if (response.status === 200) {
+          if (results.status === 200) {
 
-            return response.json();
+            return results.json();
 
           } else {
 
-            return response.status;
+            return results.status;
 
           };
 
@@ -477,7 +478,7 @@ const Title = (props) => {
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -562,7 +563,7 @@ const Title = (props) => {
                 <Row className="mb-4">
                   <Col xs="4">
 
-                    {isEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} className="cover-display" /> : <Image className="no-image-icon" />}
+                    {isEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName, profileType)} alt={title.titleName} className="cover-display" /> : <Image className="no-image-icon" />}
 
                   </Col>
                   <Col xs="8">

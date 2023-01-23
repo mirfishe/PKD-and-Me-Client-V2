@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Alert, Container, Col, Row } from "reactstrap";
 import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
-import { encodeURL, convertBitTrueFalse /* , addErrorLog */ } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, addErrorLog } from "shared-functions";
+import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {
 
@@ -12,13 +12,10 @@ const FromTheHomeopape = (props) => {
 
   const componentName = "FromTheHomeopape";
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // const admin = useSelector(state => state.user.admin);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
 
   let headerText = isEmpty(props) === false && isEmpty(props.headerText) === false ? props.headerText : "";
 
@@ -60,15 +57,15 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -89,7 +86,7 @@ const FromTheHomeopape = (props) => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString } from "shared-functions";
-import { createTitleURL, createImageName, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString, addErrorLog } from "shared-functions";
+import { createTitleURL, createImageName } from "../../utilities/ApplicationFunctions";
 // import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
 // import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 import { /* addStateURL, updateStateURL, deleteStateURL, */ setPageURL } from "../../app/urlsSlice";
@@ -20,15 +19,11 @@ const EditTitle = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
-  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const categoryListState = useSelector(state => state.categories.arrayCategories);
   const editionListState = useSelector(state => state.editions.arrayEditions);
@@ -522,21 +517,21 @@ const EditTitle = (props) => {
             }),
             body: JSON.stringify({ title: recordObject })
           })
-            .then(response => {
+            .then(results => {
 
-              // if (response.ok !== true) {
+              // if (results.ok !== true) {
 
-              //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-              // } else {
-
-              // if (response.status === 200) {
-
-              return response.json();
+              //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
               // } else {
 
-              //     return response.status;
+              // if (results.status === 200) {
+
+              return results.json();
+
+              // } else {
+
+              //     return results.status;
 
               // };
 
@@ -595,7 +590,7 @@ const EditTitle = (props) => {
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -843,21 +838,21 @@ const EditTitle = (props) => {
             }),
             body: JSON.stringify({ title: recordObject })
           })
-            .then(response => {
+            .then(results => {
 
-              // if (response.ok !== true) {
+              // if (results.ok !== true) {
 
-              //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-              // } else {
-
-              // if (response.status === 200) {
-
-              return response.json();
+              //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
               // } else {
 
-              //     return response.status;
+              // if (results.status === 200) {
+
+              return results.json();
+
+              // } else {
+
+              //     return results.status;
 
               // };
 
@@ -959,7 +954,7 @@ const EditTitle = (props) => {
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -994,21 +989,21 @@ const EditTitle = (props) => {
             "Authorization": sessionToken
           })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -1063,7 +1058,7 @@ const EditTitle = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -1095,21 +1090,21 @@ const EditTitle = (props) => {
   //           "Authorization": sessionToken
   //         })
   //       })
-  //         .then(response => {
+  //         .then(results => {
 
-  //           // if (response.ok !== true) {
+  //           // if (results.ok !== true) {
 
-  //           //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-  //           // } else {
-
-  //           // if (response.status === 200) {
-
-  //           return response.json();
+  //           //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
   //           // } else {
 
-  //           //     return response.status;
+  //           // if (results.status === 200) {
+
+  //           return results.json();
+
+  //           // } else {
+
+  //           //     return results.status;
 
   //           // };
 
@@ -1143,7 +1138,7 @@ const EditTitle = (props) => {
 
   //           addErrorMessage(error.name + ": " + error.message);
 
-  //           // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+  //           // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //         });
 

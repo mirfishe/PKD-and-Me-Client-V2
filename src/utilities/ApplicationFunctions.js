@@ -1,5 +1,4 @@
-import applicationSettings from "../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, replaceSmartCharacters } from "shared-functions";
 
 const componentName = "ApplicationFunctions";
 
@@ -107,14 +106,14 @@ export const removeOnePixelImage = (text, ASIN) => {
 };
 
 
-export const setLocalImagePath = (text) => {
+export const setLocalImagePath = (text, profileType) => {
 
   let newText = text;
 
   if (isEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (applicationSettings.profileType === "philipdick" || applicationSettings.profileType === "homeopape") {
+    if (profileType === "philipdick" || profileType === "homeopape") {
 
       // * Removes the "https://philipdick.com" -- 03/06/2021 MF
       newText = newText.replaceAll("https://philipdick.com", "");
@@ -128,14 +127,14 @@ export const setLocalImagePath = (text) => {
 };
 
 
-export const setLocalPath = (text) => {
+export const setLocalPath = (text, profileType) => {
 
   let newText = text;
 
   if (isEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (applicationSettings.profileType === "philipdick") {
+    if (profileType === "philipdick") {
 
       // * Removes the "https://philipdick.com" -- 03/06/2021 MF
       newText = newText.replaceAll("https://philipdick.com", "");
@@ -523,115 +522,3 @@ export const addComputerLog = (computerLogOne, computerLogTwo) => {
 
 };
 
-
-export const addLog = (baseURL, recordObject) => {
-
-  // const dispatch = useDispatch();
-
-  let logResult;
-
-  let operationValue = "Log";
-
-  let url = `${baseURL}logs/`;
-  let response = "";
-  let data = "";
-
-  fetch(url, {
-    method: "POST",
-    headers: new Headers({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify({ recordObject: recordObject })
-  })
-    .then(response => {
-
-      if (response.ok !== true) {
-
-        throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-      } else {
-
-        return response.json();
-
-      };
-
-    })
-    .then(results => {
-
-      data = results;
-
-    })
-    .catch((error) => {
-
-      // console.error(componentName, getDateTime(), "addLog error", error);
-      // console.error(componentName, getDateTime(), "addLog error.name", error.name);
-      // console.error(componentName, getDateTime(), "addLog error.message", error.message);
-      // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
-      // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
-
-      addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-    });
-
-  return logResult;
-
-};
-
-
-export const addErrorLog = (baseURL, operation, componentName, dataObject, errorObject) => {
-
-  // const dispatch = useDispatch();
-
-  let logErrorResult;
-
-  let recordObject = {
-    operation: operation,
-    componentName: componentName,
-    dataObject: dataObject,
-    errorObject: errorObject
-  };
-
-  let url = `${baseURL}errorLogs/`;
-
-  fetch(url, {
-    method: "POST",
-    headers: new Headers({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify({ recordObject: recordObject })
-  })
-    .then(response => {
-
-      if (response.ok !== true) {
-
-        throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-      } else {
-
-        if (response.status === 200) {
-
-          return response.json();
-
-        } else {
-
-          return response.status;
-
-        };
-
-      };
-
-    })
-    .then(results => {
-
-    })
-    .catch((error) => {
-
-      // console.error(componentName, getDateTime(), "addErrorLog error", error);
-      // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
-      // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
-      // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
-    });
-
-  return logErrorResult;
-
-};

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, displayValue, addErrorLog } from "shared-functions";
 import { loadArrayUserReviews, /* setUserReviewsDataOffline */ } from "../../app/userReviewsSlice";
 
 function LoadUserReviews() {
@@ -12,10 +10,10 @@ function LoadUserReviews() {
 
   const dispatch = useDispatch();
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
+  const applicationSettingsLoaded = useSelector(state => state.applicationSettings.applicationSettingsLoaded);
+  const applicationSettingsJsonLoaded = useSelector(state => state.applicationSettings.applicationSettingsJsonLoaded);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const userReviewsLoaded = useSelector(state => state.userReviews.userReviewsLoaded);
@@ -26,15 +24,19 @@ function LoadUserReviews() {
 
   useEffect(() => {
 
-    // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
-    if (userReviewsLoaded !== true) {
+    if (applicationSettingsJsonLoaded === true) {
 
-      getUserReviews();
-      // getUserReviewsRatings();
+      // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
+      if (userReviewsLoaded !== true) {
+
+        getUserReviews();
+        // getUserReviewsRatings();
+
+      };
 
     };
 
-  }, []);
+  }, [ /* applicationSettingsLoaded, */ applicationSettingsJsonLoaded]);
 
 
   const loadDataStore = (data, source) => {
@@ -58,11 +60,11 @@ function LoadUserReviews() {
     let url = baseURL + "userreviews";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // * Load offline data. -- 03/06/2021 MF
           // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           // dispatch(setUserReviewsDataOffline(true));
@@ -71,7 +73,7 @@ function LoadUserReviews() {
         } else {
 
           // dispatch(setUserReviewsDataOffline(false));
-          return response.json();
+          return results.json();
 
         };
 
@@ -106,7 +108,7 @@ function LoadUserReviews() {
         // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
         // fetchLocalDataUserReviews();
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

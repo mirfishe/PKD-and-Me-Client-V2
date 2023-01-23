@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
 // import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
-import { encodeURL, decodeURL, setLocalImagePath /* , addErrorLog */ } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, addErrorLog } from "shared-functions";
+import { encodeURL, decodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
@@ -21,11 +20,8 @@ const Editions = (props) => {
 
   const dispatch = useDispatch();
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const profileType = useSelector(state => state.applicationSettings.profileType);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
   // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
@@ -477,21 +473,21 @@ const Editions = (props) => {
       }),
       body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
 
         } else {
 
-          if (response.status === 200) {
+          if (results.status === 200) {
 
-            return response.json();
+            return results.json();
 
           } else {
 
-            return response.status;
+            return results.status;
 
           };
 
@@ -511,7 +507,7 @@ const Editions = (props) => {
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -627,7 +623,7 @@ const Editions = (props) => {
                     :
 
                     <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
+                    {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName, profileType)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
                     </a>
 
                     }
@@ -676,7 +672,7 @@ const Editions = (props) => {
                             :
 
                             <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                              {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
+                              {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName, profileType)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                             </a>
 
                           }

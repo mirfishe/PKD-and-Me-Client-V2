@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
-// import { HouseFill } from "react-bootstrap-icons";
-import { Container, Col, Row, Nav, Navbar, /* NavbarBrand, */ NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
+import { Container, Col, Row, Nav, Navbar, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
-import { addComputerLog, addErrorLog } from "./utilities/ApplicationFunctions";
-import { setApplicationVersion, setCopyrightYear, setLocationLogged, /* setApplicationOffline, */ setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
+import { isEmpty, getDateTime, isNonEmptyArray, getQueryStringData, addErrorLog } from "shared-functions";
+import { addComputerLog } from "./utilities/ApplicationFunctions";
+import { setApplicationVersion, setCopyrightYear, setLocationLogged, setProfileType, setBaseURL, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
 import LoadBibliographyData from "./components/loadData/LoadBibliographyData";
@@ -52,17 +51,20 @@ const App = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
-  const admin = useSelector(state => state.user.admin);
+  const routerBaseName = applicationSettings.routerBaseName;
+  const defaultPageComponent = applicationSettings.defaultPageComponent;
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const profileType = useSelector(state => state.applicationSettings.profileType);
+  const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
+  const applicationSettingsLoaded = useSelector(state => state.applicationSettings.applicationSettingsLoaded);
+  const applicationSettingsJsonLoaded = useSelector(state => state.applicationSettings.applicationSettingsJsonLoaded);
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
   const locationLogged = useSelector(state => state.applicationSettings.locationLogged);
-
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  const sessionToken = useSelector(state => state.user.sessionToken);
+  const admin = useSelector(state => state.user.admin);
 
   const firstName = useSelector(state => state.user.firstName);
   const lastName = useSelector(state => state.user.lastName);
@@ -73,9 +75,9 @@ const App = (props) => {
   // const titlesDataOffline = useSelector(state => state.titles.titlesDataOffline);
   // const editionsDataOffline = useSelector(state => state.editions.editionsDataOffline);
 
-  const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  // const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
   const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
-  const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  // const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
 
   const userLoaded = useSelector(state => state.user.userLoaded);
@@ -104,19 +106,19 @@ const App = (props) => {
   let showHomeopape = useSelector(state => state.applicationSettings.menuSettings.showHomeopape);
   let showDickian = useSelector(state => state.applicationSettings.menuSettings.showDickian);
 
-  let showEditCategory = useSelector(state => state.applicationSettings.menuSettings.showEditCategory);
-  let showEditMedia = useSelector(state => state.applicationSettings.menuSettings.showEditMedia);
-  let showEditTitle = useSelector(state => state.applicationSettings.menuSettings.showEditTitle);
-  let showEditEdition = useSelector(state => state.applicationSettings.menuSettings.showEditEdition);
+  // let showEditCategory = useSelector(state => state.applicationSettings.menuSettings.showEditCategory);
+  // let showEditMedia = useSelector(state => state.applicationSettings.menuSettings.showEditMedia);
+  // let showEditTitle = useSelector(state => state.applicationSettings.menuSettings.showEditTitle);
+  // let showEditEdition = useSelector(state => state.applicationSettings.menuSettings.showEditEdition);
 
-  let showAllCategories = useSelector(state => state.applicationSettings.menuSettings.showAllCategories);
-  let showAllMedia = useSelector(state => state.applicationSettings.menuSettings.showAllMedia);
-
-  // ! This route no longer works. -- 03/06/2021 MF
-  let showAllTitles = useSelector(state => state.applicationSettings.menuSettings.showAllTitles);
+  // let showAllCategories = useSelector(state => state.applicationSettings.menuSettings.showAllCategories);
+  // let showAllMedia = useSelector(state => state.applicationSettings.menuSettings.showAllMedia);
 
   // ! This route no longer works. -- 03/06/2021 MF
-  let showAllEditions = useSelector(state => state.applicationSettings.menuSettings.showAllEditions);
+  // let showAllTitles = useSelector(state => state.applicationSettings.menuSettings.showAllTitles);
+
+  // ! This route no longer works. -- 03/06/2021 MF
+  // let showAllEditions = useSelector(state => state.applicationSettings.menuSettings.showAllEditions);
 
   let showUserPhysicalOnly = useSelector(state => state.applicationSettings.menuSettings.showUserPhysicalOnly);
   let showUserElectronicOnly = useSelector(state => state.applicationSettings.menuSettings.showUserElectronicOnly);
@@ -126,16 +128,7 @@ const App = (props) => {
   const linkItem = useSelector(state => state.urls.linkItem);
 
   const arrayCategories = useSelector(state => state.categories.arrayCategories);
-
-  // ! Loading the routerBaseName from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const routerBaseName = useSelector(state => state.applicationSettings.routerBaseName);
-  const routerBaseName = applicationSettings.routerBaseName;
-
-  // ! Loading the defaultPageComponent from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const defaultPageComponent = useSelector(state => state.applicationSettings.defaultPageComponent);
-  const defaultPageComponent = applicationSettings.defaultPageComponent;
+  const arrayMedia = useSelector(state => state.media.arrayMedia);
 
   let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : "0.0.0";
   let copyrightYear = isEmpty(props) === false && isEmpty(props.copyrightYear) === false ? props.copyrightYear : 2022;
@@ -184,31 +177,26 @@ const App = (props) => {
 
   useEffect(() => {
 
-    if (applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
+    // * In production, unless you set the REACT_APP_FORCE_LOCAL_API = "True" environment variable, the application will use the production API. -- 07/28/2021 MF
+    // * The REACT_APP_FORCE_LOCAL_API = "True" environment variable, is used to force the application when in production to use the local API. -- 07/28/2021 MF
 
-      dispatch(setSessionToken(localStorage.getItem("token")));
+    let appBaseURL = "https://api.philipdick.com/";
 
-      // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
-      // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
-      // * ########## TEMPORARY ##########
-      // setUserID(1);
-      // setIsAdmin(true);
+    // if (process.env.NODE_ENV === "development" && (process.env.REACT_APP_FORCE_LOCAL_API === "True" || process.env.REACT_APP_FORCE_PRODUCTION_API !== "True")) {
+    if (process.env.NODE_ENV === "development" && process.env.REACT_APP_FORCE_LOCAL_API === "True") {
 
-      // * Fetch from the API to check these. -- 03/06/2021 MF
-      if (userLoaded !== true) {
-
-        getUser(localStorage.getItem("token"));
-
-      };
-
-      // * Moved to the getUser function. -- 03/06/2021 MF
-      // if (checklistLoaded !== true) {
-
-      //   getChecklist(localStorage.getItem("token"));
-
-      // };
+      appBaseURL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}/`;
 
     };
+
+    dispatch(setBaseURL(appBaseURL));
+
+    // let queryStringData = getQueryStringData();
+
+    // // * Retreive the queryString values if there are any. -- 05/10/2022 MF
+    // let profileTypeQueryString = isEmpty(queryStringData) === false && isEmpty(queryStringData.profileType) === false ? queryStringData.profileType : null;
+
+    // dispatch(setProfileType(profileTypeQueryString));
 
     let documentURL = new URL(document.URL);
 
@@ -228,9 +216,9 @@ const App = (props) => {
       let url1 = "https://geolocation-db.com/json/";
 
       fetch(url1)
-        .then(response => {
+        .then(results => {
 
-          return response.json();
+          return results.json();
 
         }).then((results) => {
 
@@ -256,9 +244,9 @@ const App = (props) => {
       let url2 = "https://api.db-ip.com/v2/free/self";
 
       fetch(url2)
-        .then(response => {
+        .then(results => {
 
-          return response.json();
+          return results.json();
 
         }).then((results) => {
 
@@ -317,7 +305,38 @@ const App = (props) => {
 
     };
 
-  }, [computerLog, /*latitude, longitude, postalCode*/ url1Loaded, url2Loaded]);
+  }, [computerLog, url1Loaded, url2Loaded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(baseURL) === false && applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
+
+      dispatch(setSessionToken(localStorage.getItem("token")));
+
+      // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
+      // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
+      // * ########## TEMPORARY ##########
+      // setUserID(1);
+      // setIsAdmin(true);
+
+      // * Fetch from the API to check these. -- 03/06/2021 MF
+      if (userLoaded !== true) {
+
+        getUser(localStorage.getItem("token"));
+
+      };
+
+      // * Moved to the getUser function. -- 03/06/2021 MF
+      // if (checklistLoaded !== true) {
+
+      //   getChecklist(localStorage.getItem("token"));
+
+      // };
+
+    };
+
+  }, [baseURL]);
 
 
   // useEffect(() => {
@@ -369,7 +388,7 @@ const App = (props) => {
 
     let href = isEmpty(window.location.href) === false ? window.location.href : "";
 
-    let url = baseURL + "computerLogs/";
+    let url = `${baseURL}computerLogs/`;
     let response = "";
     let data = "";
     let operationValue = "Update Computer Log";
@@ -410,21 +429,21 @@ const App = (props) => {
       }),
       body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
 
         } else {
 
-          if (response.status === 200) {
+          if (results.status === 200) {
 
-            return response.json();
+            return results.json();
 
           } else {
 
-            return response.status;
+            return results.status;
 
           };
 
@@ -444,7 +463,7 @@ const App = (props) => {
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -460,6 +479,7 @@ const App = (props) => {
 
 
   const logOut = () => {
+
     // * Remove user from userSlice. -- 03/06/2021 MF
 
     dispatch(loadUserData({ userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null, userLoaded: false, arrayChecklist: [], checklistLoaded: false, lastDatabaseRetrievalChecklist: null }));
@@ -486,21 +506,21 @@ const App = (props) => {
           "Authorization": token
         }),
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -517,7 +537,6 @@ const App = (props) => {
             if (results.active === true || results.active === 1) {
 
               dispatch(loadUserData(results));
-
 
               if (checklistLoaded !== true) {
 
@@ -548,7 +567,7 @@ const App = (props) => {
 
           // addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -574,21 +593,21 @@ const App = (props) => {
           "Authorization": token
         }),
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -621,7 +640,7 @@ const App = (props) => {
 
           // addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -646,10 +665,6 @@ const App = (props) => {
 
       <Navbar color="light" light>
         <Nav>
-
-          {/* <NavbarBrand href="/">
-            <HouseFill color="black" />
-          </NavbarBrand> */}
 
           <NavItem>
             <NavLink tag={Link} to="/"><NavbarText>Home</NavbarText></NavLink>
@@ -809,7 +824,7 @@ const App = (props) => {
 
         : null}
 
-      {showAllCategories === true || showAllMedia === true || showAllTitles === true || showAllEditions === true || showAllMenuItems === true ?
+      {/* {showAllCategories === true || showAllMedia === true || showAllTitles === true || showAllEditions === true || showAllMenuItems === true ?
 
         <Navbar>
           <Nav>
@@ -849,7 +864,7 @@ const App = (props) => {
           </Nav>
         </Navbar>
 
-        : null}
+        : null} */}
 
       {/* {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && isEmpty(admin) === false && admin === true ?
 
@@ -925,7 +940,7 @@ const App = (props) => {
 
             {isEmpty(arrayCategories) === false ? <Category redirectPage={redirectPage} /> : null}
 
-            <Media redirectPage={redirectPage} />
+            {isEmpty(arrayMedia) === false ? <Media redirectPage={redirectPage} /> : null}
 
           </Col>
           <Col xs="10">
@@ -953,13 +968,6 @@ const App = (props) => {
               {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />} /> : null}
               {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />} /> : null}
               {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian redirectPage={redirectPage} />} /> : null}
-
-              {/* <Route path="/">
-                {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />}
-                {defaultPageComponent === "Home" ? <Route path="/" element={<Home />}  /> : null}
-                {defaultPageComponent === "About" ? <Route path="/" element={<About />}  /> : null}
-                {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape />}  /> : null}
-              </Route> */}
 
               <Route path="/home" element={<Home redirectPage={redirectPage} />} />
               <Route path="/new" element={<New redirectPage={redirectPage} />} />
@@ -1016,8 +1024,6 @@ const App = (props) => {
               {isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false && linkItem.linkType === "media" ? <Route path="/:linkName" element={<Editions redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
             </Routes>
-
-            {/* {process.env.NODE_ENV === "development" ? <FromTheHomeopape /> : null} */}
 
           </Col>
         </Row>

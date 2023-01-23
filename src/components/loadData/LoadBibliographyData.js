@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Alert } from "reactstrap";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, getFirstItem } from "shared-functions";
-import { encodeURL /* , addErrorLog */ } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, getFirstItem, addErrorLog } from "shared-functions";
+import { encodeURL } from "../../utilities/ApplicationFunctions";
 import { loadArrayURLs } from "../../app/urlsSlice";
 import { loadArrayCategories, /* setCategoriesDataOffline */ } from "../../app/categoriesSlice";
 import { loadArrayEditions, /* setEditionsDataOffline */ } from "../../app/editionsSlice";
@@ -17,15 +16,10 @@ function LoadBibliographyData() {
 
   const dispatch = useDispatch();
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
-  // ! Loading the applicationOffline from the state store here is too slow
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
-  // const applicationOffline = applicationSettings.applicationOffline;
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const applicationOffline = useSelector(state => state.applicationSettings.applicationOffline);
+  const applicationSettingsLoaded = useSelector(state => state.applicationSettings.applicationSettingsLoaded);
+  const applicationSettingsJsonLoaded = useSelector(state => state.applicationSettings.applicationSettingsJsonLoaded);
 
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const categoriesLoaded = useSelector(state => state.categories.categoriesLoaded);
@@ -52,156 +46,156 @@ function LoadBibliographyData() {
 
   useEffect(() => {
 
-    // ! Experiment in adding bibliographical data to local storage that doesn't work. -- 03/06/2021 MF
-    // let categoriesDataLocalStorage = false;
-    // let mediaDataLocalStorage = false;
-    // let titlesDataLocalStorage = false;
-    // let editionsDataLocalStorage = false;
+    if (applicationSettingsJsonLoaded === true) {
 
-    // let currentDateTime = new Date().setTime(new Date().getTime());
+      // ! Experiment in adding bibliographical data to local storage that doesn't work. -- 03/06/2021 MF
+      // let categoriesDataLocalStorage = false;
+      // let mediaDataLocalStorage = false;
+      // let titlesDataLocalStorage = false;
+      // let editionsDataLocalStorage = false;
 
-    // if (categoriesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
+      // let currentDateTime = new Date().setTime(new Date().getTime());
 
+      // if (categoriesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalCategories")) === false) {
 
-    //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
+      //   // let localStoragelastDatabaseRetrievalCategories = new Date(localStorage.getItem("lastDatabaseRetrievalCategories"));
 
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).getTime() - (8*60*60*1000));
+      //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalCategories")).getTime() - (8*60*60*1000));
 
-    //   if (currentDateTime > checkDateTime) {
+      //   if (currentDateTime > checkDateTime) {
 
-    //     if (isEmpty(localStorage.getItem("arrayCategories")) === false) {
+      //     if (isEmpty(localStorage.getItem("arrayCategories")) === false) {
 
-    //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
-    //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
+      //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
+      //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
 
-    //       categoriesDataLocalStorage = true;
+      //       categoriesDataLocalStorage = true;
 
-    //     };
+      //     };
 
-    //   };
+      //   };
 
-    // };
+      // };
 
-    // if (mediaLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
+      // if (mediaLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalMedia")) === false {
 
+      //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
 
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalMedia")).getTime() - (8*60*60*1000));
+      //   if (currentDateTime > checkDateTime) {
 
-    //   if (currentDateTime > checkDateTime) {
+      //     if (isEmpty(localStorage.getItem("arrayMedia")) === false) {
 
-    //     if (isEmpty(localStorage.getItem("arrayMedia")) === false) {
+      //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
+      //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
 
-    //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
-    //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
+      //       mediaDataLocalStorage = true;
 
-    //       mediaDataLocalStorage = true;
+      //     };
 
-    //     };
+      //   };
 
-    //   };
+      // };
 
-    // };
+      // if (titlesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
 
-    // if (titlesLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalTitles")) === false) {
+      //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
 
+      //   if (currentDateTime > checkDateTime) {
 
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
+      //     if (isEmpty(localStorage.getItem("arrayTitles")) === false) {
 
-    //   if (currentDateTime > checkDateTime) {
+      //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
+      //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
 
-    //     if (isEmpty(localStorage.getItem("arrayTitles")) === false) {
+      //       titlesDataLocalStorage = true;
 
-    //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
-    //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
+      //     };
 
-    //       titlesDataLocalStorage = true;
+      //   };
 
-    //     };
+      // };
 
-    //   };
+      // if (editionsLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
 
-    // };
+      //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
 
-    // if (editionsLoaded !== true && isEmpty(localStorage.getItem("lastDatabaseRetrievalEditions")) === false) {
+      //   if (currentDateTime > checkDateTime) {
 
+      //   if (isEmpty(localStorage.getItem("arrayEditions")) === false) {
 
-    //   let checkDateTime = new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).setTime(new Date(localStorage.getItem("lastDatabaseRetrievalTitles")).getTime() - (8*60*60*1000));
+      //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
+      //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");
 
-    //   if (currentDateTime > checkDateTime) {
+      //       editionsDataLocalStorage = true;
 
-    //   if (isEmpty(localStorage.getItem("arrayEditions")) === false) {
+      //     };
 
-    //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
-    //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");
+      //   };
 
-    //       editionsDataLocalStorage = true;
+      // };
 
-    //     };
+      // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
+      // if (applicationOffline) {
 
-    //   };
+      //   if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
 
-    // };
+      //     // dispatch(setCategoriesDataOffline(true));
+      //     fetchLocalDataCategories();
 
-    // * Only load the bibliography data once per session unless the data is changed. -- 03/06/2021 MF
-    // if (applicationOffline) {
+      //   };
 
-    //   if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
+      //   if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
 
-    //     // dispatch(setCategoriesDataOffline(true));
-    //     fetchLocalDataCategories();
+      //     // dispatch(setMediaDataOffline(true));
+      //     fetchLocalDataMedia();
 
-    //   };
+      //   };
 
-    //   if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
+      //   if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
 
-    //     // dispatch(setMediaDataOffline(true));
-    //     fetchLocalDataMedia();
+      //     // dispatch(setTitlesDataOffline(true));
+      //     fetchLocalDataTitles();
 
-    //   };
+      //   };
 
-    //   if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
+      //   if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
 
-    //     // dispatch(setTitlesDataOffline(true));
-    //     fetchLocalDataTitles();
+      //     // dispatch(setEditionsDataOffline(true));
+      //     fetchLocalDataEditions();
 
-    //   };
+      //   };
 
-    //   if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
+      // } else {
 
-    //     // dispatch(setEditionsDataOffline(true));
-    //     fetchLocalDataEditions();
+      if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
 
-    //   };
+        getCategories();
 
-    // } else {
+      };
 
-    if (categoriesLoaded !== true /* && categoriesDataLocalStorage !== true */) {
+      if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
 
-      getCategories();
+        getMedia();
+
+      };
+
+      if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
+
+        getTitles();
+
+      };
+
+      if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
+
+        getEditions();
+
+      };
+
+      // };
 
     };
 
-    if (mediaLoaded !== true /* && mediaDataLocalStorage !== true */) {
-
-      getMedia();
-
-    };
-
-    if (titlesLoaded !== true /* && titlesDataLocalStorage !== true */) {
-
-      getTitles();
-
-    };
-
-    if (editionsLoaded !== true /* && editionsDataLocalStorage !== true */) {
-
-      getEditions();
-
-    };
-
-    // };
-
-  }, []);
+  }, [ /* applicationSettingsLoaded, */ applicationSettingsJsonLoaded]);
 
 
   const addRatings = (titleData, userReviewsRatingsData) => {
@@ -253,9 +247,7 @@ function LoadBibliographyData() {
 
           };
 
-
         };
-
 
         Object.assign(arrayTitles[i], { userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage });
 
@@ -279,13 +271,12 @@ function LoadBibliographyData() {
 
     url = url + "rating";
 
-
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // * Load offline data. -- 03/06/2021 MF
           // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           // dispatch(setUserReviewsRatingsDataOffline(true));
@@ -295,7 +286,7 @@ function LoadBibliographyData() {
 
           // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           // dispatch(setUserReviewsRatingsDataOffline(false));
-          return response.json();
+          return results.json();
 
         };
 
@@ -331,7 +322,7 @@ function LoadBibliographyData() {
         // dispatch(setUserReviewsRatingsDataOffline(true));
         // fetchLocalDataUserReviewsRatings(titleData);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -412,11 +403,11 @@ function LoadBibliographyData() {
     let url = baseURL + "categories";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setCategoriesDataOffline(true));
           // return { transactionSuccess: false, errorOccurred: true, message: "Offline Categories data fetch used." };
@@ -424,7 +415,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setCategoriesDataOffline(false));
-          return response.json();
+          return results.json();
 
         };
 
@@ -457,7 +448,7 @@ function LoadBibliographyData() {
         // dispatch(setCategoriesDataOffline(true));
         fetchLocalDataCategories();
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -472,11 +463,11 @@ function LoadBibliographyData() {
     let url = baseURL + "media";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setMediaDataOffline(true));
           // return {transactionSuccess: true, errorOccurred: false, message: "Offline Media data used.", media: MediaData};
@@ -485,7 +476,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setMediaDataOffline(false));
-          return response.json();
+          return results.json();
 
         };
 
@@ -518,7 +509,7 @@ function LoadBibliographyData() {
         // dispatch(setMediaDataOffline(true));
         fetchLocalDataMedia();
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -533,11 +524,11 @@ function LoadBibliographyData() {
     let url = baseURL + "titles";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setTitlesDataOffline(true));
           // return {transactionSuccess: true, errorOccurred: false, message: "Offline Titles data used.", titles: TitleData};
@@ -546,7 +537,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setTitlesDataOffline(false));
-          return response.json();
+          return results.json();
 
         };
 
@@ -579,7 +570,7 @@ function LoadBibliographyData() {
         // dispatch(setTitlesDataOffline(true));
         fetchLocalDataTitles();
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -594,11 +585,11 @@ function LoadBibliographyData() {
     let url = baseURL + "editions";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setEditionsDataOffline(true));
           // return {transactionSuccess: true, errorOccurred: false, message: "Offline Editions data used.", editions: EditionData};
@@ -607,7 +598,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setEditionsDataOffline(false));
-          return response.json();
+          return results.json();
 
         };
 
@@ -640,7 +631,7 @@ function LoadBibliographyData() {
         // dispatch(setEditionsDataOffline(true));
         fetchLocalDataEditions();
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -652,11 +643,11 @@ function LoadBibliographyData() {
     let url = "bibliographyData/categories.json";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setCategoriesDataOffline(true));
@@ -666,7 +657,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setCategoriesDataOffline(true));
-          return response.json();
+          return results.json();
 
         };
 
@@ -698,7 +689,7 @@ function LoadBibliographyData() {
         // dispatch(setCategoriesDataOffline(true));
         // loadDataStore(CategoryData, "categories");
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -710,11 +701,11 @@ function LoadBibliographyData() {
     let url = "bibliographyData/media.json";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setMediaDataOffline(true));
@@ -724,7 +715,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setMediaDataOffline(true));
-          return response.json();
+          return results.json();
 
         };
 
@@ -756,7 +747,7 @@ function LoadBibliographyData() {
         // dispatch(setMediaDataOffline(true));
         // loadDataStore(MediaData, "media");
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -768,11 +759,11 @@ function LoadBibliographyData() {
     let url = "bibliographyData/titles.json";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setTitlesDataOffline(true));
@@ -782,7 +773,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setTitlesDataOffline(true));
-          return response.json();
+          return results.json();
 
         };
 
@@ -814,7 +805,7 @@ function LoadBibliographyData() {
         // dispatch(setTitlesDataOffline(true));
         // loadDataStore(TitleData, "titles");
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -826,11 +817,11 @@ function LoadBibliographyData() {
     let url = "bibliographyData/editions.json";
 
     fetch(url)
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
           // ! This error runs on the web server but not on the local developer computer. -- 03/06/2021 MF
           // * Load offline data. -- 03/06/2021 MF
           // dispatch(setEditionsDataOffline(true));
@@ -840,7 +831,7 @@ function LoadBibliographyData() {
         } else {
 
           // dispatch(setEditionsDataOffline(true));
-          return response.json();
+          return results.json();
 
         };
 
@@ -872,7 +863,7 @@ function LoadBibliographyData() {
         // dispatch(setEditionsDataOffline(true));
         // loadDataStore(EditionData, "editions");
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

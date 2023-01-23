@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image } from 'react-bootstrap-icons';
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString } from "shared-functions";
-import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString, addErrorLog } from "shared-functions";
+import { getASIN, removeOnePixelImage } from "../../utilities/ApplicationFunctions";
 // import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
 const EditEdition = (props) => {
@@ -16,19 +15,16 @@ const EditEdition = (props) => {
 
   const dispatch = useDispatch();
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
 
   const mediaListState = useSelector(state => state.media.arrayMedia);
   const titleListState = useSelector(state => state.titles.arrayTitles);
   const editionListState = useSelector(state => state.editions.arrayEditions);
-
-  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   let editionID = isEmpty(props) === false && isEmpty(props.editionID) === false ? props.editionID : 0;
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : 0;
@@ -441,21 +437,21 @@ const EditEdition = (props) => {
           }),
           body: JSON.stringify({ edition: recordObject })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -512,7 +508,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -701,21 +697,21 @@ const EditEdition = (props) => {
           }),
           body: JSON.stringify({ edition: recordObject })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -772,7 +768,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -804,21 +800,21 @@ const EditEdition = (props) => {
             "Authorization": sessionToken
           })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -853,7 +849,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -877,15 +873,15 @@ const EditEdition = (props) => {
       url = url + ASIN;
 
       fetch(url)
-        .then(response => {
+        .then(results => {
 
-          if (response.ok !== true) {
+          if (results.ok !== true) {
 
-            throw Error(response.status + " " + response.statusText + " " + response.url);
+            throw Error(results.status + " " + results.statusText + " " + results.url);
 
           } else {
 
-            return response.json();
+            return results.json();
 
           };
 
@@ -913,7 +909,7 @@ const EditEdition = (props) => {
 
           setErrASINMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

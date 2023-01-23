@@ -15,6 +15,7 @@ const Home = (props) => {
 
   const componentName = "Home";
 
+  const profileType = useSelector(state => state.applicationSettings.profileType);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
@@ -51,7 +52,7 @@ const Home = (props) => {
         </Col>
         <Col xs="2">
 
-          <img src={setLocalImagePath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
+          <img src={setLocalImagePath("https://philipdick.com/images/PKD/Philip_Dick2.jpg", profileType)} alt="Philip K. Dick" />
 
         </Col>
       </Row>

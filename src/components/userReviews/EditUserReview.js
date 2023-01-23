@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 // import { Rating } from "@mui/lab/";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString } from "shared-functions";
-// import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString, addErrorLog } from "shared-functions";
 // import { addStateUserReview, updateStateUserReview, deleteStateUserReview } from "../../app/userReviewsSlice";
 // import { updateStateTitleRating } from "../../app/titlesSlice";
 // import { updateStateChecklist } from "../../app/userSlice";
@@ -18,16 +16,12 @@ const EditUserReview = (props) => {
 
   // const dispatch = useDispatch();
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
   // const userID = useSelector(state => state.user.userID);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
-  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   // const titleListState = useSelector(state => state.titles.arrayTitles);
 
@@ -365,21 +359,21 @@ const EditUserReview = (props) => {
         }),
         body: JSON.stringify({ userReview: recordObject })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -499,7 +493,7 @@ const EditUserReview = (props) => {
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -625,21 +619,21 @@ const EditUserReview = (props) => {
         }),
         body: JSON.stringify({ userReview: recordObject })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -774,7 +768,7 @@ const EditUserReview = (props) => {
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -805,21 +799,21 @@ const EditUserReview = (props) => {
             "Authorization": sessionToken
           })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -905,7 +899,7 @@ const EditUserReview = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 

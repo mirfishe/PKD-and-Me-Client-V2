@@ -3,12 +3,10 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import TagManager from "react-gtm-module";
-import { isEmpty, getDateTime, displayValue } from "shared-functions";
+import { isEmpty, getDateTime } from "shared-functions";
 import store from "./app/store";
 import "bootstrap/dist/css/bootstrap.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-// import {tagManagerArgs} from "./app/constants";
 import applicationSettings from "./app/environment";
 import App from "./App";
 import "./index.css";
@@ -36,8 +34,6 @@ if (isEmpty(applicationSettings.tagManagerArgs.gtmId) === false) {
 
 };
 
-// const metaDescription = useSelector(state => state.applicationSettings.metaDescription);
-// document.getElementsByTagName("META")[3].content = metaDescription;
 document.getElementsByTagName("META")[3].content = applicationSettings.metaDescription;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
