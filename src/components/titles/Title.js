@@ -592,9 +592,9 @@ const Title = (props) => {
 
                     {isEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
 
-                    {isEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
+                    {isEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener">Encyclopedia Dickiana</a></p> : null}
 
-                    {isEmpty(title.urlPKDBookshelf) === false ? <p><a href={title.urlPKDBookshelf} target="_blank" rel="noopener noreferrer">PKD Bookshelf</a></p> : null}
+                    {isEmpty(title.urlPKDBookshelf) === false ? <p><a href={title.urlPKDBookshelf} target="_blank" rel="noopener">PKD Bookshelf</a></p> : null}
 
                     {isEmpty(title.writtenDate) === false ? <p>Manuscript Written Date: {displayDate(title.writtenDate)}</p> : null}
 

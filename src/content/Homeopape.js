@@ -42,7 +42,7 @@ const Homeopape = (props) => {
           <p>*Homeopape<br />
             A newspaper that filters the news so it only shows what you are interested in- these are beginning to exist now in the form of web robots. Along with many SF predictions, there are anachronisms in the way the thing operates. The homeopape asks you what you want to read about. (the forefront of our technology), and then prints it on paper. It's obvious that this was written before PCs were common.</p>
 
-          <p>View the <a href={setLocalPath("http://www.philipdick.com/resources/miscellaneous/pkdicktionary/#homeopape")} target="_blank" rel="noopener noreferrer">definition on the Philip K. Dick Site</a>.</p>
+          <p>View the <a href={setLocalPath("http://www.philipdick.com/resources/miscellaneous/pkdicktionary/#homeopape")} target="_blank" rel="noopener">definition on the Philip K. Dick Site</a>.</p>
 
           <Container>
 

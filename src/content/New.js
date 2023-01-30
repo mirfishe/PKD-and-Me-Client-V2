@@ -69,7 +69,7 @@ const New = (props) => {
       <Row>
         <Col xs="12" className="mb-4">
 
-          <p className="text-center">If you would like further recommendations, visit <a href={setLocalPath("https://philipdick.com/biography/the-connoisseurs-choice/")} target="_blank" rel="noopener noreferrer">The Connoisseurs' Choice</a> collated by Umberto Rossi.</p>
+          <p className="text-center">If you would like further recommendations, visit <a href={setLocalPath("https://philipdick.com/biography/the-connoisseurs-choice/")} target="_blank" rel="noopener">The Connoisseurs' Choice</a> collated by Umberto Rossi.</p>
 
         </Col>
       </Row>
@@ -77,7 +77,7 @@ const New = (props) => {
       <Row>
         <Col xs="12" className="mb-4">
 
-          <p className="text-center"><a href={setLocalPath("https://philipdick.com/mirror/misc/sf_book_reviews.pdf")} target="_blank" rel="noopener noreferrer">Book Reviews From The SF Press</a></p>
+          <p className="text-center"><a href={setLocalPath("https://philipdick.com/mirror/misc/sf_book_reviews.pdf")} target="_blank" rel="noopener">Book Reviews From The SF Press</a></p>
 
         </Col>
       </Row>

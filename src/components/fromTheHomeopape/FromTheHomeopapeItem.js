@@ -735,7 +735,7 @@ const FromTheHomeopapeItem = (props) => {
           <div>
             {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
             {Parse(homeopapeItem.itemTitle)}<br />
-            <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
+            <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{homeopapeItem.itemLinkFormatted}</a><br />
             ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
             {itemID}
           </div>

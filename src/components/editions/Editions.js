@@ -622,7 +622,7 @@ const Editions = (props) => {
 
                     :
 
-                    <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                    <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                     {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName, profileType)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
                     </a>
 
@@ -663,7 +663,7 @@ const Editions = (props) => {
                               {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
                               {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
 
-                              <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                              <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                                 {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={edition.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}
                               </a>
 
@@ -671,7 +671,7 @@ const Editions = (props) => {
 
                             :
 
-                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                               {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName, profileType)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                             </a>
 
@@ -693,13 +693,13 @@ const Editions = (props) => {
 
                         {/* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                           <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                         </a>
 
                         :
 
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                           <p className="my-2">Find Copy</p>
                         </a>
 
@@ -707,7 +707,7 @@ const Editions = (props) => {
 
                         {isEmpty(edition.textLinkFullAPI) === false ?
 
-                          <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                          <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                             <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                           </a>
 
@@ -717,7 +717,7 @@ const Editions = (props) => {
 
                             {isEmpty(edition.textLinkFullAPI) === false ?
 
-                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                                 <p className="my-2">Find Copy</p>
                               </a>
 

@@ -727,11 +727,11 @@ const App = (props) => {
             : null} */}
 
           <NavItem className="mx-3 my-2">
-            <a href="https://pkdickbooks.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
+            <a href="https://pkdickbooks.com" target="_blank" rel="noopener"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
           </NavItem>
 
           <NavItem className="mx-3 my-2">
-            <a href="https://philipdick.com" target="_blank" rel="noopener noreferrer"><NavbarText>Philip K. Dick Site</NavbarText></a>
+            <a href="https://philipdick.com" target="_blank" rel="noopener"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
 
           {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true && isEmpty(firstName) === false && isEmpty(lastName) === false ?

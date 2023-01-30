@@ -45,7 +45,7 @@ const Home = (props) => {
 
           <p>Future improvements are the ability to create an account, review titles and mark which titles have been read.</p>
 
-          <p>An electronic only version is available at <a href={setLocalPath("https://homeopape.com")} target="_blank" rel="noopener noreferrer">Homeopape</a>.</p>
+          <p>An electronic only version is available at <a href={setLocalPath("https://homeopape.com")} target="_blank" rel="noopener">Homeopape</a>.</p>
 
           <p>If you have any comments, questions or suggestions, please email philipkdickfans[at]gmail[dot]com</p>
 
