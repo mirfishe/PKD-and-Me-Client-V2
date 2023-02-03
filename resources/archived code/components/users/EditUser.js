@@ -340,16 +340,16 @@ const EditUser = () => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null} */}
+      { /* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
 
         <React.Fragment>
-          {/* <NavItem> */}
-          {/* <NavItem className="mx-3 my-2">
-            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></a> */}
+          { /* <NavItem> */}
+          { /* <NavItem className="mx-3 my-2">
+            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></a> */ }
           <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></NavLink>
-          {/* </NavItem> */}
+          { /* </NavItem> */}
         </React.Fragment>
 
         : null}

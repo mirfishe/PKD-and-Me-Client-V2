@@ -413,12 +413,12 @@ const EditUserReview = (props) => {
             // // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-            // dispatch(addStateUserReview([{ reviewID: dataRecord.reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: dataRecord.titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, ranking: dataRecord.ranking, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, owned: dataRecord.owned, datePurchased: dataRecord.datePurchased, active: dataRecord.active, userReviewActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
+            // dispatch(addStateUserReview([{ reviewID: dataRecord.reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: dataRecord.titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, ranking: dataRecord.ranking, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, owned: dataRecord.owned, datePurchased: dataRecord.datePurchased, active: dataRecord.active, userReviewActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate /* , title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } */, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate /* , user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } */, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
 
             // // ? Add to local storage also? -- 03/06/2021 MF
 
             // // * Recalculate ratings
-            // let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*dataRecord.*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
+            // let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /* dataRecord. */ titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
             // let userReviews = [];
 
@@ -438,7 +438,7 @@ const EditUserReview = (props) => {
             // // ? Get the latest from state? -- 03/06/2021 MF
             // // ? Update the state user review array? -- 03/06/2021 MF
             // if (isEmpty(dataRecord.rating) === false) {
-            //   // userReviews.push({ reviewID: dataRecord.reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: dataRecord.titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, ranking: dataRecord.ranking, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, active: dataRecord.active, userReviewActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active });
+            //   // userReviews.push({ reviewID: dataRecord.reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: dataRecord.titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, ranking: dataRecord.ranking, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, active: dataRecord.active, userReviewActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate /* , title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } */, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate /* , user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } */, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active });
             //   userReviews.push({ reviewID: dataRecord.reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: dataRecord.titleID, rating: dataRecord.rating });
             // };
 
@@ -468,13 +468,13 @@ const EditUserReview = (props) => {
             // };
 
             // // * Update the title ratings. -- 03/06/2021 MF
-            // dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+            // dispatch(updateStateTitleRating({ /* titleItemIndex: titleItemIndex, */ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === dataRecord.titleID);
 
             // if (dataRecord.active === true || dataRecord.active === 1) {
 
-            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: dataRecord.reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: dataRecord.titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, userReviewActive: dataRecord.active, userReviewUpdateDate: getDateTime() }));
+            //   dispatch(updateStateChecklist({ /* checklistListIndex: checklistListIndex, */ reviewID: dataRecord.reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: dataRecord.titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, userReviewActive: dataRecord.active, userReviewUpdateDate: getDateTime() }));
 
             // };
 
@@ -662,22 +662,22 @@ const EditUserReview = (props) => {
             // setLongReview(dataRecord.longReview);
             setActive(dataRecord.active);
 
-            // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === /*dataRecord.*/titleID));
+            // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === /* dataRecord. */ titleID));
             // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
 
 
-            // // let titleItemIndex = titleListState.findIndex(title => title.titleID === /*dataRecord.*/titleID);
+            // // let titleItemIndex = titleListState.findIndex(title => title.titleID === /* dataRecord. */ titleID);
 
             // // user: {userID: userID, firstName: firstName, lastName: lastName, email: email, updatedBy: updatedBy,  admin: admin, active: userActive}
 
             // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-            // dispatch(updateStateUserReview({ /*userReviewItemIndex: userReviewItemIndex,*/ reviewID: reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /*dataRecord.*/titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, ranking: dataRecord.ranking, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, owned: dataRecord.owned, datePurchased: dataRecord.datePurchased, active: dataRecord.active, userReviewActive: dataRecord.active, updateDate: getDateTime()/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ }));
+            // dispatch(updateStateUserReview({ /* userReviewItemIndex: userReviewItemIndex, */ reviewID: reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /* dataRecord. */ titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, ranking: dataRecord.ranking, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, owned: dataRecord.owned, datePurchased: dataRecord.datePurchased, active: dataRecord.active, userReviewActive: dataRecord.active, updateDate: getDateTime() /* , title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } */ }));
 
             // // ? Add to local storage also? -- 03/06/2021 MF
 
             // // * Recalculate ratings
-            // let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /*dataRecord.*/titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
+            // let userReviewsList = userReviewListState.filter(userReview => userReview.titleID === /* dataRecord. */ titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
             // let userReviews = [];
 
@@ -705,11 +705,11 @@ const EditUserReview = (props) => {
 
             // };
 
-            // // userReviews.push({ reviewID: reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /*dataRecord.*/titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, active: dataRecord.active, userReviewActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/ });
+            // // userReviews.push({ reviewID: reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /* dataRecord. */ titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, rating: dataRecord.rating, shortReview: dataRecord.shortReview, longReview: dataRecord.longReview, active: dataRecord.active, userReviewActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate /* , title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } */ });
 
             // if (dataRecord.active === true || dataRecord.active === 1 && isEmpty(dataRecord.rating) === false) {
 
-            //   userReviews.push({ reviewID: parseInt(reviewID), userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /*dataRecord.*/titleID, rating: dataRecord.rating });
+            //   userReviews.push({ reviewID: parseInt(reviewID), userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /* dataRecord. */ titleID, rating: dataRecord.rating });
 
             // };
 
@@ -739,17 +739,17 @@ const EditUserReview = (props) => {
             // };
 
             // // * Update the title ratings. -- 03/06/2021 MF
-            // dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+            // dispatch(updateStateTitleRating({ /* titleItemIndex: titleItemIndex, */ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /*dataRecord.*/titleID);
+            // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /* dataRecord. */ titleID);
 
             // if (dataRecord.active === true || dataRecord.active === 1) {
 
-            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /*dataRecord.*/titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, userReviewActive: dataRecord.active, userReviewUpdateDate: getDateTime() }));
+            //   dispatch(updateStateChecklist({ /* checklistListIndex: checklistListIndex, */ reviewID: reviewID, userID: dataRecord.userID, updatedBy: dataRecord.updatedBy, titleID: /* dataRecord. */ titleID, read: dataRecord.read, dateRead: dataRecord.dateRead, userReviewActive: dataRecord.active, userReviewUpdateDate: getDateTime() }));
 
             // } else {
 
-            //   dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: null, userID: null, updatedBy: null, titleID: /*dataRecord.*/titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
+            //   dispatch(updateStateChecklist({ /* checklistListIndex: checklistListIndex, */ reviewID: null, userID: null, updatedBy: null, titleID: /* dataRecord. */ titleID, read: null, dateRead: null, userReviewActive: null, userReviewCreatedDate: null, userReviewUpdateDate: null }));
 
             // };
 
@@ -882,7 +882,7 @@ const EditUserReview = (props) => {
               // };
 
               // // * Update the title ratings. -- 03/06/2021 MF
-              // dispatch(updateStateTitleRating({ /*titleItemIndex: titleItemIndex,*/ titleID: userReviewItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
+              // dispatch(updateStateTitleRating({ /* titleItemIndex: titleItemIndex, */ titleID: userReviewItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
             } else {
 
@@ -944,8 +944,8 @@ const EditUserReview = (props) => {
 
                     <FormGroup>
                       <Label for="rdoRating" className="me-4">Rating</Label>
-                      {/* <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => { setRdoRating(newValue); }} /> */}
-                      {/* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
+                      { /* <Rating name="rdoRating" defaultValue={0} max={10} value={rdoRating} onChange={(event, newValue) => { setRdoRating(newValue); }} /> */}
+                      { /* <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 1</Label>
                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 2</Label>
                     
@@ -963,7 +963,7 @@ const EditUserReview = (props) => {
                                     
                 <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 9</Label>
                                     
-                <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 10</Label> */}
+                <Label for="rdoRating"><Input type="radio" id="rdoRating" value={rdoRating} onChange={(event) => {setState({rdoRating: event.target.value});}} /> 10</Label> */ }
                     </FormGroup>
 
                   </Col>
@@ -1031,7 +1031,7 @@ const EditUserReview = (props) => {
 
                 }
 
-                {/* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
+                { /* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
 
               </span>
 

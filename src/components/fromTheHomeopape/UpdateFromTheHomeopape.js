@@ -738,7 +738,7 @@ const FromTheHomeopape = () => {
 
             : null}
 
-          {/* {isNonEmptyArray(homeopapeItemsReview) === true ?
+          { /* {isNonEmptyArray(homeopapeItemsReview) === true ?
 
             <React.Fragment>
 
@@ -757,7 +757,7 @@ const FromTheHomeopape = () => {
 
             </React.Fragment>
 
-            : null} */}
+            : null} */ }
 
         </Col>
 

@@ -569,7 +569,7 @@ const EditTitle = (props) => {
 
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                // dispatch(addStateTitle([{ titleID: dataRecord.titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
+                // dispatch(addStateTitle([{ titleID: dataRecord.titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate /* , category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } */, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
 
                 // // ? Add to local storage also? -- 03/06/2021 MF
 
@@ -889,7 +889,7 @@ const EditTitle = (props) => {
                 // // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
 
                 // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                // dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                // dispatch(updateStateTitle({ /* titleItemIndex: titleItemIndex, */ titleID: titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, updateDate: getDateTime() /* , category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } */ }));
 
                 // // ? Update local storage also? -- 03/06/2021 MF
 
@@ -903,7 +903,7 @@ const EditTitle = (props) => {
                 //       // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
                 //       // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                //       dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
+                //       dispatch(updateStateEdition({ /* editionItemIndex: editionItemIndex, */ editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
 
                 //     };
 
@@ -928,7 +928,7 @@ const EditTitle = (props) => {
 
                 //   // dispatch(deleteStateURL(urlListIndex));
                 //   dispatch(deleteStateURL({ linkID: titleID, linkType: "titles" }));
-                //   dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: dataRecord.titleURL, linkType: "titles", linkID: titleID, linkTypeNameID: dataRecord.categoryID, linkTypeName: categoryName.category }]));
+                //   dispatch(addStateURL([{ /* urlListIndex: urlListIndex, */ linkName: dataRecord.titleURL, linkType: "titles", linkID: titleID, linkTypeNameID: dataRecord.categoryID, linkTypeName: categoryName.category }]));
 
                 // };
 
@@ -1029,7 +1029,7 @@ const EditTitle = (props) => {
 
               //     // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
-              //     deleteEdition(editionList[i].editionID/*, editionItemIndex*/);
+              //     deleteEdition(editionList[i].editionID /* , editionItemIndex */);
 
               //   };
 
@@ -1069,7 +1069,7 @@ const EditTitle = (props) => {
   };
 
 
-  // const deleteEdition = (editionID/*, editionItemIndex*/) => {
+  // const deleteEdition = (editionID /* , editionItemIndex */) => {
 
   //   clearMessages();
   //   setEditionRecordDeleted(null);
@@ -1220,7 +1220,7 @@ const EditTitle = (props) => {
                         {categoryList.map((category) => {
                           return (
                             <React.Fragment key={category.categoryID}>
-                              {/* {getCategoryIDFromCategoryName(categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
+                              { /* {getCategoryIDFromCategoryName(categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
                               <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
                             </React.Fragment>
                           );
@@ -1262,7 +1262,7 @@ const EditTitle = (props) => {
 
                 <FormGroup>
                   <Label for="txtImageName">Image Name</Label>
-                  <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { /*createImageName(txtTitleName);*/ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
+                  <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { /* createImageName(txtTitleName); */ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
                   <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
                   {isEmpty(txtImageName) === false ? <img src={txtImageName} alt={txtTitleName} className="cover-thumbnail" /> : <Image size="150" className="no-image-icon" />}
                 </FormGroup>
@@ -1304,7 +1304,7 @@ const EditTitle = (props) => {
                   </React.Fragment>
                 }
 
-                {/* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
+                { /* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
 
               </span>
 

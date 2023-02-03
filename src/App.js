@@ -718,13 +718,13 @@ const App = (props) => {
 
             : null}
 
-          {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
+          { /* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
 
             <NavItem>
               <EditUser />
             </NavItem>
 
-            : null} */}
+            : null} */ }
 
           <NavItem className="mx-3 my-2">
             <a href="https://pkdickbooks.com" target="_blank" rel="noopener"><NavbarText>Philip K. Dick Bookshelf</NavbarText></a>
@@ -734,42 +734,42 @@ const App = (props) => {
             <a href="https://philipdick.com" target="_blank" rel="noopener"><NavbarText>Philip K. Dick Site</NavbarText></a>
           </NavItem>
 
-          {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true && isEmpty(firstName) === false && isEmpty(lastName) === false ?
+          { /* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true && isEmpty(firstName) === false && isEmpty(lastName) === false ?
 
             <NavItem className="mx-3 my-2">
               <NavbarText>Welcome, {firstName} {lastName}.</NavbarText>
             </NavItem>
 
-            : null} */}
+            : null} */ }
 
-          {/* {applicationAllowUserInteractions === true && isEmpty(checklistLoaded) === false && checklistLoaded === true ?
+          { /* {applicationAllowUserInteractions === true && isEmpty(checklistLoaded) === false && checklistLoaded === true ?
 
             <NavItem>
               <Checklist displayButton={true} />
             </NavItem>
 
-            : null} */}
+            : null} */ }
 
-          {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
+          { /* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddTitleSuggestion displayButton={true} />
             </NavItem>
 
-            : null} */}
+            : null} */ }
 
-          {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
+          { /* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem>
               <AddComment displayButton={true} />
             </NavItem>
 
-            : null} */}
+            : null} */ }
 
           {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false ?
 
             <NavItem className="mx-3 my-2">
-              {/* <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span> */}
+              { /* <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={() => logOut()}>Log Out</Button></span> */}
               <a href="#" onClick={() => logOut()}><NavbarText>Log Out</NavbarText></a>
             </NavItem>
 
@@ -824,7 +824,7 @@ const App = (props) => {
 
         : null}
 
-      {/* {showAllCategories === true || showAllMedia === true || showAllTitles === true || showAllEditions === true || showAllMenuItems === true ?
+      { /* {showAllCategories === true || showAllMedia === true || showAllTitles === true || showAllEditions === true || showAllMenuItems === true ?
 
         <Navbar>
           <Nav>
@@ -864,9 +864,9 @@ const App = (props) => {
           </Nav>
         </Navbar>
 
-        : null} */}
+        : null} */ }
 
-      {/* {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && isEmpty(admin) === false && admin === true ?
+      { /* {(showEditCategory === true || showEditMedia === true || showEditTitle === true || showEditEdition === true || showAllMenuItems === true) && isEmpty(admin) === false && admin === true ?
 
         <Navbar>
           <Nav>
@@ -898,7 +898,7 @@ const App = (props) => {
           </Nav>
         </Navbar>
 
-        : null} */}
+        : null} */ }
 
       {(showUserPhysicalOnly === true || showUserElectronicOnly === true || showAllMenuItems === true) && isEmpty(admin) === false && admin === true ?
 
@@ -947,7 +947,7 @@ const App = (props) => {
 
             <Row className="text-center">
 
-              {/* {isEmpty(linkItem) === false && isEmpty(linkItem.linkName)===false ? <Alert color="info">{JSON.stringify(linkItem, null, 1)}</Alert> : null} */}
+              { /* {isEmpty(linkItem) === false && isEmpty(linkItem.linkName)===false ? <Alert color="info">{JSON.stringify(linkItem, null, 1)}</Alert> : null} */}
 
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
@@ -963,7 +963,7 @@ const App = (props) => {
 
             <Routes>
 
-              {/* // * Set the default page from the defaultPageComponent from environment. -- 03/06/2021 MF */}
+              { /* // * Set the default page from the defaultPageComponent from environment. -- 03/06/2021 MF */}
               {defaultPageComponent === "Home" ? <Route path="/" element={<Home redirectPage={redirectPage} />} /> : null}
               {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />} /> : null}
               {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />} /> : null}
@@ -974,10 +974,10 @@ const App = (props) => {
               <Route path="/about" element={<About redirectPage={redirectPage} />} />
               <Route path="/homeopape" element={<Homeopape redirectPage={redirectPage} />} />
 
-              {/* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}
-              {/* {isEmpty(admin) === false && admin === true ?
+              { /* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}
+              { /* {isEmpty(admin) === false && admin === true ?
 
-                <React.Fragment> */}
+                <React.Fragment> */ }
 
               <Route path="/socialMedia" element={<FormatPost />} />
 
@@ -997,26 +997,26 @@ const App = (props) => {
 
               <Route path="/amazon" element={<Amazon />} />
 
-              {/* </React.Fragment>
+              { /* </React.Fragment>
 
-                : null} */}
+                : null} */ }
 
               <Route path="/dickian" element={<Dickian redirectPage={redirectPage} />} />
 
               <Route path="/categories" element={<Category redirectPage={redirectPage} />} />
               <Route path="/media" element={<Media redirectPage={redirectPage} />} />
 
-              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
+              { /* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
               <Route path="/titles" element={<Titles redirectPage={redirectPage} />} />
-              {/* <Route path="/titles/:category" element={<Titles />} />
-              <Route path="/title/:title" element={<Title />} /> */}
+              { /* <Route path="/titles/:category" element={<Titles />} />
+              <Route path="/title/:title" element={<Title />} /> */ }
 
-              {/* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
+              { /* // * This route no longer works. Fixed. -- 03/06/2021 MF */}
               <Route path="/editions" element={<Editions redirectPage={redirectPage} />} />
-              {/* <Route path="/editions/:title" element={<Editions />} />
-               <Route path="/editions/:media" element={<Editions />} /> */}
+              { /* <Route path="/editions/:title" element={<Editions />} />
+               <Route path="/editions/:media" element={<Editions />} /> */ }
 
-              {/* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
+              { /* // ! These need to stay at the bottom of the list so that the links above will work properly. -- 03/06/2021 MF */}
               {isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false && linkItem.linkType === "categories" ? <Route path="/:linkName" element={<Titles redirectPage={redirectPage} linkItem={linkItem} />} /> : null}
 
               {isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false && linkItem.linkType === "titles" ? <Route path="/:linkName" element={<Title redirectPage={redirectPage} linkItem={linkItem} />} /> : null}

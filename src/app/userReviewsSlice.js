@@ -454,6 +454,6 @@ const userReviewsSlice = createSlice({
   }
 });
 
-export const { loadArrayUserReviews, /* addStateUserReview, updateStateUserReview, deleteStateUserReview, */ /* setUserReviewsDataOffline, */ /*loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings,*/ setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings /* , setUserReviewsRatingsDataOffline */ } = userReviewsSlice.actions;
+export const { loadArrayUserReviews, /* addStateUserReview, updateStateUserReview, deleteStateUserReview, */ /* setUserReviewsDataOffline, */ /* loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings, */ setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings /* , setUserReviewsRatingsDataOffline */ } = userReviewsSlice.actions;
 
 export default userReviewsSlice.reducer;

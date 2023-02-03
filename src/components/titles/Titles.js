@@ -408,7 +408,7 @@ const Titles = (props) => {
       <Row>
         <Col className="text-center" xs="12">
 
-          {/* {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
+          { /* {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
           {isEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
 
         </Col>
@@ -438,7 +438,7 @@ const Titles = (props) => {
             return (
               <Col key={title.titleID} xs="4" className="mb-4">
 
-                {/* <Link to={`${title.titleID}`}>{title.titleID}</Link>
+                { /* <Link to={`${title.titleID}`}>{title.titleID}</Link>
                     <Link to={`${title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}`}>{title.titleName}</Link>
                     <Link to={title.titleID}>{title.titleID}</Link>
                     <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
@@ -446,23 +446,23 @@ const Titles = (props) => {
                     <Link to={`/editions/${title.titleID}`}>{title.titleID}</Link>
                     <Link to={`/editions/${title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}`}>{title.titleName}</Link>
                     <Link to={title.titleID}>{title.titleID}</Link>
-                    <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link> */}
+                    <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link> */ }
 
-                {/* <Card key={title.titleID}>
+                { /* <Card key={title.titleID}>
 
                     {isEmpty(categoryParam) === false ?
                     
                     <CardHeader>
-                        <Link to={encodeURL(title.category)}>{title.category}</Link> */}
+                        <Link to={encodeURL(title.category)}>{title.category}</Link> */ }
 
-                {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
-                        {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
+                { /* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
+                        {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */ }
 
-                {/* </CardHeader>  
+                { /* </CardHeader>  
 
-                    : null} */}
+                    : null} */ }
 
-                {/* <CardBody>
+                { /* <CardBody>
 
                         <Link to={title.titleURL}>
                         {isEmpty(title.imageName) === false ? <CardImg onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName, profileType)} alt={title.titleName} /> : <Image className="no-image-icon" />}
@@ -470,14 +470,14 @@ const Titles = (props) => {
                         <CardText>{title.authorFirstName} {title.authorLastName}</CardText>
 
                     </CardBody>
-                    <CardFooter> */}
+                    <CardFooter> */ }
 
-                {/* <Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link> */}
+                { /* <Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link> */}
 
-                {/* <Link to={title.titleURL}>{title.titleName}</Link>
+                { /* <Link to={title.titleURL}>{title.titleName}</Link>
                         {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null}
                     </CardFooter>
-                    </Card> */}
+                    </Card> */ }
 
                 <Card key={title.titleID}>
 
@@ -502,7 +502,7 @@ const Titles = (props) => {
                     <Col className="col-md-8">
                       <CardBody>
 
-                        {/* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
+                        { /* <CardText><Link to={title.replaceAll("-", "|").replaceAll(" ", "-")}>{title.category}</Link></CardText> */}
 
                         <CardText><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(title.titleURL); }}>{title.titleName}</Link>
 
@@ -528,8 +528,8 @@ const Titles = (props) => {
 
                       <CardText><Link to={encodeURL(title.category)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(title.category)); }}>{title.category}</Link></CardText>
 
-                      {/* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
-                        {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */}
+                      { /* <Link to={title.titleName.replaceAll("-", "|").replaceAll(" ", "-")}>{title.titleName}</Link>
+                        {isEmpty(title.publicationDate) === false ? <span> <small>({displayYear(title.publicationDate)})</small></span> : null} */ }
 
                     </CardFooter>
 

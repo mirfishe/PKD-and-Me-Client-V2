@@ -73,7 +73,7 @@ const Home = (props) => {
         </Col>
       </Row>
 
-      {/* <Row className="my-4">
+      { /* <Row className="my-4">
         <Col xs="8">
 
           <TitleCard redirectPage={redirectPage} randomTitle={true} showShortDescription={true} headerText="From the Bibliography" />
@@ -84,7 +84,7 @@ const Home = (props) => {
           <FromTheHomeopape headerText="From the Homeopape" />
           
         </Col>
-      </Row> */}
+      </Row> */ }
 
     </Container>
   );

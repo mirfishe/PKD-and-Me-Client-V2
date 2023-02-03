@@ -234,6 +234,6 @@ const userSlice = createSlice({
   }
 });
 
-export const { loadUserData, setSessionToken, loadArrayChecklist, /*addStateChecklist, updateStateChecklist, */ /* setChecklistDataOffline */ } = userSlice.actions;
+export const { loadUserData, setSessionToken, loadArrayChecklist, /* addStateChecklist, updateStateChecklist, */ /* setChecklistDataOffline */ } = userSlice.actions;
 
 export default userSlice.reducer;

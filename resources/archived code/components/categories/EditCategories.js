@@ -134,12 +134,12 @@ const EditCategories = (props) => {
 
                       <Col xs="10">
                         <Input type="text" id={"txtCategory" + category.categoryID} value={category.category} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
-                        {/* {isEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
+                        { /* {isEmpty(errCategory) === false ? <Alert color="danger">{errCategory}</Alert> : null} */}
                       </Col>
 
                       <Col xs="2">
                         <Input type="text" id={"txtSortID" + category.categoryID} value={category.sortID} onChange={(event) => { console.log(componentName, getDateTime(), "event.target.value", event.target.value); console.log(event.target); }} />
-                        {/* {isEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
+                        { /* {isEmpty(errSortID) === false ? <Alert color="danger">{errSortID}</Alert> : null} */}
                       </Col>
 
                     </FormGroup>

@@ -90,8 +90,8 @@ const Category = (props) => {
 
             : null}
 
-          {/* {isEmpty(admin) === false && admin === true ? <EditCategory displayButton={true} /> : null} */}
-          {/* {isEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null} */}
+          { /* {isEmpty(admin) === false && admin === true ? <EditCategory displayButton={true} /> : null} */}
+          { /* {isEmpty(admin) === false && admin === true ? <EditCategories displayButton={true} /> : null} */}
 
         </Col>
       </Row>

@@ -604,7 +604,7 @@ const Editions = (props) => {
             return (
               <Col key={edition.editionID} xs="6" className="mb-4">
 
-                {/* <Card key={edition.editionID}>
+                { /* <Card key={edition.editionID}>
 
                     {isEmpty(mediaParam) === false ?
                     
@@ -637,7 +637,7 @@ const Editions = (props) => {
                         {isEmpty(edition.editionPublicationDate) === false ? <span> <small>({displayYear(edition.title.publicationDate)})</small></span> : null}
 
                     </CardFooter>
-                    </Card> */}
+                    </Card> */ }
 
                 <Card key={edition.editionID}>
 
@@ -660,8 +660,8 @@ const Editions = (props) => {
 
                             <React.Fragment>
 
-                              {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
-                              {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
+                              { /* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
+                              { /* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
 
                               <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                                 {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={edition.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}
@@ -691,7 +691,7 @@ const Editions = (props) => {
 
                         {isEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {displayDate(edition.editionPublicationDate)}</CardText> : null}
 
-                        {/* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
+                        { /* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
                         <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                           <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
@@ -703,7 +703,7 @@ const Editions = (props) => {
                           <p className="my-2">Find Copy</p>
                         </a>
 
-                      } */}
+                      } */ }
 
                         {isEmpty(edition.textLinkFullAPI) === false ?
 

@@ -354,18 +354,18 @@ const AddTitleSuggestion = (props) => {
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title Suggestion</Button></span> : null}
+      { /* {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title Suggestion</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */ }
 
       {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) ?
 
         <React.Fragment>
-          {/* <NavItem> */}
-          {/* <NavItem className="mx-3 my-2">
-            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Title Suggestion</NavbarText></a> */}
+          { /* <NavItem> */}
+          { /* <NavItem className="mx-3 my-2">
+            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Title Suggestion</NavbarText></a> */ }
           <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Title Suggestion</NavbarText></NavLink>
-          {/* </NavItem> */}
+          { /* </NavItem> */}
         </React.Fragment>
 
         : null}

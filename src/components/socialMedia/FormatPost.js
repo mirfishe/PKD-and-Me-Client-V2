@@ -212,9 +212,9 @@ const FormatPost = () => {
             <Button outline size="lg" color="secondary">Reset</Button>
             <Button outline size="lg" color="secondary">Cancel</Button>
 
-            {/* <FormGroup className="text-center">
+            { /* <FormGroup className="text-center">
                             {isEmpty(formattedPost) === false ? <Alert color="info">{formattedPost}</Alert> : null}
-                        </FormGroup> */}
+                        </FormGroup> */ }
 
             {isNonEmptyArray(formattedPosts) === true ?
 

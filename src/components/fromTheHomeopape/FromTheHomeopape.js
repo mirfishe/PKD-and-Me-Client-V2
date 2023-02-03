@@ -149,12 +149,12 @@ const FromTheHomeopape = (props) => {
             return (
               <React.Fragment key={index}>
 
-                {/* {show === true ? */}
+                { /* {show === true ? */}
 
                 <Row className="mt-3">
                   <Col xs="12">
 
-                    {/* <a href={itemLink} target="_blank" rel="noopener noreferrer nofollow"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
+                    { /* <a href={itemLink} target="_blank" rel="noopener noreferrer nofollow"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
 
                     <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{Parse(homeopapeItem.itemTitle)}</a><br />
 
@@ -163,7 +163,7 @@ const FromTheHomeopape = (props) => {
                   </Col>
                 </Row>
 
-                {/* : null} */}
+                { /* : null} */}
 
               </React.Fragment>
             );
