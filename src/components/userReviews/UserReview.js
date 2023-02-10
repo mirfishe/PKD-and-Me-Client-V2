@@ -113,7 +113,7 @@ const UserReview = (props) => {
   return (
     <Container className="my-4">
 
-      { /* // * This is not filtering correctly if there are reviews with no text or ratings in them; only read and dateRead reviews
+      {/* // * This is not filtering correctly if there are reviews with no text or ratings in them; only read and dateRead reviews
             {isEmpty(userReviews) === false ? */ }
 
       <Row>
@@ -131,7 +131,7 @@ const UserReview = (props) => {
         </Col>
       </Row>
 
-      { /* : null} */}
+      {/* : null} */}
 
       {isNonEmptyArray(userReviews) === true ?
 
@@ -194,7 +194,7 @@ const UserReview = (props) => {
                     <Row>
                       <Col xs="5">
 
-                        { /* {isEmpty(userReview.rating) === false ? <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={userReview.rating} /> : null} */}
+                        {/* {isEmpty(userReview.rating) === false ? <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={userReview.rating} /> : null} */}
 
                       </Col>
                       <Col xs="7">

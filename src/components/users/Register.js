@@ -394,16 +394,16 @@ const Register = () => {
   return (
     <React.Fragment>
 
-      { /* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Register</Button></span> : null} */}
+      {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Register</Button></span> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(sessionToken) === true ?
 
         <React.Fragment>
-          { /* <NavItem> */}
-          { /* <NavItem className="mx-3 my-2">
+          {/* <NavItem> */}
+          {/* <NavItem className="mx-3 my-2">
             <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Register</NavbarText></a> */ }
           <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Register</NavbarText></NavLink>
-          { /* </NavItem> */}
+          {/* </NavItem> */}
         </React.Fragment>
 
         : null}
@@ -441,7 +441,7 @@ const Register = () => {
               <InputGroup>
                 <Input type={showPassword} id="txtPassword" value={txtPassword} onChange={(event) => { setTxtPassword(event.target.value); }} />
                 <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
-                { /* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
+                {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
               </InputGroup>
               {isEmpty(errPassword) === false ? <Alert color="danger">{errPassword}</Alert> : null}
             </FormGroup>

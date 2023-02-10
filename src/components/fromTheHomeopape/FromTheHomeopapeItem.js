@@ -721,7 +721,7 @@ const FromTheHomeopapeItem = (props) => {
       <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
       <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
-      { /* {show === true ? */}
+      {/* {show === true ? */}
 
       <Row className="mb-5">
 
@@ -733,7 +733,7 @@ const FromTheHomeopapeItem = (props) => {
           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
 
           <div>
-            { /* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
+            {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
             {Parse(homeopapeItem.itemTitle)}<br />
             <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{homeopapeItem.itemLinkFormatted}</a><br />
             ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
@@ -748,7 +748,7 @@ const FromTheHomeopapeItem = (props) => {
 
       </Row>
 
-      { /* : null} */}
+      {/* : null} */}
 
     </React.Fragment>
   );

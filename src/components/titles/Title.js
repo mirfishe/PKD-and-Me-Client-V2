@@ -543,7 +543,7 @@ const Title = (props) => {
 
                       {isEmpty(title.publicationDate) === false ? <span className="ms-2 smaller-text"> ({title.publicationDate.includes("-01-01") === true ? <React.Fragment>{displayYear(title.publicationDate)}</React.Fragment> : <React.Fragment>{displayDate(title.publicationDate)}</React.Fragment>})</span> : null}
 
-                      { /* {isEmpty(title.category) === false ? <span className="ms-4 smaller-text"><Link to={encodeURL(title.category)}>{title.category}</Link>
+                      {/* {isEmpty(title.category) === false ? <span className="ms-4 smaller-text"><Link to={encodeURL(title.category)}>{title.category}</Link>
                             </span> : null} */ }
 
                       {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
@@ -572,7 +572,7 @@ const Title = (props) => {
 
                       <React.Fragment>
 
-                        { /* <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} /> */}
+                        {/* <Rating name="rdoRating" precision={0.1} readOnly defaultValue={0} max={10} value={title.userReviewAverage} /> */}
                         <p><small>out of {title.userReviewCount} review(s)</small></p>
 
                       </React.Fragment>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { Image } from 'react-bootstrap-icons';
+import { Image } from "react-bootstrap-icons";
 import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString, addErrorLog } from "shared-functions";
 import { getASIN, removeOnePixelImage } from "../../utilities/ApplicationFunctions";
 // import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
@@ -749,7 +749,7 @@ const EditEdition = (props) => {
               // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
               // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-              // dispatch(updateStateEdition({ /* editionItemIndex: editionItemIndex, */ editionID: editionID, titleID: dataRecord.titleID, mediaID: dataRecord.mediaID, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, ASIN: dataRecord.ASIN, textLinkShort: dataRecord.textLinkShort, textLinkFull: dataRecord.textLinkFull, imageLinkSmall: dataRecord.imageLinkSmall, imageLinkMedium: dataRecord.imageLinkMedium, imageLinkLarge: dataRecord.imageLinkLarge, textImageLink: dataRecord.textImageLink, active: dataRecord.active, editionActive: dataRecord.active, updateDate: getDateTime() /* , medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } */ }));
+              // dispatch(updateStateEdition({/* editionItemIndex: editionItemIndex, */ editionID: editionID, titleID: dataRecord.titleID, mediaID: dataRecord.mediaID, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, ASIN: dataRecord.ASIN, textLinkShort: dataRecord.textLinkShort, textLinkFull: dataRecord.textLinkFull, imageLinkSmall: dataRecord.imageLinkSmall, imageLinkMedium: dataRecord.imageLinkMedium, imageLinkLarge: dataRecord.imageLinkLarge, textImageLink: dataRecord.textImageLink, active: dataRecord.active, editionActive: dataRecord.active, updateDate: getDateTime() /* , medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } */ }));
 
               // // ? Add to local storage also? -- 03/06/2021 MF
 
@@ -1079,7 +1079,7 @@ const EditEdition = (props) => {
 
                 }
 
-                { /* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
+                {/* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
 
               </span>
 

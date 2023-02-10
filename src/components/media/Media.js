@@ -108,7 +108,7 @@ const Media = (props) => {
 
             : null}
 
-          { /* {isEmpty(admin) === false && admin === true ? <EditMedia displayButton={true} /> : null} */}
+          {/* {isEmpty(admin) === false && admin === true ? <EditMedia displayButton={true} /> : null} */}
 
         </Col>
       </Row>
