@@ -45,7 +45,7 @@ function LoadApplicationSettings() {
 
     let queryStringData = getQueryStringData();
 
-    // * Retreive the queryString values if there are any. -- 05/10/2022 MF
+    // * Retrieve the queryString values if there are any. -- 05/10/2022 MF
     let profileTypeQueryString = isEmpty(queryStringData) === false && isEmpty(queryStringData.profileType) === false ? queryStringData.profileType : null;
 
     if (isEmpty(profileTypeQueryString) === false) {
