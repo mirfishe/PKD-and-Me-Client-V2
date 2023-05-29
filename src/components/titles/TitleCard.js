@@ -30,7 +30,7 @@ const TitleCard = (props) => {
   let showShortDescription = isEmpty(props) === false && isEmpty(props.showShortDescription) === false ? props.showShortDescription : "";
   let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
-  const [titleParam, setTitleParam] = useState(null);
+  // const [titleParam, setTitleParam] = useState(null);
   const [titleList, setTitleList] = useState([]);
 
   const [errTitleMessage, setErrTitleMessage] = useState("");
@@ -38,9 +38,11 @@ const TitleCard = (props) => {
 
   useEffect(() => {
 
+    let newTitleParam = null;
+
     if (isEmpty(linkName) === false) {
 
-      setTitleParam(linkName);
+      newTitleParam = linkName;
 
     };
 
@@ -50,30 +52,30 @@ const TitleCard = (props) => {
 
     if (randomTitle === true) {
 
-      setTitleParam(Math.floor(Math.random() * randomTitleList.length));
+      newTitleParam = Math.floor(Math.random() * randomTitleList.length);
 
     };
 
     let newTitleList = [];
 
-    // * If titleParam is a number, then it's the titleID
-    if (isNaN(titleParam) === false) {
+    // * If newTitleParam is a number, then it's the titleID
+    if (isNaN(newTitleParam) === false) {
 
       if (randomTitle === true) {
 
         // * Active titles were filtered out above
-        newTitleList = randomTitleList.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
+        newTitleList = randomTitleList.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(newTitleParam));
 
       } else {
 
-        newTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(titleParam));
+        newTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleID === parseInt(newTitleParam));
 
       };
 
-    } else if (isEmpty(titleParam) === false) {
+    } else if (isEmpty(newTitleParam) === false) {
 
-      // * If titleParam is not a number, then it's the title name
-      newTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === titleParam);
+      // * If newTitleParam is not a number, then it's the title name
+      newTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.titleURL === newTitleParam);
 
     } else {
 
@@ -83,9 +85,11 @@ const TitleCard = (props) => {
 
     };
 
+    // setTitleParam(newTitleParam);
+
     setTitleList(newTitleList);
 
-  }, [linkName, arrayTitles]);
+  }, [linkName, arrayTitles, randomTitle]);
 
 
   useEffect(() => {
