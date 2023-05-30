@@ -57,19 +57,23 @@ const FromTheHomeopape = () => {
 
   useEffect(() => {
 
-    // fetchNews();
-    // fetchNews2();
+    if (isEmpty(baseURL) === false) {
 
-    // * Handled in a cron job on the server now. -- 06/26/2021 MF
-    // fetchNews();
+      // fetchNews();
+      // fetchNews2();
 
-    getNews();
+      // * Handled in a cron job on the server now. -- 06/26/2021 MF
+      // fetchNews();
 
-    getNewsPosted();
+      getNews();
 
-    getNewsReview();
+      getNewsPosted();
 
-  }, []);
+      getNewsReview();
+
+    };
+
+  }, [baseURL]);
 
 
   useEffect(() => {
@@ -370,9 +374,9 @@ const FromTheHomeopape = () => {
 
   const getNews = () => {
 
-    let url = baseURL + "fromthehomeopape/top/50";
+    let url = baseURL + "fromthehomeopape/top/50/";
     // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // // let url = baseURL + "fromthehomeopape/top/10";
+    // // let url = baseURL + "fromthehomeopape/top/10/";
 
     fetch(url, {
       method: "GET",
@@ -424,7 +428,7 @@ const FromTheHomeopape = () => {
 
     let url = baseURL + "fromthehomeopape/posted";
     // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // // let url = baseURL + "fromthehomeopape/top/10";
+    // // let url = baseURL + "fromthehomeopape/top/10/";
 
     fetch(url, {
       method: "GET",

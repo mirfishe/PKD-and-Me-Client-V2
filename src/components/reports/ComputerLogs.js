@@ -34,9 +34,13 @@ const ComputerLogs = () => {
 
   useEffect(() => {
 
-    getComputerLogs();
+    if (isEmpty(baseURL) === false) {
 
-  }, []);
+      getComputerLogs();
+
+    };
+
+  }, [baseURL]);
 
 
   useEffect(() => {

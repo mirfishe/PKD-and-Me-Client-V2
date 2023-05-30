@@ -34,9 +34,13 @@ const BrokenLinks = () => {
 
   useEffect(() => {
 
-    getBrokenLinks();
+    if (isEmpty(baseURL) === false) {
 
-  }, []);
+      getBrokenLinks();
+
+    };
+
+  }, [baseURL]);
 
 
   useEffect(() => {

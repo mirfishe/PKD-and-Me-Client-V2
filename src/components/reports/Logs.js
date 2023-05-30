@@ -34,9 +34,13 @@ const Logs = () => {
 
   useEffect(() => {
 
-    getLogs();
+    if (isEmpty(baseURL) === false) {
 
-  }, []);
+      getLogs();
+
+    };
+
+  }, [baseURL]);
 
 
   useEffect(() => {
@@ -48,7 +52,6 @@ const Logs = () => {
     };
 
   }, [admin]);
-
 
 
   const getLogs = () => {

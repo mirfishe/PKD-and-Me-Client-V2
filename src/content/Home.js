@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
 import { noFunctionAvailable, isEmpty, getDateTime, displayValue } from "shared-functions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
@@ -68,7 +68,7 @@ const Home = (props) => {
       <Row className="my-4">
         <Col xs="12">
 
-          <FromTheHomeopape headerText="From the Homeopape" />
+          <FromTheHomeopape headerText="From the Homeopape" topNumber="20" />
 
         </Col>
       </Row>

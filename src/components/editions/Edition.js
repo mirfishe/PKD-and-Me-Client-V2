@@ -34,14 +34,21 @@ const Edition = (props) => {
   const arrayTitles = useSelector(state => state.titles.arrayTitles);
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
+
   let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [titleItem, setTitleItem] = useState({});
   const [editionList, setEditionList] = useState([]);
-
-  // const [editionMessage, setEditionMessage] = useState("");
-  const [errEditionMessage, setErrEditionMessage] = useState("");
-  // const [editionResultsFound, setEditionResultsFound] = useState(null);
 
 
   useEffect(() => {
@@ -100,11 +107,11 @@ const Edition = (props) => {
 
     if (isEmpty(editionList) === false) {
 
-      setErrEditionMessage("");
+      clearMessages();
 
     } else {
 
-      setErrEditionMessage("No editions found.");
+      addErrorMessage("No editions found.");
 
     };
 
@@ -134,7 +141,8 @@ const Edition = (props) => {
       <Row className="my-4">
         <Col className="text-center" xs="12">
 
-          {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+          <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
           {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
           {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
 

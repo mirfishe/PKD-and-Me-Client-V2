@@ -36,10 +36,6 @@ const EditTitle = (props) => {
 
   const [showForm, setShowForm] = useState(false);
 
-  const [categoryMessage, setCategoryMessage] = useState("");
-  const [errCategoryMessage, setErrCategoryMessage] = useState("");
-  const [categoryResultsFound, setCategoryResultsFound] = useState(null);
-
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [messageVisible, setMessageVisible] = useState(false);
@@ -101,14 +97,12 @@ const EditTitle = (props) => {
   // if (categoryList.length < 1) {
 
   //     console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
-  //     setErrCategoryMessage("categoryList is empty", categoryList.length);
-  //     setCategoryResultsFound(false);
+  //     addErrorMessage("categoryList is empty", categoryList.length);
 
   // } else {
 
   //     console.error(componentName, getDateTime(), "categoryList.length", categoryList.length);
-  //     setCategoryMessage("categoryList.length", categoryList.length);
-  //     setCategoryResultsFound(true);
+  //     addMessage("categoryList.length", categoryList.length);
 
   // };
 
@@ -120,13 +114,11 @@ const EditTitle = (props) => {
     if (categoryList.length < 1) {
 
       console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
-      setErrCategoryMessage("categoryList is empty", categoryList.length);
-      setCategoryResultsFound(false);
+      addErrorMessage("categoryList is empty", categoryList.length);
 
     } else {
 
-      // setCategoryMessage("categoryList.length", categoryList.length);
-      setCategoryResultsFound(true);
+      // addMessage("categoryList.length", categoryList.length);
 
     };
 
@@ -1182,8 +1174,6 @@ const EditTitle = (props) => {
                 <FormGroup className="text-center">
                   <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
                   <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-                  {isEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
-                  {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
                 </FormGroup>
 
                 <FormGroup>

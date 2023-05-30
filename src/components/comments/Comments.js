@@ -36,9 +36,13 @@ const Comments = () => {
 
   useEffect(() => {
 
-    getComments();
+    if (isEmpty(baseURL) === false) {
 
-  }, []);
+      getComments();
+
+    };
+
+  }, [baseURL]);
 
 
   useEffect(() => {

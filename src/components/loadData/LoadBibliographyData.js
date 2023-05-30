@@ -400,7 +400,7 @@ function LoadBibliographyData() {
     setCategoryMessage("");
     setErrorCategoryMessage("");
 
-    let url = baseURL + "categories";
+    let url = baseURL + "categories/";
 
     fetch(url)
       .then(results => {
@@ -460,7 +460,7 @@ function LoadBibliographyData() {
     setMediaMessage("");
     setErrorMediaMessage("");
 
-    let url = baseURL + "media";
+    let url = baseURL + "media/";
 
     fetch(url)
       .then(results => {
@@ -521,7 +521,7 @@ function LoadBibliographyData() {
     setTitleMessage("");
     setErrorTitleMessage("");
 
-    let url = baseURL + "titles";
+    let url = baseURL + "titles/";
 
     fetch(url)
       .then(results => {
@@ -582,7 +582,7 @@ function LoadBibliographyData() {
     setEditionMessage("");
     setErrorEditionMessage("");
 
-    let url = baseURL + "editions";
+    let url = baseURL + "editions/";
 
     fetch(url)
       .then(results => {

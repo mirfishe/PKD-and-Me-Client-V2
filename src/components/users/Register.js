@@ -65,11 +65,14 @@ const Register = () => {
     if (isEmpty(userRecordAdded) === false) {
 
       clearMessages();
+
       setErrFirstName("");
       setErrLastName("");
       setErrEmail("");
       setErrPassword("");
+
       setUserRecordAdded(null);
+
       setModal(!modal);
 
     };
@@ -82,10 +85,12 @@ const Register = () => {
     if (isEmpty(sessionToken) === false) {
 
       clearMessages();
+
       setErrFirstName("");
       setErrLastName("");
       setErrEmail("");
       setErrPassword("");
+
       setModal(!modal);
 
     };
@@ -121,10 +126,12 @@ const Register = () => {
   const register = () => {
 
     clearMessages();
+
     setErrFirstName("");
     setErrLastName("");
     setErrEmail("");
     setErrPassword("");
+
     // setUser({});
     // setUserID(null);
     // setFirstName("");

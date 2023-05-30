@@ -18,8 +18,15 @@ function LoadUserReviews() {
   // * Load settings from Redux slices. -- 03/06/2021 MF
   const userReviewsLoaded = useSelector(state => state.userReviews.userReviewsLoaded);
 
-  const [userReviewMessage, setUserReviewMessage] = useState("");
-  const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
 
   useEffect(() => {
@@ -54,10 +61,9 @@ function LoadUserReviews() {
 
   const getUserReviews = () => {
 
-    setUserReviewMessage("");
-    setErrUserReviewMessage("");
+    clearMessages();
 
-    let url = baseURL + "userreviews";
+    let url = baseURL + "userreviews/";
 
     fetch(url)
       .then(results => {
@@ -80,7 +86,7 @@ function LoadUserReviews() {
       })
       .then(results => {
 
-        // setUserReviewMessage(results.message);
+        // addMessage(results.message);
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -89,7 +95,7 @@ function LoadUserReviews() {
           // } else {
 
           //   console.error(componentName, getDateTime(), "getUserReviews error", results.message);
-          //   // setErrUserReviewMessage(results.message);
+          //   // addErrorMessage(results.message);
           //   dispatch(setUserReviewsDataOffline(true));
           //   // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
           //   // fetchLocalDataUserReviews();
@@ -103,7 +109,7 @@ function LoadUserReviews() {
         // console.error(componentName, getDateTime(), "getUserReviews error.name", error.name);
         // console.error(componentName, getDateTime(), "getUserReviews error.message", error.message);
 
-        // setErrUserReviewMessage(error.name + ": " + error.message);
+        // addErrorMessage(error.name + ": " + error.message);
         // dispatch(setUserReviewsDataOffline(true));
         // * Not going to need to load user reviews from local results. -- 03/06/2021 MF
         // fetchLocalDataUserReviews();
@@ -118,8 +124,8 @@ function LoadUserReviews() {
   return (
     <Row className="text-center">
 
-      {isEmpty(userReviewMessage) === false ? <Alert color="info">{userReviewMessage}</Alert> : null}
-      {isEmpty(errUserReviewMessage) === false ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
+      <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
     </Row>
   );

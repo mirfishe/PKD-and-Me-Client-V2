@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
 import { emailRegExp } from "../../app/constants";
-import { isEmpty, getDateTime, formatTrim, addErrorLog } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, formatTrim, addErrorLog } from "shared-functions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
-const Login = () => {
+const Login = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties:  -- 10/21/2022 MF
+  // * Functions: getChecklist -- 10/21/2022 MF
 
   const componentName = "Login";
 
@@ -16,6 +20,8 @@ const Login = () => {
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   // const admin = useSelector(state => state.user.admin);
+
+  let getChecklist = isEmpty(props) === false && isEmpty(props.getChecklist) === false ? props.getChecklist : noFunctionAvailable;
 
   // const [user, setUser] = useState({});
   // const [userID, setUserID] = useState(null);
@@ -40,10 +46,6 @@ const Login = () => {
   const [modal, setModal] = useState(false);
   const [userResultsFound, setUserResultsFound] = useState(null);
 
-  const [checklistMessage, setChecklistMessage] = useState("");
-  const [errChecklistMessage, setErrChecklistMessage] = useState("");
-  const [checklistResultsFound, setChecklistResultsFound] = useState(null);
-
   const [txtEmail, setTxtEmail] = useState(""); // process.env.REACT_APP_EMAIL_DEFAULT
   const [txtPassword, setTxtPassword] = useState(""); // process.env.REACT_APP_PASSWORD_DEFAULT
   const [showPassword, setShowPassword] = useState("password");
@@ -57,9 +59,12 @@ const Login = () => {
     if (isEmpty(userResultsFound) === false) {
 
       clearMessages();
+
       setErrEmail("");
       setErrPassword("");
+
       setUserResultsFound(null);
+
       setModal(!modal);
 
     };
@@ -72,8 +77,10 @@ const Login = () => {
     if (isEmpty(sessionToken) === false) {
 
       clearMessages();
+
       setErrEmail("");
       setErrPassword("");
+
       setModal(!modal);
 
     };
@@ -107,8 +114,10 @@ const Login = () => {
   const logIn = () => {
 
     clearMessages();
+
     setErrEmail("");
     setErrPassword("");
+
     // setUser({});
     // setUserID(null);
     // setFirstName("");
@@ -260,78 +269,6 @@ const Login = () => {
           });
 
       };
-
-    };
-
-  };
-
-
-  const getChecklist = (token) => {
-
-    setChecklistMessage("");
-    setErrChecklistMessage("");
-    setChecklistResultsFound(null);
-
-    let url = baseURL + "titles/checklist";
-
-    if (isEmpty(token) === false) {
-
-      fetch(url, {
-        method: "GET",
-        headers: new Headers({
-          "Content-Type": "application/json",
-          "Authorization": token
-        }),
-      })
-        .then(results => {
-
-          // if (results.ok !== true) {
-
-          //     throw Error(results.status + " " + results.statusText + " " + results.url);
-
-          // } else {
-
-          // if (results.status === 200) {
-
-          return results.json();
-
-          // } else {
-
-          //     return results.status;
-
-          // };
-
-          // };
-
-        })
-        .then(results => {
-
-          setChecklistResultsFound(results.transactionSuccess);
-          // setChecklistMessage(results.message);
-
-          if (isEmpty(results) === false && results.transactionSuccess === true) {
-
-            dispatch(loadArrayChecklist(results.records));
-
-          } else {
-
-            console.error(componentName, getDateTime(), "getChecklist error", results.message);
-            addErrorMessage(results.message);
-
-          };
-
-        })
-        .catch((error) => {
-
-          console.error(componentName, getDateTime(), "getChecklist error", error);
-          // console.error(componentName, getDateTime(), "getChecklist error.name", error.name);
-          // console.error(componentName, getDateTime(), "getChecklist error.message", error.message);
-
-          // addErrorMessage(error.name + ": " + error.message);
-
-          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-        });
 
     };
 

@@ -46,14 +46,22 @@ const Titles = (props) => {
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
   // let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
+
   let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [categoryParam, setCategoryParam] = useState(null);
   const [titleList, setTitleList] = useState([]);
   const [editionList, setEditionList] = useState([]);
-
-  // const [errCategoryMessage, setErrCategoryMessage] = useState("");
-  const [errTitleMessage, setErrTitleMessage] = useState("");
 
 
   useEffect(() => {
@@ -100,7 +108,6 @@ const Titles = (props) => {
         // newTitleList = arrayTitles;
         // // Display all editions
         // editionList = arrayEditions;
-        // setErrCategoryMessage("Category not found.")
 
       };
 
@@ -175,11 +182,11 @@ const Titles = (props) => {
 
     if (isEmpty(titleList) === false) {
 
-      setErrTitleMessage("");
+      clearMessages();
 
     } else {
 
-      setErrTitleMessage("No titles found.");
+      addErrorMessage("No titles found.");
 
     };
 
@@ -405,14 +412,8 @@ const Titles = (props) => {
           </h4>
         </Col>
       </Row>
-      <Row>
-        <Col className="text-center" xs="12">
 
-          {/* {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null} */}
-          {isEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-
-        </Col>
-      </Row>
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
       {isNonEmptyArray(titleList) === true ?
 

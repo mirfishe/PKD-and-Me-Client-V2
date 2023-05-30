@@ -23,6 +23,7 @@ const FromTheHomeopapeItem = (props) => {
   const admin = useSelector(state => state.user.admin);
 
   let homeopapeItem = isEmpty(props) === false && isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
+
   let getNews = isEmpty(props) === false && isEmpty(props.getNews) === false ? props.getNews : noFunctionAvailable;
   let getNewsPosted = isEmpty(props) === false && isEmpty(props.getNewsPosted) === false ? props.getNewsPosted : noFunctionAvailable;
   let getNewsReview = isEmpty(props) === false && isEmpty(props.getNewsReview) === false ? props.getNewsReview : noFunctionAvailable;

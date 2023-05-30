@@ -20,16 +20,21 @@ const UserReview = (props) => {
   const arrayUserReviews = useSelector(state => state.userReviews.arrayUserReviews);
 
   let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
+
   // let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
   // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
+
   const [userReviews, setUserReviews] = useState([]);
-
-  // const [userReviewMessage, setUserReviewMessage] = useState("");
-  const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
-  // const [userReviewResultsFound, setUserReviewResultsFound] = useState(null);
-
-  // const [userReviewDisplayCount, setUserReviewDisplayCount] = useState(0);
 
 
   useEffect(() => {
@@ -93,17 +98,17 @@ const UserReview = (props) => {
 
       if (displayCount > 0) {
 
-        setErrUserReviewMessage("");
+        clearMessages("");
 
       } else {
 
-        setErrUserReviewMessage("No user reviews found.");
+        addErrorMessage("No user reviews found.");
 
       };
 
     } else {
 
-      setErrUserReviewMessage("No user reviews found.");
+      addErrorMessage("No user reviews found.");
 
     };
 
@@ -123,13 +128,8 @@ const UserReview = (props) => {
 
         </Col>
       </Row>
-      <Row>
-        <Col className="text-center" xs="12">
 
-          {isEmpty(errUserReviewMessage) === false ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
-
-        </Col>
-      </Row>
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
       {/* : null} */}
 

@@ -75,7 +75,7 @@ const Homeopape = (props) => {
       <Row className="my-4">
         <Col xs="12">
 
-          <FromTheHomeopape headerText="From the Homeopape" />
+          <FromTheHomeopape headerText="From the Homeopape" topNumber="20" />
 
         </Col>
       </Row>

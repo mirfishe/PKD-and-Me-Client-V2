@@ -36,9 +36,13 @@ const TitleSuggestions = () => {
 
   useEffect(() => {
 
-    getTitleSuggestions();
+    if (isEmpty(baseURL) === false) {
 
-  }, []);
+      getTitleSuggestions();
+
+    };
+
+  }, [baseURL]);
 
 
   useEffect(() => {

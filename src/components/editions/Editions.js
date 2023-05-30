@@ -47,12 +47,21 @@ const Editions = (props) => {
   // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
   let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : "";
   // let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
+
   let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [mediaParam, setMediaParam] = useState(null);
   const [editionList, setEditionList] = useState([]);
-
-  const [errEditionMessage, setErrEditionMessage] = useState("");
 
 
   useEffect(() => {
@@ -149,11 +158,11 @@ const Editions = (props) => {
 
     if (isEmpty(editionList) === false) {
 
-      setErrEditionMessage("");
+      clearMessages();
 
     } else {
 
-      setErrEditionMessage("No editions found.");
+      addErrorMessage("No editions found.");
 
     };
 
@@ -567,7 +576,8 @@ const Editions = (props) => {
       <Row>
         <Col className="text-center" xs="12">
 
-          {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+          <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
           {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
           {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
 

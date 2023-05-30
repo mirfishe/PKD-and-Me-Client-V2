@@ -14,6 +14,7 @@ import { loadUserData, setSessionToken, loadArrayChecklist } from "./app/userSli
 import Home from "./content/Home";
 import New from "./content/New";
 import About from "./content/About";
+import Updates from "./content/Updates";
 import Homeopape from "./content/Homeopape";
 import Dickian from "./content/Dickian";
 // import EditCategory from "./components/categories/EditCategory";
@@ -142,12 +143,6 @@ const App = (props) => {
   const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
-
-  const [userResultsFound, setUserResultsFound] = useState(null);
-
-  const [checklistMessage, setChecklistMessage] = useState("");
-  const [errChecklistMessage, setErrChecklistMessage] = useState("");
-  const [checklistResultsFound, setChecklistResultsFound] = useState(null);
 
   const [url1Loaded, setURL1Loaded] = useState(false);
   const [url2Loaded, setURL2Loaded] = useState(false);
@@ -529,7 +524,6 @@ const App = (props) => {
         })
         .then(results => {
 
-          setUserResultsFound(results.transactionSuccess);
           // addMessage(results.message);
 
           if (isEmpty(results) === false && results.transactionSuccess === true) {
@@ -554,6 +548,7 @@ const App = (props) => {
           } else {
 
             // addErrorMessage(results.message);
+
             logOut();
 
           };
@@ -565,7 +560,7 @@ const App = (props) => {
           // console.error(componentName, getDateTime(), "getUser error.name", error.name);
           // console.error(componentName, getDateTime(), "getUser error.message", error.message);
 
-          // addErrorMessage(error.name + ": " + error.message);
+          addErrorMessage(error.name + ": " + error.message);
 
           // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
@@ -578,11 +573,9 @@ const App = (props) => {
 
   const getChecklist = (token) => {
 
-    setChecklistMessage("");
-    setErrChecklistMessage("");
-    setChecklistResultsFound(null);
+    // clearMessages();
 
-    let url = baseURL + "titles/checklist";
+    let url = baseURL + "titles/checklist/";
 
     if (isEmpty(token) === false) {
 
@@ -616,8 +609,7 @@ const App = (props) => {
         })
         .then(results => {
 
-          setChecklistResultsFound(results.transactionSuccess);
-          // setChecklistMessage(results.message);
+          // addMessage(results.message);
 
           if (isEmpty(results) === false && results.transactionSuccess === true) {
 
@@ -627,7 +619,7 @@ const App = (props) => {
 
             console.error(componentName, getDateTime(), "getChecklist error", results.message);
 
-            // addErrorMessage(results.message);
+            addErrorMessage(results.message);
 
           };
 
@@ -638,7 +630,7 @@ const App = (props) => {
           // console.error(componentName, getDateTime(), "getChecklist error.name", error.name);
           // console.error(componentName, getDateTime(), "getChecklist error.message", error.message);
 
-          // addErrorMessage(error.name + ": " + error.message);
+          addErrorMessage(error.name + ": " + error.message);
 
           // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
@@ -702,10 +694,18 @@ const App = (props) => {
 
             : null}
 
+          {showAbout === true || showAllMenuItems === true ?
+
+            <NavItem>
+              <NavLink tag={Link} to="/updates"><NavbarText>From the Homeopape</NavbarText></NavLink>
+            </NavItem>
+
+            : null}
+
           {applicationAllowUserInteractions === true && (isEmpty(sessionToken) === true) ?
 
             <NavItem>
-              <Login />
+              <Login getChecklist={getChecklist} />
             </NavItem>
 
             : null}
@@ -952,9 +952,6 @@ const App = (props) => {
               <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
               <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
-              {isEmpty(checklistMessage) === false ? <Alert color="info">{checklistMessage}</Alert> : null}
-              {isEmpty(errChecklistMessage) === false ? <Alert color="danger">{errChecklistMessage}</Alert> : null}
-
               <LoadApplicationSettings />
               <LoadBibliographyData />
               <LoadUserReviews />
@@ -966,12 +963,14 @@ const App = (props) => {
               {/* // * Set the default page from the defaultPageComponent from environment. -- 03/06/2021 MF */}
               {defaultPageComponent === "Home" ? <Route path="/" element={<Home redirectPage={redirectPage} />} /> : null}
               {defaultPageComponent === "About" ? <Route path="/" element={<About redirectPage={redirectPage} />} /> : null}
+              {defaultPageComponent === "Updates" ? <Route path="/" element={<Updates redirectPage={redirectPage} />} /> : null}
               {defaultPageComponent === "Homeopape" ? <Route path="/" element={<Homeopape redirectPage={redirectPage} />} /> : null}
               {defaultPageComponent === "Dickian" ? <Route path="/" element={<Dickian redirectPage={redirectPage} />} /> : null}
 
               <Route path="/home" element={<Home redirectPage={redirectPage} />} />
               <Route path="/new" element={<New redirectPage={redirectPage} />} />
               <Route path="/about" element={<About redirectPage={redirectPage} />} />
+              <Route path="/updates" element={<Updates redirectPage={redirectPage} />} />
               <Route path="/homeopape" element={<Homeopape redirectPage={redirectPage} />} />
 
               {/* // ! Can't add this security to the routes because it interferes with the routes below these. -- 12/19/2021 MF */}

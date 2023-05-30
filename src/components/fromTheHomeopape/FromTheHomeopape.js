@@ -18,6 +18,7 @@ const FromTheHomeopape = (props) => {
   // const admin = useSelector(state => state.user.admin);
 
   let headerText = isEmpty(props) === false && isEmpty(props.headerText) === false ? props.headerText : "";
+  let topNumber = isEmpty(props) === false && isEmpty(props.topNumber) === false ? props.topNumber : "";
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -40,16 +41,22 @@ const FromTheHomeopape = (props) => {
 
   useEffect(() => {
 
-    getNews();
+    if (isEmpty(baseURL) === false) {
 
-  }, []);
+      getNews();
+
+    };
+
+  }, [baseURL]);
 
 
   const getNews = () => {
 
-    let url = baseURL + "fromthehomeopape/top/20";
+    clearMessages();
+
+    let url = baseURL + "fromthehomeopape/top/" + topNumber;
     // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // // let url = baseURL + "fromthehomeopape/top/10/10";
+    // // let url = baseURL + "fromthehomeopape/top/10/10/";
 
     fetch(url, {
       method: "GET",
@@ -96,13 +103,14 @@ const FromTheHomeopape = (props) => {
   return (
     <Container className="mt-4">
 
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
       {isNonEmptyArray(homeopapeItems) === true ?
 
         <React.Fragment>
 
           <Row className="justify-content-center">
             <Col className="text-center" xs="12">
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
               {isEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
             </Col>
           </Row>
