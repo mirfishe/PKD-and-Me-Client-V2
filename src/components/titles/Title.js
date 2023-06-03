@@ -1,41 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Container, Col, Row, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 // import { Rating } from "@mui/lab/";
-import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { setPageURL } from "../../app/urlsSlice";
-// import AddTitle from "./AddTitle";
+// import Parse from "html-react-parser";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, getFirstItem, addErrorLog } from "shared-functions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import EditTitle from "./EditTitle";
+import TitleText from "./TitleText";
 import Edition from "../editions/Edition";
-// import AddEdition from "../editions/AddEdition";
 import EditEdition from "../editions/EditEdition";
 import UserReview from "../userReviews/UserReview";
-// import AddUserReview from "../userReviews/AddUserReview";
 import EditUserReview from "../userReviews/EditUserReview";
 
 const Title = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: applicationVersion, linkItem, match -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
+
   const componentName = "Title";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
-  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
-
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const profileType = useSelector(state => state.applicationSettings.profileType);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
   // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -48,171 +41,266 @@ const Title = (props) => {
   // const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   // const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  const [errTitleMessage, setErrTitleMessage] = useState("");
-  // const [errEditionMessage, setErrEditionMessage] = useState("");
+  const arrayTitles = useSelector(state => state.titles.arrayTitles);
+  // const arrayEditions = useSelector(state => state.editions.arrayEditions);
+  // const arrayUserReviewsRatings = useSelector(state => state.userReviews.arrayUserReviewsRatings);
+  const arrayUserReviews = useSelector(state => state.userReviews.arrayUserReviews);
 
-  const titleListState = useSelector(state => state.titles.arrayTitles);
-  // const editionListState = useSelector(state => state.editions.arrayEditions);
+  const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
 
-  const titleParam = props.linkItem.linkName; // props.match.params.title;
+  // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
+  let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : null;
+  // let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
 
-  let titleNameBreadCrumb = "";
-  let titleID = "";
-  let titlePublicationDate = "";
-  let titleImageName = "";
-  // ! This code is causing React to have too many re-renders in this location
-  // const [titleID, setTitleID] = useState("");
-  // const [titlePublicationDate, setTitlePublicationDate] = useState("");
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
-  let titleList = [];
-  // let editionList = [];
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  if (isNaN(titleParam) === false) {
-
-    // ! This code no longer works with the current URL setup
-    // * If titleParam is a number, then it's the titleID
-    document.title = titleList[0].titleName + " | " + applicationName + " | " + siteName;
-    titleNameBreadCrumb = titleList[0].titleName;
-    titleID = titleList[0].titleID;
-    titlePublicationDate = titleList[0].publicationDate;
-    titleImageName = titleList[0].imageName;
-    // setTitleID(titleList[0].titleID);
-    // setTitlePublicationDate(titleList[0].publicationDate);
-
-    titleList = titleListState.filter(title => title.titleID === parseInt(titleParam));
-
-    // editionList = editionListState.filter(edition => edition.titleID === parseInt(titleParam));
-
-  } else if (isEmpty(titleParam) === false) {
-
-    // * If titleParam is not a number, then it's the title name
-    titleList = titleListState.filter(title => title.titleURL === titleParam);
-    const title = titleListState.find(title => title.titleURL === titleParam);
-
-    if (isEmpty(title) === false) {
-
-      document.title = title.titleName + " | " + applicationName + " | " + siteName;
-      titleNameBreadCrumb = title.titleName;
-      titleID = title.titleID;
-      titlePublicationDate = title.publicationDate;
-      titleImageName = title.imageName;
-      // setTitleID(title.titleID);
-      // setTitlePublicationDate(title.publicationDate);
-
-      // editionList = editionListState.filter(edition => edition.titleID === parseInt(title.titleID));
-
-    } else {
-
-      document.title = "Title Not Found | " + applicationName + " | " + siteName;
-      console.error("Title not found.");
-      // // Display all active titles
-      // titleList = titleListState;
-      // // Display all active editions
-      // editionList = editionListState;
-      // setErrTitleMessage("Title not found.")
-
-    };
-
-  } else {
-
-    document.title = "All Titles | " + applicationName + " | " + siteName;
-    // * Display all active titles
-    // titleList = [...titleListState];
-    titleList = titleListState.filter(title => title.titleActive === true || title.titleActive === 1);
-    // * Display all active editions
-    // editionList = [...editionListState];
-    // editionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
-
-  };
-
-  // if (electronicOnly === true || userElectronicOnly === true) {
-
-  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
-  //   // editionList = editionList.filter(edition => edition.medium.electronic === true);
-  //   editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
-
-  // } else if (physicalOnly === true || userPhysicalOnly === true) {
-
-  // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
-  //   // editionList = editionList.filter(edition => edition.medium.electronic === false);
-  //   editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
-
-  // } else {
-
-  //   editionList = [...editionList];
-
-  // };
-
-  if (isEmpty(admin) === false && admin === true) {
-
-    titleList = [...titleList];
-    // editionList = [...editionList];
-
-  } else {
-
-    titleList = titleList.filter(title => title.titleActive === true || title.titleActive === 1);
-    // editionList = editionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
-
-  };
-
-
-  // * Sort the titleList array by title.titleSort
-  // * Really not needed here since there should only be one item in the array
-  titleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
-
-  // * Sort the editionList array by media.sortID
-  // // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
-  // editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-
-  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
-
-  let userReviews = userReviewsState.filter(userReview => userReview.titleID === titleID);
-
-  let userReviewItem = {};
-
-  if (isEmpty(userID) === false && !isNaN(userID)) {
-
-    userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
-    userReviewItem = userReviewItem[0];
-
-  };
-
-
-  // const userReviewsRatingsState = useSelector(state => state.userReviews.arrayUserReviewsRatings);
-
-  // let userReviewRatingItem = {};
-
-  // if (isEmpty(titleID) === false && !isNaN(titleID)) {
-
-  //     userReviewRatingItem = userReviewsRatingsState.filter(userReview => userReview.titleID === titleID);
-  //     userReviewRatingItem = userReviewRatingItem[0];
-
-  // };
-
-  // let overallTitleRatingCount = 0;
-  // let overallTitleRating = 0;
-
-  // if (isEmpty(userReviewRatingItem) === false) {
-
-  //     if (hasNonEmptyProperty(userReviewRatingItem, "userReviewAverage")) {
-
-  //         overallTitleRating = userReviewRatingItem.userReviewAverage;
-
-  //     };
-
-  //     if (hasNonEmptyProperty(userReviewRatingItem, "userReviewCount")) {
-
-  //         overallTitleRatingCount = userReviewRatingItem.userReviewCount;
-
-  //     };
-
-  // };
+  const [titleParam, setTitleParam] = useState(null);
+  const [titleList, setTitleList] = useState([]);
+  const [titleNameBreadCrumb, setTitleNameBreadCrumb] = useState("");
+  const [titleID, setTitleID] = useState("");
+  const [titlePublicationDate, setTitlePublicationDate] = useState("");
+  const [titleImageName, setTitleImageName] = useState("");
+  // const [editionList, setEditionList] = useState([]);
+  // const [userReviews, setUserReviews] = useState([]);
+  const [userReviewItem, setUserReviewItem] = useState({});
+  // const [userReviewRatingItem, setUserReviewRatingItem] = useState({});
+  // const [overallTitleRating, setOverallTitleRating] = useState(0);
+  // const [overallTitleRatingCount, setOverallTitleRatingCount] = useState(0);
 
   // const [overallTitleRatingMessage, setOverallTitleRatingMessage] = useState("");
   // const [errOverallTitleRatingMessage, setErrOverallTitleRatingMessage] = useState("");
   // const [overallTitleRatingResultsFound, setOverallTitleRatingResultsFound] = useState(null);
   // const [overallTitleRating, setOverallTitleRating] = useState(null);
   // const [overallTitleRatingCount, setOverallTitleRatingCount] = useState(0);
+
+
+  useEffect(() => {
+
+    if (isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false) {
+
+      setTitleParam(linkItem.linkName); // match.params.category;
+
+    };
+
+  }, [linkItem]);
+
+
+  useEffect(() => {
+
+    // let titleNameBreadCrumb = "";
+    // let titleID = "";
+    // let titlePublicationDate = "";
+    // let titleImageName = "";
+    // ! This code is causing React to have too many re-renders in this location
+    // const [titleID, setTitleID] = useState("");
+    // const [titlePublicationDate, setTitlePublicationDate] = useState("");
+
+    let newTitleList = [];
+    // let newEditionList = [];
+
+    if (isNaN(titleParam) === false) {
+
+      newTitleList = arrayTitles.filter(title => title.titleID === parseInt(titleParam));
+
+      // newEditionList = arrayEditions.filter(edition => edition.titleID === parseInt(titleParam));
+
+      if (isEmpty(newTitleList) === false) {
+
+        // ! This code no longer works with the current URL setup
+        // * If titleParam is a number, then it's the titleID
+        document.title = newTitleList[0].titleName + " | " + applicationName + " | " + siteName;
+        setTitleNameBreadCrumb(newTitleList[0].titleName);
+        setTitleID(newTitleList[0].titleID);
+        setTitlePublicationDate(newTitleList[0].publicationDate);
+        setTitleImageName(newTitleList[0].imageName);
+        // setTitleID(newTitleList[0].titleID);
+        // setTitlePublicationDate(newTitleList[0].publicationDate);
+
+      };
+
+    } else if (isEmpty(titleParam) === false) {
+
+      // * If titleParam is not a number, then it's the title name
+      newTitleList = arrayTitles.filter(title => title.titleURL === titleParam);
+      const title = arrayTitles.find(title => title.titleURL === titleParam);
+
+      if (isEmpty(title) === false) {
+
+        document.title = title.titleName + " | " + applicationName + " | " + siteName;
+        setTitleNameBreadCrumb(title.titleName);
+        setTitleID(title.titleID);
+        setTitlePublicationDate(title.publicationDate);
+        setTitleImageName(title.imageName);
+        // setTitleID(title.titleID);
+        // setTitlePublicationDate(title.publicationDate);
+
+        // newEditionList = arrayEditions.filter(edition => edition.titleID === parseInt(title.titleID));
+
+      } else {
+
+        document.title = "Title Not Found | " + applicationName + " | " + siteName;
+        console.error("Title not found.");
+        // // Display all active titles
+        // newTitleList = arrayTitles;
+        // // Display all active editions
+        // newEditionList = arrayEditions;
+        // addErrorMessage("Title not found.")
+
+      };
+
+    } else {
+
+      document.title = "All Titles | " + applicationName + " | " + siteName;
+      // * Display all active titles
+      // newTitleList = [...arrayTitles];
+      newTitleList = arrayTitles.filter(title => title.titleActive === true || title.titleActive === 1);
+      // * Display all active editions
+      // newEditionList = [...arrayEditions];
+      // newEditionList = arrayEditions.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+
+    };
+
+    // if (electronicOnly === true || userElectronicOnly === true) {
+
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
+    //   // newEditionList = newEditionList.filter(edition => edition.medium.electronic === true);
+    //   newEditionList = newEditionList.filter(edition => edition.electronic === true || edition.electronic === 1);
+
+    // } else if (physicalOnly === true || userPhysicalOnly === true) {
+
+    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
+    //   // newEditionList = newEditionList.filter(edition => edition.medium.electronic === false);
+    //   newEditionList = newEditionList.filter(edition => edition.electronic === false || edition.electronic === 0);
+
+    // } else {
+
+    //   newEditionList = [...newEditionList];
+
+    // };
+
+    if (isEmpty(admin) === false && admin === true) {
+
+      // newTitleList = [...newTitleList];
+      // // newEditionList = [...newEditionList];
+
+    } else {
+
+      newTitleList = newTitleList.filter(title => title.titleActive === true || title.titleActive === 1);
+      // newEditionList = newEditionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+
+    };
+
+    // * Sort the newTitleList array by title.titleSort
+    // * Really not needed here since there should only be one item in the array
+    newTitleList.sort((a, b) => (a.titleSort > b.titleSort) ? 1 : -1);
+
+    //   // * Sort the newEditionList array by media.sortID
+    //   // newEditionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+    //   newEditionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
+    setTitleList(newTitleList);
+
+    // setEditionList(newEditionList);
+
+  }, [titleParam, arrayTitles]);
+
+
+  useEffect(() => {
+
+    let newUserReviews = arrayUserReviews.filter(userReview => userReview.titleID === titleID);
+
+    let newUserReviewItem = {};
+
+    if (isEmpty(userID) === false && !isNaN(userID) === true) {
+
+      newUserReviewItem = getFirstItem(newUserReviews.filter(userReview => userReview.userID === userID));
+
+    };
+
+    // setUserReviews(newUserReviews);
+
+    setUserReviewItem(newUserReviewItem);
+
+    // let newUserReviewRatingItem = {};
+
+    // if (isEmpty(titleID) === false && !isNaN(titleID) === true) {
+
+    //   newUserReviewRatingItem = getFirstItem(arrayUserReviewsRatings.filter(userReview => userReview.titleID === titleID));
+
+    // };
+
+    // let newOverallTitleRating = 0;
+    // let newOverallTitleRatingCount = 0;
+
+    // if (isEmpty(newUserReviewRatingItem) === false) {
+
+    //   if (isEmpty(userReviewRatingItem.userReviewCount) === false) {
+
+    //     userReviewCount = userReviewRatingItem.userReviewCount;
+
+    //   };
+
+    //   if (isEmpty(userReviewRatingItem.userReviewSum) === false) {
+
+    //     userReviewSum = userReviewRatingItem.userReviewSum;
+
+    //   };
+
+    // };
+
+    // setUserReviewRatingItem(newUserReviewRatingItem);
+    // setOverallTitleRating(newOverallTitleRating);
+    // setOverallTitleRatingCount(newOverallTitleRatingCount);
+
+  }, [arrayUserReviews]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleList) === false) {
+
+      clearMessages();
+
+    } else {
+
+      addErrorMessage("Title not found.");
+
+    };
+
+  }, [titleList]);
+
+
+  // useEffect(() => {
+
+  //     if (isEmpty(titleID) === false && isEmpty(overallTitleRatingResultsFound) === false) {
+
+  //         getTitleRating();
+
+  //     };
+
+  // }, [titleID]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleList) === false) {
+
+      addVisitLog();
+
+    };
+
+  }, [titleList]);
+
 
   // const getTitleRating = () => {
 
@@ -230,13 +318,19 @@ const Title = (props) => {
 
 
   //         fetch(url)
-  //         .then(response => {
-  //             if (response.ok !== true) {
-  //                 // throw Error(response.status + " " + response.statusText + " " + response.url);
+  //         .then(results => {
+
+  //             if (results.ok !== true) {
+
+  //                 // throw Error(results.status + " " + results.statusText + " " + results.url);
   //                 return {transactionSuccess: false, errorOccurred: true, message: "Offline User Reviews Rating data fetch used."};
+
   //             } else {
-  //                 return response.json();
+
+  //                 return results.json();
+
   //             };
+
   //         })
   //         .then(results => {
 
@@ -269,13 +363,14 @@ const Title = (props) => {
 
   //         })
   //         .catch((error) => {
+
   //             console.error(componentName, getDateTime(), "getTitleRating error", error);
 
   //             // console.error(componentName, getDateTime(), "getTitleRating error.name", error.name);
   //             // console.error(componentName, getDateTime(), "getTitleRating error.message", error.message);
   //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
 
-  //            addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+  //            addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //         });
 
@@ -284,59 +379,7 @@ const Title = (props) => {
   // };
 
 
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
-
-
-  useEffect(() => {
-
-    if (titleList.length > 0) {
-
-      setErrTitleMessage("");
-
-    } else {
-
-      setErrTitleMessage("Title not found.");
-
-    };
-
-  }, [titleList]);
-
-
-  // useEffect(() => {
-
-  //     if (isEmpty(titleID) === false && isEmpty(overallTitleRatingResultsFound) === false) {
-
-  //         getTitleRating();
-
-  //     };
-
-  // }, [titleID]);
-
-
-  // useEffect(() => {
-
-  //     if (editionList.length > 0) {
-
-  //         setErrEditionMessage("");
-
-  //     } else {
-
-  //         setErrEditionMessage("No editions found.");
-
-  //     };
-
-  // }, [editionList]);
-
-
-  const saveRecord = () => {
+  const addVisitLog = () => {
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -365,8 +408,7 @@ const Title = (props) => {
 
       title: titleList[0].titleName,
       href: href,
-      // applicationVersion: props.applicationVersion,
-      applicationVersion: process.env.REACT_APP_VERSION,
+      applicationVersion: applicationVersion,
 
       lastAccessed: getDateTime(),
 
@@ -388,7 +430,6 @@ const Title = (props) => {
 
     };
 
-
     fetch(url, {
       method: "POST",
       headers: new Headers({
@@ -396,21 +437,21 @@ const Title = (props) => {
       }),
       body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
 
         } else {
 
-          if (response.status === 200) {
+          if (results.status === 200) {
 
-            return response.json();
+            return results.json();
 
           } else {
 
-            return response.status;
+            return results.status;
 
           };
 
@@ -425,26 +466,16 @@ const Title = (props) => {
 
       })
       .catch((error) => {
-        console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
+
+        console.error(componentName, getDateTime(), operationValue, "addVisitLog error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
   };
-
-
-  useEffect(() => {
-
-    if (titleList.length > 0) {
-
-      saveRecord();
-
-    };
-
-  }, [titleList]);
 
 
   return (
@@ -470,13 +501,8 @@ const Title = (props) => {
 
         </Col>
       </Row>
-      <Row>
-        <Col className="text-center" xs="12">
 
-          {isEmpty(errTitleMessage) === false ? <Alert color="danger">{errTitleMessage}</Alert> : null}
-
-        </Col>
-      </Row>
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
       {isNonEmptyArray(titleList) === true ?
 
@@ -506,15 +532,9 @@ const Title = (props) => {
                       {isEmpty(title.publicationDate) === false ? <span className="ms-2 smaller-text"> ({title.publicationDate.includes("-01-01") === true ? <React.Fragment>{displayYear(title.publicationDate)}</React.Fragment> : <React.Fragment>{displayDate(title.publicationDate)}</React.Fragment>})</span> : null}
 
                       {/* {isEmpty(title.category) === false ? <span className="ms-4 smaller-text"><Link to={encodeURL(title.category)}>{title.category}</Link>
-                            </span> : null} */}
+                            </span> : null} */ }
 
                       {isEmpty(activeString) === false ? <span className="ms-2 inactive-item">({activeString})</span> : null}
-
-                      {/* {isEmpty(admin) === false && admin === true ? <AddTitle displayButton={true} /> : null} */}
-
-                      {isEmpty(admin) === false && admin === true ? <EditTitle titleID={title.titleID} displayButton={true} /> : null}
-
-                      {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null}
 
                     </h4>
                   </Col>
@@ -531,7 +551,7 @@ const Title = (props) => {
                 <Row className="mb-4">
                   <Col xs="4">
 
-                    {isEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName)} alt={title.titleName} className="cover-display" /> : <Image className="no-image-icon" />}
+                    {isEmpty(title.imageName) === false ? <img onError={() => { console.error("Title image not loaded!"); fetch(baseURL + "titles/broken/" + title.titleID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} src={setLocalImagePath(title.imageName, profileType)} alt={title.titleName} className="cover-display" /> : <Image className="no-image-icon" />}
 
                   </Col>
                   <Col xs="8">
@@ -558,13 +578,11 @@ const Title = (props) => {
 
                       : null}
 
-                    {/* {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === true ? <AddUserReview titleID={title.titleID} displayButton={true} /> : null} */}
-
-                    {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === false ? <EditUserReview reviewID={userReviewItem.reviewID} displayButton={true} /> : null}
-
                     {isEmpty(title.shortDescription) === false ? <p className="display-paragraphs">{title.shortDescription}</p> : null}
 
-                    {isEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener noreferrer">Encyclopedia Dickiana</a></p> : null}
+                    {isEmpty(title.urlPKDWeb) === false ? <p><a href={title.urlPKDWeb} target="_blank" rel="noopener">Encyclopedia Dickiana</a></p> : null}
+
+                    {isEmpty(title.urlPKDBookshelf) === false ? <p><a href={title.urlPKDBookshelf} target="_blank" rel="noopener">PKD Bookshelf</a></p> : null}
 
                     {isEmpty(title.writtenDate) === false ? <p>Manuscript Written Date: {displayDate(title.writtenDate)}</p> : null}
 
@@ -572,9 +590,21 @@ const Title = (props) => {
 
                     {isEmpty(title.manuscriptTitle) === false ? <p>Manuscript Title: {title.manuscriptTitle}</p> : null}
 
-                    {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
+                    {applicationAllowUserInteractions === true && isEmpty(sessionToken) === false && isEmpty(userID) === false && isEmpty(userReviewItem) === true ?
 
-                    {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} displayButton={true} /> : null} */}
+                      <EditUserReview titleID={title.titleID} />
+
+                      : null}
+
+                    {isEmpty(admin) === false && admin === true ?
+
+                      <Row>
+
+                        <EditEdition titleID={title.titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName} />
+
+                      </Row>
+
+                      : null}
 
                   </Col>
                 </Row>
@@ -587,135 +617,35 @@ const Title = (props) => {
 
         : null}
 
-      {/* <Row className="my-4">
-                <Col className="text-center" xs="12">
+      {isEmpty(admin) === false && admin === true ?
 
-                {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+        <Row>
 
-                {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
+          <EditTitle />
 
-                {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
+        </Row>
 
-                </Col>
-            </Row>
+        : null}
 
-            {editionList.length > 0 ?
-            
-            <Row className="my-4">
-                <Col xs="12">
+      {isEmpty(admin) === false && admin === true ?
 
-                    <h5 className="text-center">Find A Copy 
-                    {isEmpty(admin) === false && admin === true ? <EditEdition titleID={titleID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
-                    </h5>
+        <Row>
 
-                </Col>
-            </Row>
+          <EditTitle titleID={titleID} />
 
-            : null}
+        </Row>
 
-            <Row>
-                
-                {isNonEmptyArray(editionList) === true ?
+        : null}
 
-            <React.Fragment>
+      {isEmpty(admin) === false && admin === true ?
 
-            {editionList.map((edition) => {
+        <Row>
 
-                let activeString = "";
+          <TitleText titleID={titleID} />
 
-                if (edition.editionActive === true || edition.editionActive === 1) {
-                
-                    // activeString = "Active";
-                    activeString = "";
+        </Row>
 
-                } else {
-                
-                    activeString = "Inactive";
-
-                };
-
-            return (
-                <Col key={edition.editionID} xs="6" className="mb-4"> */}
-
-      {/* <Card key={edition.editionID}>
-                    <CardHeader>
-
-                        <Link to={encodeURL(edition.medium.media)}>{edition.medium.media}</Link>
-
-                    </CardHeader>
-                    <CardBody>
-
-                    {isEmpty(edition.imageLinkLarge) === false ? 
-                    
-                        <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
-
-                    :
-
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                        {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
-                        </a>
-
-                    }
-
-                    </CardBody>
-                    <CardFooter>
-
-                        {isEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {displayDate(editionPublicationDate)}</CardText> : null}
-
-                    </CardFooter>
-                    </Card> */}
-
-      {/* <Card key={edition.editionID}>
-
-                    {isEmpty(activeString) === false ?
-                    
-                        <CardHeader className="card-header inactive-item">
-                            ({activeString})
-                        </CardHeader>
-
-                    : null}
-
-                    <Row className="no-gutters">
-                        <Col className="col-md-6">
-
-                        {isEmpty(edition.imageLinkLarge) === false ? 
-                        
-                            <div dangerouslySetInnerHTML={{"__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN)}} />
-                            
-                        :
-
-                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                            {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
-                            </a>
-
-                        }
-
-                        </Col>
-                        <Col className="col-md-6">
-                            <CardBody>
-
-                                {isEmpty(edition.editionPublicationDate) === false ? <CardText className="smaller-text">Released: {displayDate(editionPublicationDate)}</CardText> : null}
-                                {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={titlePublicationDate} titleImageName={titleImageName}  displayButton={true} /> : null}
-
-                            </CardBody>
-                        </Col>
-                    </Row>
-                    <CardFooter className="card-footer">
-
-                        <CardText><Link to={encodeURL(edition.medium.media)} onClick={(event) => {event.preventDefault(); redirectPage(encodeURL(edition.medium.media));}}>{edition.medium.media}</Link></CardText>
-
-                    </CardFooter>
-                    </Card>
-
-                </Col>
-                )
-            })}
-
-            </React.Fragment>
-
-            : null}
-
-            </Row> */}
+        : null}
 
       <Row>
 

@@ -1,7 +1,4 @@
 {
-    "transactionSuccess": true,
-    "errorOccurred": false,
-    "message": "Offline Application Settings data used.",
     "siteName": "Philip K. Dick",
     "applicationName": "PKD and Me",
     "electronicOnly": false,

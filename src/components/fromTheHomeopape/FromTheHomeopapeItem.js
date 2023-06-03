@@ -3,24 +3,30 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
-import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, displayValue, formatLowerCase, formatUpperCase, removeHTML, addErrorLog } from "shared-functions";
+import { encodeURL, convertBitTrueFalse, toTitleCase } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopapeItem = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: homeopapeItem -- 10/21/2022 MF
+  // * Functions: getNews, getNewsPosted, getNewsReview -- 10/21/2022 MF
 
   const componentName = "FromTheHomeopapeItem";
 
   // const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  let homeopapeItem = isEmpty(props) === false && isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
+
+  let getNews = isEmpty(props) === false && isEmpty(props.getNews) === false ? props.getNews : noFunctionAvailable;
+  let getNewsPosted = isEmpty(props) === false && isEmpty(props.getNewsPosted) === false ? props.getNewsPosted : noFunctionAvailable;
+  let getNewsReview = isEmpty(props) === false && isEmpty(props.getNewsReview) === false ? props.getNewsReview : noFunctionAvailable;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,8 +37,6 @@ const FromTheHomeopapeItem = (props) => {
   const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
-
-  let homeopapeItem = isEmpty(props.homeopapeItem) === false ? props.homeopapeItem : {};
 
 
   const formatPost = (txtArticleTitle, txtArticleURL, txtItemContentSnippet) => {
@@ -216,86 +220,86 @@ const FromTheHomeopapeItem = (props) => {
   // OR itemLink like '%elasticsearch.columbian.com%'
   // goodreads.com
 
-  // // if (homeopapeItem.itemLink.includes("ebay.com")) {
-  // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.")) {
+  // // if (homeopapeItem.itemLink.includes("ebay.com") === true) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes(".ebay.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("reddit.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("craigslist.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("amazon.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("audible.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("pinterest.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("twitter.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("facebook.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("tiktok.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("sites.google.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("books.google.") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("elasticsearch.columbian.com") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com")) {
+  // if (formatLowerCase(homeopapeItem.itemLink).includes("news.ycombinator.com") === true) {
 
   //   show = false;
 
   // };
 
-  // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius")) {
+  // if (formatLowerCase(homeopapeItem.itemTitle).includes("pistorius") === true || formatLowerCase(homeopapeItem.itemContentSnippet).includes("pistorius") === true) {
 
   //   show = false;
 
@@ -333,6 +337,17 @@ const FromTheHomeopapeItem = (props) => {
   let formattedPost = formatPost(homeopapeItem.itemTitle.replace(/(<([^>]+)>)/ig, ""), homeopapeItem.itemLinkFormatted, homeopapeItem.itemContentSnippet.replace(/(<([^>]+)>)/ig, ""));
 
 
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const setDisplay = (itemID, display) => {
 
     clearMessages();
@@ -367,21 +382,21 @@ const FromTheHomeopapeItem = (props) => {
         }),
         body: JSON.stringify({ recordObject: recordObject })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -394,11 +409,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 
@@ -409,13 +424,14 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setDisplay error", error);
           // console.error(componentName, getDateTime(), "setDisplay error.name", error.name);
           // console.error(componentName, getDateTime(), "setDisplay error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -458,21 +474,21 @@ const FromTheHomeopapeItem = (props) => {
         }),
         body: JSON.stringify({ recordObject: recordObject })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -485,11 +501,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 
@@ -500,13 +516,14 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setPosted error", error);
           // console.error(componentName, getDateTime(), "setPosted error.name", error.name);
           // console.error(componentName, getDateTime(), "setPosted error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -549,21 +566,21 @@ const FromTheHomeopapeItem = (props) => {
         }),
         body: JSON.stringify({ recordObject: recordObject })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -576,11 +593,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 
@@ -591,13 +608,14 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setAlwaysFilter error", error);
           // console.error(componentName, getDateTime(), "setAlwaysFilter error.name", error.name);
           // console.error(componentName, getDateTime(), "setAlwaysFilter error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -640,21 +658,21 @@ const FromTheHomeopapeItem = (props) => {
         }),
         body: JSON.stringify({ recordObject: recordObject })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -667,11 +685,11 @@ const FromTheHomeopapeItem = (props) => {
 
           if (data.transactionSuccess === true) {
 
-            props.getNews();
+            getNews();
 
-            props.getNewsPosted();
+            getNewsPosted();
 
-            props.getNewsReview();
+            getNewsReview();
 
           } else {
 
@@ -682,30 +700,20 @@ const FromTheHomeopapeItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setViewed error", error);
           // console.error(componentName, getDateTime(), "setViewed error.name", error.name);
           // console.error(componentName, getDateTime(), "setViewed error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (
@@ -720,26 +728,22 @@ const FromTheHomeopapeItem = (props) => {
 
         <Col xs="12">
 
-          <React.Fragment>
-
-            <div>
-              {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
-              {Parse(homeopapeItem.itemTitle)}<br />
-              <a href={homeopapeItem.itemLinkFormatted} target="_blank">{homeopapeItem.itemLinkFormatted}</a><br />
-              ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
-              {itemID}
-            </div>
-
-            <FormGroup className="text-center">
-              <Alert color="info">{formattedPost}</Alert>
-            </FormGroup>
-
-          </React.Fragment>
-
           <Button outline size="sm" color="primary" onClick={(event) => { setDisplay(itemID, !homeopapeItem.display); setViewed(itemID, !homeopapeItem.viewed); }} >{homeopapeItem.display === true || homeopapeItem.display === 1 ? <React.Fragment>Undo Display</React.Fragment> : <React.Fragment>Display</React.Fragment>}</Button>
           <Button outline size="sm" color="secondary" className="ms-2" onClick={(event) => { setPosted(itemID, !homeopapeItem.posted); }} >{homeopapeItem.posted === true || homeopapeItem.posted === 1 ? <React.Fragment>Undo Posted</React.Fragment> : <React.Fragment>Post</React.Fragment>}</Button>
           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setAlwaysFilter(itemID, !homeopapeItem.alwaysFilter); setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.alwaysFilter === true || homeopapeItem.alwaysFilter === 1 ? <React.Fragment>Undo Always Filter</React.Fragment> : <React.Fragment>Always Filter</React.Fragment>}</Button>
           <Button outline size="sm" color="danger" className="ms-2" onClick={(event) => { setViewed(itemID, !homeopapeItem.viewed); }}>{homeopapeItem.viewed === true || homeopapeItem.viewed === 1 ? <React.Fragment>Undo Viewed</React.Fragment> : <React.Fragment>Viewed</React.Fragment>}</Button>
+
+          <div>
+            {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
+            {Parse(homeopapeItem.itemTitle)}<br />
+            <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{homeopapeItem.itemLinkFormatted}</a><br />
+            ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
+            {itemID}
+          </div>
+
+          <FormGroup className="text-center">
+            <Alert color="info">{formattedPost}</Alert>
+          </FormGroup>
 
         </Col>
 

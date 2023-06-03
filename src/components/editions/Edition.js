@@ -1,28 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate, displayYear } from "shared-functions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
-import { setPageURL } from "../../app/urlsSlice";
-// import AddEdition from "../editions/AddEdition";
+// import Parse from "html-react-parser";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem } from "shared-functions";
+import { encodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
 const Edition = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: titleID -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
+
   const componentName = "Edition";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const profileType = useSelector(state => state.applicationSettings.profileType);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
@@ -34,81 +30,88 @@ const Edition = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  // const [editionMessage, setEditionMessage] = useState("");
-  const [errEditionMessage, setErrEditionMessage] = useState("");
-  // const [editionResultsFound, setEditionResultsFound] = useState(null);
+  const arrayEditions = useSelector(state => state.editions.arrayEditions);
+  const arrayTitles = useSelector(state => state.titles.arrayTitles);
 
-  const editionsState = useSelector(state => state.editions.arrayEditions);
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
 
-  let editionList = [...editionsState];
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
-  const titleListState = useSelector(state => state.titles.arrayTitles);
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  let titleItemArray = [];
-  let titleItem = {};
-
-  if (isEmpty(props.titleID) === false && !isNaN(props.titleID)) {
-
-    editionList = editionList.filter(edition => edition.titleID === props.titleID);
-    titleItemArray = titleListState.filter(title => title.titleID === props.titleID);
-    titleItem = titleItemArray[0];
-
-  };
-
-
-  if (electronicOnly === true || userElectronicOnly === true) {
-
-    // editionList = editionList.filter(edition => edition.medium.electronic === true);
-    editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
-
-  } else if (physicalOnly === true || userPhysicalOnly === true) {
-
-    // editionList = editionList.filter(edition => edition.medium.electronic === false);
-    editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
-
-  } else {
-
-    editionList = [...editionList];
-
-  };
-
-  if (isEmpty(admin) === false && admin === true) {
-
-    editionList = [...editionList];
-
-  } else {
-
-    editionList = editionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
-
-  };
-
-
-  // * Sort the editionList array by media.sortID
-  // editionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
-  editionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
+  const [titleItem, setTitleItem] = useState({});
+  const [editionList, setEditionList] = useState([]);
 
 
   useEffect(() => {
 
-    if (editionList.length > 0) {
+    let newEditionList = [...arrayEditions];
 
-      setErrEditionMessage("");
+    let titleItemArray = [];
+    let newTitleItem = {};
+
+    if (isEmpty(titleID) === false && !isNaN(titleID) === true) {
+
+      newEditionList = newEditionList.filter(edition => edition.titleID === titleID);
+      titleItemArray = arrayTitles.filter(title => title.titleID === titleID);
+      newTitleItem = getFirstItem(titleItemArray);
+
+    };
+
+    if (electronicOnly === true || userElectronicOnly === true) {
+
+      // newEditionList = newEditionList.filter(edition => edition.medium.electronic === true);
+      newEditionList = newEditionList.filter(edition => edition.electronic === true || edition.electronic === 1);
+
+    } else if (physicalOnly === true || userPhysicalOnly === true) {
+
+      // newEditionList = newEditionList.filter(edition => edition.medium.electronic === false);
+      newEditionList = newEditionList.filter(edition => edition.electronic === false || edition.electronic === 0);
 
     } else {
 
-      setErrEditionMessage("No editions found.");
+      newEditionList = [...newEditionList];
+
+    };
+
+    if (isEmpty(admin) === false && admin === true) {
+
+      newEditionList = [...newEditionList];
+
+    } else {
+
+      newEditionList = newEditionList.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+
+    };
+
+    // * Sort the newEditionList array by media.sortID
+    // newEditionList.sort((a, b) => (a.medium.sortID > b.medium.sortID) ? 1 : -1);
+    newEditionList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+
+    setTitleItem(newTitleItem);
+
+    setEditionList(newEditionList);
+
+  }, [arrayEditions, titleID]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(editionList) === false) {
+
+      clearMessages();
+
+    } else {
+
+      addErrorMessage("No editions found.");
 
     };
 
@@ -126,25 +129,20 @@ const Edition = (props) => {
   return (
     <Container className="my-4">
 
-      {/* {editionList.length > 0 ? */}
+      {/* {isEmpty(editionList) === false ? */}
 
       <Row className="my-4">
         <Col xs="12">
 
-          <h5 className="text-center">Find A Copy
-
-            {/* {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <AddEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null} */}
-
-            {isEmpty(admin) === false && admin === true && isEmpty(titleItem) === false ? <EditEdition titleID={titleItem.titleID} titlePublicationDate={titleItem.publicationDate} titleImageName={titleItem.imageName} displayButton={true} /> : null}
-
-          </h5>
+          <h5 className="text-center">Find A Copy</h5>
 
         </Col>
       </Row>
       <Row className="my-4">
         <Col className="text-center" xs="12">
 
-          {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+          <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
           {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
           {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
 
@@ -193,9 +191,9 @@ const Edition = (props) => {
                         <div dangerouslySetInnerHTML={{"__html": edition.imageLinkLarge}} />
 
                     :
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
 
-                        {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
+                        {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName, profileType)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="edition-image" /> : <Image className="no-image-icon"/>}
 
                         </a>
 
@@ -207,7 +205,7 @@ const Edition = (props) => {
                         {isEmpty(edition.editionPublicationDate) === false ? <CardText>Released: {displayDate(editionPublicationDate)}</CardText> : null}
 
                     </CardFooter>
-                    </Card> */}
+                    </Card> */ }
 
                 <Card key={edition.editionID}>
 
@@ -233,7 +231,7 @@ const Edition = (props) => {
                               {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
                               {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
 
-                              <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                              <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                                 {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={titleItem.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}
                               </a>
 
@@ -245,8 +243,8 @@ const Edition = (props) => {
 
                               {isEmpty(edition.imageName) === false && isEmpty(edition.textLinkFull) === false ?
 
-                                <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                                  {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
+                                <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
+                                  {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName, profileType)} alt={titleItem.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                                 </a>
 
                                 : null}
@@ -267,21 +265,21 @@ const Edition = (props) => {
 
                         {/* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                           <img src={amazonLogo} alt={titleItem.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                         </a>
 
                         :
 
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                           <p className="my-2">Find Copy</p>
                         </a>
 
-                      } */}
+                      } */ }
 
                         {isEmpty(edition.textLinkFullAPI) === false ?
 
-                          <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                          <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                             <img src={amazonLogo} alt={titleItem.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                           </a>
 
@@ -291,7 +289,7 @@ const Edition = (props) => {
 
                             {isEmpty(edition.textLinkFullAPI) === false ?
 
-                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                                 <p className="my-2">Find Copy</p>
                               </a>
 
@@ -301,11 +299,20 @@ const Edition = (props) => {
 
                         }
 
-                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
-
                       </CardBody>
                     </Col>
                   </Row>
+
+                  {isEmpty(admin) === false && admin === true ?
+
+                    <Row>
+
+                      <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} />
+
+                    </Row>
+
+                    : null}
+
                   <CardFooter className="card-footer">
 
                     <CardText><Link to={encodeURL(edition.media)} onClick={(event) => { event.preventDefault(); redirectPage(encodeURL(edition.media)); }}>{edition.media}</Link></CardText>

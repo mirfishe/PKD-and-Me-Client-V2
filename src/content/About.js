@@ -1,33 +1,25 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
-import { isEmpty, getDateTime, displayValue } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, displayValue } from "shared-functions";
 import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
-import { setPageURL } from "../app/urlsSlice";
 
-const About = () => {
+const About = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
 
   const componentName = "About";
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
+  const profileType = useSelector(state => state.applicationSettings.profileType);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
+
   document.title = "About Philip K. Dick | " + applicationName + " | " + siteName;
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
-
-  };
 
 
   return (
@@ -52,7 +44,7 @@ const About = () => {
         </Col>
         <Col xs="2">
 
-          <img src={setLocalImagePath("https://philipdick.com/images/PKD/Philip_Dick2.jpg")} alt="Philip K. Dick" />
+          <img src={setLocalImagePath("https://philipdick.com/images/PKD/Philip_Dick2.jpg", profileType)} alt="Philip K. Dick" />
 
         </Col>
       </Row>
@@ -74,7 +66,7 @@ const About = () => {
 
           <p>Much speculation has surrounded the events and explanations of PKD's 2/3-74 experiences. Dick himself spent much of the rest of his life wondering and writing about it in his unpublished, mostly holographic, notes which he called his Exegesis. But essentially what happened was that, while suffering from an impacted wisdom tooth and while taking massive doses of vitamin-C, Phil called a local pharmacist for some medicine. When the delivery girl arrived at his door he was stunned by a beam of pink light which seemed to emanate from a necklace the girl wore. This was one of those 'fish sign' necklaces that are associated with Christianity. He soon found himself in a dual reality, as if ancient Rome was overlaid on Orange County 1974. He felt himself to be an early Christian and beyond time. This story is told in VALIS and some of his speculation (it runs to a million words in the Exegesis) can be found in In Pursuit Of Valis ed. L. Sutin. We hope that soon a complete publication of the Exegesis will appear.</p>
 
-          <a href="https://1999pkdweb.philipdick.com/pkdlife.htm" target="_blank" rel="noopener noreferrer">https://1999pkdweb.philipdick.com/pkdlife.htm</a>
+          <a href="https://1999pkdweb.philipdick.com/pkdlife.htm" target="_blank" rel="noopener">https://1999pkdweb.philipdick.com/pkdlife.htm</a>
 
         </Col>
       </Row>

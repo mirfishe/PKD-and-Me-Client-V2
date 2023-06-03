@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, InputGroup, InputGroupText, Label, Input, Alert, Button, NavItem, NavbarText, NavLink } from "reactstrap";
-import applicationSettings from "../../app/environment";
 import { emailRegExp } from "../../app/constants";
-import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, formatTrim, addErrorLog } from "shared-functions";
 import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/userSlice";
 
 const Login = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties:  -- 10/21/2022 MF
+  // * Functions: getChecklist -- 10/21/2022 MF
 
   const componentName = "Login";
 
   const dispatch = useDispatch();
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  const sessionToken = useSelector(state => state.user.sessionToken);
+  // const admin = useSelector(state => state.user.admin);
+
+  let getChecklist = isEmpty(props) === false && isEmpty(props.getChecklist) === false ? props.getChecklist : noFunctionAvailable;
 
   // const [user, setUser] = useState({});
   // const [userID, setUserID] = useState(null);
@@ -45,16 +46,58 @@ const Login = (props) => {
   const [modal, setModal] = useState(false);
   const [userResultsFound, setUserResultsFound] = useState(null);
 
-  const [checklistMessage, setChecklistMessage] = useState("");
-  const [errChecklistMessage, setErrChecklistMessage] = useState("");
-  const [checklistResultsFound, setChecklistResultsFound] = useState(null);
-
   const [txtEmail, setTxtEmail] = useState(""); // process.env.REACT_APP_EMAIL_DEFAULT
   const [txtPassword, setTxtPassword] = useState(""); // process.env.REACT_APP_PASSWORD_DEFAULT
   const [showPassword, setShowPassword] = useState("password");
 
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
+
+
+  useEffect(() => {
+
+    if (isEmpty(userResultsFound) === false) {
+
+      clearMessages();
+
+      setErrEmail("");
+      setErrPassword("");
+
+      setUserResultsFound(null);
+
+      setModal(!modal);
+
+    };
+
+  }, [userResultsFound]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(sessionToken) === false) {
+
+      clearMessages();
+
+      setErrEmail("");
+      setErrPassword("");
+
+      setModal(!modal);
+
+    };
+
+  }, [sessionToken]);
+
+
+  useEffect(() => {
+
+    if (process.env.NODE_ENV === "development") {
+
+      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
+      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
+
+    };
+
+  }, []);
 
 
   const updateToken = (newToken) => {
@@ -71,8 +114,10 @@ const Login = (props) => {
   const logIn = () => {
 
     clearMessages();
+
     setErrEmail("");
     setErrPassword("");
+
     // setUser({});
     // setUserID(null);
     // setFirstName("");
@@ -130,7 +175,6 @@ const Login = (props) => {
 
     };
 
-
     if (formValidated === true) {
 
       if (isEmpty(txtEmail) === false && isEmpty(txtPassword) === false) {
@@ -148,23 +192,23 @@ const Login = (props) => {
           headers: new Headers({
             "Content-Type": "application/json"
           }),
-          body: JSON.stringify({ user: recordObject })
+          body: JSON.stringify({ recordObject: recordObject })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -213,13 +257,14 @@ const Login = (props) => {
 
           })
           .catch((error) => {
+
             console.error(componentName, getDateTime(), "logIn error", error);
             // console.error(componentName, getDateTime(), "logIn error.name", error.name);
             // console.error(componentName, getDateTime(), "logIn error.message", error.message);
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -228,118 +273,6 @@ const Login = (props) => {
     };
 
   };
-
-
-  const getChecklist = (token) => {
-
-    setChecklistMessage("");
-    setErrChecklistMessage("");
-    setChecklistResultsFound(null);
-
-    let url = baseURL + "titles/checklist";
-
-    if (isEmpty(token) === false) {
-
-      fetch(url, {
-        method: "GET",
-        headers: new Headers({
-          "Content-Type": "application/json",
-          "Authorization": token
-        }),
-      })
-        .then(response => {
-
-          // if (response.ok !== true) {
-
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
-
-          // } else {
-
-          //     return response.status;
-
-          // };
-
-          // };
-
-        })
-        .then(results => {
-
-          setChecklistResultsFound(results.transactionSuccess);
-          // setChecklistMessage(results.message);
-
-          if (isEmpty(results) === false && results.transactionSuccess === true) {
-
-            dispatch(loadArrayChecklist(results.records));
-
-          } else {
-
-            console.error(componentName, getDateTime(), "getChecklist error", results.message);
-            addErrorMessage(results.message);
-
-          };
-
-        })
-        .catch((error) => {
-          console.error(componentName, getDateTime(), "getChecklist error", error);
-          // console.error(componentName, getDateTime(), "getChecklist error.name", error.name);
-          // console.error(componentName, getDateTime(), "getChecklist error.message", error.message);
-
-          // addErrorMessage(error.name + ": " + error.message);
-
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-        });
-
-    };
-
-  };
-
-
-  useEffect(() => {
-
-    if (isEmpty(userResultsFound) === false) {
-
-      clearMessages();
-      setErrEmail("");
-      setErrPassword("");
-      setUserResultsFound(null);
-      setModal(!modal);
-
-    };
-
-  }, [userResultsFound]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(sessionToken) === false) {
-
-      clearMessages();
-      setErrEmail("");
-      setErrPassword("");
-      setModal(!modal);
-
-    };
-
-  }, [sessionToken]);
-
-
-  useEffect(() => {
-
-    if (process.env.NODE_ENV === "development") {
-
-      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
-      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
-
-    };
-
-  }, []);
 
 
   return (
@@ -352,7 +285,7 @@ const Login = (props) => {
         <React.Fragment>
           {/* <NavItem> */}
           {/* <NavItem className="mx-3 my-2">
-            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Login</NavbarText></a> */}
+            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Login</NavbarText></a> */ }
           <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Login</NavbarText></NavLink>
           {/* </NavItem> */}
         </React.Fragment>
@@ -373,14 +306,14 @@ const Login = (props) => {
 
             <FormGroup>
               <Label for="txtEmail">Email Address</Label>
-              <Input id="txtEmail" label="Email Address" value={txtEmail} onChange={(event) => { setTxtEmail(event.target.value); }} />
+              <Input id="txtEmail" label="Email Address" autoFocus value={txtEmail} onChange={(event) => { setTxtEmail(event.target.value); }} />
               {isEmpty(errEmail) === false ? <Alert color="danger">{errEmail}</Alert> : null}
             </FormGroup>
 
             <FormGroup>
               <Label for="txtPassword">Password</Label>
               <InputGroup>
-                <Input type={showPassword} /*type="password"*/ id="txtPassword" value={txtPassword} onChange={(event) => { setTxtPassword(event.target.value); }} />
+                <Input type={showPassword} id="txtPassword" value={txtPassword} onChange={(event) => { setTxtPassword(event.target.value); }} />
                 <InputGroupText><i className="fas fa-eye" onMouseOver={(event) => { setShowPassword("text"); }} onMouseOut={(event) => { setShowPassword("password"); }}></i></InputGroupText>
                 {/* <InputGroupText><i className="fas fa-eye-slash"></i></InputGroupText> */}
               </InputGroup>

@@ -1,36 +1,90 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
-import { getASIN, removeOnePixelImage, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
+import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Image } from "react-bootstrap-icons";
+import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString, addErrorLog } from "shared-functions";
+import { getASIN, removeOnePixelImage } from "../../utilities/ApplicationFunctions";
+// import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
 const EditEdition = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: editionID, titleID, titleImageName, titlePublicationDate -- 10/21/2022 MF
 
   const componentName = "EditEdition";
 
   const dispatch = useDispatch();
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
-  const admin = useSelector(state => state.user.admin);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
 
+  const sessionToken = useSelector(state => state.user.sessionToken);
+  const admin = useSelector(state => state.user.admin);
+
+  const mediaListState = useSelector(state => state.media.arrayMedia);
+  const titleListState = useSelector(state => state.titles.arrayTitles);
+  const editionListState = useSelector(state => state.editions.arrayEditions);
+
+  let editionID = isEmpty(props) === false && isEmpty(props.editionID) === false ? props.editionID : 0;
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : 0;
+  let titleImageName = isEmpty(props) === false && isEmpty(props.titleImageName) === false ? props.titleImageName : "";
+  let titlePublicationDate = isEmpty(props) === false && isEmpty(props.titlePublicationDate) === false ? props.titlePublicationDate : null;
+
+  const [showForm, setShowForm] = useState(false);
 
   const [mediaMessage, setMediaMessage] = useState("");
   const [errMediaMessage, setErrMediaMessage] = useState("");
   const [mediaResultsFound, setMediaResultsFound] = useState(null);
 
-  const mediaListState = useSelector(state => state.media.arrayMedia);
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
+  const [editionRecordAdded, setEditionRecordAdded] = useState(null);
+  const [editionRecordUpdated, setEditionRecordUpdated] = useState(null);
+  const [editionRecordDeleted, setEditionRecordDeleted] = useState(null);
+
+  const [ddMediaID, setDdMediaID] = useState("");
+  const [txtPublicationDate, setTxtPublicationDate] = useState("");
+  const [txtImageName, setTxtImageName] = useState("");
+  const [txtASIN, setTxtASIN] = useState("");
+  const [txtTextLinkShort, setTxtTextLinkShort] = useState("");
+  const [txtTextLinkFull, setTxtTextLinkFull] = useState("");
+  const [txtImageLinkSmall, setTxtImageLinkSmall] = useState("");
+  const [txtImageLinkMedium, setTxtImageLinkMedium] = useState("");
+  const [txtImageLinkLarge, setTxtImageLinkLarge] = useState("");
+  const [txtTextImageLink, setTxtTextImageLink] = useState("");
+
+  const [errMediaID, setErrMediaID] = useState("");
+
+  // const [editionItemIndex, setEditionItemIndex] = useState(null);
+  const [editionItem, setEditionItem] = useState(null);
+  // const [editionID, setEditionID] = useState(null);
+  // const [titleID, setTitleID] = useState(null);
+  // const [mediaID, setMediaID] = useState(null);
+  // const [publicationDate, setPublicationDate] = useState(null);
+  // const [imageName, setImageName] = useState(null);
+  // const [ASIN, setASIN] = useState(null);
+  // const [textLinkShort, setTextLinkShort] = useState(null);
+  // const [textLinkFull, setTextLinkFull] = useState(null);
+  // const [imageLinkSmall, setImageLinkSmall,] = useState(null);
+  // const [imageLinkMedium, setImageLinkMedium] = useState(null);
+  // const [imageLinkLarge, setImageLinkLarge] = useState(null);
+  // const [textImageLink, setTextImageLink] = useState(null);
+  const [active, setActive] = useState(null);
+
+  const [ASINMessage, setASINMessage] = useState("");
+  const [errASINMessage, setErrASINMessage] = useState("");
+  const [ASINResultsFound, setASINResultsFound] = useState(null);
+
+  let mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
   // const mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
@@ -53,6 +107,18 @@ const EditEdition = (props) => {
   // };
 
 
+  // useEffect(() => {
+
+  //   if (admin !== true) {
+
+  //     // return <Redirect to="/" />;
+  //     setModal(false);
+
+  //   };
+
+  // }, [admin]);
+
+
   useEffect(() => {
 
     if (mediaList.length < 1) {
@@ -71,72 +137,19 @@ const EditEdition = (props) => {
   }, [mediaList]);
 
 
-  const titleListState = useSelector(state => state.titles.arrayTitles);
-
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [messageVisible, setMessageVisible] = useState(false);
-  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
-  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
-  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
-  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
-  const onDismissMessage = () => setMessageVisible(false);
-  const onDismissErrorMessage = () => setErrorMessageVisible(false);
-
-  const [modal, setModal] = useState(false);
-  const [editionRecordAdded, setEditionRecordAdded] = useState(null);
-  const [editionRecordUpdated, setEditionRecordUpdated] = useState(null);
-  const [editionRecordDeleted, setEditionRecordDeleted] = useState(null);
-
-  const [ddMediaID, setDdMediaID] = useState("");
-  const [txtPublicationDate, setTxtPublicationDate] = useState("");
-  const [txtImageName, setTxtImageName] = useState("");
-  const [txtASIN, setTxtASIN] = useState("");
-  const [txtTextLinkShort, setTxtTextLinkShort] = useState("");
-  const [txtTextLinkFull, setTxtTextLinkFull] = useState("");
-  const [txtImageLinkSmall, setTxtImageLinkSmall] = useState("");
-  const [txtImageLinkMedium, setTxtImageLinkMedium] = useState("");
-  const [txtImageLinkLarge, setTxtImageLinkLarge] = useState("");
-  const [txtTextImageLink, setTxtTextImageLink] = useState("");
-
-  const [errMediaID, setErrMediaID] = useState("");
-
-  // const [editionItemIndex, setEditionItemIndex] = useState(null);
-  const [editionItem, setEditionItem] = useState(null);
-  // const [editionID, setEditionID] = useState(null);
-  const [titleID, setTitleID] = useState(null);
-  // const [mediaID, setMediaID] = useState(null);
-  // const [publicationDate, setPublicationDate] = useState(null);
-  // const [imageName, setImageName] = useState(null);
-  // const [ASIN, setASIN] = useState(null);
-  // const [textLinkShort, setTextLinkShort] = useState(null);
-  // const [textLinkFull, setTextLinkFull] = useState(null);
-  // const [imageLinkSmall, setImageLinkSmall,] = useState(null);
-  // const [imageLinkMedium, setImageLinkMedium] = useState(null);
-  // const [imageLinkLarge, setImageLinkLarge] = useState(null);
-  // const [textImageLink, setTextImageLink] = useState(null);
-  const [active, setActive] = useState(null);
-
-  const [ASINMessage, setASINMessage] = useState("");
-  const [errASINMessage, setErrASINMessage] = useState("");
-  const [ASINResultsFound, setASINResultsFound] = useState(null);
-
-  const editionListState = useSelector(state => state.editions.arrayEditions);
-
-
   useEffect(() => {
 
-    if (isEmpty(props.editionID) === false) {
+    if (isEmpty(editionID) === false) {
 
-      let editionObject = editionListState.find(edition => edition.editionID === props.editionID);
+      let editionObject = editionListState.find(edition => edition.editionID === editionID);
 
-      // setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === props.editionID));
+      // setEditionItemIndex(editionListState.findIndex(edition => edition.editionID === editionID));
 
       if (isEmpty(editionObject) === false) {
 
         setEditionItem(editionObject);
         // setEditionID(editionObject.editionID);
-        setTitleID(editionObject.titleID);
+        // setTitleID(editionObject.titleID);
         // setMediaID(editionObject.mediaID);
         // setPublicationDate(editionObject.publicationDate);
         // setImageName(editionObject.imageName);
@@ -174,7 +187,80 @@ const EditEdition = (props) => {
 
     };
 
-  }, [props.editionID, editionListState]);
+  }, [editionID, editionListState]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(editionRecordAdded) === false && editionRecordAdded === true) {
+
+      clearMessages();
+      setErrMediaID("");
+      setEditionRecordAdded(null);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
+      // setModal(!modal);
+
+    };
+
+  }, [editionRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(editionRecordUpdated) === false && editionRecordUpdated === true) {
+
+      clearMessages();
+      setErrMediaID("");
+      setEditionRecordUpdated(null);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
+      // setModal(!modal);
+
+    };
+
+    if (isEmpty(editionRecordDeleted) === false && editionRecordDeleted === true) {
+
+      clearMessages();
+      setErrMediaID("");
+      setEditionRecordDeleted(null);
+
+      setDdMediaID("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setTxtASIN("");
+      setTxtTextLinkShort("");
+      setTxtTextLinkFull("");
+      setTxtImageLinkSmall("");
+      setTxtImageLinkMedium("");
+      setTxtImageLinkLarge("");
+      setTxtTextImageLink("");
+
+      // setModal(!modal);
+
+    };
+
+  }, [editionRecordUpdated, editionRecordDeleted]);
 
 
   const addEdition = () => {
@@ -185,7 +271,7 @@ const EditEdition = (props) => {
 
     setEditionItem(null);
     // setEditionID(null);
-    setTitleID(null);
+    // setTitleID(null);
     // setMediaID(null);
     // setPublicationDate(null);
     // setImageName(null);
@@ -201,7 +287,7 @@ const EditEdition = (props) => {
     let mediaIDValidated = false;
     let formValidated = false;
 
-    // ? Check to make sure that props.titleID is a number? -- 03/06/2021 MF
+    // ? Check to make sure that titleID is a number? -- 03/06/2021 MF
 
     if (isEmpty(ddMediaID) === false) {
 
@@ -225,13 +311,10 @@ const EditEdition = (props) => {
 
     };
 
-
     if (formValidated === true) {
 
-
-
       let recordObject = {
-        titleID: parseInt(props.titleID),
+        titleID: parseInt(titleID),
         mediaID: parseInt(ddMediaID),
         // imageName: formatTrim(txtImageName),
         // ASIN: formatTrim(txtASIN),
@@ -342,7 +425,6 @@ const EditEdition = (props) => {
 
       };
 
-
       let url = baseURL + "editions/";
 
       if (isEmpty(sessionToken) === false) {
@@ -355,21 +437,21 @@ const EditEdition = (props) => {
           }),
           body: JSON.stringify({ edition: recordObject })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -383,35 +465,33 @@ const EditEdition = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              setEditionItem(data.records[0]);
-              // setEditionID(data.records[0].editionID);
-              setTitleID(data.records[0].titleID);
-              // setMediaID(data.records[0].mediaID);
-              // setPublicationDate(data.records[0].publicationDate);
-              // setImageName(data.records[0].imageName);
-              // setASIN(data.records[0].ASIN);
-              // setTextLinkShort(data.records[0].textLinkShort);
-              // setTextLinkFull(data.records[0].textLinkFull);
-              // setImageLinkSmall(data.records[0].imageLinkSmall);
-              // setImageLinkMedium(data.records[0].imageLinkMedium);
-              // setImageLinkLarge(data.records[0].imageLinkLarge);
-              // setTextImageLink(data.records[0].textImageLink);
-              setActive(data.records[0].active);
+              let dataRecord = getFirstItem(data.records);
 
-              let mediaItem = mediaListState.filter(media => media.mediaID === data.records[0].mediaID);
-              // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
-              mediaItem = mediaItem[0];
+              // setEditionItem(dataRecord);
+              // // setEditionID(dataRecord.editionID);
+              // setTitleID(dataRecord.titleID);
+              // // setMediaID(dataRecord.mediaID);
+              // // setPublicationDate(dataRecord.publicationDate);
+              // // setImageName(dataRecord.imageName);
+              // // setASIN(dataRecord.ASIN);
+              // // setTextLinkShort(dataRecord.textLinkShort);
+              // // setTextLinkFull(dataRecord.textLinkFull);
+              // // setImageLinkSmall(dataRecord.imageLinkSmall);
+              // // setImageLinkMedium(dataRecord.imageLinkMedium);
+              // // setImageLinkLarge(dataRecord.imageLinkLarge);
+              // // setTextImageLink(dataRecord.textImageLink);
+              // setActive(dataRecord.active);
 
+              // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === dataRecord.mediaID));
+              // // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
 
-              let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
-              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-              titleItem = titleItem[0];
+              // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === dataRecord.titleID));
+              // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
+              // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+              // dispatch(addStateEdition([{ editionID: dataRecord.editionID, titleID: dataRecord.titleID, mediaID: dataRecord.mediaID, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, ASIN: dataRecord.ASIN, textLinkShort: dataRecord.textLinkShort, textLinkFull: dataRecord.textLinkFull, imageLinkSmall: dataRecord.imageLinkSmall, imageLinkMedium: dataRecord.imageLinkMedium, imageLinkLarge: dataRecord.imageLinkLarge, textImageLink: dataRecord.textImageLink, active: dataRecord.active, editionActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate /* , medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate } */, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, mediaActive: mediaItem.active, mediaCreateDate: mediaItem.createDate, mediaUpdatedDate: mediaItem.updateDate /* , title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } */, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, titlePublicationDate: titleItem.publicationDate, titleImageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate }]));
 
-              // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-              dispatch(addStateEdition([{ editionID: data.records[0].editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }*/, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, mediaActive: mediaItem.active, mediaCreateDate: mediaItem.createDate, mediaUpdatedDate: mediaItem.updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, submissionDate: titleItem.submissionDate, titlePublicationDate: titleItem.publicationDate, titleImageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate }]));
-
-              // ? Add to local storage also? -- 03/06/2021 MF
+              // // ? Add to local storage also? -- 03/06/2021 MF
 
             } else {
 
@@ -428,7 +508,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -441,14 +521,13 @@ const EditEdition = (props) => {
 
   const updateEdition = (deleteEdition) => {
 
-
     clearMessages();
     setEditionRecordUpdated(null);
     setErrMediaID("");
 
     setEditionItem(null);
     // setEditionID(null);
-    setTitleID(null);
+    // setTitleID(null);
     // setMediaID(null);
     // setPublicationDate(null);
     // setImageName(null);
@@ -464,7 +543,7 @@ const EditEdition = (props) => {
     let mediaIDValidated = false;
     let formValidated = false;
 
-    // ? Check to make sure that props.editionID is a number? -- 03/06/2021 MF
+    // ? Check to make sure that editionID is a number? -- 03/06/2021 MF
 
     if (isEmpty(ddMediaID) === false) {
 
@@ -488,13 +567,10 @@ const EditEdition = (props) => {
 
     };
 
-
     if (formValidated === true) {
 
-
-
       let recordObject = {
-        editionID: props.editionID,
+        editionID: editionID,
         titleID: parseInt(titleID),
         mediaID: parseInt(ddMediaID),
         // imageName: formatTrim(txtImageName),
@@ -607,13 +683,11 @@ const EditEdition = (props) => {
 
       };
 
-
       let url = baseURL + "editions/";
 
-      if (isEmpty(props.editionID) === false && isEmpty(sessionToken) === false) {
+      if (isEmpty(editionID) === false && isEmpty(sessionToken) === false) {
 
-        url = url + props.editionID;
-
+        url = url + editionID;
 
         fetch(url, {
           method: "PUT",
@@ -623,21 +697,21 @@ const EditEdition = (props) => {
           }),
           body: JSON.stringify({ edition: recordObject })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -651,35 +725,33 @@ const EditEdition = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              setEditionItem(data.records[0]);
-              // setEditionID(data.records[0].editionID);
-              setTitleID(data.records[0].titleID);
-              // setMediaID(data.records[0].mediaID);
-              // setPublicationDate(data.records[0].publicationDate);
-              // setImageName(data.records[0].imageName);
-              // setASIN(data.records[0].ASIN);
-              // setTextLinkShort(data.records[0].textLinkShort);
-              // setTextLinkFull(data.records[0].textLinkFull);
-              // setImageLinkSmall(data.records[0].imageLinkSmall);
-              // setImageLinkMedium(data.records[0].imageLinkMedium);
-              // setImageLinkLarge(data.records[0].imageLinkLarge);
-              // setTextImageLink(data.records[0].textImageLink);
-              setActive(data.records[0].active);
+              let dataRecord = getFirstItem(data.records);
 
-              let mediaItem = mediaListState.filter(media => media.mediaID === data.records[0].mediaID);
-              // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
-              mediaItem = mediaItem[0];
+              setEditionItem(dataRecord);
+              // setEditionID(dataRecord.editionID);
+              // setTitleID(dataRecord.titleID);
+              // setMediaID(dataRecord.mediaID);
+              // setPublicationDate(dataRecord.publicationDate);
+              // setImageName(dataRecord.imageName);
+              // setASIN(dataRecord.ASIN);
+              // setTextLinkShort(dataRecord.textLinkShort);
+              // setTextLinkFull(dataRecord.textLinkFull);
+              // setImageLinkSmall(dataRecord.imageLinkSmall);
+              // setImageLinkMedium(dataRecord.imageLinkMedium);
+              // setImageLinkLarge(dataRecord.imageLinkLarge);
+              // setTextImageLink(dataRecord.textImageLink);
+              setActive(dataRecord.active);
 
+              // let mediaItem = getFirstItem(mediaListState.filter(media => media.mediaID === dataRecord.mediaID));
+              // // medium: {mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate}
 
-              let titleItem = titleListState.filter(title => title.titleID === data.records[0].titleID);
-              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-              titleItem = titleItem[0];
+              // let titleItem = getFirstItem(titleListState.filter(title => title.titleID === dataRecord.titleID));
+              // // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
+              // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+              // dispatch(updateStateEdition({/* editionItemIndex: editionItemIndex, */ editionID: editionID, titleID: dataRecord.titleID, mediaID: dataRecord.mediaID, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, ASIN: dataRecord.ASIN, textLinkShort: dataRecord.textLinkShort, textLinkFull: dataRecord.textLinkFull, imageLinkSmall: dataRecord.imageLinkSmall, imageLinkMedium: dataRecord.imageLinkMedium, imageLinkLarge: dataRecord.imageLinkLarge, textImageLink: dataRecord.textImageLink, active: dataRecord.active, editionActive: dataRecord.active, updateDate: getDateTime() /* , medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } */ }));
 
-              // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-              dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: props.editionID, titleID: data.records[0].titleID, mediaID: data.records[0].mediaID, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, ASIN: data.records[0].ASIN, textLinkShort: data.records[0].textLinkShort, textLinkFull: data.records[0].textLinkFull, imageLinkSmall: data.records[0].imageLinkSmall, imageLinkMedium: data.records[0].imageLinkMedium, imageLinkLarge: data.records[0].imageLinkLarge, textImageLink: data.records[0].textImageLink, active: data.records[0].active, editionActive: data.records[0].active, updateDate: getDateTime()/*, medium: { mediaID: mediaItem.mediaID, media: mediaItem.media, electronic: mediaItem.electronic, sortID: mediaItem.sortID, active: mediaItem.active, createDate: mediaItem.createDate, updateDate: mediaItem.updateDate }, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/ }));
-
-              // ? Add to local storage also? -- 03/06/2021 MF
+              // // ? Add to local storage also? -- 03/06/2021 MF
 
             } else {
 
@@ -696,7 +768,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -715,10 +787,9 @@ const EditEdition = (props) => {
 
     let url = baseURL + "editions/";
 
-    if (isEmpty(props.editionID) === false) {
+    if (isEmpty(editionID) === false) {
 
-      url = url + props.editionID;
-
+      url = url + editionID;
 
       if (isEmpty(sessionToken) === false) {
 
@@ -729,21 +800,21 @@ const EditEdition = (props) => {
             "Authorization": sessionToken
           })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -758,10 +829,10 @@ const EditEdition = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              // dispatch(deleteStateEdition(props.editionID));
-              // dispatch(deleteStateEdition(editionItemIndex));
-              dispatch(deleteStateEdition(data.editionID));
-              // ? Update local storage also?. -- 03/06/2021 MF
+              // // dispatch(deleteStateEdition(editionID));
+              // // dispatch(deleteStateEdition(editionItemIndex));
+              // dispatch(deleteStateEdition(data.editionID));
+              // // ? Update local storage also?. -- 03/06/2021 MF
 
             } else {
 
@@ -778,7 +849,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -801,17 +872,16 @@ const EditEdition = (props) => {
 
       url = url + ASIN;
 
-
       fetch(url)
-        .then(response => {
+        .then(results => {
 
-          if (response.ok !== true) {
+          if (results.ok !== true) {
 
-            throw Error(response.status + " " + response.statusText + " " + response.url);
+            throw Error(results.status + " " + results.statusText + " " + results.url);
 
           } else {
 
-            return response.json();
+            return results.json();
 
           };
 
@@ -824,7 +894,6 @@ const EditEdition = (props) => {
           if (isEmpty(results) === false && results.transactionSuccess === true) {
 
             setASINMessage(results.message + "That ASIN already exists in the database. " + results.records[0].titleName + " (" + results.records[0].media + ") editionID=" + results.records[0].editionID);
-
 
           } else {
 
@@ -840,7 +909,7 @@ const EditEdition = (props) => {
 
           setErrASINMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
@@ -851,9 +920,9 @@ const EditEdition = (props) => {
 
   const copyTitlePublicationDate = () => {
 
-    if (isEmpty(props.titlePublicationDate) === false) {
+    if (isEmpty(titlePublicationDate) === false) {
 
-      setTxtPublicationDate(formatToString(props.titlePublicationDate).substring(0, 10));
+      setTxtPublicationDate(formatToString(titlePublicationDate).substring(0, 10));
 
     } else {
 
@@ -866,9 +935,9 @@ const EditEdition = (props) => {
 
   const copyTitleImageName = () => {
 
-    if (isEmpty(props.titleImageName) === false) {
+    if (isEmpty(titleImageName) === false) {
 
-      setTxtImageName(formatToString(props.titleImageName));
+      setTxtImageName(formatToString(titleImageName));
 
     } else {
 
@@ -879,240 +948,148 @@ const EditEdition = (props) => {
   };
 
 
-  useEffect(() => {
-
-    if (isEmpty(editionRecordAdded) === false && editionRecordAdded === true) {
-
-      clearMessages();
-      setErrMediaID("");
-      setEditionRecordAdded(null);
-
-      setDdMediaID("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setTxtASIN("");
-      setTxtTextLinkShort("");
-      setTxtTextLinkFull("");
-      setTxtImageLinkSmall("");
-      setTxtImageLinkMedium("");
-      setTxtImageLinkLarge("");
-      setTxtTextImageLink("");
-
-      setModal(!modal);
-
-    };
-
-  }, [editionRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(editionRecordUpdated) === false && editionRecordUpdated === true) {
-
-      clearMessages();
-      setErrMediaID("");
-      setEditionRecordUpdated(null);
-
-      setDdMediaID("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setTxtASIN("");
-      setTxtTextLinkShort("");
-      setTxtTextLinkFull("");
-      setTxtImageLinkSmall("");
-      setTxtImageLinkMedium("");
-      setTxtImageLinkLarge("");
-      setTxtTextImageLink("");
-
-      setModal(!modal);
-
-    };
-
-    if (isEmpty(editionRecordDeleted) === false && editionRecordDeleted === true) {
-
-      clearMessages();
-      setErrMediaID("");
-      setEditionRecordDeleted(null);
-
-      setDdMediaID("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setTxtASIN("");
-      setTxtTextLinkShort("");
-      setTxtTextLinkFull("");
-      setTxtImageLinkSmall("");
-      setTxtImageLinkMedium("");
-      setTxtImageLinkLarge("");
-      setTxtTextImageLink("");
-
-      setModal(!modal);
-
-    };
-
-  }, [editionRecordUpdated, editionRecordDeleted]);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
-
-
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Edition</Button></span> : null} */}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+        <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(editionItem) === true && isEmpty(admin) === false && admin === true ?
+          <button aria-label={showForm === false ? "expand" : "collapse"} onClick={() => { setShowForm(!showForm); }}>
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Add Edition</a>
+            <div>
+              {isEmpty(editionItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Edition
+
+              {showForm === false ? <i className="fas fa-caret-down"></i> : <i className="fas fa-caret-up"></i>}
+            </div>
+
+            {showForm === true ?
+
+              <span onClick={() => { setShowForm(!showForm); }}>
+
+                <FormGroup className="text-center">
+                  <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+                  <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+                  {isEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
+                  {isEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
+                </FormGroup>
+
+                <FormGroup row>
+                  <Col>
+
+                    <Label for="ddMediaID">Media</Label>
+                    <Input type="select" id="ddMediaID" value={ddMediaID} onChange={(event) => { setDdMediaID(event.target.value); }}>
+                      <option value="">Select a Media</option>
+
+                      {isNonEmptyArray(mediaList) === true ?
+
+                        <React.Fragment>
+
+                          {mediaList.map((media) => {
+                            return (
+                              <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
+                            );
+                          })}
+
+                        </React.Fragment>
+
+                        : null}
+
+                    </Input>
+                    {isEmpty(errMediaID) === false ? <Alert color="danger">{errMediaID}</Alert> : null}
+
+                  </Col>
+                  <Col>
+
+                    <Label for="txtPublicationDate">Publication Date</Label> {isEmpty(titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
+                    <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
+
+                  </Col>
+
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageName">Image Name</Label> {isEmpty(titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
+                  <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
+                  {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
+                </FormGroup>
+
+                <FormGroup>
+                  {isEmpty(txtTextLinkFull) === false ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
+                  {isEmpty(ASINMessage) === false ? <Alert color="info">{ASINMessage}</Alert> : null}
+                  {isEmpty(errASINMessage) === false ? <Alert color="danger">{errASINMessage}</Alert> : null}
+                  <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={(event) => { checkASIN(txtASIN); }}>Check for ASIN</Button>
+                  <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => { setTxtASIN(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtTextLinkShort">Text Link Short</Label>
+                  <Input type="text" id="txtTextLinkShort" value={txtTextLinkShort} onChange={(event) => { setTxtTextLinkShort(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
+                  <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => { setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
+                  <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => { setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
+                  <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => { setTxtImageLinkMedium(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
+                  <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => { setTxtImageLinkLarge(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtTextImageLink">Text Image Link</Label>
+                  <Input type="textarea" id="txtTextImageLink" rows={10} value={txtTextImageLink} onChange={(event) => { setTxtTextImageLink(event.target.value); }} />
+                </FormGroup>
+
+                {isEmpty(editionItem) === true ?
+
+                  <Button outline size="lg" color="primary" onClick={addEdition}>Add Edition</Button>
+
+                  :
+
+                  <React.Fragment>
+
+                    <Button outline size="lg" color="primary" onClick={(event) => { updateEdition(false); }}>Update Edition</Button>
+
+                    {isEmpty(active) === false && (active === false || active === 0) ?
+
+                      <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(false); }}>Undelete/Restore Edition</Button>
+
+                      : null}
+
+                    {isEmpty(active) === false && (active === true || active === 1) ?
+
+                      <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(true); }}>Delete Edition</Button>
+
+                      : null}
+
+                    <Button outline size="lg" color="warning" onClick={(event) => { deleteEdition(); }}>Hard Delete Edition</Button>
+                  </React.Fragment>
+
+                }
+
+                {/* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
+
+              </span>
+
+              : null}
+
+          </button>
+
+        </React.Fragment>
 
         : null}
-
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Edition</Button></span> : null} */}
-
-      {/* {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
-
-      {applicationAllowUserInteractions === true && isEmpty(editionItem) === false && isEmpty(admin) === false && admin === true ?
-
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Update Edition</a>
-
-        : null}
-
-
-      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
-        <ModalHeader toggle={(event) => { setModal(!modal); }}>{isEmpty(editionItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Edition</ModalHeader>
-        <ModalBody>
-          <Form>
-
-            <FormGroup className="text-center">
-              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-              {isEmpty(mediaMessage) === false ? <Alert color="info">{mediaMessage}</Alert> : null}
-              {isEmpty(errMediaMessage) === false ? <Alert color="danger">{errMediaMessage}</Alert> : null}
-            </FormGroup>
-
-            <FormGroup row>
-              <Col>
-
-                <Label for="ddMediaID">Media</Label>
-                <Input type="select" id="ddMediaID" value={ddMediaID} onChange={(event) => { setDdMediaID(event.target.value); }}>
-                  <option value="">Select a Media</option>
-
-                  {isNonEmptyArray(mediaList) === true ?
-
-                    <React.Fragment>
-
-                      {mediaList.map((media) => {
-                        return (
-                          <option key={media.mediaID} value={media.mediaID}>{media.media}</option>
-                        );
-                      })}
-
-                    </React.Fragment>
-
-                    : null}
-
-                </Input>
-                {isEmpty(errMediaID) === false ? <Alert color="danger">{errMediaID}</Alert> : null}
-
-              </Col>
-              <Col>
-
-                <Label for="txtPublicationDate">Publication Date</Label> {isEmpty(props.titlePublicationDate) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitlePublicationDate}>Copy Title Publication Date</Button> : null}
-                <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
-
-              </Col>
-
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageName">Image Name</Label> {isEmpty(props.titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
-              <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
-              {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
-            </FormGroup>
-
-            <FormGroup>
-              {isEmpty(txtTextLinkFull) === false ? <Alert color="info">{getASIN(txtTextLinkFull)}</Alert> : null}
-              {isEmpty(ASINMessage) === false ? <Alert color="info">{ASINMessage}</Alert> : null}
-              {isEmpty(errASINMessage) === false ? <Alert color="danger">{errASINMessage}</Alert> : null}
-              <Label for="txtASIN">ASIN</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={(event) => { checkASIN(txtASIN); }}>Check for ASIN</Button>
-              <Input type="text" id="txtASIN" value={txtASIN} onChange={(event) => { setTxtASIN(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtTextLinkShort">Text Link Short</Label>
-              <Input type="text" id="txtTextLinkShort" value={txtTextLinkShort} onChange={(event) => { setTxtTextLinkShort(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtTextLinkFull">Text Link Full (Can include non-Amazon.com links)</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtASIN(getASIN(txtTextLinkFull)); }}>Copy ASIN</Button>
-              <Input type="textarea" id="txtTextLinkFull" rows={5} value={txtTextLinkFull} onChange={(event) => { setTxtTextLinkFull(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageLinkSmall">Image Link Small</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkSmall(removeOnePixelImage(txtImageLinkSmall, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkSmall" rows={10} value={txtImageLinkSmall} onChange={(event) => { setTxtImageLinkSmall(event.target.value); setTxtASIN(getASIN(txtTextLinkFull)); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageLinkMedium">Image Link Medium</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkMedium(removeOnePixelImage(txtImageLinkMedium, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkMedium" rows={10} value={txtImageLinkMedium} onChange={(event) => { setTxtImageLinkMedium(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageLinkLarge">Image Link Large</Label><Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtImageLinkLarge(removeOnePixelImage(txtImageLinkLarge, txtASIN)); }}>Remove One Pixel Image</Button>
-              <Input type="textarea" id="txtImageLinkLarge" rows={10} value={txtImageLinkLarge} onChange={(event) => { setTxtImageLinkLarge(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtTextImageLink">Text Image Link</Label>
-              <Input type="textarea" id="txtTextImageLink" rows={10} value={txtTextImageLink} onChange={(event) => { setTxtTextImageLink(event.target.value); }} />
-            </FormGroup>
-
-            <ModalFooter>
-
-              {isEmpty(editionItem) === true ?
-
-                <Button outline size="lg" color="primary" onClick={addEdition}>Add Edition</Button>
-
-                :
-
-                <React.Fragment>
-
-                  <Button outline size="lg" color="primary" onClick={(event) => { updateEdition(false); }}>Update Edition</Button>
-
-                  {isEmpty(active) === false && (active === false || active === 0) ?
-
-                    <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(false); }}>Undelete/Restore Edition</Button>
-
-                    : null}
-
-                  {isEmpty(active) === false && (active === true || active === 1) ?
-
-                    <Button outline size="lg" color="danger" onClick={(event) => { updateEdition(true); }}>Delete Edition</Button>
-
-                    : null}
-
-                  <Button outline size="lg" color="warning" onClick={(event) => { deleteEdition(); }}>Hard Delete Edition</Button>
-                </React.Fragment>
-
-              }
-
-              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
-
-            </ModalFooter>
-          </Form>
-        </ModalBody>
-      </Modal>
 
     </React.Fragment>
   );

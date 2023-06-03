@@ -3,29 +3,27 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 // import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
-// import { encodeURL, convertBitTrueFalse, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
+// import Parser from "rss-parser";
+import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, removeHTML, addErrorLog } from "shared-functions";
+// import { encodeURL, convertBitTrueFalse, toTitleCase } from "../../utilities/ApplicationFunctions";
 import FromTheHomeopapeItem from "./FromTheHomeopapeItem";
 
-// * https://www.npmjs.com/package/rss-parser
-// * https://github.com/rbren/rss-parser
-// import Parser from "rss-parser";
+const FromTheHomeopape = () => {
 
-const FromTheHomeopape = (props) => {
+  // * https://www.npmjs.com/package/rss-parser
+  // * https://github.com/rbren/rss-parser
 
   const componentName = "FromTheHomeopape";
 
   // const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -54,6 +52,40 @@ const FromTheHomeopape = (props) => {
   // let displayItemsCount = 0;
   // let displayUpdateItemsCount = 0;
 
+  document.title = "Update From The Homeopape | " + applicationName + " | " + siteName;
+
+
+  useEffect(() => {
+
+    if (isEmpty(baseURL) === false) {
+
+      // fetchNews();
+      // fetchNews2();
+
+      // * Handled in a cron job on the server now. -- 06/26/2021 MF
+      // fetchNews();
+
+      getNews();
+
+      getNewsPosted();
+
+      getNewsReview();
+
+    };
+
+  }, [baseURL]);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
 
   const filterNewsReview = (homeopapeItemsReview) => {
 
@@ -66,7 +98,6 @@ const FromTheHomeopape = (props) => {
     if (isNonEmptyArray(homeopapeItemsReview) === true) {
 
       for (let i = 0; i < homeopapeItemsReview.length; i++) {
-
 
         let inTitle = false;
         let inText = false;
@@ -343,9 +374,9 @@ const FromTheHomeopape = (props) => {
 
   const getNews = () => {
 
-    let url = baseURL + "fromthehomeopape/top/50";
+    let url = baseURL + "fromthehomeopape/top/50/";
     // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // // let url = baseURL + "fromthehomeopape/top/10";
+    // // let url = baseURL + "fromthehomeopape/top/10/";
 
     fetch(url, {
       method: "GET",
@@ -353,15 +384,15 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -381,11 +412,12 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -396,7 +428,7 @@ const FromTheHomeopape = (props) => {
 
     let url = baseURL + "fromthehomeopape/posted";
     // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // // let url = baseURL + "fromthehomeopape/top/10";
+    // // let url = baseURL + "fromthehomeopape/top/10/";
 
     fetch(url, {
       method: "GET",
@@ -404,15 +436,15 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -432,11 +464,12 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -453,15 +486,15 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -483,32 +516,16 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNewsReview error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
   };
-
-
-  useEffect(() => {
-
-    // fetchNews();
-    // fetchNews2();
-
-    // * Handled in a cron job on the server now. -- 06/26/2021 MF
-    // fetchNews();
-
-    getNews();
-
-    getNewsPosted();
-
-    getNewsReview();
-
-  }, []);
 
 
   const markAllViewed = () => {
@@ -519,7 +536,6 @@ const FromTheHomeopape = (props) => {
 
     if (isEmpty(sessionToken) === false) {
 
-
       fetch(url, {
         method: "GET",
         headers: new Headers({
@@ -527,21 +543,21 @@ const FromTheHomeopape = (props) => {
           "Authorization": sessionToken
         })
       })
-        .then(response => {
+        .then(results => {
 
-          // if (response.ok !== true) {
+          // if (results.ok !== true) {
 
-          //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-          // } else {
-
-          // if (response.status === 200) {
-
-          return response.json();
+          //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
           // } else {
 
-          //     return response.status;
+          // if (results.status === 200) {
+
+          return results.json();
+
+          // } else {
+
+          //     return results.status;
 
           // };
 
@@ -566,30 +582,20 @@ const FromTheHomeopape = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "markAllViewed error", error);
           // console.error(componentName, getDateTime(), "markAllViewed error.name", error.name);
           // console.error(componentName, getDateTime(), "markAllViewed error.message", error.message);
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 
     };
 
   };
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (
@@ -667,7 +673,6 @@ const FromTheHomeopape = (props) => {
 
             : null}
 
-
           {isNonEmptyArray(homeopapeItemsReviewText) === true ?
 
             <React.Fragment>
@@ -690,7 +695,6 @@ const FromTheHomeopape = (props) => {
             </React.Fragment>
 
             : null}
-
 
           {isNonEmptyArray(homeopapeItemsReviewNeither) === true ?
 
@@ -715,7 +719,6 @@ const FromTheHomeopape = (props) => {
 
             : null}
 
-
           {isNonEmptyArray(homeopapeItemsReviewIncorrectContext) === true ?
 
             <React.Fragment>
@@ -739,7 +742,6 @@ const FromTheHomeopape = (props) => {
 
             : null}
 
-
           {/* {isNonEmptyArray(homeopapeItemsReview) === true ?
 
             <React.Fragment>
@@ -759,7 +761,7 @@ const FromTheHomeopape = (props) => {
 
             </React.Fragment>
 
-            : null} */}
+            : null} */ }
 
         </Col>
 

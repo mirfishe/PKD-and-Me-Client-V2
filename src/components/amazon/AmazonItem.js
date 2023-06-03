@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Alert, Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Button } from "reactstrap";
-import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
+import { Alert, Col, Row, Card, CardBody, /* CardText, */ CardHeader, CardFooter, CardImg, Button } from "reactstrap";
+import { Image } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
-import { isEmpty, displayValue, getDateTime, displayDate, formatLowerCase, formatUpperCase, removeHTML } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, displayDate } from "shared-functions";
+// import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
 const AmazonItem = (props) => {
 
@@ -35,8 +35,7 @@ const AmazonItem = (props) => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   let amazonItem = isEmpty(props.amazonItem) === false ? props.amazonItem : {};
-
-  // console.log(componentName, getDateTime(), "amazonItem", amazonItem);
+  let getAmazonItems = isEmpty(props) === false && isEmpty(props.getAmazonItems) === false ? props.getAmazonItems : noFunctionAvailable;
 
   // let activeString = "";
 
@@ -64,9 +63,18 @@ const AmazonItem = (props) => {
   };
 
 
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
+
+
   const setActive = (ASIN, active) => {
-    // console.log(componentName, getDateTime(), "setActive ASIN", ASIN);
-    // console.log(componentName, getDateTime(), "setActive active", active);
 
     clearMessages();
 
@@ -87,7 +95,6 @@ const AmazonItem = (props) => {
     if (isEmpty(ASIN) === false && isEmpty(sessionToken) === false) {
 
       url = url + ASIN;
-      // console.log(componentName, getDateTime(), "setActive url", url);
 
       let recordObject = {
         active: activeValue
@@ -102,7 +109,6 @@ const AmazonItem = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "setActive response", response);
 
           // if (!response.ok) {
 
@@ -124,13 +130,12 @@ const AmazonItem = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "setActive data", data);
 
           addMessage(data.message);
 
           if (data.transactionSuccess === true) {
 
-            props.getAmazonItems();
+            getAmazonItems();
 
           } else {
 
@@ -141,6 +146,7 @@ const AmazonItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setActive error", error);
           // console.error(componentName, getDateTime(), "setActive error.name", error.name);
           // console.error(componentName, getDateTime(), "setActive error.message", error.message);
@@ -157,8 +163,6 @@ const AmazonItem = (props) => {
 
 
   const setViewed = (ASIN, viewed) => {
-    // console.log(componentName, getDateTime(), "setViewed ASIN", ASIN);
-    // console.log(componentName, getDateTime(), "setViewed viewed", viewed);
 
     clearMessages();
 
@@ -179,7 +183,6 @@ const AmazonItem = (props) => {
     if (isEmpty(ASIN) === false && isEmpty(sessionToken) === false) {
 
       url = url + ASIN;
-      // console.log(componentName, getDateTime(), "setViewed url", url);
 
       let recordObject = {
         viewed: viewedValue
@@ -194,7 +197,6 @@ const AmazonItem = (props) => {
         body: JSON.stringify({ recordObject: recordObject })
       })
         .then(response => {
-          // console.log(componentName, getDateTime(), "setViewed response", response);
 
           // if (!response.ok) {
 
@@ -216,13 +218,12 @@ const AmazonItem = (props) => {
 
         })
         .then(data => {
-          // console.log(componentName, getDateTime(), "setViewed data", data);
 
           addMessage(data.message);
 
           if (data.transactionSuccess === true) {
 
-            props.getAmazonItems();
+            getAmazonItems();
 
           } else {
 
@@ -233,6 +234,7 @@ const AmazonItem = (props) => {
 
         })
         .catch((error) => {
+
           console.error(componentName, getDateTime(), "setViewed error", error);
           // console.error(componentName, getDateTime(), "setViewed error.name", error.name);
           // console.error(componentName, getDateTime(), "setViewed error.message", error.message);
@@ -246,18 +248,6 @@ const AmazonItem = (props) => {
     };
 
   };
-
-
-  useEffect(() => {
-    // console.log(componentName, getDateTime(), "useEffect check for admin", admin);
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

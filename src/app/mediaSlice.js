@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
 
 const componentName = "mediaSlice";
 
@@ -7,7 +7,7 @@ const initialState = {
   arrayMedia: [],
   mediaLoaded: false,
   lastDatabaseRetrievalMedia: null,
-  mediaDataOffline: false
+  // mediaDataOffline: false
 };
 
 const mediaSlice = createSlice({
@@ -17,6 +17,8 @@ const mediaSlice = createSlice({
     loadArrayMedia(state, action) {
 
       if (isNonEmptyArray(action.payload) === true) {
+
+        state.arrayMedia = [];
 
         for (let i = 0; i < action.payload.length; i++) {
 
@@ -30,96 +32,94 @@ const mediaSlice = createSlice({
       state.lastDatabaseRetrievalMedia = getDateTime();
 
     },
-    addStateMedia(state, action) {
+    // addStateMedia(state, action) {
 
-      // * Could change this to accept an object and add that object to the store
-      if (isNonEmptyArray(action.payload) === true) {
+    //   // * Could change this to accept an object and add that object to the store
+    //   if (isNonEmptyArray(action.payload) === true) {
 
-        for (let i = 0; i < action.payload.length; i++) {
+    //     for (let i = 0; i < action.payload.length; i++) {
 
-          state.arrayMedia.push(action.payload[i]);
+    //       state.arrayMedia.push(action.payload[i]);
 
-        };
+    //     };
 
-      };
+    //   };
 
-    },
-    updateStateMedia(state, action) {
+    // },
+    // updateStateMedia(state, action) {
 
-      const mediaItem = action.payload;
-      let mediaItemIndex;
+    //   const mediaItem = action.payload;
+    //   let mediaItemIndex;
 
-      if (typeof mediaItem === "object") {
+    //   if (typeof mediaItem === "object") {
 
-        if (hasNonEmptyProperty(mediaItem, "mediaID")) {
+    //     if (hasNonEmptyProperty(mediaItem, "mediaID") === true) {
 
-          mediaItemIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaItem.mediaID);
+    //       mediaItemIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaItem.mediaID);
 
+    //       // state.arrayMedia[mediaItemIndex].mediaID = mediaItem.mediaID;
+    //     };
 
-          // state.arrayMedia[mediaItemIndex].mediaID = mediaItem.mediaID;
-        };
+    //     if (hasNonEmptyProperty(mediaItem, "media") === true) {
 
-        if (hasNonEmptyProperty(mediaItem, "media")) {
+    //       state.arrayMedia[mediaItemIndex].media = mediaItem.media;
 
-          state.arrayMedia[mediaItemIndex].media = mediaItem.media;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(mediaItem, "electronic") === true) {
 
-        if (hasNonEmptyProperty(mediaItem, "electronic")) {
+    //       state.arrayMedia[mediaItemIndex].electronic = mediaItem.electronic;
 
-          state.arrayMedia[mediaItemIndex].electronic = mediaItem.electronic;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(mediaItem, "sortID") === true) {
 
-        if (hasNonEmptyProperty(mediaItem, "sortID")) {
+    //       state.arrayMedia[mediaItemIndex].sortID = mediaItem.sortID;
 
-          state.arrayMedia[mediaItemIndex].sortID = mediaItem.sortID;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(mediaItem, "active") === true) {
 
-        if (hasNonEmptyProperty(mediaItem, "active")) {
+    //       state.arrayMedia[mediaItemIndex].active = mediaItem.active;
 
-          state.arrayMedia[mediaItemIndex].active = mediaItem.active;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(mediaItem, "updateDate") === true) {
 
-        if (hasNonEmptyProperty(mediaItem, "updateDate")) {
+    //       state.arrayMedia[mediaItemIndex].updateDate = mediaItem.updateDate;
 
-          state.arrayMedia[mediaItemIndex].updateDate = mediaItem.updateDate;
+    //     };
 
-        };
+    //   };
 
-      };
+    // },
+    // deleteStateMedia(state, action) {
 
-    },
-    deleteStateMedia(state, action) {
+    //   // const mediaItemIndex = action.payload;
+    //   let mediaListIndex;
+    //   const mediaID = action.payload;
 
-      // const mediaItemIndex = action.payload;
-      let mediaListIndex;
-      const mediaID = action.payload;
+    //   // ? This doesn't work because state.arrayMedia isn't stored as an array of objects?
+    //   // ? Need to copy the array?
+    //   // const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
 
-      // ? This doesn't work because state.arrayMedia isn't stored as an array of objects?
-      // ? Need to copy the array?
-      // const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
+    //   if (isEmpty(mediaID) === false) {
 
-      if (isEmpty(mediaID) === false) {
+    //     mediaListIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
 
-        mediaListIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
+    //     state.arrayMedia.splice(mediaListIndex, 1);
 
+    //   };
 
-        state.arrayMedia.splice(mediaListIndex, 1);
+    // },
+    // setMediaDataOffline(state, action) {
 
-      };
+    //   state.mediaDataOffline = action.payload;
 
-    },
-    setMediaDataOffline(state, action) {
-
-      state.mediaDataOffline = action.payload;
-
-    }
+    // }
   }
 });
 
-export const { loadArrayMedia, addStateMedia, updateStateMedia, deleteStateMedia, setMediaDataOffline } = mediaSlice.actions;
+export const { loadArrayMedia, /* addStateMedia, updateStateMedia, deleteStateMedia, */ /* setMediaDataOffline */ } = mediaSlice.actions;
 
 export default mediaSlice.reducer;

@@ -2,25 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, Table, } from "reactstrap";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
-import { addErrorLog } from "../../utilities/ApplicationFunctions";
-
-// ! The coding on this component is not finished. -- 03/06/2021 MF
+import { isEmpty, getDateTime, isNonEmptyArray, displayDate, addErrorLog } from "shared-functions";
 
 const TitleSuggestions = () => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
 
   const componentName = "TitleSuggestions";
 
   const navigate = useNavigate();
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
+
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
-
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,6 +30,30 @@ const TitleSuggestions = () => {
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
   const [titleSuggestions, setTitleSuggestions] = useState([]);
+
+  document.title = "Title Suggestions | " + applicationName + " | " + siteName;
+
+
+  useEffect(() => {
+
+    if (isEmpty(baseURL) === false) {
+
+      getTitleSuggestions();
+
+    };
+
+  }, [baseURL]);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
 
 
   const getTitleSuggestions = () => {
@@ -48,15 +69,15 @@ const TitleSuggestions = () => {
         "Authorization": sessionToken
       }),
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -71,33 +92,16 @@ const TitleSuggestions = () => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
   };
-
-
-  useEffect(() => {
-
-    getTitleSuggestions();
-
-  }, []);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
 
 
   return (

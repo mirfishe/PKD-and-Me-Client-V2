@@ -1,37 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
-import { Image } from 'react-bootstrap-icons';
-import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayDate, displayYear } from "shared-functions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { Image } from "react-bootstrap-icons";
+// import Parse from "html-react-parser";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, addErrorLog } from "shared-functions";
+import { encodeURL, decodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
-import { setPageURL } from "../../app/urlsSlice";
-// import AddEdition from "../editions/AddEdition";
-import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
 const Editions = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: applicationVersion, linkItem, match -- 10/21/2022 MF
+  // * Functions: redirectPage -- 10/21/2022 MF
+
   const componentName = "Editions";
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const profileType = useSelector(state => state.applicationSettings.profileType);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
   // const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
   const computerLog = useSelector(state => state.applicationSettings.computerLog);
 
-  const sessionToken = useSelector(state => state.user.sessionToken);
+  // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
   const editionSortBy = useSelector(state => state.editions.editionSortBy);
@@ -43,36 +39,164 @@ const Editions = (props) => {
   const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
   const physicalOnlyMessage = useSelector(state => state.applicationSettings.physicalOnlyMessage);
 
-  const [errEditionMessage, setErrEditionMessage] = useState("");
+  const arrayEditions = useSelector(state => state.editions.arrayEditions);
+  const arrayMedia = useSelector(state => state.media.arrayMedia);
 
-  const editionListState = useSelector(state => state.editions.arrayEditions);
-  const mediaListState = useSelector(state => state.media.arrayMedia);
+  const applicationVersion = useSelector(state => state.applicationSettings.applicationVersion);
 
-  let mediaParam;
+  // let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : null;
+  let linkItem = isEmpty(props) === false && isEmpty(props.linkItem) === false ? props.linkItem : "";
+  // let match = isEmpty(props) === false && isEmpty(props.match) === false ? props.match : null;
 
-  if (isEmpty(props.linkItem) === false && hasNonEmptyProperty(props.linkItem, "linkName")) {
+  let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
-    mediaParam = props.linkItem.linkName; // props.match.params.media;
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  };
+  const [mediaParam, setMediaParam] = useState(null);
+  const [editionList, setEditionList] = useState([]);
 
 
-  const sortEditions = (sortBy) => {
-    // console.log("componentName, sortTitles sortBy", sortBy);
+  useEffect(() => {
 
-    if (isEmpty(editionList) === false && editionList.length > 0) {
+    if (isEmpty(linkItem) === false && isEmpty(linkItem.linkName) === false) {
+
+      setMediaParam(linkItem.linkName); // match.params.media;
+
+    };
+
+  }, [linkItem]);
+
+
+  useEffect(() => {
+
+    let newEditionList = [];
+
+    if (isNaN(mediaParam) === false) {
+
+      if (isEmpty(newEditionList[0]) === false) {
+
+        // ! This code no longer works with the current URL setup
+        // * If mediaParam is a number, then it's the mediaID
+        document.title = newEditionList[0].medium.media + " | " + applicationName + " | " + siteName;
+        newEditionList = arrayEditions.filter(edition => edition.mediaID === parseInt(mediaParam));
+
+      };
+
+    } else if (isEmpty(mediaParam) === false) {
+
+      // * If mediaParam is not a number, then it's the media name
+      const media = arrayMedia.find(media => media.media === decodeURL(mediaParam));
+
+      if (isEmpty(media) === false) {
+
+        document.title = media.media + " | " + applicationName + " | " + siteName;
+        newEditionList = arrayEditions.filter(edition => edition.mediaID === parseInt(media.mediaID));
+
+      } else {
+
+        document.title = "Media Not Found | " + applicationName + " | " + siteName;
+        console.error("Media not found.");
+        // * Display all active editions
+        // newEditionList = arrayEditions;
+        // setErrTitleMessage("Media not found.")
+
+      };
+
+    } else {
+
+      document.title = "All Editions | " + applicationName + " | " + siteName;
+      // * Display all active editions
+      newEditionList = [...arrayEditions];
+      // newEditionList = arrayEditions.filter(edition => edition.editionActive === true || edition.editionActive === 1);
+
+    };
+
+    if (electronicOnly === true || userElectronicOnly === true) {
+
+      // newEditionList = newEditionList.filter(edition => edition.medium.electronic === true);
+      newEditionList = newEditionList.filter(edition => edition.electronic === true || edition.electronic === 1);
+
+    } else if (physicalOnly === true || userPhysicalOnly === true) {
+
+      // newEditionList = newEditionList.filter(edition => edition.medium.electronic === false);
+      newEditionList = newEditionList.filter(edition => edition.electronic === false || edition.electronic === 0);
+
+    } else {
+
+      newEditionList = [...newEditionList];
+
+    };
+
+    if (isEmpty(admin) === false && admin === true) {
+
+      newEditionList = [...newEditionList];
+
+    } else {
+
+      // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
+      // newEditionList = newEditionList.filter(edition => (edition.active === true || edition.active === 1) && (edition.medium.active === true || edition.medium.active === 1));
+      newEditionList = newEditionList.filter(edition => (edition.editionActive === true || edition.editionActive === 1) && (edition.mediaActive === true || edition.mediaActive === 1));
+
+    };
+
+    newEditionList = sortEditions(newEditionList, editionSortBy);
+
+    setEditionList(newEditionList);
+
+  }, [mediaParam, arrayEditions]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(editionList) === false) {
+
+      clearMessages();
+
+    } else {
+
+      addErrorMessage("No editions found.");
+
+    };
+
+  }, [editionList]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(editionList) === false) {
+
+      addVisitLog();
+
+    };
+
+  }, [editionList]);
+
+
+  const sortEditions = (editionList, sortBy) => {
+
+    let newEditionList = [...editionList];
+
+    if (isEmpty(newEditionList) === false) {
 
       if (sortBy === "releaseDate") {
 
-        // * Sort the editionList array by editionPublicationDate, title.titleSort, (would like to add media.sortID)
+        // * Sort the newEditionList array by editionPublicationDate, title.titleSort, (would like to add media.sortID)
         // ! Doesn't handle null values well; treats them as "null"
-        // editionList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : (a.publicationDate > b.publicationDate) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+        // newEditionList.sort((a, b) => (a.publicationDate > b.publicationDate) ? 1 : (a.publicationDate > b.publicationDate) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
 
         // * Temporary to test the sorting
-        // editionList = editionList.filter(edition => edition.title.titleName === "A Scanner Darkly");
+        // newEditionList = newEditionList.filter(edition => edition.title.titleName === "A Scanner Darkly");
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
-        // editionList.sort(
+        // newEditionList.sort(
 
         //     function(a, b) {
         //        if (a.publicationDate === b.publicationDate) {
@@ -94,7 +218,7 @@ const Editions = (props) => {
         //     });
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
-        let editionListReleaseDate = editionList.filter(edition => edition.editionPublicationDate !== undefined && edition.editionPublicationDate !== null);
+        let editionListReleaseDate = newEditionList.filter(edition => edition.editionPublicationDate !== undefined && edition.editionPublicationDate !== null);
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListReleaseDate.sort(
@@ -122,7 +246,7 @@ const Editions = (props) => {
 
           });
 
-        let editionListNoReleaseDate = editionList.filter(edition => edition.editionPublicationDate === undefined || edition.editionPublicationDate === null);
+        let editionListNoReleaseDate = newEditionList.filter(edition => edition.editionPublicationDate === undefined || edition.editionPublicationDate === null);
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListNoReleaseDate.sort(
@@ -143,23 +267,22 @@ const Editions = (props) => {
 
           });
 
+        let newSortedEditionList = [...editionListReleaseDate];
+        newSortedEditionList.push(...editionListNoReleaseDate);
 
-        let newEditionList = [...editionListReleaseDate];
-        newEditionList.push(...editionListNoReleaseDate);
-
-        editionList = [...newEditionList];
+        newEditionList = [...newSortedEditionList];
 
       } else if (sortBy === "publicationDate") {
 
-        // * Sort the editionList array by title.publicationDate, title.titleSort, (would like to add media.sortID)
+        // * Sort the newEditionList array by title.publicationDate, title.titleSort, (would like to add media.sortID)
         // ! Doesn't handle null values well; treats them as "null"
-        // editionList.sort((a, b) => (a.title.publicationDate > b.title.publicationDate) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
+        // newEditionList.sort((a, b) => (a.title.publicationDate > b.title.publicationDate) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.title.titleSort > b.title.titleSort) ? 1 : -1) : -1);
 
         // * Temporary to test the sorting
-        // editionList = editionList.filter(edition => edition.title.titleName === "A Scanner Darkly");
+        // newEditionList = newEditionList.filter(edition => edition.title.titleName === "A Scanner Darkly");
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
-        // editionList.sort(
+        // newEditionList.sort(
 
         //     function(a, b) {      
 
@@ -182,7 +305,7 @@ const Editions = (props) => {
         //     });
 
         // * Separate the array items with undefined/null values, sort them appropriately and then concatenate them back together
-        let editionListPublicationDate = editionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
+        let editionListPublicationDate = newEditionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListPublicationDate.sort(
@@ -212,8 +335,7 @@ const Editions = (props) => {
 
           });
 
-
-        let editionListNoPublicationDate = editionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
+        let editionListNoPublicationDate = newEditionList.filter(edition => edition.titlePublicationDate === undefined || edition.titlePublicationDate === null);
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
         editionListNoPublicationDate.sort(
@@ -234,22 +356,21 @@ const Editions = (props) => {
 
           });
 
+        let newSortedEditionList = [...editionListPublicationDate];
+        newSortedEditionList.push(...editionListNoPublicationDate);
 
-        let newEditionList = [...editionListPublicationDate];
-        newEditionList.push(...editionListNoPublicationDate);
-
-        editionList = [...newEditionList];
+        newEditionList = [...newSortedEditionList];
 
       } else if (sortBy === "titleName") {
 
-        // * Sort the editionList array by title.titleSort, media.sortID
+        // * Sort the newEditionList array by title.titleSort, media.sortID
         // ! Doesn't sort correctly
-        // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+        // newEditionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
 
-        // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : -1);
+        // newEditionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : -1);
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
-        editionList.sort(
+        newEditionList.sort(
 
           function (a, b) {
 
@@ -269,14 +390,14 @@ const Editions = (props) => {
 
       } else {
 
-        // * Sort the editionList array by title.titleSort, media.sortID
+        // * Sort the newEditionList array by title.titleSort, media.sortID
         // ! Doesn't sort correctly
-        // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
+        // newEditionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : (a.title.titleSort > b.title.titleSort) ? ((a.medium.sortID > b.medium.sortID) ? 1 : -1) : -1);
 
-        // editionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : -1);
+        // newEditionList.sort((a, b) => (a.title.titleSort > b.title.titleSort) ? 1 : -1);
 
         // * https://stackoverflow.com/questions/6913512/how-to-sort-an-array-of-objects-by-multiple-fields
-        editionList.sort(
+        newEditionList.sort(
 
           function (a, b) {
 
@@ -298,105 +419,12 @@ const Editions = (props) => {
 
     };
 
-  };
-
-
-  let editionList = [];
-
-  if (isNaN(mediaParam) === false) {
-
-    // ! This code no longer works with the current URL setup
-    // * If mediaParam is a number, then it's the mediaID
-    document.title = editionList[0].medium.media + " | " + applicationName + " | " + siteName;
-    editionList = editionListState.filter(edition => edition.mediaID === parseInt(mediaParam));
-
-  } else if (isEmpty(mediaParam) === false) {
-
-    // * If mediaParam is not a number, then it's the media name
-    const media = mediaListState.find(media => media.media === decodeURL(mediaParam));
-
-    if (isEmpty(media) === false) {
-
-      document.title = media.media + " | " + applicationName + " | " + siteName;
-      editionList = editionListState.filter(edition => edition.mediaID === parseInt(media.mediaID));
-
-    } else {
-
-      document.title = "Media Not Found | " + applicationName + " | " + siteName;
-      console.error("Media not found.");
-      // * Display all active editions
-      // editionList = editionListState;
-      // setErrTitleMessage("Media not found.")
-
-    };
-
-  } else {
-
-    document.title = "All Editions | " + applicationName + " | " + siteName;
-    // * Display all active editions
-    editionList = [...editionListState];
-    // editionList = editionListState.filter(edition => edition.editionActive === true || edition.editionActive === 1);
-
-  };
-
-  if (electronicOnly === true || userElectronicOnly === true) {
-
-    // editionList = editionList.filter(edition => edition.medium.electronic === true);
-    editionList = editionList.filter(edition => edition.electronic === true || edition.electronic === 1);
-
-  } else if (physicalOnly === true || userPhysicalOnly === true) {
-
-    // editionList = editionList.filter(edition => edition.medium.electronic === false);
-    editionList = editionList.filter(edition => edition.electronic === false || edition.electronic === 0);
-
-  } else {
-
-    editionList = [...editionList];
-
-  };
-
-  if (isEmpty(admin) === false && admin === true) {
-
-    editionList = [...editionList];
-
-  } else {
-
-    // ! How does Knex handle the leftOuterJoin with two columns of the same name?:  active, publicationDate, imageName, sortID, updatedBy, createDate, updateDate
-    // editionList = editionList.filter(edition => (edition.active === true || edition.active === 1) && (edition.medium.active === true || edition.medium.active === 1));
-    editionList = editionList.filter(edition => (edition.editionActive === true || edition.editionActive === 1) && (edition.mediaActive === true || edition.mediaActive === 1));
-
-  };
-
-  sortEditions(editionSortBy);
-
-
-  const redirectPage = (linkName) => {
-
-    // * Scroll to top of the page after clicking the link. -- 08/05/2021 MF
-    window.scrollTo(0, 0);
-
-    dispatch(setPageURL(linkName.replaceAll("/", "")));
-    navigate("/" + linkName);
+    return newEditionList;
 
   };
 
 
-  useEffect(() => {
-
-    if (editionList.length > 0) {
-
-      setErrEditionMessage("");
-
-    } else {
-
-      setErrEditionMessage("No editions found.");
-
-    };
-
-  }, [editionList]);
-
-
-  const saveRecord = () => {
+  const addVisitLog = () => {
 
     let ipAddress = isEmpty(computerLog) === false && isEmpty(computerLog.ipAddress) === false ? computerLog.ipAddress : "";
     let city = isEmpty(computerLog) === false && isEmpty(computerLog.city) === false ? computerLog.city : "";
@@ -425,8 +453,7 @@ const Editions = (props) => {
 
       title: "Editions",
       href: href,
-      // applicationVersion: props.applicationVersion,
-      applicationVersion: process.env.REACT_APP_VERSION,
+      applicationVersion: applicationVersion,
 
       lastAccessed: getDateTime(),
 
@@ -448,7 +475,6 @@ const Editions = (props) => {
 
     };
 
-
     fetch(url, {
       method: "POST",
       headers: new Headers({
@@ -456,21 +482,21 @@ const Editions = (props) => {
       }),
       body: JSON.stringify({ recordObject: recordObject })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          // throw Error(response.status + " " + response.statusText + " " + response.url);
+          // throw Error(results.status + " " + results.statusText + " " + results.url);
 
         } else {
 
-          if (response.status === 200) {
+          if (results.status === 200) {
 
-            return response.json();
+            return results.json();
 
           } else {
 
-            return response.status;
+            return results.status;
 
           };
 
@@ -485,26 +511,16 @@ const Editions = (props) => {
 
       })
       .catch((error) => {
-        console.error(componentName, getDateTime(), operationValue, "saveRecord error", error);
+
+        console.error(componentName, getDateTime(), operationValue, "addVisitLog error", error);
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
   };
-
-
-  useEffect(() => {
-
-    if (editionList.length > 0) {
-
-      saveRecord();
-
-    };
-
-  }, [editionList]);
 
 
   return (
@@ -560,7 +576,8 @@ const Editions = (props) => {
       <Row>
         <Col className="text-center" xs="12">
 
-          {isEmpty(errEditionMessage) === false ? <Alert color="danger">{errEditionMessage}</Alert> : null}
+          <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+
           {electronicOnly === true || userElectronicOnly === true ? <Alert color="info">{electronicOnlyMessage}</Alert> : null}
           {physicalOnly === true || userPhysicalOnly === true ? <Alert color="info">{physicalOnlyMessage}</Alert> : null}
 
@@ -615,8 +632,8 @@ const Editions = (props) => {
 
                     :
 
-                    <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                    {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
+                    <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
+                    {isEmpty(edition.imageName) === false ? <img src={setLocalImagePath(edition.imageName, profileType)} alt={titleItem.titleName + " is available for purchase at Amazon.com"} className="cover-display" /> : <Image className="no-image-icon"/>}
                     </a>
 
                     }
@@ -630,7 +647,7 @@ const Editions = (props) => {
                         {isEmpty(edition.editionPublicationDate) === false ? <span> <small>({displayYear(edition.title.publicationDate)})</small></span> : null}
 
                     </CardFooter>
-                    </Card> */}
+                    </Card> */ }
 
                 <Card key={edition.editionID}>
 
@@ -656,7 +673,7 @@ const Editions = (props) => {
                               {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
                               {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
 
-                              <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                              <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                                 {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={edition.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}
                               </a>
 
@@ -664,8 +681,8 @@ const Editions = (props) => {
 
                             :
 
-                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
-                              {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
+                            <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
+                              {isEmpty(edition.imageName) === false ? <CardImg src={setLocalImagePath(edition.imageName, profileType)} alt={edition.titleName + " is available for purchase."} className="edition-image" /> : <Image className="no-image-icon" />}
                             </a>
 
                           }
@@ -686,21 +703,21 @@ const Editions = (props) => {
 
                         {/* {isEmpty(edition.textLinkFull) === false && (edition.textLinkFull.includes("amzn.to") === true || edition.textLinkFull.includes("amazon.com") === true || edition.textLinkFull.includes("ws-na.amazon-adsystem.com") === true) ?
 
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                           <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                         </a>
 
                         :
 
-                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                        <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                           <p className="my-2">Find Copy</p>
                         </a>
 
-                      } */}
+                      } */ }
 
                         {isEmpty(edition.textLinkFullAPI) === false ?
 
-                          <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer">
+                          <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                             <img src={amazonLogo} alt={edition.titleName + " is available for purchase at Amazon.com."} className="purchase-image my-2" /><br />
                           </a>
 
@@ -710,7 +727,7 @@ const Editions = (props) => {
 
                             {isEmpty(edition.textLinkFullAPI) === false ?
 
-                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer">
+                              <a href={edition.textLinkFull} target="_blank" rel="noopener noreferrer nofollow">
                                 <p className="my-2">Find Copy</p>
                               </a>
 
@@ -719,12 +736,6 @@ const Editions = (props) => {
                           </React.Fragment>
 
                         }
-
-                        {/* {isEmpty(admin) === false && admin === true ? <AddEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
-
-                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition titleID={edition.titleID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
-
-                        {/* {isEmpty(admin) === false && admin === true ? <EditEdition editionID={edition.editionID} titlePublicationDate={edition.titlePublicationDate} titleImageName={edition.titleImageName} displayButton={true} /> : null} */}
 
                       </CardBody>
                     </Col>

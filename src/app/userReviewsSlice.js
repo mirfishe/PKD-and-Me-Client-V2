@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty } from "shared-functions";
 
 const componentName = "userReviewsSlice";
 
@@ -7,7 +7,7 @@ const initialState = {
   arrayUserReviews: [],
   userReviewsLoaded: false,
   lastDatabaseRetrievalUserReviews: null,
-  userReviewsDataOffline: false,
+  // userReviewsDataOffline: false,
   // arrayUserReviewsRatings: [],
   userReviewsRatingsLoaded: false,
   lastDatabaseRetrievalUserReviewsRatings: null
@@ -22,6 +22,8 @@ const userReviewsSlice = createSlice({
 
       if (isNonEmptyArray(action.payload) === true) {
 
+        // state.arrayUserReviews = [];
+
         for (let i = 0; i < action.payload.length; i++) {
 
           state.arrayUserReviews.push(action.payload[i]);
@@ -34,356 +36,354 @@ const userReviewsSlice = createSlice({
       state.lastDatabaseRetrievalUserReviews = getDateTime();
 
     },
-    addStateUserReview(state, action) {
+    // addStateUserReview(state, action) {
 
-      // * Could change this to accept an object and add that object to the store
-      if (isNonEmptyArray(action.payload) === true) {
+    //   // * Could change this to accept an object and add that object to the store
+    //   if (isNonEmptyArray(action.payload) === true) {
 
-        for (let i = 0; i < action.payload.length; i++) {
+    //     for (let i = 0; i < action.payload.length; i++) {
 
-          state.arrayUserReviews.push(action.payload[i]);
+    //       state.arrayUserReviews.push(action.payload[i]);
 
-        };
+    //     };
 
-      };
+    //   };
 
-    },
-    updateStateUserReview(state, action) {
+    // },
+    // updateStateUserReview(state, action) {
 
-      const userReviewItem = action.payload;
-      let userReviewListIndex;
+    //   const userReviewItem = action.payload;
+    //   let userReviewListIndex;
 
-      if (typeof userReviewItem === "object") {
+    //   if (typeof userReviewItem === "object") {
 
-        if (hasNonEmptyProperty(userReviewItem, "reviewID")) {
+    //     if (hasNonEmptyProperty(userReviewItem, "reviewID") === true) {
 
-          userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === userReviewItem.reviewID);
+    //       userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === userReviewItem.reviewID);
 
+    //       // state.arrayUserReviews[userReviewListIndex].reviewID = userReviewItem.reviewID;
 
-          // state.arrayUserReviews[userReviewListIndex].reviewID = userReviewItem.reviewID;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "userID") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "userID")) {
+    //       state.arrayUserReviews[userReviewListIndex].userID = userReviewItem.userID;
 
-          state.arrayUserReviews[userReviewListIndex].userID = userReviewItem.userID;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "updatedBy") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "updatedBy")) {
+    //       state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
 
-          state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "userReviewUpdatedBy") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "userReviewUpdatedBy")) {
+    //       state.arrayUserReviews[userReviewListIndex].userReviewUpdatedBy = userReviewItem.userReviewUpdatedBy;
 
-          state.arrayUserReviews[userReviewListIndex].userReviewUpdatedBy = userReviewItem.userReviewUpdatedBy;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleID") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleID")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleID = userReviewItem.titleID;
 
-          state.arrayUserReviews[userReviewListIndex].titleID = userReviewItem.titleID;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "read") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "read")) {
+    //       state.arrayUserReviews[userReviewListIndex].read = userReviewItem.read;
 
-          state.arrayUserReviews[userReviewListIndex].read = userReviewItem.read;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "dateRead") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "dateRead")) {
+    //       state.arrayUserReviews[userReviewListIndex].dateRead = userReviewItem.dateRead;
 
-          state.arrayUserReviews[userReviewListIndex].dateRead = userReviewItem.dateRead;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "rating") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "rating")) {
+    //       state.arrayUserReviews[userReviewListIndex].rating = userReviewItem.rating;
 
-          state.arrayUserReviews[userReviewListIndex].rating = userReviewItem.rating;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "ranking") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "ranking")) {
+    //       state.arrayUserReviews[userReviewListIndex].ranking = userReviewItem.ranking;
 
-          state.arrayUserReviews[userReviewListIndex].ranking = userReviewItem.ranking;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "shortReview") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "shortReview")) {
+    //       state.arrayUserReviews[userReviewListIndex].shortReview = userReviewItem.shortReview;
 
-          state.arrayUserReviews[userReviewListIndex].shortReview = userReviewItem.shortReview;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "longReview") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "longReview")) {
+    //       state.arrayUserReviews[userReviewListIndex].longReview = userReviewItem.longReview;
 
-          state.arrayUserReviews[userReviewListIndex].longReview = userReviewItem.longReview;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "owned") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "owned")) {
+    //       state.arrayUserReviews[userReviewListIndex].owned = userReviewItem.owned;
 
-          state.arrayUserReviews[userReviewListIndex].owned = userReviewItem.owned;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "datePurchased") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "datePurchased")) {
+    //       state.arrayUserReviews[userReviewListIndex].datePurchased = userReviewItem.datePurchased;
 
-          state.arrayUserReviews[userReviewListIndex].datePurchased = userReviewItem.datePurchased;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "active") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "active")) {
+    //       state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
 
-          state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "userReviewActive") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "userReviewActive")) {
+    //       state.arrayUserReviews[userReviewListIndex].userReviewActive = userReviewItem.userReviewActive;
 
-          state.arrayUserReviews[userReviewListIndex].userReviewActive = userReviewItem.userReviewActive;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "createDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "createDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
 
-          state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "userReviewCreateDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "userReviewCreateDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].userReviewCreateDate = userReviewItem.userReviewCreateDate;
 
-          state.arrayUserReviews[userReviewListIndex].userReviewCreateDate = userReviewItem.userReviewCreateDate;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "updateDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "updateDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
 
-          state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "userReviewUpdatedDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "userReviewUpdatedDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].userReviewUpdatedDate = userReviewItem.userReviewUpdatedDate;
 
-          state.arrayUserReviews[userReviewListIndex].userReviewUpdatedDate = userReviewItem.userReviewUpdatedDate;
+    //     };
 
-        };
+    //     // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
+    //     // if (hasNonEmptyProperty(userReviewItem, "title") === true) {
 
-        // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (hasNonEmptyProperty(userReviewItem, "title")) {
+    //     //   if (hasNonEmptyProperty(userReviewItem.title, "titleID") === true) {
 
-        //   if (hasNonEmptyProperty(userReviewItem.title, "titleID")) {
+    //     //     state.arrayUserReviews[userReviewListIndex].title.titleID = userReviewItem.title.titleID;
 
-        //     state.arrayUserReviews[userReviewListIndex].title.titleID = userReviewItem.title.titleID;
+    //     //   };
 
-        //   };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleName") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleName")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleName = userReviewItem.titleName;
 
-          state.arrayUserReviews[userReviewListIndex].titleName = userReviewItem.titleName;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleSort") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleSort")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleSort = userReviewItem.titleSort;
 
-          state.arrayUserReviews[userReviewListIndex].titleSort = userReviewItem.titleSort;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleURL") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleURL")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleURL = userReviewItem.titleURL;
 
-          state.arrayUserReviews[userReviewListIndex].titleURL = userReviewItem.titleURL;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "authorFirstName") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "authorFirstName")) {
+    //       state.arrayUserReviews[userReviewListIndex].authorFirstName = userReviewItem.authorFirstName;
 
-          state.arrayUserReviews[userReviewListIndex].authorFirstName = userReviewItem.authorFirstName;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "authorLastName") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "authorLastName")) {
+    //       state.arrayUserReviews[userReviewListIndex].authorLastName = userReviewItem.authorLastName;
 
-          state.arrayUserReviews[userReviewListIndex].authorLastName = userReviewItem.authorLastName;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "submissionDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "submissionDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].submissionDate = userReviewItem.submissionDate;
 
-          state.arrayUserReviews[userReviewListIndex].submissionDate = userReviewItem.submissionDate;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "publicationDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "publicationDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].publicationDate = userReviewItem.publicationDate;
 
-          state.arrayUserReviews[userReviewListIndex].publicationDate = userReviewItem.publicationDate;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "titlePublicationDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titlePublicationDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].titlePublicationDate = userReviewItem.titlePublicationDate;
 
-          state.arrayUserReviews[userReviewListIndex].titlePublicationDate = userReviewItem.titlePublicationDate;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "imageName") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "imageName")) {
+    //       state.arrayUserReviews[userReviewListIndex].imageName = userReviewItem.imageName;
 
-          state.arrayUserReviews[userReviewListIndex].imageName = userReviewItem.imageName;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleImageName") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleImageName")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleImageName = userReviewItem.titleImageName;
 
-          state.arrayUserReviews[userReviewListIndex].titleImageName = userReviewItem.titleImageName;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "categoryID") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "categoryID")) {
+    //       state.arrayUserReviews[userReviewListIndex].categoryID = userReviewItem.categoryID;
 
-          state.arrayUserReviews[userReviewListIndex].categoryID = userReviewItem.categoryID;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "shortDescription") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "shortDescription")) {
+    //       state.arrayUserReviews[userReviewListIndex].shortDescription = userReviewItem.shortDescription;
 
-          state.arrayUserReviews[userReviewListIndex].shortDescription = userReviewItem.shortDescription;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "urlPKDWeb") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "urlPKDWeb")) {
+    //       state.arrayUserReviews[userReviewListIndex].urlPKDWeb = userReviewItem.urlPKDWeb;
 
-          state.arrayUserReviews[userReviewListIndex].urlPKDWeb = userReviewItem.urlPKDWeb;
+    //     };
 
-        };
+    //     // if (hasNonEmptyProperty(userReviewItem, "active") === true) {
 
-        // if (hasNonEmptyProperty(userReviewItem, "active")) {
+    //     //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
 
-        //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
+    //     // };
 
-        // };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleActive") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleActive")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleActive = userReviewItem.titleActive;
 
-          state.arrayUserReviews[userReviewListIndex].titleActive = userReviewItem.titleActive;
+    //     };
 
-        };
+    //     // if (hasNonEmptyProperty(userReviewItem, "createDate") === true) {
 
-        // if (hasNonEmptyProperty(userReviewItem, "createDate")) {
+    //     //   state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
 
-        //   state.arrayUserReviews[userReviewListIndex].createDate = userReviewItem.createDate;
+    //     // };
 
-        // };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleCreateDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleCreateDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleCreateDate = userReviewItem.titleCreateDate;
 
-          state.arrayUserReviews[userReviewListIndex].titleCreateDate = userReviewItem.titleCreateDate;
+    //     };
 
-        };
+    //     // if (hasNonEmptyProperty(userReviewItem, "updateDate") === true) {
 
-        // if (hasNonEmptyProperty(userReviewItem, "updateDate")) {
+    //     //   state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
 
-        //   state.arrayUserReviews[userReviewListIndex].updateDate = userReviewItem.updateDate;
+    //     // };
 
-        // };
+    //     if (hasNonEmptyProperty(userReviewItem, "titleUpdatedDate") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "titleUpdatedDate")) {
+    //       state.arrayUserReviews[userReviewListIndex].titleUpdatedDate = userReviewItem.titleUpdatedDate;
 
-          state.arrayUserReviews[userReviewListIndex].titleUpdatedDate = userReviewItem.titleUpdatedDate;
+    //     };
 
-        };
+    //     // };
 
-        // };
+    //     // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
+    //     // if (hasNonEmptyProperty(userReviewItem, "user") === true) {
 
-        // // TODO: Fix how this is handled with the change in the left outer joins from Knex.
-        // if (hasNonEmptyProperty(userReviewItem, "user")) {
+    //     //   if (hasNonEmptyProperty(userReviewItem.user, "userID") === true) {
 
-        //   if (hasNonEmptyProperty(userReviewItem.user, "userID")) {
+    //     //     state.arrayUserReviews[userReviewListIndex].user.userID = userReviewItem.user.userID;
 
-        //     state.arrayUserReviews[userReviewListIndex].user.userID = userReviewItem.user.userID;
+    //     //   };
 
-        //   };
+    //     if (hasNonEmptyProperty(userReviewItem, "firstName") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "firstName")) {
+    //       state.arrayUserReviews[userReviewListIndex].firstName = userReviewItem.firstName;
 
-          state.arrayUserReviews[userReviewListIndex].firstName = userReviewItem.firstName;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "lastName") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "lastName")) {
+    //       state.arrayUserReviews[userReviewListIndex].lastName = userReviewItem.lastName;
 
-          state.arrayUserReviews[userReviewListIndex].lastName = userReviewItem.lastName;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "email") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "email")) {
+    //       state.arrayUserReviews[userReviewListIndex].email = userReviewItem.email;
 
-          state.arrayUserReviews[userReviewListIndex].email = userReviewItem.email;
+    //     };
 
-        };
+    //     // if (hasNonEmptyProperty(userReviewItem, "updatedBy") === true) {
 
-        // if (hasNonEmptyProperty(userReviewItem, "updatedBy")) {
+    //     //   state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
 
-        //   state.arrayUserReviews[userReviewListIndex].updatedBy = userReviewItem.updatedBy;
+    //     // };
 
-        // };
+    //     if (hasNonEmptyProperty(userReviewItem, "userUpdatedBy") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "userUpdatedBy")) {
+    //       state.arrayUserReviews[userReviewListIndex].userUpdatedBy = userReviewItem.userUpdatedBy;
 
-          state.arrayUserReviews[userReviewListIndex].userUpdatedBy = userReviewItem.userUpdatedBy;
+    //     };
 
-        };
+    //     if (hasNonEmptyProperty(userReviewItem, "admin") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "admin")) {
+    //       state.arrayUserReviews[userReviewListIndex].admin = userReviewItem.admin;
 
-          state.arrayUserReviews[userReviewListIndex].admin = userReviewItem.admin;
+    //     };
 
-        };
+    //     // if (hasNonEmptyProperty(userReviewItem, "active") === true) {
 
-        // if (hasNonEmptyProperty(userReviewItem, "active")) {
+    //     //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
 
-        //   state.arrayUserReviews[userReviewListIndex].active = userReviewItem.active;
+    //     // };
 
-        // };
+    //     if (hasNonEmptyProperty(userReviewItem, "userActive") === true) {
 
-        if (hasNonEmptyProperty(userReviewItem, "userActive")) {
+    //       state.arrayUserReviews[userReviewListIndex].userActive = userReviewItem.userActive;
 
-          state.arrayUserReviews[userReviewListIndex].userActive = userReviewItem.userActive;
+    //     };
 
-        };
+    //     // };
 
-        // };
+    //   };
 
-      };
+    // },
+    // deleteStateUserReview(state, action) {
 
-    },
-    deleteStateUserReview(state, action) {
+    //   // let userReviewItemIndex = action.payload;
+    //   let userReviewListIndex;
+    //   const reviewID = action.payload;
 
-      // let userReviewItemIndex = action.payload;
-      let userReviewListIndex;
-      const reviewID = action.payload;
+    //   // ? This doesn't work because state.arrayUserReviews isn't stored as an array of objects?
+    //   // ? Need to copy the array?
+    //   // const existingUserReviewIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
 
-      // ? This doesn't work because state.arrayUserReviews isn't stored as an array of objects?
-      // ? Need to copy the array?
-      // const existingUserReviewIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
+    //   if (isEmpty(reviewID) === false) {
 
-      if (isEmpty(reviewID) === false) {
+    //     userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
 
-        userReviewListIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
+    //     state.arrayUserReviews.splice(userReviewListIndex, 1);
 
+    //   };
 
-        state.arrayUserReviews.splice(userReviewListIndex, 1);
+    // },
+    // setUserReviewsDataOffline(state, action) {
 
-      };
+    //   state.userReviewsDataOffline = action.payload;
 
-    },
-    setUserReviewsDataOffline(state, action) {
-
-      state.userReviewsDataOffline = action.payload;
-
-    },
+    // },
     // loadArrayUserReviewsRatings(state, action) {
 
     //   if (isNonEmptyArray(action.payload) === true) {
@@ -454,6 +454,6 @@ const userReviewsSlice = createSlice({
   }
 });
 
-export const { loadArrayUserReviews, addStateUserReview, updateStateUserReview, deleteStateUserReview, setUserReviewsDataOffline, /*loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings,*/ setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings /* , setUserReviewsRatingsDataOffline */ } = userReviewsSlice.actions;
+export const { loadArrayUserReviews, /* addStateUserReview, updateStateUserReview, deleteStateUserReview, */ /* setUserReviewsDataOffline, */ /* loadArrayUserReviewsRatings, addStateUserReviewsRatings, updateStateUserReviewsRatings, deleteStateUserReviewsRatings, */ setUserReviewsRatingsLoaded, setLastDatabaseRetrievalUserReviewsRatings /* , setUserReviewsRatingsDataOffline */ } = userReviewsSlice.actions;
 
 export default userReviewsSlice.reducer;

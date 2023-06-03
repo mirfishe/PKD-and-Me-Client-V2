@@ -6,9 +6,12 @@ import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 
-// ! The coding on this component is not finished. -- 03/06/2021 MF
-
 const AddComment = (props) => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton, displayIcon -- 10/21/2022 MF
 
   const componentName = "AddComment";
 
@@ -26,6 +29,9 @@ const AddComment = (props) => {
   const requireUserLogin = useSelector(state => state.applicationSettings.requireUserLogin);
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
 
   const userState = { userID: useSelector(state => state.user.userID), firstName: useSelector(state => state.user.firstName), lastName: useSelector(state => state.user.lastName), email: useSelector(state => state.user.email), updatedBy: useSelector(state => state.user.updatedBy), admin: useSelector(state => state.user.admin), active: useSelector(state => state.user.active) };
 
@@ -64,6 +70,37 @@ const AddComment = (props) => {
     };
 
   }, [userState]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
+
+      clearMessages();
+      setErrComment("");
+      setErrEmail("");
+      setCommentRecordAdded(null);
+
+      setTxtComment("");
+      setTxtEmail("");
+
+      setModal(!modal);
+
+    };
+
+  }, [commentRecordAdded]);
+
+
+  useEffect(() => {
+
+    if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [sessionToken]);
 
 
   const addComment = () => {
@@ -115,7 +152,7 @@ const AddComment = (props) => {
 
     };
 
-    if (commentValidated === true /*&& emailValidated === true*/) {
+    if (commentValidated === true /* && emailValidated === true */) {
 
       formValidated = true;
 
@@ -128,7 +165,7 @@ const AddComment = (props) => {
 
     if (formValidated === true) {
 
-      if (isEmpty(txtComment) === false /*&& isEmpty(txtEmail) === false*/) {
+      if (isEmpty(txtComment) === false /* && isEmpty(txtEmail) === false */) {
 
         let recordObject = {
           comment: formatTrim(txtComment),
@@ -154,7 +191,7 @@ const AddComment = (props) => {
           fetch(url, {
             method: "POST",
             headers: headerObject,
-            body: JSON.stringify({ comment: recordObject })
+            body: JSON.stringify({ recordObject: recordObject })
           })
             .then(response => {
 
@@ -222,52 +259,21 @@ const AddComment = (props) => {
   };
 
 
-  useEffect(() => {
-
-    if (isEmpty(commentRecordAdded) === false && commentRecordAdded === true) {
-
-      clearMessages();
-      setErrComment("");
-      setErrEmail("");
-      setCommentRecordAdded(null);
-
-      setTxtComment("");
-      setTxtEmail("");
-
-      setModal(!modal);
-
-    };
-
-  }, [commentRecordAdded]);
-
-
-  useEffect(() => {
-
-    if ((isEmpty(sessionToken) === false) || requireUserLogin === false) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [sessionToken]);
-
-
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
+      { /* {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Comment</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+      {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */ }
 
       {applicationAllowUserInteractions === true && ((isEmpty(sessionToken) === false) || requireUserLogin === false) ?
 
         <React.Fragment>
-          {/* <NavItem> */}
-          {/* <NavItem className="mx-3 my-2">
-          <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></a> */}
+          { /* <NavItem> */}
+          { /* <NavItem className="mx-3 my-2">
+          <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></a> */ }
           <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Add Comment</NavbarText></NavLink>
-          {/* </NavItem> */}
+          { /* </NavItem> */}
         </React.Fragment>
 
         : null}

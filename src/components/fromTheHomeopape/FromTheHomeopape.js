@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Alert, Container, Col, Row } from "reactstrap";
 import Parse from "html-react-parser";
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
-import { encodeURL, convertBitTrueFalse, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, addErrorLog } from "shared-functions";
+import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {
 
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: headerText -- 10/21/2022 MF
+
   const componentName = "FromTheHomeopape";
+
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // const admin = useSelector(state => state.user.admin);
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
+  let headerText = isEmpty(props) === false && isEmpty(props.headerText) === false ? props.headerText : "";
+  let topNumber = isEmpty(props) === false && isEmpty(props.topNumber) === false ? props.topNumber : "";
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,17 +35,28 @@ const FromTheHomeopape = (props) => {
   // const [cbxDisplay, setCbxDisplay] = useState(false);
   // const [cbxPosted, setCbxPosted] = useState(false);
 
-  const headerText = props.headerText;
-
   // let breakArray = false;
   // let displayItemsCount = 0;
 
 
+  useEffect(() => {
+
+    if (isEmpty(baseURL) === false) {
+
+      getNews();
+
+    };
+
+  }, [baseURL]);
+
+
   const getNews = () => {
 
-    let url = baseURL + "fromthehomeopape/top/20";
+    clearMessages();
+
+    let url = baseURL + "fromthehomeopape/top/" + topNumber;
     // // TODO: Fix the way that the limit works on the server because it works differently than the local version. -- 06/26/2021 MF
-    // // let url = baseURL + "fromthehomeopape/top/10/10";
+    // // let url = baseURL + "fromthehomeopape/top/10/10/";
 
     fetch(url, {
       method: "GET",
@@ -50,15 +64,15 @@ const FromTheHomeopape = (props) => {
         "Content-Type": "application/json"
       })
     })
-      .then(response => {
+      .then(results => {
 
-        if (response.ok !== true) {
+        if (results.ok !== true) {
 
-          throw Error(`${response.status} ${response.statusText} ${response.url}`);
+          throw Error(`${results.status} ${results.statusText} ${results.url}`);
 
         } else {
 
-          return response.json();
+          return results.json();
 
         };
 
@@ -67,7 +81,6 @@ const FromTheHomeopape = (props) => {
 
         if (isEmpty(results) === false && results.transactionSuccess === true) {
 
-
           setHomeopapeItems(results.records);
           // setHomeopapeItems(results.records[0]);
 
@@ -75,26 +88,22 @@ const FromTheHomeopape = (props) => {
 
       })
       .catch((error) => {
+
         // console.error(componentName, getDateTime(), "getNews error", error);
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
   };
 
 
-  useEffect(() => {
-
-    getNews();
-
-  }, []);
-
-
   return (
     <Container className="mt-4">
+
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
       {isNonEmptyArray(homeopapeItems) === true ?
 
@@ -102,7 +111,6 @@ const FromTheHomeopape = (props) => {
 
           <Row className="justify-content-center">
             <Col className="text-center" xs="12">
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
               {isEmpty(headerText) === false ? <h4 className="text-center">{headerText}</h4> : null}
             </Col>
           </Row>
@@ -146,7 +154,6 @@ const FromTheHomeopape = (props) => {
 
             // };
 
-
             return (
               <React.Fragment key={index}>
 
@@ -155,9 +162,9 @@ const FromTheHomeopape = (props) => {
                 <Row className="mt-3">
                   <Col xs="12">
 
-                    {/* <a href={itemLink} target="_blank"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
+                    {/* <a href={itemLink} target="_blank" rel="noopener noreferrer nofollow"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
 
-                    <a href={homeopapeItem.itemLinkFormatted} target="_blank">{Parse(homeopapeItem.itemTitle)}</a><br />
+                    <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{Parse(homeopapeItem.itemTitle)}</a><br />
 
                     ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
 

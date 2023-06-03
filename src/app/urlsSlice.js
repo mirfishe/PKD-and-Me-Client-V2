@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
 
 const componentName = "urlsSlice";
 
@@ -18,6 +18,8 @@ const urlsSlice = createSlice({
 
       if (isNonEmptyArray(action.payload) === true) {
 
+        // state.arrayURLs = [];
+
         for (let i = 0; i < action.payload.length; i++) {
 
           state.arrayURLs.push(action.payload[i]);
@@ -29,97 +31,97 @@ const urlsSlice = createSlice({
       state.urlsLoaded = true;
 
     },
-    addStateURL(state, action) {
+    // addStateURL(state, action) {
 
-      // Could change this to accept an object and add that object to the store
-      if (isNonEmptyArray(action.payload) === true) {
+    //   // Could change this to accept an object and add that object to the store
+    //   if (isNonEmptyArray(action.payload) === true) {
 
-        for (let i = 0; i < action.payload.length; i++) {
+    //     // state.arrayURLs = [];
 
-          state.arrayURLs.push(action.payload[i]);
+    //     for (let i = 0; i < action.payload.length; i++) {
 
-        };
+    //       state.arrayURLs.push(action.payload[i]);
 
-      };
+    //     };
 
-    },
-    updateStateURL(state, action) {
+    //   };
 
-      // ? Doesn't seem to be updating the state for some reason?
+    // },
+    // updateStateURL(state, action) {
 
-      const urlItem = action.payload;
-      let urlListIndex;
+    //   // ? Doesn't seem to be updating the state for some reason?
 
-      if (typeof urlItem === "object") {
+    //   const urlItem = action.payload;
+    //   let urlListIndex;
 
-        if (hasNonEmptyProperty(urlItem, "linkID") && hasNonEmptyProperty(urlItem, "linkType")) {
+    //   if (typeof urlItem === "object") {
 
-          urlListIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
+    //     if (hasNonEmptyProperty(urlItem, "linkID") === true && hasNonEmptyProperty(urlItem, "linkType") === true) {
 
+    //       urlListIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 
-          if (isEmpty(urlListIndex) === false) {
+    //       if (isEmpty(urlListIndex) === false) {
 
-            if (hasNonEmptyProperty(urlItem, "linkName")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkName") === true) {
 
-              state.arrayURLs[urlListIndex].linkName = urlItem.linkName;
+    //           state.arrayURLs[urlListIndex].linkName = urlItem.linkName;
 
-            };
+    //         };
 
-            if (hasNonEmptyProperty(urlItem, "linkType")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkType") === true) {
 
-              state.arrayURLs[urlListIndex].linkType = urlItem.linkType;
+    //           state.arrayURLs[urlListIndex].linkType = urlItem.linkType;
 
-            };
+    //         };
 
-            if (hasNonEmptyProperty(urlItem, "linkID")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkID") === true) {
 
-              state.arrayURLs[urlListIndex].linkID = urlItem.linkID;
+    //           state.arrayURLs[urlListIndex].linkID = urlItem.linkID;
 
-            };
+    //         };
 
-            if (hasNonEmptyProperty(urlItem, "linkTypeNameID")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkTypeNameID") === true) {
 
-              state.arrayURLs[urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
+    //           state.arrayURLs[urlListIndex].linkTypeNameID = urlItem.linkTypeNameID;
 
-            };
+    //         };
 
-            if (hasNonEmptyProperty(urlItem, "linkTypeName")) {
+    //         if (hasNonEmptyProperty(urlItem, "linkTypeName") === true) {
 
-              state.arrayURLs[urlListIndex].linkTypeName = urlItem.linkTypeName;
+    //           state.arrayURLs[urlListIndex].linkTypeName = urlItem.linkTypeName;
 
-            };
+    //         };
 
-          };
+    //       };
 
-        };
+    //     };
 
-      };
+    //   };
 
-    },
-    deleteStateURL(state, action) {
+    // },
+    // deleteStateURL(state, action) {
 
-      // const urlListIndex = action.payload;
-      const urlItem = action.payload;
-      let urlItemIndex;
+    //   // const urlListIndex = action.payload;
+    //   const urlItem = action.payload;
+    //   let urlItemIndex;
 
-      if (typeof urlItem === "object") {
+    //   if (typeof urlItem === "object") {
 
-        if (hasNonEmptyProperty(urlItem, "linkID") && hasNonEmptyProperty(urlItem, "linkType")) {
+    //     if (hasNonEmptyProperty(urlItem, "linkID") === true && hasNonEmptyProperty(urlItem, "linkType") === true) {
 
-          urlItemIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
+    //       urlItemIndex = state.arrayURLs.findIndex(url => url.linkID === urlItem.linkID && url.linkType === urlItem.linkType);
 
+    //       if (isEmpty(urlItemIndex) === false) {
 
-          if (isEmpty(urlItemIndex) === false) {
+    //         state.arrayURLs.splice(urlItemIndex, 1);
 
-            state.arrayURLs.splice(urlItemIndex, 1);
+    //       };
 
-          };
+    //     };
 
-        };
+    //   };
 
-      };
-
-    },
+    // },
     setPageURL(state, action) {
 
       state.pageURL = action.payload;
@@ -133,6 +135,6 @@ const urlsSlice = createSlice({
   }
 });
 
-export const { loadArrayURLs, addStateURL, updateStateURL, deleteStateURL, setPageURL, setLinkItem } = urlsSlice.actions;
+export const { loadArrayURLs, /* addStateURL, updateStateURL, deleteStateURL, */ setPageURL, setLinkItem } = urlsSlice.actions;
 
 export default urlsSlice.reducer;

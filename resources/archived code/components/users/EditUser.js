@@ -7,7 +7,7 @@ import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions
 import { addErrorLog } from "../../utilities/ApplicationFunctions";
 import { loadUserData } from "../../app/userSlice";
 
-const EditUser = (props) => {
+const EditUser = () => {
 
   // ? What if the user has deleted their account and wants to reupdateUser?
   // * The database won't allow duplicate email addresses to be entered.
@@ -60,6 +60,49 @@ const EditUser = (props) => {
   const [errLastName, setErrLastName] = useState("");
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
+
+
+  useEffect(() => {
+
+    if (isEmpty(userRecordUpdated) === false) {
+
+      clearMessages();
+      setErrFirstName("");
+      setErrLastName("");
+      setErrEmail("");
+      setErrPassword("");
+      setUserRecordUpdated(null);
+
+      setTxtFirstName("");
+      setTxtLastName("");
+      setTxtEmail("");
+      setTxtPassword("");
+
+      setModal(!modal);
+
+    };
+
+  }, [userRecordUpdated]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(userLoaded) === false && userLoaded === false) {
+
+      clearMessages();
+      setErrEmail("");
+      setErrPassword("");
+
+      setTxtFirstName("");
+      setTxtLastName("");
+      setTxtEmail("");
+      setTxtPassword("");
+
+      setModal(false);
+
+    };
+
+  }, [userLoaded]);
 
 
   const updateUser = (deleteUser) => {
@@ -294,62 +337,19 @@ const EditUser = (props) => {
   };
 
 
-  useEffect(() => {
-
-    if (isEmpty(userRecordUpdated) === false) {
-
-      clearMessages();
-      setErrFirstName("");
-      setErrLastName("");
-      setErrEmail("");
-      setErrPassword("");
-      setUserRecordUpdated(null);
-
-      setTxtFirstName("");
-      setTxtLastName("");
-      setTxtEmail("");
-      setTxtPassword("");
-
-      setModal(!modal);
-
-    };
-
-  }, [userRecordUpdated]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(userLoaded) === false && userLoaded === false) {
-
-      clearMessages();
-      setErrEmail("");
-      setErrPassword("");
-
-      setTxtFirstName("");
-      setTxtLastName("");
-      setTxtEmail("");
-      setTxtPassword("");
-
-      setModal(false);
-
-    };
-
-  }, [userLoaded]);
-
-
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null} */}
+      { /* {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update User</Button> : null} */}
 
       {applicationAllowUserInteractions === true && isEmpty(userLoaded) === false && userLoaded === true ?
 
         <React.Fragment>
-          {/* <NavItem> */}
-          {/* <NavItem className="mx-3 my-2">
-            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></a> */}
+          { /* <NavItem> */}
+          { /* <NavItem className="mx-3 my-2">
+            <a href="#" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></a> */ }
           <NavLink className="nav_link" onClick={(event) => { setModal(!modal); }}><NavbarText>Update User</NavbarText></NavLink>
-          {/* </NavItem> */}
+          { /* </NavItem> */}
         </React.Fragment>
 
         : null}

@@ -1,28 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import TagManager from "react-gtm-module";
+import { isEmpty, getDateTime } from "shared-functions";
 import store from "./app/store";
 import "bootstrap/dist/css/bootstrap.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fortawesome/fontawesome-free/css/all.css";
-import { isEmpty, getDateTime, displayValue } from "shared-functions";
-import TagManager from 'react-gtm-module';
-// import {tagManagerArgs} from "./app/constants";
 import applicationSettings from "./app/environment";
-import App from './App';
-import './index.css';
+import App from "./App";
+import "./index.css";
 // import * as serviceWorker from "./serviceWorker";
-// import reportWebVitals from './reportWebVitals';
+// import reportWebVitals from "./reportWebVitals";
 // * https://stackoverflow.com/questions/66384368/how-is-it-possible-to-access-homepage-from-package-json-in-a-react-app -- 12/17/2021 MF
-// import { version, copyrightYear } from '../package.json';
+// import { version, copyrightYear } from "../package.json";
 // * https://stackoverflow.com/questions/64993118/error-should-not-import-the-named-export-version-imported-as-version -- 12/27/2021 MF
 // * Now imports the entire package.json file because of changes needed to be made due to updates with webpack 5. -- 12/27/2021 MF
-// import packageJSON from '../package.json';
+// import packageJSON from "../package.json";
+const applicationVersion = require("../package.json").version;
+const copyrightYear = require("../package.json").copyrightYear;
 
 // const componentName = "index";
 
-// console.log(componentName, "packageJSON.version", packageJSON.version);
-// console.log(componentName, "packageJSON.copyrightYear", packageJSON.copyrightYear);
+// console.log(componentName, "applicationVersion", applicationVersion);
+// console.log(componentName, "copyrightYear", copyrightYear);
+
+const routerBaseName = applicationSettings.routerBaseName;
 
 // * Google Tag Manager -- 03/06/2021 MF
 if (isEmpty(applicationSettings.tagManagerArgs.gtmId) === false) {
@@ -31,27 +34,15 @@ if (isEmpty(applicationSettings.tagManagerArgs.gtmId) === false) {
 
 };
 
-// const metaDescription = useSelector(state => state.applicationSettings.metaDescription);
-// document.getElementsByTagName("META")[3].content = metaDescription;
 document.getElementsByTagName("META")[3].content = applicationSettings.metaDescription;
 
-// * The old syntax for React 17 and older. -- 05/29/2022 MF
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Provider store={store}>
-//       {/* <App applicationVersion={packageJSON.version} copyrightYear={packageJSON.copyrightYear} /> */}
-//       <App />
-//     </Provider>
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <App applicationVersion={packageJSON.version} copyrightYear={packageJSON.copyrightYear} /> */}
-      <App />
+      <BrowserRouter basename={routerBaseName}>
+        <App applicationVersion={applicationVersion} copyrightYear={copyrightYear} />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

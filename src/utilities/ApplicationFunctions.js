@@ -1,44 +1,43 @@
-import applicationSettings from "../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase } from "shared-functions";
+import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, replaceSmartCharacters } from "shared-functions";
 
 const componentName = "ApplicationFunctions";
 
-export const encodeURL = (titleName) => {
+export const encodeURL = (url) => {
 
-  let newTitleName = titleName;
+  let newURL = url;
 
-  if (isEmpty(titleName) === false) {
+  if (isEmpty(url) === false) {
 
     // Changes the - to | -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("-", "|");
+    newURL = newURL.replaceAll("-", "|");
     // Changes the spaces to - -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll(" ", "-");
+    newURL = newURL.replaceAll(" ", "-");
     // Changes the rest to be a safe URL -- 02/20/2021 MF
-    newTitleName = encodeURIComponent(newTitleName);
+    newURL = encodeURIComponent(newURL);
 
   };
 
-  return newTitleName;
+  return newURL;
 
 };
 
 
-export const decodeURL = (titleName) => {
+export const decodeURL = (url) => {
 
-  let newTitleName = titleName;
+  let newURL = url;
 
-  if (isEmpty(titleName) === false) {
+  if (isEmpty(url) === false) {
 
     // Changes it back from a safe URL -- 02/20/2021 MF
-    newTitleName = decodeURIComponent(newTitleName);
+    newURL = decodeURIComponent(newURL);
     // Changes the - to space -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("-", " ");
+    newURL = newURL.replaceAll("-", " ");
     // Changes the | to - -- 02/20/2021 MF
-    newTitleName = newTitleName.replaceAll("|", "-");
+    newURL = newURL.replaceAll("|", "-");
 
   };
 
-  return newTitleName;
+  return newURL;
 
 };
 
@@ -93,7 +92,7 @@ export const removeOnePixelImage = (text, ASIN) => {
     newText = newText.replaceAll("<img src=\"https://ir-na.amazon-adsystem.com/e/ir?t=bulbocreat-20&l=li3&o=1&a=" + ASIN + "\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\" />", "");
 
 
-    if (newText.includes("https://ir-na.amazon-adsystem.com")) {
+    if (newText.includes("https://ir-na.amazon-adsystem.com") === true) {
 
       // console.log(componentName, getDateTime(), "removeOnePixelImage ASIN", ASIN);
       // console.log(componentName, getDateTime(), "removeOnePixelImage newText", newText);
@@ -107,14 +106,14 @@ export const removeOnePixelImage = (text, ASIN) => {
 };
 
 
-export const setLocalImagePath = (text) => {
+export const setLocalImagePath = (text, profileType) => {
 
   let newText = text;
 
   if (isEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (applicationSettings.profileType === "philipdick" || applicationSettings.profileType === "homeopape") {
+    if (profileType === "philipdick" || profileType === "homeopape") {
 
       // * Removes the "https://philipdick.com" -- 03/06/2021 MF
       newText = newText.replaceAll("https://philipdick.com", "");
@@ -128,14 +127,14 @@ export const setLocalImagePath = (text) => {
 };
 
 
-export const setLocalPath = (text) => {
+export const setLocalPath = (text, profileType) => {
 
   let newText = text;
 
   if (isEmpty(newText) === false) {
 
     // * So that it doesn't remove the URL when the application is running locally or on a site without the images -- 03/06/2021 MF
-    if (applicationSettings.profileType === "philipdick") {
+    if (profileType === "philipdick") {
 
       // * Removes the "https://philipdick.com" -- 03/06/2021 MF
       newText = newText.replaceAll("https://philipdick.com", "");
@@ -413,112 +412,113 @@ export const convertBitTrueFalse = (records) => {
 };
 
 
-export const addLog = (baseURL, logObject) => {
+export const addComputerLog = (computerLogOne, computerLogTwo) => {
 
-  // const dispatch = useDispatch();
+  let computerLog = { ...computerLogOne };
 
-  let logResult;
+  if (typeof computerLogItem === "object") {
 
-  let operationValue = "Log";
+    // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
+    if (isEmpty(computerLogTwo.country_code) === false) {
 
-  let url = `${baseURL}logs/`;
-  let response = "";
-  let data = "";
+      computerLog.countryCode = computerLogTwo.country_code;
 
-  fetch(url, {
-    method: "POST",
-    headers: new Headers({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify({ recordObject: logObject })
-  })
-    .then(response => {
+    };
 
-      if (response.ok !== true) {
+    if (isEmpty(computerLogTwo.country_name) === false) {
 
-        throw Error(`${response.status} ${response.statusText} ${response.url}`);
+      computerLog.countryName = computerLogTwo.country_name;
 
-      } else {
+    };
 
-        return response.json();
+    if (isEmpty(computerLogTwo.city) === false) {
 
-      };
+      computerLog.city = computerLogTwo.city;
 
-    })
-    .then(results => {
+    };
 
-      data = results;
+    if (isEmpty(computerLogTwo.postal) === false) {
 
-    })
-    .catch((error) => {
-      // console.error(componentName, getDateTime(), "addLog error", error);
-      // console.error(componentName, getDateTime(), "addLog error.name", error.name);
-      // console.error(componentName, getDateTime(), "addLog error.message", error.message);
-      // console.error(componentName, getDateTime(), "addLog error.stack", error.stack);
-      // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
+      computerLog.postal = computerLogTwo.postal;
 
-      addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, logObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+    };
 
-    });
+    if (isEmpty(computerLogTwo.latitude) === false) {
 
-  return logResult;
+      computerLog.latitude = computerLogTwo.latitude;
 
-};
+    };
 
+    if (isEmpty(computerLogTwo.longitude) === false) {
 
-export const addErrorLog = (baseURL, operation, componentName, dataObject, errorObject) => {
+      computerLog.longitude = computerLogTwo.longitude;
 
-  // const dispatch = useDispatch();
+    };
 
-  let logErrorResult;
+    if (isEmpty(computerLogTwo.IPv4) === false) {
 
-  let recordObject = {
-    operation: operation,
-    componentName: componentName,
-    dataObject: dataObject,
-    errorObject: errorObject
+      computerLog.ipAddress = computerLogTwo.IPv4;
+
+    };
+
+    if (isEmpty(computerLogTwo.state) === false) {
+
+      computerLog.state = computerLogTwo.state;
+
+    };
+
+    // * From https://api.db-ip.com/v2/free/self -- 09/27/2021 MF
+    if (isEmpty(computerLogTwo.ipAddress) === false) {
+
+      computerLog.ipAddress = computerLogTwo.ipAddress;
+
+    };
+
+    if (isEmpty(computerLogTwo.continentCode) === false) {
+
+      computerLog.continentCode = computerLogTwo.continentCode;
+
+    };
+
+    if (isEmpty(computerLogTwo.continentName) === false) {
+
+      computerLog.continentName = computerLogTwo.continentName;
+
+    };
+
+    if (isEmpty(computerLogTwo.countryCode) === false) {
+
+      computerLog.countryCode = computerLogTwo.countryCode;
+
+    };
+
+    if (isEmpty(computerLogTwo.countryName) === false) {
+
+      computerLog.countryName = computerLogTwo.countryName;
+
+    };
+
+    if (isEmpty(computerLogTwo.stateProvCode) === false) {
+
+      computerLog.stateProvCode = computerLogTwo.stateProvCode;
+
+    };
+
+    if (isEmpty(computerLogTwo.stateProv) === false) {
+
+      computerLog.state = computerLogTwo.state;
+
+    };
+
+    if (isEmpty(computerLogTwo.city) === false) {
+
+      computerLog.city = computerLogTwo.city;
+
+    };
+
   };
 
-  let url = `${baseURL}errorLogs/`;
-
-  fetch(url, {
-    method: "POST",
-    headers: new Headers({
-      "Content-Type": "application/json"
-    }),
-    body: JSON.stringify({ recordObject: recordObject })
-  })
-    .then(response => {
-
-      if (response.ok !== true) {
-
-        throw Error(`${response.status} ${response.statusText} ${response.url}`);
-
-      } else {
-
-        if (response.status === 200) {
-
-          return response.json();
-
-        } else {
-
-          return response.status;
-
-        };
-
-      };
-
-    })
-    .then(results => {
-
-    })
-    .catch((error) => {
-      // console.error(componentName, getDateTime(), "addErrorLog error", error);
-      // console.error(componentName, getDateTime(), "addErrorLog error.name", error.name);
-      // console.error(componentName, getDateTime(), "addErrorLog error.message", error.message);
-      // dispatch(addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`));
-    });
-
-  return logErrorResult;
+  return computerLog;
 
 };
+

@@ -1,80 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Col, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { Image, PencilSquare, Plus } from 'react-bootstrap-icons';
-import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, formatTrim, formatToString } from "shared-functions";
-import { createTitleURL, createImageName, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
-import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
-import { addStateURL, updateStateURL, deleteStateURL, setPageURL } from "../../app/urlsSlice";
+import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
+import { Image } from "react-bootstrap-icons";
+import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString, addErrorLog } from "shared-functions";
+import { createTitleURL, createImageName } from "../../utilities/ApplicationFunctions";
+// import { addStateTitle, updateStateTitle, deleteStateTitle } from "../../app/titlesSlice";
+// import { updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
+import {/* addStateURL, updateStateURL, deleteStateURL, */ setPageURL } from "../../app/urlsSlice";
 
 const EditTitle = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: categoryName, editionID, titleID -- 10/21/2022 MF
 
   const componentName = "EditTitle";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
+  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
   const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-
-  const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
-
-  const [categoryMessage, setCategoryMessage] = useState("");
-  const [errCategoryMessage, setErrCategoryMessage] = useState("");
-  const [categoryResultsFound, setCategoryResultsFound] = useState(null);
-
   const categoryListState = useSelector(state => state.categories.arrayCategories);
+  const editionListState = useSelector(state => state.editions.arrayEditions);
+  const titleListState = useSelector(state => state.titles.arrayTitles);
+  // const urlLookup = useSelector(state => state.urls.arrayURLs);
 
-  const categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
-  // const categoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
+  const linkItem = useSelector(state => state.urls.linkItem);
 
-  // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
-  // * Sort the list alphabetically instead of by sortID
-  categoryList.sort((a, b) => (a.category > b.category) ? 1 : -1);
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : 0;
 
-  // ! This code is causing React to have too many re-renders in this location
-  // if (categoryList.length < 1) {
-
-  //     console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
-  //     setErrCategoryMessage("categoryList is empty", categoryList.length);
-  //     setCategoryResultsFound(false);
-
-  // } else {
-
-  //     console.error(componentName, getDateTime(), "categoryList.length", categoryList.length);
-  //     setCategoryMessage("categoryList.length", categoryList.length);
-  //     setCategoryResultsFound(true);
-
-  // };
-
-
-  useEffect(() => {
-
-    if (categoryList.length < 1) {
-
-      console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
-      setErrCategoryMessage("categoryList is empty", categoryList.length);
-      setCategoryResultsFound(false);
-
-    } else {
-
-      // setCategoryMessage("categoryList.length", categoryList.length);
-      setCategoryResultsFound(true);
-
-    };
-
-    // setDdCategoryID(getCategoryIDFromCategoryName(props.categoryName));
-
-  }, [categoryList]);
-
+  const [showForm, setShowForm] = useState(false);
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -86,12 +46,11 @@ const EditTitle = (props) => {
   const onDismissMessage = () => setMessageVisible(false);
   const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  const [modal, setModal] = useState(false);
   const [titleRecordAdded, setTitleRecordAdded] = useState(null);
   const [titleRecordUpdated, setTitleRecordUpdated] = useState(null);
   const [titleRecordDeleted, setTitleRecordDeleted] = useState(null);
-  const [editionRecordUpdated, setEditionRecordUpdated] = useState(null);
-  const [editionRecordDeleted, setEditionRecordDeleted] = useState(null);
+  // const [editionRecordUpdated, setEditionRecordUpdated] = useState(null);
+  // const [editionRecordDeleted, setEditionRecordDeleted] = useState(null);
 
   const [txtTitleName, setTxtTitleName] = useState("");
   const [txtTitleURL, setTxtTitleURL] = useState("");
@@ -127,26 +86,60 @@ const EditTitle = (props) => {
   // const [urlPKDWeb, setUrlPKDWeb] = useState(null);
   const [active, setActive] = useState(null);
 
-  const editionListState = useSelector(state => state.editions.arrayEditions);
+  let categoryList = categoryListState.filter(category => category.active === true || category.active === 1);
+  // let categoryList = categoryListState.filter(category => category.categoryActive === true || category.categoryActive === 1);
+
+  // categoryList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
+  // * Sort the list alphabetically instead of by sortID
+  categoryList.sort((a, b) => (a.category > b.category) ? 1 : -1);
+
+  // ! This code is causing React to have too many re-renders in this location
+  // if (categoryList.length < 1) {
+
+  //     console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
+  //     addErrorMessage("categoryList is empty", categoryList.length);
+
+  // } else {
+
+  //     console.error(componentName, getDateTime(), "categoryList.length", categoryList.length);
+  //     addMessage("categoryList.length", categoryList.length);
+
+  // };
 
   let editionList = [];
-
-  const titleListState = useSelector(state => state.titles.arrayTitles);
-
-  // const urlLookup = useSelector(state => state.urls.arrayURLs);
-
-  const linkItem = useSelector(state => state.urls.linkItem);
 
 
   useEffect(() => {
 
-    if (isEmpty(props.titleID) === false) {
+    if (categoryList.length < 1) {
 
-      let titleObject = titleListState.find(title => title.titleID === props.titleID);
+      console.error(componentName, getDateTime(), "categoryList is empty", categoryList.length);
+      addErrorMessage("categoryList is empty", categoryList.length);
+
+    } else {
+
+      // addMessage("categoryList.length", categoryList.length);
+
+    };
+
+    // setDdCategoryID(getCategoryIDFromCategoryName(categoryName));
+
+  }, [categoryList]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleID) === false) {
+
+      let titleObject = titleListState.find(title => title.titleID === titleID);
 
       // setTitleItemIndex(titleListState.findIndex(title => title.titleID === titleObject.titleID));
 
-      editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
+      if (isEmpty(titleObject) === false) {
+
+        editionList = editionListState.filter(edition => edition.titleID === parseInt(titleObject.titleID));
+
+      };
 
       if (isEmpty(titleObject) === false) {
 
@@ -216,7 +209,101 @@ const EditTitle = (props) => {
 
     };
 
-  }, [props.titleID, titleListState]);
+  }, [titleID, titleListState]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleRecordAdded) === false && titleRecordAdded === true) {
+
+      clearMessages();
+      setErrTitleName("");
+      setErrCategoryID("");
+      setTitleRecordAdded(null);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
+      // setModal(!modal);
+
+    };
+
+  }, [titleRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(titleRecordUpdated) === false && titleRecordUpdated === true) {
+
+      clearMessages();
+      setErrTitleName("");
+      setErrCategoryID("");
+      setTitleRecordUpdated(null);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
+      // setModal(!modal);
+
+    };
+
+    if (isEmpty(titleRecordDeleted) === false && titleRecordDeleted === true) {
+
+      clearMessages();
+      setErrTitleName("");
+      setErrCategoryID("");
+      setTitleRecordDeleted(null);
+
+      setTxtTitleName("");
+      setTxtTitleURL("");
+      setTxtAuthorFirstName("");
+      setTxtAuthorLastName("");
+      setTxtManuscriptTitle("");
+      setTxtWrittenDate("");
+      setTxtSubmissionDate("");
+      setTxtPublicationDate("");
+      setTxtImageName("");
+      setDdCategoryID("");
+      setTxtShortDescription("");
+      setTxtUrlPKDWeb("");
+
+      // setModal(!modal);
+
+    };
+
+  }, [titleRecordUpdated, titleRecordDeleted]);
+
+
+  // useEffect(() => {
+
+  //   if (admin !== true) {
+
+  //     // return <Redirect to="/" />;
+  //     setModal(false);
+
+  //   };
+
+  // }, [admin]);
 
 
   const addTitle = () => {
@@ -289,8 +376,6 @@ const EditTitle = (props) => {
     if (formValidated === true) {
 
       if (isEmpty(txtTitleName) === false) {
-
-
 
         let recordObject = {
           titleName: formatTrim(txtTitleName),
@@ -390,7 +475,6 @@ const EditTitle = (props) => {
 
         };
 
-
         // * If the user doesn't enter a short description, then it isn't added/updated. -- 03/06/2021 MF
         if (isEmpty(txtShortDescription) === false) {
 
@@ -413,7 +497,6 @@ const EditTitle = (props) => {
 
         };
 
-
         let url = baseURL + "titles/";
 
         if (isEmpty(sessionToken) === false) {
@@ -426,21 +509,21 @@ const EditTitle = (props) => {
             }),
             body: JSON.stringify({ title: recordObject })
           })
-            .then(response => {
+            .then(results => {
 
-              // if (response.ok !== true) {
+              // if (results.ok !== true) {
 
-              //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-              // } else {
-
-              // if (response.status === 200) {
-
-              return response.json();
+              //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
               // } else {
 
-              //     return response.status;
+              // if (results.status === 200) {
+
+              return results.json();
+
+              // } else {
+
+              //     return results.status;
 
               // };
 
@@ -454,34 +537,35 @@ const EditTitle = (props) => {
 
               if (data.transactionSuccess === true) {
 
-                setTitleItem(data.records[0]);
-                // setTitleID(data.records[0].titleID);
-                // setTitleName(data.records[0].titleName);
-                // setTitleSort(data.records[0].titleSort);
-                // setTitleURL(data.records[0].titleURL);
-                // setAuthorFirstName(data.records[0].authorFirstName);
-                // setAuthorLastName(data.records[0].authorLastName);
-                // setManuscriptTitle(data.records[0].manuscriptTitle);
-                // setWrittenDate(data.records[0].writtenDate);
-                // setSubmissionDate(data.records[0].submissionDate);
-                // setPublicationDate(data.records[0].publicationDate);
-                // setImageName(data.records[0].imageName);
-                // setCategoryID(data.records[0].categoryID);
-                // setShortDescription(data.records[0].shortDescription);
-                // setUrlPKDWeb(data.records[0].urlPKDWeb);
-                setActive(data.records[0].active);
+                let dataRecord = getFirstItem(data.records);
 
-                let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
-                // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
-                categoryItem = categoryItem[0];
+                setTitleItem(dataRecord);
+                // setTitleID(dataRecord.titleID);
+                // setTitleName(dataRecord.titleName);
+                // setTitleSort(dataRecord.titleSort);
+                // setTitleURL(dataRecord.titleURL);
+                // setAuthorFirstName(dataRecord.authorFirstName);
+                // setAuthorLastName(dataRecord.authorLastName);
+                // setManuscriptTitle(dataRecord.manuscriptTitle);
+                // setWrittenDate(dataRecord.writtenDate);
+                // setSubmissionDate(dataRecord.submissionDate);
+                // setPublicationDate(dataRecord.publicationDate);
+                // setImageName(dataRecord.imageName);
+                // setCategoryID(dataRecord.categoryID);
+                // setShortDescription(dataRecord.shortDescription);
+                // setUrlPKDWeb(dataRecord.urlPKDWeb);
+                setActive(dataRecord.active);
+
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === dataRecord.categoryID));
+                // // category: {categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate}
 
 
-                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(addStateTitle([{ titleID: data.records[0].titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
+                // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                // dispatch(addStateTitle([{ titleID: dataRecord.titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, createDate: dataRecord.createDate, updateDate: dataRecord.updateDate /* , category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } */, category: categoryItem.category, sortID: categoryItem.sortID, categoryActive: categoryItem.active, categoryCreateDate: categoryItem.createDate, categoryUpdatedDate: categoryItem.updateDate }]));
 
-                // ? Add to local storage also? -- 03/06/2021 MF
+                // // ? Add to local storage also? -- 03/06/2021 MF
 
-                dispatch(addStateURL([{ linkName: data.records[0].titleURL, linkType: "title", linkID: data.records[0].titleID }]));
+                // dispatch(addStateURL([{ linkName: dataRecord.titleURL, linkType: "title", linkID: dataRecord.titleID }]));
 
               } else {
 
@@ -498,7 +582,7 @@ const EditTitle = (props) => {
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -542,7 +626,6 @@ const EditTitle = (props) => {
 
 
   const updateTitle = (deleteTitle) => {
-
 
     clearMessages();
     setTitleRecordDeleted(null);
@@ -608,12 +691,9 @@ const EditTitle = (props) => {
 
     };
 
-
     if (formValidated === true) {
 
       if (isEmpty(txtTitleName) === false) {
-
-
 
         let recordObject = {
           titleName: formatTrim(txtTitleName),
@@ -736,13 +816,11 @@ const EditTitle = (props) => {
 
         };
 
-
         let url = baseURL + "titles/";
 
-        if (isEmpty(props.titleID) === false && isEmpty(sessionToken) === false) {
+        if (isEmpty(titleID) === false && isEmpty(sessionToken) === false) {
 
-          url = url + props.titleID;
-
+          url = url + titleID;
 
           fetch(url, {
             method: "PUT",
@@ -752,21 +830,21 @@ const EditTitle = (props) => {
             }),
             body: JSON.stringify({ title: recordObject })
           })
-            .then(response => {
+            .then(results => {
 
-              // if (response.ok !== true) {
+              // if (results.ok !== true) {
 
-              //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-              // } else {
-
-              // if (response.status === 200) {
-
-              return response.json();
+              //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
               // } else {
 
-              //     return response.status;
+              // if (results.status === 200) {
+
+              return results.json();
+
+              // } else {
+
+              //     return results.status;
 
               // };
 
@@ -780,79 +858,76 @@ const EditTitle = (props) => {
 
               if (data.transactionSuccess === true) {
 
-                setTitleItem(data.records[0]);
-                // // setTitleID(data.records[0].titleID);
-                // setTitleName(data.records[0].titleName);
-                // setTitleSort(data.records[0].titleSort);
-                // setTitleURL(data.records[0].titleURL);
-                // setAuthorFirstName(data.records[0].authorFirstName);
-                // setAuthorLastName(data.records[0].authorLastName);
-                // setManuscriptTitle(data.records[0].manuscriptTitle);
-                // setWrittenDate(data.records[0].writtenDate);
-                // setSubmissionDate(data.records[0].submissionDate);
-                // setPublicationDate(data.records[0].publicationDate);
-                // setImageName(data.records[0].imageName);
-                // setCategoryID(data.records[0].categoryID);
-                // setShortDescription(data.records[0].shortDescription);
-                // setUrlPKDWeb(data.records[0].urlPKDWeb);
-                setActive(data.records[0].active);
+                let dataRecord = getFirstItem(data.records);
 
+                setTitleItem(dataRecord);
+                // // setTitleID(dataRecord.titleID);
+                // setTitleName(dataRecord.titleName);
+                // setTitleSort(dataRecord.titleSort);
+                // setTitleURL(dataRecord.titleURL);
+                // setAuthorFirstName(dataRecord.authorFirstName);
+                // setAuthorLastName(dataRecord.authorLastName);
+                // setManuscriptTitle(dataRecord.manuscriptTitle);
+                // setWrittenDate(dataRecord.writtenDate);
+                // setSubmissionDate(dataRecord.submissionDate);
+                // setPublicationDate(dataRecord.publicationDate);
+                // setImageName(dataRecord.imageName);
+                // setCategoryID(dataRecord.categoryID);
+                // setShortDescription(dataRecord.shortDescription);
+                // setUrlPKDWeb(dataRecord.urlPKDWeb);
+                setActive(dataRecord.active);
 
-                let categoryItem = categoryList.filter(category => category.categoryID === data.records[0].categoryID);
-                // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
-                categoryItem = categoryItem[0];
+                // let categoryItem = getFirstItem(categoryList.filter(category => category.categoryID === dataRecord.categoryID));
+                // // category: {categoryID: categoryItem[0].categoryID, category: categoryItem[0].category, sortID: categoryItem[0].sortID, active: categoryItem[0].active, createDate: categoryItem[0].createDate, updateDate: categoryItem[0].updateDate}
 
+                // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                // dispatch(updateStateTitle({/* titleItemIndex: titleItemIndex, */ titleID: titleID, titleName: dataRecord.titleName, titleSort: dataRecord.titleSort, titleURL: dataRecord.titleURL, authorFirstName: dataRecord.authorFirstName, authorLastName: dataRecord.authorLastName, manuscriptTitle: dataRecord.manuscriptTitle, writtenDate: dataRecord.writtenDate, submissionDate: dataRecord.submissionDate, publicationDate: dataRecord.publicationDate, imageName: dataRecord.imageName, categoryID: dataRecord.categoryID, shortDescription: dataRecord.shortDescription, urlPKDWeb: dataRecord.urlPKDWeb, active: dataRecord.active, titleActive: dataRecord.active, updateDate: getDateTime() /* , category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate } */ }));
 
-                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(updateStateTitle({ /*titleItemIndex: titleItemIndex,*/ titleID: props.titleID, titleName: data.records[0].titleName, titleSort: data.records[0].titleSort, titleURL: data.records[0].titleURL, authorFirstName: data.records[0].authorFirstName, authorLastName: data.records[0].authorLastName, manuscriptTitle: data.records[0].manuscriptTitle, writtenDate: data.records[0].writtenDate, submissionDate: data.records[0].submissionDate, publicationDate: data.records[0].publicationDate, imageName: data.records[0].imageName, categoryID: data.records[0].categoryID, shortDescription: data.records[0].shortDescription, urlPKDWeb: data.records[0].urlPKDWeb, active: data.records[0].active, titleActive: data.records[0].active, updateDate: getDateTime()/*, category: { categoryID: categoryItem.categoryID, category: categoryItem.category, sortID: categoryItem.sortID, active: categoryItem.active, createDate: categoryItem.createDate, updateDate: categoryItem.updateDate }*/ }));
+                // // ? Update local storage also? -- 03/06/2021 MF
 
-                // ? Update local storage also? -- 03/06/2021 MF
+                // // * Update/Delete related editions also if active is set to false. -- 03/06/2021 MF
+                // if (dataRecord.active === false || dataRecord.active === 0) {
 
-                // * Update/Delete related editions also if active is set to false. -- 03/06/2021 MF
-                if (data.records[0].active === false || data.records[0].active === 0) {
+                //   if (isNonEmptyArray(editionList) === true) {
 
-                  if (isNonEmptyArray(editionList) === true) {
+                //     for (let i = 0; i < editionList.length; i++) {
 
-                    for (let i = 0; i < editionList.length; i++) {
+                //       // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
-                      // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+                //       // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                //       dispatch(updateStateEdition({/* editionItemIndex: editionItemIndex, */ editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
 
-                      // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                      dispatch(updateStateEdition({ /*editionItemIndex: editionItemIndex,*/ editionID: editionList[i].editionID, titleID: editionList[i].titleID, mediaID: editionList[i].mediaID, publicationDate: editionList[i].publicationDate, imageName: editionList[i].imageName, ASIN: editionList[i].ASIN, textLinkShort: editionList[i].textLinkShort, textLinkFull: editionList[i].textLinkFull, imageLinkSmall: editionList[i].imageLinkSmall, imageLinkMedium: editionList[i].imageLinkMedium, imageLinkLarge: editionList[i].imageLinkLarge, textImageLink: editionList[i].textImageLink, active: false, createDate: editionList[i].createDate, updateDate: editionList[i].updateDate }));
+                //     };
 
-                    };
+                //   };
 
-                  };
+                // };
 
-                };
+                // // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === titleID);
 
-                // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === props.titleID);
+                // // * Update/Delete related urls in arrayURLs also. -- 03/06/2021 MF
+                // if (dataRecord.active === false || dataRecord.active === 0) {
 
-                // * Update/Delete related urls in arrayURLs also. -- 03/06/2021 MF
-                if (data.records[0].active === false || data.records[0].active === 0) {
+                //   // dispatch(deleteStateURL(urlListIndex));
+                //   dispatch(deleteStateURL({ linkID: titleID, linkType: "titles" }));
 
-                  // dispatch(deleteStateURL(urlListIndex));
-                  dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
+                // } else {
 
-                } else {
+                //   let categoryName = categoryList.find(category => category.categoryID === dataRecord.categoryID);
 
+                //   // ? Doesn't seem to be updating the state for some reason? -- 03/06/2021 MF
+                //   // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: dataRecord.titleURL, linkType: "title", linkID: titleID, linkTypeNameID: dataRecord.categoryID, linkTypeName: categoryName.category}]));
 
-                  let categoryName = categoryList.find(category => category.categoryID === data.records[0].categoryID);
+                //   // dispatch(deleteStateURL(urlListIndex));
+                //   dispatch(deleteStateURL({ linkID: titleID, linkType: "titles" }));
+                //   dispatch(addStateURL([{/* urlListIndex: urlListIndex, */ linkName: dataRecord.titleURL, linkType: "titles", linkID: titleID, linkTypeNameID: dataRecord.categoryID, linkTypeName: categoryName.category }]));
 
-
-                  // ? Doesn't seem to be updating the state for some reason? -- 03/06/2021 MF
-                  // dispatch(updateStateURL([{urlListIndex: urlListIndex, linkName: data.records[0].titleURL, linkType: "title", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category}]));
-
-                  // dispatch(deleteStateURL(urlListIndex));
-                  dispatch(deleteStateURL({ linkID: props.titleID, linkType: "titles" }));
-                  dispatch(addStateURL([{ /*urlListIndex: urlListIndex,*/ linkName: data.records[0].titleURL, linkType: "titles", linkID: props.titleID, linkTypeNameID: data.records[0].categoryID, linkTypeName: categoryName.category }]));
-
-                };
+                // };
 
                 // * Redirect to the new titleURL is that was changed. -- 03/06/2021 MF
-                if (linkItem.linkName !== data.records[0].titleURL) {
+                if (linkItem.linkName !== dataRecord.titleURL) {
 
-                  redirectPage(data.records[0].titleURL);
+                  redirectPage(dataRecord.titleURL);
 
                 };
 
@@ -871,7 +946,7 @@ const EditTitle = (props) => {
 
               addErrorMessage(error.name + ": " + error.message);
 
-              // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+              // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
             });
 
@@ -893,10 +968,9 @@ const EditTitle = (props) => {
 
     let url = baseURL + "titles/";
 
-    if (isEmpty(props.titleID) === false) {
+    if (isEmpty(titleID) === false) {
 
-      url = url + props.titleID;
-
+      url = url + titleID;
 
       if (isEmpty(sessionToken) === false) {
 
@@ -907,21 +981,21 @@ const EditTitle = (props) => {
             "Authorization": sessionToken
           })
         })
-          .then(response => {
+          .then(results => {
 
-            // if (response.ok !== true) {
+            // if (results.ok !== true) {
 
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
+            //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
             // } else {
 
-            //     return response.status;
+            // if (results.status === 200) {
+
+            return results.json();
+
+            // } else {
+
+            //     return results.status;
 
             // };
 
@@ -936,30 +1010,30 @@ const EditTitle = (props) => {
 
             if (data.transactionSuccess === true) {
 
-              dispatch(deleteStateTitle(props.titleID));
-              // dispatch(deleteStateTitle(titleItemIndex));
-              // ? Update local storage also? -- 03/06/2021 MF
+              // dispatch(deleteStateTitle(titleID));
+              // // dispatch(deleteStateTitle(titleItemIndex));
+              // // ? Update local storage also? -- 03/06/2021 MF
 
-              if (isNonEmptyArray(editionList) === true) {
+              // if (isNonEmptyArray(editionList) === true) {
 
-                // * Delete related editions also. -- 03/06/2021 MF
-                for (let i = 0; i < editionList.length; i++) {
+              //   // * Delete related editions also. -- 03/06/2021 MF
+              //   for (let i = 0; i < editionList.length; i++) {
 
-                  // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
+              //     // let editionItemIndex = editionListState.findIndex(edition => edition.editionID === editionList[i].editionID);
 
-                  deleteEdition(editionList[i].editionID/*, editionItemIndex*/);
+              //     deleteEdition(editionList[i].editionID /* , editionItemIndex */);
 
-                };
+              //   };
 
-              };
+              // };
 
-              // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
+              // // let urlListIndex = urlLookup.findIndex(url => url.linkType === "titles" && url.linkID === data.titleID);
 
-              // Update/Delete related urls in arrayURLs also
-              // dispatch(deleteStateURL(urlListIndex));
-              dispatch(deleteStateURL({ linkID: data.titleID, linkType: "titles" }));
+              // // Update/Delete related urls in arrayURLs also
+              // // dispatch(deleteStateURL(urlListIndex));
+              // dispatch(deleteStateURL({ linkID: data.titleID, linkType: "titles" }));
 
-              // ? Redirect when the title is deleted? -- 03/06/2021 MF
+              // // ? Redirect when the title is deleted? -- 03/06/2021 MF
 
             } else {
 
@@ -976,7 +1050,7 @@ const EditTitle = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -987,166 +1061,84 @@ const EditTitle = (props) => {
   };
 
 
-  const deleteEdition = (editionID/*, editionItemIndex*/) => {
+  // const deleteEdition = (editionID /* , editionItemIndex */) => {
 
-    clearMessages();
-    setEditionRecordDeleted(null);
+  //   clearMessages();
+  //   setEditionRecordDeleted(null);
 
-    let url = baseURL + "editions/";
+  //   let url = baseURL + "editions/";
 
-    if (isEmpty(editionID) === false) {
+  //   if (isEmpty(editionID) === false) {
 
-      url = url + editionID;
-
-
-      if (isEmpty(sessionToken) === false) {
-
-        fetch(url, {
-          method: "DELETE",
-          headers: new Headers({
-            "Content-Type": "application/json",
-            "Authorization": sessionToken
-          })
-        })
-          .then(response => {
-
-            // if (response.ok !== true) {
-
-            //     throw Error(response.status + " " + response.statusText + " " + response.url);
-
-            // } else {
-
-            // if (response.status === 200) {
-
-            return response.json();
-
-            // } else {
-
-            //     return response.status;
-
-            // };
-
-            // };
-
-          })
-          .then(data => {
-
-            setEditionRecordDeleted(data.transactionSuccess);
-
-            addMessage(data.message); // Never seen by the user if the delete was successful
-
-            if (data.transactionSuccess === true) {
-
-              dispatch(deleteStateEdition(props.editionID));
-              // dispatch(deleteStateEdition(editionItemIndex));
-              // ? Update local storage also? -- 03/06/2021 MF
-
-            } else {
-
-              // addErrorMessage(data.error);
-              addErrorMessage(data.errorMessages);
-
-            };
-
-          })
-          .catch((error) => {
-            console.error(componentName, getDateTime(), "deleteEdition error", error);
-            // console.error(componentName, getDateTime(), "deleteEdition error.name", error.name);
-            // console.error(componentName, getDateTime(), "deleteEdition error.message", error.message);
-
-            addErrorMessage(error.name + ": " + error.message);
-
-            // addErrorLog(baseURL, operationValue, componentName, { url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
-
-          });
-
-      };
-
-    };
-
-  };
+  //     url = url + editionID;
 
 
-  useEffect(() => {
+  //     if (isEmpty(sessionToken) === false) {
 
-    if (isEmpty(titleRecordAdded) === false && titleRecordAdded === true) {
+  //       fetch(url, {
+  //         method: "DELETE",
+  //         headers: new Headers({
+  //           "Content-Type": "application/json",
+  //           "Authorization": sessionToken
+  //         })
+  //       })
+  //         .then(results => {
 
-      clearMessages();
-      setErrTitleName("");
-      setErrCategoryID("");
-      setTitleRecordAdded(null);
+  //           // if (results.ok !== true) {
 
-      setTxtTitleName("");
-      setTxtTitleURL("");
-      setTxtAuthorFirstName("");
-      setTxtAuthorLastName("");
-      setTxtManuscriptTitle("");
-      setTxtWrittenDate("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setDdCategoryID("");
-      setTxtShortDescription("");
-      setTxtUrlPKDWeb("");
+  //           //     throw Error(results.status + " " + results.statusText + " " + results.url);
 
-      setModal(!modal);
+  //           // } else {
 
-    };
+  //           // if (results.status === 200) {
 
-  }, [titleRecordAdded]);
+  //           return results.json();
 
+  //           // } else {
 
-  useEffect(() => {
+  //           //     return results.status;
 
-    if (isEmpty(titleRecordUpdated) === false && titleRecordUpdated === true) {
+  //           // };
 
-      clearMessages();
-      setErrTitleName("");
-      setErrCategoryID("");
-      setTitleRecordUpdated(null);
+  //           // };
 
-      setTxtTitleName("");
-      setTxtTitleURL("");
-      setTxtAuthorFirstName("");
-      setTxtAuthorLastName("");
-      setTxtManuscriptTitle("");
-      setTxtWrittenDate("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setDdCategoryID("");
-      setTxtShortDescription("");
-      setTxtUrlPKDWeb("");
+  //         })
+  //         .then(data => {
 
-      setModal(!modal);
+  //           setEditionRecordDeleted(data.transactionSuccess);
 
-    };
+  //           addMessage(data.message); // Never seen by the user if the delete was successful
 
-    if (isEmpty(titleRecordDeleted) === false && titleRecordDeleted === true) {
+  //           if (data.transactionSuccess === true) {
 
-      clearMessages();
-      setErrTitleName("");
-      setErrCategoryID("");
-      setTitleRecordDeleted(null);
+  //             dispatch(deleteStateEdition(editionID));
+  //             // dispatch(deleteStateEdition(editionItemIndex));
+  //             // ? Update local storage also? -- 03/06/2021 MF
 
-      setTxtTitleName("");
-      setTxtTitleURL("");
-      setTxtAuthorFirstName("");
-      setTxtAuthorLastName("");
-      setTxtManuscriptTitle("");
-      setTxtWrittenDate("");
-      setTxtSubmissionDate("");
-      setTxtPublicationDate("");
-      setTxtImageName("");
-      setDdCategoryID("");
-      setTxtShortDescription("");
-      setTxtUrlPKDWeb("");
+  //           } else {
 
-      setModal(!modal);
+  //             // addErrorMessage(data.error);
+  //             addErrorMessage(data.errorMessages);
 
-    };
+  //           };
 
-  }, [titleRecordUpdated, titleRecordDeleted]);
+  //         })
+  //         .catch((error) => {
+  //           console.error(componentName, getDateTime(), "deleteEdition error", error);
+  //           // console.error(componentName, getDateTime(), "deleteEdition error.name", error.name);
+  //           // console.error(componentName, getDateTime(), "deleteEdition error.message", error.message);
+
+  //           addErrorMessage(error.name + ": " + error.message);
+
+  //           // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+
+  //         });
+
+  //     };
+
+  //   };
+
+  // };
 
 
   const redirectPage = (linkName) => {
@@ -1160,180 +1152,159 @@ const EditTitle = (props) => {
   };
 
 
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
-
-
   return (
     <React.Fragment>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Title</Button></span> : null} */}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true ?
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+        <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(titleItem) === true && isEmpty(admin) === false && admin === true ?
+          <button aria-label={showForm === false ? "expand" : "collapse"} onClick={() => { setShowForm(!showForm); }}>
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Add Title</a>
+            <div>
+              {isEmpty(titleItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Title
 
-        : null}
+              {showForm === false ? <i className="fas fa-caret-down"></i> : <i className="fas fa-caret-up"></i>}
+            </div>
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Update Title</Button></span> : null} */}
+            {showForm === true ?
 
-      {/* {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <PencilSquare className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null} */}
+              <span onClick={() => { setShowForm(!showForm); }}>
 
-      {applicationAllowUserInteractions === true && isEmpty(titleItem) === false && isEmpty(admin) === false && admin === true ?
+                <FormGroup className="text-center">
+                  <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
+                  <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
+                </FormGroup>
 
-        <a href="#" onClick={(event) => { setModal(!modal); }}> Update Title</a>
+                <FormGroup>
+                  <Label for="txtTitleName">Title</Label>
+                  <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => { setTxtTitleName(event.target.value); }} />
+                  {isEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
+                </FormGroup>
 
-        : null}
+                <FormGroup>
+                  <Label for="txtTitleURL">Title URL</Label>
+                  <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtTitleURL(createTitleURL(txtTitleName)); }}>Create Title URL</Button>
+                  <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => { setTxtTitleURL(event.target.value); }} />
+                </FormGroup>
 
-      <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
-        <ModalHeader toggle={(event) => { setModal(!modal); }}>{isEmpty(titleItem) === true ? <React.Fragment>Add</React.Fragment> : <React.Fragment>Update</React.Fragment>} Title</ModalHeader>
-        <ModalBody>
-          <Form>
+                <FormGroup>
+                  <Label for="txtAuthorFirstName">Author First Name</Label>
+                  <Input type="text" id="txtAuthorFirstName" value={txtAuthorFirstName} onChange={(event) => { setTxtAuthorFirstName(event.target.value); }} />
+                </FormGroup>
 
-            <FormGroup className="text-center">
-              <Alert color="info" isOpen={messageVisible} toggle={onDismissMessage}>{message}</Alert>
-              <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
-              {isEmpty(categoryMessage) === false ? <Alert color="info">{categoryMessage}</Alert> : null}
-              {isEmpty(errCategoryMessage) === false ? <Alert color="danger">{errCategoryMessage}</Alert> : null}
-            </FormGroup>
+                <FormGroup>
+                  <Label for="txtAuthorLastName">Author Last Name</Label>
+                  <Input type="text" id="txtAuthorLastName" value={txtAuthorLastName} onChange={(event) => { setTxtAuthorLastName(event.target.value); }} />
+                </FormGroup>
 
-            <FormGroup>
-              <Label for="txtTitleName">Title</Label>
-              <Input type="text" id="txtTitleName" value={txtTitleName} onChange={(event) => { setTxtTitleName(event.target.value); }} />
-              {isEmpty(errTitleName) === false ? <Alert color="danger">{errTitleName}</Alert> : null}
-            </FormGroup>
+                <FormGroup>
+                  <Label id="lblCategoryID" for="lblCategoryID">Category</Label>
+                  <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => { setDdCategoryID(event.target.value); }}>
+                    <option value="">Select a Category</option>
 
-            <FormGroup>
-              <Label for="txtTitleURL">Title URL</Label>
-              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { setTxtTitleURL(createTitleURL(txtTitleName)); }}>Create Title URL</Button>
-              <Input type="text" id="txtTitleURL" value={txtTitleURL} onChange={(event) => { setTxtTitleURL(event.target.value); }} />
-            </FormGroup>
+                    {isNonEmptyArray(categoryList) === true ?
 
-            <FormGroup>
-              <Label for="txtAuthorFirstName">Author First Name</Label>
-              <Input type="text" id="txtAuthorFirstName" value={txtAuthorFirstName} onChange={(event) => { setTxtAuthorFirstName(event.target.value); }} />
-            </FormGroup>
+                      <React.Fragment>
 
-            <FormGroup>
-              <Label for="txtAuthorLastName">Author Last Name</Label>
-              <Input type="text" id="txtAuthorLastName" value={txtAuthorLastName} onChange={(event) => { setTxtAuthorLastName(event.target.value); }} />
-            </FormGroup>
+                        {categoryList.map((category) => {
+                          return (
+                            <React.Fragment key={category.categoryID}>
+                              {/* {getCategoryIDFromCategoryName(categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
+                              <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
+                            </React.Fragment>
+                          );
+                        })}
 
-            <FormGroup>
-              <Label id="lblCategoryID" for="lblCategoryID">Category</Label>
-              <Input type="select" id="ddCategoryID" value={ddCategoryID} onChange={(event) => { setDdCategoryID(event.target.value); }}>
-                <option value="">Select a Category</option>
+                      </React.Fragment>
 
-                {isNonEmptyArray(categoryList) === true ?
+                      : null}
+
+                  </Input>
+                  {isEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtManuscriptTitle">Manuscript Title</Label>
+                  <Input type="text" id="txtManuscriptTitle" value={txtManuscriptTitle} onChange={(event) => { setTxtManuscriptTitle(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtWrittenDate">Manuscript Written Date</Label>
+                  <Input type="date" id="txtWrittenDate" value={txtWrittenDate} onChange={(event) => { setTxtWrittenDate(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup row>
+                  <Col>
+
+                    <Label for="txtSubmissionDate">Manuscript Submission Date</Label>
+                    <Input type="date" id="txtSubmissionDate" value={txtSubmissionDate} onChange={(event) => { setTxtSubmissionDate(event.target.value); }} />
+
+                  </Col>
+                  <Col>
+
+                    <Label for="txtPublicationDate">Publication Date</Label>
+                    <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
+
+                  </Col>
+
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtImageName">Image Name</Label>
+                  <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => {/* createImageName(txtTitleName); */ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
+                  <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
+                  {isEmpty(txtImageName) === false ? <img src={txtImageName} alt={txtTitleName} className="cover-thumbnail" /> : <Image size="150" className="no-image-icon" />}
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtShortDescription">Short Description</Label>
+                  <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => { setTxtShortDescription(event.target.value); }} />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="txtUrlPKDWeb">url PKDWeb</Label>
+                  <Input type="text" id="txtUrlPKDWeb" value={txtUrlPKDWeb} onChange={(event) => { setTxtUrlPKDWeb(event.target.value); }} />
+                </FormGroup>
+
+                {isEmpty(titleItem) === true ?
+
+                  <Button outline size="lg" color="primary" onClick={addTitle}>Add Title</Button>
+
+                  :
 
                   <React.Fragment>
 
-                    {categoryList.map((category) => {
-                      return (
-                        <React.Fragment key={category.categoryID}>
-                          {/* {getCategoryIDFromCategoryName(props.categoryName) === category.categoryID ? <option selected value={category.categoryID}>{category.category}</option> : <option key={category.categoryID} value={category.categoryID}>{category.category}</option>} */}
-                          <option key={category.categoryID} value={category.categoryID}>{category.category}</option>
-                        </React.Fragment>
-                      );
-                    })}
+                    <Button outline size="lg" color="primary" onClick={(event) => { updateTitle(false); }}>Update Title</Button>
+
+                    {isEmpty(active) === false && (active === false || active === 0) ?
+
+                      <Button outline size="lg" color="danger" onClick={(event) => { updateTitle(false); }}>Undelete/Restore Title</Button>
+
+                      : null}
+
+                    {isEmpty(active) === false && (active === true || active === 1) ?
+
+                      <Button outline size="lg" color="danger" onClick={(event) => { updateTitle(true); }}>Delete Title</Button>
+
+                      : null}
+
+                    <Button outline size="lg" color="warning" onClick={(event) => { deleteTitle(); }}>Hard Delete Title</Button>
 
                   </React.Fragment>
+                }
 
-                  : null}
+                {/* <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button> */}
 
-              </Input>
-              {isEmpty(errCategoryID) === false ? <Alert color="danger">{errCategoryID}</Alert> : null}
-            </FormGroup>
+              </span>
 
-            <FormGroup>
-              <Label for="txtManuscriptTitle">Manuscript Title</Label>
-              <Input type="text" id="txtManuscriptTitle" value={txtManuscriptTitle} onChange={(event) => { setTxtManuscriptTitle(event.target.value); }} />
-            </FormGroup>
+              : null}
 
-            <FormGroup>
-              <Label for="txtWrittenDate">Manuscript Written Date</Label>
-              <Input type="date" id="txtWrittenDate" value={txtWrittenDate} onChange={(event) => { setTxtWrittenDate(event.target.value); }} />
-            </FormGroup>
+          </button>
 
-            <FormGroup row>
-              <Col>
+        </React.Fragment>
 
-                <Label for="txtSubmissionDate">Manuscript Submission Date</Label>
-                <Input type="date" id="txtSubmissionDate" value={txtSubmissionDate} onChange={(event) => { setTxtSubmissionDate(event.target.value); }} />
-
-              </Col>
-              <Col>
-
-                <Label for="txtPublicationDate">Publication Date</Label>
-                <Input type="date" id="txtPublicationDate" value={txtPublicationDate} onChange={(event) => { setTxtPublicationDate(event.target.value); }} />
-
-              </Col>
-
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtImageName">Image Name</Label>
-              <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={() => { /*createImageName(txtTitleName);*/ setTxtImageName(createImageName(txtTitleName)); }}>Create Image Name</Button>
-              <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
-              {isEmpty(txtImageName) === false ? <img src={txtImageName} alt={txtTitleName} className="cover-thumbnail" /> : <Image size="150" className="no-image-icon" />}
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtShortDescription">Short Description</Label>
-              <Input type="textarea" id="txtShortDescription" rows={10} value={txtShortDescription} onChange={(event) => { setTxtShortDescription(event.target.value); }} />
-            </FormGroup>
-
-            <FormGroup>
-              <Label for="txtUrlPKDWeb">url PKDWeb</Label>
-              <Input type="text" id="txtUrlPKDWeb" value={txtUrlPKDWeb} onChange={(event) => { setTxtUrlPKDWeb(event.target.value); }} />
-            </FormGroup>
-
-            <ModalFooter>
-
-              {isEmpty(titleItem) === true ?
-
-                <Button outline size="lg" color="primary" onClick={addTitle}>Add Title</Button>
-
-                :
-
-                <React.Fragment>
-
-                  <Button outline size="lg" color="primary" onClick={(event) => { updateTitle(false); }}>Update Title</Button>
-
-                  {isEmpty(active) === false && (active === false || active === 0) ?
-
-                    <Button outline size="lg" color="danger" onClick={(event) => { updateTitle(false); }}>Undelete/Restore Title</Button>
-
-                    : null}
-
-                  {isEmpty(active) === false && (active === true || active === 1) ?
-
-                    <Button outline size="lg" color="danger" onClick={(event) => { updateTitle(true); }}>Delete Title</Button>
-
-                    : null}
-
-                  <Button outline size="lg" color="warning" onClick={(event) => { deleteTitle(); }}>Hard Delete Title</Button>
-
-                </React.Fragment>
-              }
-
-              <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
-
-            </ModalFooter>
-
-          </Form>
-        </ModalBody>
-      </Modal>
+        : null}
 
     </React.Fragment>
   );

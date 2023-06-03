@@ -4,15 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Alert, Container, Col, Row, NavLink, ListGroup, ListGroupItem, Button, Input, NavItem, NavbarText } from "reactstrap";
 // import { Drawer } from "@mui/material";
 import applicationSettings from "../../app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayValue, hasNonEmptyProperty, displayYear } from "shared-functions";
 import { encodeURL, decodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import { setPageURL } from "../../app/urlsSlice";
-import { addStateUserReview, updateStateUserReview } from "../../app/userReviewsSlice";
-import { updateStateChecklist } from "../../app/userSlice";
+// import { addStateUserReview, updateStateUserReview } from "../../app/userReviewsSlice";
+// import { updateStateChecklist } from "../../app/userSlice";
 
 const Checklist = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton -- 10/21/2022 MF
+  // * Functions: userReviewUpdated -- 10/21/2022 MF
 
   const componentName = "Checklist";
 
@@ -28,6 +32,9 @@ const Checklist = (props) => {
   const baseURL = applicationSettings.baseURL;
 
   const titleSortBy = useSelector(state => state.titles.titleSortBy);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
 
   // const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
@@ -123,7 +130,7 @@ const Checklist = (props) => {
   let checklistList = [...checklistListState];
 
   // * Filter by category
-  if (isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkType") === true) {
+  if (isEmpty(linkItem) === false && isEmpty(linkItem.linkType) === false) {
 
     if (linkItem.linkType === "categories") {
 
@@ -248,39 +255,36 @@ const Checklist = (props) => {
             // updateChecklistItemRead(titleID);
 
             // ! Need to update the other components after this function runs
-            // this.props.userReviewUpdated();
+            // userReviewUpdated();
 
             // const checklistListItem = checklistList.find(title => title.titleID === titleID);
 
             // const checklistListIndex = checklistList.findIndex(title => title.titleID === titleID);
 
-            if (updateChecklistMethod === "PUT") {
+            // if (updateChecklistMethod === "PUT") {
 
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime()
-              }));
+            //   dispatch(updateStateChecklist({ /* checklistListIndex: checklistListIndex, */ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: getDateTime() }));
 
-            } else if (updateChecklistMethod === "POST") {
+            // } else if (updateChecklistMethod === "POST") {
 
-              dispatch(updateStateChecklist({ /*checklistListIndex: checklistListIndex,*/ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate
-              }));
+            //   dispatch(updateStateChecklist({ /* checklistListIndex: checklistListIndex, */ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, userReviewActive: data.records[0].active, userReviewUpdateDate: data.records[0].updateDate }));
 
-            };
+            // };
 
-            // const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
+            // // const userReviewListIndex = userReviewListState.findIndex(userReview => userReview.reviewID === reviewID);
 
-            if (updateChecklistMethod === "PUT") {
+            // if (updateChecklistMethod === "PUT") {
 
-              dispatch(updateStateUserReview({ /*userReviewListIndex: userReviewListIndex,*/ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: data.records[0].updateDate }));
+            //   dispatch(updateStateUserReview({ /* userReviewListIndex: userReviewListIndex, */ reviewID: reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, updateDate: data.records[0].updateDate }));
 
-            } else if (updateChecklistMethod === "POST") {
+            // } else if (updateChecklistMethod === "POST") {
 
-              let titleItem = titleListState.filter(title => title.titleID === titleID);
-              // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
-              titleItem = titleItem[0];
+            //   let titleItem = getFirstItem(titleListState.filter(title => title.titleID === titleID));
+            //   // title: {titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate}
 
-              dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate/*, title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate }*/, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate/*, user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active }*/, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
+            //   dispatch(addStateUserReview([{ reviewID: data.records[0].reviewID, userID: data.records[0].userID, updatedBy: data.records[0].updatedBy, titleID: data.records[0].titleID, read: data.records[0].read, dateRead: data.records[0].dateRead, rating: data.records[0].rating, shortReview: data.records[0].shortReview, longReview: data.records[0].longReview, owned: data.records[0].owned, datePurchased: data.records[0].datePurchased, active: data.records[0].active, userReviewActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate /* , title: { titleID: titleItem.titleID, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, active: titleItem.active, createDate: titleItem.createDate, updateDate: titleItem.updateDate } */, titleName: titleItem.titleName, titleSort: titleItem.titleSort, titleURL: titleItem.titleURL, authorFirstName: titleItem.authorFirstName, authorLastName: titleItem.authorLastName, publicationDate: titleItem.publicationDate, imageName: titleItem.imageName, categoryID: titleItem.categoryID, shortDescription: titleItem.shortDescription, urlPKDWeb: titleItem.urlPKDWeb, titleActive: titleItem.active, titleCreateDate: titleItem.createDate, titleUpdatedDate: titleItem.updateDate /* , user: { userID: userState.userID, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, updatedBy: userState.updatedBy, admin: userState.admin, active: userState.active } */, firstName: userState.firstName, lastName: userState.lastName, email: userState.email, userUpdatedBy: userState.updatedBy, admin: userState.admin, userActive: userState.active }]));
 
-            };
+            // };
 
           } else {
 
@@ -322,27 +326,27 @@ const Checklist = (props) => {
   return (
     <React.Fragment>
 
-      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Checklist</Button> : null}
+      { /* {isEmpty(checklistLoaded) === false && checklistLoaded === true && displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Checklist</Button> : null}
 
         <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="lg">
            <ModalHeader toggle={(event) => { setModal(!modal); }}>Checklist</ModalHeader>
-           <ModalBody> */}
+           <ModalBody> */ }
 
-      {/* {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null} */}
+      { /* {isEmpty(checklistLoaded) === false && checklistLoaded === true && displayButton === true ? <Button outline className="my-2" size="sm" color="info" onClick={(event) => { setDrawer(!drawer); }}>Checklist</Button> : null} */}
 
-      {isEmpty(checklistLoaded) === false && checklistLoaded === true && props.displayButton === true ?
+      {isEmpty(checklistLoaded) === false && checklistLoaded === true && displayButton === true ?
 
         <React.Fragment>
-          {/* <NavItem> */}
-          {/* <NavItem className="mx-3 my-2">
-            <a href="#" onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></a> */}
+          { /* <NavItem> */}
+          { /* <NavItem className="mx-3 my-2">
+            <a href="#" onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></a> */ }
           <NavLink className="nav_link" onClick={(event) => { setDrawer(!drawer); }}><NavbarText>Checklist</NavbarText></NavLink>
-          {/* </NavItem> */}
+          { /* </NavItem> */}
         </React.Fragment>
 
         : null}
 
-      {/* <Drawer anchor="right" open={drawer} onClose={(event) => { setDrawer(!drawer); }}> */}
+      { /* <Drawer anchor="right" open={drawer} onClose={(event) => { setDrawer(!drawer); }}> */}
 
       <Container className="checklist-drawer mx-3">
         <Row className="mb-2">
@@ -373,14 +377,14 @@ const Checklist = (props) => {
           </Col>
         </Row>
 
-        {/* <ListGroup flush> */}
+        { /* <ListGroup flush> */}
 
-        {isEmpty(linkItem) === false && hasNonEmptyProperty(linkItem, "linkTypeName") === true ?
+        {isEmpty(linkItem) === false && isEmpty(linkItem.linkTypeName) === false ?
 
           <Row className="justify-content-center">
             <Col xs="8">
 
-              {/* <ListGroupItem> */}
+              { /* <ListGroupItem> */}
 
               <h6 className="text-center mb-2">{linkItem.linkTypeName}
                 <br />
@@ -403,7 +407,7 @@ const Checklist = (props) => {
 
               </h6>
 
-              {/* </ListGroupItem> */}
+              { /* </ListGroupItem> */}
 
             </Col>
           </Row>
@@ -417,18 +421,18 @@ const Checklist = (props) => {
             {checklistList.map((title) => {
 
               return (
-                <Row /*ListGroupItem*/ key={title.titleID}>
+                <Row key={title.titleID}>
                   <Col className="mx-3">
 
-                    {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /*value={title.read}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
+                    {readOrOwned === "read" ? <Input type="checkbox" id={"cbxRead" + title.titleID} checked={title.read}  /* value={title.read} */ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, !title.read, title.owned); }} /> : null}
 
-                    {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /*value={title.owned}*/ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
+                    {readOrOwned === "owned" ? <Input type="checkbox" id={"cbxOwn" + title.titleID} checked={title.owned} /* value={title.owned} */ onChange={(event) => { updateChecklist(title.titleID, title.reviewID, title.read, !title.owned); }} /> : null}
 
                     <p><Link to={title.titleURL} onClick={(event) => { event.preventDefault(); redirectPage(title.titleURL); }}>{title.titleName}</Link>
                       {isEmpty(title.publicationDate) === false ? <span className="ms-1 smaller-text">({displayYear(title.publicationDate)})</span> : null}
                     </p>
 
-                    {/* </ListGroupItem> */}
+                    { /* </ListGroupItem> */}
 
                   </Col>
                 </Row>
@@ -440,18 +444,18 @@ const Checklist = (props) => {
 
           : null}
 
-        {/* </ListGroup> */}
+        { /* </ListGroup> */}
 
       </Container>
 
-      {/* </Drawer> */}
+      { /* </Drawer> */}
 
-      {/* <ModalFooter>
+      { /* <ModalFooter>
     
         <Button outline size="lg" color="secondary" onClick={(event) => { setModal(!modal); }}>Cancel</Button>
     </ModalFooter>
     </ModalBody>
-    </Modal> */}
+    </Modal> */ }
 
     </React.Fragment>
   );

@@ -5,12 +5,15 @@ import { Plus } from 'react-bootstrap-icons';
 import applicationSettings from "../../app/environment";
 import { isEmpty, getDateTime, displayValue, formatTrim } from "shared-functions";
 import { encodeURL, addErrorLog } from "../../utilities/ApplicationFunctions";
-import { addStateCategory } from "../../app/categoriesSlice";
-import { addStateURL } from "../../app/urlsSlice";
-
-// ! The coding on this component is not finished. -- 03/06/2021 MF
+// import { addStateCategory } from "../../app/categoriesSlice";
+// import { addStateURL } from "../../app/urlsSlice";
 
 const EditCategory = (props) => {
+
+  // ! The coding on this component is not finished. -- 03/06/2021 MF
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: displayButton, displayIcon -- 10/21/2022 MF
 
   const componentName = "EditCategory";
 
@@ -25,6 +28,9 @@ const EditCategory = (props) => {
   const baseURL = applicationSettings.baseURL;
 
   const applicationAllowUserInteractions = useSelector(state => state.applicationSettings.applicationAllowUserInteractions);
+
+  let displayButton = isEmpty(props) === false && isEmpty(props.displayButton) === false ? props.displayButton : false;
+  let displayIcon = isEmpty(props) === false && isEmpty(props.displayIcon) === false ? props.displayIcon : false;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,6 +56,61 @@ const EditCategory = (props) => {
   // const [category, setCategory] = useState(null);
   // const [sortID, setSortID] = useState(null);
   const [active, setActive] = useState(null);
+
+
+  useEffect(() => {
+
+    if (isEmpty(categoryRecordAdded) === false && categoryRecordAdded === true) {
+
+      clearMessages();
+      setCategoryRecordAdded(null);
+
+      setTxtCategory("");
+
+      setModal(!modal);
+
+    };
+
+  }, [categoryRecordAdded]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(categoryRecordUpdated) === false && categoryRecordUpdated === true) {
+
+      clearMessages();
+      setCategoryRecordUpdated(null);
+
+      setTxtCategory("");
+
+      setModal(!modal);
+
+    };
+
+    if (isEmpty(categoryRecordDeleted) === false && categoryRecordDeleted === true) {
+
+      clearMessages();
+      setCategoryRecordDeleted(null);
+
+      setTxtCategory("");
+
+      setModal(!modal);
+
+    };
+
+  }, [categoryRecordUpdated, categoryRecordDeleted]);
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      // return <Redirect to="/" />;
+      setModal(false);
+
+    };
+
+  }, [admin]);
 
 
   const addCategory = () => {
@@ -149,12 +210,12 @@ const EditCategory = (props) => {
                 // setSortID(data.records[0].sortID);
                 setActive(data.records[0].active);
 
-                // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
-                dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, categoryActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
+                // // ? Would still work if the createDate and updateDate were left out? -- 03/06/2021 MF
+                // dispatch(addStateCategory([{ categoryID: data.records[0].categoryID, category: data.records[0].category, sortID: data.records[0].sortID, active: data.records[0].active, categoryActive: data.records[0].active, createDate: data.records[0].createDate, updateDate: data.records[0].updateDate }]));
 
-                // ? Add to local storage also? -- 03/06/2021 MF
+                // // ? Add to local storage also? -- 03/06/2021 MF
 
-                dispatch(addStateURL([{ linkName: encodeURL(data.records[0].category), linkType: "category", linkID: data.records[0].categoryID }]));
+                // dispatch(addStateURL([{ linkName: encodeURL(data.records[0].category), linkType: "category", linkID: data.records[0].categoryID }]));
 
               } else {
 
@@ -196,67 +257,12 @@ const EditCategory = (props) => {
   };
 
 
-  useEffect(() => {
-
-    if (isEmpty(categoryRecordAdded) === false && categoryRecordAdded === true) {
-
-      clearMessages();
-      setCategoryRecordAdded(null);
-
-      setTxtCategory("");
-
-      setModal(!modal);
-
-    };
-
-  }, [categoryRecordAdded]);
-
-
-  useEffect(() => {
-
-    if (isEmpty(categoryRecordUpdated) === false && categoryRecordUpdated === true) {
-
-      clearMessages();
-      setCategoryRecordUpdated(null);
-
-      setTxtCategory("");
-
-      setModal(!modal);
-
-    };
-
-    if (isEmpty(categoryRecordDeleted) === false && categoryRecordDeleted === true) {
-
-      clearMessages();
-      setCategoryRecordDeleted(null);
-
-      setTxtCategory("");
-
-      setModal(!modal);
-
-    };
-
-  }, [categoryRecordUpdated, categoryRecordDeleted]);
-
-
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      // return <Redirect to="/" />;
-      setModal(false);
-
-    };
-
-  }, [admin]);
-
-
   return (
     <React.Fragment>
 
-      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Category</Button></span> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && displayButton === true ? <span className="ps-3"><Button outline className="my-2" size="sm" color="info" onClick={(event) => { setModal(!modal); }}>Add Category</Button></span> : null}
 
-      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && props.displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
+      {applicationAllowUserInteractions === true && isEmpty(admin) === false && admin === true && displayIcon === true ? <Plus className="add-edit-icon" onClick={(event) => { setModal(!modal); }} /> : null}
 
       <Modal isOpen={modal} toggle={(event) => { setModal(!modal); }} size="md">
         <ModalHeader toggle={(event) => { setModal(!modal); }}>Add Category</ModalHeader>

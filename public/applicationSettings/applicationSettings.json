@@ -1,10 +1,6 @@
 {
-    "transactionSuccess": true,
-    "errorOccurred": false,
-    "message": "Offline Application Settings data used.",
     "siteName": "Philip K. Dick",
     "applicationName": "PKD and Me",
-    "applicationOffline": false,
     "electronicOnly": false,
     "electronicOnlyMessage": "You are viewing only electronic editions.",
     "physicalOnly": false,

@@ -1,17 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isEmpty, getDateTime, displayValue, hasNonEmptyProperty } from "shared-functions";
+import { isEmpty, getDateTime, hasNonEmptyProperty } from "shared-functions";
 
 const componentName = "applicationSettingsSlice";
 
 const initialState = {
-  // applicationVersion: "",
-  // copyrightYear: "",
+  applicationVersion: "",
+  copyrightYear: "",
   computerLog: {},
   locationLogged: false,
   hostname: "",
   profileType: "",
-  // API_URL: "",
-  // baseURL: "",
+  baseURL: "",
   tagManagerArgsgtmId: "",
   siteName: "",
   applicationName: "",
@@ -30,7 +29,6 @@ const initialState = {
   applicationSettingsLoaded: false,
   applicationSettingsJsonLoaded: false,
   menuSettings: {},
-  linkItem: {},
   informationMessage: "",
   informationMessageVisible: false,
   successMessage: "",
@@ -46,128 +44,19 @@ const applicationSettingsSlice = createSlice({
   name: "applicationSettings",
   initialState,
   reducers: {
-    // setApplicationVersion(state, action) {
+    setApplicationVersion(state, action) {
 
-    //   state.applicationVersion = action.payload;
+      state.applicationVersion = action.payload;
 
-    // },
-    // setCopyrightYear(state, action) {
+    },
+    setCopyrightYear(state, action) {
 
-    //   state.copyrightYear = action.payload;
+      state.copyrightYear = action.payload;
 
-    // },
+    },
     setLocationLogged(state, action) {
 
       state.locationLogged = action.payload;
-
-    },
-    addComputerLog(state, action) {
-
-      // state.computerLog = action.payload;
-
-      const computerLogItem = action.payload;
-
-      if (typeof computerLogItem === "object") {
-
-        // * From https://geolocation-db.com/json/ -- 09/27/2021 MF
-        if (hasNonEmptyProperty(computerLogItem, "country_code") === true) {
-
-          state.computerLog.countryCode = computerLogItem.country_code;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "country_name") === true) {
-
-          state.computerLog.countryName = computerLogItem.country_name;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "city") === true) {
-
-          state.computerLog.city = computerLogItem.city;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "postal") === true) {
-
-          state.computerLog.postal = computerLogItem.postal;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "latitude") === true) {
-
-          state.computerLog.latitude = computerLogItem.latitude;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "longitude") === true) {
-
-          state.computerLog.longitude = computerLogItem.longitude;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "IPv4") === true) {
-
-          state.computerLog.ipAddress = computerLogItem.IPv4;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "state") === true) {
-
-          state.computerLog.state = computerLogItem.state;
-
-        };
-
-        // * From https://api.db-ip.com/v2/free/self -- 09/27/2021 MF
-        if (hasNonEmptyProperty(computerLogItem, "ipAddress") === true) {
-
-          state.computerLog.ipAddress = computerLogItem.ipAddress;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "continentCode") === true) {
-
-          state.computerLog.continentCode = computerLogItem.continentCode;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "continentName") === true) {
-
-          state.computerLog.continentName = computerLogItem.continentName;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "countryCode") === true) {
-
-          state.computerLog.countryCode = computerLogItem.countryCode;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "countryName") === true) {
-
-          state.computerLog.countryName = computerLogItem.countryName;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "stateProvCode") === true) {
-
-          state.computerLog.stateProvCode = computerLogItem.stateProvCode;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "stateProv") === true) {
-
-          state.computerLog.state = computerLogItem.state;
-
-        };
-
-        if (hasNonEmptyProperty(computerLogItem, "city") === true) {
-
-          state.computerLog.city = computerLogItem.city;
-
-        };
-
-      };
 
     },
     setHostname(state, action) {
@@ -180,16 +69,11 @@ const applicationSettingsSlice = createSlice({
       state.profileType = action.payload;
 
     },
-    // setAPI_URL(state, action) {
+    setBaseURL(state, action) {
 
-    //     state.API_URL = action.payload;
+      state.baseURL = action.payload;
 
-    // },
-    // setBaseURL(state, action) {
-
-    //       state.baseURL = action.payload;
-
-    //   },
+    },
     setTagManagerArgsgtmId(state, action) {
 
       state.tagManagerArgsgtmId = action.payload;
@@ -280,13 +164,7 @@ const applicationSettingsSlice = createSlice({
       state.menuSettings = action.payload;
 
     },
-    setLinkItem(state, action) {
-
-      state.linkItem = action.payload;
-
-    },
     addInformationMessage(state, action) {
-
 
       if (isEmpty(action.payload) === false) {
 
@@ -325,11 +203,9 @@ const applicationSettingsSlice = createSlice({
 
       if (isEmpty(action.payload) === false) {
 
-
         // * Make sure that the new phrase isn't in the existing success message. -- 09/27/2021 MF
         // if (state.successMessage !== action.payload) {
         if (state.successMessage.includes(action.payload) === false) {
-
 
           if (isEmpty(state.successMessage) === false) {
 
@@ -361,14 +237,11 @@ const applicationSettingsSlice = createSlice({
     },
     addWarningMessage(state, action) {
 
-
       if (isEmpty(action.payload) === false) {
-
 
         // * Make sure that the new phrase isn't in the existing warning message. -- 09/27/2021 MF
         // if (state.warningMessage !== action.payload) {
         if (state.warningMessage.includes(action.payload) === false) {
-
 
           if (isEmpty(state.warningMessage) === false) {
 
@@ -400,14 +273,11 @@ const applicationSettingsSlice = createSlice({
     },
     addErrorMessage(state, action) {
 
-
       if (isEmpty(action.payload) === false) {
-
 
         // * Make sure that the new phrase isn't in the existing error message. -- 09/27/2021 MF
         // if (state.errorMessage !== action.payload) {
         if (state.errorMessage.includes(action.payload) === false) {
-
 
           if (isEmpty(state.errorMessage) === false) {
 
@@ -458,6 +328,6 @@ const applicationSettingsSlice = createSlice({
   }
 });
 
-export const { /* setApplicationVersion, setCopyrightYear, */ setLocationLogged, addComputerLog, setHostname, setProfileType, /*setAPI_URL, setBaseURL,*/ setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, setLinkItem, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
+export const { setApplicationVersion, setCopyrightYear, setLocationLogged, setHostname, setProfileType, setBaseURL, setTagManagerArgsgtmId, setSiteName, setApplicationName, setMetaDescription, setDefaultPageComponent, setRouterBaseName, setApplicationOffline, setElectronicOnly, setUserElectronicOnly, setElectronicOnlyMessage, setPhysicalOnly, setUserPhysicalOnly, setPhysicalOnlyMessage, setApplicationAllowUserInteractions, setRequireUserLogin, setApplicationSettingsLoaded, setApplicationSettingsJsonLoaded, setMenuSettings, addInformationMessage, addSuccessMessage, addWarningMessage, addErrorMessage, clearMessages, setShowMessages } = applicationSettingsSlice.actions;
 
 export default applicationSettingsSlice.reducer;

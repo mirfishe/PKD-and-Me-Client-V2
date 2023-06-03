@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, FormGroup, Label, Input, Alert, Button } from "reactstrap";
-import { isEmpty, getDateTime, displayValue, isNonEmptyArray } from "shared-functions";
-import { encodeURL, toTitleCase, addErrorLog } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
+import { encodeURL, toTitleCase } from "../../utilities/ApplicationFunctions";
 
 const FormatPost = () => {
 
@@ -13,6 +13,9 @@ const FormatPost = () => {
 
   // const sessionToken = useSelector(state => state.user.sessionToken);
   const admin = useSelector(state => state.user.admin);
+
+  const siteName = useSelector(state => state.applicationSettings.siteName);
+  const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
   const [txtArticleTitle, setTxtArticleTitle] = useState("");
   const [txtArticleURL, setTxtArticleURL] = useState("");
@@ -28,6 +31,19 @@ const FormatPost = () => {
 
   // const [formattedPost, setFormattedPost] = useState("");
   const [formattedPosts, setFormattedPosts] = useState([]);
+
+  document.title = "Format Social Media Post | " + applicationName + " | " + siteName;
+
+
+  useEffect(() => {
+
+    if (admin !== true) {
+
+      navigate("/");
+
+    };
+
+  }, [admin]);
 
 
   const formatPost = () => {
@@ -128,17 +144,6 @@ const FormatPost = () => {
   };
 
 
-  useEffect(() => {
-
-    if (admin !== true) {
-
-      navigate("/");
-
-    };
-
-  }, [admin]);
-
-
   return (
     <Container className="mt-4">
       <Row>
@@ -209,7 +214,7 @@ const FormatPost = () => {
 
             {/* <FormGroup className="text-center">
                             {isEmpty(formattedPost) === false ? <Alert color="info">{formattedPost}</Alert> : null}
-                        </FormGroup> */}
+                        </FormGroup> */ }
 
             {isNonEmptyArray(formattedPosts) === true ?
 

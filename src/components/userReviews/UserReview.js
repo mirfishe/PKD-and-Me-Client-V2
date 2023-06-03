@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Container, Col, Row, Alert } from "reactstrap";
 // import { Rating } from "@mui/lab/";
-import { isEmpty, getDateTime, isNonEmptyArray, displayValue, displayDate } from "shared-functions";
-// import AddUserReview from "../userReviews/AddUserReview";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem } from "shared-functions";
 import EditUserReview from "../userReviews/EditUserReview";
 
 const UserReview = (props) => {
+
+  // * Available props: -- 10/21/2022 MF
+  // * Properties: titleID, userReviewUpdated -- 10/21/2022 MF
+  // * Functions: redirectPage, userReviewUpdated -- 10/21/2022 MF
 
   const componentName = "UserReview";
 
@@ -14,54 +17,68 @@ const UserReview = (props) => {
   const admin = useSelector(state => state.user.admin);
   const userID = useSelector(state => state.user.userID);
 
-  // const [userReviewMessage, setUserReviewMessage] = useState("");
-  const [errUserReviewMessage, setErrUserReviewMessage] = useState("");
-  // const [userReviewResultsFound, setUserReviewResultsFound] = useState(null);
+  const arrayUserReviews = useSelector(state => state.userReviews.arrayUserReviews);
 
-  // const [userReviewDisplayCount, setUserReviewDisplayCount] = useState(0);
+  let titleID = isEmpty(props) === false && isEmpty(props.titleID) === false ? props.titleID : null;
 
-  const userReviewsState = useSelector(state => state.userReviews.arrayUserReviews);
+  // let userReviewUpdated = isEmpty(props) === false && isEmpty(props.userReviewUpdated) === false ? props.userReviewUpdated : noFunctionAvailable;
+  // let redirectPage = isEmpty(props) === false && isEmpty(props.redirectPage) === false ? props.redirectPage : noFunctionAvailable;
 
-  let userReviews = [...userReviewsState];
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messageVisible, setMessageVisible] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const clearMessages = () => { setMessage(""); setErrorMessage(""); setMessageVisible(false); setErrorMessageVisible(false); };
+  const addMessage = (message) => { setMessage(message); setMessageVisible(true); };
+  const addErrorMessage = (message) => { setErrorMessage(message); setErrorMessageVisible(true); };
+  const onDismissMessage = () => setMessageVisible(false);
+  const onDismissErrorMessage = () => setErrorMessageVisible(false);
 
-  if (isEmpty(props.titleID) === false && !isNaN(props.titleID)) {
-
-    userReviews = userReviews.filter(userReview => userReview.titleID === props.titleID);
-
-  };
-
-
-  if (isEmpty(admin) === false && admin === true) {
-
-    userReviews = [...userReviews];
-
-  } else {
-
-    userReviews = userReviews.filter(userReview => userReview.userReview === true);
-
-  };
-
-
-  // * Sort the list by createDate. -- 03/06/2021 MF
-  userReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
-
-  // * Sort the list by updateDate. -- 03/06/2021 MF
-  // userReviews.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
-
-  let userReviewItem = {};
-
-  if (isEmpty(userID) === false && !isNaN(userID)) {
-
-    userReviewItem = userReviews.filter(userReview => userReview.userID === userID);
-    userReviewItem = userReviewItem[0];
-
-  };
-
+  const [userReviews, setUserReviews] = useState([]);
 
 
   useEffect(() => {
 
-    if (userReviews.length > 0) {
+    if (isEmpty(titleID) === false && !isNaN(titleID) === true) {
+
+      let newUserReviews = [...arrayUserReviews];
+
+      newUserReviews = newUserReviews.filter(userReview => userReview.titleID === titleID);
+
+      if (isEmpty(admin) === false && admin === true) {
+
+        // newUserReviews = [...newUserReviews];
+
+      } else {
+
+        newUserReviews = newUserReviews.filter(userReview => userReview.userReviewActive === true || userReview.userReviewActive === 1);
+
+      };
+
+      // * Sort the list by createDate. -- 03/06/2021 MF
+      newUserReviews.sort((a, b) => (a.createDate > b.createDate) ? 1 : -1);
+
+      // * Sort the list by updateDate. -- 03/06/2021 MF
+      // newUserReviews.sort((a, b) => (a.updateDate > b.updateDate) ? 1 : -1);
+
+      let userReviewItem = {};
+
+      if (isEmpty(userID) === false && !isNaN(userID) === true) {
+
+        userReviewItem = getFirstItem(newUserReviews.filter(userReview => userReview.userID === userID));
+
+      };
+
+      setUserReviews(newUserReviews);
+
+    };
+
+  }, [titleID, arrayUserReviews]);
+
+
+  useEffect(() => {
+
+    if (isEmpty(userReviews) === false) {
 
       let displayCount = 0;
 
@@ -79,20 +96,19 @@ const UserReview = (props) => {
 
       };
 
-
       if (displayCount > 0) {
 
-        setErrUserReviewMessage("");
+        clearMessages("");
 
       } else {
 
-        setErrUserReviewMessage("No user reviews found.");
+        addErrorMessage("No user reviews found.");
 
       };
 
     } else {
 
-      setErrUserReviewMessage("No user reviews found.");
+      addErrorMessage("No user reviews found.");
 
     };
 
@@ -103,25 +119,17 @@ const UserReview = (props) => {
     <Container className="my-4">
 
       {/* // * This is not filtering correctly if there are reviews with no text or ratings in them; only read and dateRead reviews
-            {userReviews.length > 0 ? */}
+            {isEmpty(userReviews) === false ? */ }
 
       <Row>
         <Col xs="12">
 
-          <h5 className="text-center">User Reviews
-            {/* {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <AddUserReview titleID={props.titleID} displayButton={true} /> : null} */}
-            {isEmpty(sessionToken) === false && (isEmpty(userReviewItem) === true) ? <EditUserReview titleID={props.titleID} displayButton={true} /> : null}
-          </h5>
+          <h5 className="text-center">User Reviews</h5>
 
         </Col>
       </Row>
-      <Row>
-        <Col className="text-center" xs="12">
 
-          {isEmpty(errUserReviewMessage) === false ? <Alert color="danger">{errUserReviewMessage}</Alert> : null}
-
-        </Col>
-      </Row>
+      <Alert color="danger" isOpen={errorMessageVisible} toggle={onDismissErrorMessage}>{errorMessage}</Alert>
 
       {/* : null} */}
 
@@ -149,7 +157,7 @@ const UserReview = (props) => {
 
                 {isEmpty(userReview.rating) === false || isEmpty(userReview.shortReview) === false || isEmpty(userReview.longReview) === false ?
 
-                  <Col className="my-4" xs="12" key={userReview.reviewID}>
+                  <Col className="my-4" xs="12">
 
                     {isEmpty(activeString) === false ?
 
@@ -168,9 +176,7 @@ const UserReview = (props) => {
 
                         {isEmpty(userReview.shortReview) === false ?
 
-                          <h6>{userReview.shortReview}
-                            {/* {props.userID === userReview.userID || props.isAdmin === true ? <UpdateUserReview userID={props.userID} isAdmin={props.isAdmin} sessionToken={props.sessionToken} titleID={props.titleID} userReviewUpdated={props.userReviewUpdated} reviewID={userReview.reviewID} displayIcon={true} /> : null} */}
-                          </h6>
+                          <h6>{userReview.shortReview}</h6>
 
                           : null}
 
@@ -203,7 +209,7 @@ const UserReview = (props) => {
 
                         {isEmpty(sessionToken) === false && ((isEmpty(userID) === false && userID === userReview.userID) || (isEmpty(admin) === false && admin === true)) ?
 
-                          <EditUserReview reviewID={userReview.reviewID} displayButton={true} />
+                          <EditUserReview reviewID={userReview.reviewID} />
 
                           : null}
 
