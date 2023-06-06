@@ -470,7 +470,7 @@ const EditUserReview = (props) => {
             // // * Update the title ratings. -- 03/06/2021 MF
             // dispatch(updateStateTitleRating({/* titleItemIndex: titleItemIndex, */ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === dataRecord.titleID);
+            // // let checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === dataRecord.titleID);
 
             // if (dataRecord.active === true || dataRecord.active === 1) {
 
@@ -691,7 +691,7 @@ const EditUserReview = (props) => {
 
             // };
 
-            // const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === reviewID);
+            // let userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === reviewID);
 
             // // * Get all reviews for the title. -- 03/06/2021 MF
             // // ? Get the latest from state? -- 03/06/2021 MF
@@ -741,7 +741,7 @@ const EditUserReview = (props) => {
             // // * Update the title ratings. -- 03/06/2021 MF
             // dispatch(updateStateTitleRating({/* titleItemIndex: titleItemIndex, */ titleID: titleItem.titleID, userReviewCount: userReviewCount, userReviewSum: userReviewSum, userReviewAverage: userReviewAverage }));
 
-            // // const checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /* dataRecord. */ titleID);
+            // // let checklistListIndex = checklistListState.findIndex(userReview => userReview.titleID === /* dataRecord. */ titleID);
 
             // if (dataRecord.active === true || dataRecord.active === 1) {
 
@@ -842,7 +842,7 @@ const EditUserReview = (props) => {
               // // * Recalculate ratings. -- 03/06/2021 MF
               // let userReviews = userReviewListState.filter(userReview => userReview.titleID === userReviewItem.titleID && (userReview.userReviewActive === true || userReview.userReviewActive === 1) && isEmpty(rating) === false);
 
-              // const userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === data.reviewID);
+              // let userReviewsIndex = userReviews.findIndex(userReview => userReview.reviewID === data.reviewID);
 
               // // * Get all reviews for the title. -- 03/06/2021 MF
               // // ? Get the latest from state? -- 03/06/2021 MF

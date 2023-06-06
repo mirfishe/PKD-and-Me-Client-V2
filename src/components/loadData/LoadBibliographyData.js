@@ -66,7 +66,7 @@ function LoadBibliographyData() {
 
       //     if (isEmpty(localStorage.getItem("arrayCategories")) === false) {
 
-      //       const localStorageArrayCategories = localStorage.getItem("arrayCategories");
+      //       let localStorageArrayCategories = localStorage.getItem("arrayCategories");
       //       loadDataStore(JSON.parse(localStorageArrayCategories), "category");
 
       //       categoriesDataLocalStorage = true;
@@ -85,7 +85,7 @@ function LoadBibliographyData() {
 
       //     if (isEmpty(localStorage.getItem("arrayMedia")) === false) {
 
-      //       const localStorageArrayMedia = localStorage.getItem("arrayMedia");
+      //       let localStorageArrayMedia = localStorage.getItem("arrayMedia");
       //       loadDataStore(JSON.parse(localStorageArrayMedia), "media");
 
       //       mediaDataLocalStorage = true;
@@ -104,7 +104,7 @@ function LoadBibliographyData() {
 
       //     if (isEmpty(localStorage.getItem("arrayTitles")) === false) {
 
-      //       const localStorageArrayTitles = localStorage.getItem("arrayTitles");
+      //       let localStorageArrayTitles = localStorage.getItem("arrayTitles");
       //       loadDataStore(JSON.parse(localStorageArrayTitles), "title");
 
       //       titlesDataLocalStorage = true;
@@ -123,7 +123,7 @@ function LoadBibliographyData() {
 
       //   if (isEmpty(localStorage.getItem("arrayEditions")) === false) {
 
-      //       const localStorageArrayEditions = localStorage.getItem("arrayEditions");
+      //       let localStorageArrayEditions = localStorage.getItem("arrayEditions");
       //       loadDataStore(JSON.parse(localStorageArrayEditions), "edition");
 
       //       editionsDataLocalStorage = true;

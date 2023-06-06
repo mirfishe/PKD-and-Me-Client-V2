@@ -52,7 +52,7 @@ const userReviewsSlice = createSlice({
     // },
     // updateStateUserReview(state, action) {
 
-    //   const userReviewItem = action.payload;
+    //   let userReviewItem = action.payload;
     //   let userReviewListIndex;
 
     //   if (typeof userReviewItem === "object") {
@@ -364,11 +364,11 @@ const userReviewsSlice = createSlice({
 
     //   // let userReviewItemIndex = action.payload;
     //   let userReviewListIndex;
-    //   const reviewID = action.payload;
+    //   let reviewID = action.payload;
 
     //   // ? This doesn't work because state.arrayUserReviews isn't stored as an array of objects?
     //   // ? Need to copy the array?
-    //   // const existingUserReviewIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
+    //   // let existingUserReviewIndex = state.arrayUserReviews.findIndex(userReview => userReview.reviewID === reviewID);
 
     //   if (isEmpty(reviewID) === false) {
 
@@ -416,7 +416,7 @@ const userReviewsSlice = createSlice({
     // },
     // updateStateUserReviewsRatings(state, action) {
 
-    //     const userReviewRatingItem = action.payload;
+    //     let userReviewRatingItem = action.payload;
 
     //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].titleID = userReviewRatingItem.titleID;
     //     state.arrayUserReviewsRatings[userReviewRatingItem.userReviewItemIndex].userReviewCount = userReviewRatingItem.userReviewCount;
@@ -426,12 +426,12 @@ const userReviewsSlice = createSlice({
     // },
     // deleteStateUserReviewsRatings(state, action) {
 
-    //     const userReviewItemIndex = action.payload;
-    //     // const reviewID = action.payload;
+    //     let userReviewItemIndex = action.payload;
+    //     // let reviewID = action.payload;
 
     //     // This doesn't work because state.arrayUserReviewsRatings isn't stored as an array of objects?
     //     // Need to copy the array?
-    //     // const existingUserReviewIndex = state.arrayUserReviewsRatings.findIndex(userReview => userReview.reviewID === reviewID);
+    //     // let existingUserReviewIndex = state.arrayUserReviewsRatings.findIndex(userReview => userReview.reviewID === reviewID);
 
     //     state.arrayUserReviewsRatings.splice(userReviewItemIndex, 1);
 

@@ -48,7 +48,7 @@ const mediaSlice = createSlice({
     // },
     // updateStateMedia(state, action) {
 
-    //   const mediaItem = action.payload;
+    //   let mediaItem = action.payload;
     //   let mediaItemIndex;
 
     //   if (typeof mediaItem === "object") {
@@ -95,13 +95,13 @@ const mediaSlice = createSlice({
     // },
     // deleteStateMedia(state, action) {
 
-    //   // const mediaItemIndex = action.payload;
+    //   // let mediaItemIndex = action.payload;
     //   let mediaListIndex;
-    //   const mediaID = action.payload;
+    //   let mediaID = action.payload;
 
     //   // ? This doesn't work because state.arrayMedia isn't stored as an array of objects?
     //   // ? Need to copy the array?
-    //   // const existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
+    //   // let existingMediaIndex = state.arrayMedia.findIndex(media => media.mediaID === mediaID);
 
     //   if (isEmpty(mediaID) === false) {
 

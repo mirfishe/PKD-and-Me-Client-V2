@@ -48,7 +48,7 @@ const categoriesSlice = createSlice({
     // },
     // updateStateCategory(state, action) {
 
-    //   const categoryItem = action.payload;
+    //   let categoryItem = action.payload;
     //   let categoryItemIndex;
 
     //   if (typeof categoryItem === "object") {
@@ -90,13 +90,13 @@ const categoriesSlice = createSlice({
     // },
     // deleteStateCategory(state, action) {
 
-    //   // const categoryItemIndex = action.payload;
+    //   // let categoryItemIndex = action.payload;
     //   let categoryListIndex;
-    //   const categoryID = action.payload;
+    //   let categoryID = action.payload;
 
     //   // ? This doesn't work because state.arrayCategories isn't stored as an array of objects?
     //   // ? Need to copy the array?
-    //   // const existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
+    //   // let existingCategoryIndex = state.arrayCategories.findIndex(category => category.categoryID === categoryID);
 
     //   if (isEmpty(categoryID) === false) {
 

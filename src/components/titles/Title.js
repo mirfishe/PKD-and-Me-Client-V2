@@ -132,7 +132,7 @@ const Title = (props) => {
 
       // * If titleParam is not a number, then it's the title name
       newTitleList = arrayTitles.filter(title => title.titleURL === titleParam);
-      const title = arrayTitles.find(title => title.titleURL === titleParam);
+      let title = arrayTitles.find(title => title.titleURL === titleParam);
 
       if (isEmpty(title) === false) {
 

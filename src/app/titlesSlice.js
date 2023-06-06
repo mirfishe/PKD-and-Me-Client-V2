@@ -49,7 +49,7 @@ const titlesSlice = createSlice({
     // },
     // updateStateTitle(state, action) {
 
-    //   const titleItem = action.payload;
+    //   let titleItem = action.payload;
     //   let titleItemIndex;
 
     //   if (typeof titleItem === "object") {
@@ -228,13 +228,13 @@ const titlesSlice = createSlice({
     // },
     // deleteStateTitle(state, action) {
 
-    //   // const titleItemIndex = action.payload;
+    //   // let titleItemIndex = action.payload;
     //   let titleListIndex;
-    //   const titleID = action.payload;
+    //   let titleID = action.payload;
 
     //   // ? This doesn't work because state.arrayTitles isn't stored as an array of objects?
     //   // ? Need to copy the array?
-    //   // const existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
+    //   // let existingTitleIndex = state.arrayTitles.findIndex(title => title.titleID === titleID);
 
     //   if (isEmpty(titleID) === false) {
 
@@ -247,7 +247,7 @@ const titlesSlice = createSlice({
     // },
     // updateStateTitleRating(state, action) {
 
-    //   const titleItem = action.payload;
+    //   let titleItem = action.payload;
     //   let titleItemIndex;
 
     //   if (typeof titleItem === "object") {

@@ -163,7 +163,7 @@ const userSlice = createSlice({
     // },
     // updateStateChecklist(state, action) {
 
-    //   const checklistItem = action.payload;
+    //   let checklistItem = action.payload;
     //   let checklistListIndex;
 
     //   if (typeof checklistItem === "object") {

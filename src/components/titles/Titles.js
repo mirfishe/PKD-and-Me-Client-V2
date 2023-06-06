@@ -434,7 +434,7 @@ const Titles = (props) => {
 
             };
 
-            const editionsAvailable = editionList.reduce((titleCount, edition) => edition.titleID === title.titleID ? ++titleCount : titleCount, 0);
+            let editionsAvailable = editionList.reduce((titleCount, edition) => edition.titleID === title.titleID ? ++titleCount : titleCount, 0);
 
             return (
               <Col key={title.titleID} xs="4" className="mb-4">

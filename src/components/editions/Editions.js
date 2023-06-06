@@ -93,7 +93,7 @@ const Editions = (props) => {
     } else if (isEmpty(mediaParam) === false) {
 
       // * If mediaParam is not a number, then it's the media name
-      const media = arrayMedia.find(media => media.media === decodeURL(mediaParam));
+      let media = arrayMedia.find(media => media.media === decodeURL(mediaParam));
 
       if (isEmpty(media) === false) {
 

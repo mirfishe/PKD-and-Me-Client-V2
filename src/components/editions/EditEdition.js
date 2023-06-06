@@ -85,7 +85,7 @@ const EditEdition = (props) => {
   const [ASINResultsFound, setASINResultsFound] = useState(null);
 
   let mediaList = mediaListState.filter(media => media.active === true || media.active === 1);
-  // const mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
+  // let mediaList = mediaListState.filter(media => media.mediaActive === true || media.mediaActive === 1);
 
   // mediaList.sort((a, b) => (a.sortID > b.sortID) ? 1 : -1);
   // * Sort the list alphabetically instead of by sortID

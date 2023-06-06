@@ -600,7 +600,7 @@ const EditTitle = (props) => {
   //   if (isEmpty(categoryName) === false) {
 
   //     // * Could use a find here also. -- 03/06/2021 MF
-  //     const categoryProps = categoryList.filter(category => category.category === categoryName);
+  //     let categoryProps = categoryList.filter(category => category.category === categoryName);
 
   //     if (isNaN(categoryProps[0].categoryID) === false) {
 
