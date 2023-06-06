@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Container, Col, Row } from "reactstrap";
-import Parse from "html-react-parser";
 import { isEmpty, getDateTime, isNonEmptyArray, addErrorLog } from "shared-functions";
-import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
+import { encodeURL, convertBitTrueFalse, parse } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {
 
@@ -164,7 +163,7 @@ const FromTheHomeopape = (props) => {
 
                     {/* <a href={itemLink} target="_blank" rel="noopener noreferrer nofollow"><div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /></a> */}
 
-                    <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{Parse(homeopapeItem.itemTitle)}</a><br />
+                    <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{parse(homeopapeItem.itemTitle)}</a><br />
 
                     ({homeopapeItem.itemPubDate.substring(0, 10)}) {homeopapeItem.itemContentSnippet}
 

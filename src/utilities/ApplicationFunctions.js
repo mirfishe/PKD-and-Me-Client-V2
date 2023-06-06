@@ -1,3 +1,4 @@
+import parseHTML from "html-react-parser";
 import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, replaceSmartCharacters } from "shared-functions";
 
 const componentName = "ApplicationFunctions";
@@ -522,3 +523,18 @@ export const addComputerLog = (computerLogOne, computerLogTwo) => {
 
 };
 
+
+// * The parseHTML function from the npm package html-react-parser doesn't provide error handling if the value sent to it isn't a string. -- 03/09/2023 MF
+export const parse = (value) => {
+
+  let newValue = value;
+
+  if (isEmpty(value) === false) {
+
+    newValue = parseHTML(value);
+
+  };
+
+  return newValue;
+
+};

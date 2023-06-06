@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
-import Parse from "html-react-parser";
 import { noFunctionAvailable, isEmpty, getDateTime, displayValue, formatLowerCase, formatUpperCase, removeHTML, addErrorLog } from "shared-functions";
-import { encodeURL, convertBitTrueFalse, toTitleCase } from "../../utilities/ApplicationFunctions";
+import { encodeURL, convertBitTrueFalse, toTitleCase, parse } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopapeItem = (props) => {
 
@@ -735,7 +734,7 @@ const FromTheHomeopapeItem = (props) => {
 
           <div>
             {/* <div dangerouslySetInnerHTML={{ "__html": homeopapeItem.itemTitle }} /> */}
-            {Parse(homeopapeItem.itemTitle)}<br />
+            {parse(homeopapeItem.itemTitle)}<br />
             <a href={homeopapeItem.itemLinkFormatted} target="_blank" rel="noopener noreferrer nofollow">{homeopapeItem.itemLinkFormatted}</a><br />
             ({homeopapeItem.itemPubDate}) {homeopapeItem.itemContentSnippet}<br />
             {itemID}
