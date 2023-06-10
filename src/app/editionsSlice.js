@@ -49,7 +49,7 @@ const editionsSlice = createSlice({
     // },
     // updateStateEdition(state, action) {
 
-    //   const editionItem = action.payload;
+    //   let editionItem = action.payload;
     //   let editionItemIndex;
 
     //   if (typeof editionItem === "object") {
@@ -323,13 +323,13 @@ const editionsSlice = createSlice({
     // },
     // deleteStateEdition(state, action) {
 
-    //   // const editionItemIndex = action.payload;
+    //   // let editionItemIndex = action.payload;
     //   let editionListIndex;
-    //   const editionID = action.payload;
+    //   let editionID = action.payload;
 
     //   // ? This doesn't work because state.arrayEditions isn't stored as an array of objects?
     //   // ? Need to copy the array?
-    //   // const existingEditionIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
+    //   // let existingEditionIndex = state.arrayEditions.findIndex(edition => edition.editionID === editionID);
 
     //   if (isEmpty(editionID) === false) {
 

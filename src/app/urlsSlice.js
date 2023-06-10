@@ -51,7 +51,7 @@ const urlsSlice = createSlice({
 
     //   // ? Doesn't seem to be updating the state for some reason?
 
-    //   const urlItem = action.payload;
+    //   let urlItem = action.payload;
     //   let urlListIndex;
 
     //   if (typeof urlItem === "object") {
@@ -101,8 +101,8 @@ const urlsSlice = createSlice({
     // },
     // deleteStateURL(state, action) {
 
-    //   // const urlListIndex = action.payload;
-    //   const urlItem = action.payload;
+    //   // let urlListIndex = action.payload;
+    //   let urlItem = action.payload;
     //   let urlItemIndex;
 
     //   if (typeof urlItem === "object") {

@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { Container, Col, Row, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 // import { Rating } from "@mui/lab/";
-// import Parse from "html-react-parser";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, getFirstItem, addErrorLog } from "shared-functions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath, parse } from "../../utilities/ApplicationFunctions";
 import EditTitle from "./EditTitle";
 import TitleText from "./TitleText";
 import Edition from "../editions/Edition";
@@ -132,7 +131,7 @@ const Title = (props) => {
 
       // * If titleParam is not a number, then it's the title name
       newTitleList = arrayTitles.filter(title => title.titleURL === titleParam);
-      const title = arrayTitles.find(title => title.titleURL === titleParam);
+      let title = arrayTitles.find(title => title.titleURL === titleParam);
 
       if (isEmpty(title) === false) {
 

@@ -3,9 +3,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-// import Parse from "html-react-parser";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem } from "shared-functions";
-import { encodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
+import { encodeURL, setLocalImagePath, parse } from "../../utilities/ApplicationFunctions";
 import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
@@ -229,7 +228,7 @@ const Edition = (props) => {
                             <React.Fragment>
 
                               {/* <div dangerouslySetInnerHTML={{ "__html": removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText) }} /> */}
-                              {/* {Parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
+                              {/* {parse(removeOnePixelImage(edition.imageLinkLarge, edition.ASIN).replaceAll("<img ", brokenURLReplaceText))} */}
 
                               <a href={edition.textLinkFullAPI} target="_blank" rel="noopener noreferrer nofollow">
                                 {isEmpty(edition.imageNameAPI) === false ? <img src={edition.imageNameAPI} alt={titleItem.titleName + " is available for purchase."} className="edition-image" onError={(event) => { console.error("Edition image not loaded!"); fetch(baseURL + "editions/broken/" + edition.editionID, { method: "GET", headers: new Headers({ "Content-Type": "application/json" }) }); }} /> : <Image className="no-image-icon" />}

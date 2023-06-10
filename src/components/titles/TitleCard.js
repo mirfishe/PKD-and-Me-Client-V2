@@ -17,6 +17,11 @@ const TitleCard = (props) => {
   const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const profileType = useSelector(state => state.applicationSettings.profileType);
 
+  // const electronicOnly = useSelector(state => state.applicationSettings.electronicOnly);
+  const userElectronicOnly = useSelector(state => state.applicationSettings.userElectronicOnly);
+  // const physicalOnly = useSelector(state => state.applicationSettings.physicalOnly);
+  const userPhysicalOnly = useSelector(state => state.applicationSettings.userPhysicalOnly);
+
   // const sessionToken = useSelector(state => state.user.sessionToken);
   // const admin = useSelector(state => state.user.admin);
 
@@ -56,8 +61,14 @@ const TitleCard = (props) => {
     };
 
     // * Only show title in certain categories or by certain authors
-    // const randomTitleList = arrayTitles.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
-    const randomTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+    // let randomTitleList = arrayTitles.filter(title => title.authorLastName === "Dick" && title.authorFirstName === "Philip K." && (title.category === "Novels" || title.category === "Short Story Collections" || title.category === "Non Fiction"));
+    let randomTitleList = arrayTitles.filter(title => (title.titleActive === true || title.titleActive === 1) && title.authorLastName === "Dick" && title.authorFirstName === "Philip K.");
+
+    if (profileType === "homeopape" || userElectronicOnly === true) {
+
+      // * Filter out titles without electronic items. -- 06/04/2023 MF
+
+    };
 
     if (randomTitle === true) {
 
