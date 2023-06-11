@@ -317,39 +317,36 @@ export const getASIN = (textLinkFull) => {
 
 export const toTitleCase = (title) => {
 
-  // * Doesn't handle acronyms execpt for the few listed in the code below. -- 06/26/2021 MF
+  // * Doesn't handle acronyms except for the few listed in the code below. -- 06/26/2021 MF
 
   // * https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript -- 06/26/2021 MF
-  let i, j, str, lowers, uppers;
-
-  str = title.replaceAll("&#39;", "'").replaceAll("&Amp;", "&").replaceAll("&amp;", "&").replaceAll("&Quot;", "\"").replaceAll("&quot;", "\"");
-
-  str = str.replace(/([^\W_]+[^\s-]*) */g, function (txt) {
-
-    return formatUpperCase(txt.charAt(0)) + formatLowerCase(txt.substr(1));
-
-  });
 
   // * Certain minor words should be left lowercase unless they are the first or last words in the string. -- 06/26/2021 MF
-  lowers = ["A", "An", "The", "And", "But", "Or", "For", "Nor", "As", "At",
+  let lowers = ["A", "An", "The", "And", "But", "Or", "For", "Nor", "As", "At",
     "By", "For", "From", "In", "Into", "Near", "Of", "On", "Onto", "To", "With"];
 
-  for (i = 0, j = lowers.length; i < j; i++)
-    str = str.replace(new RegExp("\\s" + lowers[i] + "\\s", "g"),
-      function (txt) {
-
-        return formatLowerCase(txt);
-
-      });
-
   // * Certain words such as initialisms or acronyms should be left uppercase. -- 06/26/2021 MF
-  uppers = ["Id", "Tv", "Pkd"];
+  let uppers = ["Id", "Tv", "Pkd"];
 
-  for (i = 0, j = uppers.length; i < j; i++)
-    str = str.replace(new RegExp("\\b" + uppers[i] + "\\b", "g"),
-      formatUpperCase(uppers[i]));
+  let newTitle = title.replaceAll("&#39;", "'").replaceAll("&Amp;", "&").replaceAll("&amp;", "&").replaceAll("&Quot;", "\"").replaceAll("&quot;", "\"");
 
-  return str;
+  newTitle = newTitle.replace(/([^\W_]+[^\s-]*) */g, function (titleText) { return formatUpperCase(titleText.charAt(0)) + formatLowerCase(titleText.substr(1)) + " "; });
+
+  newTitle = newTitle.replaceAll("  ", " ");
+
+  for (let i = 0, j = lowers.length; i < j; i++) {
+
+    newTitle = newTitle.replace(new RegExp("\\s" + lowers[i] + "\\s", "g"), function (titleText) { return formatLowerCase(titleText); });
+
+  };
+
+  for (let i = 0, j = uppers.length; i < j; i++) {
+
+    newTitle = newTitle.replace(new RegExp("\\b" + uppers[i] + "\\b", "g"), formatUpperCase(uppers[i]));
+
+  };
+
+  return newTitle;
 
 };
 
