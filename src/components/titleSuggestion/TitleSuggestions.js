@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Alert, Container, Col, Row, Table, } from "reactstrap";
+import { Alert, Container, Col, Row, Table } from "reactstrap";
 import { isEmpty, getDateTime, isNonEmptyArray, displayDate, addErrorLog } from "shared-functions";
 
 const TitleSuggestions = () => {
@@ -67,7 +67,7 @@ const TitleSuggestions = () => {
       headers: new Headers({
         "Content-Type": "application/json",
         "Authorization": sessionToken
-      }),
+      })
     })
       .then(results => {
 

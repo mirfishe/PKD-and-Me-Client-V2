@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Alert, Container, Col, Row, Table, } from "reactstrap";
+import { Alert, Container, Col, Row, Table } from "reactstrap";
 import { isEmpty, getDateTime, isNonEmptyArray, addErrorLog } from "shared-functions";
 
 const Errors = () => {
@@ -65,7 +65,7 @@ const Errors = () => {
       headers: new Headers({
         "Content-Type": "application/json",
         "Authorization": sessionToken
-      }),
+      })
     })
       .then(results => {
 
