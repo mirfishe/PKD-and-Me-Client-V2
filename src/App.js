@@ -499,7 +499,7 @@ const App = (props) => {
         headers: new Headers({
           "Content-Type": "application/json",
           "Authorization": token
-        }),
+        })
       })
         .then(results => {
 
@@ -584,7 +584,7 @@ const App = (props) => {
         headers: new Headers({
           "Content-Type": "application/json",
           "Authorization": token
-        }),
+        })
       })
         .then(results => {
 

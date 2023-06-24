@@ -341,7 +341,7 @@ const Register = () => {
         headers: new Headers({
           "Content-Type": "application/json",
           "Authorization": token
-        }),
+        })
       })
         .then(results => {
 

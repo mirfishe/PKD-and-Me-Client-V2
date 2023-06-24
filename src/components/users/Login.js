@@ -8,7 +8,7 @@ import { loadUserData, setSessionToken, loadArrayChecklist } from "../../app/use
 const Login = (props) => {
 
   // * Available props: -- 10/21/2022 MF
-  // * Properties:  -- 10/21/2022 MF
+  // * Properties: -- 10/21/2022 MF
   // * Functions: getChecklist -- 10/21/2022 MF
 
   const componentName = "Login";
