@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Container, Col, Row, Nav, Navbar, NavItem, NavLink, NavbarText, Alert, Button } from "reactstrap";
 import applicationSettings from "./app/environment";
-import { isEmpty, getDateTime, isNonEmptyArray, getQueryStringData, addErrorLog } from "shared-functions";
-import { addComputerLog } from "./utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, getQueryStringData, addErrorLog, addComputerLog } from "shared-functions";
 import { setApplicationVersion, setCopyrightYear, setLocationLogged, setProfileType, setBaseURL, setApplicationOffline, setUserElectronicOnly, setUserPhysicalOnly } from "./app/applicationSettingsSlice";
 import { setPageURL, setLinkItem } from "./app/urlsSlice";
 import LoadApplicationSettings from "./components/loadData/LoadApplicationSettings";
@@ -132,7 +131,7 @@ const App = (props) => {
   const arrayMedia = useSelector(state => state.media.arrayMedia);
 
   let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : "0.0.0";
-  let copyrightYear = isEmpty(props) === false && isEmpty(props.copyrightYear) === false ? props.copyrightYear : 2022;
+  let copyrightYear = isEmpty(props) === false && isEmpty(props.copyrightYear) === false ? props.copyrightYear : 2023;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

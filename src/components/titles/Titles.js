@@ -138,7 +138,7 @@ const Titles = (props) => {
 
     setTitleList(newTitleList);
 
-  }, [categoryParam, arrayTitles]);
+  }, [categoryParam, arrayCategories, arrayTitles, titleSortBy, admin]);
 
 
   useEffect(() => {
@@ -175,7 +175,7 @@ const Titles = (props) => {
 
     setEditionList(newEditionList);
 
-  }, [arrayEditions]);
+  }, [arrayEditions, admin]);
 
 
   useEffect(() => {

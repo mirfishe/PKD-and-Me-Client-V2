@@ -211,7 +211,7 @@ const Title = (props) => {
 
     // setEditionList(newEditionList);
 
-  }, [titleParam, arrayTitles]);
+  }, [titleParam, arrayTitles, admin]);
 
 
   useEffect(() => {
@@ -261,7 +261,7 @@ const Title = (props) => {
     // setOverallTitleRating(newOverallTitleRating);
     // setOverallTitleRatingCount(newOverallTitleRatingCount);
 
-  }, [arrayUserReviews]);
+  }, [arrayUserReviews, titleID]);
 
 
   useEffect(() => {

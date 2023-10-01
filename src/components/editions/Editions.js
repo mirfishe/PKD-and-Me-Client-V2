@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, addErrorLog } from "shared-functions";
-import { encodeURL, decodeURL, setLocalImagePath, parse } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, addErrorLog, parse } from "shared-functions";
+import { encodeURL, decodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import { setTitleSortBy } from "../../app/titlesSlice";
 import { setEditionSortBy } from "../../app/editionsSlice";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
@@ -150,7 +150,7 @@ const Editions = (props) => {
 
     setEditionList(newEditionList);
 
-  }, [mediaParam, arrayEditions]);
+  }, [mediaParam, arrayMedia, arrayEditions, editionSortBy, admin]);
 
 
   useEffect(() => {
