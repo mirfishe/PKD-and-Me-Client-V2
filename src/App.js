@@ -176,10 +176,10 @@ const App = (props) => {
 
     let appBaseURL = "https://api.philipdick.com/";
 
-    // if (process.env.NODE_ENV === "development" && (process.env.REACT_APP_FORCE_LOCAL_API === "True" || process.env.REACT_APP_FORCE_PRODUCTION_API !== "True")) {
-    if (process.env.NODE_ENV === "development" && process.env.REACT_APP_FORCE_LOCAL_API === "True") {
+    // if (import.meta.env.MODE === "development" && (import.meta.env.REACT_APP_FORCE_LOCAL_API === "True" || import.meta.env.REACT_APP_FORCE_PRODUCTION_API !== "True")) {
+    if (import.meta.env.MODE === "development" && import.meta.env.REACT_APP_FORCE_LOCAL_API === "True") {
 
-      appBaseURL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}/`;
+      appBaseURL = `http://localhost:${import.meta.env.REACT_APP_SERVER_PORT}/`;
 
     };
 

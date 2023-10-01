@@ -10,15 +10,17 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import applicationSettings from "./app/environment";
 import App from "./App";
 import "./index.css";
-// import * as serviceWorker from "./serviceWorker";
 // import reportWebVitals from "./reportWebVitals";
 // * https://stackoverflow.com/questions/66384368/how-is-it-possible-to-access-homepage-from-package-json-in-a-react-app -- 12/17/2021 MF
 // import { version, copyrightYear } from "../package.json";
 // * https://stackoverflow.com/questions/64993118/error-should-not-import-the-named-export-version-imported-as-version -- 12/27/2021 MF
 // * Now imports the entire package.json file because of changes needed to be made due to updates with webpack 5. -- 12/27/2021 MF
 // import packageJSON from "../package.json";
-const applicationVersion = require("../package.json").version;
-const copyrightYear = require("../package.json").copyrightYear;
+// const applicationVersion = require("../package.json").version;
+// const copyrightYear = require("../package.json").copyrightYear;
+// * Using Vite requires a different syntax. -- 09/22/2023 MF
+import { version, copyrightYear } from '../package.json';
+const applicationVersion = version;
 
 // const componentName = "index";
 
