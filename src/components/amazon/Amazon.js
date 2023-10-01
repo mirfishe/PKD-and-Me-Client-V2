@@ -18,12 +18,7 @@ const Amazon = () => {
   const admin = useSelector(state => state.user.admin);
   // console.log(componentName, getDateTime(), "admin", admin);
 
-  // ! Loading the baseURL from the state store here is too slow. -- 03/06/2021 MF
-  // ! Always pulling it from environment.js. -- 03/06/2021 MF
-  // const baseURL = useSelector(state => state.applicationSettings.baseURL);
-  const baseURL = applicationSettings.baseURL;
-  // console.log(componentName, getDateTime(), "baseURL", baseURL);
-
+  const baseURL = useSelector(state => state.applicationSettings.baseURL);
   const siteName = useSelector(state => state.applicationSettings.siteName);
   const applicationName = useSelector(state => state.applicationSettings.applicationName);
 
