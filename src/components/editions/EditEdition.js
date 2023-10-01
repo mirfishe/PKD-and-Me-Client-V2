@@ -1011,7 +1011,7 @@ const EditEdition = (props) => {
                 <FormGroup>
                   <Label for="txtImageName">Image Name</Label> {isEmpty(titleImageName) === false ? <Button outline size="small" color="secondary" className="ms-3 mb-2" onClick={copyTitleImageName}>Copy Title Image Name</Button> : null}
                   <Input type="text" id="txtImageName" value={txtImageName} onChange={(event) => { setTxtImageName(event.target.value); }} />
-                  {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition Image" /> : <Image size="150" className="no-image-icon" />}
+                  {isEmpty(txtImageName) === false ? <img src={txtImageName} alt="Edition" /> : <Image size="150" className="no-image-icon" />}
                 </FormGroup>
 
                 <FormGroup>

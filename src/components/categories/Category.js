@@ -47,7 +47,7 @@ const Category = (props) => {
 
     };
 
-  }, [arrayCategories]);
+  }, [arrayCategories, admin]);
 
 
   return (

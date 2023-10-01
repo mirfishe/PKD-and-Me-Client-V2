@@ -65,7 +65,7 @@ const Media = (props) => {
 
     };
 
-  }, [arrayMedia]);
+  }, [arrayMedia, admin]);
 
 
   return (

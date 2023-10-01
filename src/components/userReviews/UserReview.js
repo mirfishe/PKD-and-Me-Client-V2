@@ -73,7 +73,7 @@ const UserReview = (props) => {
 
     };
 
-  }, [titleID, arrayUserReviews]);
+  }, [titleID, arrayUserReviews, admin, userID]);
 
 
   useEffect(() => {

@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
-import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem } from "shared-functions";
-import { encodeURL, setLocalImagePath, parse } from "../../utilities/ApplicationFunctions";
+import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem, parse } from "shared-functions";
+import { encodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
 import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 
@@ -99,7 +99,7 @@ const Edition = (props) => {
 
     setEditionList(newEditionList);
 
-  }, [arrayEditions, titleID]);
+  }, [arrayTitles, arrayEditions, titleID, admin]);
 
 
   useEffect(() => {

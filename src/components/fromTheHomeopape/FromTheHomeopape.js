@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Container, Col, Row } from "reactstrap";
-import { isEmpty, getDateTime, isNonEmptyArray, addErrorLog } from "shared-functions";
-import { encodeURL, convertBitTrueFalse, parse } from "../../utilities/ApplicationFunctions";
+import { isEmpty, getDateTime, isNonEmptyArray, addErrorLog, parse } from "shared-functions";
+// import { encodeURL, convertBitTrueFalse } from "../../utilities/ApplicationFunctions";
 
 const FromTheHomeopape = (props) => {
 
