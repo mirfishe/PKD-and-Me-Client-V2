@@ -5,10 +5,10 @@ import { BrowserRouter } from "react-router-dom";
 import TagManager from "react-gtm-module";
 import { isEmpty, getDateTime } from "shared-functions";
 import store from "./app/store";
+import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import applicationSettings from "./app/environment";
-import App from "./App";
 import "./index.css";
 // import reportWebVitals from "./reportWebVitals";
 // * https://stackoverflow.com/questions/66384368/how-is-it-possible-to-access-homepage-from-package-json-in-a-react-app -- 12/17/2021 MF

@@ -1,8 +1,12 @@
-import { defineConfig } from 'vite';
-import dotenv from 'dotenv';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import dotenv from "dotenv";
+import react from "@vitejs/plugin-react";
+import eslint from "vite-plugin-eslint";
 
-// * https://vitejs.dev/config/ -- 04/04/2023 JH
+// * https://vitejs.dev/config/ -- 04/04/2023 MF
+
+// * Vite with ESLint: https://www.robinwieruch.de/vite-eslint/ -- 01/23/2024 MF
+// * vite-plugin-eslint: https://github.com/gxmari007/vite-plugin-eslint -- 01/23/2024 MF
 
 // * https://stackoverflow.com/questions/66389043/how-can-i-use-vite-env-variables-in-vite-config-js -- 09/22/2023 MF
 dotenv.config();
@@ -19,7 +23,21 @@ if (process.env.PORT !== null && process.env.PORT !== undefined && process.env.P
 
 export default defineConfig({
   base: "./",
-  plugins: [react()],
+  plugins: [
+    { // * default settings on build (i.e. fail on error)
+      ...eslint(),
+      apply: "build",
+    },
+    { // * do not fail on serve (i.e. local development)
+      ...eslint({
+        failOnWarning: false,
+        failOnError: true,
+      }),
+      apply: "serve",
+      enforce: "post",
+    },
+    react()
+  ],
   server: {
     port: applicationPort
   },
@@ -44,15 +62,15 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'build',
+    outDir: "build",
     emptyOutDir: true,
     rollupOptions: {
       input: {
         index: "./index.html"
       },
       output: {
-        entryFileNames: 'static/[name].[hash].js',
-        assetFileNames: `static/[name].[hash].[ext]`,
+        entryFileNames: "static/[name].[hash].js",
+        assetFileNames: "static/[name].[hash].[ext]",
       }
     }
   }

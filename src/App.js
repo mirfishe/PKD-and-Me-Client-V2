@@ -304,9 +304,11 @@ const App = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(baseURL) === false && applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
+    let currentSessionToken = localStorage.getItem("token");
 
-      dispatch(setSessionToken(localStorage.getItem("token")));
+    if (isEmpty(baseURL) === false && applicationAllowUserInteractions === true && isEmpty(currentSessionToken) === false) {
+
+      dispatch(setSessionToken(currentSessionToken));
 
       // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
       // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
@@ -317,14 +319,14 @@ const App = (props) => {
       // * Fetch from the API to check these. -- 03/06/2021 MF
       if (userLoaded !== true) {
 
-        getUser(localStorage.getItem("token"));
+        getUser(currentSessionToken);
 
       };
 
       // * Moved to the getUser function. -- 03/06/2021 MF
       // if (checklistLoaded !== true) {
 
-      //   getChecklist(localStorage.getItem("token"));
+      //   getChecklist(currentSessionToken);
 
       // };
 
@@ -464,21 +466,17 @@ const App = (props) => {
   };
 
 
-  const clearToken = () => {
-
-    localStorage.clear();
-    // setSessionToken("");
-
-  };
-
-
   const logOut = () => {
+
+    // * The order matters for this code. The component is refreshed when loadUserData() occurs and the localStorage is never cleared. -- 10/26/2023 MF
+    localStorage.clear();
+
+    // setSessionToken("");
+    dispatch(setSessionToken(null));
 
     // * Remove user from userSlice. -- 03/06/2021 MF
 
     dispatch(loadUserData({ userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null, userLoaded: false, arrayChecklist: [], checklistLoaded: false, lastDatabaseRetrievalChecklist: null }));
-    dispatch(setSessionToken(null));
-    clearToken();
 
     // * Reload/refresh page. -- 03/06/2021 MF
 
