@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Project using React and Redux to allow users to find works by and related to Philip K. Dick. Data for the application is stored in Redux. Used Bootstrap to make the application more visually appealing.",
   "author": "Michael Fisher",
-  "copyrightYear": "2024",
+  "copyrightYear": "2025",
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -24,7 +24,6 @@
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "bootstrap": "^5.3.3",
-    "html-react-parser": "^5.1.17",
     "react": "^18.3.1",
     "react-bootstrap-icons": "^1.11.4",
     "react-dom": "^18.3.1",
