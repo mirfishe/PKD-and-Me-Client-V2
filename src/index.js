@@ -12,7 +12,7 @@ import applicationSettings from "./app/environment";
 import "./index.css";
 // * https://stackoverflow.com/questions/66384368/how-is-it-possible-to-access-homepage-from-package-json-in-a-react-app -- 12/17/2021 MF
 // * Using Vite requires a different syntax. -- 09/22/2023 MF
-import { version, copyrightYear } from '../package.json';
+import { version, copyrightYear } from "../package.json";
 const applicationVersion = version;
 
 // const componentName = "index";
