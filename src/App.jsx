@@ -39,7 +39,6 @@ import BrokenLinks from "./components/reports/BrokenLinks";
 import ComputerLogs from "./components/reports/ComputerLogs";
 import Logs from "./components/reports/Logs";
 import Errors from "./components/reports/Errors";
-import "./App.css";
 
 const App = (props) => {
 
