@@ -352,7 +352,7 @@ export const toTitleCase = (title) => {
 
 export const convertBitTrueFalse = (records) => {
 
-  // if (process.env.DATABASE_DIALECT == "mysql") {
+  // if (import.meta.env.DATABASE_DIALECT == "mysql") {
 
   if (isNonEmptyArray(records) === true) {
 
