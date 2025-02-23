@@ -129,6 +129,3 @@ ehthumbs_vista.db
 
 # Archive Files
 *.zip
-
-# postcss compiled file
-/src/css/styles.css

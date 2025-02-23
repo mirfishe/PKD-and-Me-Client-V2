@@ -48,10 +48,10 @@ const Register = () => {
   const [errChecklistMessage, setErrChecklistMessage] = useState("");
   const [checklistResultsFound, setChecklistResultsFound] = useState(null);
 
-  const [txtFirstName, setTxtFirstName] = useState(""); // process.env.REACT_APP_FIRSTNAME_DEFAULT
-  const [txtLastName, setTxtLastName] = useState(""); // process.env.REACT_APP_LASTNAME_DEFAULT
-  const [txtEmail, setTxtEmail] = useState(""); // process.env.REACT_APP_EMAIL_DEFAULT
-  const [txtPassword, setTxtPassword] = useState(""); // process.env.REACT_APP_PASSWORD_DEFAULT
+  const [txtFirstName, setTxtFirstName] = useState(""); // import.meta.env.REACT_APP_FIRSTNAME_DEFAULT
+  const [txtLastName, setTxtLastName] = useState(""); // import.meta.env.REACT_APP_LASTNAME_DEFAULT
+  const [txtEmail, setTxtEmail] = useState(""); // import.meta.env.REACT_APP_EMAIL_DEFAULT
+  const [txtPassword, setTxtPassword] = useState(""); // import.meta.env.REACT_APP_PASSWORD_DEFAULT
   const [showPassword, setShowPassword] = useState("password");
 
   const [errFirstName, setErrFirstName] = useState("");
@@ -100,12 +100,12 @@ const Register = () => {
 
   useEffect(() => {
 
-    if (process.env.NODE_ENV === "development") {
+    if (import.meta.env.MODE === "development") {
 
-      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
-      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
-      setTxtFirstName(process.env.REACT_APP_FIRSTNAME_DEFAULT);
-      setTxtLastName(process.env.REACT_APP_LASTNAME_DEFAULT);
+      setTxtEmail(import.meta.env.REACT_APP_EMAIL_DEFAULT);
+      setTxtPassword(import.meta.env.REACT_APP_PASSWORD_DEFAULT);
+      setTxtFirstName(import.meta.env.REACT_APP_FIRSTNAME_DEFAULT);
+      setTxtLastName(import.meta.env.REACT_APP_LASTNAME_DEFAULT);
 
     };
 
