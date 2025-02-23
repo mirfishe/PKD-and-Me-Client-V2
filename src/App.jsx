@@ -39,7 +39,6 @@ import BrokenLinks from "./components/reports/BrokenLinks";
 import ComputerLogs from "./components/reports/ComputerLogs";
 import Logs from "./components/reports/Logs";
 import Errors from "./components/reports/Errors";
-import "./App.css";
 
 const App = (props) => {
 
@@ -131,7 +130,7 @@ const App = (props) => {
   const arrayMedia = useSelector(state => state.media.arrayMedia);
 
   let applicationVersion = isEmpty(props) === false && isEmpty(props.applicationVersion) === false ? props.applicationVersion : "0.0.0";
-  let copyrightYear = isEmpty(props) === false && isEmpty(props.copyrightYear) === false ? props.copyrightYear : 2023;
+  let copyrightYear = isEmpty(props) === false && isEmpty(props.copyrightYear) === false ? props.copyrightYear : 2024;
 
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -176,10 +175,10 @@ const App = (props) => {
 
     let appBaseURL = "https://api.philipdick.com/";
 
-    // if (process.env.NODE_ENV === "development" && (process.env.REACT_APP_FORCE_LOCAL_API === "True" || process.env.REACT_APP_FORCE_PRODUCTION_API !== "True")) {
-    if (process.env.NODE_ENV === "development" && process.env.REACT_APP_FORCE_LOCAL_API === "True") {
+    // if (import.meta.env.MODE === "development" && (import.meta.env.REACT_APP_FORCE_LOCAL_API === "True" || import.meta.env.REACT_APP_FORCE_PRODUCTION_API !== "True")) {
+    if (import.meta.env.MODE === "development" && import.meta.env.REACT_APP_FORCE_LOCAL_API === "True") {
 
-      appBaseURL = `http://localhost:${process.env.REACT_APP_SERVER_PORT}/`;
+      appBaseURL = `http://localhost:${import.meta.env.REACT_APP_SERVER_PORT}/`;
 
     };
 
@@ -304,9 +303,11 @@ const App = (props) => {
 
   useEffect(() => {
 
-    if (isEmpty(baseURL) === false && applicationAllowUserInteractions === true && isEmpty(localStorage.getItem("token")) === false) {
+    let currentSessionToken = localStorage.getItem("token");
 
-      dispatch(setSessionToken(localStorage.getItem("token")));
+    if (isEmpty(baseURL) === false && applicationAllowUserInteractions === true && isEmpty(currentSessionToken) === false) {
+
+      dispatch(setSessionToken(currentSessionToken));
 
       // ! Doesn't store if the user is active or is an admin. -- 03/06/2021 MF
       // ! Doesn't store the userID except inside the sessionToken hash. -- 03/06/2021 MF
@@ -317,14 +318,14 @@ const App = (props) => {
       // * Fetch from the API to check these. -- 03/06/2021 MF
       if (userLoaded !== true) {
 
-        getUser(localStorage.getItem("token"));
+        getUser(currentSessionToken);
 
       };
 
       // * Moved to the getUser function. -- 03/06/2021 MF
       // if (checklistLoaded !== true) {
 
-      //   getChecklist(localStorage.getItem("token"));
+      //   getChecklist(currentSessionToken);
 
       // };
 
@@ -464,21 +465,17 @@ const App = (props) => {
   };
 
 
-  const clearToken = () => {
-
-    localStorage.clear();
-    // setSessionToken("");
-
-  };
-
-
   const logOut = () => {
+
+    // * The order matters for this code. The component is refreshed when loadUserData() occurs and the localStorage is never cleared. -- 10/26/2023 MF
+    localStorage.clear();
+
+    // setSessionToken("");
+    dispatch(setSessionToken(null));
 
     // * Remove user from userSlice. -- 03/06/2021 MF
 
     dispatch(loadUserData({ userID: null, firstName: null, lastName: null, email: null, updatedBy: null, admin: null, active: null, sessionToken: null, userLoaded: false, arrayChecklist: [], checklistLoaded: false, lastDatabaseRetrievalChecklist: null }));
-    dispatch(setSessionToken(null));
-    clearToken();
 
     // * Reload/refresh page. -- 03/06/2021 MF
 

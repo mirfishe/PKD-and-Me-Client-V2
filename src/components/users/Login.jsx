@@ -46,8 +46,8 @@ const Login = (props) => {
   const [modal, setModal] = useState(false);
   const [userResultsFound, setUserResultsFound] = useState(null);
 
-  const [txtEmail, setTxtEmail] = useState(""); // process.env.REACT_APP_EMAIL_DEFAULT
-  const [txtPassword, setTxtPassword] = useState(""); // process.env.REACT_APP_PASSWORD_DEFAULT
+  const [txtEmail, setTxtEmail] = useState(""); // import.meta.env.REACT_APP_EMAIL_DEFAULT
+  const [txtPassword, setTxtPassword] = useState(""); // import.meta.env.REACT_APP_PASSWORD_DEFAULT
   const [showPassword, setShowPassword] = useState("password");
 
   const [errEmail, setErrEmail] = useState("");
@@ -90,10 +90,10 @@ const Login = (props) => {
 
   useEffect(() => {
 
-    if (process.env.NODE_ENV === "development") {
+    if (import.meta.env.MODE === "development") {
 
-      setTxtEmail(process.env.REACT_APP_EMAIL_DEFAULT);
-      setTxtPassword(process.env.REACT_APP_PASSWORD_DEFAULT);
+      setTxtEmail(import.meta.env.REACT_APP_EMAIL_DEFAULT);
+      setTxtPassword(import.meta.env.REACT_APP_PASSWORD_DEFAULT);
 
     };
 
