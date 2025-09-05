@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Col, Row, Nav, NavItem, NavLink } from "reactstrap";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray } from "shared-functions";
-import { encodeURL } from "../../utilities/ApplicationFunctions";
+import { encodeURL } from "../../utilities/applicationFunctions";
 // import EditMedia from "./EditMedia";
 
 const Media = (props) => {

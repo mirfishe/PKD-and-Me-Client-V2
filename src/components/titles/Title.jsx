@@ -5,7 +5,7 @@ import { Container, Col, Row, Alert, Breadcrumb, BreadcrumbItem } from "reactstr
 import { Image } from "react-bootstrap-icons";
 // import { Rating } from "@mui/lab/";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, hasNonEmptyProperty, displayDate, displayYear, getFirstItem, addErrorLog, parse } from "shared-functions";
-import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
+import { encodeURL, decodeURL, removeOnePixelImage, setLocalPath, setLocalImagePath } from "../../utilities/applicationFunctions";
 import EditTitle from "./EditTitle";
 import TitleText from "./TitleText";
 import Edition from "../editions/Edition";
@@ -369,7 +369,7 @@ const Title = (props) => {
   //             // console.error(componentName, getDateTime(), "getTitleRating error.message", error.message);
   //             setErrOverallTitleRatingMessage(error.name + ": " + error.message);
 
-  //            addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+  //            addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
   //         });
 
@@ -470,7 +470,7 @@ const Title = (props) => {
 
         // addErrorMessage(`${operationValue}: ${error.name}: ${error.message}`);
 
-        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 

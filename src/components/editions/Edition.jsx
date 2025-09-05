@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayDate, getFirstItem, parse } from "shared-functions";
-import { encodeURL, setLocalImagePath } from "../../utilities/ApplicationFunctions";
+import { encodeURL, setLocalImagePath } from "../../utilities/applicationFunctions";
 import EditEdition from "../editions/EditEdition";
 import amazonLogo from "../../assets/images/available_at_amazon_en_vertical.png";
 

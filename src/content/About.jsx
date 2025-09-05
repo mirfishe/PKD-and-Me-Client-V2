@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Col, Row } from "reactstrap";
 import { noFunctionAvailable, isEmpty, getDateTime, displayValue } from "shared-functions";
-import { setLocalPath, setLocalImagePath } from "../utilities/ApplicationFunctions";
+import { setLocalPath, setLocalImagePath } from "../utilities/applicationFunctions";
 
 const About = (props) => {
 

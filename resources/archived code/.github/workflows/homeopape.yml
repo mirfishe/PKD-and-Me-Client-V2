@@ -10,61 +10,60 @@ on:
   pull_request:
     types:
       - closed
-    branches: [ "master" ]
+    branches: ["master"]
 
 # env:
 #   CI: false
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [20.x]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          **/node_modules
-        key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: npm install
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
-    - name: Build
-      run: npm run continuousintegrationbuild --if-present
+      - name: Install dependencies
+        run: npm install
 
-    - name: List output files
-      run: find build/ -print
-      
-    - name: Remove asset-manifest.json
-      run: rm -fv build/asset-manifest.json
-      shell: bash
+      - name: Build
+        run: npm run continuousintegrationbuild --if-present
 
-    - name: Copy .htaccess and remove htaccess directory
-      run: |
-        cp build/htaccess/homeopape.htaccess build/.htaccess
-        rm -rfv build/htaccess
-      shell: bash
+      - name: List output files
+        run: find build/ -print
 
-    - name: Sync Files
-      uses: SamKirkland/web-deploy@v1
-      with:
-        target-server: ${{ secrets.SSHSERVERNAME }}
-        remote-user: ${{ secrets.SSHUSERNAME }}
-        private-ssh-key: ${{ secrets.SSHKEY }}
-        source-path: build/
-        destination-path: /var/www/html/homeopape/
-        rsync-options: --archive --verbose --compress --human-readable --progress --delete-after --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore --stats --itemize-changes --exclude=images --exclude=sitemap.xml
+      - name: Remove asset-manifest.json
+        run: rm -fv build/asset-manifest.json
+        shell: bash
+
+      - name: Copy .htaccess and remove htaccess directory
+        run: |
+          cp build/htaccess/homeopape.htaccess build/.htaccess
+          rm -rfv build/htaccess
+        shell: bash
+
+      - name: Sync Files
+        uses: SamKirkland/web-deploy@v1
+        with:
+          target-server: ${{ secrets.SSHSERVERNAME }}
+          remote-user: ${{ secrets.SSHUSERNAME }}
+          private-ssh-key: ${{ secrets.SSHKEY }}
+          source-path: build/
+          destination-path: /var/www/html/homeopape/
+          rsync-options: --archive --verbose --compress --human-readable --progress --delete-after --exclude=.git* --exclude=.git/ --exclude=README.md --exclude=readme.md --exclude=.gitignore --stats --itemize-changes --exclude=images --exclude=sitemap.xml

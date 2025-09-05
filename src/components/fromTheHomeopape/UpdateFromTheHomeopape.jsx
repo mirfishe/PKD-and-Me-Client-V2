@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Container, Col, Row, FormGroup, Label, Input, Button } from "reactstrap";
 // import Parser from "rss-parser";
 import { isEmpty, getDateTime, isNonEmptyArray, formatLowerCase, formatUpperCase, removeHTML, addErrorLog, parse } from "shared-functions";
-// import { encodeURL, convertBitTrueFalse, toTitleCase } from "../../utilities/ApplicationFunctions";
+// import { encodeURL, convertBitTrueFalse, toTitleCase } from "../../utilities/applicationFunctions";
 import FromTheHomeopapeItem from "./FromTheHomeopapeItem";
 
 const FromTheHomeopape = () => {
@@ -416,7 +416,7 @@ const FromTheHomeopape = () => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -468,7 +468,7 @@ const FromTheHomeopape = () => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -520,7 +520,7 @@ const FromTheHomeopape = () => {
 
         addErrorMessage(error.name + ": " + error.message);
 
-        // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+        // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
       });
 
@@ -588,7 +588,7 @@ const FromTheHomeopape = () => {
 
           addErrorMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

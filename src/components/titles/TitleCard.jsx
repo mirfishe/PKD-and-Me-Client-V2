@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, Col, Row, Card, CardBody, CardText, CardHeader, CardFooter, CardImg, Alert } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import { noFunctionAvailable, isEmpty, getDateTime, isNonEmptyArray, displayYear, truncateText } from "shared-functions";
-import { encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../utilities/ApplicationFunctions";
+import { encodeURL, decodeURL, setLocalPath, setLocalImagePath } from "../../utilities/applicationFunctions";
 
 const TitleCard = (props) => {
 

@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
           index: "./index.html"
         },
         output: {
-          entryFileNames: "static/[name].[hash].jsx",
+          entryFileNames: "static/[name].[hash].js",
           assetFileNames: "static/[name].[hash].[ext]",
         }
       }

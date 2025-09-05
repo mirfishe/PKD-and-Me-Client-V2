@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Col, FormGroup, Label, Input, Alert, Button } from "reactstrap";
 import { Image } from "react-bootstrap-icons";
 import { isEmpty, getDateTime, isNonEmptyArray, getFirstItem, displayValue, formatTrim, formatToString, addErrorLog } from "shared-functions";
-import { getASIN, removeOnePixelImage } from "../../utilities/ApplicationFunctions";
+import { getASIN, removeOnePixelImage } from "../../utilities/applicationFunctions";
 // import { addStateEdition, updateStateEdition, deleteStateEdition } from "../../app/editionsSlice";
 
 const EditEdition = (props) => {
@@ -508,7 +508,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -768,7 +768,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -849,7 +849,7 @@ const EditEdition = (props) => {
 
             addErrorMessage(error.name + ": " + error.message);
 
-            // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+            // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
           });
 
@@ -909,7 +909,7 @@ const EditEdition = (props) => {
 
           setErrASINMessage(error.name + ": " + error.message);
 
-          // addErrorLog(baseURL, getFetchAuthorization(), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
+          // addErrorLog(baseURL, setFetchAuthorization(null, environmentMode, demonstrationMode), databaseAvailable, allowLogging(), {  url: url, response: { ok: response.ok, redirected: response.redirected, status: response.status, statusText: response.statusText, type: response.type, url: response.url }, recordObject, errorData: { name: error.name, message: error.message, stack: error.stack } });
 
         });
 

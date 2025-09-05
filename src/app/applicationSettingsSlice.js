@@ -172,22 +172,13 @@ const applicationSettingsSlice = createSlice({
         // if (state.informationMessage !== action.payload) {
         if (state.informationMessage.includes(action.payload) === false) {
 
-          if (isEmpty(state.informationMessage) === false) {
+          if (!isEmpty(state.informationMessage)) {
 
             state.informationMessage = state.informationMessage + " ";
           };
 
           state.informationMessage = state.informationMessage + action.payload;
-
-          if (isEmpty(action.payload) === false) {
-
-            state.informationMessageVisible = true;
-
-          } else {
-
-            state.informationMessageVisible = false;
-
-          };
+          state.informationMessageVisible = true;
 
         };
 
@@ -201,29 +192,20 @@ const applicationSettingsSlice = createSlice({
     },
     addSuccessMessage(state, action) {
 
-      if (isEmpty(action.payload) === false) {
+      if (!isEmpty(action.payload)) {
 
         // * Make sure that the new phrase isn't in the existing success message. -- 09/27/2021 MF
         // if (state.successMessage !== action.payload) {
-        if (state.successMessage.includes(action.payload) === false) {
+        if (!state.successMessage.includes(action.payload)) {
 
-          if (isEmpty(state.successMessage) === false) {
+          if (!isEmpty(state.successMessage)) {
 
             state.successMessage = state.successMessage + " ";
 
           };
 
           state.successMessage = state.successMessage + action.payload;
-
-          if (isEmpty(action.payload) === false) {
-
-            state.successMessageVisible = true;
-
-          } else {
-
-            state.successMessageVisible = false;
-
-          };
+          state.successMessageVisible = true;
 
         };
 
@@ -237,29 +219,20 @@ const applicationSettingsSlice = createSlice({
     },
     addWarningMessage(state, action) {
 
-      if (isEmpty(action.payload) === false) {
+      if (!isEmpty(action.payload)) {
 
         // * Make sure that the new phrase isn't in the existing warning message. -- 09/27/2021 MF
         // if (state.warningMessage !== action.payload) {
-        if (state.warningMessage.includes(action.payload) === false) {
+        if (!state.warningMessage.includes(action.payload)) {
 
-          if (isEmpty(state.warningMessage) === false) {
+          if (!isEmpty(state.warningMessage)) {
 
             state.warningMessage = state.warningMessage + " ";
 
           };
 
           state.warningMessage = state.warningMessage + action.payload;
-
-          if (isEmpty(action.payload) === false) {
-
-            state.warningMessageVisible = true;
-
-          } else {
-
-            state.warningMessageVisible = false;
-
-          };
+          state.warningMessageVisible = true;
 
         };
 
@@ -273,29 +246,20 @@ const applicationSettingsSlice = createSlice({
     },
     addErrorMessage(state, action) {
 
-      if (isEmpty(action.payload) === false) {
+      if (!isEmpty(action.payload)) {
 
         // * Make sure that the new phrase isn't in the existing error message. -- 09/27/2021 MF
         // if (state.errorMessage !== action.payload) {
-        if (state.errorMessage.includes(action.payload) === false) {
+        if (!state.errorMessage.includes(action.payload)) {
 
-          if (isEmpty(state.errorMessage) === false) {
+          if (!isEmpty(state.errorMessage)) {
 
             state.errorMessage = state.errorMessage + " ";
 
           };
 
           state.errorMessage = state.errorMessage + action.payload;
-
-          if (isEmpty(action.payload) === false) {
-
-            state.errorMessageVisible = true;
-
-          } else {
-
-            state.errorMessageVisible = false;
-
-          };
+          state.errorMessageVisible = true;
 
         };
 
